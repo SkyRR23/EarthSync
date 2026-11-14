@@ -46,8 +46,13 @@ def test_captured_evidence_keeps_original_provenance(client):
 
 def test_unknown_interface_and_oversized_request(client):
     assert client.post("/api/engine/unknown", json={}).status_code == 404
-    assert client.post("/api/engine/integration", content=b"x" * 2_000_001).status_code == 413
-    assert client.post("/api/engine/integration", content=b"not JSON").status_code == 422
+    assert (
+        client.post("/api/engine/integration", content=b"x" * 2_000_001).status_code
+        == 413
+    )
+    assert (
+        client.post("/api/engine/integration", content=b"not JSON").status_code == 422
+    )
     assert client.post("/api/engine/integration", json=[]).status_code == 422
 
 
