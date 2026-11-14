@@ -1,0 +1,94 @@
+{
+  "schema_version": "earthsync.pilot-reference-cases.v1",
+  "data_kind": "reference_only",
+  "cases": [
+    {
+      "id": "us_ia_story_reference",
+      "pilot_id": "us_ia_story",
+      "profile_ids": [
+        "us_ia_story_corn_rainfed_v1",
+        "us_ia_story_soybean_rainfed_v1"
+      ],
+      "user_approximate_location": null,
+      "farmer_confirmed_farm": null,
+      "field_photo": null,
+      "environmental_evidence": {
+        "state": "unavailable",
+        "kind": "unavailable",
+        "value": null,
+        "unit": null,
+        "dates": null,
+        "spatial_support": null,
+        "source_refs": [],
+        "quality": "No field or environmental observations were collected."
+      },
+      "expected_recommendation_state": "insufficient_information"
+    },
+    {
+      "id": "us_ks_tribune_reference",
+      "pilot_id": "us_ks_tribune",
+      "profile_ids": [
+        "us_ks_tribune_winter_wheat_dryland_v1",
+        "us_ks_tribune_sorghum_dryland_v1",
+        "us_ks_tribune_fallow_v1"
+      ],
+      "user_approximate_location": null,
+      "farmer_confirmed_farm": null,
+      "field_photo": null,
+      "environmental_evidence": {
+        "state": "unavailable",
+        "kind": "unavailable",
+        "value": null,
+        "unit": null,
+        "dates": null,
+        "spatial_support": null,
+        "source_refs": [],
+        "quality": "No field or environmental observations were collected."
+      },
+      "expected_recommendation_state": "insufficient_information"
+    },
+    {
+      "id": "us_ar_stuttgart_reference",
+      "pilot_id": "us_ar_stuttgart",
+      "profile_ids": [
+        "us_ar_stuttgart_rice_flooded_v1",
+        "us_ar_stuttgart_soybean_irrigated_v1"
+      ],
+      "user_approximate_location": null,
+      "farmer_confirmed_farm": null,
+      "field_photo": null,
+      "environmental_evidence": {
+        "state": "unavailable",
+        "kind": "unavailable",
+        "value": null,
+        "unit": null,
+        "dates": null,
+        "spatial_support": null,
+        "source_refs": [],
+        "quality": "No field or environmental observations were collected."
+      },
+      "expected_recommendation_state": "insufficient_information"
+    },
+    {
+      "id": "au_nsw_riverina_reference",
+      "pilot_id": "au_nsw_riverina",
+      "profile_ids": [
+        "au_nsw_riverina_rice_drill_irrigated_v1"
+      ],
+      "user_approximate_location": null,
+      "farmer_confirmed_farm": null,
+      "field_photo": null,
+      "environmental_evidence": {
+        "state": "unavailable",
+        "kind": "unavailable",
+        "value": null,
+        "unit": null,
+        "dates": null,
+        "spatial_support": null,
+        "source_refs": [],
+        "quality": "No field or environmental observations were collected."
+      },
+      "expected_recommendation_state": "insufficient_information"
+    }
+  ]
+}
