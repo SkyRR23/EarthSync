@@ -5,9 +5,9 @@ NASA Space Apps 2026 · farmer crop-rotation explorer. Design: [docs/flutter-des
 ## Run
 
 ```bash
-flutter run                              # mock engine (demo fixture), default
+flutter run                              # native Rust engine, live backend required
 flutter run --dart-define=ENGINE=rust    # on-device Rust engine via flutter_rust_bridge
-flutter run --dart-define=MOCK_FAIL=true # test the error screen
+flutter run --dart-define=ENGINE=mock --dart-define=MOCK_FAIL=true # test the error screen
 ```
 
 H2 gate — prove Flutter → Rust works on the connected phone:
@@ -50,7 +50,7 @@ flutter run -d PHONE_ID --dart-define=ENGINE=rust
 The ARM64 build command requires an ARM64 phone for installation. For other
 architectures, build for the connected target and install its Rust target too.
 The integration test calls Rust directly regardless of the `ENGINE` setting;
-the interactive app defaults to mock mode, so keep `ENGINE=rust` when checking
+the native app defaults to Rust mode; keep `ENGINE=rust` when checking
 the actual farmer workflow. Verify synthetic labels, baseline and two
 alternatives, unknown states, and the error envelope before merging to `main`.
 A successful host test or APK build alone does not establish device success.
@@ -91,3 +91,10 @@ Build the native bridge with `cargo build --release --locked` from `app/rust/`
 before running host `flutter test`. This suite includes actual native FFI tests.
 `CLIMATE_MODE=synthetic_demo` and `ENGINE=mock` remain explicit demo modes;
 live failures never select them automatically.
+
+## Local browser demo
+
+See [the web demo runbook](../docs/WEB_DEMO.md). Run `../Run-WebDemo.ps1` from
+PowerShell (or `./Run-WebDemo.ps1` from the repository root). Browser analysis
+calls the actual compiled engine through a separate local Python service;
+Android continues to use the on-device FRB bridge.

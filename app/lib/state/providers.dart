@@ -5,22 +5,26 @@ import '../data/environment/nasa_power_client.dart';
 import '../data/engine/engine_gateway.dart';
 import '../data/engine/mock_engine.dart';
 import '../data/engine/rust_engine.dart';
+import '../data/engine/web_engine.dart';
 import '../data/models/farmer_input.dart';
 import '../data/models/field_analysis.dart';
 
 const _engineDefine = String.fromEnvironment('ENGINE');
 
-/// `rust` (team engine via bridge) on phones by default; `mock` on web,
-/// where the Rust bridge is not built. Override with --dart-define=ENGINE=...
+/// Native apps use FRB; browsers call the shared Rust engine on the demo host.
+/// Fixture presentation requires an explicit ENGINE=mock selection.
 final kEngine = _engineDefine.isNotEmpty
     ? _engineDefine
-    : (kIsWeb ? 'mock' : 'rust');
+    : (kIsWeb ? (Uri.base.queryParameters['engine'] ?? 'web') : 'rust');
 
 final engineProvider = Provider<EngineGateway>(
   (ref) => switch (kEngine) {
     'rust' => RustEngine(window: ref.watch(historicalWindowProvider)),
+    'web' => WebEngine(window: ref.watch(historicalWindowProvider)),
     'mock' => MockEngine(),
-    _ => throw StateError('Unsupported ENGINE value. Choose rust or mock.'),
+    _ => throw StateError(
+      'Unsupported ENGINE value. Choose rust, web or mock.',
+    ),
   },
 );
 

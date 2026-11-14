@@ -35,6 +35,8 @@ jobs:
           python -m pip check
       - name: Cache Rust dependencies for offline contract tests
         run: cargo fetch --locked --manifest-path ../engine/Cargo.toml
+      - name: Build actual Rust executable for web endpoint tests
+        run: cargo build --locked --manifest-path ../engine/Cargo.toml --example web_engine
       - name: Ruff
         run: |
           python -m ruff check earthsync tests

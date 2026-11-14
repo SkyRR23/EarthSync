@@ -167,7 +167,7 @@ class NasaPowerClient {
         base.query.isNotEmpty ||
         base.fragment.isNotEmpty ||
         !(base.scheme == 'https' ||
-            (kDebugMode && local && base.scheme == 'http'))) {
+            ((kDebugMode || kIsWeb) && local && base.scheme == 'http'))) {
       throw const EngineError(
         code: 'backend_configuration',
         message:
