@@ -124,3 +124,10 @@ Reproduce the web integration test with the demo server running:
 cd app
 flutter test test/web_engine_test.dart --dart-define=RUN_WEB_DEMO=true --reporter expanded
 ```
+
+If a browser still shows "Your 3 options at a glance" with an empty list, it is
+running the earlier build. Close the old tab, reopen the current Wi-Fi URL and
+hard-refresh with Ctrl+Shift+R. Start a new analysis; an already-open Flutter
+session does not replace its running code when files are rebuilt. The local
+host serves static files with `Cache-Control: no-store` to avoid retaining old
+demo assets. This does not change the NASA backend's evidence cache or modes.

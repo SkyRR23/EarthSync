@@ -1,4 +1,4 @@
-"""Loopback-only demo host: Flutter web + NASA backend + native Rust engine."""
+"""Local demo host: Flutter web + NASA backend + native Rust engine."""
 
 import asyncio
 import json
@@ -17,6 +17,13 @@ ENGINE = (
     / "engine/target/debug/examples"
     / ("web_engine.exe" if os.name == "nt" else "web_engine")
 )
+
+
+class DemoStaticFiles(StaticFiles):
+    async def get_response(self, path, scope):
+        response = await super().get_response(path, scope)
+        response.headers["Cache-Control"] = "no-store"
+        return response
 
 
 def create_demo_app(engine=ENGINE, static_dir=ROOT / "app/build/web"):
@@ -77,7 +84,7 @@ def create_demo_app(engine=ENGINE, static_dir=ROOT / "app/build/web"):
         return JSONResponse(json.loads(output))
 
     if Path(static_dir).is_dir():
-        app.mount("/", StaticFiles(directory=static_dir, html=True), name="flutter")
+        app.mount("/", DemoStaticFiles(directory=static_dir, html=True), name="flutter")
     return app
 
 
