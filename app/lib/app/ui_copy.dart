@@ -6,6 +6,25 @@ abstract final class UiCopy {
   static const en = <String, String>{
     'season': 'Season & records',
     'cropReferences': 'Crop references',
+    'mapLayer': 'Map layer',
+    'map_standard': 'Standard · OpenStreetMap',
+    'map_satellite': 'Satellite · NASA MODIS',
+    'hybridUnavailable':
+        'Hybrid labels unavailable: NASA reference tiles returned HTTP 500 at field-scale zooms. Terrain is not configured.',
+    'pointHelp':
+        'Pan and zoom. Tap to choose your farm point, or enter coordinates.',
+    'boundaryHelp':
+        'Tap corners in order. Select a numbered vertex, then tap its new position. Confirm or cancel before saving the farm.',
+    'zoomIn': 'Zoom in',
+    'zoomOut': 'Zoom out',
+    'centerFarm': 'Center on farm point',
+    'drawBoundary': 'Draw boundary',
+    'editBoundary': 'Edit boundary',
+    'pointOnly': 'Use point only',
+    'undo': 'Undo',
+    'cancelBoundary': 'Cancel boundary edits',
+    'confirmBoundary': 'Confirm boundary',
+    'deleteVertex': 'Delete selected vertex',
     'home': 'Home',
     'farm': 'My Farm',
     'explore': 'Explore',
@@ -50,7 +69,7 @@ abstract final class UiCopy {
         'Farm and area choices are stored on this device. GPS is optional. Photo metadata requires consent; private workspace tokens stay in session memory.',
     'forecast': 'Current weather & forecast',
     'forecastBody':
-        'Unavailable. Historical NASA climate records do not describe today’s conditions or predict the weather.',
+        'Current observations and official warnings are unavailable. Saved farms can request dated NOAA temperature forecasts in Persisted farm evidence. NASA POWER remains historical climate.',
     'fieldTitle': 'Know your field',
     'fieldBody':
         'Available evidence and the information still needed. Data availability is not a field health score.',

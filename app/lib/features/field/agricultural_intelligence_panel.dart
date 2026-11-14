@@ -14,11 +14,19 @@ class AgriculturalIntelligencePanel extends StatefulWidget {
     required this.client,
     required this.records,
     required this.onSaved,
+    this.initialDecision,
+    this.farmerReports = const [],
+    this.environmentalSnapshots = const [],
+    this.farmerObservations = const [],
   });
   final PlatformFarm farm;
   final PlatformFarmClient client;
   final List<Map<String, dynamic>> records;
   final VoidCallback onSaved;
+  final Map<String, dynamic>? initialDecision;
+  final List<Map<String, dynamic>> farmerReports,
+      environmentalSnapshots,
+      farmerObservations;
   @override
   State<AgriculturalIntelligencePanel> createState() => _IntelligenceState();
 }
@@ -33,6 +41,95 @@ class _IntelligenceState extends State<AgriculturalIntelligencePanel> {
   List<String> _evidenceIds = [];
   final _profiles = <String, Map<String, dynamic>>{};
   bool _busy = false;
+  final _selectedReports = <String>{},
+      _selectedJobs = <String>{},
+      _selectedObservations = <String>{};
+
+  @override
+  void initState() {
+    super.initState();
+    final saved = widget.initialDecision?['assessment'] as Map?;
+    if (saved == null) return;
+    final context = saved['result']?['data']?['context'] as Map?;
+    final scenarios = context?['scenarios'] as List? ?? [];
+    if (scenarios.length != 1) return;
+    final plans = scenarios.first['plans'] as List;
+    String date(Map day) =>
+        '${day['year']}-${'${day['month']}'.padLeft(2, '0')}-${'${day['day']}'.padLeft(2, '0')}';
+    for (final sidecar in saved['catalog_projection'] as List? ?? []) {
+      final profile = Map<String, dynamic>.from(sidecar['profile'] as Map);
+      final projected = (context?['catalog'] as List? ?? [])
+          .where((p) => p['id'] == profile['id'])
+          .firstOrNull;
+      if (projected == null) continue;
+      _profiles[profile['id'] as String] = {
+        ...profile,
+        'identity_projection_system': projected['system'],
+        'identity_projection_blocked': false,
+      };
+    }
+    if (plans.isNotEmpty) {
+      _profile = plans[0]['profile_id'] as String?;
+      _start.text = date(plans[0]['period']['start'] as Map);
+      _end.text = date(plans[0]['period']['end'] as Map);
+    }
+    if (plans.length == 2) {
+      _second = plans[1]['profile_id'] as String?;
+      _nextStart.text = date(plans[1]['period']['start'] as Map);
+      _nextEnd.text = date(plans[1]['period']['end'] as Map);
+    }
+    _selectedJobs.addAll(
+      (saved['environmental_snapshots'] as List? ?? []).map(
+        (j) => j['id'] as String,
+      ),
+    );
+    _selectedObservations.addAll(
+      (saved['farmer_observations'] as List? ?? []).map(
+        (j) => j['id'] as String,
+      ),
+    );
+    _evidenceIds = (saved['evidence'] as List? ?? [])
+        .map((e) => e['id'] as String)
+        .toList();
+    _selectedReports.addAll(
+      (saved['farmer_reports'] as List? ?? []).map((r) => r['id'] as String),
+    );
+  }
+
+  Widget _dateField(TextEditingController controller, String label) =>
+      TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: label,
+          suffixIcon: IconButton(
+            tooltip: 'Choose $label',
+            onPressed: _busy
+                ? null
+                : () async {
+                    final parsed = DateTime.tryParse(controller.text);
+                    final first = DateTime(1900), last = DateTime(2200);
+                    final selected = await showDatePicker(
+                      context: context,
+                      initialDate:
+                          parsed != null &&
+                              !parsed.isBefore(first) &&
+                              !parsed.isAfter(last)
+                          ? parsed
+                          : DateTime.now(),
+                      firstDate: first,
+                      lastDate: last,
+                    );
+                    if (mounted && selected != null) {
+                      controller.text = selected.toIso8601String().substring(
+                        0,
+                        10,
+                      );
+                    }
+                  },
+            icon: const Icon(Icons.calendar_month),
+          ),
+        ),
+      );
   @override
   void dispose() {
     for (final c in [_query, _start, _end, _nextStart, _nextEnd]) {
@@ -128,18 +225,8 @@ class _IntelligenceState extends State<AgriculturalIntelligencePanel> {
           const Text(
             'Historical regional evidence · English · global location support. ET0 describes reference-grass atmospheric water demand; it does not prescribe irrigation.',
           ),
-          TextField(
-            controller: _start,
-            decoration: const InputDecoration(
-              labelText: 'Water / first crop start (YYYY-MM-DD)',
-            ),
-          ),
-          TextField(
-            controller: _end,
-            decoration: const InputDecoration(
-              labelText: 'Water / first crop end (YYYY-MM-DD)',
-            ),
-          ),
+          _dateField(_start, 'Water / first crop start (YYYY-MM-DD)'),
+          _dateField(_end, 'Water / first crop end (YYYY-MM-DD)'),
           FilledButton(
             onPressed: _busy ? null : () => _act(_retrieve),
             child: const Text('Retrieve NASA inputs & calculate ET0'),
@@ -194,6 +281,22 @@ class _IntelligenceState extends State<AgriculturalIntelligencePanel> {
             decoration: const InputDecoration(
               labelText: 'Exact crop name or identity (7P v2)',
             ),
+          ),
+          Wrap(
+            spacing: 8,
+            children: [
+              for (final crop in [
+                'rice',
+                'maize',
+                'mung bean',
+                'sesame',
+                'groundnut',
+              ])
+                ActionChip(
+                  label: Text(crop),
+                  onPressed: _busy ? null : () => _query.text = crop,
+                ),
+            ],
           ),
           OutlinedButton(
             onPressed: _busy
@@ -291,8 +394,7 @@ class _IntelligenceState extends State<AgriculturalIntelligencePanel> {
                     (p) =>
                         p['identity_projection_blocked'] == false &&
                         p['identity_projection_system'] ==
-                            widget.farm.productionSystem &&
-                        p['region_id'] == selected['region_id'],
+                            widget.farm.productionSystem,
                   ))
                     DropdownMenuItem(
                       value: p['id'] as String,
@@ -306,23 +408,88 @@ class _IntelligenceState extends State<AgriculturalIntelligencePanel> {
               ),
             ],
             if (_second != null) ...[
-              TextField(
-                controller: _nextStart,
-                decoration: const InputDecoration(
-                  labelText: 'Second declared planting (YYYY-MM-DD)',
-                ),
-              ),
-              TextField(
-                controller: _nextEnd,
-                decoration: const InputDecoration(
-                  labelText: 'Second declared harvest (YYYY-MM-DD)',
-                ),
-              ),
+              _dateField(_nextStart, 'Second declared planting (YYYY-MM-DD)'),
+              _dateField(_nextEnd, 'Second declared harvest (YYYY-MM-DD)'),
               const Text(
                 'Sequence order asserts successive use of this one field. Overlapping inclusive dates conflict. Dates are farmer proposals, not source-recommended dates.',
               ),
             ],
           ],
+          if (widget.environmentalSnapshots.isNotEmpty)
+            ExpansionTile(
+              title: const Text('Choose soil / forecast reference snapshots'),
+              children: [
+                const Text(
+                  'Selected 7G snapshots are saved with this assessment for explanation. Their units, native resolution, original times, missingness and scientific restrictions remain. They do not activate a Rust suitability rule.',
+                ),
+                for (final j in widget.environmentalSnapshots.where(
+                  (j) => j['status'] == 'succeeded',
+                ))
+                  CheckboxListTile(
+                    title: Text(
+                      '${j['kind']} · ${j['result']?['provider'] ?? 'Source reference'}',
+                    ),
+                    subtitle: Text(
+                      '${j['result']?['retrieved_at'] ?? 'Time unknown'} · reference context, not executable requirements',
+                    ),
+                    value: _selectedJobs.contains(j['id']),
+                    onChanged: _busy
+                        ? null
+                        : (yes) => setState(() {
+                            yes == true
+                                ? _selectedJobs.add(j['id'] as String)
+                                : _selectedJobs.remove(j['id']);
+                          }),
+                  ),
+              ],
+            ),
+          if (widget.farmerObservations.isNotEmpty)
+            ExpansionTile(
+              title: const Text('Choose earlier farmer observations'),
+              children: [
+                for (final r in widget.farmerObservations)
+                  CheckboxListTile(
+                    title: Text(
+                      '${r['observed_on']} · ${r['crop_name'] ?? 'Crop unknown'}',
+                    ),
+                    subtitle: Text(r['notes'] as String),
+                    value: _selectedObservations.contains(r['id']),
+                    onChanged: _busy
+                        ? null
+                        : (yes) => setState(() {
+                            yes == true
+                                ? _selectedObservations.add(r['id'] as String)
+                                : _selectedObservations.remove(r['id']);
+                          }),
+                  ),
+              ],
+            ),
+          if (widget.farmerReports.isNotEmpty)
+            ExpansionTile(
+              title: const Text('Choose farmer reports for this assessment'),
+              children: [
+                const Text(
+                  'Only checked reports are retained with the saved assessment. Supported soil, drainage and irrigation availability reports reach Rust as unverified farmer reports. Priorities/resources remain declared context, with no invented weights.',
+                ),
+                for (final report in widget.farmerReports)
+                  CheckboxListTile(
+                    title: Text(
+                      '${report['kind']} · ${report['occurred_on']} · ${report['crop_name'] ?? 'Farm context'}',
+                    ),
+                    subtitle: Text(
+                      '${(report['priorities'] as List).join(', ')} · ${report['resources'] ?? ''}',
+                    ),
+                    value: _selectedReports.contains(report['id']),
+                    onChanged: _busy
+                        ? null
+                        : (yes) => setState(() {
+                            yes == true
+                                ? _selectedReports.add(report['id'] as String)
+                                : _selectedReports.remove(report['id']);
+                          }),
+                  ),
+              ],
+            ),
           FilledButton(
             onPressed: _busy
                 ? null
@@ -334,6 +501,9 @@ class _IntelligenceState extends State<AgriculturalIntelligencePanel> {
                     final result = await widget.client.assess({
                       'farm_id': widget.farm.id,
                       'catalog_version': 'v2',
+                      'farmer_report_ids': _selectedReports.toList(),
+                      'environmental_job_ids': _selectedJobs.toList(),
+                      'observation_ids': _selectedObservations.toList(),
                       'evidence_ids': _evidenceIds,
                       'profile_ids': _profile == null || _second != null
                           ? []
@@ -346,9 +516,16 @@ class _IntelligenceState extends State<AgriculturalIntelligencePanel> {
                       'sequential_field': _second != null,
                       if (_second != null)
                         'plans': [
-                          {'profile_id': _profile, 'start': start, 'end': end},
+                          {
+                            'profile_id': _profile,
+                            'start': start,
+                            'end': end,
+                            'reference_region': selected?['region_id'],
+                          },
                           {
                             'profile_id': _second,
+                            'reference_region':
+                                _profiles[_second]?['region_id'],
                             'start': nextStart,
                             'end': nextEnd,
                           },

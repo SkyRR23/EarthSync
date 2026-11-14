@@ -170,8 +170,17 @@ def build(args, source, state):
         "web_origin": args.web_origin,
     }
     if args.profile == "web":
+        # Resolve PATHEXT on Windows: CreateProcess cannot resolve bare flutter
+        # to flutter.bat. Keep an argument list; do not enable shell execution.
+        flutter_executable = shutil.which("flutter")
+        if flutter_executable is None:
+            raise ValueError("Flutter executable not found on PATH")
+        # A fresh Windows SDK bootstraps its tool on first invocation and emits
+        # pub progress before the requested JSON. Finish that bootstrap first;
+        # the subsequent machine response must still be valid, exact JSON.
+        run([flutter_executable, "--version"])
         flutter = subprocess.check_output(
-            ["flutter", "--version", "--machine"], text=True
+            [flutter_executable, "--version", "--machine"], text=True
         )
         if json.loads(flutter)["frameworkVersion"] != args.flutter_version:
             raise ValueError(
@@ -189,10 +198,12 @@ def build(args, source, state):
                 "web_engine",
             ]
         )
-        run(["flutter", "pub", "get", "--enforce-lockfile"], cwd=source / "app")
+        run(
+            [flutter_executable, "pub", "get", "--enforce-lockfile"], cwd=source / "app"
+        )
         run(
             [
-                "flutter",
+                flutter_executable,
                 "build",
                 "web",
                 "--no-web-resources-cdn",
@@ -201,6 +212,13 @@ def build(args, source, state):
                 "--dart-define=PLATFORM_URL=" + manifest["platform_url"],
             ],
             cwd=source / "app",
+        )
+        run(
+            [
+                sys.executable,
+                source / "scripts/finalize_offline.py",
+                source / "app/build/web",
+            ]
         )
         manifest["engine"] = str(
             source / f"engine/target/debug/examples/web_engine{suffix}"

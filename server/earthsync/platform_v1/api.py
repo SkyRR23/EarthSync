@@ -35,12 +35,15 @@ from .models import (
     FarmLinkInput,
     Point,
     HistoryInput,
+    ObservationInput,
 )
 from .objects import LocalObjects
 from .orchestrate import Orchestrator
 from .providers.discovery import DiscoveryQuery, HlsDiscovery
 from .providers.power_daily import POLICY, PowerDaily
 from .providers.soil_wcs import SoilQuery, SoilWcs
+from .providers.soil_webdav import SoilWebdav
+from .providers.gfs import GfsForecast
 from .providers.transport import Transport
 from .store import Store, cache_key
 from .reference_v2 import ReferenceCatalog, ROOT as REFERENCE_ROOT
@@ -116,6 +119,8 @@ def create_app(
         SoilWcs(transport),
         HlsDiscovery(transport),
     )
+    soil_map = SoilWebdav(transport, store)
+    forecast_source = GfsForecast(transport, store)
     health = SourceHealth()
     objects = objects or LocalObjects(store)
     reference_catalog = reference_catalog or (
@@ -206,12 +211,24 @@ def create_app(
             health.record("NASA HLS CMR", exc.code, exc.retryable)
             raise
 
+    async def soil_map_handler(owner, raw):
+        value = SoilInput.model_validate(raw)
+        association(value.farm_id, value.point)
+        return await soil_map.retrieve(value.point)
+
+    async def forecast_handler(owner, raw):
+        value = SoilInput.model_validate(raw)
+        association(value.farm_id, value.point)
+        return await forecast_source.retrieve(value.point)
+
     jobs = Jobs(
         store,
         {
             "climate": climate_handler,
             "water": water_handler,
             "soil": soil_handler,
+            "soil_map": soil_map_handler,
+            "forecast": forecast_handler,
             "optical_discovery": optical_handler,
         },
     )
@@ -413,6 +430,14 @@ def create_app(
             "agricultural_diagnosis": None,
         }
 
+    @app.get(PREFIX + "/farms/{farm_id}/observations")
+    def observations(farm_id: UUID):
+        return store.observations(OWNER, farm_id)
+
+    @app.post(PREFIX + "/farms/{farm_id}/observations", status_code=201)
+    def report_observation(farm_id: UUID, value: ObservationInput):
+        return store.save_observation(OWNER, farm_id, value)
+
     @app.get(PREFIX + "/farms/{farm_id}/assistant-context")
     def assistant(farm_id: UUID):
         return assistant_context(store, OWNER, farm_id)
@@ -467,6 +492,31 @@ def create_app(
             OWNER, "soil", cache_key("ISRIC", "WCS-pH", "probe.v1", raw), raw
         )
 
+    @app.post(PREFIX + "/soil-map/jobs", status_code=202)
+    async def soil_map_job(value: SoilInput):
+        if value.farm_id is None:
+            raise PlatformError("FARM_REQUIRED", 422)
+        association(value.farm_id, value.point)
+        raw = value.model_dump(mode="json")
+        return await jobs.submit(
+            OWNER, "soil_map", cache_key("ISRIC", "WebDAV-pH", "v1", raw), raw
+        )
+
+    @app.post(PREFIX + "/forecast/jobs", status_code=202)
+    async def forecast_job(value: SoilInput):
+        if value.farm_id is None:
+            raise PlatformError("FARM_REQUIRED", 422)
+        association(value.farm_id, value.point)
+        raw = value.model_dump(mode="json")
+        return await jobs.submit(
+            OWNER, "forecast", cache_key("NOAA", "GFS", "v1", raw), raw
+        )
+
+    @app.get(PREFIX + "/farms/{farm_id}/intelligence")
+    def intelligence(farm_id: UUID):
+        store.farm(OWNER, farm_id)
+        return store.intelligence(OWNER, farm_id)
+
     @app.post(PREFIX + "/water/jobs", status_code=202)
     async def water_job(value: ClimateInput):
         association(value.farm_id, value.query.point)
@@ -488,26 +538,44 @@ def create_app(
             raise PlatformError("CATALOG_NOT_INSTALLED", 503)
         return reference_catalog.lookup(q, region, system, cultivar)
 
-    @app.get(PREFIX + "/crop-options")
-    def crop_options(q: str = Query(default="", max_length=150)):
+    def identity_matches(q):
         if reference_catalog is None:
             raise PlatformError("CATALOG_NOT_INSTALLED", 503)
         query = q.strip().casefold()
-        crops = [
+        return [
             c
             for c in reference_catalog.data["crops"]
             if not query
-            or any(
-                query in name.casefold()
-                for name in [c["scientific_name"], *c["aliases"]]
-            )
+            or any(query in n.casefold() for n in [c["scientific_name"], *c["aliases"]])
         ]
+
+    @app.get(PREFIX + "/crop-options")
+    def crop_options(q: str = Query(default="", max_length=150)):
+        crops = identity_matches(q)
         return {
             "schema_version": "earthsync.crop-options.v1",
             "catalog_sha256": reference_catalog.sha256,
             "crops": crops[:100],
             "total_matches": len(crops),
             "recommendation_eligible": False,
+        }
+
+    @app.get(PREFIX + "/crop-identities")
+    def crop_identities(q: str = Query(default="", max_length=150)):
+        crops = identity_matches(q)
+        return {
+            "records": [
+                {
+                    "id": c["id"],
+                    "scientific_name": c["scientific_name"],
+                    "aliases": c["aliases"],
+                    "review": "reference_only",
+                }
+                for c in crops[:50]
+            ],
+            "truncated": len(crops) > 50,
+            "recommendation_eligible": False,
+            "catalog_sha256": reference_catalog.sha256,
         }
 
     @app.post(PREFIX + "/optical/jobs", status_code=202)

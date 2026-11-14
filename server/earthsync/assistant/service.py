@@ -39,7 +39,7 @@ TOPICS = {
     "rainfall": {"rainfall"},
     "area": {"climate", "rainfall", "temperature"},
     "next": {"farmer_input"},
-    "crops": set(),
+    "crops": {"farmer_input"},
     "limitations": set(),
     "fallback": set(),
 }
@@ -190,7 +190,7 @@ def explain(request: ChatRequest) -> ChatResponse:
     for record in visible:
         if (
             record.topic == "farmer_input"
-            and record.metric == "journal_report"
+            and record.metric in {"journal_report", "comparison_report"}
             and record.kind == "farmer_reported"
             and record.quality == "unverified"
             and record.scope == "field"
@@ -208,6 +208,32 @@ def explain(request: ChatRequest) -> ChatResponse:
                     evidence_ids=[record.id],
                 )
             )
+            continue
+        if (
+            record.metric in {"soil_reference_summary", "forecast_reference_summary"}
+            and record.topic in {"soil", "climate"}
+            and record.kind in {"modeled", "forecast"}
+            and record.quality in {"unverified", "stale"}
+            and isinstance(record.value, str)
+            and any(
+                s and s.id == record.location_id
+                for s in [context.selected_area, context.confirmed_farm]
+            )
+            and record.source_ids
+            and all(ref in sources and sources[ref].url for ref in record.source_ids)
+        ):
+            claims.append(
+                Claim(
+                    category="unavailable_evidence"
+                    if record.quality == "stale"
+                    else "retrieved_fact",
+                    text=words["reference_snapshot"].format(text=record.value),
+                    evidence_ids=[record.id],
+                    source_ids=record.source_ids,
+                )
+            )
+            if record.quality == "stale":
+                warnings.append(f"{record.id}:stale")
             continue
         reason = _reason(record, context, sources, conflicts)
         refs = [ref for ref in record.source_ids if ref in sources]

@@ -24,6 +24,7 @@ class AppShell extends ConsumerWidget {
       : [
               '/field',
               '/season',
+              '/rotations',
               '/farm-photos',
               '/farm-evidence',
               '/photos',

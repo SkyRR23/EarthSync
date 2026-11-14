@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:latlong2/latlong.dart';
 import '../../data/models/home_profile.dart';
 import '../../state/home_provider.dart';
 import '../../state/providers.dart';
-import '../map/gibs_layer.dart';
+import '../map/farm_map_editor.dart';
+import '../../data/models/farm_boundary.dart';
 
 /// A local draft. Map taps and area changes never mutate a confirmed farm.
 class LocationScreen extends ConsumerStatefulWidget {
@@ -27,6 +26,8 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
       _lon = TextEditingController(),
       _name = TextEditingController();
   bool _initialized = false, _confirmed = false, _map = false, _saving = false;
+  FarmBoundary? _boundary;
+  bool _boundaryEditing = false;
   AreaSource _source = AreaSource.manual;
   String? _error;
   @override
@@ -44,8 +45,8 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
     AreaSource source = AreaSource.manual,
   }) {
     setState(() {
-      _lat.text = lat.toStringAsFixed(4);
-      _lon.text = lon.toStringAsFixed(4);
+      _lat.text = lat.toStringAsFixed(7);
+      _lon.text = lon.toStringAsFixed(7);
       if (name != null) _name.text = name;
       _source = source;
       _confirmed = false;
@@ -68,6 +69,16 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
       return;
     }
     final point = _point!;
+    if (_boundaryEditing) {
+      setState(
+        () => _error = 'Confirm or cancel boundary editing before saving.',
+      );
+      return;
+    }
+    if (!widget.areaOnly && _boundary != null && !_boundary!.covers(point)) {
+      setState(() => _error = 'The farm point must be inside the boundary.');
+      return;
+    }
     setState(() {
       _saving = true;
       _error = null;
@@ -89,6 +100,7 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
           point,
           _name.text,
           createNew: widget.newFarm,
+          boundary: _boundary,
         );
         ref
             .read(farmerDraftProvider.notifier)
@@ -152,6 +164,9 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
           ? (area is ApproximateArea ? area.label : '')
           : (widget.newFarm ? null : profile.farm?.name) ?? '';
       if (widget.areaOnly && area is ApproximateArea) _source = area.source;
+      _boundary = widget.areaOnly || widget.newFarm
+          ? null
+          : profile.farm?.boundary;
       _initialized = true;
     }
     return Scaffold(
@@ -185,7 +200,7 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
                 Text(
                   widget.areaOnly
                       ? 'Choose a point for climate context. This will not change your farm.'
-                      : 'Check that this point is on your field. Your device location may be somewhere else. No field boundary is created.',
+                      : 'Check that this point is on your field. Your device location may be somewhere else. A boundary is optional and must be explicitly drawn and confirmed.',
                 ),
                 const SizedBox(height: 16),
                 OutlinedButton.icon(
@@ -288,55 +303,28 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
                   'Selected points go to our climate service and NASA POWER for environmental queries. Satellite views use NASA GIBS. Opening the map shares the viewed tile area with OpenStreetMap.',
                 ),
                 TextButton.icon(
-                  onPressed: () => setState(() => _map = !_map),
+                  onPressed: _boundaryEditing
+                      ? null
+                      : () => setState(() => _map = !_map),
                   icon: const Icon(Icons.map_outlined),
                   label: Text(_map ? 'Hide map' : 'Open map (OpenStreetMap)'),
                 ),
-                if (_map) ...[
-                  const Text(
-                    'Tap to choose a point. You can also enter coordinates above if tiles are unavailable.',
+                if (_map)
+                  FarmMapEditor(
+                    point: _point,
+                    boundary: _boundary,
+                    areaOnly: widget.areaOnly,
+                    onPoint: (p) => _pick(p.latitude, p.longitude),
+                    onEditing: (v) => setState(() => _boundaryEditing = v),
+                    onBoundary: (v) => setState(() {
+                      _boundary = v;
+                      _confirmed = false;
+                    }),
                   ),
-                  SizedBox(
-                    height: 280,
-                    child: FlutterMap(
-                      key: ValueKey(widget.areaOnly),
-                      options: MapOptions(
-                        initialCenter: LatLng(
-                          _point?.latitude ?? 0,
-                          _point?.longitude ?? 0,
-                        ),
-                        initialZoom: _point == null ? 2 : 10,
-                        onTap: (_, p) => _pick(p.latitude, p.longitude),
-                      ),
-                      children: [
-                        ...baseMapLayers(),
-                        if (_point != null)
-                          MarkerLayer(
-                            markers: [
-                              Marker(
-                                point: LatLng(
-                                  _point!.latitude,
-                                  _point!.longitude,
-                                ),
-                                child: const Icon(
-                                  Icons.location_on,
-                                  color: Colors.red,
-                                  size: 32,
-                                ),
-                              ),
-                            ],
-                          ),
-                        const RichAttributionWidget(
-                          attributions: [
-                            TextSourceAttribution(
-                              '© OpenStreetMap contributors',
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                if (!_map && _boundary != null)
+                  Text(
+                    'Saved boundary: ${_boundary!.vertices.length} vertices · ${(_boundary!.areaSquareMetres / 10000).toStringAsFixed(3)} ha. Open map to edit.',
                   ),
-                ],
                 if (!widget.areaOnly)
                   CheckboxListTile(
                     contentPadding: EdgeInsets.zero,
@@ -350,6 +338,7 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
                   onPressed:
                       _saving ||
                           profile == null ||
+                          _boundaryEditing ||
                           (!widget.areaOnly && !_confirmed)
                       ? null
                       : _save,

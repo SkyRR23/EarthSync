@@ -1,3 +1,4 @@
+import '../features/companion/rotation_workspace.dart';
 import '../features/companion/companion_screen.dart';
 import '../features/companion/crop_explorer.dart';
 import '../features/companion/farm_photos.dart';
@@ -37,6 +38,10 @@ GoRouter buildRouter() => GoRouter(
         GoRoute(
           path: '/farm-evidence',
           builder: (_, _) => const FarmRequired(child: PlatformFarmScreen()),
+        ),
+        GoRoute(
+          path: '/rotations',
+          builder: (_, _) => const FarmRequired(child: RotationWorkspace()),
         ),
         GoRoute(
           path: '/season',

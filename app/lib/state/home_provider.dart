@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data/local/profile_store.dart';
 import '../data/location/device_location.dart';
 import '../data/models/home_profile.dart';
+import '../data/models/farm_boundary.dart';
 
 final profileStoreProvider = Provider<ProfileStore>(
   (ref) => LocalProfileStore(),
@@ -51,7 +52,14 @@ class HomeProfileNotifier extends AsyncNotifier<HomeProfile> {
     GeoPoint point,
     String name, {
     bool createNew = false,
+    FarmBoundary? boundary,
   }) => _update((p) {
+    if (boundary != null && !boundary.covers(point)) {
+      throw const FormatException(
+        'The confirmed farm point must be inside its boundary.',
+      );
+    }
+
     final now = DateTime.now().toUtc();
     return p.withFarm(
       ConfirmedFarm(
@@ -59,6 +67,7 @@ class HomeProfileNotifier extends AsyncNotifier<HomeProfile> {
             (createNew ? null : p.farm?.id) ??
             'farm-${now.microsecondsSinceEpoch}',
         point: point,
+        boundary: boundary,
         confirmedAt: now,
         name: name.trim().isEmpty ? null : name.trim(),
       ),

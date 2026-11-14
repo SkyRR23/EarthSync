@@ -9,19 +9,29 @@ import time
 
 PROGRAM = r"""
 import json, urllib.request
+from pathlib import Path
+reference_root = Path('/app/data/crop-knowledge/v2')
+assert not (reference_root / 'tests').exists()
+assert not (reference_root / 'tools/build.py').exists()
+assert not Path('/app/.git').exists()
 base = 'http://127.0.0.1:8021/api/platform/v1'
 def call(path, payload=None):
     req = urllib.request.Request(base+path, data=json.dumps(payload).encode() if payload else None, headers={'Content-Type':'application/json'})
     with urllib.request.urlopen(req, timeout=25) as response:
         return json.load(response)
 assert call('/ready')['ready']
+reference = call('/crop-references?q=rice')
+assert reference['status'] == 'reference_only'
+assert reference['rule_review']['executable_rule_count'] == 0
+assert len(reference['rule_review']['candidates']) == 12
+assert all(c['execution_status'] == 'blocked' for c in reference['rule_review']['candidates'])
 farm = call('/farms', {'name':'Container software test, no field ground truth','confirmed_point':{'latitude':42.03,'longitude':-93.62},'confirmed_on':'2026-11-14','production_system':'rainfed'})
 result = call('/assessments', {'farm_id':farm['id'],'start':'2024-02-01','end':'2024-02-29'})
 assert result['result']['status'] == 'success'
 assert result['result']['data']['context']['farm']['field_id'] == farm['id']
 assert not result['recommendation_eligible']
 assert len(call('/farms/'+farm['id']+'/decisions')) == 1
-print('PASS: container readiness, owned farm, actual Rust v0.3, persisted decision; no public bind or live network')
+print('PASS: container readiness, v2 integrity/lookup, blocked 7V sidecar, owned farm, actual Rust v0.3, persisted decision; no public bind or live network')
 """
 
 

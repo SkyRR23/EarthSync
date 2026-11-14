@@ -33,6 +33,7 @@ class ComparisonInput(Contract):
     name: str = Field(min_length=1, max_length=150)
     baseline_decision_id: UUID
     alternative_decision_ids: list[UUID] = Field(min_length=2, max_length=5)
+    chosen_decision_id: UUID | None = None
     baseline_declared_existing_plan: Literal[True]
     priorities: list[Priority] = Field(default_factory=list, max_length=11)
     practical_constraints: str = Field(default="", max_length=1000)
@@ -41,6 +42,8 @@ class ComparisonInput(Contract):
     @model_validator(mode="after")
     def distinct(self):
         ids = [self.baseline_decision_id, *self.alternative_decision_ids]
+        if self.chosen_decision_id and self.chosen_decision_id not in ids:
+            raise ValueError("Farmer choice must be one of the strategies")
         if len(set(ids)) != len(ids) or len(set(self.priorities)) != len(
             self.priorities
         ):

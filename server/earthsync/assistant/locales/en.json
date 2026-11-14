@@ -55,5 +55,6 @@
   "reference_duration": "Source-reviewed reference growing period for {profile}: {value} {unit}. Scope: {scope}. This is an advisory reference, not your cultivar maturity prediction or an independently accepted crop rule.",
   "persisted_explanation": "Persisted Rust explanation: {text}",
   "history": "Saved farm reports describe what the farmer recorded, including plans and unknowns. Calendar days do not establish biological growth stage. Review the dated timeline and select sources explicitly before reassessing.",
-  "farmer_report": "Farmer-reported record dated {date} (unverified; not a scientific measurement): {text}"
+  "farmer_report": "Farmer-reported record dated {date} (unverified; not a scientific measurement): {text}",
+  "reference_snapshot": "Supplied reference snapshot (not an approved field-assessment input): {text}"
 }

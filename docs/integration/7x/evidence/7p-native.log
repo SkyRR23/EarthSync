@@ -1,0 +1,10 @@
+test_all_ten_requests_accepted_by_native_rust (test_rust_contract.RustContract.test_all_ten_requests_accepted_by_native_rust) ... ok
+test_fallow_remains_explicit_dated_history (test_rust_contract.RustContract.test_fallow_remains_explicit_dated_history) ... ok
+test_known_calendar_gap_and_overlap (test_rust_contract.RustContract.test_known_calendar_gap_and_overlap) ... ok
+test_real_mode_does_not_promote_reference_catalog (test_rust_contract.RustContract.test_real_mode_does_not_promote_reference_catalog) ... ok
+test_sidecar_is_not_an_engine_input (test_rust_contract.RustContract.test_sidecar_is_not_an_engine_input) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.906s
+
+OK

@@ -11,6 +11,8 @@ import '../field/assessment_screen.dart';
 import '../field/evidence_panels.dart';
 import 'companion_copy.dart';
 import 'journal_form.dart';
+import 'risk_center.dart';
+import 'reassessment_notice.dart';
 
 class CompanionScreen extends ConsumerWidget {
   const CompanionScreen({super.key});
@@ -19,7 +21,7 @@ class CompanionScreen extends ConsumerWidget {
     String tr(String s) => CompanionCopy.text(context, s);
     final farm = ref.watch(homeProfileProvider).value?.farm;
     final state = ref.watch(journalProvider);
-    final snapshot = state.value;
+    final snapshot = state.isLoading || state.hasError ? null : state.value;
     return Scaffold(
       appBar: AppBar(
         title: Text(tr('Season & records')),
@@ -50,7 +52,7 @@ class CompanionScreen extends ConsumerWidget {
                 children: [
                   for (final route in const {
                     '/field': 'Map & environment',
-                    '/farm-evidence': 'Reassess with selected evidence',
+                    '/rotations': 'Reassess with selected evidence',
                     '/crops': 'Crop references',
                     '/farm-photos': 'Photos',
                     '/assistant': 'Assistant',
@@ -159,24 +161,9 @@ class CompanionScreen extends ConsumerWidget {
                     ),
                   ],
                 ),
+                ReassessmentNotice(snapshot: snapshot),
                 _SeasonSummary(snapshot: snapshot),
-                SectionCard(
-                  title: tr('Risk & warnings'),
-                  icon: Icons.warning_amber_outlined,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(tr('No official alerts loaded')),
-                      const Text(
-                        'A missing alert is not an all-clear. Inspect dated forecasts and their coverage in Map & environment. Historical climate cannot issue a current warning.',
-                      ),
-                      TextButton(
-                        onPressed: () => context.push('/field'),
-                        child: Text(tr('Map & environment')),
-                      ),
-                    ],
-                  ),
-                ),
+                RiskCenter(snapshot: snapshot),
                 _Calendar(snapshot: snapshot),
                 _Timeline(snapshot: snapshot),
               ],
@@ -289,9 +276,8 @@ class _Timeline extends ConsumerWidget {
                 onPressed: () => context.push('/farm-photos'),
                 child: Text(tr('Photos')),
               ),
-            if (e['kind'] == 'season' &&
-                e['harvest_on'] != null &&
-                e['crop_id'] != null)
+            if (['season', 'fallow'].contains(e['kind']) &&
+                e['harvest_on'] != null)
               OutlinedButton(
                 onPressed: snapshot.cached
                     ? null
@@ -324,10 +310,24 @@ class _Timeline extends ConsumerWidget {
                           }
                         }
                       },
-                child: const Text('Confirm completed season for Rust history'),
+                child: const Text('Confirm completed period for Rust history'),
               ),
             EvidenceDetails(title: tr('Evidence & sources'), data: e),
           ],
+        ),
+      ));
+    }
+    for (final report in snapshot.rows('observations')) {
+      items.add((
+        date: report['observed_on'] as String,
+        child: ListTile(
+          leading: const Icon(Icons.event_note),
+          title: Text(
+            '${report['observed_on']} · ${report['crop_name'] ?? 'Crop unknown'} · farmer report',
+          ),
+          subtitle: Text(
+            '${report['notes']}\nReported stage: ${report['growth_stage']}; planting: ${report['planting_on'] ?? 'Unknown'} · irrigation: ${report['irrigation']} · drainage: ${report['drainage']}',
+          ),
         ),
       ));
     }
@@ -344,6 +344,29 @@ class _Timeline extends ConsumerWidget {
           children: [
             Text('${e['spatial']['support']}'),
             Text((e['limitations'] as List).join('\n')),
+            if (e['source_metadata']?['calculation']
+                case final Map calculation) ...[
+              Text(
+                'Rust reference ET0: ${calculation['et0_total_mm'] ?? 'Unknown'} mm; rainfall: ${calculation['rainfall_total_mm'] ?? 'Unknown'} mm for the stated period.',
+              ),
+              const Text(
+                'Reference-grass demand, not crop ETc or irrigation. Incomplete totals remain unknown.',
+              ),
+            ],
+            ExpansionTile(
+              title: const Text('Dated values & original units'),
+              children: [
+                for (final m in e['measurements'] as List? ?? [])
+                  ListTile(
+                    title: Text(
+                      '${m['date'] ?? 'Date unknown'} · ${m['variable']}: ${m['value'] ?? 'Unknown'} ${m['unit']}',
+                    ),
+                    subtitle: Text(
+                      'Quality: ${m['quality']} · ${m['missing_reason'] ?? ''}',
+                    ),
+                  ),
+              ],
+            ),
             EvidenceDetails(title: tr('Evidence & sources'), data: e),
           ],
         ),
@@ -352,8 +375,7 @@ class _Timeline extends ConsumerWidget {
     for (final d in snapshot.rows('decisions')) {
       final assessment = d['assessment'] as Map;
       items.add((
-        date:
-            '${assessment['created_at'] ?? assessment['request']?['end'] ?? ''}',
+        date: '${assessment['assessed_at'] ?? ''}',
         child: ExpansionTile(
           title: Text(tr('Saved assessments')),
           subtitle: Text('${d['id']}'),

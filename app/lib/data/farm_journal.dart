@@ -5,6 +5,20 @@ import 'models/home_profile.dart';
 import 'platform_farms.dart';
 import 'platform_transport.dart';
 
+const farmerPriorityLabels = {
+  'food': 'Food for family',
+  'income': 'Income / market interests',
+  'less_water': 'Water conservation',
+  'soil': 'Soil structure & organic matter',
+  'lower_risk': 'Lower risk',
+  'less_labor': 'Labor limits',
+  'nitrogen_potential': 'Nitrogen-fixing potential',
+  'erosion': 'Erosion reduction',
+  'forage': 'Forage value',
+  'equipment': 'Equipment limits',
+  'market': 'Market access',
+};
+
 String journalId() {
   final random = Random.secure();
   final b = List<int>.generate(16, (_) => random.nextInt(256));
@@ -120,6 +134,8 @@ Future<FarmJournalSnapshot?> loadFarmJournal(
         '${journal.path(linked.id)}/comparisons',
         expectedStatus: 200,
       ),
+      client.intelligence(linked.id),
+      client.observations(linked.id),
     ]);
     final context = values[1] as Map<String, dynamic>;
     return FarmJournalSnapshot({
@@ -132,6 +148,8 @@ Future<FarmJournalSnapshot?> loadFarmJournal(
       'photos': values[3],
       'timeline': values[4],
       'comparisons': values[5],
+      'intelligence': values[6],
+      'observations': values[7],
     });
   } on PlatformFailure catch (error) {
     // Never retain access after a missing farm, rejected origin or permission failure.

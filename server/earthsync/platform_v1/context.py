@@ -4,6 +4,8 @@ import hashlib
 import json
 
 from .journal import Journal
+from .comparisons import Comparisons
+from .environmental_explanations import assistant_references
 
 
 def assistant_context(store, owner, farm_id):
@@ -93,7 +95,17 @@ def assistant_context(store, owner, farm_id):
             )
     # Preserve persisted engine states and original citation IDs. No request,
     # photo bytes, coordinates from photos, tokens or private object paths.
-    for decision in store.decisions(owner, farm_id)[:3]:
+    comparisons = Comparisons(store).list(owner, farm_id)
+    saved_decisions = store.decisions(owner, farm_id)
+    if comparisons:
+        latest = comparisons[0]
+        requested = [
+            latest["baseline_decision_id"],
+            *latest["alternative_decision_ids"],
+        ]
+        selected = {d["id"]: d for d in saved_decisions}
+        saved_decisions = [selected[ident] for ident in requested if ident in selected]
+    for decision in saved_decisions[:6]:
         for sidecar in decision["assessment"].get("catalog_projection", [])[:5]:
             profile = sidecar.get("profile", {})
             duration = profile.get("parameters", {}).get("growing_duration", {})
@@ -194,6 +206,30 @@ def assistant_context(store, owner, farm_id):
                 ],
             }
         )
+    for group in comparisons[:2]:
+        summary = f"Comparison {group['name']}; baseline is a farmer-declared existing plan, decision {group['baseline_decision_id']}; alternatives={','.join(group['alternative_decision_ids'])}; priorities={','.join(group['priorities'])}; reason={group['exploration_reason']}; farmer choice={group.get('chosen_decision_id') or 'undecided'}. No suitability ranking or benefit is approved."
+        evidence.append(
+            {
+                "id": "comparison:" + group["id"],
+                "topic": "farmer_input",
+                "metric": "comparison_report",
+                "kind": "farmer_reported",
+                "quality": "unverified",
+                "value": summary[:500],
+                "start_date": group["recorded_at"][:10],
+                "end_date": group["recorded_at"][:10],
+                "retrieved_at": group["recorded_at"],
+                "scope": "field",
+                "location_id": str(farm.id),
+                "source_ids": [],
+                "limitations": [
+                    "Farmer-declared exploration, not scientific crop advice. Full sources and findings are retained in each selected assessment."
+                ],
+            }
+        )
+    source_views, reference_views = assistant_references(store, owner, farm_id)
+    sources.extend(source_views)
+    evidence.extend(reference_views)
     value = {
         "schema_version": "assistant.v1-proposal",
         "context_id": "pending",

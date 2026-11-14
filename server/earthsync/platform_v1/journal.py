@@ -87,6 +87,7 @@ class JournalInput(Contract):
     photo_ids: list[UUID] = Field(default_factory=list, max_length=10)
     evidence_ids: list[str] = Field(default_factory=list, max_length=20)
     decision_id: UUID | None = None
+    environmental_job_ids: list[UUID] = Field(default_factory=list, max_length=10)
 
     @model_validator(mode="after")
     def valid(self):
@@ -94,7 +95,11 @@ class JournalInput(Contract):
             raise ValueError("Actual reports cannot be future events")
         if self.harvest_on and self.harvest_on < self.occurred_on:
             raise ValueError("Harvest must follow planting")
-        if self.kind == "season" and self.harvest_on and self.harvest_on > date.today():
+        if (
+            self.kind in {"season", "fallow", "bare_field"}
+            and self.harvest_on
+            and self.harvest_on > date.today()
+        ):
             raise ValueError("Actual harvest cannot be in the future; use a plan")
         if self.kind in {"season", "plan"} and not self.crop_name:
             raise ValueError("Crop identity must be reported")
@@ -104,6 +109,7 @@ class JournalInput(Contract):
             len(set(self.priorities)) != len(self.priorities)
             or len(set(self.photo_ids)) != len(self.photo_ids)
             or len(set(self.evidence_ids)) != len(self.evidence_ids)
+            or len(set(self.environmental_job_ids)) != len(self.environmental_job_ids)
         ):
             raise ValueError("Duplicate selections")
         if any(len(e) > 100 for e in self.evidence_ids):
@@ -137,6 +143,7 @@ class Journal:
             ).fetchone()
             if old:
                 saved = json.loads(old[1])
+                saved.setdefault("environmental_job_ids", [])
                 if old[0] != str(farm_id) or any(saved[k] != v for k, v in raw.items()):
                     raise PlatformError("JOURNAL_ID_CONFLICT", 409)
                 return saved
@@ -152,6 +159,12 @@ class Journal:
                     (ident, str(farm_id), owner),
                 ).fetchone():
                     raise PlatformError("EVIDENCE_NOT_OWNED_BY_FARM", 404)
+            for ident in value.environmental_job_ids:
+                if not db.execute(
+                    "SELECT 1 FROM jobs WHERE id=? AND owner=? AND json_extract(request,'$.farm_id')=? AND status='succeeded' AND kind IN ('soil_map','forecast','optical_discovery')",
+                    (str(ident), owner, str(farm_id)),
+                ).fetchone():
+                    raise PlatformError("SOURCE_SNAPSHOT_NOT_OWNED_BY_FARM", 404)
             if (
                 value.decision_id
                 and not db.execute(
@@ -196,12 +209,8 @@ class Journal:
             if row is None:
                 raise PlatformError("NOT_FOUND", 404)
             report = json.loads(row[0])
-            if (
-                report["kind"] != "season"
-                or not report["harvest_on"]
-                or not report["crop_id"]
-            ):
-                raise PlatformError("COMPLETED_CATALOG_SEASON_REQUIRED", 422)
+            if report["kind"] not in {"season", "fallow"} or not report["harvest_on"]:
+                raise PlatformError("COMPLETED_REPORTED_PERIOD_REQUIRED", 422)
             prior = db.execute(
                 "SELECT history_id FROM journal_history_links WHERE entry_id=? AND owner=?",
                 (str(entry_id), owner),
@@ -209,7 +218,8 @@ class Journal:
             if prior:
                 return {"history_id": prior[0], "data_type": "farmer_reported"}
             history = HistoryInput(
-                crop_id=report["crop_id"],
+                crop_id=report["crop_id"] if report["kind"] == "season" else None,
+                fallow=report["kind"] == "fallow",
                 start=report["occurred_on"],
                 end=report["harvest_on"],
             )

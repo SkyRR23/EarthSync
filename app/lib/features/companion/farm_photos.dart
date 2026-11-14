@@ -22,7 +22,7 @@ class _FarmPhotosState extends ConsumerState<FarmPhotosScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(journalProvider);
-    final snapshot = state.value;
+    final snapshot = state.isLoading || state.hasError ? null : state.value;
     final client = ref.watch(platformFarmClientProvider);
     final prefix = snapshot == null
         ? ''

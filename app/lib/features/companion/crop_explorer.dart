@@ -112,9 +112,7 @@ class _CropExplorerState extends ConsumerState<CropExplorer> {
     if (_selected.length >= 4 && !_selected.containsKey(crop['id'])) {
       throw StateError('Compare up to four crops at a time.');
     }
-    final query =
-        (crop['aliases'] as List).firstOrNull as String? ??
-        crop['scientific_name'] as String;
+    final query = crop['id'] as String;
     final result = await _get('facts:$query', (c) => c.references(query));
     if (mounted) setState(() => _selected[crop['id'] as String] = result);
   });
@@ -214,7 +212,7 @@ class _CropExplorerState extends ConsumerState<CropExplorer> {
               ),
             ),
             FilledButton(
-              onPressed: () => context.push('/farm-evidence'),
+              onPressed: () => context.push('/rotations'),
               child: Text(tr('Compare alternatives')),
             ),
           ],

@@ -3,6 +3,7 @@
 import asyncio
 import hashlib
 import json
+import re
 from dataclasses import dataclass
 from datetime import datetime, timezone
 
@@ -14,6 +15,7 @@ ALLOWED = {
     "https://power.larc.nasa.gov/api/temporal/daily/point",
     "https://cmr.earthdata.nasa.gov/search/granules.umm_json",
     "https://maps.isric.org/mapserv",
+    "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl",
 }
 
 
@@ -58,7 +60,12 @@ class Transport:
         self.max_bytes = max_bytes
 
     async def get(self, url, params):
-        if url not in ALLOWED:
+        from .soil_webdav import MANIFEST, BASE, ASSET_PATTERN
+
+        soil_asset = url.startswith(BASE) and re.fullmatch(
+            ASSET_PATTERN, url[len(BASE) :]
+        )
+        if url not in ALLOWED and url != MANIFEST and not soil_asset:
             raise PlatformError("UNSUPPORTED_PRODUCT")
         try:
             async with asyncio.timeout(35):

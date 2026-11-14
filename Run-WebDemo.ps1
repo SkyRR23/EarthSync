@@ -44,6 +44,8 @@ if (-not $SkipBuild) {
         if ($LASTEXITCODE) { throw 'Flutter dependency installation failed' }
         flutter build web --no-web-resources-cdn --pwa-strategy=none --no-wasm-dry-run
         if ($LASTEXITCODE) { throw 'Flutter web build failed' }
+        python ../scripts/finalize_offline.py build/web
+        if ($LASTEXITCODE) { throw 'Offline asset preparation failed' }
     } finally { Pop-Location }
 }
 Write-Host "EarthSync binds to ${BindAddress}:$Port; local demo: http://127.0.0.1:$Port"

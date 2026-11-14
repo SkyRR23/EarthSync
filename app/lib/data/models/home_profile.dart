@@ -1,3 +1,5 @@
+import 'farm_boundary.dart';
+
 /// User area and farm confirmation are independent, versioned local records.
 class GeoPoint {
   GeoPoint(this.latitude, this.longitude) {
@@ -81,22 +83,30 @@ class ConfirmedFarm {
     required this.point,
     required this.confirmedAt,
     this.name,
+    this.boundary,
   });
   final String id;
   final GeoPoint point;
   final DateTime confirmedAt;
   final String? name;
+  final FarmBoundary? boundary;
   Map<String, dynamic> toJson() => {
     'id': id,
     'point': point.toJson(),
     'confirmed_at': confirmedAt.toUtc().toIso8601String(),
     'name': name,
+    if (boundary != null) 'confirmed_polygon': boundary!.toJson(),
   };
   factory ConfirmedFarm.fromJson(Map<String, dynamic> json) => ConfirmedFarm(
     id: json['id'] as String,
     point: GeoPoint.fromJson(json['point'] as Map<String, dynamic>),
     confirmedAt: DateTime.parse(json['confirmed_at'] as String),
     name: json['name'] as String?,
+    boundary: json['confirmed_polygon'] == null
+        ? null
+        : FarmBoundary.fromJson(
+            Map<String, dynamic>.from(json['confirmed_polygon'] as Map),
+          ),
   );
 }
 

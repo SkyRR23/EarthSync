@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "distinct_actual_server_processes": {
+    "runtime.log": [
+      "7584",
+      "7585"
+    ],
+    "restarted-runtime.log": [
+      "10985",
+      "10986"
+    ],
+    "restored-runtime.log": [
+      "11017",
+      "11018"
+    ]
+  },
+  "original_and_restored_http_checks": [
+    {
+      "status": "PASS",
+      "ready": true,
+      "exact_original_job": true,
+      "exact_evidence_records": 8,
+      "exact_assessments": 3,
+      "separate_photos_verified": 2,
+      "host_origin_protection": true
+    },
+    {
+      "status": "PASS",
+      "ready": true,
+      "exact_original_job": true,
+      "exact_evidence_records": 8,
+      "exact_assessments": 3,
+      "separate_photos_verified": 2,
+      "host_origin_protection": true
+    }
+  ],
+  "all_tables_retained_exactly": true,
+  "platform_tables": {
+    "artifacts": 1,
+    "audit": 41,
+    "decisions": 14,
+    "evidence": 18,
+    "farm_evidence": 46,
+    "farm_links": 7,
+    "farms": 7,
+    "history": 1,
+    "jobs": 8,
+    "schema_migrations": 2,
+    "source_cache": 3
+  },
+  "workspace_tables": {
+    "photos": 1
+  },
+  "platform_photo_objects": 1,
+  "backup_manifest_sha256": "c2afb5e3e6f47054f3a6a92fe67ccc7f2f872cf80bd45784ea0b9f0a45da38f7",
+  "original_stores_preserved": true,
+  "token_exported": false
+}

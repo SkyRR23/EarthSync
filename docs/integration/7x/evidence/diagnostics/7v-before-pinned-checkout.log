@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/workspace/.earthsync-7x-clean-crlf/data/crop-rule-candidates/v1/tools/package.py", line 375, in <module>
+    build(check=args.check)
+  File "/workspace/.earthsync-7x-clean-crlf/data/crop-rule-candidates/v1/tools/package.py", line 341, in build
+    outputs = generate()
+              ^^^^^^^^^^
+  File "/workspace/.earthsync-7x-clean-crlf/data/crop-rule-candidates/v1/tools/package.py", line 67, in generate
+    check_pins()
+  File "/workspace/.earthsync-7x-clean-crlf/data/crop-rule-candidates/v1/tools/package.py", line 63, in check_pins
+    raise ValueError("Pinned input changed: " + name)
+ValueError: Pinned input changed: data/crop-knowledge/v2/tools/importers.py

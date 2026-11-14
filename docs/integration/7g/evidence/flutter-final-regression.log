@@ -1,0 +1,151 @@
+00:00 +0: loading /workspace/EarthSync-7G/app/test/engine_envelope_test.dart
+00:00 +0: /workspace/EarthSync-7G/app/test/engine_envelope_test.dart: success envelope preserves engine order and identifies baseline
+00:00 +1: /workspace/EarthSync-7G/app/test/engine_envelope_test.dart: engine eligibility is kept, never upgraded
+00:00 +2: /workspace/EarthSync-7G/app/test/engine_envelope_test.dart: synthetic data is flagged and notices are carried
+00:00 +3: /workspace/EarthSync-7G/app/test/engine_envelope_test.dart: error envelope becomes EngineError with the engine message
+00:00 +4: /workspace/EarthSync-7G/app/test/engine_envelope_test.dart: garbage output is an error, not a silent success
+00:00 +5: loading /workspace/EarthSync-7G/app/test/native_bridge_test.dart
+00:00 +5: /workspace/EarthSync-7G/app/test/native_bridge_test.dart: (setUpAll)
+Initializing the actual native Rust bridge.
+Native bridge initialized; analyzing the captured NASA response.
+00:00 +5: /workspace/EarthSync-7G/app/test/native_bridge_test.dart: captured real NASA -> actual FRB -> Rust -> Flutter climate display
+00:01 +6: /workspace/EarthSync-7G/app/test/native_bridge_test.dart: missing historical months return unknown values and render safely
+00:01 +7: /workspace/EarthSync-7G/app/test/native_bridge_test.dart: Rust rejects mismatched field/environment coordinates through actual FRB
+00:01 +8: /workspace/EarthSync-7G/app/test/native_bridge_test.dart: live Python -> NASA -> actual FRB -> Rust -> Flutter
+00:01 +8 ~1: /workspace/EarthSync-7G/app/test/native_bridge_test.dart: synthetic crop warning stays visible with modeled climate
+00:01 +9 ~1: /workspace/EarthSync-7G/app/test/native_bridge_test.dart: (tearDownAll)
+00:01 +9 ~1: loading /workspace/EarthSync-7G/app/test/web_engine_test.dart
+00:02 +9 ~1: /workspace/EarthSync-7G/app/test/web_engine_test.dart: (setUpAll)
+00:02 +9 ~1: /workspace/EarthSync-7G/app/test/web_engine_test.dart: web reference options use actual Rust and cannot become verified advice
+00:02 +10 ~1: /workspace/EarthSync-7G/app/test/web_engine_test.dart: live failure never requests captured data or invokes Rust
+00:02 +11 ~1: /workspace/EarthSync-7G/app/test/web_engine_test.dart: phone results show Rust values, crop options and monthly coverage
+00:03 +12 ~1: /workspace/EarthSync-7G/app/test/web_engine_test.dart: no crop shows climate and an actionable empty recommendation state
+00:03 +13 ~1: /workspace/EarthSync-7G/app/test/web_engine_test.dart: live web HTTP to Python to Rust returns and displays twelve months
+00:03 +13 ~2: /workspace/EarthSync-7G/app/test/web_engine_test.dart: (tearDownAll)
+00:03 +13 ~2: loading /workspace/EarthSync-7G/app/test/photo_evidence/photo_evidence_test.dart
+00:04 +13 ~2: /workspace/EarthSync-7G/app/test/photo_evidence/photo_evidence_test.dart: preflight dimensions are bounded without web-unsupported descriptor getters
+00:04 +14 ~2: /workspace/EarthSync-7G/app/test/photo_evidence/photo_evidence_test.dart: shared v1 response keeps unknown states
+00:04 +15 ~2: /workspace/EarthSync-7G/app/test/photo_evidence/photo_evidence_test.dart: GPS reader is never called without consent and upload pixels lose metadata
+00:04 +16 ~2: /workspace/EarthSync-7G/app/test/photo_evidence/photo_evidence_test.dart: consented EXIF GPS is optional and uncertainty stays unknown
+00:04 +17 ~2: /workspace/EarthSync-7G/app/test/photo_evidence/photo_evidence_test.dart: malformed signature and oversized input fail before GPS access
+00:04 +18 ~2: /workspace/EarthSync-7G/app/test/photo_evidence/photo_evidence_test.dart: unknown dates, unlocated photos and farmer observations survive the contract
+00:04 +19 ~2: /workspace/EarthSync-7G/app/test/photo_evidence/photo_evidence_test.dart: HTTP upload, unicode metadata, authenticated viewer, replace and remove use v1
+00:04 +20 ~2: /workspace/EarthSync-7G/app/test/photo_evidence/photo_evidence_test.dart: service failures never become an empty successful list
+00:04 +21 ~2: /workspace/EarthSync-7G/app/test/photo_evidence/photo_evidence_test.dart: select preview, edit, upload unlocated, view, replace and delete
+00:05 +22 ~2: /workspace/EarthSync-7G/app/test/photo_evidence/photo_evidence_test.dart: EXIF consent can be revoked and farm association needs explicit selection
+00:06 +23 ~2: /workspace/EarthSync-7G/app/test/photo_evidence/photo_evidence_test.dart: cancel selection, discard preview and unavailable service stay explicit
+00:06 +24 ~2: loading /workspace/EarthSync-7G/app/test/analysis_session_test.dart
+00:06 +24 ~2: /workspace/EarthSync-7G/app/test/analysis_session_test.dart: a slow response for the earlier field cannot replace the latest result
+00:07 +25 ~2: /workspace/EarthSync-7G/app/test/analysis_session_test.dart: editing a farm clears results and ignores an in-flight result
+00:07 +26 ~2: /workspace/EarthSync-7G/app/test/analysis_session_test.dart: questionnaire preserves unknown crop and previous crop, month and priorities
+00:07 +27 ~2: loading /workspace/EarthSync-7G/app/test/global_onboarding_test.dart
+00:07 +27 ~2: /workspace/EarthSync-7G/app/test/global_onboarding_test.dart: first launch offers three choices without requesting GPS
+00:08 +28 ~2: /workspace/EarthSync-7G/app/test/global_onboarding_test.dart: allowed location opens Your Area without confirming a farm
+00:09 +29 ~2: /workspace/EarthSync-7G/app/test/global_onboarding_test.dart: LocationUnavailableReason.denied location never blocks the dashboard
+00:09 +30 ~2: /workspace/EarthSync-7G/app/test/global_onboarding_test.dart: LocationUnavailableReason.unavailable location never blocks the dashboard
+00:09 +31 ~2: /workspace/EarthSync-7G/app/test/global_onboarding_test.dart: skip opens global exploration and restores for a returning user
+00:09 +32 ~2: /workspace/EarthSync-7G/app/test/global_onboarding_test.dart: manual global area is saved without GPS or farm confirmation
+00:10 +33 ~2: /workspace/EarthSync-7G/app/test/global_onboarding_test.dart: farm needs explicit confirmation, persists, and can be edited
+00:11 +34 ~2: /workspace/EarthSync-7G/app/test/global_onboarding_test.dart: unconfirmed direct questionnaire link offers area exploration
+00:11 +35 ~2: loading /workspace/EarthSync-7G/app/test/question_flow_test.dart
+00:11 +35 ~2: /workspace/EarthSync-7G/app/test/question_flow_test.dart: single-choice answer auto-advances to next question
+00:13 +36 ~2: /workspace/EarthSync-7G/app/test/question_flow_test.dart: "I don't know" is visible without scrolling on crop question
+00:13 +37 ~2: loading /workspace/EarthSync-7G/app/test/nasa_power_client_test.dart
+00:14 +37 ~2: /workspace/EarthSync-7G/app/test/nasa_power_client_test.dart: HTTP uses selected coordinates and explicit historical months; retains exact text
+00:14 +38 ~2: /workspace/EarthSync-7G/app/test/nasa_power_client_test.dart: HTTP errors differ from valid incomplete evidence
+00:14 +39 ~2: /workspace/EarthSync-7G/app/test/nasa_power_client_test.dart: unsupported NASA source is actionable and arbitrary error text is withheld
+00:14 +40 ~2: /workspace/EarthSync-7G/app/test/nasa_power_client_test.dart: backend outage and timeout do not load a demo
+00:14 +41 ~2: /workspace/EarthSync-7G/app/test/nasa_power_client_test.dart: invalid location and window are rejected before HTTP
+00:14 +42 ~2: /workspace/EarthSync-7G/app/test/nasa_power_client_test.dart: mismatched schema, status, field, period, or provenance cannot be attached
+00:14 +43 ~2: /workspace/EarthSync-7G/app/test/nasa_power_client_test.dart: release-inappropriate HTTP host is rejected
+00:14 +44 ~2: /workspace/EarthSync-7G/app/test/nasa_power_client_test.dart: unknown crop builds climate-only request, never rice or synthetic profiles
+00:14 +45 ~2: /workspace/EarthSync-7G/app/test/nasa_power_client_test.dart: farmer crop and partial irrigation are faithfully represented
+00:14 +46 ~2: /workspace/EarthSync-7G/app/test/nasa_power_client_test.dart: decoder preserves Rust scenario order and nullable crop identities
+00:14 +47 ~2: /workspace/EarthSync-7G/app/test/nasa_power_client_test.dart: real modeled climate never removes synthetic crop label
+00:14 +48 ~2: loading /workspace/EarthSync-7G/app/test/assistant/assistant_test.dart
+00:14 +48 ~2: /workspace/EarthSync-7G/app/test/assistant/assistant_test.dart: background evidence refresh preserves an unsent question
+00:16 +49 ~2: /workspace/EarthSync-7G/app/test/assistant/assistant_test.dart: shared wire fixture preserves null, evidence provenance and citations
+00:16 +50 ~2: /workspace/EarthSync-7G/app/test/assistant/assistant_test.dart: context snapshots cannot be mutated by the host after construction
+00:16 +51 ~2: /workspace/EarthSync-7G/app/test/assistant/assistant_test.dart: photo location remains optional and never confirms a farm
+00:16 +52 ~2: /workspace/EarthSync-7G/app/test/assistant/assistant_test.dart: unsupported context or dangling response citation fails closed
+00:16 +53 ~2: /workspace/EarthSync-7G/app/test/assistant/assistant_test.dart: analysis requires an explicit matching selection
+00:16 +54 ~2: /workspace/EarthSync-7G/app/test/assistant/assistant_test.dart: v0.2 and legacy Rust findings retain exact status and scenario order
+00:16 +55 ~2: /workspace/EarthSync-7G/app/test/assistant/assistant_test.dart: captured climate adapter retains original links and rejects stale provenance
+00:16 +56 ~2: /workspace/EarthSync-7G/app/test/assistant/assistant_test.dart: Rust findings cannot be relabeled as a different selected point
+00:16 +57 ~2: /workspace/EarthSync-7G/app/test/assistant/assistant_test.dart: HTTP adapter sends typed context and expanded/language flags
+00:16 +58 ~2: /workspace/EarthSync-7G/app/test/assistant/assistant_test.dart: HTTP 503 never substitutes a successful or demo answer
+00:16 +59 ~2: /workspace/EarthSync-7G/app/test/assistant/assistant_test.dart: HTTP timeout never substitutes a successful or demo answer
+00:16 +60 ~2: /workspace/EarthSync-7G/app/test/assistant/assistant_test.dart: HTTP network never substitutes a successful or demo answer
+00:16 +61 ~2: /workspace/EarthSync-7G/app/test/assistant/assistant_test.dart: HTTP malformed never substitutes a successful or demo answer
+00:16 +62 ~2: /workspace/EarthSync-7G/app/test/assistant/assistant_test.dart: HTTP context never substitutes a successful or demo answer
+00:16 +63 ~2: /workspace/EarthSync-7G/app/test/assistant/assistant_test.dart: suggestion, loading, response and source details
+00:16 +64 ~2: /workspace/EarthSync-7G/app/test/assistant/assistant_test.dart: unavailable service shows retry and preserves the question
+00:16 +65 ~2: /workspace/EarthSync-7G/app/test/assistant/assistant_test.dart: context changes clear history and discard previous in-flight replies
+00:17 +66 ~2: /workspace/EarthSync-7G/app/test/assistant/assistant_test.dart: malicious supplied text stays plain selectable text
+00:17 +67 ~2: loading /workspace/EarthSync-7G/app/test/home_profile_test.dart
+00:17 +67 ~2: /workspace/EarthSync-7G/app/test/home_profile_test.dart: first launch is unknown and unconfirmed; skip is persisted
+00:17 +68 ~2: /workspace/EarthSync-7G/app/test/home_profile_test.dart: confirm, restore, edit farm; changing area never moves farm
+00:17 +69 ~2: /workspace/EarthSync-7G/app/test/home_profile_test.dart: concurrent area and farm saves do not lose either choice
+00:17 +70 ~2: /workspace/EarthSync-7G/app/test/home_profile_test.dart: failed save leaves last confirmed farm intact
+00:17 +71 ~2: /workspace/EarthSync-7G/app/test/home_profile_test.dart: invalid saved record recovers without fabricating a farm
+00:17 +72 ~2: /workspace/EarthSync-7G/app/test/home_profile_test.dart: global coordinate boundaries and nonfinite values are validated
+00:17 +73 ~2: loading /workspace/EarthSync-7G/app/test/engine_startup_test.dart
+00:18 +73 ~2: /workspace/EarthSync-7G/app/test/engine_startup_test.dart: native analysis initializes on demand using the unchanged NASA/Rust contract
+00:18 +74 ~2: loading /workspace/EarthSync-7G/app/test/widget_test.dart
+00:19 +74 ~2: /workspace/EarthSync-7G/app/test/widget_test.dart: fixture parses: baseline + 2 alternatives, missing month stays null
+00:19 +75 ~2: /workspace/EarthSync-7G/app/test/widget_test.dart: mock engine returns the fixture
+00:19 +76 ~2: /workspace/EarthSync-7G/app/test/widget_test.dart: welcome screen offers optional location
+00:19 +77 ~2: /workspace/EarthSync-7G/app/test/widget_test.dart: scenario card shows title, status and no percentages
+00:20 +78 ~2: loading /workspace/EarthSync-7G/app/test/ui/water_intelligence_test.dart
+00:20 +78 ~2: /workspace/EarthSync-7G/app/test/ui/water_intelligence_test.dart: farm key preserves entered dates when refresh inserts loading UI
+00:21 +79 ~2: /workspace/EarthSync-7G/app/test/ui/water_intelligence_test.dart: real partial calculation keeps period ET0 unknown and exposes reasons
+00:21 +80 ~2: /workspace/EarthSync-7G/app/test/ui/water_intelligence_test.dart: water submission sends exact confirmed point and dates once without mutation replay
+00:21 +81 ~2: loading /workspace/EarthSync-7G/app/test/ui/platform_climate_test.dart
+00:22 +81 ~2: /workspace/EarthSync-7G/app/test/ui/platform_climate_test.dart: local-only adapter rejects hosted endpoints before making requests
+00:22 +82 ~2: /workspace/EarthSync-7G/app/test/ui/platform_climate_test.dart: 202 climate jobs use reviewed daily contract without ownership fields
+00:22 +83 ~2: /workspace/EarthSync-7G/app/test/ui/platform_climate_test.dart: source failures stay typed and never become synthetic success
+00:22 +84 ~2: /workspace/EarthSync-7G/app/test/ui/platform_climate_test.dart: daily measurement preserves unknown values, source units and reason
+00:22 +85 ~2: loading /workspace/EarthSync-7G/app/test/ui/platform_live_test.dart
+00:22 +85 ~2: /workspace/EarthSync-7G/app/test/ui/platform_live_test.dart: actual local 7I job retains live daily evidence and quality
+00:22 +85 ~3: loading /workspace/EarthSync-7G/app/test/ui/responsive_product_test.dart
+00:23 +85 ~3: /workspace/EarthSync-7G/app/test/ui/responsive_product_test.dart: all product destinations handle unavailable services at 320.0
+00:26 +86 ~3: /workspace/EarthSync-7G/app/test/ui/responsive_product_test.dart: all product destinations handle unavailable services at 390.0
+00:27 +87 ~3: /workspace/EarthSync-7G/app/test/ui/responsive_product_test.dart: all product destinations handle unavailable services at 768.0
+00:29 +88 ~3: /workspace/EarthSync-7G/app/test/ui/responsive_product_test.dart: all product destinations handle unavailable services at 1024.0
+00:31 +89 ~3: /workspace/EarthSync-7G/app/test/ui/responsive_product_test.dart: all product destinations handle unavailable services at 1440.0
+00:32 +90 ~3: /workspace/EarthSync-7G/app/test/ui/responsive_product_test.dart: large text and dark mode retain source and navigation semantics
+00:32 +91 ~3: /workspace/EarthSync-7G/app/test/ui/responsive_product_test.dart: appearance persists and Burmese navigation uses bundled fallback
+00:32 +92 ~3: loading /workspace/EarthSync-7G/app/test/ui/platform_integration_test.dart
+00:33 +92 ~3: /workspace/EarthSync-7G/app/test/ui/platform_integration_test.dart: 201 farm link, 200 recovery and 204 deletion have endpoint-specific contracts
+00:33 +93 ~3: /workspace/EarthSync-7G/app/test/ui/platform_integration_test.dart: mutating transport error does not retry and preserves retryability
+00:33 +94 ~3: /workspace/EarthSync-7G/app/test/ui/platform_integration_test.dart: polling is bounded, preserves running status, and stops when selection changes
+00:33 +95 ~3: /workspace/EarthSync-7G/app/test/ui/platform_integration_test.dart: farm association survives queued/running/succeeded lifecycle and cancellation
+00:33 +96 ~3: /workspace/EarthSync-7G/app/test/ui/platform_integration_test.dart: a farm edit discards a delayed response for the old confirmation
+00:33 +97 ~3: /workspace/EarthSync-7G/app/test/ui/platform_integration_test.dart: phone farm linking is explicit and displays restored records
+00:35 +98 ~3: loading /workspace/EarthSync-7G/app/test/ui/planning_preferences_test.dart
+00:36 +98 ~3: /workspace/EarthSync-7G/app/test/ui/planning_preferences_test.dart: appearance and language restore in a fresh provider container
+00:36 +99 ~3: /workspace/EarthSync-7G/app/test/ui/planning_preferences_test.dart: crop history saves for the confirmed farm without engine promotion
+00:38 +100 ~3: loading /workspace/EarthSync-7G/app/test/geospatial_accessibility_test.dart
+00:39 +100 ~3: /workspace/EarthSync-7G/app/test/geospatial_accessibility_test.dart: cached real forecast exposes issuance gap and provenance to accessibility
+00:40 +101 ~3: loading /workspace/EarthSync-7G/app/test/system_integration_test.dart
+00:41 +101 ~3: /workspace/EarthSync-7G/app/test/system_integration_test.dart: (setUpAll)
+00:41 +101 ~3: /workspace/EarthSync-7G/app/test/system_integration_test.dart: v03 native bridge preserves evidence, sources and all result states
+00:41 +102 ~3: /workspace/EarthSync-7G/app/test/system_integration_test.dart: phone v03 results label synthetic arithmetic and retain details
+00:42 +103 ~3: /workspace/EarthSync-7G/app/test/system_integration_test.dart: device area, manual area and confirmed farm remain separate after restore
+00:42 +104 ~3: /workspace/EarthSync-7G/app/test/system_integration_test.dart: farm edits invalidate v03 results and discard old in-flight work
+00:42 +105 ~3: /workspace/EarthSync-7G/app/test/system_integration_test.dart: main navigation opens assistant with no farm and no location
+00:44 +106 ~3: /workspace/EarthSync-7G/app/test/system_integration_test.dart: manual or skipped exploration does not send a previously saved device point
+00:44 +107 ~3: /workspace/EarthSync-7G/app/test/system_integration_test.dart: location-free assistant never fabricates context or decisions
+00:44 +108 ~3: /workspace/EarthSync-7G/app/test/system_integration_test.dart: (tearDownAll)
+00:44 +108 ~3: loading /workspace/EarthSync-7G/app/test/dashboard_climate_test.dart
+00:45 +108 ~3: /workspace/EarthSync-7G/app/test/dashboard_climate_test.dart: monthly context retains complete values and never fills missing data
+00:45 +109 ~3: /workspace/EarthSync-7G/app/test/dashboard_climate_test.dart: API failure is an error, with no synthetic or captured fallback
+00:45 +110 ~3: /workspace/EarthSync-7G/app/test/dashboard_climate_test.dart: query identity includes the exact point and month window
+00:45 +111 ~3: /workspace/EarthSync-7G/app/test/dashboard_climate_test.dart: missing climate renders unknown values and no fake charts
+00:45 +112 ~3: /workspace/EarthSync-7G/app/test/dashboard_climate_test.dart: refresh failure labels last-known data for the same query
+00:46 +113 ~3: loading /workspace/EarthSync-7G/app/test/farm_boundary_test.dart
+00:47 +113 ~3: /workspace/EarthSync-7G/app/test/farm_boundary_test.dart: spherical area, reversed ring and point association
+00:47 +114 ~3: /workspace/EarthSync-7G/app/test/farm_boundary_test.dart: reject self-intersection, degenerate, adjacent duplicates, antimeridian
+00:47 +115 ~3: /workspace/EarthSync-7G/app/test/farm_boundary_test.dart: old point-only profile and new boundary survive device store reload
+00:47 +116 ~3: /workspace/EarthSync-7G/app/test/farm_boundary_test.dart: remote boundary comparison ignores JSON object key order and rejects changed vertices
+00:47 +117 ~3: All tests passed!

@@ -8,6 +8,7 @@ import '../../state/integration_provider.dart';
 import '../../state/journal_provider.dart';
 import '../../state/platform_provider.dart';
 import 'companion_copy.dart';
+import 'crop_picker.dart';
 
 const journalKinds = {
   'season': 'Actual crop season',
@@ -292,7 +293,13 @@ class _JournalFormState extends ConsumerState<JournalForm> {
           const Text(
             'Save a draft first if offline. Nothing is submitted or retried automatically. Dates and crop stages are reported by you.',
           ),
-          choice('Record type', _kind, journalKinds, (v) => _kind = v),
+          choice('Record type', _kind, journalKinds, (v) {
+            _kind = v;
+            if (['fallow', 'bare_field'].contains(v)) {
+              _crop.clear();
+              _cropId = null;
+            }
+          }),
           RawAutocomplete<String>(
             textEditingController: _crop,
             focusNode: _cropFocus,
@@ -331,7 +338,36 @@ class _JournalFormState extends ConsumerState<JournalForm> {
               ),
             ),
           ),
-          if (['season', 'plan'].contains(_kind))
+          OutlinedButton.icon(
+            onPressed: _busy
+                ? null
+                : () async {
+                    final crop = await pickCatalogCrop(context);
+                    if (crop != null && mounted) {
+                      setState(() {
+                        _crop.text =
+                            (crop['aliases'] as List).firstOrNull as String? ??
+                            crop['scientific_name'] as String;
+                        _cropId = crop['id'] as String;
+                      });
+                    }
+                  },
+            icon: const Icon(Icons.search),
+            label: Text(tr('Search crops or aliases')),
+          ),
+          TextButton(
+            onPressed: _busy
+                ? null
+                : () => setState(() {
+                    _crop.text = 'Unknown crop';
+                    _cropId = null;
+                  }),
+            child: Text(tr('Unknown')),
+          ),
+          if (_cropId != null)
+            Text('Farmer-declared catalog identity: $_cropId'),
+          if (['season', 'plan'].contains(_kind) &&
+              (_cropId == null || identities.containsKey(_cropId)))
             DropdownButtonFormField<String>(
               key: ValueKey('catalog:$_cropId'),
               initialValue: _cropId,
@@ -358,7 +394,11 @@ class _JournalFormState extends ConsumerState<JournalForm> {
           day('Date / planting', _date, (v) => _date = v),
           if (['season', 'plan', 'fallow', 'bare_field'].contains(_kind))
             day(
-              _kind == 'plan' ? 'Expected harvest' : 'Actual harvest',
+              _kind == 'plan'
+                  ? 'Expected harvest'
+                  : ['fallow', 'bare_field'].contains(_kind)
+                  ? 'Period end'
+                  : 'Actual harvest',
               _harvest,
               (v) => _harvest = v,
             ),
@@ -399,14 +439,7 @@ class _JournalFormState extends ConsumerState<JournalForm> {
             spacing: 8,
             runSpacing: 4,
             children: [
-              for (final p in const {
-                'food': 'Food for family',
-                'income': 'Income',
-                'less_water': 'Less water',
-                'soil': 'Soil care',
-                'lower_risk': 'Lower risk',
-                'less_labor': 'Less labor',
-              }.entries)
+              for (final p in farmerPriorityLabels.entries)
                 FilterChip(
                   label: Text(tr(p.value)),
                   selected: _priorities.contains(p.key),

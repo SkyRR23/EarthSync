@@ -1,0 +1,117 @@
+{
+  "process_restart_passed": true,
+  "backup_restore_passed": true,
+  "actual_rust_readiness": {
+    "ready": true,
+    "storage": true,
+    "rust_v03_configured": true,
+    "rust_v03_startup_probe_passed": true,
+    "catalog_installed": true,
+    "crop_reference_v2_installed": true,
+    "hosted_private_api_enabled": false,
+    "limitation": "Storage integrity and actual Rust startup execution; external provider availability is separate."
+  },
+  "before": {
+    "farms": {
+      "rows": 5,
+      "sha256": "e4b53a3e98ad85467c39d1e0abe0771f0469940c0710194d58bf9b726f06bc50"
+    },
+    "farm_links": {
+      "rows": 5,
+      "sha256": "c6efe99c97a25ef223d90e4b06b55f21d6f50100e639d0838d5fd93615759dfe"
+    },
+    "observations": {
+      "rows": 1,
+      "sha256": "9aa9e277420073cbe08f622e39ff8d1d2bfc92bdff20984a632ea0771157284a"
+    },
+    "jobs": {
+      "rows": 6,
+      "sha256": "83316a520e9cf6ba387249034632622470dfb290d1583317bb5b4a4429f6af16"
+    },
+    "evidence": {
+      "rows": 8,
+      "sha256": "a802b5c6085a447acf1c2d032ba7b64c626ec015c4e03453e328914d3f22453a"
+    },
+    "decisions": {
+      "rows": 1,
+      "sha256": "d51a288100e66693c8a0079ab775c298da5fdc82917af099929dc94a9521f9e4"
+    },
+    "history": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "schema_migrations": {
+      "rows": 3,
+      "sha256": "b7d518ddc38a5de7b299df11b278a768f0f8bdcf57fcd056fd80fc4a8c536576"
+    }
+  },
+  "after_restart": {
+    "farms": {
+      "rows": 5,
+      "sha256": "e4b53a3e98ad85467c39d1e0abe0771f0469940c0710194d58bf9b726f06bc50"
+    },
+    "farm_links": {
+      "rows": 5,
+      "sha256": "c6efe99c97a25ef223d90e4b06b55f21d6f50100e639d0838d5fd93615759dfe"
+    },
+    "observations": {
+      "rows": 1,
+      "sha256": "9aa9e277420073cbe08f622e39ff8d1d2bfc92bdff20984a632ea0771157284a"
+    },
+    "jobs": {
+      "rows": 6,
+      "sha256": "83316a520e9cf6ba387249034632622470dfb290d1583317bb5b4a4429f6af16"
+    },
+    "evidence": {
+      "rows": 8,
+      "sha256": "a802b5c6085a447acf1c2d032ba7b64c626ec015c4e03453e328914d3f22453a"
+    },
+    "decisions": {
+      "rows": 1,
+      "sha256": "d51a288100e66693c8a0079ab775c298da5fdc82917af099929dc94a9521f9e4"
+    },
+    "history": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "schema_migrations": {
+      "rows": 3,
+      "sha256": "b7d518ddc38a5de7b299df11b278a768f0f8bdcf57fcd056fd80fc4a8c536576"
+    }
+  },
+  "after_restore": {
+    "farms": {
+      "rows": 5,
+      "sha256": "e4b53a3e98ad85467c39d1e0abe0771f0469940c0710194d58bf9b726f06bc50"
+    },
+    "farm_links": {
+      "rows": 5,
+      "sha256": "c6efe99c97a25ef223d90e4b06b55f21d6f50100e639d0838d5fd93615759dfe"
+    },
+    "observations": {
+      "rows": 1,
+      "sha256": "9aa9e277420073cbe08f622e39ff8d1d2bfc92bdff20984a632ea0771157284a"
+    },
+    "jobs": {
+      "rows": 6,
+      "sha256": "83316a520e9cf6ba387249034632622470dfb290d1583317bb5b4a4429f6af16"
+    },
+    "evidence": {
+      "rows": 8,
+      "sha256": "a802b5c6085a447acf1c2d032ba7b64c626ec015c4e03453e328914d3f22453a"
+    },
+    "decisions": {
+      "rows": 1,
+      "sha256": "d51a288100e66693c8a0079ab775c298da5fdc82917af099929dc94a9521f9e4"
+    },
+    "history": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "schema_migrations": {
+      "rows": 3,
+      "sha256": "b7d518ddc38a5de7b299df11b278a768f0f8bdcf57fcd056fd80fc4a8c536576"
+    }
+  },
+  "private_contents_omitted": true
+}

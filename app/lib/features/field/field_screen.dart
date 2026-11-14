@@ -7,6 +7,9 @@ import '../../app/ui_copy.dart';
 import '../../data/environment/area_climate.dart';
 import '../../design/components/product.dart';
 import '../../state/home_provider.dart';
+import '../../state/platform_provider.dart';
+import '../../state/journal_provider.dart';
+import 'geospatial_intelligence_panel.dart';
 import '../../state/providers.dart';
 import '../../state/integration_provider.dart';
 import '../dashboard/climate_panel.dart';
@@ -24,6 +27,7 @@ class FieldScreen extends ConsumerWidget {
       );
     }
     String tr(String k) => UiCopy.text(context, k);
+    final linkedFarm = ref.watch(platformFarmProvider).value;
     final target = environmentalKey(farm.point, farmId: farm.id);
     return Scaffold(
       appBar: AppBar(
@@ -47,6 +51,10 @@ class FieldScreen extends ConsumerWidget {
                   onPressed: () => context.push('/farm-evidence'),
                   child: const Text('Persisted farm evidence'),
                 ),
+              TextButton(
+                onPressed: () => context.push('/rotations'),
+                child: const Text('Compare rotation strategies'),
+              ),
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
@@ -66,7 +74,9 @@ class FieldScreen extends ConsumerWidget {
                 ],
               ),
               PageHeader(
-                eyebrow: tr('point'),
+                eyebrow: farm.boundary == null
+                    ? tr('point')
+                    : 'Confirmed field boundary',
                 title: farm.name ?? tr('farm'),
                 subtitle: '${farm.point.label} · ${tr('fieldBody')}',
               ),
@@ -84,9 +94,20 @@ class FieldScreen extends ConsumerWidget {
                   onTap: () => context.push('/photos'),
                 ),
               ),
+              if (linkedFarm != null)
+                GeospatialIntelligencePanel(
+                  key: ValueKey('field-map:${linkedFarm.id}'),
+                  farm: linkedFarm,
+                  onSaved: () {
+                    ref.invalidate(journalProvider);
+                    ref.invalidate(platformAssistantProvider);
+                  },
+                ),
               EvidenceNotice(
                 title: UiLabels.fieldConditionIsUnknown,
-                message: UiLabels.regionalEstimatesAndPhotosDoNotEstablishSoil,
+                message: farm.boundary == null
+                    ? UiLabels.regionalEstimatesAndPhotosDoNotEstablishSoil
+                    : 'A confirmed boundary does not certify soil health, crop stress or disease. Each source retains its native resolution and quality.',
                 icon: Icons.info_outline,
               ),
               ClimatePanel(

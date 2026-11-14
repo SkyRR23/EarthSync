@@ -3,6 +3,7 @@
 from datetime import date, datetime, timezone
 
 from .errors import PlatformError
+from .journal_projection import selected_reports, project_reports
 from .models import ENGINE_VERSION
 from .water import water_dependencies
 
@@ -53,7 +54,34 @@ class Orchestrator:
             "sequential_field": query.sequential_field,
             "candidate_window": None,
         }
+        owned_jobs = {j["id"]: j for j in self.store.intelligence(owner, farm.id)}
+        if any(
+            str(ident) not in owned_jobs
+            or owned_jobs[str(ident)]["status"] != "succeeded"
+            for ident in query.environmental_job_ids
+        ):
+            raise PlatformError("SOURCE_SNAPSHOT_NOT_OWNED_BY_FARM", 404)
+        environmental_snapshots = [
+            owned_jobs[str(ident)] for ident in query.environmental_job_ids
+        ]
+        observations = {r["id"]: r for r in self.store.observations(owner, farm.id)}
+        if any(str(ident) not in observations for ident in query.observation_ids):
+            raise PlatformError("OBSERVATION_NOT_OWNED_BY_FARM", 404)
+        farmer_observations = [
+            observations[str(ident)] for ident in query.observation_ids
+        ]
+        reports = selected_reports(self.store, owner, farm.id, query.farmer_report_ids)
+        project_reports(reports, request)
         gaps, projections = [], []
+        for snapshot in environmental_snapshots:
+            gaps.append(
+                {
+                    "source_job_id": snapshot["id"],
+                    "code": "REFERENCE_ENVIRONMENTAL_SNAPSHOT_NOT_EXECUTABLE",
+                }
+            )
+        if reports:
+            gaps.append({"code": "FARMER_CALENDAR_APPLICABILITY_REQUIRES_REVIEW"})
         seen_variables = set()
         for record in records:
             if (
@@ -203,8 +231,18 @@ class Orchestrator:
             )
             if catalog is None:
                 raise PlatformError("CATALOG_NOT_INSTALLED", 503)
+            scopes = {
+                p.reference_region
+                if "reference_region" in p.model_fields_set
+                else query.pilot_id
+                for p in query.plans
+                if p.profile_id == ident
+            }
+            if len(scopes) > 1:
+                raise PlatformError("AMBIGUOUS_REFERENCE_SCOPE")
+            reference_region = next(iter(scopes)) if scopes else query.pilot_id
             profile, sidecar = catalog.project(
-                ident, query.pilot_id, farm.production_system
+                ident, reference_region, farm.production_system
             )
             projections.append(sidecar)
             request["catalog"].append(profile)
@@ -255,6 +293,9 @@ class Orchestrator:
             "engine_binary_sha256": self.engine.sha256,
             "assessed_at": datetime.now(timezone.utc).isoformat(),
             "recommendation_eligible": False,
+            "farmer_reports": reports,
+            "farmer_observations": farmer_observations,
+            "environmental_snapshots": environmental_snapshots,
             "result": result,
             "evidence_gaps": gaps,
             "catalog_projection": projections,

@@ -74,4 +74,17 @@ class ReferenceCatalog:
         except (ValueError, KeyError) as exc:
             raise PlatformError("REFERENCE_PROJECTION_BLOCKED") from exc
         result["sidecar"]["rule_review"] = review_for(result["profile"]["crop_id"])
+        identity = next(c for c in self.data["crops"] if c["id"] == profile["crop_id"])
+        claim = next(
+            c for c in self.data["claims"] if c["id"] == identity["identity_claim_id"]
+        )
+        source = next(s for s in self.data["sources"] if s["id"] == claim["source_id"])
+        result["sidecar"]["qualitative_identity"] = copy.deepcopy(
+            {
+                "crop": identity,
+                "claim": claim,
+                "source": source,
+                "limitation": "Taxonomy and recorded use categories are references, not proof of nitrogen credit, ground cover, forage performance, income or field benefits.",
+            }
+        )
         return result["profile"], result["sidecar"]

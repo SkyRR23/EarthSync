@@ -3,6 +3,19 @@
     "PlanSelection": {
       "additionalProperties": false,
       "properties": {
+        "reference_region": {
+          "anyOf": [
+            {
+              "maxLength": 150,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reference Region"
+        },
         "profile_id": {
           "maxLength": 150,
           "minLength": 1,
@@ -39,6 +52,33 @@
       ],
       "title": "Catalog Version",
       "type": "string"
+    },
+    "farmer_report_ids": {
+      "items": {
+        "format": "uuid",
+        "type": "string"
+      },
+      "maxItems": 20,
+      "title": "Farmer Report Ids",
+      "type": "array"
+    },
+    "environmental_job_ids": {
+      "items": {
+        "format": "uuid",
+        "type": "string"
+      },
+      "maxItems": 10,
+      "title": "Environmental Job Ids",
+      "type": "array"
+    },
+    "observation_ids": {
+      "items": {
+        "format": "uuid",
+        "type": "string"
+      },
+      "maxItems": 20,
+      "title": "Observation Ids",
+      "type": "array"
     },
     "farm_id": {
       "format": "uuid",

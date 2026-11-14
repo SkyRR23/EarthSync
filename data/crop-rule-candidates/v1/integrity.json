@@ -1,0 +1,16 @@
+{
+  "schema_version": "earthsync.crop-rule-candidates.v1",
+  "sha256": {
+    "EVIDENCE_MATRIX.md": "7898b0c8a5abeb855efa5ecf0261840833fb00e3a382b5a9058bb8ee952ac260",
+    "blocked-rules.json": "edccdbc6e73b59390c31a98328c0f6a2638a4909ce8d887ae53c613d374d6124",
+    "facts.json": "82f3afee30474ed188053b1fdbdace620123db58fcd77568119dda9b44415eaa",
+    "input-pins.json": "32bc865714cac7c35d6f7dc3ac63b1fe27a9bb4a10d6a03498a909cb8b9c6d19",
+    "package.json": "0771cc950de3eda4c47c283616728102d3256d1f5233fb503f93ad34939d3c84",
+    "package.schema.json": "af5b7837cda70bbf3ee9131028562c5bd27dc65e28e8490b7ec4e496f190da25",
+    "review.json": "5979ea521a565421f2ac0a7d18592d00fe9af6698a6ff36d41430536af0542fb",
+    "source-receipts.json": "773b93938d4f4d2127fef2d11fc453377fef8dcdc00c6f001e1fa3af09d03eb0",
+    "sources.json": "b3e3a2ac54fed8afca7b493ef24825cb6d85bea1b670dc6aa6d8acf97c2ade15",
+    "traceability.jsonl": "4c0be259c9fe64cf53fab5e1f6681551d7210240a0b3fc68024e96bdb810b8f6",
+    "upstream-evidence.json": "04d01efe22360b18a7821b4eb17c10f0378c9f7b5a98487d02db19846047914e"
+  }
+}

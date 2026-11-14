@@ -1,0 +1,9 @@
+test_cmr_discovery_is_metadata_not_pixels (test_live.LiveSources.test_cmr_discovery_is_metadata_not_pixels) ... ok
+test_myanmar_calendar_presence_and_regions (test_live.LiveSources.test_myanmar_calendar_presence_and_regions) ... ok
+test_official_ecocrop_license (test_live.LiveSources.test_official_ecocrop_license) ... ok
+test_official_ecocrop_sheet (test_live.LiveSources.test_official_ecocrop_sheet) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 8.399s
+
+OK

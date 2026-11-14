@@ -52,5 +52,6 @@
   "reference_duration": "Duración de referencia de {profile}: {value} {unit}. Ámbito: {scope}. No es una predicción para su parcela ni una regla agronómica aceptada.",
   "persisted_explanation": "Explicación guardada de Rust: {text}",
   "history": "Los registros describen lo informado por el agricultor. Los planes no son operaciones completadas y los días no establecen la etapa biológica.",
-  "farmer_report": "Registro del agricultor del {date} (sin verificación independiente): {text}"
+  "farmer_report": "Registro del agricultor del {date} (sin verificación independiente): {text}",
+  "reference_snapshot": "Referencia proporcionada (no aceptada como medición del campo): {text}"
 }

@@ -61,7 +61,7 @@ def test_farm_scope_id_conflicts_and_plan_not_promoted(store, farm_input):
         journal.confirm_history("alice", other.id, value.id)
     plan = value.model_copy(update={"id": uuid4(), "kind": "plan"})
     journal.save("alice", farm.id, plan)
-    with pytest.raises(PlatformError, match="COMPLETED_CATALOG_SEASON_REQUIRED"):
+    with pytest.raises(PlatformError, match="COMPLETED_REPORTED_PERIOD_REQUIRED"):
         journal.confirm_history("alice", farm.id, plan.id)
     assert store.history("alice", farm.id) == []
 

@@ -56,6 +56,11 @@ with sync_playwright() as p:
     def go(route):
         page.goto(args.base_url + "/#/" + route, wait_until="domcontentloaded")
         enable()
+        if route == "farm-evidence":
+            expect(
+                page.get_by_role("heading", name="Persisted farm evidence", exact=True)
+            ).to_be_visible()
+        page.wait_for_timeout(500)
 
     def fill(locator, value):
         locator.click()
@@ -69,13 +74,14 @@ with sync_playwright() as p:
     def visible(text):
         viewport = page.viewport_size
         page.mouse.move(viewport["width"] / 2, viewport["height"] * 0.6)
-        page.mouse.wheel(0, -40000)
-        page.wait_for_timeout(250)
-        for _ in range(25):
+        for _ in range(3):
+            page.mouse.wheel(0, -40000)
+            page.wait_for_timeout(500)
+        for _ in range(60):
             if text in page.locator("body").aria_snapshot():
                 return
-            page.mouse.wheel(0, 550)
-            page.wait_for_timeout(150)
+            page.mouse.wheel(0, 400)
+            page.wait_for_timeout(250)
         raise AssertionError("Rendered text not found: " + text)
 
     def shot(name):
@@ -188,8 +194,11 @@ with sync_playwright() as p:
         for parameter in ("PRECTOTCORR", "T2M_MAX", "T2M_MIN"):
             visible(parameter)
             checkbox = page.get_by_role("checkbox", name=re.compile(parameter))
-            checkbox.click()
+            if not checkbox.is_checked():
+                checkbox.click()
             expect(checkbox).to_be_checked()
+            page.wait_for_timeout(500)
+        visible("3 source records selected.")
         page.get_by_role(
             "button", name="Optional reference profile", exact=True
         ).click()

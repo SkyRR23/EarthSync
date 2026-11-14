@@ -1,0 +1,8 @@
+{
+  "url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T15TVG.2024186T165849.v2.0/HLS.S30.T15TVG.2024186T165849.v2.0.B04.tif",
+  "method": "HEAD",
+  "status": 303,
+  "location": "https://d1nklfio7vscoe.cloudfront.net/head-2d2df3a34830d5223d1e9547cd713408/lp-prod-protected.s3.us-west-2.amazonaws.com/HLSS30.020/HLS.S30.T15TVG.2024186T165849.v2.0/HLS.S30.T15TVG.2024186T165849.v2.0.B04.tif",
+  "retrieved_at": "2026-11-14T17:48:47.218533+00:00",
+  "numeric_pixels_accepted": false
+}

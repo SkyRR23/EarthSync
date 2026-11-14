@@ -1,0 +1,221 @@
+{
+  "id": "38a713f0-561e-43da-aa4e-66d3930c9524",
+  "kind": "forecast",
+  "status": "succeeded",
+  "result": {
+    "cache_hit": true,
+    "current_observed_weather": null,
+    "dataset": "GFS 0.25 degree operational 2 m temperature",
+    "derived_indicators": [
+      {
+        "basis": "Physical freezing reference only; not a crop-specific damage threshold",
+        "kind": "derived_forecast_condition",
+        "name": "Temperature at or below 0 \u00b0C in sampled future forecast times",
+        "threshold_c": 0,
+        "value": true
+      }
+    ],
+    "forecast_horizon_hours": 24,
+    "grid_spacing_degrees": 0.25,
+    "issuance_basis": "GRIB forecast reference/model initialization verified; publication/issuance timestamp not supplied",
+    "issued_at": null,
+    "license": "US government data; NOAA attribution",
+    "limitations": [
+      "Sparse forecast times, not daily minima/maxima or continuous monitoring.",
+      "Current observed weather, precipitation and official warnings are unavailable.",
+      "Regional model grid; no exact field measurement, frost event or crop injury inferred.",
+      "GRIB reference time is model initialization, not independently verified publication time.",
+      "No automatic refresh or background scheduler; retrieve a new snapshot explicitly."
+    ],
+    "model_initialized_at": "2026-11-14T12:00:00+00:00",
+    "official_warnings": null,
+    "policy": "noaa-gfs-quarter-degree-temperature.v1",
+    "provider": "NOAA NCEP GFS",
+    "records": [
+      {
+        "conversion": "GRIB Kelvin minus 273.15 = Celsius",
+        "crs": "GEOGCS[\"Coordinate System imported from GRIB file\",DATUM[\"unnamed\",SPHEROID[\"Sphere\",6371229,0]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AXIS[\"Latitude\",NORTH],AXIS[\"Longitude\",EAST]]",
+        "forecast_hour": 0,
+        "grib_metadata": {
+          "GRIB_COMMENT": "Temperature [K]",
+          "GRIB_DISCIPLINE": "0(Meteorological)",
+          "GRIB_ELEMENT": "TMP",
+          "GRIB_FORECAST_SECONDS": "0",
+          "GRIB_IDS": "CENTER=7(US-NCEP) SUBCENTER=0 MASTER_TABLE=2 LOCAL_TABLE=1 SIGNF_REF_TIME=1(Start_of_Forecast) REF_TIME=2026-11-14T12:00:00Z PROD_STATUS=0(Operational) TYPE=1(Forecast)",
+          "GRIB_PDS_PDTN": "0",
+          "GRIB_PDS_TEMPLATE_ASSEMBLED_VALUES": "0 0 2 0 81 0 0 1 0 103 0 2 255 0 0",
+          "GRIB_PDS_TEMPLATE_NUMBERS": "0 0 2 0 81 0 0 0 1 0 0 0 0 103 0 0 0 0 2 255 0 0 0 0 0",
+          "GRIB_REF_TIME": "1794657600",
+          "GRIB_SHORT_NAME": "2-HTGL",
+          "GRIB_UNIT": "[K]",
+          "GRIB_VALID_TIME": "1794657600"
+        },
+        "grid_point": {
+          "latitude": 42.0,
+          "longitude": -93.75
+        },
+        "model_initialized_at": "2026-11-14T12:00:00+00:00",
+        "native_unit": "[K]",
+        "quality": "modeled",
+        "raw_temperature_k": 271.4072265625,
+        "retrieved_at": "2026-11-14T18:12:03.305190+00:00",
+        "source_sha256": "d590998245feb4654ef747c8d6fffd5db9801c89123e62450a74f220d60e1ada",
+        "source_url": "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?file=gfs.t12z.pgrb2.0p25.f000&lev_2_m_above_ground=on&var_TMP=on&subregion=&leftlon=266.0&rightlon=266.5&toplat=42.25&bottomlat=41.75&dir=%2Fgfs.20261114%2F12%2Fatmos",
+        "temperature_c": -1.7427734374999773,
+        "transform": [
+          0.25,
+          0.0,
+          -94.125,
+          0.0,
+          -0.25,
+          42.375,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "unit": "\u00b0C",
+        "valid_at": "2026-11-14T12:00:00+00:00"
+      },
+      {
+        "conversion": "GRIB Kelvin minus 273.15 = Celsius",
+        "crs": "GEOGCS[\"Coordinate System imported from GRIB file\",DATUM[\"unnamed\",SPHEROID[\"Sphere\",6371229,0]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AXIS[\"Latitude\",NORTH],AXIS[\"Longitude\",EAST]]",
+        "forecast_hour": 6,
+        "grib_metadata": {
+          "GRIB_COMMENT": "Temperature [K]",
+          "GRIB_DISCIPLINE": "0(Meteorological)",
+          "GRIB_ELEMENT": "TMP",
+          "GRIB_FORECAST_SECONDS": "21600",
+          "GRIB_IDS": "CENTER=7(US-NCEP) SUBCENTER=0 MASTER_TABLE=2 LOCAL_TABLE=1 SIGNF_REF_TIME=1(Start_of_Forecast) REF_TIME=2026-11-14T12:00:00Z PROD_STATUS=0(Operational) TYPE=1(Forecast)",
+          "GRIB_PDS_PDTN": "0",
+          "GRIB_PDS_TEMPLATE_ASSEMBLED_VALUES": "0 0 2 0 96 0 0 1 6 103 0 2 255 0 0",
+          "GRIB_PDS_TEMPLATE_NUMBERS": "0 0 2 0 96 0 0 0 1 0 0 0 6 103 0 0 0 0 2 255 0 0 0 0 0",
+          "GRIB_REF_TIME": "1794657600",
+          "GRIB_SHORT_NAME": "2-HTGL",
+          "GRIB_UNIT": "[K]",
+          "GRIB_VALID_TIME": "1794679200"
+        },
+        "grid_point": {
+          "latitude": 42.0,
+          "longitude": -93.75
+        },
+        "model_initialized_at": "2026-11-14T12:00:00+00:00",
+        "native_unit": "[K]",
+        "quality": "modeled",
+        "raw_temperature_k": 278.6141052246094,
+        "retrieved_at": "2026-11-14T18:12:04.186466+00:00",
+        "source_sha256": "3c1b70418f868a60ee32f31470ba290dd422cfda4b937d2009e1c9035a689ecc",
+        "source_url": "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?file=gfs.t12z.pgrb2.0p25.f006&lev_2_m_above_ground=on&var_TMP=on&subregion=&leftlon=266.0&rightlon=266.5&toplat=42.25&bottomlat=41.75&dir=%2Fgfs.20261114%2F12%2Fatmos",
+        "temperature_c": 5.464105224609398,
+        "transform": [
+          0.25,
+          0.0,
+          -94.125,
+          0.0,
+          -0.25,
+          42.375,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "unit": "\u00b0C",
+        "valid_at": "2026-11-14T18:00:00+00:00"
+      },
+      {
+        "conversion": "GRIB Kelvin minus 273.15 = Celsius",
+        "crs": "GEOGCS[\"Coordinate System imported from GRIB file\",DATUM[\"unnamed\",SPHEROID[\"Sphere\",6371229,0]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AXIS[\"Latitude\",NORTH],AXIS[\"Longitude\",EAST]]",
+        "forecast_hour": 12,
+        "grib_metadata": {
+          "GRIB_COMMENT": "Temperature [K]",
+          "GRIB_DISCIPLINE": "0(Meteorological)",
+          "GRIB_ELEMENT": "TMP",
+          "GRIB_FORECAST_SECONDS": "43200",
+          "GRIB_IDS": "CENTER=7(US-NCEP) SUBCENTER=0 MASTER_TABLE=2 LOCAL_TABLE=1 SIGNF_REF_TIME=1(Start_of_Forecast) REF_TIME=2026-11-14T12:00:00Z PROD_STATUS=0(Operational) TYPE=1(Forecast)",
+          "GRIB_PDS_PDTN": "0",
+          "GRIB_PDS_TEMPLATE_ASSEMBLED_VALUES": "0 0 2 0 96 0 0 1 12 103 0 2 255 0 0",
+          "GRIB_PDS_TEMPLATE_NUMBERS": "0 0 2 0 96 0 0 0 1 0 0 0 12 103 0 0 0 0 2 255 0 0 0 0 0",
+          "GRIB_REF_TIME": "1794657600",
+          "GRIB_SHORT_NAME": "2-HTGL",
+          "GRIB_UNIT": "[K]",
+          "GRIB_VALID_TIME": "1794700800"
+        },
+        "grid_point": {
+          "latitude": 42.0,
+          "longitude": -93.75
+        },
+        "model_initialized_at": "2026-11-14T12:00:00+00:00",
+        "native_unit": "[K]",
+        "quality": "modeled",
+        "raw_temperature_k": 275.9374084472656,
+        "retrieved_at": "2026-11-14T18:12:05.379539+00:00",
+        "source_sha256": "9861972575ac55bab73fe6f7f2bce9d3d6412c5c76c9a0b44fe863f827f42b15",
+        "source_url": "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?file=gfs.t12z.pgrb2.0p25.f012&lev_2_m_above_ground=on&var_TMP=on&subregion=&leftlon=266.0&rightlon=266.5&toplat=42.25&bottomlat=41.75&dir=%2Fgfs.20261114%2F12%2Fatmos",
+        "temperature_c": 2.7874084472656477,
+        "transform": [
+          0.25,
+          0.0,
+          -94.125,
+          0.0,
+          -0.25,
+          42.375,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "unit": "\u00b0C",
+        "valid_at": "2026-11-15T00:00:00+00:00"
+      },
+      {
+        "conversion": "GRIB Kelvin minus 273.15 = Celsius",
+        "crs": "GEOGCS[\"Coordinate System imported from GRIB file\",DATUM[\"unnamed\",SPHEROID[\"Sphere\",6371229,0]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AXIS[\"Latitude\",NORTH],AXIS[\"Longitude\",EAST]]",
+        "forecast_hour": 24,
+        "grib_metadata": {
+          "GRIB_COMMENT": "Temperature [K]",
+          "GRIB_DISCIPLINE": "0(Meteorological)",
+          "GRIB_ELEMENT": "TMP",
+          "GRIB_FORECAST_SECONDS": "86400",
+          "GRIB_IDS": "CENTER=7(US-NCEP) SUBCENTER=0 MASTER_TABLE=2 LOCAL_TABLE=1 SIGNF_REF_TIME=1(Start_of_Forecast) REF_TIME=2026-11-14T12:00:00Z PROD_STATUS=0(Operational) TYPE=1(Forecast)",
+          "GRIB_PDS_PDTN": "0",
+          "GRIB_PDS_TEMPLATE_ASSEMBLED_VALUES": "0 0 2 0 96 0 0 1 24 103 0 2 255 0 0",
+          "GRIB_PDS_TEMPLATE_NUMBERS": "0 0 2 0 96 0 0 0 1 0 0 0 24 103 0 0 0 0 2 255 0 0 0 0 0",
+          "GRIB_REF_TIME": "1794657600",
+          "GRIB_SHORT_NAME": "2-HTGL",
+          "GRIB_UNIT": "[K]",
+          "GRIB_VALID_TIME": "1794744000"
+        },
+        "grid_point": {
+          "latitude": 42.0,
+          "longitude": -93.75
+        },
+        "model_initialized_at": "2026-11-14T12:00:00+00:00",
+        "native_unit": "[K]",
+        "quality": "modeled",
+        "raw_temperature_k": 272.58917236328125,
+        "retrieved_at": "2026-11-14T18:12:05.922655+00:00",
+        "source_sha256": "c61bb005d5614ed2f4310d7b966fc2bdcf636401415e281aa48031a8b7b75a66",
+        "source_url": "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?file=gfs.t12z.pgrb2.0p25.f024&lev_2_m_above_ground=on&var_TMP=on&subregion=&leftlon=266.0&rightlon=266.5&toplat=42.25&bottomlat=41.75&dir=%2Fgfs.20261114%2F12%2Fatmos",
+        "temperature_c": -0.5608276367187273,
+        "transform": [
+          0.25,
+          0.0,
+          -94.125,
+          0.0,
+          -0.25,
+          42.375,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "unit": "\u00b0C",
+        "valid_at": "2026-11-15T12:00:00+00:00"
+      }
+    ],
+    "retrieved_at": "2026-11-14T18:12:05.928072+00:00",
+    "schema_version": "earthsync.forecast.v1",
+    "status": "partial",
+    "timezone": "UTC",
+    "unit": "\u00b0C",
+    "usable_for_assessment": false
+  },
+  "error": null,
+  "retryable": false
+}

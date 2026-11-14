@@ -210,6 +210,7 @@ class ClimateQuery(Contract):
 
 
 class PlanSelection(Contract):
+    reference_region: str | None = Field(default=None, max_length=150)
     profile_id: str = Field(min_length=1, max_length=150)
     start: CalendarDate
     end: CalendarDate
@@ -223,6 +224,9 @@ class PlanSelection(Contract):
 
 class AssessmentInput(Contract):
     catalog_version: Literal["v1", "v2"] = "v1"
+    farmer_report_ids: list[UUID] = Field(default_factory=list, max_length=20)
+    environmental_job_ids: list[UUID] = Field(default_factory=list, max_length=10)
+    observation_ids: list[UUID] = Field(default_factory=list, max_length=20)
     farm_id: UUID
     evidence_ids: list[str] = Field(default_factory=list, max_length=50)
     profile_ids: list[str] = Field(default_factory=list, max_length=20)
@@ -236,6 +240,12 @@ class AssessmentInput(Contract):
     def period(self):
         if not 0 <= (self.end - self.start).days < 366:
             raise ValueError("Require 1..366 ordered assessment days")
+        if len(set(self.environmental_job_ids)) != len(
+            self.environmental_job_ids
+        ) or len(set(self.observation_ids)) != len(self.observation_ids):
+            raise ValueError("Duplicate reference snapshots/reports")
+        if len(set(self.farmer_report_ids)) != len(self.farmer_report_ids):
+            raise ValueError("Duplicate farmer reports")
         if self.plans and self.profile_ids:
             raise ValueError("Choose alternatives or an explicit sequence")
         if len(self.plans) > 1 and not self.sequential_field:
@@ -265,4 +275,41 @@ class HistoryInput(Contract):
             raise ValueError("History requires an ordered historical period")
         if self.fallow and self.crop_id is not None:
             raise ValueError("Fallow is distinct from a crop")
+        return self
+
+
+class ObservationInput(Contract):
+    """Farmer reports; never independently verified crop or soil evidence."""
+
+    observed_on: CalendarDate
+    crop_name: str | None = Field(default=None, min_length=1, max_length=150)
+    planting_on: CalendarDate | None = None
+    growth_stage: Literal[
+        "unknown",
+        "establishment",
+        "vegetative",
+        "flowering",
+        "fruiting",
+        "maturing",
+        "harvested",
+    ] = "unknown"
+    irrigation: Literal["unknown", "none", "rain_only", "supplemental", "regular"] = (
+        "unknown"
+    )
+    drainage: Literal[
+        "unknown",
+        "standing_water_reported",
+        "drains_freely_reported",
+        "poor_drainage_reported",
+    ] = "unknown"
+    notes: str = Field(min_length=1, max_length=2000)
+
+    @model_validator(mode="after")
+    def dates(self):
+        if self.observed_on > CalendarDate.today() or (
+            self.planting_on and self.planting_on > self.observed_on
+        ):
+            raise ValueError(
+                "Report dates must be historical; planting cannot follow observation"
+            )
         return self

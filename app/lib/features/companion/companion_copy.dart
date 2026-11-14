@@ -4,6 +4,18 @@ import 'package:flutter/widgets.dart';
 /// Native language and agricultural review remain required before field rollout.
 abstract final class CompanionCopy {
   static const my = {
+    'Income / market interests': 'ဝင်ငွေ / ဈေးကွက်စိတ်ဝင်စားမှု',
+    'Water conservation': 'ရေချွေတာရေး',
+    'Soil structure & organic matter':
+        'မြေဆီလွှာဖွဲ့စည်းပုံနှင့် အော်ဂဲနစ်ပစ္စည်း',
+    'Labor limits': 'လုပ်အားအကန့်အသတ်',
+    'Nitrogen-fixing potential': 'နိုက်ထရိုဂျင်ဖမ်းယူနိုင်စွမ်း',
+    'Erosion reduction': 'မြေတိုက်စားမှု လျှော့ချရေး',
+    'Forage value': 'တိရစ္ဆာန်အစာတန်ဖိုး',
+    'Equipment limits': 'စက်ကိရိယာအကန့်အသတ်',
+    'Market access': 'ဈေးကွက်ရရှိမှု',
+    'Declared fallow period': 'ကြေညာထားသော လယ်လပ်ကာလ',
+    'Reported bare-field period': 'တောင်သူဖော်ပြသော မြေလွတ်ကာလ',
     'Season & records': 'စိုက်ပျိုးရာသီနှင့် မှတ်တမ်းများ',
     'Farm records': 'လယ်ယာမှတ်တမ်းများ',
     'Add a record': 'မှတ်တမ်းထည့်ရန်',
