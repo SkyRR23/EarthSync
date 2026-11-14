@@ -3,6 +3,7 @@ import json
 import re
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from release_privacy import private_output
 
 parser = argparse.ArgumentParser(
     description="Verify actual in-app dated forecast acknowledgment, never an official alert claim."
@@ -11,11 +12,10 @@ parser.add_argument("--state", required=True)
 parser.add_argument("--base-url", default="http://127.0.0.1:8091")
 parser.add_argument("--platform-url", default="http://127.0.0.1:8021")
 parser.add_argument(
-    "--output", type=Path, default=Path("docs/release/evidence/browser-risk")
+    "--output", type=Path, help="Private raw receipt directory outside the checkout"
 )
 args = parser.parse_args()
-out = args.output
-out.mkdir(parents=True, exist_ok=True)
+out = private_output(args.output or Path(args.state).absolute().parent / "browser-risk")
 
 with sync_playwright() as p:
     b = p.chromium.launch(

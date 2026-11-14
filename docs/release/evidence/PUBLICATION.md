@@ -1,0 +1,1 @@
+Raw field boundaries, coordinates, identifiers, reports, photos and provider responses are kept outside Git. Public JSON files contain allowlisted verification summaries and hashes of private originals. Only reviewed screenshots without field coordinates/identifiers are published. Existing scientific-package hashes and source ancestry are preserved.

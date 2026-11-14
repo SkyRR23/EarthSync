@@ -207,7 +207,7 @@ def assistant_context(store, owner, farm_id):
             }
         )
     for group in comparisons[:2]:
-        summary = f"Comparison {group['name']}; baseline is a farmer-declared existing plan, decision {group['baseline_decision_id']}; alternatives={','.join(group['alternative_decision_ids'])}; priorities={','.join(group['priorities'])}; reason={group['exploration_reason']}; farmer choice={group.get('chosen_decision_id') or 'undecided'}. No suitability ranking or benefit is approved."
+        summary = f"Comparison {group['name'][:150]}; farmer choice={group.get('chosen_decision_id') or 'undecided'}; baseline is a farmer-declared existing plan; priorities={','.join(group['priorities'])}; reason={group['exploration_reason'][:150]}. No suitability ranking or benefit is approved. Selected strategy IDs and original chronology are retained in the separate strategy records."
         evidence.append(
             {
                 "id": "comparison:" + group["id"],

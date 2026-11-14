@@ -4,14 +4,18 @@ The combined candidate preserves these exact completed sources:
 
 | Source | Exact SHA |
 |---|---|
+| 7N / PR #24 | `a6dd13213d629e6714575425169530c617cbffad` |
+| 7P / PR #25 | `940a8aad62da8b188cdd3af4d200f353d907997a` |
+| 7V / PR #26 | `5ffe71e45f0f141d0e383cd437ab35c843960dc6` |
 | Initial 7W base / PR #27 | `edefc0c4dedf232e7ddb9704f6f2180a4936fcc3` |
 | Completed 7X / PR #28 | `665cbecce3575724ded5145863a6823b44773a69` |
 | Completed 7G / PR #30 | `27584a6e506ecda362be516b113b850c6ac98259` |
 | Independent farmer-product implementation | `6dc8e25dfbc476876c2df7ff40ee558c0d8c07f8` |
 | Published combined source and precision fix | `f12dcd2971e955fd2ca540e6a20c3aaf0f3124d9` |
+| Completed farmer editor, tracking and assistant fixes | `393b89af913ad4a3afd078a9f164fdc4430d9f06` |
 
-The last commit is a merge with the preceding three completed source heads as
-parents. No incomplete parallel changes were copied. Original local commits are
+The combined `f12dcd2` commit is a merge of the completed 7X, 7G and independent
+farmer-product source heads. Later commits retain that ancestry. No incomplete parallel changes were copied. Original local commits are
 also preserved in archive branches. The original main rollback reference is
 `1ea3df7b09637cf8162f834411d830aa8621590c`.
 
@@ -57,3 +61,22 @@ origin and exact confirmed farm revision. Forbidden/not-found responses do not
 fall back to private cache. The public service worker caches only an explicit
 hash-versioned static allowlist; never private API responses, tokens or images.
 No databases or authorization storage-state files belong in release artifacts.
+
+
+```mermaid
+flowchart LR
+  W["7W edefc0c"] --> X["7X 665cbec"]
+  W --> G["7G 27584a6"]
+  W --> F["Farmer product 6dc8e25"]
+  X --> C["Combined f12dcd2"]
+  G --> C
+  F --> C
+  C --> U["Farmer workflows 393b89a"]
+  U --> R["Final PR 29 head and verification artifacts"]
+```
+
+Final UI/interpretation and verification files follow `393b89a`; the exact final
+source SHA is the current PR #29 head, with check results recorded on that PR.
+Do not use an earlier green head to certify a later change. Runtime artifact and
+scientific-package hashes are retained in `evidence/artifact-hashes.json` and
+`evidence/source-integrity.log`.

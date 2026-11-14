@@ -31,6 +31,7 @@ void main() {
           'baseline_decision_id': 'baseline',
           'alternative_decision_ids': ['alternative-a', 'alternative-b'],
           'name': 'Reported plan exploration',
+          'chosen_decision_id': 'alternative-a',
           'exploration_reason': 'Explore water conservation',
           'priorities': ['less_water', 'nitrogen_potential'],
           'baseline_declared_existing_plan': true,
@@ -52,7 +53,7 @@ void main() {
         );
         await tester.pumpAndSettle();
         expect(find.text('Baseline · existing plan'), findsOneWidget);
-        expect(find.text('Alternative A'), findsOneWidget);
+        expect(find.text('Alternative A'), findsNWidgets(2));
         expect(find.text('Alternative B'), findsOneWidget);
         expect(
           find.text(
@@ -62,7 +63,7 @@ void main() {
         );
         expect(find.textContaining('No preferred crop'), findsOneWidget);
         final a = tester.getTopLeft(find.text('Baseline · existing plan'));
-        final b = tester.getTopLeft(find.text('Alternative A'));
+        final b = tester.getTopLeft(find.text('Alternative A').last);
         if (width >= 1000) {
           expect(a.dy, b.dy);
           expect(b.dx, greaterThan(a.dx));
@@ -80,12 +81,64 @@ void main() {
           'alternative-b',
         ]);
         expect(saved!['baseline_declared_existing_plan'], true);
+        expect(saved!['chosen_decision_id'], 'alternative-a');
         expect(saved!['priorities'], ['less_water', 'nitrogen_potential']);
         expect(saved!.containsKey('score'), false);
         expect(tester.takeException(), isNull);
       },
     );
   }
+  testWidgets(
+    'soil depth requirements are not presented as root characteristics',
+    (tester) async {
+      final assessment = fixture();
+      assessment['catalog_projection'][0]['profile']['parameters']['ecological_soil_depth'] =
+          {
+            'state': 'available',
+            'value': 100,
+            'unit': 'cm',
+            'statistic': 'synthetic reference fixture',
+            'spatial_support': 'not field evidence',
+            'claim_ids': [],
+          };
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: SingleChildScrollView(
+              child: DecisionComparison(
+                decisions: [
+                  for (final id in ['a', 'b', 'c'])
+                    {'id': id, 'assessment': assessment},
+                ],
+                initialComparison: const {
+                  'baseline_decision_id': 'a',
+                  'alternative_decision_ids': ['b', 'c'],
+                  'baseline_declared_existing_plan': true,
+                },
+              ),
+            ),
+          ),
+        ),
+      );
+      final details = find
+          .text('Crop characteristics & possible benefits')
+          .first;
+      await tester.ensureVisible(details);
+      await tester.tap(details);
+      await tester.pumpAndSettle();
+      expect(
+        find.text(
+          'Root characteristics: Insufficient applicable trait evidence.',
+        ),
+        findsOneWidget,
+      );
+      expect(
+        find.textContaining('ecological soil depth: 100 cm'),
+        findsOneWidget,
+      );
+      expect(tester.takeException(), isNull);
+    },
+  );
   testWidgets('two decisions cannot satisfy three-strategy requirement', (
     tester,
   ) async {

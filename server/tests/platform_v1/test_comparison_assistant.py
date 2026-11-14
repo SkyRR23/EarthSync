@@ -62,6 +62,7 @@ def test_default_comparison_answer_retains_baseline_and_both_alternatives(
             id=uuid4(),
             name="Synthetic farmer-declared comparison",
             exploration_reason="Test all three saved strategies",
+            chosen_decision_id=ids[1],
             baseline_decision_id=ids[0],
             alternative_decision_ids=ids[1:],
             baseline_declared_existing_plan=True,
@@ -97,6 +98,7 @@ def test_default_comparison_answer_retains_baseline_and_both_alternatives(
     ]:
         assert role in text
     assert "software-test-crop-2-1" in text
+    assert "farmer choice=" + ids[1] in text
     assert "not recommended crop durations" in text
     assert all(
         e.kind == "farmer_reported" and e.quality == "unverified"

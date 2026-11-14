@@ -1,0 +1,7 @@
+{
+  "schema_version": "earthsync.public_verification_receipt.v1",
+  "raw_receipt_sha256": "ebc4d396d4716cc651f45bb27dfc0470927268dce61659c17c775de71d652129",
+  "private_field_data_omitted": true,
+  "raw_record_type": "acknowledgment",
+  "classification": "SYNTHETIC software-test farmer record; raw data retained privately"
+}

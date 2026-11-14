@@ -128,3 +128,24 @@ require a compatible persistent host plus proper authentication/ownership
 isolation, or a separate sanitized read-only demo. This release retains the
 loopback local demonstration while mandatory data/acceptance gates remain open.
 No paid resources, billing changes or public tunnel have been created.
+
+
+## Private browser receipts and safe publication
+
+Keep browser authorization/state files and raw results outside the checkout.
+Raw helpers enforce this boundary; public receipt summaries cannot be used as
+raw inputs for `--resume-strategies` or recovery verification.
+
+```bash
+# Chromium and Python Playwright are required only for browser verification.
+"$PY" scripts/browser_final.py --state "$PRIVATE/browser-state.json" --output "$PRIVATE/verification/browser-final"
+"$PY" scripts/browser_crop_explorer.py --state "$PRIVATE/browser-state.json" --output "$PRIVATE/verification/browser-crops"
+"$PY" scripts/browser_risk_final.py --state "$PRIVATE/browser-state.json" --output "$PRIVATE/verification/browser-risk"
+"$PY" scripts/summarize_release_evidence.py --raw "$PRIVATE/verification" --output docs/release/evidence
+```
+
+The public step publishes metadata/hashes only. Screenshots are excluded by default;
+add `--include-reviewed-screenshots` only after reviewing the fixed allowlist for
+field locations, identifiers and personal information. Retain map screenshots and
+full assessment/observation payloads privately. Never push local raw-evidence archive
+refs. The historical 7G/7X test fixtures are separate from newly captured runtime data.

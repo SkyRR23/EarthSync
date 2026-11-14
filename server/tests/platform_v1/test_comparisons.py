@@ -32,6 +32,7 @@ def comparison(ids):
     return ComparisonInput(
         id=uuid4(),
         name="Declared baseline and alternatives",
+        chosen_decision_id=ids[1],
         baseline_decision_id=ids[0],
         alternative_decision_ids=ids[1:],
         baseline_declared_existing_plan=True,
@@ -47,6 +48,7 @@ def test_three_distinct_strategies_restart_and_baseline_confirmation(store, farm
     repo = Comparisons(store)
     saved = repo.save("alice", farm.id, value)
     assert saved["recommendation_eligible"] is False
+    assert saved["chosen_decision_id"] == str(ids[1])
     assert saved["data_type"] == "farmer_reported"
     assert repo.save("alice", farm.id, value) == saved
     assert Comparisons(Store(store.path.parent)).list("alice", farm.id) == [saved]

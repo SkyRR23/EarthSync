@@ -13,6 +13,7 @@ from datetime import datetime, timezone
 from urllib.parse import urlencode
 
 from playwright.sync_api import sync_playwright, expect
+from release_privacy import private_output
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--base-url", default="http://127.0.0.1:8091")
@@ -24,14 +25,20 @@ parser.add_argument(
     help="Continue from the three actual saved native assessment receipts; no provider substitution",
 )
 parser.add_argument(
-    "--output", type=Path, default=Path("docs/release/evidence/browser-final")
+    "--output", type=Path, help="Private raw receipt directory outside the checkout"
 )
 args = parser.parse_args()
-out = args.output
-out.mkdir(parents=True, exist_ok=True)
+out = private_output(
+    args.output or Path(args.state).absolute().parent / "browser-final"
+)
 steps, errors = [], []
 if args.resume_strategies:
-    steps = json.loads((out / "results.json").read_text())["steps"]
+    steps = list(
+        {
+            row["step"]: row
+            for row in json.loads((out / "results.json").read_text())["steps"]
+        }.values()
+    )
 
 
 def receipt(name, value):
@@ -41,6 +48,7 @@ def receipt(name, value):
 
 
 def record(name, classification):
+    steps[:] = [row for row in steps if row["step"] != name]
     steps.append({"step": name, "classification": classification})
     receipt(
         "results",
@@ -85,12 +93,16 @@ with sync_playwright() as p:
         page.wait_for_timeout(300)
 
     def visible(text, exact=False, role=None):
+        if role is None:
+            snapshot = page.locator("body").aria_snapshot()
+            if text.search(snapshot) if hasattr(text, "search") else text in snapshot:
+                return page.locator("body")
         current = (
             page.get_by_role(role, name=text, exact=exact)
             if role
             else page.get_by_text(text, exact=exact)
         )
-        if current.count() and current.first.is_visible():
+        if role is not None and current.count() and current.first.is_visible():
             box = current.first.bounding_box()
             if (
                 box
@@ -111,6 +123,9 @@ with sync_playwright() as p:
                 text.search(snapshot) if hasattr(text, "search") else text in snapshot
             ):
                 return page.locator("body")
+            if role is None:
+                raw_scroll(200)
+                continue
             loc = (
                 page.get_by_role(role, name=text, exact=exact)
                 if role
@@ -135,7 +150,10 @@ with sync_playwright() as p:
         raise AssertionError("Rendered control/text missing: " + str(text))
 
     def button(name):
-        visible(name, exact=True, role="button").click()
+        if name == "Refresh":
+            page.get_by_role("button", name=name, exact=True).first.click()
+        else:
+            visible(name, exact=True, role="button").click()
         page.wait_for_timeout(250)
 
     def fill(name, value):
@@ -432,6 +450,7 @@ with sync_playwright() as p:
             "SYNTHETIC",
         )
         page.set_viewport_size({"width": 390, "height": 844})
+        page.wait_for_timeout(500)
         visible("Baseline · existing plan")
         shot("three-strategies-phone")
         record("Responsive mobile strategy comparison", "SYNTHETIC")
@@ -588,7 +607,8 @@ with sync_playwright() as p:
         answer = reply.value.json()
         receipt("assistant-comparison", answer)
         assert any("baseline" in c["text"] for c in answer["claims"])
-        assert answer["decisions"] and answer["citations"]
+        assert len(answer["decisions"]) >= 3 and answer["citations"]
+        assert any("Alternative B" in c["text"] for c in answer["claims"])
         shot("assistant-saved-comparison")
         record(
             "Deterministic assistant explains the saved comparison and original citations",
@@ -596,8 +616,7 @@ with sync_playwright() as p:
         )
 
         go("settings")
-        button("English")
-        page.get_by_role("menuitem", name="မြန်မာ", exact=True).click()
+        choose("Language", "မြန်မာ")
         page.wait_for_timeout(500)
         visible("ဘာသာစကား")
         shot("burmese-settings")
@@ -609,8 +628,7 @@ with sync_playwright() as p:
             "SYNTHETIC",
         )
         go("settings")
-        button("မြန်မာ")
-        page.get_by_role("menuitem", name="English", exact=True).click()
+        choose("ဘာသာစကား", "English")
         page.wait_for_timeout(500)
 
         go("season")
@@ -620,9 +638,7 @@ with sync_playwright() as p:
         )
         button("Refresh")
         visible("Cached copy · may be stale")
-        assert page.get_by_role(
-            "button", name="Confirm & save report", exact=True
-        ).is_disabled()
+        assert visible("Confirm & save report", exact=True, role="button").is_disabled()
         shot("cached-offline-records")
         page.unroute("**/api/platform/v1/**")
         record(
@@ -669,7 +685,24 @@ with sync_playwright() as p:
         )
         raise
     finally:
-        context.storage_state(
-            path=str(Path(args.state).with_name("browser-final-state.json"))
-        )
+        # Capture the live local app page directly. Chromium's storage-state
+        # helper can navigate a temporary page through the active offline worker;
+        # that is not the page whose persisted farmer state we are verifying.
+        if not page.is_closed() and page.url.startswith(args.base_url):
+            rows = page.evaluate(
+                "Object.entries(localStorage).map(([name,value])=>({name,value}))"
+            )
+            if any(row["name"] == "flutter.earthsync.home.v1" for row in rows):
+                target = Path(args.state).with_name("browser-final-state.json")
+                target.write_text(
+                    json.dumps(
+                        {
+                            "cookies": context.cookies(),
+                            "origins": [
+                                {"origin": args.base_url, "localStorage": rows}
+                            ],
+                        }
+                    )
+                )
+                target.chmod(0o600)
         browser.close()

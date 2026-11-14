@@ -458,7 +458,7 @@ class _StrategyEvidence extends StatelessWidget {
       'Nitrogen-fixing potential': ['nitrogen_fixation'],
       'Ground cover': ['ground_cover'],
       'Organic matter contributions': ['organic_matter_contribution'],
-      'Root characteristics': ['ecological_soil_depth', 'rooting_depth'],
+      'Root characteristics': ['rooting_depth'],
       'Forage value': ['forage_value'],
       'Erosion-related considerations': ['erosion_protection'],
       'Water-use characteristics': ['water_demand', 'kc_stages'],

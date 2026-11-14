@@ -1,0 +1,17 @@
+{
+  "schema_version": "earthsync.public_verification_receipt.v1",
+  "raw_receipt_sha256": "c7abe9c76639108d85cdd2929eb08bf81e23276b3baaf4399155c91a44127a1c",
+  "private_field_data_omitted": true,
+  "native_status": "success",
+  "recommendation_eligible": false,
+  "strategy_plan_counts": [
+    2
+  ],
+  "finding_statuses": [
+    "insufficient_information",
+    "supported_by_supplied_evidence"
+  ],
+  "executable_rule_count": 0,
+  "selected_environmental_snapshot_count": 2,
+  "selected_farmer_report_count": 0
+}
