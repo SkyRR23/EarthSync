@@ -1,0 +1,250 @@
+{
+  "scope": "Exact stored data bytes; hashes establish integrity, not agricultural truth or source acceptance",
+  "files": [
+    {
+      "path": "catalog.json",
+      "sha256": "9c61fc394bd73f990fa12cba21d77a3e21028c233b956e1ce31f664178ad241b",
+      "bytes": 3222104
+    },
+    {
+      "path": "catalog.schema.json",
+      "sha256": "8b896f16d4e79b6180768a6abf690eee09cfa943eea9da9f5fbd7b002e520701",
+      "bytes": 54203
+    },
+    {
+      "path": "dataset-inventory.json",
+      "sha256": "fd75330ec9c390a8ea21a23ab895c82adcef71dabc86c2395ca625e8b636caf3",
+      "bytes": 15141
+    },
+    {
+      "path": "dataset-inventory.schema.json",
+      "sha256": "faadecba63b687ef0300e53b47b6470a047918a735f96fdbd6c0eb4c24653245",
+      "bytes": 1989
+    },
+    {
+      "path": "dataset-versions.json",
+      "sha256": "c52d6ca63ee4938be35a06ba66e912284de29d4ecaad6a7a64103e2beffbce7f",
+      "bytes": 1095
+    },
+    {
+      "path": "editorial.json",
+      "sha256": "cb1f5adc2a8dc3fdcfd9631ce58cfd2767ef5bd2fbec7651d13f7e892726a6fb",
+      "bytes": 2238
+    },
+    {
+      "path": "evidence/calendar-disagreements.json",
+      "sha256": "930ea0ee581474dcaf1193eab14ba33a798dbe68675ae10d937bcde35947b2f1",
+      "bytes": 5171
+    },
+    {
+      "path": "evidence/gaez-v5-reference.json",
+      "sha256": "50314a3964b170a2efb05ddf04aaad1ed8186e5d90fc4f4691f4b69618399cda",
+      "bytes": 2619
+    },
+    {
+      "path": "evidence/myanmar-calendar-facts.json",
+      "sha256": "431bae20a307b44f84c336c1ce95af2141b5964dc95b1c4dfc1247ee55223c88",
+      "bytes": 34767
+    },
+    {
+      "path": "evidence/retrieval-receipts.json",
+      "sha256": "127b0aa2eccb18b9a352519f7b1315d46cc8c8013f5a807f4307d1a40774e7d9",
+      "bytes": 33297
+    },
+    {
+      "path": "evidence/soil-wcs-rejected-receipt.json",
+      "sha256": "52154121f9953301290c4762e281ed0eb32affdbd9d12e44cab5c8ed299879d5",
+      "bytes": 2541
+    },
+    {
+      "path": "evidence/taxon-checks.json",
+      "sha256": "1f667b896b703b40b96d459f385ac97e9f02a921f20191bd3747f95d588c17f3",
+      "bytes": 2231
+    },
+    {
+      "path": "fixtures/declared-overlap.request.json",
+      "sha256": "6325b05d3663e6eafefc97f203c865996b6a9cc152ed3fd52062f4dbf6d4f31d",
+      "bytes": 2835
+    },
+    {
+      "path": "fixtures/declared-reverse-order.request.json",
+      "sha256": "49945cdc0cc2da26ba4d0347c3cf0729504f6a83d71525a21fb7052c281ad521",
+      "bytes": 2840
+    },
+    {
+      "path": "fixtures/groundnut-maize.request.json",
+      "sha256": "bf90ae21d396f447b6b94826348cf2828a4c57c54f6c53e36d0a0f2b825e9042",
+      "bytes": 2837
+    },
+    {
+      "path": "fixtures/maize-groundnut.request.json",
+      "sha256": "165441bf391f7f8cfaccbcb946c623d804373ee83de712e0edc3b6af1c5ee61f",
+      "bytes": 2837
+    },
+    {
+      "path": "fixtures/maize-mung.request.json",
+      "sha256": "f8be74226a6418b6bc16b75e53d7f8cb30d7555a50c3a9af5db71bb46ed3af9d",
+      "bytes": 2820
+    },
+    {
+      "path": "fixtures/rice-groundnut.request.json",
+      "sha256": "88a16327c81b47918df7ce6190deb18d0bd7f89032f4a2cb26e740f449fd5010",
+      "bytes": 2844
+    },
+    {
+      "path": "fixtures/rice-mung.request.json",
+      "sha256": "5de10131bf0d2b15d05c3ffc856f8826df3a199509dac861a3a71539bdef9830",
+      "bytes": 2827
+    },
+    {
+      "path": "fixtures/rice-sesame.request.json",
+      "sha256": "7b91d699be118df9ae60f1942b0330beab16d3f40f8fd33bde164043141d6775",
+      "bytes": 2838
+    },
+    {
+      "path": "fixtures/sesame-pulses.request.json",
+      "sha256": "4cabcc9cdd6ccc95063018aa6475d34eb9edb877f1aa11dfef2949b477206648",
+      "bytes": 2841
+    },
+    {
+      "path": "fixtures/wheat-sorghum-fallow.request.json",
+      "sha256": "baccb34b9ea5039c2420b5182052b80fa4e7cfbe96cf35c652c7db84c026dae4",
+      "bytes": 3913
+    },
+    {
+      "path": "mapping-report.json",
+      "sha256": "902206c4caab240599de49b065fd9472474c2efe8c0f3ee602c47e59fcc2d5cf",
+      "bytes": 611158
+    },
+    {
+      "path": "missing-parameters.json",
+      "sha256": "dddd49302c6326d3900cdc113359a9e800e125e084916e533ba77ccd41e2b6b6",
+      "bytes": 397456
+    },
+    {
+      "path": "nasa-compatibility.json",
+      "sha256": "491709cb6c0e63e0639f45acc4f6105641b10cbb82b1d5c290ea3bb7d75be47c",
+      "bytes": 8755
+    },
+    {
+      "path": "open-source-reuse.json",
+      "sha256": "e9e7e4041f5835c95bc8326bbe3e3d39ccbf599939bd50835dd7120bf1bc96bc",
+      "bytes": 5011
+    },
+    {
+      "path": "original-manifest.json",
+      "sha256": "94acd95002c7eda197b6de0017dcd98ca17d0e659102c59b81f906ad038f1ed5",
+      "bytes": 3801
+    },
+    {
+      "path": "originals/ecocrop_groundnut.html",
+      "sha256": "fc99ce99d40be5ef2b89d5c391e740fde7501ef68ae0ed3e14e54da782e07956",
+      "bytes": 6497
+    },
+    {
+      "path": "originals/ecocrop_help_2000.html",
+      "sha256": "ef3eb9cfeed9b5a03380f4df7d63c09a267f26cb7a09366befb0d3505305affc",
+      "bytes": 655
+    },
+    {
+      "path": "originals/ecocrop_help_2001.html",
+      "sha256": "2d71b5a07c1f7e5eec2ac1cad883f0c3d632a67bae78c05889427a7d65c81097",
+      "bytes": 721
+    },
+    {
+      "path": "originals/ecocrop_help_2003.html",
+      "sha256": "c1c1974dc518b23b4fe4c75fa556a89395f85293b0c6aa647e9efd93dfa82038",
+      "bytes": 735
+    },
+    {
+      "path": "originals/ecocrop_help_2004.html",
+      "sha256": "097bf90a361bfb149e36a4975665db8ef35b6a7b52e6767eb81aa83861648988",
+      "bytes": 602
+    },
+    {
+      "path": "originals/ecocrop_maize.html",
+      "sha256": "285c1b1cc3522c5e34ddc552ec46306a364a7c44897421e421e1657bb8194bb0",
+      "bytes": 6393
+    },
+    {
+      "path": "originals/ecocrop_mung_bean.html",
+      "sha256": "772f2edbece09d0ca0a641396c73a5b70ed52dea6fd78671ac8e2810d529254c",
+      "bytes": 6350
+    },
+    {
+      "path": "originals/ecocrop_openclim_ea43ecd.csv",
+      "sha256": "4187e8846336e185c4583165211c5981855e95adfbefd897bd2bd481de48d106",
+      "bytes": 1622384
+    },
+    {
+      "path": "originals/ecocrop_rice.html",
+      "sha256": "73e150aaf5c203a6b4c55e95d87284cfd3b5c70a425b888c9c436bb74b217e6c",
+      "bytes": 6144
+    },
+    {
+      "path": "originals/ecocrop_sesame.html",
+      "sha256": "0e56e837107dfc2f7bc21d3bd4236ae6efc6cfc831877a0a5197ece19cafb5f7",
+      "bytes": 6382
+    },
+    {
+      "path": "originals/fao_ecocrop_metadata.json",
+      "sha256": "a72d94cb0dfa1fe7c2023fbf78e1bfadd3e7b6dbd268c2c33b18d460babf4262",
+      "bytes": 7015
+    },
+    {
+      "path": "originals/gaez_v5_metadata.json",
+      "sha256": "df4d4a7d9794d29daedba730aa1f2d58b454f461e296cff78776995abcdcc0a3",
+      "bytes": 23259
+    },
+    {
+      "path": "originals/soil-wcs-capture-0.bin",
+      "sha256": "967770398980215524e116d8e9a8c6901202f8072a07b709a99430530026012e",
+      "bytes": 2535
+    },
+    {
+      "path": "originals/soil-wcs-capture-1.bin",
+      "sha256": "dd0e39567b60214e700e6c6ef6e982a42d86f497b2e7c8d430500c98a6e4b2fa",
+      "bytes": 1070
+    },
+    {
+      "path": "regions.json",
+      "sha256": "e08ff5bb77095b72b3364b337e665ab78ec3210094c2361397fbc33039de9256",
+      "bytes": 2265
+    },
+    {
+      "path": "research-leads.json",
+      "sha256": "46c35d0414593b9fc9ed422e7d29e38e33d1ee9a4af7a872aae3127fbf1b370b",
+      "bytes": 4804
+    },
+    {
+      "path": "retrieval-corrections.json",
+      "sha256": "c220d7e70e433bda6efc3277085dc07cf8a1079780ba76112db4e1d98200374b",
+      "bytes": 176
+    },
+    {
+      "path": "retrieval-plan.json",
+      "sha256": "dddb111395148007e93576ff930d20de0954415945b42c153bd5b47c67b9a7f1",
+      "bytes": 4829
+    },
+    {
+      "path": "retrieval-semantics.json",
+      "sha256": "4c1a013de2386a0b242df616a58c55893d5bf364e163c573a4be2d00f425ef7a",
+      "bytes": 663
+    },
+    {
+      "path": "retrieval-soil-webdav.json",
+      "sha256": "5e00f34c6f028bfd2ca5041bf0ee5896d5558612b8b98e8927db64c18e70d689",
+      "bytes": 320
+    },
+    {
+      "path": "sources.json",
+      "sha256": "52f05aaae1af09769bbbda4251ba407bb80426f46942a28d68c68622313796d4",
+      "bytes": 55242
+    },
+    {
+      "path": "species-inventory.jsonl",
+      "sha256": "555afe461cbfa0bad7efb607b9df06106cdda6ed5ff415f701065db43b1960da",
+      "bytes": 1044161
+    }
+  ]
+}

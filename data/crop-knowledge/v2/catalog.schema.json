@@ -1,0 +1,1849 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "earthsync.crop-knowledge.v2-reference"
+    },
+    "content_version": {
+      "const": "1.0.0"
+    },
+    "recommendation_eligible": {
+      "const": false
+    },
+    "dataset_versions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dataset_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "publisher": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "publication_date": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "publication_date_precision": {
+            "enum": [
+              "day",
+              "month",
+              "year",
+              "unknown"
+            ]
+          },
+          "retrieved_at": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "retrieval_date": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "access_status": {
+            "enum": [
+              "captured",
+              "web_reviewed",
+              "inherited_7j_review",
+              "unavailable",
+              "discovery_only"
+            ]
+          },
+          "review": {
+            "const": "reference_only"
+          },
+          "license": {
+            "type": "string",
+            "minLength": 1
+          },
+          "license_url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "rights_note": {
+            "type": "string",
+            "minLength": 1
+          },
+          "attribution": {
+            "type": "string",
+            "minLength": 1
+          },
+          "response_sha256": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "original_file": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "id",
+          "dataset_id",
+          "title",
+          "publisher",
+          "url",
+          "version",
+          "publication_date",
+          "publication_date_precision",
+          "retrieved_at",
+          "retrieval_date",
+          "access_status",
+          "review",
+          "license",
+          "license_url",
+          "rights_note",
+          "attribution",
+          "response_sha256",
+          "original_file",
+          "limitations"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "locator": {
+            "type": "string",
+            "minLength": 1
+          },
+          "crop_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "parameter": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {},
+          "unit": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "statistic": {
+            "type": "string",
+            "minLength": 1
+          },
+          "temporal_support": {
+            "type": "string",
+            "minLength": 1
+          },
+          "spatial_support": {
+            "type": "string",
+            "minLength": 1
+          },
+          "method": {
+            "type": "string",
+            "minLength": 1
+          },
+          "region_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "production_system": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "cultivar": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "review": {
+            "const": "reference_only"
+          },
+          "evidence_kind": {
+            "enum": [
+              "taxonomy",
+              "ecological_descriptor",
+              "advisory_calendar",
+              "method_reference",
+              "published_guidance",
+              "research_context"
+            ]
+          },
+          "uncertainty": {
+            "type": "string",
+            "minLength": 1
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "supporting_source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "id",
+          "source_id",
+          "source_version",
+          "locator",
+          "crop_id",
+          "parameter",
+          "value",
+          "unit",
+          "statistic",
+          "temporal_support",
+          "spatial_support",
+          "method",
+          "region_id",
+          "production_system",
+          "cultivar",
+          "review",
+          "evidence_kind",
+          "uncertainty",
+          "limitations",
+          "supporting_source_ids"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "crops": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scientific_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "aliases": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "family": {
+            "type": "string",
+            "minLength": 1
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "agricultural_basis": {
+            "type": "string",
+            "minLength": 1
+          },
+          "identity_claim_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "profile_coverage": {
+            "enum": [
+              "reference_profiles",
+              "identity_only"
+            ]
+          },
+          "recommendation_eligible": {
+            "const": false
+          },
+          "approved_for_candidates": {
+            "const": false
+          },
+          "review": {
+            "const": "reference_only"
+          }
+        },
+        "required": [
+          "id",
+          "scientific_name",
+          "aliases",
+          "family",
+          "categories",
+          "agricultural_basis",
+          "identity_claim_id",
+          "profile_coverage",
+          "recommendation_eligible",
+          "approved_for_candidates",
+          "review"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "crop_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "region_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "production_system": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "cultivar": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "country": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "agroecological_zone": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "season": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source_context": {
+            "type": "string",
+            "minLength": 1
+          },
+          "recommendation_eligible": {
+            "const": false
+          },
+          "approved_for_candidates": {
+            "const": false
+          },
+          "review": {
+            "const": "reference_only"
+          },
+          "executable_rules": {
+            "const": []
+          },
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "planting_window": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "object",
+                          "properties": {
+                            "first_mmdd": {
+                              "type": "integer"
+                            },
+                            "last_mmdd": {
+                              "type": "integer"
+                            },
+                            "wraps_year": {
+                              "type": "boolean"
+                            },
+                            "advisory": {
+                              "const": true
+                            }
+                          },
+                          "required": [
+                            "first_mmdd",
+                            "last_mmdd",
+                            "wraps_year",
+                            "advisory"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "unit": {
+                          "const": "MMDD"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "harvest_window": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "object",
+                          "properties": {
+                            "first_mmdd": {
+                              "type": "integer"
+                            },
+                            "last_mmdd": {
+                              "type": "integer"
+                            },
+                            "wraps_year": {
+                              "type": "boolean"
+                            },
+                            "advisory": {
+                              "const": true
+                            }
+                          },
+                          "required": [
+                            "first_mmdd",
+                            "last_mmdd",
+                            "wraps_year",
+                            "advisory"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "unit": {
+                          "const": "MMDD"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "growing_duration": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "object",
+                          "properties": {
+                            "min": {
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            },
+                            "max": {
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "unit": {
+                          "const": "days"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "ecological_temperature": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "object",
+                          "properties": {
+                            "optimal": {
+                              "type": "object",
+                              "properties": {
+                                "min": {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                },
+                                "max": {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "min",
+                                "max"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "absolute": {
+                              "type": "object",
+                              "properties": {
+                                "min": {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                },
+                                "max": {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "min",
+                                "max"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "required": [
+                            "optimal",
+                            "absolute"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "unit": {
+                          "const": "celsius"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "daily_extreme_temperature": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "string"
+                        },
+                        "unit": {
+                          "const": "qualitative"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "growing_degree_days": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "string"
+                        },
+                        "unit": {
+                          "const": "qualitative"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "annual_precipitation": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "object",
+                          "properties": {
+                            "optimal": {
+                              "type": "object",
+                              "properties": {
+                                "min": {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                },
+                                "max": {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "min",
+                                "max"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "absolute": {
+                              "type": "object",
+                              "properties": {
+                                "min": {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                },
+                                "max": {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "min",
+                                "max"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "required": [
+                            "optimal",
+                            "absolute"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "unit": {
+                          "const": "mm"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "growing_period_rainfall": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "string"
+                        },
+                        "unit": {
+                          "const": "qualitative"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "water_demand": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "string"
+                        },
+                        "unit": {
+                          "const": "qualitative"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "et0_method": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "string"
+                        },
+                        "unit": {
+                          "const": "qualitative"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "kc_stages": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "object",
+                          "properties": {
+                            "initial": {
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            },
+                            "mid": {
+                              "type": "number"
+                            },
+                            "end": {
+                              "oneOf": [
+                                {
+                                  "type": "number"
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "min": {
+                                      "type": [
+                                        "number",
+                                        "null"
+                                      ]
+                                    },
+                                    "max": {
+                                      "type": [
+                                        "number",
+                                        "null"
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "min",
+                                    "max"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              ]
+                            },
+                            "stage_offsets": {
+                              "const": null
+                            },
+                            "basis": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "initial",
+                            "mid",
+                            "end",
+                            "stage_offsets",
+                            "basis"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "unit": {
+                          "const": "dimensionless"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "drought_tolerance": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "string"
+                        },
+                        "unit": {
+                          "const": "qualitative"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "flooding_tolerance": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "string"
+                        },
+                        "unit": {
+                          "const": "qualitative"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "stage_vulnerabilities": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "string"
+                        },
+                        "unit": {
+                          "const": "qualitative"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "ecological_soil_ph": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "object",
+                          "properties": {
+                            "optimal": {
+                              "type": "object",
+                              "properties": {
+                                "min": {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                },
+                                "max": {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "min",
+                                "max"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "absolute": {
+                              "type": "object",
+                              "properties": {
+                                "min": {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                },
+                                "max": {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "min",
+                                "max"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "required": [
+                            "optimal",
+                            "absolute"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "unit": {
+                          "const": "pH"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "soil_ph_by_depth": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "string"
+                        },
+                        "unit": {
+                          "const": "qualitative"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "soil_texture": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "object",
+                          "properties": {
+                            "optimal": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "absolute": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "optimal",
+                            "absolute"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "unit": {
+                          "const": "source_category"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "soil_drainage": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "object",
+                          "properties": {
+                            "optimal": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "absolute": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "optimal",
+                            "absolute"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "unit": {
+                          "const": "source_category"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "ecological_soil_depth": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "object",
+                          "properties": {
+                            "optimal": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "absolute": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "optimal",
+                            "absolute"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "unit": {
+                          "const": "source_category"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "irrigation_requirements": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "string"
+                        },
+                        "unit": {
+                          "const": "qualitative"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "flooded_management": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "string"
+                        },
+                        "unit": {
+                          "const": "qualitative"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "succession": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "string"
+                        },
+                        "unit": {
+                          "const": "qualitative"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "crop_history_relationships": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "string"
+                        },
+                        "unit": {
+                          "const": "qualitative"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "altitude": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "object",
+                          "properties": {
+                            "min": {
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            },
+                            "max": {
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "unit": {
+                          "const": "m"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "ecological_crop_cycle": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "object",
+                          "properties": {
+                            "min": {
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            },
+                            "max": {
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "min",
+                            "max"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "unit": {
+                          "const": "days"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "climate_zone": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/parameter"
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "available"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "value": {
+                          "type": "string"
+                        },
+                        "unit": {
+                          "const": "qualitative"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "unit"
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            "required": [
+              "planting_window",
+              "harvest_window",
+              "growing_duration",
+              "ecological_temperature",
+              "daily_extreme_temperature",
+              "growing_degree_days",
+              "annual_precipitation",
+              "growing_period_rainfall",
+              "water_demand",
+              "et0_method",
+              "kc_stages",
+              "drought_tolerance",
+              "flooding_tolerance",
+              "stage_vulnerabilities",
+              "ecological_soil_ph",
+              "soil_ph_by_depth",
+              "soil_texture",
+              "soil_drainage",
+              "ecological_soil_depth",
+              "irrigation_requirements",
+              "flooded_management",
+              "succession",
+              "crop_history_relationships",
+              "altitude",
+              "ecological_crop_cycle",
+              "climate_zone"
+            ],
+            "additionalProperties": false
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "id",
+          "crop_id",
+          "region_id",
+          "production_system",
+          "cultivar",
+          "country",
+          "agroecological_zone",
+          "season",
+          "source_context",
+          "recommendation_eligible",
+          "approved_for_candidates",
+          "review",
+          "executable_rules",
+          "parameters",
+          "limitations"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "rotations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "region_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "production_system": {
+            "type": "string",
+            "minLength": 1
+          },
+          "date_basis": {
+            "const": "synthetic_example_dates_not_source_calendar"
+          },
+          "claim_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "source_support": {
+            "type": "string",
+            "minLength": 1
+          },
+          "cycles": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "crop",
+                    "fallow"
+                  ]
+                },
+                "crop_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "profile_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "start": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "end": {
+                  "type": "string",
+                  "format": "date"
+                }
+              },
+              "required": [
+                "kind",
+                "crop_id",
+                "profile_id",
+                "start",
+                "end"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "field_drainage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "water_requirements": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "crop_history_available": {
+            "const": false
+          },
+          "succession_restrictions": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "verified_tradeoffs": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "missing_evidence": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "recommendation_eligible": {
+            "const": false
+          },
+          "approved_for_candidates": {
+            "const": false
+          },
+          "review": {
+            "const": "reference_only"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "region_id",
+          "production_system",
+          "date_basis",
+          "claim_ids",
+          "source_support",
+          "cycles",
+          "field_drainage",
+          "water_requirements",
+          "crop_history_available",
+          "succession_restrictions",
+          "verified_tradeoffs",
+          "missing_evidence",
+          "recommendation_eligible",
+          "approved_for_candidates",
+          "review"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "content_version",
+    "recommendation_eligible",
+    "dataset_versions",
+    "sources",
+    "claims",
+    "crops",
+    "profiles",
+    "rotations"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "parameter": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "enum": [
+            "available",
+            "unknown"
+          ]
+        },
+        "value": {},
+        "unit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "statistic": {
+          "type": "string",
+          "minLength": 1
+        },
+        "temporal_support": {
+          "type": "string",
+          "minLength": 1
+        },
+        "spatial_support": {
+          "type": "string",
+          "minLength": 1
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "review": {
+          "const": "reference_only"
+        },
+        "uncertainty": {
+          "type": "string",
+          "minLength": 1
+        },
+        "missing_reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "state",
+        "value",
+        "unit",
+        "statistic",
+        "temporal_support",
+        "spatial_support",
+        "method",
+        "claim_ids",
+        "review",
+        "uncertainty",
+        "missing_reason"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "soilgrids_root_readme",
+    "url": "https://files.isric.org/soilgrids/README.md",
+    "format": "text",
+    "maximum_bytes": 100000
+  },
+  {
+    "id": "soilgrids_phh2o_directory",
+    "url": "https://files.isric.org/soilgrids/latest/data/phh2o/",
+    "format": "html",
+    "maximum_bytes": 200000
+  }
+]

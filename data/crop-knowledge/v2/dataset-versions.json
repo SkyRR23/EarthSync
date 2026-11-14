@@ -1,0 +1,17 @@
+{
+  "ecocrop": "historical database; discontinued circa 2015; per-sheet publication unknown",
+  "ecocrop_openclim": "ea43ecd418fd1a1ea08d32c7dce64b7fae02dec4; CSV 2568 rows 55 columns",
+  "grin": "GRIN-Global public website 2.3.12; taxon record revision unspecified",
+  "crop_calendar": "API v1 snapshot 2026-11-14; Myanmar records lastUpdated 2021-02-26",
+  "gaez_v5": "GAEZ v5; portal configuration snapshot 2026-11-14",
+  "soilgrids": "SoilGrids250m 2.0; latest is mutable, release date unverified",
+  "fao_myanmar": "2022; ISBN 978-92-5-136276-1; cc0246en",
+  "doa_pulses": "2017-11-17 public extension article",
+  "fao56": "FAO Irrigation and Drainage Paper 56 (1998)",
+  "fao_water": "Irrigation Water Management training manual: Irrigation scheduling; chapter 2",
+  "kstate": "Dryland cropping systems abstracts; 2008–2020 study context",
+  "nsw": "Primefact 1253, fourth edition, July 2023",
+  "irri": "Water management in irrigated rice (2007)",
+  "power": "existing 7H/7I validated contracts; no new observations",
+  "cmr": "CMR collections search HLSL30 v2.0 snapshot 2026-11-14"
+}

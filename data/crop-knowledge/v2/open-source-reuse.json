@@ -1,0 +1,92 @@
+[
+  {
+    "tool": "OpenCLIM ECOCROP",
+    "repository": "https://github.com/OpenCLIM/ecocrop",
+    "version": "data file commit ea43ecd418fd1a1ea08d32c7dce64b7fae02dec4",
+    "license": "Repository code license undeclared; underlying FAO dataset CC-BY-4.0 documented independently",
+    "dependencies": "Numerical/geospatial Python suitability model; not installed",
+    "used": "Only pinned 55-column FAO-derived CSV data, with original hash, explicit mirror provenance and official priority-field cross-checks",
+    "decision": "No code copied and no suitability/ranking model run."
+  },
+  {
+    "tool": "Recocrop",
+    "repository": "https://github.com/cropmodels/Recocrop",
+    "version": "CRAN0.4-2, 2025-07-21 DESCRIPTION inspected",
+    "license": "GPL >=3",
+    "dependencies": "R>=3.5, Rcpp, meteor, terra>=1.8-5, methods",
+    "used": "None",
+    "decision": "Models ecological suitability; installing another crop decision model is outside scope. No code copied."
+  },
+  {
+    "tool": "Python ecocrop",
+    "repository": "https://github.com/ttwiipongwii/ecocrop",
+    "version": "PyPI0.2.0 metadata inspected",
+    "license": "PyPI license field null; reuse license not independently established",
+    "dependencies": "numpy,pandas,rasterio,matplotlib,scipy",
+    "used": "None",
+    "decision": "Not required for bounded identity/table parsing; no code copied and no model introduced."
+  },
+  {
+    "tool": "PyAEZ",
+    "repository": "https://github.com/gicait/PyAEZ",
+    "version": "Repository master metadata inspected; no software version pinned/installed",
+    "license": "MIT per repository metadata",
+    "dependencies": "Agroecological modeling stack; not installed",
+    "used": "None",
+    "decision": "Method/model toolkit, not required for lightweight official GAEZ CKAN metadata access; no second agricultural engine."
+  },
+  {
+    "tool": "OWSLib",
+    "repository": "https://github.com/geopython/OWSLib",
+    "version": "Repository master metadata inspected; no release installed",
+    "license": "BSD-3-Clause per repository metadata",
+    "dependencies": "Python OGC protocol/geospatial helpers",
+    "used": "None",
+    "decision": "Existing 7I WCS query/reader reused; no additional protocol framework needed."
+  },
+  {
+    "tool": "Rasterio/GDAL",
+    "repository": "https://github.com/rasterio/rasterio",
+    "version": "1.4.3, existing server/requirements.lock pin",
+    "license": "Rasterio BSD-style; bundled GDAL/PROJ and other binary licenses remain their own (repository API NOASSERTION is not treated as a license grant)",
+    "dependencies": "Existing server rasterio/numpy/affine/PROJ/GDAL environment, no new core dependency",
+    "used": "Unchanged existing 7I SoilWcs/read_ph_raster and Transport through soil_probe.py; diagnostic metadata inspection of rejected raster",
+    "decision": "No raster parsing or geospatial algorithms copied/reimplemented; use existing locked environment for future probes."
+  },
+  {
+    "tool": "rOpenSci nasapower",
+    "repository": "https://github.com/ropensci/nasapower",
+    "version": "Repository main metadata inspected; no release installed",
+    "license": "Not relied upon; repository API generic other/NOASSERTION",
+    "dependencies": "R POWER API client",
+    "used": "None",
+    "decision": "Existing validated EarthSync NASA POWER adapters retained; no duplicate retrieval pipeline."
+  },
+  {
+    "tool": "Pint",
+    "repository": "https://github.com/hgrecco/pint",
+    "version": "Repository master metadata inspected; no release installed",
+    "license": "Not relied upon; repository API generic other/NOASSERTION",
+    "dependencies": "Python unit framework",
+    "used": "None",
+    "decision": "Eight documented integer scale factors and original units preserved in a small tested decoder; no generic unit inference needed."
+  },
+  {
+    "tool": "jsonschema",
+    "repository": "https://github.com/python-jsonschema/jsonschema",
+    "version": "4.26.0, same pin as existing v1 catalog",
+    "license": "MIT",
+    "dependencies": "attrs,jsonschema-specifications,referencing,rpds-py (existing package ecosystem)",
+    "used": "Draft202012Validator/FormatChecker for strict offline reference schema validation",
+    "decision": "Reuse the existing validation dependency; no new large framework."
+  },
+  {
+    "tool": "FAO Crop Calendar app/API",
+    "repository": "https://cropcalendar.apps.fao.org/",
+    "version": "Official app main-es2015.731fd85a4879e6ade8c7.js inspected as API documentation; no code copied",
+    "license": "Application code/data export rights not established; no application code/media or full API response redistributed",
+    "dependencies": "No external parser package found necessary; documented JSON shapes consumed with Python stdlib",
+    "used": "Official public GET responses; selected priority factual dates/durations/short context",
+    "decision": "Small source-specific normalization preserves exact JSON locators and ambiguous identities; no general scraping framework."
+  }
+]

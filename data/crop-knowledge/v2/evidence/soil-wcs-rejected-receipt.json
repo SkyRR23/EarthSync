@@ -1,0 +1,102 @@
+{
+  "provider": "ISRIC SoilGrids WCS",
+  "point_role": "public_regional_query_not_a_farm",
+  "query": {
+    "point": {
+      "latitude": 22.0,
+      "longitude": 95.0
+    }
+  },
+  "started_at": "2026-11-14T15:02:08.138349+00:00",
+  "captures": [
+    {
+      "url": "https://maps.isric.org/mapserv",
+      "params": {
+        "map": "/map/phh2o.map",
+        "SERVICE": "WCS",
+        "VERSION": "2.0.1",
+        "COVERAGEID": "phh2o_0-5cm_mean",
+        "REQUEST": "DescribeCoverage"
+      },
+      "file": "capture-0.bin",
+      "sha256": "967770398980215524e116d8e9a8c6901202f8072a07b709a99430530026012e",
+      "bytes": 2535,
+      "retrieved_at": "2026-11-14T15:02:09.465728+00:00",
+      "headers": {
+        "content-type": "text/xml; charset=UTF-8"
+      },
+      "package_original_file": "originals/soil-wcs-capture-0.bin"
+    },
+    {
+      "url": "https://maps.isric.org/mapserv",
+      "params": [
+        [
+          "map",
+          "/map/phh2o.map"
+        ],
+        [
+          "SERVICE",
+          "WCS"
+        ],
+        [
+          "VERSION",
+          "2.0.1"
+        ],
+        [
+          "COVERAGEID",
+          "phh2o_0-5cm_mean"
+        ],
+        [
+          "REQUEST",
+          "GetCoverage"
+        ],
+        [
+          "FORMAT",
+          "GEOTIFF_INT16"
+        ],
+        [
+          "SUBSETTINGCRS",
+          "http://www.opengis.net/def/crs/EPSG/0/152160"
+        ],
+        [
+          "OUTPUTCRS",
+          "http://www.opengis.net/def/crs/EPSG/0/152160"
+        ],
+        [
+          "SUBSET",
+          "X(10048220.970335966,10048720.970335966)"
+        ],
+        [
+          "SUBSET",
+          "Y(2448778.7974520186,2449278.7974520186)"
+        ]
+      ],
+      "file": "capture-1.bin",
+      "sha256": "dd0e39567b60214e700e6c6ef6e982a42d86f497b2e7c8d430500c98a6e4b2fa",
+      "bytes": 1070,
+      "retrieved_at": "2026-11-14T15:02:09.947715+00:00",
+      "headers": {
+        "content-type": "image/tiff"
+      },
+      "package_original_file": "originals/soil-wcs-capture-1.bin"
+    }
+  ],
+  "review": "reference_only",
+  "usable_for_assessment": false,
+  "status": "unavailable",
+  "reason": "SOIL_ENCODING_MISMATCH",
+  "completed_at": "2026-11-14T15:02:09.955212+00:00",
+  "diagnostic_only": {
+    "dtype": "int16",
+    "nodata": null,
+    "shape": [
+      2,
+      2
+    ],
+    "nominal_pixel_spacing_m": [
+      250,
+      250
+    ],
+    "reason": "7I parser requires an explicit nodata value; absent nodata cannot establish valid vs missing pixels. No numeric soil sample accepted."
+  }
+}

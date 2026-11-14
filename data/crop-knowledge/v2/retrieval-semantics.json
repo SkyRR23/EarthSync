@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ecocrop_help_2000",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/helpShow?id=2000",
+    "format": "html",
+    "maximum_bytes": 100000
+  },
+  {
+    "id": "ecocrop_help_2001",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/helpShow?id=2001",
+    "format": "html",
+    "maximum_bytes": 100000
+  },
+  {
+    "id": "ecocrop_help_2003",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/helpShow?id=2003",
+    "format": "html",
+    "maximum_bytes": 100000
+  },
+  {
+    "id": "ecocrop_help_2004",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/helpShow?id=2004",
+    "format": "html",
+    "maximum_bytes": 100000
+  }
+]

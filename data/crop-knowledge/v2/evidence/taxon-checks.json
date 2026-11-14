@@ -1,0 +1,71 @@
+[
+  {
+    "id": "grin_rice_26077",
+    "scientific_name": "Oryza sativa",
+    "family": "Poaceae",
+    "provider_name": "Oryza sativa L.",
+    "aliases": [
+      "rice",
+      "paddy",
+      "paddy rice"
+    ],
+    "source_response_sha256": "b265610c690b285eba8c2985798a82968ba9e0ba7794bd4e16394d40cef62d89",
+    "locator": "h1.title; Nomenclature / Summary / Family",
+    "classification": "selected_taxonomic_facts_not_original_response"
+  },
+  {
+    "id": "grin_mung_bean",
+    "scientific_name": "Vigna radiata",
+    "family": "Fabaceae",
+    "provider_name": "Vigna radiata (L.) R. Wilczek",
+    "aliases": [
+      "mung bean",
+      "mungbean",
+      "green gram",
+      "greengram"
+    ],
+    "source_response_sha256": "b7abb1c2b33a93dfe2b55101553639e0ea5768cec242666c76cdc97aced9d6ce",
+    "locator": "h1.title; Nomenclature / Summary / Family",
+    "classification": "selected_taxonomic_facts_not_original_response"
+  },
+  {
+    "id": "grin_sesame",
+    "scientific_name": "Sesamum indicum",
+    "family": "Pedaliaceae",
+    "provider_name": "Sesamum indicum L.",
+    "aliases": [
+      "sesame"
+    ],
+    "source_response_sha256": "f3962427983273091df189152d6e51587f913263d878a2d787dcd95bc4e6e9c7",
+    "locator": "h1.title; Nomenclature / Summary / Family",
+    "classification": "selected_taxonomic_facts_not_original_response"
+  },
+  {
+    "id": "grin_groundnut",
+    "scientific_name": "Arachis hypogaea",
+    "family": "Fabaceae",
+    "provider_name": "Arachis hypogaea L.",
+    "aliases": [
+      "groundnut",
+      "peanut",
+      "groundnuts",
+      "peanuts"
+    ],
+    "source_response_sha256": "97f6405d41c17d816d63a165798eff949c0f5a2caa3c56b741afdd0685de982d",
+    "locator": "h1.title; Nomenclature / Summary / Family",
+    "classification": "selected_taxonomic_facts_not_original_response"
+  },
+  {
+    "id": "grin_maize",
+    "scientific_name": "Zea mays",
+    "family": "Poaceae",
+    "provider_name": "Zea mays L.",
+    "aliases": [
+      "maize",
+      "corn"
+    ],
+    "source_response_sha256": "5d730f290d28be46a5373a7f41f486469f1c98f43dbdcb4899bf3fb16270dab5",
+    "locator": "h1.title; Nomenclature / Summary / Family",
+    "classification": "selected_taxonomic_facts_not_original_response"
+  }
+]

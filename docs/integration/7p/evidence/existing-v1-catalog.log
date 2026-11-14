@@ -1,0 +1,44 @@
+test_empty_oversized_and_bad_pdf_responses_rejected (test_capture_sources.CaptureTests.test_empty_oversized_and_bad_pdf_responses_rejected) ... ok
+test_exact_raw_response_bytes_and_checksum_preserved (test_capture_sources.CaptureTests.test_exact_raw_response_bytes_and_checksum_preserved) ... ok
+test_previous_capture_is_not_overwritten (test_capture_sources.CaptureTests.test_previous_capture_is_not_overwritten) ... ok
+test_proxy_and_http_errors_remain_unavailable_without_zero_values (test_capture_sources.CaptureTests.test_proxy_and_http_errors_remain_unavailable_without_zero_values) ... ok
+test_unexpected_content_type_or_status_rejected (test_capture_sources.CaptureTests.test_unexpected_content_type_or_status_rejected) ... ok
+test_available_fact_cannot_be_null_or_uncited (test_catalog.CatalogTests.test_available_fact_cannot_be_null_or_uncited) ... ok
+test_bundle_and_audit_are_reproducible (test_catalog.CatalogTests.test_bundle_and_audit_are_reproducible) ... ok
+test_calendar_without_either_endpoint_is_unavailable (test_catalog.CatalogTests.test_calendar_without_either_endpoint_is_unavailable) ... ok
+test_captures_have_scoped_checksums_and_no_false_original_hash (test_catalog.CatalogTests.test_captures_have_scoped_checksums_and_no_false_original_hash) ... ok
+test_catalog_cannot_authorize_recommendations (test_catalog.CatalogTests.test_catalog_cannot_authorize_recommendations) ... ok
+test_cli_can_select_fallow_without_inventing_a_crop_identity (test_catalog.CatalogTests.test_cli_can_select_fallow_without_inventing_a_crop_identity) ... ok
+test_duplicate_ids_rejected_for_every_registry (test_catalog.CatalogTests.test_duplicate_ids_rejected_for_every_registry) ... ok
+test_fallow_remains_distinct_from_a_crop (test_catalog.CatalogTests.test_fallow_remains_distinct_from_a_crop) ... ok
+test_incorrect_unit_rejected (test_catalog.CatalogTests.test_incorrect_unit_rejected) ... ok
+test_lookup_retains_unknowns_and_does_not_extrapolate_globally (test_catalog.CatalogTests.test_lookup_retains_unknowns_and_does_not_extrapolate_globally) ... ok
+test_missing_evidence_cannot_be_reclassified_not_applicable (test_catalog.CatalogTests.test_missing_evidence_cannot_be_reclassified_not_applicable) ... ok
+test_missing_unknown_and_wrong_version_fields_rejected (test_catalog.CatalogTests.test_missing_unknown_and_wrong_version_fields_rejected) ... ok
+test_month_and_day_labels_are_validated (test_catalog.CatalogTests.test_month_and_day_labels_are_validated) ... ok
+test_one_sided_soybean_window_does_not_invent_start (test_catalog.CatalogTests.test_one_sided_soybean_window_does_not_invent_start) ... ok
+test_pilot_cases_do_not_invent_farms_observations_or_photos (test_catalog.CatalogTests.test_pilot_cases_do_not_invent_farms_observations_or_photos) ... ok
+test_production_system_scope_is_not_coerced (test_catalog.CatalogTests.test_production_system_scope_is_not_coerced) ... ok
+test_publication_dates_are_not_retrieval_or_search_dates (test_catalog.CatalogTests.test_publication_dates_are_not_retrieval_or_search_dates) ... ok
+test_reference_only_cannot_be_promoted_to_reviewed (test_catalog.CatalogTests.test_reference_only_cannot_be_promoted_to_reviewed) ... ok
+test_regional_evidence_cannot_leak_to_another_pilot (test_catalog.CatalogTests.test_regional_evidence_cannot_leak_to_another_pilot) ... ok
+test_reversed_research_dates_rejected (test_catalog.CatalogTests.test_reversed_research_dates_rejected) ... ok
+test_software_only_cross_year_and_leap_day_cases (test_catalog.CatalogTests.test_software_only_cross_year_and_leap_day_cases) ... ok
+test_soil_temperature_is_not_air_temperature (test_catalog.CatalogTests.test_soil_temperature_is_not_air_temperature) ... ok
+test_strict_json_rejects_duplicate_keys_and_nonfinite_numbers (test_catalog.CatalogTests.test_strict_json_rejects_duplicate_keys_and_nonfinite_numbers) ... ok
+test_synthetic_cannot_enter_real_profiles (test_catalog.CatalogTests.test_synthetic_cannot_enter_real_profiles) ... ok
+test_synthetic_parameter_cannot_enter_real_profiles (test_catalog.CatalogTests.test_synthetic_parameter_cannot_enter_real_profiles) ... ok
+test_synthetic_review_status_cannot_enter_real_profiles (test_catalog.CatalogTests.test_synthetic_review_status_cannot_enter_real_profiles) ... ok
+test_taxonomy_cannot_cite_as_a_planting_rule (test_catalog.CatalogTests.test_taxonomy_cannot_cite_as_a_planting_rule) ... ok
+test_unavailable_numeric_bound_cannot_be_supported_without_a_bound (test_catalog.CatalogTests.test_unavailable_numeric_bound_cannot_be_supported_without_a_bound) ... ok
+test_unknown_never_becomes_empty_string_or_empty_object (test_catalog.CatalogTests.test_unknown_never_becomes_empty_string_or_empty_object) ... ok
+test_unknown_never_becomes_zero (test_catalog.CatalogTests.test_unknown_never_becomes_zero) ... ok
+test_unknown_property_inventory_must_agree (test_catalog.CatalogTests.test_unknown_property_inventory_must_agree) ... ok
+test_unresolved_claim_rejected (test_catalog.CatalogTests.test_unresolved_claim_rejected) ... ok
+test_unresolved_pilot_rejected (test_catalog.CatalogTests.test_unresolved_pilot_rejected) ... ok
+test_unresolved_source_rejected (test_catalog.CatalogTests.test_unresolved_source_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 39 tests in 2.514s
+
+OK

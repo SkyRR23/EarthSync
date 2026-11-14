@@ -1,0 +1,1432 @@
+[
+  {
+    "locator": "/0/sessions/0",
+    "crop_code": "0113",
+    "provider_crop_name": "Corn, sweet",
+    "region_id": "MM-FAO-AEZ-001",
+    "provider_region_name": "A. Bago, Kachin River-Side Land",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon",
+    "comments": "Hybrid, use of fertilizer",
+    "planting_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 801,
+      "last_mmdd": 930,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 90.0,
+      "max": 110.0
+    }
+  },
+  {
+    "locator": "/1/sessions/0",
+    "crop_code": "0113",
+    "provider_crop_name": "Corn, sweet",
+    "region_id": "MM-FAO-AEZ-002",
+    "provider_region_name": "B. Central Dry Zone",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon",
+    "comments": "Hybrid, use of fertilizer",
+    "planting_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 801,
+      "last_mmdd": 930,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 90.0,
+      "max": 110.0
+    }
+  },
+  {
+    "locator": "/1/sessions/1",
+    "crop_code": "0113",
+    "provider_crop_name": "Corn, sweet",
+    "region_id": "MM-FAO-AEZ-002",
+    "provider_region_name": "B. Central Dry Zone",
+    "updated_on": "2021-02-26",
+    "season": "Late Monsoon",
+    "comments": "Hybrid, use of fertilizer",
+    "planting_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1130,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 101,
+      "last_mmdd": 228,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 100.0,
+      "max": 120.0
+    }
+  },
+  {
+    "locator": "/2/sessions/0",
+    "crop_code": "0113",
+    "provider_crop_name": "Corn, sweet",
+    "region_id": "MM-FAO-AEZ-003",
+    "provider_region_name": "C. Delta and Coastal Lowland",
+    "updated_on": "2021-02-26",
+    "season": "Late Monsoon",
+    "comments": "Modern variety, residual moisture",
+    "planting_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1130,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 101,
+      "last_mmdd": 228,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 100.0,
+      "max": 120.0
+    }
+  },
+  {
+    "locator": "/3/sessions/0",
+    "crop_code": "0113",
+    "provider_crop_name": "Corn, sweet",
+    "region_id": "MM-FAO-AEZ-005",
+    "provider_region_name": "E. North, East and West Hills",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon",
+    "comments": "hilly, local variety, residual moisture",
+    "planting_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1130,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 130.0,
+      "max": 150.0
+    }
+  },
+  {
+    "locator": "/4/sessions/0",
+    "crop_code": "0113",
+    "provider_crop_name": "Corn, sweet",
+    "region_id": "MM-FAO-AEZ-006",
+    "provider_region_name": "F. Upper, Lower Myanmar and Shan Plain",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon",
+    "comments": "local variety",
+    "planting_window": {
+      "first_mmdd": 601,
+      "last_mmdd": 831,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 901,
+      "last_mmdd": 1130,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 130.0,
+      "max": 150.0
+    }
+  },
+  {
+    "locator": "/5/sessions/0",
+    "crop_code": "0303",
+    "provider_crop_name": "Rice",
+    "region_id": "MM-FAO-AEZ-001",
+    "provider_region_name": "A. Bago, Kachin River-Side Land",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon Rice",
+    "comments": "rainfed, lowland, favorable",
+    "planting_window": {
+      "first_mmdd": 601,
+      "last_mmdd": 731,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1231,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 135.0,
+      "max": 165.0
+    }
+  },
+  {
+    "locator": "/5/sessions/1",
+    "crop_code": "0303",
+    "provider_crop_name": "Rice",
+    "region_id": "MM-FAO-AEZ-001",
+    "provider_region_name": "A. Bago, Kachin River-Side Land",
+    "updated_on": "2021-02-26",
+    "season": "Summer Rice",
+    "comments": "irrigated",
+    "planting_window": {
+      "first_mmdd": 1101,
+      "last_mmdd": 1231,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 301,
+      "last_mmdd": 430,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 105.0,
+      "max": 110.0
+    }
+  },
+  {
+    "locator": "/6/sessions/0",
+    "crop_code": "0303",
+    "provider_crop_name": "Rice",
+    "region_id": "MM-FAO-AEZ-002",
+    "provider_region_name": "B. Central Dry Zone",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon Rice",
+    "comments": "drought prone area",
+    "planting_window": {
+      "first_mmdd": 601,
+      "last_mmdd": 831,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1130,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 115.0,
+      "max": 135.0
+    }
+  },
+  {
+    "locator": "/8/sessions/0",
+    "crop_code": "0303",
+    "provider_crop_name": "Rice",
+    "region_id": "MM-FAO-AEZ-003",
+    "provider_region_name": "C. Delta and Coastal Lowland",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon Rice",
+    "comments": "rainfed, lowland, favorable",
+    "planting_window": {
+      "first_mmdd": 601,
+      "last_mmdd": 731,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1231,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 135.0,
+      "max": 165.0
+    }
+  },
+  {
+    "locator": "/8/sessions/1",
+    "crop_code": "0303",
+    "provider_crop_name": "Rice",
+    "region_id": "MM-FAO-AEZ-003",
+    "provider_region_name": "C. Delta and Coastal Lowland",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon Rice",
+    "comments": "flood prone area",
+    "planting_window": {
+      "first_mmdd": 401,
+      "last_mmdd": 531,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 1101,
+      "last_mmdd": 1231,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 165.0,
+      "max": 185.0
+    }
+  },
+  {
+    "locator": "/8/sessions/2",
+    "crop_code": "0303",
+    "provider_crop_name": "Rice",
+    "region_id": "MM-FAO-AEZ-003",
+    "provider_region_name": "C. Delta and Coastal Lowland",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon Rice",
+    "comments": "tidal wetland",
+    "planting_window": {
+      "first_mmdd": 601,
+      "last_mmdd": 731,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 1101,
+      "last_mmdd": 1231,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 135.0,
+      "max": 155.0
+    }
+  },
+  {
+    "locator": "/8/sessions/3",
+    "crop_code": "0303",
+    "provider_crop_name": "Rice",
+    "region_id": "MM-FAO-AEZ-003",
+    "provider_region_name": "C. Delta and Coastal Lowland",
+    "updated_on": "2021-02-26",
+    "season": "Summer Rice",
+    "comments": "irrigated",
+    "planting_window": {
+      "first_mmdd": 1101,
+      "last_mmdd": 430,
+      "wraps_year": true,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 301,
+      "last_mmdd": 731,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 105.0,
+      "max": 110.0
+    }
+  },
+  {
+    "locator": "/9/sessions/0",
+    "crop_code": "0303",
+    "provider_crop_name": "Rice",
+    "region_id": "MM-FAO-AEZ-005",
+    "provider_region_name": "E. North, East and West Hills",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon Rice",
+    "comments": "upland rice",
+    "planting_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 901,
+      "last_mmdd": 1031,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 125.0,
+      "max": 135.0
+    }
+  },
+  {
+    "locator": "/10/sessions/0",
+    "crop_code": "0303",
+    "provider_crop_name": "Rice",
+    "region_id": "MM-FAO-AEZ-006",
+    "provider_region_name": "F. Upper, Lower Myanmar and Shan Plain",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon Rice",
+    "comments": "rainfed, lowland, favorable",
+    "planting_window": {
+      "first_mmdd": 601,
+      "last_mmdd": 731,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1231,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 135.0,
+      "max": 165.0
+    }
+  },
+  {
+    "locator": "/10/sessions/1",
+    "crop_code": "0303",
+    "provider_crop_name": "Rice",
+    "region_id": "MM-FAO-AEZ-006",
+    "provider_region_name": "F. Upper, Lower Myanmar and Shan Plain",
+    "updated_on": "2021-02-26",
+    "season": "Summer Rice",
+    "comments": "irrigated",
+    "planting_window": {
+      "first_mmdd": 201,
+      "last_mmdd": 430,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 601,
+      "last_mmdd": 731,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 105.0,
+      "max": 110.0
+    }
+  },
+  {
+    "locator": "/37/sessions/0",
+    "crop_code": "0157",
+    "provider_crop_name": "Green gram",
+    "region_id": "MM-FAO-AEZ-001",
+    "provider_region_name": "A. Bago, Kachin River-Side Land",
+    "updated_on": "2021-02-26",
+    "season": "Post monsoon",
+    "comments": "residual moisture, after rice, broadcast",
+    "planting_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1130,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 1201,
+      "last_mmdd": 131,
+      "wraps_year": true,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 65.0,
+      "max": 70.0
+    }
+  },
+  {
+    "locator": "/38/sessions/0",
+    "crop_code": "0157",
+    "provider_crop_name": "Green gram",
+    "region_id": "MM-FAO-AEZ-002",
+    "provider_region_name": "B. Central Dry Zone",
+    "updated_on": "2021-02-26",
+    "season": "Pre-monsoon",
+    "comments": "irrigated, 1 ft line sowing",
+    "planting_window": {
+      "first_mmdd": 201,
+      "last_mmdd": 331,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 401,
+      "last_mmdd": 531,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 55.0,
+      "max": 60.0
+    }
+  },
+  {
+    "locator": "/38/sessions/1",
+    "crop_code": "0157",
+    "provider_crop_name": "Green gram",
+    "region_id": "MM-FAO-AEZ-002",
+    "provider_region_name": "B. Central Dry Zone",
+    "updated_on": "2021-02-26",
+    "season": "Early monsoon",
+    "comments": "rainfed, 1.5 ft line sowing",
+    "planting_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 701,
+      "last_mmdd": 831,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 65.0,
+      "max": 70.0
+    }
+  },
+  {
+    "locator": "/38/sessions/2",
+    "crop_code": "0157",
+    "provider_crop_name": "Green gram",
+    "region_id": "MM-FAO-AEZ-002",
+    "provider_region_name": "B. Central Dry Zone",
+    "updated_on": "2021-02-26",
+    "season": "Late monsoon",
+    "comments": "rainfed, 1.5 ft line sowing",
+    "planting_window": {
+      "first_mmdd": 801,
+      "last_mmdd": 930,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1130,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 65.0,
+      "max": 70.0
+    }
+  },
+  {
+    "locator": "/39/sessions/0",
+    "crop_code": "0157",
+    "provider_crop_name": "Green gram",
+    "region_id": "MM-FAO-AEZ-003",
+    "provider_region_name": "C. Delta and Coastal Lowland",
+    "updated_on": "2021-02-26",
+    "season": "Post monsoon",
+    "comments": "residual moisture, after rice, broadcast",
+    "planting_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1130,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 1201,
+      "last_mmdd": 131,
+      "wraps_year": true,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 65.0,
+      "max": 70.0
+    }
+  },
+  {
+    "locator": "/40/sessions/0",
+    "crop_code": "0157",
+    "provider_crop_name": "Green gram",
+    "region_id": "MM-FAO-AEZ-006",
+    "provider_region_name": "F. Upper, Lower Myanmar and Shan Plain",
+    "updated_on": "2021-02-26",
+    "season": "Post monsoon",
+    "comments": "residual moisture, after rice, broadcast",
+    "planting_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1130,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 1201,
+      "last_mmdd": 131,
+      "wraps_year": true,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 65.0,
+      "max": 70.0
+    }
+  },
+  {
+    "locator": "/47/sessions/0",
+    "crop_code": "0232",
+    "provider_crop_name": "Mung bean",
+    "region_id": "MM-FAO-AEZ-001",
+    "provider_region_name": "A. Bago, Kachin River-Side Land",
+    "updated_on": "2021-02-26",
+    "season": "Post monsoon",
+    "comments": "residual moisture",
+    "planting_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1130,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 101,
+      "last_mmdd": 228,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 100.0,
+      "max": 120.0
+    }
+  },
+  {
+    "locator": "/48/sessions/0",
+    "crop_code": "0232",
+    "provider_crop_name": "Mung bean",
+    "region_id": "MM-FAO-AEZ-002",
+    "provider_region_name": "B. Central Dry Zone",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon",
+    "comments": "rainfed",
+    "planting_window": {
+      "first_mmdd": 801,
+      "last_mmdd": 930,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 1101,
+      "last_mmdd": 1231,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 100.0,
+      "max": 120.0
+    }
+  },
+  {
+    "locator": "/48/sessions/1",
+    "crop_code": "0232",
+    "provider_crop_name": "Mung bean",
+    "region_id": "MM-FAO-AEZ-002",
+    "provider_region_name": "B. Central Dry Zone",
+    "updated_on": "2021-02-26",
+    "season": "Post monsoon",
+    "comments": "residual moisture",
+    "planting_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1130,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 101,
+      "last_mmdd": 228,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 100.0,
+      "max": 120.0
+    }
+  },
+  {
+    "locator": "/49/sessions/0",
+    "crop_code": "0232",
+    "provider_crop_name": "Mung bean",
+    "region_id": "MM-FAO-AEZ-003",
+    "provider_region_name": "C. Delta and Coastal Lowland",
+    "updated_on": "2021-02-26",
+    "season": "Post monsoon",
+    "comments": "residual moisture",
+    "planting_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1130,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 101,
+      "last_mmdd": 228,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 100.0,
+      "max": 120.0
+    }
+  },
+  {
+    "locator": "/50/sessions/0",
+    "crop_code": "0232",
+    "provider_crop_name": "Mung bean",
+    "region_id": "MM-FAO-AEZ-006",
+    "provider_region_name": "F. Upper, Lower Myanmar and Shan Plain",
+    "updated_on": "2021-02-26",
+    "season": "Post monsoon",
+    "comments": "residual moisture",
+    "planting_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1130,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 101,
+      "last_mmdd": 228,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 100.0,
+      "max": 120.0
+    }
+  },
+  {
+    "locator": "/65/sessions/0",
+    "crop_code": "0262",
+    "provider_crop_name": "Peanut",
+    "region_id": "MM-FAO-AEZ-001",
+    "provider_region_name": "A. Bago, Kachin River-Side Land",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon",
+    "comments": "rainfed",
+    "planting_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 901,
+      "last_mmdd": 1031,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 100.0,
+      "max": 110.0
+    }
+  },
+  {
+    "locator": "/65/sessions/1",
+    "crop_code": "0262",
+    "provider_crop_name": "Peanut",
+    "region_id": "MM-FAO-AEZ-001",
+    "provider_region_name": "A. Bago, Kachin River-Side Land",
+    "updated_on": "2021-02-26",
+    "season": "Post monsoon",
+    "comments": "residual moisture",
+    "planting_window": {
+      "first_mmdd": 1101,
+      "last_mmdd": 1231,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 201,
+      "last_mmdd": 331,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 100.0,
+      "max": 110.0
+    }
+  },
+  {
+    "locator": "/66/sessions/0",
+    "crop_code": "0262",
+    "provider_crop_name": "Peanut",
+    "region_id": "MM-FAO-AEZ-002",
+    "provider_region_name": "B. Central Dry Zone",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon, erect type",
+    "comments": "seed treatment with Rhizobium, NPK, gypsum application",
+    "planting_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 801,
+      "last_mmdd": 930,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 105.0,
+      "max": 110.0
+    }
+  },
+  {
+    "locator": "/66/sessions/1",
+    "crop_code": "0262",
+    "provider_crop_name": "Peanut",
+    "region_id": "MM-FAO-AEZ-002",
+    "provider_region_name": "B. Central Dry Zone",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon, spread type",
+    "comments": "seed treatment with Rhizobium, NPK, gypsum application",
+    "planting_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1130,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 105.0,
+      "max": 110.0
+    }
+  },
+  {
+    "locator": "/66/sessions/2",
+    "crop_code": "0262",
+    "provider_crop_name": "Peanut",
+    "region_id": "MM-FAO-AEZ-002",
+    "provider_region_name": "B. Central Dry Zone",
+    "updated_on": "2021-02-26",
+    "season": "Unusual season",
+    "comments": "seed treatment with Rhizobium, NPK, gypsum application",
+    "planting_window": {
+      "first_mmdd": 801,
+      "last_mmdd": 930,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 1101,
+      "last_mmdd": 1231,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 105.0,
+      "max": 110.0
+    }
+  },
+  {
+    "locator": "/66/sessions/3",
+    "crop_code": "0262",
+    "provider_crop_name": "Peanut",
+    "region_id": "MM-FAO-AEZ-002",
+    "provider_region_name": "B. Central Dry Zone",
+    "updated_on": "2021-02-26",
+    "season": "Post monsoon",
+    "comments": "irrigated, seed treatment with Rhizobium, NPK, gypsum application",
+    "planting_window": {
+      "first_mmdd": 1101,
+      "last_mmdd": 1231,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 201,
+      "last_mmdd": 331,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 110.0,
+      "max": 120.0
+    }
+  },
+  {
+    "locator": "/67/sessions/0",
+    "crop_code": "0262",
+    "provider_crop_name": "Peanut",
+    "region_id": "MM-FAO-AEZ-003",
+    "provider_region_name": "C. Delta and Coastal Lowland",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon",
+    "comments": "rainfed",
+    "planting_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 901,
+      "last_mmdd": 1031,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 100.0,
+      "max": 110.0
+    }
+  },
+  {
+    "locator": "/67/sessions/1",
+    "crop_code": "0262",
+    "provider_crop_name": "Peanut",
+    "region_id": "MM-FAO-AEZ-003",
+    "provider_region_name": "C. Delta and Coastal Lowland",
+    "updated_on": "2021-02-26",
+    "season": "Post monsoon",
+    "comments": "residual moisture",
+    "planting_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1231,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 201,
+      "last_mmdd": 331,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 110.0,
+      "max": 120.0
+    }
+  },
+  {
+    "locator": "/68/sessions/0",
+    "crop_code": "0262",
+    "provider_crop_name": "Peanut",
+    "region_id": "MM-FAO-AEZ-004",
+    "provider_region_name": "D. Kachin and Coastal Upland",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon",
+    "comments": "rainfed",
+    "planting_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 901,
+      "last_mmdd": 1031,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 100.0,
+      "max": 110.0
+    }
+  },
+  {
+    "locator": "/68/sessions/1",
+    "crop_code": "0262",
+    "provider_crop_name": "Peanut",
+    "region_id": "MM-FAO-AEZ-004",
+    "provider_region_name": "D. Kachin and Coastal Upland",
+    "updated_on": "2021-02-26",
+    "season": "Post monsoon",
+    "comments": "residual moisture",
+    "planting_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1231,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 201,
+      "last_mmdd": 331,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 110.0,
+      "max": 120.0
+    }
+  },
+  {
+    "locator": "/69/sessions/0",
+    "crop_code": "0262",
+    "provider_crop_name": "Peanut",
+    "region_id": "MM-FAO-AEZ-005",
+    "provider_region_name": "E. North, East and West Hills",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon",
+    "comments": "rainfed",
+    "planting_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 901,
+      "last_mmdd": 1031,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 100.0,
+      "max": 110.0
+    }
+  },
+  {
+    "locator": "/69/sessions/1",
+    "crop_code": "0262",
+    "provider_crop_name": "Peanut",
+    "region_id": "MM-FAO-AEZ-005",
+    "provider_region_name": "E. North, East and West Hills",
+    "updated_on": "2021-02-26",
+    "season": "Post monsoon",
+    "comments": "residual moisture",
+    "planting_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1231,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 201,
+      "last_mmdd": 331,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 110.0,
+      "max": 120.0
+    }
+  },
+  {
+    "locator": "/70/sessions/0",
+    "crop_code": "0262",
+    "provider_crop_name": "Peanut",
+    "region_id": "MM-FAO-AEZ-006",
+    "provider_region_name": "F. Upper, Lower Myanmar and Shan Plain",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon",
+    "comments": "rainfed",
+    "planting_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 901,
+      "last_mmdd": 1031,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 100.0,
+      "max": 110.0
+    }
+  },
+  {
+    "locator": "/70/sessions/1",
+    "crop_code": "0262",
+    "provider_crop_name": "Peanut",
+    "region_id": "MM-FAO-AEZ-006",
+    "provider_region_name": "F. Upper, Lower Myanmar and Shan Plain",
+    "updated_on": "2021-02-26",
+    "season": "Post monsoon",
+    "comments": "residual moisture",
+    "planting_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1231,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 201,
+      "last_mmdd": 331,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 110.0,
+      "max": 120.0
+    }
+  },
+  {
+    "locator": "/75/sessions/0",
+    "crop_code": "0318",
+    "provider_crop_name": "Sesame",
+    "region_id": "MM-FAO-AEZ-001",
+    "provider_region_name": "A. Bago, Kachin River-Side Land",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon",
+    "comments": "rainfed",
+    "planting_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 801,
+      "last_mmdd": 930,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 85.0,
+      "max": 90.0
+    }
+  },
+  {
+    "locator": "/75/sessions/1",
+    "crop_code": "0318",
+    "provider_crop_name": "Sesame",
+    "region_id": "MM-FAO-AEZ-001",
+    "provider_region_name": "A. Bago, Kachin River-Side Land",
+    "updated_on": "2021-02-26",
+    "season": "Post monsoon",
+    "comments": "residual moisture",
+    "planting_window": {
+      "first_mmdd": 901,
+      "last_mmdd": 1031,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 1201,
+      "last_mmdd": 131,
+      "wraps_year": true,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 85.0,
+      "max": 90.0
+    }
+  },
+  {
+    "locator": "/75/sessions/2",
+    "crop_code": "0318",
+    "provider_crop_name": "Sesame",
+    "region_id": "MM-FAO-AEZ-001",
+    "provider_region_name": "A. Bago, Kachin River-Side Land",
+    "updated_on": "2021-02-26",
+    "season": "Summer",
+    "comments": "irrigated",
+    "planting_window": {
+      "first_mmdd": 301,
+      "last_mmdd": 430,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 65.0,
+      "max": 70.0
+    }
+  },
+  {
+    "locator": "/76/sessions/0",
+    "crop_code": "0318",
+    "provider_crop_name": "Sesame",
+    "region_id": "MM-FAO-AEZ-002",
+    "provider_region_name": "B. Central Dry Zone",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon",
+    "comments": "rainfed",
+    "planting_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 801,
+      "last_mmdd": 930,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 85.0,
+      "max": 90.0
+    }
+  },
+  {
+    "locator": "/76/sessions/1",
+    "crop_code": "0318",
+    "provider_crop_name": "Sesame",
+    "region_id": "MM-FAO-AEZ-002",
+    "provider_region_name": "B. Central Dry Zone",
+    "updated_on": "2021-02-26",
+    "season": "Post monsoon",
+    "comments": "residual moisture",
+    "planting_window": {
+      "first_mmdd": 901,
+      "last_mmdd": 1031,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 1201,
+      "last_mmdd": 131,
+      "wraps_year": true,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 85.0,
+      "max": 90.0
+    }
+  },
+  {
+    "locator": "/76/sessions/2",
+    "crop_code": "0318",
+    "provider_crop_name": "Sesame",
+    "region_id": "MM-FAO-AEZ-002",
+    "provider_region_name": "B. Central Dry Zone",
+    "updated_on": "2021-02-26",
+    "season": "Summer",
+    "comments": "irrigated",
+    "planting_window": {
+      "first_mmdd": 201,
+      "last_mmdd": 331,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 85.0,
+      "max": 90.0
+    }
+  },
+  {
+    "locator": "/77/sessions/0",
+    "crop_code": "0318",
+    "provider_crop_name": "Sesame",
+    "region_id": "MM-FAO-AEZ-003",
+    "provider_region_name": "C. Delta and Coastal Lowland",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon",
+    "comments": "rainfed",
+    "planting_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 801,
+      "last_mmdd": 930,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 85.0,
+      "max": 90.0
+    }
+  },
+  {
+    "locator": "/77/sessions/1",
+    "crop_code": "0318",
+    "provider_crop_name": "Sesame",
+    "region_id": "MM-FAO-AEZ-003",
+    "provider_region_name": "C. Delta and Coastal Lowland",
+    "updated_on": "2021-02-26",
+    "season": "Post monsoon",
+    "comments": "residual moisture, after rice, lowland",
+    "planting_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1130,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 101,
+      "last_mmdd": 228,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 65.0,
+      "max": 70.0
+    }
+  },
+  {
+    "locator": "/77/sessions/2",
+    "crop_code": "0318",
+    "provider_crop_name": "Sesame",
+    "region_id": "MM-FAO-AEZ-003",
+    "provider_region_name": "C. Delta and Coastal Lowland",
+    "updated_on": "2021-02-26",
+    "season": "Summer",
+    "comments": "irrigated",
+    "planting_window": {
+      "first_mmdd": 301,
+      "last_mmdd": 430,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 65.0,
+      "max": 70.0
+    }
+  },
+  {
+    "locator": "/78/sessions/0",
+    "crop_code": "0318",
+    "provider_crop_name": "Sesame",
+    "region_id": "MM-FAO-AEZ-005",
+    "provider_region_name": "E. North, East and West Hills",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon",
+    "comments": "rainfed",
+    "planting_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 801,
+      "last_mmdd": 930,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 85.0,
+      "max": 90.0
+    }
+  },
+  {
+    "locator": "/78/sessions/1",
+    "crop_code": "0318",
+    "provider_crop_name": "Sesame",
+    "region_id": "MM-FAO-AEZ-005",
+    "provider_region_name": "E. North, East and West Hills",
+    "updated_on": "2021-02-26",
+    "season": "Post monsoon",
+    "comments": "residual moisture",
+    "planting_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1130,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 101,
+      "last_mmdd": 228,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 65.0,
+      "max": 70.0
+    }
+  },
+  {
+    "locator": "/79/sessions/0",
+    "crop_code": "0318",
+    "provider_crop_name": "Sesame",
+    "region_id": "MM-FAO-AEZ-006",
+    "provider_region_name": "F. Upper, Lower Myanmar and Shan Plain",
+    "updated_on": "2021-02-26",
+    "season": "Monsoon",
+    "comments": "rainfed",
+    "planting_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 801,
+      "last_mmdd": 930,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 85.0,
+      "max": 90.0
+    }
+  },
+  {
+    "locator": "/79/sessions/1",
+    "crop_code": "0318",
+    "provider_crop_name": "Sesame",
+    "region_id": "MM-FAO-AEZ-006",
+    "provider_region_name": "F. Upper, Lower Myanmar and Shan Plain",
+    "updated_on": "2021-02-26",
+    "season": "Post monsoon",
+    "comments": "residual moisture",
+    "planting_window": {
+      "first_mmdd": 1001,
+      "last_mmdd": 1130,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 101,
+      "last_mmdd": 228,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 65.0,
+      "max": 70.0
+    }
+  },
+  {
+    "locator": "/79/sessions/2",
+    "crop_code": "0318",
+    "provider_crop_name": "Sesame",
+    "region_id": "MM-FAO-AEZ-006",
+    "provider_region_name": "F. Upper, Lower Myanmar and Shan Plain",
+    "updated_on": "2021-02-26",
+    "season": "Summer",
+    "comments": "irrigated",
+    "planting_window": {
+      "first_mmdd": 201,
+      "last_mmdd": 331,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "harvest_window": {
+      "first_mmdd": 501,
+      "last_mmdd": 630,
+      "wraps_year": false,
+      "advisory": true
+    },
+    "growing_duration": {
+      "min": 85.0,
+      "max": 90.0
+    }
+  }
+]

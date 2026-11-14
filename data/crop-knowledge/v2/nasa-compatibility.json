@@ -1,0 +1,151 @@
+[
+  {
+    "id": "power",
+    "official_url": "https://power.larc.nasa.gov/docs/services/api/temporal/daily/",
+    "classification": "validated_numeric_existing",
+    "product": "Existing POWER MERRA-2 historical daily/monthly contracts",
+    "version": "7H/7I pinned parsers; daily API v2.10.3 lineage acceptance",
+    "coverage_resolution": "Modeled regional meteorology, nominal 0.5° latitude ×0.625° longitude; query point is not field observation",
+    "temporal_units": "Daily T2M_MIN/T2M_MAX C and PRECTOTCORR mm/day in explicit LST convention; monthly summaries retain original aggregation",
+    "existing_code": [
+      "server/earthsync/power.py",
+      "server/earthsync/platform_v1/providers/power_daily.py"
+    ],
+    "new_access_evidence": "No new POWER observations retrieved; reuse accepted captures and tests from exact 7N base",
+    "required_before_new_use": [
+      "Preserve returned geometry/precision checks, exact days, missing states and original response SHA-256",
+      "Keep MERRA2, POWER hourly-derived extrema and GEOSIT lineage distinct; current parsers reject unsupported source changes",
+      "No monthly-to-daily conversion, no default GDD base, no ET0 fabricated from rainfall/T2M"
+    ],
+    "numerical_claim_added": false,
+    "evidence_class": 1
+  },
+  {
+    "id": "imerg",
+    "official_url": "https://gpm.nasa.gov/data/imerg",
+    "classification": "available_unintegrated",
+    "product": "GPM IMERG precipitation; V07 family needs collection-specific version acceptance",
+    "version": "No numerical product pinned in 7P",
+    "coverage_resolution": "Near-global precipitation estimates; common product 0.1° half-hourly grid, exact native support per selected collection",
+    "temporal_units": "Half-hourly/daily/monthly products are distinct; precipitation rates/accumulations and Early/Late/Final latency differ",
+    "existing_code": [],
+    "new_access_evidence": "Official product documentation reviewed; numerical granules, QA and local spatial/temporal checks not tested",
+    "required_before_new_use": [
+      "Pin collection/version/run and variable unit; apply quality/error/nodata semantics",
+      "Validate Earthdata access and bounded geometry/date coverage; aggregate rates only over complete aligned intervals"
+    ],
+    "numerical_claim_added": false,
+    "evidence_class": 3
+  },
+  {
+    "id": "smap",
+    "official_url": "https://smap.jpl.nasa.gov/data/",
+    "classification": "available_unintegrated",
+    "product": "SMAP surface soil moisture L2/L3; L4 model-assimilated root-zone product distinct",
+    "version": "No numerical product pinned in 7P",
+    "coverage_resolution": "Product-dependent EASE-Grid; passive products commonly 36 km or enhanced 9 km posting; not farm sampling or independent 9 km resolving power",
+    "temporal_units": "L2 half-orbit / L3 daily composites / L4 model intervals; volumetric moisture needs depth and product QA",
+    "existing_code": [],
+    "new_access_evidence": "Official product table reviewed, no authenticated granule or valid soil-moisture measurement retrieved",
+    "required_before_new_use": [
+      "Pin collection/version, depth/statistic, retrieval quality and frozen/water/radio-frequency masks",
+      "Associate regional footprint and effective dates; do not substitute vegetation color or radar brightness"
+    ],
+    "numerical_claim_added": false,
+    "evidence_class": 3
+  },
+  {
+    "id": "modis",
+    "official_url": "https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod13q1-061",
+    "classification": "available_unintegrated",
+    "product": "MOD13 NDVI/EVI vegetation indices; MOD11 LST is a different product",
+    "version": "MOD13Q1.061 candidate reference only; no numerical product accepted",
+    "coverage_resolution": "Example MOD13Q1 250m/16-day product; LST/other MODIS products have different grids",
+    "temporal_units": "NDVI/EVI scaled dimensionless indices, compositing interval, quality flags; LST Kelvin with product-specific scale/time",
+    "existing_code": [],
+    "new_access_evidence": "Official overview returned 502; Earthdata collection page returned 403. Product characteristics remain documented research leads, not tested numerical granules or an available integration.",
+    "required_before_new_use": [
+      "Pin version/bands/scale and quality masks; preserve composite/date semantics",
+      "NDVI does not directly measure soil moisture, nutrients, disease or yield"
+    ],
+    "numerical_claim_added": false,
+    "evidence_class": 3
+  },
+  {
+    "id": "hls",
+    "official_url": "https://hls.gsfc.nasa.gov/data-products/",
+    "classification": "available_unintegrated",
+    "product": "HLSL30 / HLSS30 v2.0 optical surface reflectance",
+    "version": "Existing 7I local QA expects v2.0; remote numerical access unvalidated",
+    "coverage_resolution": "30m grid, native scene/tile geometry; no field-wide claim from a point or unmasked scene",
+    "temporal_units": "Acquisition timestamp, reflectance scale/offset and Fmask QA; computed indices retain supported valid pixels",
+    "existing_code": [
+      "server/earthsync/platform_v1/satellite.py",
+      "server/earthsync/platform_v1/providers/discovery.py"
+    ],
+    "new_access_evidence": "7P CMR HLSL30 2.0 collection metadata retrieved; this establishes discovery only, not acquisition/pixel availability",
+    "required_before_new_use": [
+      "Reuse existing bounded CMR and local optical QA readers; authorize assets separately",
+      "Validate red/NIR/Fmask registration, native quality and contained field-pixel coverage; preserve nodata/coverage"
+    ],
+    "numerical_claim_added": false,
+    "evidence_class": 3
+  },
+  {
+    "id": "opera",
+    "official_url": "https://www.jpl.nasa.gov/go/opera/products/",
+    "classification": "available_unintegrated",
+    "product": "OPERA RTC-S1 SAR, DSWx and DIST product families",
+    "version": "Product-specific releases/coverage; no new acquisition/version accepted in 7P",
+    "coverage_resolution": "RTC near-global30m product reference; CSLC/DISP coverage and resolution differ. Do not assume all OPERA products cover Myanmar",
+    "temporal_units": "Acquisition/orbit/burst/polarization, gamma0/backscatter or categorical products per product; masks essential",
+    "existing_code": [
+      "server/earthsync/platform_v1/satellite.py"
+    ],
+    "new_access_evidence": "Official product/coverage page reviewed; existing local operator-manifest path only, remote numerical access remains unverified",
+    "required_before_new_use": [
+      "Validate product coverage/version/license/authorization, native masks, geometry and paired acquisition support",
+      "Radar brightness does not establish moisture, flood status, disease or crop performance"
+    ],
+    "numerical_claim_added": false,
+    "evidence_class": 3
+  },
+  {
+    "id": "gibs",
+    "official_url": "https://nasa-gibs.github.io/gibs-api-docs/",
+    "classification": "visual_reference",
+    "product": "NASA GIBS dated visualizations via WMTS/WMS",
+    "version": "Layer-specific metadata and time dimension; no numerical product in 7P",
+    "coverage_resolution": "Visualization tile pyramids, projection/zoom-dependent display resolution",
+    "temporal_units": "Explicit imagery date/layer; images are transformed displays",
+    "existing_code": [
+      "server/earthsync/environmental/vegetation.py"
+    ],
+    "new_access_evidence": "Documentation reviewed; no new visual tiles presented as numerical observations",
+    "required_before_new_use": [
+      "Keep imagery dates and attribution visible",
+      "Never decode display colors as numeric NDVI, soil moisture, crop health or model inputs"
+    ],
+    "numerical_claim_added": false,
+    "evidence_class": 2
+  },
+  {
+    "id": "cmr",
+    "official_url": "https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html",
+    "classification": "reference_context",
+    "product": "NASA Earthdata Common Metadata Repository discovery API",
+    "version": "HLSL30 v2.0 collection query captured; no science-data processing version implied",
+    "coverage_resolution": "Collection/granule metadata footprints, not sampled pixels",
+    "temporal_units": "Metadata collection/granule time extents; not effective dates of accepted observations",
+    "existing_code": [
+      "server/earthsync/platform_v1/providers/discovery.py"
+    ],
+    "new_access_evidence": "Exact successful 7P collection response SHA in retrieval receipts; earlier 7I proxy failures remain historical",
+    "required_before_new_use": [
+      "Keep discovery distinct from authorized granule download and scientific QA",
+      "Metadata existence does not prove local valid numeric observations"
+    ],
+    "numerical_claim_added": false,
+    "evidence_class": 2
+  }
+]
