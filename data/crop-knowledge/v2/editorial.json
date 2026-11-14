@@ -1,0 +1,96 @@
+{
+  "priority_crops": [
+    {
+      "label": "rice",
+      "ecocrop_id": "1574",
+      "scientific_name": "Oryza sativa",
+      "family": "Poaceae",
+      "aliases": [
+        "rice",
+        "paddy",
+        "paddy rice"
+      ],
+      "category": "cereals_grains",
+      "grin_source": "grin_rice_26077"
+    },
+    {
+      "label": "mung_bean",
+      "ecocrop_id": "2150",
+      "scientific_name": "Vigna radiata",
+      "family": "Fabaceae",
+      "aliases": [
+        "mung bean",
+        "mungbean",
+        "green gram",
+        "greengram"
+      ],
+      "category": "legumes_pulses",
+      "grin_source": "grin_mung_bean"
+    },
+    {
+      "label": "sesame",
+      "ecocrop_id": "1937",
+      "scientific_name": "Sesamum indicum",
+      "family": "Pedaliaceae",
+      "aliases": [
+        "sesame"
+      ],
+      "category": "oilseeds",
+      "grin_source": "grin_sesame"
+    },
+    {
+      "label": "groundnut",
+      "ecocrop_id": "2199",
+      "scientific_name": "Arachis hypogaea",
+      "family": "Fabaceae",
+      "aliases": [
+        "groundnut",
+        "peanut",
+        "groundnuts",
+        "peanuts"
+      ],
+      "category": "oilseeds",
+      "grin_source": "grin_groundnut"
+    },
+    {
+      "label": "maize",
+      "ecocrop_id": "2175",
+      "scientific_name": "Zea mays",
+      "family": "Poaceae",
+      "aliases": [
+        "maize",
+        "corn"
+      ],
+      "category": "cereals_grains",
+      "grin_source": "grin_maize"
+    }
+  ],
+  "expected_ecocrop_rows": 2568,
+  "global_import_policy": "Require explicit cultivated attribute AND an agricultural source category; priority identities independently checked with official sheets/GRIN. All mirror-only species remain identity-only.",
+  "calendar_mapping": {
+    "0303": {
+      "label": "rice",
+      "status": "reference_only"
+    },
+    "0262": {
+      "label": "groundnut",
+      "status": "reference_only"
+    },
+    "0318": {
+      "label": "sesame",
+      "status": "reference_only"
+    },
+    "0157": {
+      "label": "mung_bean",
+      "status": "identity_disputed"
+    },
+    "0232": {
+      "label": "mung_bean",
+      "status": "identity_disputed"
+    },
+    "0113": {
+      "label": "maize",
+      "status": "identity_disputed"
+    }
+  }
+}

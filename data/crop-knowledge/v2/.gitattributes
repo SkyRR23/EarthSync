@@ -1,0 +1,10 @@
+# Preserve captured provider/mirror bytes, including CRLF and original whitespace.
+originals/** -text -diff
+
+# Generated review artifacts; the editable sources and tools remain visible.
+catalog.json linguist-generated=true
+integrity.json linguist-generated=true
+mapping-report.json linguist-generated=true
+missing-parameters.json linguist-generated=true
+species-inventory.jsonl linguist-generated=true
+fixtures/*.json linguist-generated=true
