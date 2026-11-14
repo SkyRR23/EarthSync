@@ -28,6 +28,9 @@ PARAMS = dict(
 
 def nasa(request):
     payload = copy.deepcopy(FIXTURE)
+    payload["header"].update(
+        start=request.url.params["start"], end=request.url.params["end"]
+    )
     start = date.fromisoformat(
         str(request.url.params["start"])[:4]
         + "-"
@@ -233,7 +236,8 @@ def test_api_success_and_openapi():
         )
 
 
-async def test_real_rust_json_boundary(tmp_path):
+@pytest.mark.parametrize("sample", ["mock", "live_capture"])
+async def test_real_rust_json_boundary(tmp_path, sample):
     """Compile an external consumer without changing any engine files."""
     import os
     import shutil
@@ -254,7 +258,12 @@ fn main() {
     io::stdin().read_to_string(&mut input).unwrap();
     println!("{}", field_shift_engine::seasonal::analyze_season_json(&input).unwrap());
 }""")
-    data = await run(lambda req: httpx.Response(200, json=nasa(req)))
+    if sample == "mock":
+        data = await run(lambda req: httpx.Response(200, json=nasa(req)))
+    else:
+        data = SeasonResponse.model_validate_json(
+            (Path(__file__).parents[1] / "examples/nasa_power_real.json").read_text()
+        )
     env = os.environ.copy()
     env["CARGO_TARGET_DIR"] = str(tmp_path / "target")
     proc = subprocess.run(
@@ -274,8 +283,14 @@ fn main() {
     )
     assert proc.returncode == 0, proc.stderr
     summary = json.loads(proc.stdout)
-    assert summary["rainfall_total_mm"] == 242
-    assert summary["calendar_days"] == 121
+    assert summary["rainfall_total_mm"] == pytest.approx(
+        242 if sample == "mock" else 0.04
+    )
+    assert summary["calendar_days"] == (121 if sample == "mock" else 29)
+    if sample == "live_capture":
+        assert summary["calendar_day_weighted_mean_temperature_c"] == pytest.approx(
+            28.03655172413793
+        )
     assert summary["metadata"]["data_kind"] == "modeled"
 
 
@@ -318,3 +333,47 @@ async def test_concurrent_cache_misses_are_coalesced():
     results = await asyncio.gather(*(cache.get(query, Mock()) for _ in range(5)))
     assert len(calls) == 1
     assert sum(result.cache["hit"] for result in results) == 4
+
+
+@pytest.mark.parametrize(
+    "change,code",
+    [
+        ({"sources": ["GEOSIT"]}, "UPSTREAM_SOURCE_CHANGED"),
+        ({"sources": ["MERRA2", "GEOSIT"]}, "UPSTREAM_SOURCE_CHANGED"),
+        ({"sources": []}, "UPSTREAM_SOURCE_CHANGED"),
+        ({"end": "20240228"}, "UPSTREAM_INTERVAL_CHANGED"),
+        ({"fill_value": None}, "UPSTREAM_INVALID_RESPONSE"),
+    ],
+)
+async def test_source_lineage_and_interval_validation(change, code):
+    def handler(req):
+        payload = nasa(req)
+        payload["header"].update(change)
+        return httpx.Response(200, json=payload)
+
+    with pytest.raises(ProviderError) as error:
+        await run(handler)
+    assert error.value.code == code
+
+
+async def test_captured_live_response_normalizes_without_network():
+    """Replay a real NASA capture; this test does not assert future live availability."""
+    payload = json.loads(
+        (
+            Path(__file__).parent / "fixtures/nasa_power_yangon_202402_live.json"
+        ).read_text()
+    )
+    query = SeasonQuery(**(PARAMS | dict(start_year=2024, start_month=2)))
+    result = await run(lambda req: httpx.Response(200, json=payload), query)
+    saved = SeasonResponse.model_validate_json(
+        (Path(__file__).parents[1] / "examples/nasa_power_real.json").read_text()
+    )
+    assert result.environment == saved.environment
+    assert result.provenance["coverage"] == saved.provenance["coverage"]
+    assert payload["header"]["fill_value"] == -999.0
+    assert payload["header"]["sources"] == ["MERRA2"]
+    for key in ["T2M", "PRECTOTCORR"]:
+        assert len(payload["properties"]["parameter"][key]) == 29
+    assert result.environment.seasonal.observations[0].rainfall_mm == pytest.approx(
+        0.04
+    )

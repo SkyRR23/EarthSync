@@ -46,3 +46,24 @@ policy for locations. Default bind is loopback. NASA request timeout is 20 secon
 backoffs on transport errors, 429 and selected 5xx. Windows are limited to 24
 months and each chunk to one calendar year; decompressed response size is capped
 at 4 MB. No redirects, TLS bypass, raw upstream errors or negative caching.
+
+## Live verification and CI
+
+NASA POWER live retrieval succeeded on 14 November 2026. The committed
+`examples/nasa_power_real.json` contains a real normalized February 2024 response
+at 16.85 N, 96.15 E: 0.04 mm total precipitation and 28.03655172413793 °C mean
+T2M, with both variables complete across 29 days. This is modeled gridded
+historical climate, not a direct farm measurement. See the source review for
+limits and reproducible smoke commands.
+
+`.github/workflows/python-backend.yml` independently installs the pinned Python
+resolution, checks dependencies and Ruff, fetches Rust packages, then runs
+network-independent backend tests including a compiled Rust consumer and replay
+of the real capture. No test contacts NASA. Run the same checks from `server/`:
+
+```sh
+python -m pip check
+python -m ruff check earthsync tests
+python -m ruff format --check earthsync tests
+python -m pytest -q
+```

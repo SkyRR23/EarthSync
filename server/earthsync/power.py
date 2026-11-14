@@ -21,7 +21,7 @@ from .models import (
 ENDPOINT = "https://power.larc.nasa.gov/api/temporal/daily/point"
 DOCS = [
     "https://power.larc.nasa.gov/docs/services/api/temporal/daily/",
-    "https://power.larc.nasa.gov/docs/methodology/meteorology/",
+    "https://power.larc.nasa.gov/docs/methodology/data/sources_meteorology/",
 ]
 
 
@@ -101,6 +101,15 @@ class PowerProvider:
                     raise ProviderError()
                 if header.get("time_standard") != "LST":
                     raise ProviderError("UPSTREAM_TIME_STANDARD_CHANGED")
+                # Recent POWER records can include GEOS-IT. This P0 adapter claims
+                # one MERRA-2 series; reject mixed/changed lineage instead of mislabeling.
+                if header.get("sources") != ["MERRA2"]:
+                    raise ProviderError("UPSTREAM_SOURCE_CHANGED")
+                if (
+                    header.get("start") != params["start"]
+                    or header.get("end") != params["end"]
+                ):
+                    raise ProviderError("UPSTREAM_INTERVAL_CHANGED")
                 for key in daily:
                     values = payload["properties"]["parameter"][key]
                     if not isinstance(values, dict):

@@ -63,7 +63,8 @@ Loss-aware adapters:
 
 Errors have `status: "error"`, `error: {code,message,retryable}`, no partial data.
 422 `INVALID_INPUT`; 502 `UPSTREAM_REJECTED`, `UPSTREAM_INVALID_RESPONSE`,
-`UPSTREAM_UNITS_CHANGED`, `UPSTREAM_TIME_STANDARD_CHANGED`; 503
+`UPSTREAM_UNITS_CHANGED`, `UPSTREAM_TIME_STANDARD_CHANGED`, `UPSTREAM_SOURCE_CHANGED`,
+`UPSTREAM_INTERVAL_CHANGED`; 503
 `UPSTREAM_UNAVAILABLE` after bounded transient retries. Raw upstream bodies/URLs
 and validation inputs are not echoed. Missing daily observations are successful
 incomplete evidence, not transport errors. Full-month values are null unless all
