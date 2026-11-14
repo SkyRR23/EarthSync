@@ -43,13 +43,18 @@ AssistantContext assistantContextFromAnalysis({
     for (var i = 0; i < requests.length; i++) {
       final request = requests[i];
       final endpoint = Uri.tryParse(request['endpoint'] as String? ?? '');
-      final safe = endpoint?.scheme == 'https' && endpoint!.host.isNotEmpty && endpoint.userInfo.isEmpty;
       final query = request['query'] as Map<String, dynamic>?;
+      String? sourceUrl;
+      if (endpoint != null && endpoint.scheme == 'https' &&
+          endpoint.host.isNotEmpty && endpoint.userInfo.isEmpty) {
+        sourceUrl = endpoint.replace(queryParameters:
+          query?.map((k, v) => MapEntry(k, '$v'))).toString();
+      }
       final id = 'climate-request-$i';
       sources.add(AssistantSource(id: id,
         provider: provenance?['provider'] as String? ?? 'Unknown provider',
         title: provenance?['product'] as String? ?? 'Climate evidence',
-        url: safe ? endpoint!.replace(queryParameters: query?.map((k, v) => MapEntry(k, '$v'))).toString() : null));
+        url: sourceUrl));
       sourceIds.add(id);
     }
     if (sourceIds.isEmpty) {
@@ -135,7 +140,9 @@ class AssistantRustFindings {
 /// Read-only consumer of existing integration/v0.2 envelopes, no schema changes.
 AssistantRustFindings assistantFindingsFromRust(String envelope) {
   final root = jsonDecode(envelope) as Map<String, dynamic>;
-  if (root['status'] != 'success') throw const FormatException('Rust findings unavailable');
+  if (root['status'] != 'success') {
+    throw const FormatException('Rust findings unavailable');
+  }
   final data = root['data'] as Map<String, dynamic>;
   final v02 = data['schema_version'] == '0.2-provisional';
   if (data.containsKey('schema_version') && !v02) {

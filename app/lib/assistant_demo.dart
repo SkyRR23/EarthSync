@@ -1,4 +1,4 @@
-/// Standalone entrypoint; shared navigation and onboarding are intentionally untouched.
+// Standalone entrypoint; shared navigation and onboarding are intentionally untouched.
 import 'package:flutter/material.dart';
 
 import 'features/assistant/assistant_client.dart';

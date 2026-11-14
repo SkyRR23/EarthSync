@@ -173,7 +173,9 @@ class AssistantAnswer {
   final List<AssistantDecision> decisions;
   final List<String> limitations, warnings, suggestions;
   factory AssistantAnswer.fromJson(Map<String, dynamic> j) {
-    if (j['schema_version'] != assistantVersion) throw const FormatException('Unsupported assistant response');
+    if (j['schema_version'] != assistantVersion) {
+      throw const FormatException('Unsupported assistant response');
+    }
     final answer = AssistantAnswer(contextId: j['context_id'] as String, language: j['language'] as String,
       intent: j['intent'] as String, claims: _maps(j['claims']).map(AssistantClaim.fromJson).toList(),
       citations: _maps(j['citations']).map(AssistantSource.fromJson).toList(),

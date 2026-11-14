@@ -46,6 +46,7 @@ jobs:
         run: |
           dart format app/lib/features/assistant app/lib/assistant_demo.dart app/test/assistant
           git diff --binary > assistant-format.patch
+          python -c "import base64; print('ASSISTANT_FORMAT_PATCH=' + base64.b64encode(open('assistant-format.patch', 'rb').read()).decode())"
       - name: Analyze assistant
         run: flutter analyze --no-fatal-infos lib/features/assistant lib/assistant_demo.dart test/assistant
         working-directory: app

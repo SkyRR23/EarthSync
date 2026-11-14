@@ -36,7 +36,9 @@ class HttpAssistantService implements AssistantService {
         headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
         body: jsonEncode({'schema_version': assistantVersion, 'question': question,
           'language': language, 'expanded': expanded, 'context': context.toJson()})).timeout(timeout);
-      if (response.statusCode != 200) throw AssistantUnavailable('http_${response.statusCode}');
+      if (response.statusCode != 200) {
+        throw AssistantUnavailable('http_${response.statusCode}');
+      }
       final answer = AssistantAnswer.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
       if (answer.contextId != context.contextId || answer.language != language) {
         throw const AssistantUnavailable('context_mismatch');
