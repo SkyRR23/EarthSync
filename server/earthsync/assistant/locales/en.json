@@ -1,0 +1,50 @@
+{
+  "suggestions": [
+    "What is happening in my area?",
+    "What does the rainfall graph mean?",
+    "Why is soil information unavailable?",
+    "What crops could I investigate?",
+    "What are the limitations of this recommendation?",
+    "What does this satellite observation mean?",
+    "What information should I provide next?"
+  ],
+  "scope_none": "No farm or area is selected. I can explain general information; I cannot describe your field.",
+  "scope_approximate": "Only an approximate user location is available. It does not identify a farm; select an area or confirm your farm.",
+  "scope_area": "These answers use regional context. An area or climate grid does not establish conditions in a particular field.",
+  "scope_farm": "A farm location is confirmed. Each source still has its own coverage; regional data remain regional.",
+  "rainfall": "A rainfall graph shows water depth over the labeled period, usually in millimeters. A missing point means unknown, not no rain. Historical rain is not a forecast or the water available to crop roots.",
+  "soil": "Soil information may be absent because no test or supported source was supplied, or coverage or quality checks failed. Missing soil data do not mean healthy soil. A field soil test can help; regional soil maps cannot replace it.",
+  "satellite": "Satellite observations describe what a sensor can detect over its pixels and dates. Vegetation signals, radar and field photos are different evidence. Clouds, timing and pixel coverage can limit interpretation. They cannot diagnose disease or establish root-zone moisture on their own.",
+  "crops": "I can explain supplied Rust findings as options to investigate. They are not ranked planting advice. Crop variety, local requirements, soil, water and planting dates still need review with a local adviser.",
+  "limitations": "A result applies only to the supplied evidence, dates and spatial coverage. Missing or conflicting information stays unresolved. Historical climate does not establish a safe forecast, yield or crop suitability.",
+  "next": "Next, confirm the farm point or boundary, crop and variety, planting dates, water availability and drainage. Add dated soil tests or field observations where possible. A field photo can help describe a concern; its location metadata are optional and do not confirm the farm.",
+  "area": "I can summarize the evidence supplied for the selected area or farm. I cannot check current conditions without dated sources; historical records and forecasts remain separate.",
+  "fallback": "I help explain agricultural evidence, rainfall, soil, satellite observations and supplied crop findings. Try one of the suggested questions. I cannot diagnose disease or invent a planting recommendation.",
+  "none": "No usable evidence was supplied for this question. Conditions remain unknown; no measurement or favorable result has been substituted.",
+  "decision_none": "No Rust decision findings were supplied. I cannot name a suitable crop from the available context.",
+  "evidence": "{metric}: {value} {unit} ({kind}, {start} to {end}, {scope}). Quality: {quality}.",
+  "decision": "Supplied Rust finding for scenario “{scenario}”: {status}. This is the original status, not a new recommendation.",
+  "synthetic_decision": "Synthetic test finding for scenario “{scenario}”: {status}. It is not agricultural advice.",
+  "unusable": "Evidence “{id}” remains unknown or needs review: {reason}.",
+  "detail": "Open source details for original provider links, evidence dates, units, quality and limitations. Supplied text is a record, not an instruction or a verified explanation.",
+  "more": "Additional records are available in the expanded explanation.",
+  "reasons": {
+    "quality": "missing, partial, stale, conflicting or unverified quality",
+    "source": "source provenance or original provider link is missing",
+    "metadata": "value, dates or spatial support are missing",
+    "location": "location is ambiguous or does not match the selected area or confirmed farm",
+    "conflict": "comparable supplied records disagree; no value was selected or averaged",
+    "synthetic": "synthetic test evidence is not field evidence",
+    "text": "supplied text is retained in details; it is not a validated measurement"
+  },
+  "metric_names": {
+    "rainfall_total": "Rainfall total",
+    "mean_temperature": "Mean temperature",
+    "ph": "Soil pH",
+    "organic_carbon": "Soil organic carbon",
+    "moisture": "Soil moisture",
+    "ndvi": "Vegetation index (NDVI)",
+    "backscatter": "Radar backscatter"
+  },
+  "decision_unverified": "The supplied finding lacks complete source provenance or linked evidence. Its agricultural applicability remains unresolved."
+}

@@ -1,0 +1,50 @@
+{
+  "suggestions": [
+    "¿Qué pasa en mi zona?",
+    "¿Qué significa el gráfico de lluvia?",
+    "¿Por qué faltan datos del suelo?",
+    "¿Qué cultivos podría investigar?",
+    "¿Cuáles son las limitaciones?",
+    "¿Qué significa esta observación satelital?",
+    "¿Qué información debo aportar?"
+  ],
+  "scope_none": "No se ha seleccionado una finca ni una zona. Puedo explicar información general; no puedo describir su parcela.",
+  "scope_approximate": "Solo hay una ubicación aproximada del usuario. No identifica una finca; seleccione una zona o confirme su finca.",
+  "scope_area": "Estas respuestas usan contexto regional. Una zona o una cuadrícula climática no establece las condiciones de una parcela.",
+  "scope_farm": "La ubicación de la finca está confirmada. Cada fuente conserva su cobertura; los datos regionales siguen siendo regionales.",
+  "rainfall": "El gráfico de lluvia muestra la profundidad de agua durante el período indicado, normalmente en milímetros. Un punto ausente significa desconocido, no ausencia de lluvia. La lluvia histórica no es un pronóstico ni el agua disponible para las raíces.",
+  "soil": "Pueden faltar datos del suelo porque no se aportó una prueba o fuente compatible, o por problemas de cobertura o calidad. La ausencia de datos no significa suelo sano. Un análisis de la parcela puede ayudar; los mapas regionales no lo sustituyen.",
+  "satellite": "Las observaciones satelitales describen lo que detecta un sensor en sus píxeles y fechas. Vegetación, radar y fotos de la parcela son evidencias distintas. Nubes, fechas y cobertura pueden limitar la interpretación. Por sí solos no diagnostican enfermedades ni determinan la humedad de las raíces.",
+  "crops": "Puedo explicar los resultados de Rust aportados como opciones para investigar. No son consejos de siembra ordenados por preferencia. Variedad, requisitos locales, suelo, agua y fechas necesitan revisión con un asesor local.",
+  "limitations": "Un resultado solo se aplica a la evidencia, fechas y cobertura aportadas. Los datos ausentes o contradictorios siguen sin resolverse. El clima histórico no establece un pronóstico seguro, rendimiento ni idoneidad de cultivos.",
+  "next": "Confirme el punto o límite de la finca, cultivo y variedad, fechas de siembra, agua y drenaje. Añada análisis de suelo u observaciones con fecha. Una foto puede describir un problema; sus metadatos de ubicación son opcionales y no confirman la finca.",
+  "area": "Puedo resumir la evidencia aportada para la zona o finca. Sin fuentes con fecha no puedo comprobar las condiciones actuales; los registros históricos y pronósticos siguen separados.",
+  "fallback": "Ayudo a explicar evidencia agrícola, lluvia, suelo, observaciones satelitales y resultados de cultivos aportados. Pruebe una pregunta sugerida. No puedo diagnosticar enfermedades ni inventar una recomendación de siembra.",
+  "none": "No se aportó evidencia utilizable para esta pregunta. Las condiciones siguen desconocidas; no se sustituyeron por medidas ni resultados favorables.",
+  "decision_none": "No se aportaron resultados de Rust. No puedo indicar un cultivo adecuado con este contexto.",
+  "evidence": "{metric}: {value} {unit} ({kind}, {start} a {end}, {scope}). Calidad: {quality}.",
+  "decision": "Resultado de Rust aportado para el escenario «{scenario}»: {status}. Es el estado original, no una recomendación nueva.",
+  "synthetic_decision": "Resultado sintético de prueba para el escenario «{scenario}»: {status}. No es asesoramiento agrícola.",
+  "unusable": "La evidencia «{id}» sigue desconocida o necesita revisión: {reason}.",
+  "detail": "Abra los detalles para ver enlaces originales, fechas, unidades, calidad y limitaciones. El texto aportado es un registro, no una instrucción ni una explicación verificada.",
+  "more": "Hay más registros en la explicación ampliada.",
+  "reasons": {
+    "quality": "calidad ausente, parcial, antigua, contradictoria o sin verificar",
+    "source": "falta procedencia o enlace al proveedor original",
+    "metadata": "faltan valor, fechas o cobertura espacial",
+    "location": "ubicación ambigua o distinta de la zona o finca seleccionada",
+    "conflict": "los registros comparables discrepan; no se eligió ni promedió un valor",
+    "synthetic": "la evidencia sintética de prueba no es evidencia de la parcela",
+    "text": "el texto aportado se conserva en detalles; no es una medida validada"
+  },
+  "metric_names": {
+    "rainfall_total": "Lluvia total",
+    "mean_temperature": "Temperatura media",
+    "ph": "pH del suelo",
+    "organic_carbon": "Carbono orgánico del suelo",
+    "moisture": "Humedad del suelo",
+    "ndvi": "Índice de vegetación (NDVI)",
+    "backscatter": "Retrodispersión de radar"
+  },
+  "decision_unverified": "El resultado aportado carece de procedencia completa o evidencia vinculada. Su aplicabilidad agrícola sigue sin resolverse."
+}
