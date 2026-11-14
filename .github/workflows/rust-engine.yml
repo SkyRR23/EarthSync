@@ -1,0 +1,40 @@
+name: Rust engine CI
+
+on:
+  push:
+    branches:
+      - main
+      - "feat/**"
+      - "fix/**"
+  pull_request:
+    paths:
+      - "engine/**"
+      - ".github/workflows/rust-engine.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-engine:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: engine
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: engine -> target
+      - name: Check formatting
+        run: cargo fmt --check
+      - name: Run Rust tests
+        run: cargo test --locked
+      - name: Clippy all targets
+        run: cargo clippy --all-targets --locked -- -D warnings
+      - name: Check whitespace and patch integrity
+        run: git diff --check
