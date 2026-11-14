@@ -10,6 +10,7 @@ import 'package:earthsync/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 FieldAnalysis _fixture() => FieldAnalysis.fromJson(
   jsonDecode(
@@ -41,9 +42,12 @@ void main() {
     expect(a.scenarios, isNotEmpty);
   });
 
-  testWidgets('welcome screen shows start button', (tester) async {
+  testWidgets('welcome screen offers optional location', (tester) async {
+    SharedPreferences.setMockInitialValues({});
     await tester.pumpWidget(const ProviderScope(child: FieldShiftApp()));
-    expect(find.text('Start'), findsOneWidget);
+    await tester.pumpAndSettle();
+    expect(find.text('Use My Location'), findsOneWidget);
+    expect(find.text('Skip for Now'), findsOneWidget);
   });
 
   testWidgets('scenario card shows title, status and no percentages', (

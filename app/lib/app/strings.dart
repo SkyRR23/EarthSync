@@ -1,6 +1,6 @@
 /// All English UI text in one place so P3 can review wording.
 abstract final class S {
-  static const appName = 'Field Shift';
+  static const appName = 'EarthSync';
 
   // Welcome
   static const welcomeTitle = 'Plan your next crops with NASA data';
@@ -20,8 +20,6 @@ abstract final class S {
   static const locationTitle = 'Where is your field?';
   static const locationHint = 'Tap the map to place your field.';
   static const useSampleField = 'Use sample field (Yangon)';
-  static const outsideMyanmar =
-      'This point is outside Myanmar. Results may not fit.';
   static const next = 'Next';
   static const done = 'Done';
   static const reviewAnswers = 'Check my answers';

@@ -22,20 +22,30 @@ class RustEngine implements EngineGateway {
       String.fromEnvironment('CLIMATE_MODE', defaultValue: 'live') ==
       'synthetic_demo';
   static bool _ready = false;
+  static Future<void>? _initializing;
 
-  /// Call once before runApp when ENGINE=rust.
+  /// Load on demand so browsing climate never depends on native engine startup.
   static Future<void> init() async {
     if (_ready) return;
-    await RustLib.init();
-    _ready = true;
+    try {
+      await (_initializing ??= RustLib.init());
+      _ready = true;
+    } catch (_) {
+      _initializing = null;
+      rethrow;
+    }
   }
 
   @override
   Future<FieldAnalysis> analyzeField(FarmerInput input) async {
-    if (!_ready) {
+    try {
+      await init();
+    } catch (_) {
       throw const EngineError(
         code: 'bridge_not_ready',
-        message: 'The analysis engine did not start.',
+        message:
+            'The analysis engine did not start. You can still explore climate on the dashboard.',
+        retryable: true,
       );
     }
     if (!syntheticDemo) {

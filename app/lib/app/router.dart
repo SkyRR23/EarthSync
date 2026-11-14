@@ -1,7 +1,9 @@
 import 'package:go_router/go_router.dart';
 
 import '../features/location/location_screen.dart';
-import '../features/onboarding/welcome_screen.dart';
+import '../features/onboarding/home_entry.dart';
+import '../features/onboarding/farm_required.dart';
+import '../features/dashboard/dashboard_screen.dart';
 import '../features/questionnaire/question_screen.dart';
 import '../features/questionnaire/review_screen.dart';
 import '../features/results/results_screen.dart';
@@ -10,7 +12,12 @@ import '../features/sources/sources_screen.dart';
 
 GoRouter buildRouter() => GoRouter(
   routes: [
-    GoRoute(path: '/', builder: (_, _) => const WelcomeScreen()),
+    GoRoute(path: '/', builder: (_, _) => const HomeEntry()),
+    GoRoute(path: '/dashboard', builder: (_, _) => const DashboardScreen()),
+    GoRoute(
+      path: '/area',
+      builder: (_, _) => const LocationScreen(areaOnly: true),
+    ),
     GoRoute(
       path: '/location',
       builder: (_, s) =>
@@ -18,15 +25,20 @@ GoRouter buildRouter() => GoRouter(
     ),
     GoRoute(
       path: '/question/:step',
-      builder: (_, s) => QuestionScreen(
-        step: (int.tryParse(s.pathParameters['step'] ?? '') ?? 1).clamp(
-          1,
-          kQuestionCount,
+      builder: (_, s) => FarmRequired(
+        child: QuestionScreen(
+          step: (int.tryParse(s.pathParameters['step'] ?? '') ?? 1).clamp(
+            1,
+            kQuestionCount,
+          ),
+          editing: s.uri.queryParameters['edit'] == '1',
         ),
-        editing: s.uri.queryParameters['edit'] == '1',
       ),
     ),
-    GoRoute(path: '/review', builder: (_, _) => const ReviewScreen()),
+    GoRoute(
+      path: '/review',
+      builder: (_, _) => const FarmRequired(child: ReviewScreen()),
+    ),
     GoRoute(path: '/results', builder: (_, _) => const ResultsScreen()),
     GoRoute(
       path: '/scenario/:id',
