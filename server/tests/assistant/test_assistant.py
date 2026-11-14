@@ -316,11 +316,11 @@ def test_api_is_independent_and_does_not_echo_private_invalid_inputs():
 
 def test_wire_contract_fixture_roundtrips_and_retrieves_original_citation():
     path = Path(__file__).parents[3] / "docs/assistant/request.v1.json"
-    request = ChatRequest.model_validate_json(path.read_text())
+    request = ChatRequest.model_validate_json(path.read_text(encoding="utf-8"))
     response = explain(request)
     assert response.context_id == request.context.context_id
     assert response.model_dump(mode="json") == json.loads(
-        path.with_name("response.v1.json").read_text()
+        path.with_name("response.v1.json").read_text(encoding="utf-8")
     )
 
 
@@ -330,7 +330,7 @@ def test_json_schemas_match_the_proposed_models():
     directory = Path(__file__).parents[3] / "docs/assistant"
     for model, name in [(ChatRequest, "request"), (ChatResponse, "response")]:
         assert model.model_json_schema() == json.loads(
-            (directory / f"{name}.schema.json").read_text()
+            (directory / f"{name}.schema.json").read_text(encoding="utf-8")
         )
 
 
