@@ -1,0 +1,13 @@
+# Rust
+/engine/target/
+# Flutter / Dart
+/app/.dart_tool/
+/app/build/
+/app/.flutter-plugins-dependencies
+# Secrets
+.env
+.env.*
+!.env.example
+# Local platform files
+Thumbs.db
+.DS_Store
