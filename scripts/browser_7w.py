@@ -15,6 +15,11 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--base-url", default="http://127.0.0.1:8091")
 parser.add_argument("--platform-url", default="http://127.0.0.1:8021")
 parser.add_argument("--output", default="docs/integration/7w/evidence/browser")
+parser.add_argument(
+    "--compare",
+    action="store_true",
+    help="Also exercise 7X saved alternative sequences",
+)
 args = parser.parse_args()
 out = Path(args.output).resolve()
 out.mkdir(parents=True, exist_ok=True)
@@ -50,6 +55,11 @@ with sync_playwright() as p:
     def go(route):
         page.goto(args.base_url + "/#/" + route, wait_until="domcontentloaded")
         enable()
+        if route == "farm-evidence":
+            expect(
+                page.get_by_role("heading", name="Persisted farm evidence", exact=True)
+            ).to_be_visible()
+        page.wait_for_timeout(500)
 
     def fill(name, text):
         visible(name)
@@ -66,7 +76,7 @@ with sync_playwright() as p:
         viewport = page.viewport_size
         page.mouse.move(viewport["width"] / 2, viewport["height"] * 0.6)
         page.mouse.wheel(0, -40000)
-        page.wait_for_timeout(250)
+        page.wait_for_timeout(750)
         for _ in range(40):
             if text in page.locator("body").aria_snapshot():
                 return
@@ -230,6 +240,112 @@ with sync_playwright() as p:
         record(
             "Deterministic assistant explains the same persisted water values and cited reference duration"
         )
+
+        if args.compare:
+            go("farm-evidence")
+            for crop in ["rice", "groundnut"]:
+                fill("Exact crop name or identity (7P v2)", crop)
+                with page.expect_response(lambda r: "/crop-references?" in r.url):
+                    page.get_by_role(
+                        "button", name="Look up crop references", exact=True
+                    ).click()
+                expect(
+                    page.get_by_role(
+                        "button", name="Look up crop references", exact=True
+                    )
+                ).to_be_enabled()
+            visible("Use this saved calculation and source snapshots")
+            page.get_by_role(
+                "button",
+                name="Use this saved calculation and source snapshots",
+                exact=True,
+            ).first.click()
+            visible("First reference profile (exact scope)")
+            page.get_by_role(
+                "button", name="First reference profile (exact scope)", exact=True
+            ).click()
+            page.get_by_role(
+                "menuitem", name="rice.mm.calendar-5-sessions-0@1", exact=True
+            ).click()
+            visible("Optional second profile for declared sequence")
+            page.get_by_role(
+                "button",
+                name="Optional second profile for declared sequence",
+                exact=True,
+            ).click()
+            page.get_by_role(
+                "menuitem", name="groundnut.mm.calendar-65-sessions-0@1", exact=True
+            ).click()
+            alternatives = []
+            for label, first_dates, second_dates, expected_status in [
+                (
+                    "A",
+                    ("2024-07-03", "2024-07-07"),
+                    ("2024-07-08", "2024-07-12"),
+                    "supported_by_supplied_evidence",
+                ),
+                (
+                    "B",
+                    ("2024-07-08", "2024-07-12"),
+                    ("2024-07-03", "2024-07-07"),
+                    "conflicts_with_supplied_evidence",
+                ),
+            ]:
+                fill("Water / first crop start (YYYY-MM-DD)", first_dates[0])
+                fill("Water / first crop end (YYYY-MM-DD)", first_dates[1])
+                fill("Second declared planting (YYYY-MM-DD)", second_dates[0])
+                fill("Second declared harvest (YYYY-MM-DD)", second_dates[1])
+                visible("Save crop & water evidence assessment")
+                with page.expect_response(
+                    lambda r: r.url.endswith("/assessments")
+                ) as response:
+                    page.get_by_role(
+                        "button",
+                        name="Save crop & water evidence assessment",
+                        exact=True,
+                    ).click()
+                value = response.value.json()
+                assert response.value.status == 200, value
+                receipt("alternative-" + label, value)
+                data = value["result"]["data"]
+                findings = [
+                    f for f in data["findings"] if f["rule_id"] == "schedule.sequential"
+                ]
+                assert [f["status"] for f in findings] == [expected_status], findings
+                assert not value["recommendation_eligible"] and data["candidates"] == []
+                assert all(
+                    p["profile"]["executable_rules"] == []
+                    for p in value["catalog_projection"]
+                )
+                assert value["water_findings"]["etc"]["value"] is None
+                alternatives.append(value["decision_id"])
+                expect(
+                    page.get_by_role(
+                        "button",
+                        name="Save crop & water evidence assessment",
+                        exact=True,
+                    )
+                ).to_be_enabled()
+            visible("Compare two saved assessments")
+            for label, ident in zip(["A", "B"], alternatives):
+                visible("Alternative " + label + " saved decision")
+                page.get_by_role(
+                    "button",
+                    name="Alternative " + label + " saved decision",
+                    exact=True,
+                ).click()
+                page.get_by_role("menuitem", name=ident, exact=True).click()
+            visible("Alternative A · " + alternatives[0])
+            shot("alternative-sequences-desktop")
+            visible("Alternative B · " + alternatives[1])
+            record(
+                "Two saved alternatives compare actual Rust chronological support/conflict, source scope and agricultural unknowns without ranking"
+            )
+            page.reload(wait_until="domcontentloaded")
+            enable()
+            for ident in alternatives:
+                visible("Saved decision " + ident)
+            record("Both alternative sequences persist after refresh")
 
         page.set_viewport_size({"width": 390, "height": 844})
         go("farm-evidence")

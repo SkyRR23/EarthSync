@@ -15,6 +15,10 @@ def read(path):
 
 
 def verify(root=ROOT):
+    v1_hash = hashlib.sha256(
+        (root / "data/crop-knowledge/v1/catalog.json").read_bytes()
+    ).hexdigest()
+    assert v1_hash == "2926584bce3693dff7433afe9c05c535a6d5d1e609fb502d4e2f6017f398fb0e"
     v2 = root / "data/crop-knowledge/v2"
     records = read(v2 / "integrity.json")["files"]
     for item in records:
@@ -47,6 +51,7 @@ def verify(root=ROOT):
         assert original["execution_status"] == "blocked"
         assert original["review"]["applicable_rule_independently_reviewed"] is False
     return {
+        "v1_catalog_sha256": v1_hash,
         "v2_hashed_files": len(records),
         "7v_hashed_files": len(hashes),
         "blocked_candidates": len(originals),

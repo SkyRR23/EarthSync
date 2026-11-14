@@ -175,6 +175,10 @@ def build(args, source, state):
         flutter_executable = shutil.which("flutter")
         if flutter_executable is None:
             raise ValueError("Flutter executable not found on PATH")
+        # A fresh Windows SDK bootstraps its tool on first invocation and emits
+        # pub progress before the requested JSON. Finish that bootstrap first;
+        # the subsequent machine response must still be valid, exact JSON.
+        run([flutter_executable, "--version"])
         flutter = subprocess.check_output(
             [flutter_executable, "--version", "--machine"], text=True
         )

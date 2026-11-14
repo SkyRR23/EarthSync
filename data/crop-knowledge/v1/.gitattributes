@@ -1,0 +1,2 @@
+# The immutable v1 catalog has a pinned byte hash, including on Windows.
+catalog.json -text
