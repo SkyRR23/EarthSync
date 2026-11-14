@@ -1,6 +1,8 @@
 //! Field Shift: deterministic, offline-testable environmental analysis foundation.
 //! This module does not recommend crops: agricultural rules must be validated separately.
 
+mod climate;
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -90,34 +92,28 @@ pub fn analyze_field(request: AnalysisRequest) -> Result<AnalysisResult, EngineE
     }
 
     let climate = &request.environment;
-    if climate.monthly_rainfall_mm.len() != 12 || climate.monthly_mean_temp_c.len() != 12 {
-        return Err(EngineError::InvalidMonthlyLength);
-    }
-    if climate.monthly_rainfall_mm.iter().flatten().any(|v| !v.is_finite() || *v < 0.0)
-        || climate.monthly_mean_temp_c.iter().flatten().any(|v| !v.is_finite())
-    {
-        return Err(EngineError::InvalidClimateValue);
-    }
+    let (annual_rainfall_mm, mean_of_monthly_temps_c) = climate::summarize(climate)?;
     if request.scenarios.len() != 3
-        || request.scenarios.iter().any(|s| s.id.is_empty() || s.crop_sequence.is_empty())
+        || request
+            .scenarios
+            .iter()
+            .any(|s| s.id.is_empty() || s.crop_sequence.is_empty())
     {
         return Err(EngineError::InvalidScenarios);
     }
 
     let mut warnings = Vec::new();
-    let annual_rainfall_mm = if climate.monthly_rainfall_mm.iter().all(Option::is_some) {
-        Some(climate.monthly_rainfall_mm.iter().flatten().sum())
-    } else {
+    if annual_rainfall_mm.is_none() {
         warnings.push("Rainfall data are incomplete; annual rainfall is unknown.".into());
-        None
-    };
-    let mean_of_monthly_temps_c = if climate.monthly_mean_temp_c.iter().all(Option::is_some) {
-        Some(climate.monthly_mean_temp_c.iter().flatten().sum::<f64>() / 12.0)
-    } else {
-        warnings.push("Temperature data are incomplete; annual temperature summary is unknown.".into());
-        None
-    };
-    warnings.push("Crop suitability and rotation risks require validated crop rules and local context.".into());
+    }
+    if mean_of_monthly_temps_c.is_none() {
+        warnings
+            .push("Temperature data are incomplete; annual temperature summary is unknown.".into());
+    }
+    warnings.push(
+        "Crop suitability and rotation risks require validated crop rules and local context."
+            .into(),
+    );
     if field.irrigation_available.is_none() {
         warnings.push("Irrigation availability was not provided.".into());
     }
@@ -128,13 +124,17 @@ pub fn analyze_field(request: AnalysisRequest) -> Result<AnalysisResult, EngineE
         mean_of_monthly_temps_c,
         climate_source: climate.source.clone(),
         climate_period: climate.period.clone(),
-        scenarios: request.scenarios.into_iter().map(|s| ScenarioAssessment {
-            id: s.id,
-            label: s.label,
-            crop_sequence: s.crop_sequence,
-            supporting_notes: s.supporting_notes,
-            status: "requires_agronomic_validation".to_string(),
-        }).collect(),
+        scenarios: request
+            .scenarios
+            .into_iter()
+            .map(|s| ScenarioAssessment {
+                id: s.id,
+                label: s.label,
+                crop_sequence: s.crop_sequence,
+                supporting_notes: s.supporting_notes,
+                status: "requires_agronomic_validation".to_string(),
+            })
+            .collect(),
         warnings,
     })
 }
@@ -165,12 +165,14 @@ mod tests {
                 source: "MOCK DATA — NOT NASA".into(),
                 period: "illustrative".into(),
             },
-            scenarios: (0..3).map(|i| RotationScenario {
-                id: format!("scenario-{i}"),
-                label: format!("Example {i}"),
-                crop_sequence: vec!["unverified_crop".into()],
-                supporting_notes: vec![],
-            }).collect(),
+            scenarios: (0..3)
+                .map(|i| RotationScenario {
+                    id: format!("scenario-{i}"),
+                    label: format!("Example {i}"),
+                    crop_sequence: vec!["unverified_crop".into()],
+                    supporting_notes: vec![],
+                })
+                .collect(),
         }
     }
 
@@ -180,7 +182,12 @@ mod tests {
         assert_eq!(result.annual_rainfall_mm, Some(120.0));
         assert_eq!(result.mean_of_monthly_temps_c, Some(28.0));
         assert_eq!(result.scenarios.len(), 3);
-        assert!(result.scenarios.iter().all(|s| s.status == "requires_agronomic_validation"));
+        assert!(
+            result
+                .scenarios
+                .iter()
+                .all(|s| s.status == "requires_agronomic_validation")
+        );
     }
 
     #[test]
@@ -194,7 +201,10 @@ mod tests {
     fn rejects_invalid_rainfall() {
         let mut request = sample();
         request.environment.monthly_rainfall_mm[0] = Some(-1.0);
-        assert_eq!(analyze_field(request).unwrap_err(), EngineError::InvalidClimateValue);
+        assert_eq!(
+            analyze_field(request).unwrap_err(),
+            EngineError::InvalidClimateValue
+        );
     }
 
     #[test]

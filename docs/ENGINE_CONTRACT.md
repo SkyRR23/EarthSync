@@ -63,3 +63,39 @@
 - Data/backend: API and evidence-backed dataset normalization.
 - Application: Flutter UX, map and results.
 - Design/presentation: wireframes, licenses, research citations and submission.
+
+## Foundation validation update (backward-compatible JSON shape)
+
+The input and output fields above are unchanged. Monthly rainfall totals that
+cannot be represented as finite `f64` now return `InvalidClimateValue`, including
+through the JSON adapter, rather than serializing infinity as misleading `null`.
+Temperature means normalize before summation to avoid intermediate overflow.
+Floating-point roundoff remains possible; this is not a day-weighted mean.
+`null` summaries mean incomplete observations, never a numeric overflow fallback.
+This numerical guard does not establish physically plausible climate ranges.
+
+A runnable offline example is `engine/tests/fixtures/synthetic_field.json`, tested
+through the public JSON adapter. It contains **synthetic, unmeasured values**, not
+NASA observations, crop reference data, or validated Myanmar recommendations.
+Expected rainfall is 1700 mm and the unweighted temperature mean is 334/12 °C.
+All three scenarios remain `requires_agronomic_validation`.
+
+### Integration gaps requiring owner agreement before schema v1
+
+- `current_crop` is required as a string; nullable unknown crop/history, management,
+  season, drainage and priorities still need a coordinated model update.
+- `source` and `period` are free-text labels, not adequate provenance. Agree on
+  per-variable provider/product, units, date interval, retrieved time, spatial
+  scale, observed/modeled/forecast/hypothetical kind and missingness. Do not feed
+  POWER precipitation rates into monthly totals without explicit conversion.
+- Exactly three scenarios are accepted; primary plan allows three or more.
+  There is no baseline marker or uniqueness validation for IDs yet.
+- Status and error strings are provisional; Flutter must display unknown/error
+  states rather than treating them as suitability or low risk. Plain supporting
+  notes are unverified input, not engine-generated evidence.
+- No historical baseline comparisons, water adequacy, crop constraints or risks
+  can be inferred from these summaries. Calendar-year arrays cannot express
+  cross-year seasons. Define date-aware windows before seasonal comparisons.
+- `cdylib` alone does not expose a callable Flutter bridge. No bindings, Android
+  build or Windows integration are verified. Generate v2 bindings only against
+  P4's actual app. Networking belongs in a separate adapter, outside pure analysis.
