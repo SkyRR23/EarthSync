@@ -26,3 +26,12 @@ See [the provisional JSON contract](../docs/ENGINE_CONTRACT.md).
 ## Third-party licenses
 
 The project must select an OSI-compatible license and record external data, libraries and adapted OpenFarm code before submission. This initial crate does not include OpenFarm code.
+
+## Reproducible foundation checks
+
+Rust 1.85.1 with rustfmt and Clippy was used for this foundation increment
+(edition 2024). Keep `Cargo.lock`; use `cargo test --locked` for repeatable builds.
+The public JSON tests load `tests/fixtures/synthetic_field.json`: all observations
+and rotation sequences there are explicitly synthetic, not recommendations.
+See [inspection and next steps](../docs/ENGINE_KICKOFF.md) and
+[OpenFarm research](../docs/OPENFARM_RESEARCH.md).

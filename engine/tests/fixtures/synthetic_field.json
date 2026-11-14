@@ -1,0 +1,76 @@
+{
+  "field": {
+    "field_id": "synthetic-yangon-demo",
+    "latitude": 16.8,
+    "longitude": 96.15,
+    "current_crop": "rice",
+    "irrigation_available": null
+  },
+  "environment": {
+    "monthly_rainfall_mm": [
+      5,
+      10,
+      15,
+      40,
+      180,
+      320,
+      370,
+      340,
+      240,
+      130,
+      40,
+      10
+    ],
+    "monthly_mean_temp_c": [
+      25,
+      27,
+      30,
+      32,
+      30,
+      28,
+      27,
+      27,
+      28,
+      28,
+      27,
+      25
+    ],
+    "source": "SYNTHETIC DEMO \u2014 NOT NASA; NOT MEASURED",
+    "period": "Hypothetical January\u2013December; no observation year"
+  },
+  "scenarios": [
+    {
+      "id": "baseline",
+      "label": "Synthetic baseline",
+      "crop_sequence": [
+        "rice",
+        "fallow"
+      ],
+      "supporting_notes": [
+        "Illustrative sequence only; no locally validated crop constraints supplied."
+      ]
+    },
+    {
+      "id": "alternative-a",
+      "label": "Unverified mung bean scenario",
+      "crop_sequence": [
+        "rice",
+        "mung bean"
+      ],
+      "supporting_notes": [
+        "Illustrative sequence only; no locally validated crop constraints supplied."
+      ]
+    },
+    {
+      "id": "alternative-b",
+      "label": "Unverified black gram scenario",
+      "crop_sequence": [
+        "rice",
+        "black gram"
+      ],
+      "supporting_notes": [
+        "Illustrative sequence only; no locally validated crop constraints supplied."
+      ]
+    }
+  ]
+}
