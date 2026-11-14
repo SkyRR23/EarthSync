@@ -165,7 +165,23 @@ pub fn analyze_integration(
             Some(error.to_string()),
         )
     })?;
-    let rotations = compare_rotations(&DecisionRequest {
+    // Climate-only requests carry no crop evidence or scenarios. Do not invent a
+    // baseline/alternatives to satisfy the independent decision API's contract.
+    let climate_only = request.scenarios.is_empty()
+        && request.crop_references.sources.is_empty()
+        && request.crop_references.profiles.is_empty();
+    let rotations = if climate_only {
+        DecisionResult {
+            baseline_id: String::new(),
+            scenarios: Vec::new(),
+            sources: Vec::new(),
+            contains_synthetic_references: false,
+            limitations: vec![
+                "Crop suitability is unknown: no crop constraints or scenarios supplied.".into(),
+            ],
+        }
+    } else {
+        compare_rotations(&DecisionRequest {
         farmer: FarmerContext {
             irrigation_available: request.field.irrigation_available,
             soil_texture: request.soil.texture,
@@ -181,7 +197,8 @@ pub fn analyze_integration(
             "Crop references or rotation inputs are invalid. Check identifiers, source references, dates and the baseline.",
             Some(error.to_string()),
         )
-    })?;
+    })?
+    };
     let mut notices = vec![
         notice(
             "CLIMATE_CONTEXT_ONLY",

@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/strings.dart';
+import 'climate_provenance.dart';
 import '../../data/models/field_analysis.dart';
 import '../../design/components/badges.dart';
 import '../../design/components/feedback.dart';
@@ -50,7 +51,7 @@ class ClimateTab extends StatelessWidget {
     final rainSummary = c.months
         .map(
           (m) =>
-              '${monthNames[m.month - 1]}: ${m.rainMm == null ? S.noData : '${m.rainMm!.round()} mm'}',
+              '${monthNames[m.month - 1]}: ${m.rainMm == null ? S.noData : '${m.rainMm!.toStringAsFixed(2)} mm'}',
         )
         .join(', ');
 
@@ -69,6 +70,8 @@ class ClimateTab extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(FsSpace.gutter),
       children: [
+        ClimateProvenance(analysis: analysis),
+        const SizedBox(height: FsSpace.md),
         if (c.totalRainMm != null || c.meanTempC != null) ...[
           Text(S.seasonSummary, style: t.titleLarge),
           const SizedBox(height: FsSpace.xs),
@@ -81,7 +84,7 @@ class ClimateTab extends StatelessWidget {
                   child: _Stat(
                     icon: Icons.water_drop_outlined,
                     color: FsColors.sky,
-                    value: '${c.totalRainMm!.round()} mm',
+                    value: '${c.totalRainMm!.toStringAsFixed(2)} mm',
                     label: 'Total rain',
                   ),
                 ),

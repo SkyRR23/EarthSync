@@ -79,3 +79,15 @@ On phones that reject ADB installation with `INSTALL_FAILED_USER_RESTRICTED`,
 enable the device's **Install via USB** setting if available, unlock the phone
 and approve its installation prompt. USB debugging authorization alone may
 not permit APK installation.
+## Milestone 4C live climate
+
+Phone Rust mode now retrieves modeled NASA POWER climate from Python, then calls
+`analyzeIntegrationJson` locally. The Review screen has a separate inclusive
+historical month window (initially February 2024); planting month is a farmer
+answer, not the climate query period. There are no verified crop recommendations.
+
+See [the integration contract and Android runbook](../docs/MILESTONE_4C.md).
+Build the native bridge with `cargo build --release --locked` from `app/rust/`
+before running host `flutter test`. This suite includes actual native FFI tests.
+`CLIMATE_MODE=synthetic_demo` and `ENGINE=mock` remain explicit demo modes;
+live failures never select them automatically.

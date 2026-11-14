@@ -8,19 +8,28 @@ import 'package:flutter_test/flutter_test.dart';
 /// engine `analyze_integration_json` on engine/tests/fixtures/
 /// synthetic_integration_request.json. Regenerate if the engine contract changes.
 void main() {
-  final success = File('test/fixtures/engine_success_envelope.json').readAsStringSync();
+  final success = File(
+    'test/fixtures/engine_success_envelope.json',
+  ).readAsStringSync();
 
-  test('success envelope maps to baseline-first scenarios', () {
+  test('success envelope preserves engine order and identifies baseline', () {
     final a = fieldAnalysisFromEnvelope(success);
     expect(a.scenarios, hasLength(3));
-    expect(a.scenarios.first.isBaseline, isTrue);
-    expect(a.scenarios.first.id, 'existing');
+    expect(a.scenarios.map((s) => s.id), [
+      'alternative-a',
+      'existing',
+      'alternative-b',
+    ]);
+    expect(a.baseline!.id, 'existing');
   });
 
   test('engine eligibility is kept, never upgraded', () {
     final a = fieldAnalysisFromEnvelope(success);
     // Whole rotations are insufficient_information in the engine.
-    expect(a.scenarios.every((s) => s.eligibility == Feasibility.unknown), isTrue);
+    expect(
+      a.scenarios.every((s) => s.eligibility == Feasibility.unknown),
+      isTrue,
+    );
     // Per-step categorical checks pass in the synthetic fixture.
     expect(a.scenarios.first.steps.first.feasibility, Feasibility.supported);
   });
@@ -38,13 +47,18 @@ void main() {
         '{"status":"error","error":{"code":"INVALID_ROTATIONS","message":"Crop references are invalid.","component":"rotations","detail":null,"retryable":false}}';
     expect(
       () => fieldAnalysisFromEnvelope(err),
-      throwsA(isA<EngineError>()
-          .having((e) => e.code, 'code', 'INVALID_ROTATIONS')
-          .having((e) => e.retryable, 'retryable', false)),
+      throwsA(
+        isA<EngineError>()
+            .having((e) => e.code, 'code', 'INVALID_ROTATIONS')
+            .having((e) => e.retryable, 'retryable', false),
+      ),
     );
   });
 
   test('garbage output is an error, not a silent success', () {
-    expect(() => fieldAnalysisFromEnvelope('nope'), throwsA(isA<EngineError>()));
+    expect(
+      () => fieldAnalysisFromEnvelope('nope'),
+      throwsA(isA<EngineError>()),
+    );
   });
 }

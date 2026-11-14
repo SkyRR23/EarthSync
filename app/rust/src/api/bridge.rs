@@ -65,13 +65,22 @@ fn build_demo_request(farmer_json: &str) -> Result<String, String> {
     let mut request: Value = serde_json::from_str(SYNTHETIC_REQUEST)
         .map_err(|_| "Built-in demo request is invalid.".to_string())?;
 
-    if let Some(crop) = farmer.get("current_crop").and_then(Value::as_str) {
+    if let Some(crop) = farmer
+        .get("current_crop")
+        .and_then(Value::as_str)
+        .filter(|crop| !crop.trim().is_empty())
+    {
         request["field"]["current_crop"] = json!(crop);
+    } else {
+        // Unknown farmer crop must not inherit the fixture's crop identity.
+        request["field"]["current_crop"] = json!("");
+        request["crop_references"] = json!({"sources": [], "profiles": []});
+        request["scenarios"] = json!([]);
     }
 
     request["field"]["irrigation_available"] =
         match farmer.get("irrigation").and_then(Value::as_str) {
-            Some("full") | Some("partial") => json!(true),
+            Some("full") => json!(true),
             Some("none") => json!(false),
             _ => Value::Null,
         };
@@ -104,7 +113,10 @@ mod tests {
 
     #[test]
     fn demo_with_unknown_answers_succeeds() {
-        assert_eq!(status(&analyze_synthetic_demo_json("{}".into())), "success");
+        let out: Value = serde_json::from_str(&analyze_synthetic_demo_json("{}".into())).unwrap();
+        assert_eq!(out["status"], "success");
+        assert_eq!(out["data"]["field"]["current_crop"], "");
+        assert_eq!(out["data"]["rotations"]["scenarios"], json!([]));
     }
 
     #[test]
