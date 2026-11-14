@@ -1,0 +1,707 @@
+{
+  "data": {
+    "climate": {
+      "calendar_day_weighted_mean_temperature_c": 24.75,
+      "calendar_days": 120,
+      "limitations": [
+        "Full calendar months only; no partial-month estimates or gap filling.",
+        "Day weighting assumes complete monthly means of daily mean temperatures; completeness is supplied by the caller, not verified against daily data.",
+        "Source comparability and spatial representativeness require upstream review; these statistics do not establish crop suitability or forecast skill."
+      ],
+      "metadata": {
+        "data_kind": "hypothetical",
+        "dataset": "synthetic-season-v1",
+        "rainfall_unit": "mm",
+        "source": "SYNTHETIC TEST DATA — NOT NASA; NOT MEASURED",
+        "temperature_unit": "deg_c"
+      },
+      "month_count": 4,
+      "rainfall_gap_months": [],
+      "rainfall_total_mm": 100.0,
+      "temperature_gap_months": [],
+      "window": {
+        "end": {
+          "month": 2,
+          "year": 2027
+        },
+        "start": {
+          "month": 11,
+          "year": 2026
+        }
+      }
+    },
+    "data_mode": "synthetic_demo",
+    "environment": {
+      "latitude": 16.8,
+      "longitude": 96.15,
+      "seasonal": {
+        "metadata": {
+          "data_kind": "hypothetical",
+          "dataset": "synthetic-season-v1",
+          "rainfall_unit": "mm",
+          "source": "SYNTHETIC TEST DATA — NOT NASA; NOT MEASURED",
+          "temperature_unit": "deg_c"
+        },
+        "observations": [
+          {
+            "mean_temperature_c": 10.0,
+            "period": {
+              "month": 11,
+              "year": 2026
+            },
+            "rainfall_complete": true,
+            "rainfall_mm": 10.0,
+            "temperature_complete": true
+          },
+          {
+            "mean_temperature_c": 20.0,
+            "period": {
+              "month": 12,
+              "year": 2026
+            },
+            "rainfall_complete": true,
+            "rainfall_mm": 20.0,
+            "temperature_complete": true
+          },
+          {
+            "mean_temperature_c": 30.0,
+            "period": {
+              "month": 1,
+              "year": 2027
+            },
+            "rainfall_complete": true,
+            "rainfall_mm": 30.0,
+            "temperature_complete": true
+          },
+          {
+            "mean_temperature_c": 40.0,
+            "period": {
+              "month": 2,
+              "year": 2027
+            },
+            "rainfall_complete": true,
+            "rainfall_mm": 40.0,
+            "temperature_complete": true
+          }
+        ],
+        "window": {
+          "end": {
+            "month": 2,
+            "year": 2027
+          },
+          "start": {
+            "month": 11,
+            "year": 2026
+          }
+        }
+      }
+    },
+    "field": {
+      "current_crop": "test_cereal",
+      "field_id": "synthetic-integration-field",
+      "irrigation_available": true,
+      "latitude": 16.8,
+      "longitude": 96.15
+    },
+    "notices": [
+      {
+        "code": "CLIMATE_CONTEXT_ONLY",
+        "message": "Climate statistics are shown separately; no water/temperature suitability rules are implemented or inferred."
+      },
+      {
+        "code": "ROTATION_RULES_UNAVAILABLE",
+        "message": "Rotation transitions, calendar feasibility and benefits remain unevaluated. Read per-step and rotation missing information."
+      },
+      {
+        "code": "SOURCE_APPLICABILITY_UNVERIFIED",
+        "message": "Dataset comparability, spatial scale and crop-reference applicability require upstream review; supplied data does not imply live or validated data."
+      },
+      {
+        "code": "ENVIRONMENT_KIND",
+        "message": "Caller labels this environmental series hypothetical; do not display it as observed or forecast data."
+      },
+      {
+        "code": "SYNTHETIC_DATA",
+        "message": "This workflow contains declared synthetic data or crop references. Do not present its results as observed agriculture or recommendations."
+      }
+    ],
+    "rotations": {
+      "baseline_id": "existing",
+      "contains_synthetic_references": true,
+      "limitations": [
+        "Categorical supplied-evidence checks only; no agronomic recommendation, score or ranking.",
+        "Evidence review and applicability are caller assertions; no regional validity is inferred from citations.",
+        "Planting-month membership does not establish growing duration or climate suitability; irrigation access does not establish adequate water.",
+        "Synthetic-reference results describe test rules only, not validated agriculture."
+      ],
+      "scenarios": [
+        {
+          "crops": [
+            {
+              "eligibility": "supported_by_supplied_evidence",
+              "evidence": [
+                {
+                  "code": "production_system",
+                  "message": "Supplied inputs satisfy this documented categorical constraint only.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                },
+                {
+                  "code": "planting_month",
+                  "message": "Supplied inputs satisfy this documented categorical constraint only.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                },
+                {
+                  "code": "soil_texture",
+                  "message": "Supplied inputs satisfy this documented categorical constraint only.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                },
+                {
+                  "code": "drainage",
+                  "message": "Supplied inputs satisfy this documented categorical constraint only.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                },
+                {
+                  "code": "water_management",
+                  "message": "Supplied inputs satisfy this documented categorical constraint only.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                },
+                {
+                  "code": "crop_family",
+                  "message": "Crop family metadata is documented; no rotation-family effect is inferred.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                }
+              ],
+              "missing_information": [],
+              "risks": [],
+              "step": {
+                "crop_id": "test_cereal",
+                "growing_window": {
+                  "end": {
+                    "month": 2,
+                    "year": 2027
+                  },
+                  "start": {
+                    "month": 11,
+                    "year": 2026
+                  }
+                },
+                "production_system": "upland",
+                "profile_id": "synthetic_upland"
+              }
+            }
+          ],
+          "eligibility": "insufficient_information",
+          "evidence": [
+            {
+              "code": "production_system",
+              "message": "Supplied inputs satisfy this documented categorical constraint only.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "planting_month",
+              "message": "Supplied inputs satisfy this documented categorical constraint only.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "soil_texture",
+              "message": "Supplied inputs satisfy this documented categorical constraint only.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "drainage",
+              "message": "Supplied inputs satisfy this documented categorical constraint only.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "water_management",
+              "message": "Supplied inputs satisfy this documented categorical constraint only.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "crop_family",
+              "message": "Crop family metadata is documented; no rotation-family effect is inferred.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            }
+          ],
+          "missing_information": [
+            {
+              "code": "rotation_rules",
+              "message": "Transition, duration, harvest-calendar, water-budget and soil-health rules have not been supplied or implemented.",
+              "source_refs": []
+            }
+          ],
+          "possible_benefits": [],
+          "risks": [],
+          "scenario": {
+            "id": "alternative-a",
+            "is_baseline": false,
+            "label": "Synthetic alternative A",
+            "steps": [
+              {
+                "crop_id": "test_cereal",
+                "growing_window": {
+                  "end": {
+                    "month": 2,
+                    "year": 2027
+                  },
+                  "start": {
+                    "month": 11,
+                    "year": 2026
+                  }
+                },
+                "production_system": "upland",
+                "profile_id": "synthetic_upland"
+              }
+            ]
+          }
+        },
+        {
+          "crops": [
+            {
+              "eligibility": "supported_by_supplied_evidence",
+              "evidence": [
+                {
+                  "code": "production_system",
+                  "message": "Supplied inputs satisfy this documented categorical constraint only.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                },
+                {
+                  "code": "planting_month",
+                  "message": "Supplied inputs satisfy this documented categorical constraint only.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                },
+                {
+                  "code": "soil_texture",
+                  "message": "Supplied inputs satisfy this documented categorical constraint only.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                },
+                {
+                  "code": "drainage",
+                  "message": "Supplied inputs satisfy this documented categorical constraint only.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                },
+                {
+                  "code": "water_management",
+                  "message": "Supplied inputs satisfy this documented categorical constraint only.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                },
+                {
+                  "code": "crop_family",
+                  "message": "Crop family metadata is documented; no rotation-family effect is inferred.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                }
+              ],
+              "missing_information": [],
+              "risks": [],
+              "step": {
+                "crop_id": "test_cereal",
+                "growing_window": {
+                  "end": {
+                    "month": 2,
+                    "year": 2027
+                  },
+                  "start": {
+                    "month": 11,
+                    "year": 2026
+                  }
+                },
+                "production_system": "irrigated_lowland",
+                "profile_id": "synthetic_lowland"
+              }
+            }
+          ],
+          "eligibility": "insufficient_information",
+          "evidence": [
+            {
+              "code": "production_system",
+              "message": "Supplied inputs satisfy this documented categorical constraint only.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "planting_month",
+              "message": "Supplied inputs satisfy this documented categorical constraint only.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "soil_texture",
+              "message": "Supplied inputs satisfy this documented categorical constraint only.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "drainage",
+              "message": "Supplied inputs satisfy this documented categorical constraint only.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "water_management",
+              "message": "Supplied inputs satisfy this documented categorical constraint only.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "crop_family",
+              "message": "Crop family metadata is documented; no rotation-family effect is inferred.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            }
+          ],
+          "missing_information": [
+            {
+              "code": "rotation_rules",
+              "message": "Transition, duration, harvest-calendar, water-budget and soil-health rules have not been supplied or implemented.",
+              "source_refs": []
+            }
+          ],
+          "possible_benefits": [],
+          "risks": [],
+          "scenario": {
+            "id": "existing",
+            "is_baseline": true,
+            "label": "Synthetic baseline",
+            "steps": [
+              {
+                "crop_id": "test_cereal",
+                "growing_window": {
+                  "end": {
+                    "month": 2,
+                    "year": 2027
+                  },
+                  "start": {
+                    "month": 11,
+                    "year": 2026
+                  }
+                },
+                "production_system": "irrigated_lowland",
+                "profile_id": "synthetic_lowland"
+              }
+            ]
+          }
+        },
+        {
+          "crops": [
+            {
+              "eligibility": "supported_by_supplied_evidence",
+              "evidence": [
+                {
+                  "code": "production_system",
+                  "message": "Supplied inputs satisfy this documented categorical constraint only.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                },
+                {
+                  "code": "planting_month",
+                  "message": "Supplied inputs satisfy this documented categorical constraint only.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                },
+                {
+                  "code": "soil_texture",
+                  "message": "Supplied inputs satisfy this documented categorical constraint only.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                },
+                {
+                  "code": "drainage",
+                  "message": "Supplied inputs satisfy this documented categorical constraint only.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                },
+                {
+                  "code": "water_management",
+                  "message": "Supplied inputs satisfy this documented categorical constraint only.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                },
+                {
+                  "code": "crop_family",
+                  "message": "Crop family metadata is documented; no rotation-family effect is inferred.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                }
+              ],
+              "missing_information": [],
+              "risks": [],
+              "step": {
+                "crop_id": "test_cereal",
+                "growing_window": {
+                  "end": {
+                    "month": 2,
+                    "year": 2027
+                  },
+                  "start": {
+                    "month": 11,
+                    "year": 2026
+                  }
+                },
+                "production_system": "irrigated_lowland",
+                "profile_id": "synthetic_lowland"
+              }
+            },
+            {
+              "eligibility": "supported_by_supplied_evidence",
+              "evidence": [
+                {
+                  "code": "production_system",
+                  "message": "Supplied inputs satisfy this documented categorical constraint only.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                },
+                {
+                  "code": "planting_month",
+                  "message": "Supplied inputs satisfy this documented categorical constraint only.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                },
+                {
+                  "code": "soil_texture",
+                  "message": "Supplied inputs satisfy this documented categorical constraint only.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                },
+                {
+                  "code": "drainage",
+                  "message": "Supplied inputs satisfy this documented categorical constraint only.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                },
+                {
+                  "code": "water_management",
+                  "message": "Supplied inputs satisfy this documented categorical constraint only.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                },
+                {
+                  "code": "crop_family",
+                  "message": "Crop family metadata is documented; no rotation-family effect is inferred.",
+                  "source_refs": [
+                    "synthetic-reference"
+                  ]
+                }
+              ],
+              "missing_information": [],
+              "risks": [],
+              "step": {
+                "crop_id": "test_cereal",
+                "growing_window": {
+                  "end": {
+                    "month": 2,
+                    "year": 2027
+                  },
+                  "start": {
+                    "month": 11,
+                    "year": 2026
+                  }
+                },
+                "production_system": "upland",
+                "profile_id": "synthetic_upland"
+              }
+            }
+          ],
+          "eligibility": "insufficient_information",
+          "evidence": [
+            {
+              "code": "production_system",
+              "message": "Supplied inputs satisfy this documented categorical constraint only.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "planting_month",
+              "message": "Supplied inputs satisfy this documented categorical constraint only.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "soil_texture",
+              "message": "Supplied inputs satisfy this documented categorical constraint only.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "drainage",
+              "message": "Supplied inputs satisfy this documented categorical constraint only.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "water_management",
+              "message": "Supplied inputs satisfy this documented categorical constraint only.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "crop_family",
+              "message": "Crop family metadata is documented; no rotation-family effect is inferred.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "production_system",
+              "message": "Supplied inputs satisfy this documented categorical constraint only.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "planting_month",
+              "message": "Supplied inputs satisfy this documented categorical constraint only.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "soil_texture",
+              "message": "Supplied inputs satisfy this documented categorical constraint only.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "drainage",
+              "message": "Supplied inputs satisfy this documented categorical constraint only.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "water_management",
+              "message": "Supplied inputs satisfy this documented categorical constraint only.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            },
+            {
+              "code": "crop_family",
+              "message": "Crop family metadata is documented; no rotation-family effect is inferred.",
+              "source_refs": [
+                "synthetic-reference"
+              ]
+            }
+          ],
+          "missing_information": [
+            {
+              "code": "rotation_rules",
+              "message": "Transition, duration, harvest-calendar, water-budget and soil-health rules have not been supplied or implemented.",
+              "source_refs": []
+            }
+          ],
+          "possible_benefits": [],
+          "risks": [],
+          "scenario": {
+            "id": "alternative-b",
+            "is_baseline": false,
+            "label": "Synthetic alternative B",
+            "steps": [
+              {
+                "crop_id": "test_cereal",
+                "growing_window": {
+                  "end": {
+                    "month": 2,
+                    "year": 2027
+                  },
+                  "start": {
+                    "month": 11,
+                    "year": 2026
+                  }
+                },
+                "production_system": "irrigated_lowland",
+                "profile_id": "synthetic_lowland"
+              },
+              {
+                "crop_id": "test_cereal",
+                "growing_window": {
+                  "end": {
+                    "month": 2,
+                    "year": 2027
+                  },
+                  "start": {
+                    "month": 11,
+                    "year": 2026
+                  }
+                },
+                "production_system": "upland",
+                "profile_id": "synthetic_upland"
+              }
+            ]
+          }
+        }
+      ],
+      "sources": [
+        {
+          "citation": "SYNTHETIC TEST REFERENCE — NOT REAL CROP REQUIREMENTS",
+          "id": "synthetic-reference",
+          "scope": "Software tests only; no geographic/agronomic validation",
+          "status": "synthetic_test"
+        }
+      ]
+    },
+    "soil": {
+      "drainage": "well",
+      "texture": "loam"
+    }
+  },
+  "status": "success"
+}
