@@ -1,6 +1,8 @@
 """Offline provenance, producer-contract and scope regressions; no agronomic simulation."""
 
 import copy
+import json
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -123,6 +125,20 @@ class CatalogTests(unittest.TestCase):
         self.data["claims"][0]["evidence_kind"] = "synthetic"
         self.reject()
 
+    def test_synthetic_review_status_cannot_enter_real_profiles(self):
+        self.data["claims"][0]["review_status"] = "synthetic"
+        self.corn["parameters"]["scientific_name"]["review_status"] = "reference_only"
+        self.corn["parameters"]["crop_family"]["review_status"] = "reference_only"
+        self.reject()
+
+    def test_synthetic_parameter_cannot_enter_real_profiles(self):
+        self.corn["parameters"]["scientific_name"]["review_status"] = "synthetic"
+        self.reject()
+
+    def test_calendar_without_either_endpoint_is_unavailable(self):
+        self.corn["parameters"]["planting_window"]["value"].update(start=None, end=None)
+        self.reject()
+
     def test_month_and_day_labels_are_validated(self):
         for invalid in ("00-01", "13-01", "04-31", "02-30", "annual"):
             with self.subTest(invalid=invalid):
@@ -171,6 +187,28 @@ class CatalogTests(unittest.TestCase):
         )
         fallow["crop_id"] = "fallow"
         self.reject()
+
+    def test_cli_can_select_fallow_without_inventing_a_crop_identity(self):
+        result = subprocess.run(
+            [
+                sys.executable,
+                str(catalog.ROOT / "tools/catalog.py"),
+                "lookup",
+                "--pilot",
+                "us_ks_tribune",
+                "--fallow",
+                "--system",
+                "dryland_fallow",
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        output = json.loads(result.stdout)
+        self.assertEqual(output["state"], "available")
+        self.assertEqual(output["profile"]["kind"], "fallow")
+        self.assertIsNone(output["profile"]["crop_id"])
+        self.assertFalse(output["recommendation_eligible"])
 
     def test_missing_evidence_cannot_be_reclassified_not_applicable(self):
         fact = self.corn["parameters"]["duration_days"]

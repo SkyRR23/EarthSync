@@ -40,6 +40,11 @@ Lookup requires exact crop, pilot and production-system IDs. It has no geographi
 guessing, aliases, score, nearest-region fallback, generated scenarios or hidden
 conversion to an engine enum. A successful lookup retains unavailable properties
 and `recommendation_eligible: false`; it is not an assessment of a farm.
+For a fallow management period, use `--fallow` instead of `--crop`; for example:
+
+```sh
+python data/crop-knowledge/v1/tools/catalog.py lookup --pilot us_ks_tribune --fallow --system dryland_fallow
+```
 
 The four editorial inputs are:
 

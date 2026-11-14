@@ -138,6 +138,11 @@ def validate(catalog, root=ROOT):
                 raise ValueError(
                     "No not-applicable semantics agreed for this parameter"
                 )
+            if (
+                profile["review_status"] != "synthetic"
+                and fact["review_status"] == "synthetic"
+            ):
+                raise ValueError("Synthetic parameter in a real reference profile")
             for claim_id in fact["claim_ids"]:
                 if claim_id not in claims:
                     raise ValueError(f"Unresolved claim: {claim_id}")
@@ -156,9 +161,9 @@ def validate(catalog, root=ROOT):
                     and claim["review_status"] != "reviewed"
                 ):
                     raise ValueError("Unreviewed evidence promoted to reviewed")
-                if (
-                    profile["review_status"] != "synthetic"
-                    and claim["evidence_kind"] == "synthetic"
+                if profile["review_status"] != "synthetic" and (
+                    claim["evidence_kind"] == "synthetic"
+                    or claim["review_status"] == "synthetic"
                 ):
                     raise ValueError("Synthetic evidence in a real reference profile")
             if fact["state"] == "available" and name in (
@@ -166,6 +171,8 @@ def validate(catalog, root=ROOT):
                 "harvest_window",
             ):
                 value = fact["value"]
+                if value["start"] is None and value["end"] is None:
+                    raise ValueError("Available calendar guidance needs an endpoint")
                 for bound in ("start", "end"):
                     if value[bound] is not None:
                         month_day(value[bound])
@@ -309,13 +316,21 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=("build", "check", "lookup"))
     parser.add_argument("--pilot")
-    parser.add_argument("--crop")
+    crop_selection = parser.add_mutually_exclusive_group()
+    crop_selection.add_argument("--crop")
+    crop_selection.add_argument(
+        "--fallow",
+        action="store_true",
+        help="Select a management period with crop_id null",
+    )
     parser.add_argument("--system")
     args = parser.parse_args()
     catalog = build()
     if args.command == "lookup":
-        if not all((args.pilot, args.crop, args.system)):
-            parser.error("lookup requires --pilot, --crop and --system")
+        if not all((args.pilot, args.system)) or not (args.crop or args.fallow):
+            parser.error(
+                "lookup requires --pilot, --system and either --crop or --fallow"
+            )
         print(
             encoded(lookup(catalog, args.pilot, args.crop, args.system)).decode(),
             end="",

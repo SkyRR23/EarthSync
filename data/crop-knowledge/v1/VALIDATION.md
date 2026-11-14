@@ -18,8 +18,10 @@ git diff --check
 ```
 
 The `build` command generated eight profiles, 13 sources, four pilot cases and
-the audit. The first full offline test run passed 35 tests. Ruff formatting was
-applied, then checked. Final validation outcomes are recorded in the draft PR.
+the audit. The final offline test run passed 39 tests. Ruff lint and formatting,
+deterministic artifact/checksum validation and patch whitespace checks passed.
+Actual CLI lookups exercised an Iowa crop, an uncovered Myanmar scope and fallow
+with a null crop ID. The draft PR records independent CI outcomes.
 For another machine, install `requirements.txt` in a venv and replace the
 host-specific Ruff path with that venv's `python -m ruff`.
 
