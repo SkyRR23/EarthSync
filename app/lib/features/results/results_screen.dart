@@ -43,7 +43,7 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
           actions: [
             TextButton(
               onPressed: () => context.go('/location'),
-              child: const Text('Choose field'),
+              child: const Text('Add or edit farm'),
             ),
           ],
         ),
@@ -85,6 +85,11 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
       AnalysisReady(:final analysis, :final fromCache) => Scaffold(
         appBar: AppBar(
           title: Text(analysis.location.name ?? S.appName),
+          leading: IconButton(
+            tooltip: 'Dashboard',
+            icon: const Icon(Icons.home_outlined),
+            onPressed: () => context.go('/dashboard'),
+          ),
           actions: [
             IconButton(
               tooltip: S.sources,

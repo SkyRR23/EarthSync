@@ -41,6 +41,10 @@ dependencies:
   fl_chart: ^1.3.1
   intl: ^0.20.3
   http: ^1.6.0
+  geolocator: ^14.1.2
+  shared_preferences: ^2.5.6
+  image_picker: ^1.2.4
+  exif: ^3.3.0
   field_shift_bridge:
     path: rust_builder
   flutter_rust_bridge: 2.13.0
@@ -67,6 +71,13 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  fonts:
+    - family: EarthSyncSans
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700
 
   assets:
     - assets/fixtures/

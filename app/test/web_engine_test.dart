@@ -73,7 +73,12 @@ void main() {
             endYear: 2025,
             endMonth: 12,
           ),
-          baseUri: Uri.parse('http://127.0.0.1:8080/'),
+          baseUri: Uri.parse(
+            const String.fromEnvironment(
+              'WEB_DEMO_URL',
+              defaultValue: 'http://127.0.0.1:8080/',
+            ),
+          ),
         ).analyzeField(rice),
         _LiveHttp(),
       );

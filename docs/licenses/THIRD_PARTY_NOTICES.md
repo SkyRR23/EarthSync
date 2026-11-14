@@ -21,3 +21,19 @@ v0.2 P0 fixture register: `engine/tests/fixtures/synthetic_v02_request.json` and
 names and duration bounds for software tests only. No agricultural dataset or
 NASA observation is redistributed by these fixtures. They are not scientific
 references or Myanmar recommendations. No new dependency or third-party code added.
+
+
+## Milestone 7H additions
+
+The integrated application uses the NASA POWER pipeline documented in
+`server/docs/NASA_POWER.md`; the earlier planned row describes the historical
+foundation increment. Live query receipts and scientific limits are recorded in
+`docs/integration/VERIFICATION.md`. No satellite pixels are redistributed.
+
+Roboto Regular and Bold in `app/assets/fonts/` are unmodified fonts bundled with
+the official Flutter 3.50.0 Linux SDK archive (SHA-256
+`6ea2d806fd57269ae783e6788e2a81fc26eaad782f1e0d0ff38623bb765ff9f5`).
+They are distributed under Apache License 2.0; retain
+`app/assets/fonts/Roboto_LICENSE.txt`. Bundling them avoids an implicit Google
+Fonts request during local-demo startup. Renderer assets come from Flutter's
+build tool with `--no-web-resources-cdn`; retain the generated notices.

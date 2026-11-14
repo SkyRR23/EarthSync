@@ -3,10 +3,17 @@ import 'package:earthsync/design/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:earthsync/state/home_provider.dart';
+import 'home_test_support.dart';
 
 Widget _app(String start) {
   final router = buildRouter()..go(start);
   return ProviderScope(
+    overrides: [
+      profileStoreProvider.overrideWithValue(
+        MemoryProfileStore(confirmedProfile()),
+      ),
+    ],
     child: MaterialApp.router(theme: fsTheme(), routerConfig: router),
   );
 }

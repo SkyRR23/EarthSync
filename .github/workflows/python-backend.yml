@@ -13,7 +13,12 @@ permissions:
 
 jobs:
   backend:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.12", "3.13"]
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     defaults:
       run:
@@ -22,7 +27,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: ${{ matrix.python }}
           cache: pip
           cache-dependency-path: server/requirements.lock
       - uses: dtolnay/rust-toolchain@stable
@@ -42,6 +47,8 @@ jobs:
           python -m ruff check earthsync tests
           python -m ruff format --check earthsync tests
       - name: Offline backend and Rust JSON compatibility tests
-        run: python -m pytest -q
+        # Turn a stalled runner into a diagnostic failure with all thread stacks;
+        # never skip a hanging test or allow it to report success.
+        run: python -c "import faulthandler, pytest; faulthandler.dump_traceback_later(120, exit=True); raise SystemExit(pytest.main(['-vv', '--durations=10']))"
       - name: Patch integrity
         run: git diff --check

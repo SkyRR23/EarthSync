@@ -168,7 +168,9 @@ class NasaPowerClient {
         base.fragment.isNotEmpty ||
         !(base.scheme == 'https' ||
             ((kDebugMode || kIsWeb) && local && base.scheme == 'http') ||
-            (kIsWeb && base.origin == Uri.base.origin && base.scheme == 'http'))) {
+            (kIsWeb &&
+                base.origin == Uri.base.origin &&
+                base.scheme == 'http'))) {
       throw const EngineError(
         code: 'backend_configuration',
         message:
@@ -193,11 +195,36 @@ class NasaPowerClient {
           .get(uri, headers: {'Accept': 'application/json'})
           .timeout(timeout);
       if (response.statusCode != 200) {
+        // Decode only recognized machine codes; never display an arbitrary
+        // proxy HTML body or upstream exception text.
+        String? providerCode;
+        bool? providerRetryable;
+        try {
+          final error = (jsonDecode(response.body) as Map)['error'];
+          if (error is Map && error['code'] is String) {
+            providerCode = error['code'] as String;
+            if (error['retryable'] is bool)
+              providerRetryable = error['retryable'] as bool;
+          }
+        } catch (_) {}
+        final reason = switch (providerCode) {
+          'UPSTREAM_SOURCE_CHANGED' =>
+            'NASA returned unsupported source lineage (for example GEOS-IT). Only verified MERRA-2 is supported. Choose an older completed historical period; no source was relabeled.',
+          'UPSTREAM_NETWORK_UNAVAILABLE' =>
+            'The backend cannot reach NASA POWER. Check its network and retry.',
+          'UPSTREAM_TIMEOUT' || 'BACKEND_TIMEOUT' =>
+            'NASA retrieval exceeded its deadline. Retry or choose fewer completed months.',
+          'UPSTREAM_UNITS_CHANGED' ||
+          'UPSTREAM_TIME_STANDARD_CHANGED' ||
+          'UPSTREAM_INTERVAL_CHANGED' =>
+            'NASA metadata did not match the validated units, dates or LST calendar. Data were withheld pending review.',
+          _ =>
+            'Climate server returned HTTP ${response.statusCode}. No climate data were substituted.',
+        };
         throw EngineError(
           code: 'backend_http_${response.statusCode}',
-          message:
-              'Climate server returned HTTP ${response.statusCode}. No climate data were substituted.',
-          retryable: response.statusCode >= 500,
+          message: reason,
+          retryable: providerRetryable ?? response.statusCode >= 500,
         );
       }
       return NasaPowerEvidence.parse(response.body, input, window);

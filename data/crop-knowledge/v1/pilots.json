@@ -1,0 +1,76 @@
+[
+  {
+    "id": "us_ia_story",
+    "label": "Story County, Iowa, USA",
+    "country_code": "US",
+    "scope": "Iowa statewide planting guidance applied only as a regional reference for the Story County corn/soybean pilot.",
+    "geography_basis": "named_research_region_not_farm_boundary",
+    "profile_ids": [
+      "us_ia_story_corn_rainfed_v1",
+      "us_ia_story_soybean_rainfed_v1"
+    ],
+    "coverage_status": "source_reviewed_partial",
+    "environmental_data_status": "unavailable",
+    "additional_crop_gaps": [],
+    "limitations": [
+      "Partial evidence coverage only; no farm point/boundary, local observations, forecast or current irrigation allocation is included.",
+      "EarthSync remains global. Absence from this pilot catalog means unavailable evidence, not an unsuitable location."
+    ]
+  },
+  {
+    "id": "us_ks_tribune",
+    "label": "Greeley County / Tribune, Kansas, USA",
+    "country_code": "US",
+    "scope": "Tribune research-station context; county-wide applicability is not established.",
+    "geography_basis": "named_research_region_not_farm_boundary",
+    "profile_ids": [
+      "us_ks_tribune_winter_wheat_dryland_v1",
+      "us_ks_tribune_sorghum_dryland_v1",
+      "us_ks_tribune_fallow_v1"
+    ],
+    "coverage_status": "reference_only_partial",
+    "environmental_data_status": "unavailable",
+    "additional_crop_gaps": [],
+    "limitations": [
+      "Partial evidence coverage only; no farm point/boundary, local observations, forecast or current irrigation allocation is included.",
+      "EarthSync remains global. Absence from this pilot catalog means unavailable evidence, not an unsuitable location."
+    ]
+  },
+  {
+    "id": "us_ar_stuttgart",
+    "label": "Stuttgart, Arkansas, USA",
+    "country_code": "US",
+    "scope": "Arkansas production-system guidance; no Stuttgart field validation.",
+    "geography_basis": "named_research_region_not_farm_boundary",
+    "profile_ids": [
+      "us_ar_stuttgart_rice_flooded_v1",
+      "us_ar_stuttgart_soybean_irrigated_v1"
+    ],
+    "coverage_status": "reference_only_partial",
+    "environmental_data_status": "unavailable",
+    "additional_crop_gaps": [],
+    "limitations": [
+      "Partial evidence coverage only; no farm point/boundary, local observations, forecast or current irrigation allocation is included.",
+      "EarthSync remains global. Absence from this pilot catalog means unavailable evidence, not an unsuitable location."
+    ]
+  },
+  {
+    "id": "au_nsw_riverina",
+    "label": "Griffith / Riverina, NSW, Australia",
+    "country_code": "AU",
+    "scope": "Southern NSW rice-management reference; no Griffith farm boundary or validated cultivar calendar.",
+    "geography_basis": "named_research_region_not_farm_boundary",
+    "profile_ids": [
+      "au_nsw_riverina_rice_drill_irrigated_v1"
+    ],
+    "coverage_status": "reference_only_partial",
+    "environmental_data_status": "unavailable",
+    "additional_crop_gaps": [
+      "Other regional crops: no system-specific source review completed; no profiles or rotation benefits inferred."
+    ],
+    "limitations": [
+      "Partial evidence coverage only; no farm point/boundary, local observations, forecast or current irrigation allocation is included.",
+      "EarthSync remains global. Absence from this pilot catalog means unavailable evidence, not an unsuitable location."
+    ]
+  }
+]

@@ -1,0 +1,35 @@
+{
+  "kind": "captured_real_provider_response",
+  "retrieved_at_utc": "2026-11-14T09:10:41.752567+00:00",
+  "retrieval_time_note": "Local completion timestamp of the HTTP response capture.",
+  "endpoint": "https://power.larc.nasa.gov/api/temporal/daily/point",
+  "query": {
+    "parameters": "T2M,PRECTOTCORR",
+    "community": "AG",
+    "latitude": 42.03,
+    "longitude": -93.62,
+    "start": "20261001",
+    "end": "20261031",
+    "format": "JSON",
+    "time-standard": "LST"
+  },
+  "http_status": 200,
+  "raw_fixture": "nasa_power_iowa_202610_geosit_live.json",
+  "raw_sha256": "9d039aa56aeeba0ad67a110d3ca9ee96999f1831f82214ea6466836c82e8f744",
+  "source_header": [
+    "GEOSIT"
+  ],
+  "adapter_outcome": "UPSTREAM_SOURCE_CHANGED; deliberately not normalized as MERRA-2",
+  "official_source_review": {
+    "reviewed_on_utc": "2026-11-14",
+    "url": "https://power.larc.nasa.gov/docs/methodology/data/sources_meteorology/",
+    "http_status": 200,
+    "html_sha256": "b2a8dcb492a3c43d39d940d231b72ad2580dd601e54d709655cf3bcf5c053f97",
+    "relevant_statement": "GEOS-IT extends the recent daily time series and is overwritten as MERRA-2 becomes available. Same nominal grid does not establish equivalent precipitation processing."
+  },
+  "limitations": [
+    "Public regional validation point, not a farmer-confirmed field or field observation.",
+    "Offline replay is not a live availability test.",
+    "No GEOS-IT cross-component contract is enabled."
+  ]
+}

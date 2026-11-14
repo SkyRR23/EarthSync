@@ -1,0 +1,2 @@
+# Compatibility extra; the unified requirements.lock already includes Pillow.
+pillow==12.2.0

@@ -1,5 +1,7 @@
 # Browser demo
 
+Milestone 7H unified application: [setup, endpoints, Android and verification](integration/README.md).
+
 This branch combines the latest fetched Flutter live-NASA integration, NASA
 POWER backend, Rust v0.2 and local Android fixes. The existing farmer screens are
 retained. Browser requests run the actual shared Rust engine as a local process;
@@ -14,7 +16,8 @@ server/.venv/Scripts/python -m pip install -e ./server pytest==9.0.1 pytest-asyn
 ```
 
 After building once, `./Run-WebDemo.ps1 -SkipBuild` starts the existing build.
-The server binds only to loopback. This local testing host is not a production
+The server defaults to loopback; `-BindAddress 0.0.0.0` enables same-origin
+Wi-Fi hosting using the PC's reachable IPv4 address. This local testing host is not a production
 deployment. Keep it running while testing the browser.
 
 - `http://127.0.0.1:8080/`: real NASA retrieval, response validation and shared
@@ -65,7 +68,12 @@ NASA/map requests require internet access. A live failure is shown as an error;
 there is no automatic captured-data or mock substitution. Android-native loading,
 permissions and device performance still require Android testing.
 
-## Local verification on 14 November 2026
+See [the Windows/API reliability runbook](../server/docs/WINDOWS_RUNBOOK.md) for
+Python 3.13, ports 8000/8080, live integration diagnostics, Wi-Fi checks and USB
+`adb reverse`. Health alone does not test NASA. Current task evidence and its
+platform limits are in [reliability verification](../server/docs/RELIABILITY_VERIFICATION.md).
+
+## Earlier local verification on 14 November 2026
 
 - Rust engine: 82 tests passed; native bridge: 5 tests passed.
 - Python: 48 tests passed, including actual Rust endpoint execution, bounded

@@ -31,6 +31,16 @@ pub fn engine_version() -> String {
 /// Full contract path: a complete `IntegrationRequest` JSON (built from
 /// farmer input + P2 server data) in, response envelope JSON out.
 pub fn analyze_integration_json(request_json: String) -> String {
+    // Additive version negotiation through the existing string-in/string-out
+    // FRB ABI. Generated bindings and legacy request/response shapes stay stable.
+    // v0.3 still deserializes and validates the entire request in its own engine.
+    if serde_json::from_str::<Value>(&request_json)
+        .ok()
+        .and_then(|v| v.get("schema_version").cloned())
+        .is_some_and(|version| version == "earthsync.engine.v0.3.0")
+    {
+        return field_shift_engine::v03::analyze_v03_json(&request_json);
+    }
     field_shift_engine::integration::analyze_integration_json(&request_json)
 }
 
@@ -142,5 +152,16 @@ mod tests {
             status(&analyze_integration_json(SYNTHETIC_REQUEST.into())),
             "success"
         );
+    }
+
+    #[test]
+    fn versioned_v03_dispatch_uses_real_engine_through_stable_abi() {
+        let request = include_str!("../../../../engine/tests/fixtures/v03/synthetic_request.json");
+        let output: Value =
+            serde_json::from_str(&analyze_integration_json(request.into())).unwrap();
+        assert_eq!(output["status"], "success");
+        assert_eq!(output["data"]["schema_version"], "earthsync.engine.v0.3.0");
+        assert_eq!(output["data"]["software_test_only"], true);
+        assert!(!output["data"]["findings"].as_array().unwrap().is_empty());
     }
 }

@@ -69,3 +69,82 @@ Errors have `status: "error"`, `error: {code,message,retryable}`, no partial dat
 and validation inputs are not echoed. Missing daily observations are successful
 incomplete evidence, not transport errors. Full-month values are null unless all
 calendar days for that variable are valid; null never means zero.
+
+## Reliability extension (additive, HTTP boundary only)
+
+The existing `1.0-proposal` climate payload and Rust integration/v0.2 JSON are
+unchanged. Flutter currently displays generic HTTP failures for non-200 climate
+responses; inspect this machine-readable error envelope in `/docs` or the
+network response to distinguish causes. No Flutter parsing contract is changed.
+
+| HTTP | Code | Meaning / action |
+| --- | --- | --- |
+| 503 | `UPSTREAM_NETWORK_UNAVAILABLE` | Server cannot reach NASA (transport, DNS, TLS or connection failure); check server connectivity. |
+| 504 | `UPSTREAM_TIMEOUT` | NASA read/connect attempt or the complete 70-second retrieval deadline expired. |
+| 503 | `UPSTREAM_UNAVAILABLE` | NASA 429 or transient 5xx after bounded retries. |
+| 502 | `UPSTREAM_REJECTED` | Nonretryable provider HTTP response. |
+| 502 | `UPSTREAM_INVALID_RESPONSE` | Invalid JSON, shape, fill sentinel or metadata; raw body is withheld. |
+| 502 | `UPSTREAM_*_CHANGED` | Units, time standard, source or interval violates the existing contract. |
+| 504 | `BACKEND_TIMEOUT` | Climate request exceeded 80 seconds including cache queueing. |
+| 503 | `ENGINE_CONFIGURATION` | Missing/unlaunchable compiled executable, permissions or unsupported event loop. |
+| 503 | `ENGINE_BUSY` | Two Rust workers occupied; 5-second queue deadline exceeded. |
+| 504 | `ENGINE_TIMEOUT` | Rust execution exceeded 20 seconds; process terminated and pipes drained. |
+| 502 | `ENGINE_FAILED` | Rust process exited unsuccessfully. |
+| 502 | `ENGINE_INVALID_RESPONSE` | Rust stdout is invalid JSON or violates its existing response envelope. |
+| 422 / 413 / 404 | `INVALID_INPUT` / `REQUEST_TOO_LARGE` / `UNKNOWN_INTERFACE` | Bad JSON object, engine request over 2 MB, or unknown engine version. |
+
+`POST /api/engine/integration` and `POST /api/engine/v02` execute the fixed
+compiled `engine/target/debug/examples/web_engine[.exe]` without a shell.
+Successful Rust envelopes and valid Rust domain-error envelopes retain HTTP 200
+and their original body, so current Flutter parsing remains compatible. HTTP
+boundary failures use `{status:"error",error:{code,message,retryable}}`; raw
+stderr, executable paths, stack traces and inputs are not returned. No response
+is replaced with a fixture after a failure. Queue plus execution is bounded to
+25 seconds, below the existing 30-second web-engine client timeout.
+
+### Developer diagnostics contract `1.0-diagnostic`
+
+Set `EARTHSYNC_DIAGNOSTICS=1` **before startup**. Default is disabled (404).
+These are explicit POSTs with **no query parameters or body** (422 otherwise):
+
+- `/api/v1/diagnostics/nasa`: available on both API hosts; real uncached NASA
+  retrieval, existing metadata/lineage validation and complete daily coverage.
+- `/api/v1/diagnostics/integration`: demo host only; the same live NASA check,
+  followed by the compiled Rust integration engine using climate-only input.
+
+Both use the fixed public validation point 16.85 N, 96.15 E, February 2024.
+That point does not come from a user's approximate location, selected farm or
+photo metadata and does not restrict ordinary season requests globally.
+No scientific readings, coordinates, environment variables or internal paths
+are returned. The complete diagnostic is not a crop/scientific validity test.
+
+Success example for the demo host:
+
+```json
+{
+  "schema_version": "1.0-diagnostic",
+  "status": "success",
+  "mode": "live_http",
+  "cache_used": false,
+  "checks": {
+    "nasa_transport": "passed",
+    "merra2_validation": "passed",
+    "daily_coverage": "complete",
+    "rust_execution": "passed"
+  },
+  "engine_sha256": "<SHA-256 of the executed local binary>"
+}
+```
+
+The NASA-only endpoint omits `rust_execution` and `engine_sha256`. Failures use
+the HTTP error envelope above; incomplete daily coverage yields 502
+`MISSING_DATA`. This does **not** change the normal season API: incomplete
+scientific evidence remains a successful payload with null aggregates and
+per-variable coverage states. Health still returns `upstream_checked:false`
+and performs no provider call. No automatic NASA startup probe was added.
+
+Diagnostics bypass the cache and make outbound requests on every invocation;
+keep them developer-only and disable them after troubleshooting. Offline tests
+inject captures/mocks into the provider explicitly and do not establish live
+availability. See [the runbook](WINDOWS_RUNBOOK.md) and
+[verification evidence](RELIABILITY_VERIFICATION.md).

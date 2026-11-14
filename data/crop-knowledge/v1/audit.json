@@ -1,0 +1,136 @@
+{
+  "schema_version": "earthsync.crop-knowledge-audit.v1",
+  "catalog_version": "0.1.0",
+  "checksums": {
+    "sources.json": {
+      "sha256": "b729460446bba1f121033d2343fdc4c0d67b4d8ad5a2b6fbbd09b57f20048456",
+      "bytes": 12208
+    },
+    "evidence/claims.json": {
+      "sha256": "38a44138bc9324d70dbc2ae31828237c1f052bcef72c8bfbb2f17ff6723ff277",
+      "bytes": 17126
+    },
+    "profiles.json": {
+      "sha256": "2589d4743a923081595f117f1f4f22a74af7f3eaae79805e7f0b9379be06e13c",
+      "bytes": 49614
+    },
+    "pilots.json": {
+      "sha256": "dd9809bd6368744ba858d79953bac26d70f6f2804f5d6cbc11a617d976f77bd5",
+      "bytes": 3363
+    },
+    "evidence/captures.json": {
+      "sha256": "f55cc01f52e5d62993741aa1117efefca9f971560c8b9ee6e44fc8ea7dfde107",
+      "bytes": 10493
+    },
+    "evidence/http-retrieval-audit.json": {
+      "sha256": "5dfe98bc2235ce4326e68c16019216a4bbfcf08c8bdea73dbfcdde7e4635a4b0",
+      "bytes": 7310
+    },
+    "catalog.schema.json": {
+      "sha256": "f5e33b60a38555b40e0b270bb1eaa11e1cfe4aaa29ee9cf2d88c6ad08c7f2d88",
+      "bytes": 32866
+    },
+    "catalog.json": {
+      "sha256": "2926584bce3693dff7433afe9c05c535a6d5d1e609fb502d4e2f6017f398fb0e",
+      "bytes": 86604
+    },
+    "fixtures/pilot-cases.json": {
+      "sha256": "b153a6028c2e5d35f049a9a4c9a0f5b57a1f690eea56c88fbf7e10ae98160cb1",
+      "bytes": 2862
+    }
+  },
+  "checksum_scope": "Exact repository artifact bytes; never original provider response bytes.",
+  "counts": {
+    "sources": 13,
+    "claims": 16,
+    "profiles": 8,
+    "pilots": 4
+  },
+  "reviewed_profile_ids": [
+    "us_ia_story_corn_rainfed_v1",
+    "us_ia_story_soybean_rainfed_v1"
+  ],
+  "unavailable_parameters": {
+    "us_ia_story_corn_rainfed_v1": [
+      "harvest_window",
+      "duration_days",
+      "air_temperature_limits",
+      "water_management",
+      "soil_depth_cm",
+      "rotation_information",
+      "crop_coefficients"
+    ],
+    "us_ia_story_soybean_rainfed_v1": [
+      "harvest_window",
+      "duration_days",
+      "air_temperature_limits",
+      "water_management",
+      "soil_depth_cm",
+      "rotation_information",
+      "crop_coefficients"
+    ],
+    "us_ks_tribune_winter_wheat_dryland_v1": [
+      "planting_window",
+      "harvest_window",
+      "duration_days",
+      "air_temperature_limits",
+      "soil_temperature_guidance",
+      "soil_properties",
+      "soil_depth_cm",
+      "crop_coefficients"
+    ],
+    "us_ks_tribune_sorghum_dryland_v1": [
+      "planting_window",
+      "harvest_window",
+      "duration_days",
+      "air_temperature_limits",
+      "soil_temperature_guidance",
+      "soil_properties",
+      "soil_depth_cm",
+      "crop_coefficients"
+    ],
+    "us_ks_tribune_fallow_v1": [
+      "planting_window",
+      "harvest_window",
+      "duration_days",
+      "air_temperature_limits",
+      "soil_temperature_guidance",
+      "soil_properties",
+      "soil_depth_cm",
+      "crop_coefficients"
+    ],
+    "us_ar_stuttgart_rice_flooded_v1": [
+      "planting_window",
+      "harvest_window",
+      "duration_days",
+      "air_temperature_limits",
+      "soil_temperature_guidance",
+      "soil_properties",
+      "soil_depth_cm",
+      "rotation_information",
+      "crop_coefficients"
+    ],
+    "us_ar_stuttgart_soybean_irrigated_v1": [
+      "planting_window",
+      "harvest_window",
+      "duration_days",
+      "air_temperature_limits",
+      "soil_temperature_guidance",
+      "soil_depth_cm",
+      "rotation_information",
+      "crop_coefficients"
+    ],
+    "au_nsw_riverina_rice_drill_irrigated_v1": [
+      "planting_window",
+      "harvest_window",
+      "duration_days",
+      "air_temperature_limits",
+      "soil_temperature_guidance",
+      "soil_properties",
+      "soil_depth_cm",
+      "rotation_information",
+      "crop_coefficients"
+    ]
+  },
+  "recommendation_eligible": false
+}

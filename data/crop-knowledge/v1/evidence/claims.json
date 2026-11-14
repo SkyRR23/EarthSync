@@ -1,0 +1,471 @@
+[
+  {
+    "id": "taxonomy_corn",
+    "source_id": "itis_corn",
+    "locator": "TSN 42269; accepted name and taxonomic hierarchy",
+    "summary": "Zea mays is the accepted species name; family Poaceae.",
+    "parameter_keys": [
+      "scientific_name",
+      "crop_family"
+    ],
+    "evidence_kind": "taxonomic_reference",
+    "review_status": "reviewed",
+    "pilot_ids": [],
+    "production_systems": [],
+    "spatial_support": {
+      "kind": "taxonomic_reference",
+      "description": "Taxonomic identity only, without crop management or geographic suitability inference.",
+      "resolution_m": null,
+      "field_specific": false
+    },
+    "temporal_support": {
+      "start": null,
+      "end": null,
+      "description": "Publication guidance, not a dated field observation; original study dates unavailable."
+    },
+    "limitations": [
+      "Species-level identity does not identify a cultivar, maturity group or agronomic requirement."
+    ]
+  },
+  {
+    "id": "taxonomy_soybean",
+    "source_id": "itis_soybean",
+    "locator": "TSN 26716; accepted name and taxonomic hierarchy",
+    "summary": "Glycine max is the accepted species name; family Fabaceae.",
+    "parameter_keys": [
+      "scientific_name",
+      "crop_family"
+    ],
+    "evidence_kind": "taxonomic_reference",
+    "review_status": "reviewed",
+    "pilot_ids": [],
+    "production_systems": [],
+    "spatial_support": {
+      "kind": "taxonomic_reference",
+      "description": "Taxonomic identity only, without crop management or geographic suitability inference.",
+      "resolution_m": null,
+      "field_specific": false
+    },
+    "temporal_support": {
+      "start": null,
+      "end": null,
+      "description": "Publication guidance, not a dated field observation; original study dates unavailable."
+    },
+    "limitations": [
+      "Species-level identity does not identify a cultivar, maturity group or agronomic requirement."
+    ]
+  },
+  {
+    "id": "taxonomy_winter_wheat",
+    "source_id": "itis_winter_wheat",
+    "locator": "TSN 42237; accepted name and taxonomic hierarchy",
+    "summary": "Triticum aestivum is the accepted species name; family Poaceae.",
+    "parameter_keys": [
+      "scientific_name",
+      "crop_family"
+    ],
+    "evidence_kind": "taxonomic_reference",
+    "review_status": "reviewed",
+    "pilot_ids": [],
+    "production_systems": [],
+    "spatial_support": {
+      "kind": "taxonomic_reference",
+      "description": "Taxonomic identity only, without crop management or geographic suitability inference.",
+      "resolution_m": null,
+      "field_specific": false
+    },
+    "temporal_support": {
+      "start": null,
+      "end": null,
+      "description": "Publication guidance, not a dated field observation; original study dates unavailable."
+    },
+    "limitations": [
+      "Species-level identity does not identify a cultivar, maturity group or agronomic requirement."
+    ]
+  },
+  {
+    "id": "taxonomy_sorghum",
+    "source_id": "itis_sorghum",
+    "locator": "TSN 42108; accepted name and taxonomic hierarchy",
+    "summary": "Sorghum bicolor is the accepted species name; family Poaceae.",
+    "parameter_keys": [
+      "scientific_name",
+      "crop_family"
+    ],
+    "evidence_kind": "taxonomic_reference",
+    "review_status": "reviewed",
+    "pilot_ids": [],
+    "production_systems": [],
+    "spatial_support": {
+      "kind": "taxonomic_reference",
+      "description": "Taxonomic identity only, without crop management or geographic suitability inference.",
+      "resolution_m": null,
+      "field_specific": false
+    },
+    "temporal_support": {
+      "start": null,
+      "end": null,
+      "description": "Publication guidance, not a dated field observation; original study dates unavailable."
+    },
+    "limitations": [
+      "Species-level identity does not identify a cultivar, maturity group or agronomic requirement."
+    ]
+  },
+  {
+    "id": "taxonomy_rice",
+    "source_id": "itis_rice",
+    "locator": "TSN 41976; accepted name and taxonomic hierarchy",
+    "summary": "Oryza sativa is the accepted species name; family Poaceae.",
+    "parameter_keys": [
+      "scientific_name",
+      "crop_family"
+    ],
+    "evidence_kind": "taxonomic_reference",
+    "review_status": "reviewed",
+    "pilot_ids": [],
+    "production_systems": [],
+    "spatial_support": {
+      "kind": "taxonomic_reference",
+      "description": "Taxonomic identity only, without crop management or geographic suitability inference.",
+      "resolution_m": null,
+      "field_specific": false
+    },
+    "temporal_support": {
+      "start": null,
+      "end": null,
+      "description": "Publication guidance, not a dated field observation; original study dates unavailable."
+    },
+    "limitations": [
+      "Species-level identity does not identify a cultivar, maturity group or agronomic requirement."
+    ]
+  },
+  {
+    "id": "iowa_corn_dates",
+    "source_id": "isu_planting_2021",
+    "locator": "Corn planting, paragraphs 1–3",
+    "summary": "The article gives an April 11–May 18 Iowa corn advisory window, while emphasizing soil conditions over fixed dates.",
+    "parameter_keys": [
+      "planting_window"
+    ],
+    "evidence_kind": "published_guidance",
+    "review_status": "reviewed",
+    "pilot_ids": [
+      "us_ia_story"
+    ],
+    "production_systems": [],
+    "spatial_support": {
+      "kind": "regional_guidance",
+      "description": "Iowa statewide extension guidance; Story County is a pilot within this scope.",
+      "resolution_m": null,
+      "field_specific": false
+    },
+    "temporal_support": {
+      "start": null,
+      "end": null,
+      "description": "Publication guidance, not a dated field observation; original study dates unavailable."
+    },
+    "limitations": [
+      "Historical 2021 guidance, not a planting authorization or insurance calendar. No cultivar-specific or Story County trial dates are supplied."
+    ]
+  },
+  {
+    "id": "iowa_soybean_dates",
+    "source_id": "isu_soybean_2024",
+    "locator": "Paragraph on planting corn versus soybean, before May 20",
+    "summary": "The article favors soybean planting before May 20 when conditions permit. No universal earliest date is extracted.",
+    "parameter_keys": [
+      "planting_window"
+    ],
+    "evidence_kind": "published_guidance",
+    "review_status": "reviewed",
+    "pilot_ids": [
+      "us_ia_story"
+    ],
+    "production_systems": [],
+    "spatial_support": {
+      "kind": "regional_guidance",
+      "description": "Iowa extension guidance; no farm-level planting observation.",
+      "resolution_m": null,
+      "field_specific": false
+    },
+    "temporal_support": {
+      "start": null,
+      "end": null,
+      "description": "Publication guidance, not a dated field observation; original study dates unavailable."
+    },
+    "limitations": [
+      "Earlier insurance dates in this article are policy dates, not crop requirements. This advisory endpoint is not a hard biological limit."
+    ]
+  },
+  {
+    "id": "iowa_soil_temperature",
+    "source_id": "isu_soil_2026",
+    "locator": "Why Soil Temperatures Matter; Soil temperature trend",
+    "summary": "For corn and soybean establishment, the article favors soil above 50°F with a warming 3–7 day outlook.",
+    "parameter_keys": [
+      "soil_temperature_guidance"
+    ],
+    "evidence_kind": "published_guidance",
+    "review_status": "reviewed",
+    "pilot_ids": [
+      "us_ia_story"
+    ],
+    "production_systems": [],
+    "spatial_support": {
+      "kind": "regional_guidance",
+      "description": "Iowa extension guidance, variable field conditions.",
+      "resolution_m": null,
+      "field_specific": false
+    },
+    "temporal_support": {
+      "start": null,
+      "end": null,
+      "description": "Publication guidance, not a dated field observation; original study dates unavailable."
+    },
+    "limitations": [
+      "This is soil-temperature establishment guidance, never monthly air-temperature tolerance. The advice does not specify one universal measurement depth; referenced 4-inch maps do not establish field seed-zone temperature. No forecast was retrieved."
+    ]
+  },
+  {
+    "id": "iowa_seedbed_condition",
+    "source_id": "isu_soil_2026",
+    "locator": "Soil moisture matters too",
+    "summary": "The article advises a seedbed that crumbles rather than smears and checking for wet soil below a dry surface.",
+    "parameter_keys": [
+      "soil_properties"
+    ],
+    "evidence_kind": "published_guidance",
+    "review_status": "reviewed",
+    "pilot_ids": [
+      "us_ia_story"
+    ],
+    "production_systems": [],
+    "spatial_support": {
+      "kind": "regional_guidance",
+      "description": "Iowa regional seedbed guidance, requiring local inspection.",
+      "resolution_m": null,
+      "field_specific": false
+    },
+    "temporal_support": {
+      "start": null,
+      "end": null,
+      "description": "Publication guidance, not a dated field observation; original study dates unavailable."
+    },
+    "limitations": [
+      "Qualitative seedbed fitness is not a numeric moisture, texture, drainage class or soil-depth threshold."
+    ]
+  },
+  {
+    "id": "iowa_soybean_cold_window",
+    "source_id": "isu_soybean_2024",
+    "locator": "Early planting considerations, warm soil paragraph",
+    "summary": "Early soybean planting calls for warm soil that does not cool during the first 24 hours.",
+    "parameter_keys": [
+      "soil_temperature_guidance"
+    ],
+    "evidence_kind": "published_guidance",
+    "review_status": "reviewed",
+    "pilot_ids": [
+      "us_ia_story"
+    ],
+    "production_systems": [],
+    "spatial_support": {
+      "kind": "regional_guidance",
+      "description": "Iowa extension guidance for early soybean establishment.",
+      "resolution_m": null,
+      "field_specific": false
+    },
+    "temporal_support": {
+      "start": null,
+      "end": null,
+      "description": "Publication guidance, not a dated field observation; original study dates unavailable."
+    },
+    "limitations": [
+      "No safe-forecast conclusion can be drawn without a current relevant forecast and field conditions."
+    ]
+  },
+  {
+    "id": "iowa_soybean_depth_reference",
+    "source_id": "isu_planting_2021",
+    "locator": "Soybean planting, germination paragraph",
+    "summary": "Soybean germination at 50°F is discussed at a two-inch soil depth, conditional on seedbed quality.",
+    "parameter_keys": [
+      "soil_depth_cm"
+    ],
+    "evidence_kind": "published_guidance",
+    "review_status": "reviewed",
+    "pilot_ids": [
+      "us_ia_story"
+    ],
+    "production_systems": [],
+    "spatial_support": {
+      "kind": "regional_guidance",
+      "description": "Iowa statewide guidance; stated measurement depth, not a soil sampling horizon.",
+      "resolution_m": null,
+      "field_specific": false
+    },
+    "temporal_support": {
+      "start": null,
+      "end": null,
+      "description": "Publication guidance, not a dated field observation; original study dates unavailable."
+    },
+    "limitations": [
+      "Two inches converts exactly to 5.08 cm. This is a temperature reference depth, not a required root-zone depth or soil-property layer. It must not be used for a soil-depth compatibility rule."
+    ]
+  },
+  {
+    "id": "tribune_wsf",
+    "source_id": "ksu_tribune",
+    "locator": "Large-Scale Dryland Cropping Systems abstract",
+    "summary": "No-till wheat–sorghum–fallow was among rotations researched near Tribune. The listing does not prescribe a farm rotation.",
+    "parameter_keys": [
+      "rotation_information",
+      "water_management"
+    ],
+    "evidence_kind": "research_observation",
+    "review_status": "reference_only",
+    "pilot_ids": [
+      "us_ks_tribune"
+    ],
+    "production_systems": [
+      "dryland_winter_cereal",
+      "dryland_summer_cereal",
+      "dryland_fallow"
+    ],
+    "spatial_support": {
+      "kind": "research_station",
+      "description": "K-State Southwest Research-Extension Center near Tribune, Kansas; not every field in Greeley County.",
+      "resolution_m": null,
+      "field_specific": false
+    },
+    "temporal_support": {
+      "start": "2008-01-01",
+      "end": "2020-12-31",
+      "description": "Published research interval; endpoint days denote year extent, not individual observation dates."
+    },
+    "limitations": [
+      "The abstract is a research summary. No numerical crop requirements, calendar, yield projection or transferable rotation benefit is extracted."
+    ]
+  },
+  {
+    "id": "arkansas_flood_management",
+    "source_id": "ua_rice_water_2021",
+    "locator": "Keys to Water Management Success, printed p.119 / PDF p.18; AWD sections pp.114–120",
+    "summary": "Flooded rice requires managed water delivery, retention and drainage. The chapter distinguishes conventional flood, AWD and cultivar-related exceptions.",
+    "parameter_keys": [
+      "water_management"
+    ],
+    "evidence_kind": "published_guidance",
+    "review_status": "reference_only",
+    "pilot_ids": [
+      "us_ar_stuttgart"
+    ],
+    "production_systems": [
+      "irrigated_flooded_lowland"
+    ],
+    "spatial_support": {
+      "kind": "regional_guidance",
+      "description": "Arkansas flooded-rice production guidance, not a Stuttgart field observation.",
+      "resolution_m": null,
+      "field_specific": false
+    },
+    "temporal_support": {
+      "start": null,
+      "end": null,
+      "description": "Publication guidance, not a dated field observation; original study dates unavailable."
+    },
+    "limitations": [
+      "Management depends on cultivar, growth stage, soil and irrigation capacity. Numerical flood depth and timing were not promoted to universal requirements. Rainfall is not an irrigation-sufficiency measurement."
+    ]
+  },
+  {
+    "id": "arkansas_soybean_drainage",
+    "source_id": "ua_soybean_irrigation_2000",
+    "locator": "Crop Management, PDF p.1",
+    "summary": "The handbook emphasizes surface drainage for irrigated soybean.",
+    "parameter_keys": [
+      "water_management",
+      "soil_properties"
+    ],
+    "evidence_kind": "published_guidance",
+    "review_status": "reference_only",
+    "pilot_ids": [
+      "us_ar_stuttgart"
+    ],
+    "production_systems": [
+      "irrigated_upland"
+    ],
+    "spatial_support": {
+      "kind": "regional_guidance",
+      "description": "Arkansas irrigated soybean guidance; no Stuttgart-specific soil sampling.",
+      "resolution_m": null,
+      "field_specific": false
+    },
+    "temporal_support": {
+      "start": null,
+      "end": null,
+      "description": "Publication guidance, not a dated field observation; original study dates unavailable."
+    },
+    "limitations": [
+      "This is an old (2000) chapter and remains reference-only. No numeric water, soil or yield rule is extracted; current local review is needed."
+    ]
+  },
+  {
+    "id": "riverina_drill_water",
+    "source_id": "nsw_drill_rice_2023",
+    "locator": "Summary; Primefact 1253 edition block",
+    "summary": "Drill-sown rice is established with flush irrigation before permanent water, with timing dependent on crop stage.",
+    "parameter_keys": [
+      "water_management"
+    ],
+    "evidence_kind": "published_guidance",
+    "review_status": "reference_only",
+    "pilot_ids": [
+      "au_nsw_riverina"
+    ],
+    "production_systems": [
+      "irrigated_drill_sown_delayed_flood"
+    ],
+    "spatial_support": {
+      "kind": "regional_guidance",
+      "description": "Southern NSW rice-management reference for the Riverina pilot; no Griffith field-specific evidence.",
+      "resolution_m": null,
+      "field_specific": false
+    },
+    "temporal_support": {
+      "start": null,
+      "end": null,
+      "description": "Publication guidance, not a dated field observation; original study dates unavailable."
+    },
+    "limitations": [
+      "Only the landing-page summary was audited. Full guide, variety calendar, irrigation allocation and soil suitability remain unverified; no aerial-sowing inference is permitted."
+    ]
+  },
+  {
+    "id": "fao56_method",
+    "source_id": "fao56_ch5",
+    "locator": "Crop coefficient approach, equation 56 and units",
+    "summary": "Standard-condition crop evapotranspiration equals stage-specific Kc times reference ET0. Both ET rates use mm/day and Kc is dimensionless.",
+    "parameter_keys": [
+      "crop_coefficients"
+    ],
+    "evidence_kind": "method_reference",
+    "review_status": "reference_only",
+    "pilot_ids": [],
+    "production_systems": [],
+    "spatial_support": {
+      "kind": "method_reference",
+      "description": "General method under the documented standard conditions; not a regional crop coefficient.",
+      "resolution_m": null,
+      "field_specific": false
+    },
+    "temporal_support": {
+      "start": null,
+      "end": null,
+      "description": "Publication guidance, not a dated field observation; original study dates unavailable."
+    },
+    "limitations": [
+      "No crop-specific coefficients were ingested. Monthly mean air temperature and rainfall alone do not supply ET0 or a complete field water balance. Flooded rice also needs separate water-management terms."
+    ]
+  }
+]

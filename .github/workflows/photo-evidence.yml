@@ -1,0 +1,63 @@
+name: Photo evidence contracts
+
+on:
+  pull_request:
+    paths:
+      - 'server/earthsync/evidence/**'
+      - 'server/tests/evidence/**'
+      - 'server/requirements-evidence.lock'
+      - 'app/lib/features/photo_evidence/**'
+      - 'app/test/photo_evidence/**'
+      - 'app/example/photo_evidence_main.dart'
+      - 'app/pubspec.*'
+      - '.github/workflows/photo-evidence.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.lock -r requirements-evidence.lock
+        working-directory: server
+      - run: python -m pytest tests/evidence -q
+        working-directory: server
+      - run: ruff check earthsync/evidence tests/evidence && ruff format --check earthsync/evidence tests/evidence
+        working-directory: server
+  flutter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.50.0'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+        working-directory: app
+      - run: dart format --output=none --set-exit-if-changed lib/features/photo_evidence test/photo_evidence example/photo_evidence_main.dart
+        working-directory: app
+      - name: Verify locked dependency resolution
+        run: git diff --exit-code -- app/pubspec.lock
+      - run: flutter analyze --no-fatal-infos lib/features/photo_evidence test/photo_evidence example/photo_evidence_main.dart
+        working-directory: app
+      - run: flutter test test/photo_evidence
+        working-directory: app
+      - run: flutter build web --target example/photo_evidence_main.dart
+        working-directory: app
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: photo-evidence-flutter-verification
+          path: |
+            app/pubspec.lock
+            app/lib/features/photo_evidence
+            app/test/photo_evidence
+            app/example/photo_evidence_main.dart
+            app/build/web

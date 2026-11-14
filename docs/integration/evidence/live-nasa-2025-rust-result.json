@@ -1,0 +1,219 @@
+{
+  "status": "success",
+  "data": {
+    "data_mode": "supplied_data",
+    "field": {
+      "field_id": "public-test-point",
+      "latitude": 16.85,
+      "longitude": 96.15,
+      "current_crop": "",
+      "irrigation_available": null
+    },
+    "soil": {
+      "texture": null,
+      "drainage": null
+    },
+    "environment": {
+      "latitude": 16.85,
+      "longitude": 96.15,
+      "seasonal": {
+        "window": {
+          "start": {
+            "year": 2025,
+            "month": 1
+          },
+          "end": {
+            "year": 2025,
+            "month": 12
+          }
+        },
+        "metadata": {
+          "source": "NASA POWER",
+          "dataset": "POWER daily meteorology / MERRA-2",
+          "data_kind": "modeled",
+          "rainfall_unit": "mm",
+          "temperature_unit": "deg_c"
+        },
+        "observations": [
+          {
+            "period": {
+              "year": 2025,
+              "month": 1
+            },
+            "rainfall_mm": 0.01,
+            "mean_temperature_c": 24.873548387096776,
+            "rainfall_complete": true,
+            "temperature_complete": true
+          },
+          {
+            "period": {
+              "year": 2025,
+              "month": 2
+            },
+            "rainfall_mm": 30.78,
+            "mean_temperature_c": 28.185357142857143,
+            "rainfall_complete": true,
+            "temperature_complete": true
+          },
+          {
+            "period": {
+              "year": 2025,
+              "month": 3
+            },
+            "rainfall_mm": 0.54,
+            "mean_temperature_c": 31.252258064516127,
+            "rainfall_complete": true,
+            "temperature_complete": true
+          },
+          {
+            "period": {
+              "year": 2025,
+              "month": 4
+            },
+            "rainfall_mm": 117.21,
+            "mean_temperature_c": 31.075666666666667,
+            "rainfall_complete": true,
+            "temperature_complete": true
+          },
+          {
+            "period": {
+              "year": 2025,
+              "month": 5
+            },
+            "rainfall_mm": 306.42,
+            "mean_temperature_c": 29.35483870967742,
+            "rainfall_complete": true,
+            "temperature_complete": true
+          },
+          {
+            "period": {
+              "year": 2025,
+              "month": 6
+            },
+            "rainfall_mm": 290.73,
+            "mean_temperature_c": 27.538333333333338,
+            "rainfall_complete": true,
+            "temperature_complete": true
+          },
+          {
+            "period": {
+              "year": 2025,
+              "month": 7
+            },
+            "rainfall_mm": 542.26,
+            "mean_temperature_c": 27.28483870967742,
+            "rainfall_complete": true,
+            "temperature_complete": true
+          },
+          {
+            "period": {
+              "year": 2025,
+              "month": 8
+            },
+            "rainfall_mm": 283.46999999999997,
+            "mean_temperature_c": 27.093225806451613,
+            "rainfall_complete": true,
+            "temperature_complete": true
+          },
+          {
+            "period": {
+              "year": 2025,
+              "month": 9
+            },
+            "rainfall_mm": 408.58,
+            "mean_temperature_c": 27.040666666666667,
+            "rainfall_complete": true,
+            "temperature_complete": true
+          },
+          {
+            "period": {
+              "year": 2025,
+              "month": 10
+            },
+            "rainfall_mm": 175.37,
+            "mean_temperature_c": 27.105483870967745,
+            "rainfall_complete": true,
+            "temperature_complete": true
+          },
+          {
+            "period": {
+              "year": 2025,
+              "month": 11
+            },
+            "rainfall_mm": 124.85,
+            "mean_temperature_c": 24.733,
+            "rainfall_complete": true,
+            "temperature_complete": true
+          },
+          {
+            "period": {
+              "year": 2025,
+              "month": 12
+            },
+            "rainfall_mm": 0.34,
+            "mean_temperature_c": 24.178709677419356,
+            "rainfall_complete": true,
+            "temperature_complete": true
+          }
+        ]
+      }
+    },
+    "climate": {
+      "window": {
+        "start": {
+          "year": 2025,
+          "month": 1
+        },
+        "end": {
+          "year": 2025,
+          "month": 12
+        }
+      },
+      "metadata": {
+        "source": "NASA POWER",
+        "dataset": "POWER daily meteorology / MERRA-2",
+        "data_kind": "modeled",
+        "rainfall_unit": "mm",
+        "temperature_unit": "deg_c"
+      },
+      "month_count": 12,
+      "calendar_days": 365,
+      "rainfall_total_mm": 2280.56,
+      "calendar_day_weighted_mean_temperature_c": 27.469178082191778,
+      "rainfall_gap_months": [],
+      "temperature_gap_months": [],
+      "limitations": [
+        "Full calendar months only; no partial-month estimates or gap filling.",
+        "Day weighting assumes complete monthly means of daily mean temperatures; completeness is supplied by the caller, not verified against daily data.",
+        "Source comparability and spatial representativeness require upstream review; these statistics do not establish crop suitability or forecast skill."
+      ]
+    },
+    "rotations": {
+      "baseline_id": "",
+      "scenarios": [],
+      "sources": [],
+      "contains_synthetic_references": false,
+      "limitations": [
+        "Crop suitability is unknown: no crop constraints or scenarios supplied."
+      ]
+    },
+    "notices": [
+      {
+        "code": "CLIMATE_CONTEXT_ONLY",
+        "message": "Climate statistics are shown separately; no water/temperature suitability rules are implemented or inferred."
+      },
+      {
+        "code": "ROTATION_RULES_UNAVAILABLE",
+        "message": "Rotation transitions, calendar feasibility and benefits remain unevaluated. Read per-step and rotation missing information."
+      },
+      {
+        "code": "SOURCE_APPLICABILITY_UNVERIFIED",
+        "message": "Dataset comparability, spatial scale and crop-reference applicability require upstream review; supplied data does not imply live or validated data."
+      },
+      {
+        "code": "ENVIRONMENT_KIND",
+        "message": "Caller labels this environmental series modeled; do not display it as direct field measurements."
+      }
+    ]
+  }
+}
