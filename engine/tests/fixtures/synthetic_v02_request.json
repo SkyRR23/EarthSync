@@ -1,0 +1,765 @@
+{
+  "integration": {
+    "data_mode": "synthetic_demo",
+    "field": {
+      "field_id": "synthetic-integration-field",
+      "latitude": 16.8,
+      "longitude": 96.15,
+      "current_crop": "test_cereal",
+      "irrigation_available": true
+    },
+    "soil": {
+      "texture": "loam",
+      "drainage": "well"
+    },
+    "environment": {
+      "latitude": 16.8,
+      "longitude": 96.15,
+      "seasonal": {
+        "window": {
+          "start": {
+            "year": 2026,
+            "month": 11
+          },
+          "end": {
+            "year": 2027,
+            "month": 2
+          }
+        },
+        "metadata": {
+          "source": "SYNTHETIC TEST DATA \u2014 NOT NASA; NOT MEASURED",
+          "dataset": "synthetic-season-v1",
+          "data_kind": "hypothetical",
+          "rainfall_unit": "mm",
+          "temperature_unit": "deg_c"
+        },
+        "observations": [
+          {
+            "period": {
+              "year": 2026,
+              "month": 11
+            },
+            "rainfall_mm": 10,
+            "mean_temperature_c": 10,
+            "rainfall_complete": true,
+            "temperature_complete": true
+          },
+          {
+            "period": {
+              "year": 2026,
+              "month": 12
+            },
+            "rainfall_mm": 20,
+            "mean_temperature_c": 20,
+            "rainfall_complete": true,
+            "temperature_complete": true
+          },
+          {
+            "period": {
+              "year": 2027,
+              "month": 1
+            },
+            "rainfall_mm": 30,
+            "mean_temperature_c": 30,
+            "rainfall_complete": true,
+            "temperature_complete": true
+          },
+          {
+            "period": {
+              "year": 2027,
+              "month": 2
+            },
+            "rainfall_mm": 40,
+            "mean_temperature_c": 40,
+            "rainfall_complete": true,
+            "temperature_complete": true
+          }
+        ]
+      }
+    },
+    "crop_references": {
+      "sources": [
+        {
+          "id": "synthetic-reference",
+          "citation": "SYNTHETIC TEST REFERENCE \u2014 NOT REAL CROP REQUIREMENTS",
+          "scope": "Software tests only; no geographic/agronomic validation",
+          "status": "synthetic_test"
+        }
+      ],
+      "profiles": [
+        {
+          "profile_id": "synthetic_lowland",
+          "crop_id": "test_cereal",
+          "common_name": "SYNTHETIC TEST CROP \u2014 NOT AN AGRONOMIC RECOMMENDATION",
+          "production_system": {
+            "value": "irrigated_lowland",
+            "source_refs": [
+              "synthetic-reference"
+            ]
+          },
+          "crop_family": {
+            "value": "Syntheticaceae",
+            "source_refs": [
+              "synthetic-reference"
+            ]
+          },
+          "planting_months": {
+            "value": [
+              11,
+              12
+            ],
+            "source_refs": [
+              "synthetic-reference"
+            ]
+          },
+          "soil_textures": {
+            "value": [
+              "loam"
+            ],
+            "source_refs": [
+              "synthetic-reference"
+            ]
+          },
+          "drainage": {
+            "value": [
+              "well"
+            ],
+            "source_refs": [
+              "synthetic-reference"
+            ]
+          },
+          "water_requirement": {
+            "value": "irrigation_required",
+            "source_refs": [
+              "synthetic-reference"
+            ]
+          },
+          "unsupported_requirements": []
+        },
+        {
+          "profile_id": "synthetic_upland",
+          "crop_id": "test_cereal",
+          "common_name": "SYNTHETIC TEST CROP \u2014 NOT AN AGRONOMIC RECOMMENDATION",
+          "production_system": {
+            "value": "upland",
+            "source_refs": [
+              "synthetic-reference"
+            ]
+          },
+          "crop_family": {
+            "value": "Syntheticaceae",
+            "source_refs": [
+              "synthetic-reference"
+            ]
+          },
+          "planting_months": {
+            "value": [
+              11,
+              12
+            ],
+            "source_refs": [
+              "synthetic-reference"
+            ]
+          },
+          "soil_textures": {
+            "value": [
+              "loam"
+            ],
+            "source_refs": [
+              "synthetic-reference"
+            ]
+          },
+          "drainage": {
+            "value": [
+              "well"
+            ],
+            "source_refs": [
+              "synthetic-reference"
+            ]
+          },
+          "water_requirement": {
+            "value": "irrigation_not_required",
+            "source_refs": [
+              "synthetic-reference"
+            ]
+          },
+          "unsupported_requirements": []
+        }
+      ]
+    },
+    "scenarios": [
+      {
+        "id": "alternative-a",
+        "label": "Synthetic alternative A",
+        "is_baseline": false,
+        "steps": [
+          {
+            "crop_id": "test_cereal",
+            "profile_id": "synthetic_upland",
+            "production_system": "upland",
+            "growing_window": {
+              "start": {
+                "year": 2026,
+                "month": 11
+              },
+              "end": {
+                "year": 2027,
+                "month": 2
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "existing",
+        "label": "Synthetic baseline",
+        "is_baseline": true,
+        "steps": [
+          {
+            "crop_id": "test_cereal",
+            "profile_id": "synthetic_lowland",
+            "production_system": "irrigated_lowland",
+            "growing_window": {
+              "start": {
+                "year": 2026,
+                "month": 11
+              },
+              "end": {
+                "year": 2027,
+                "month": 2
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "alternative-b",
+        "label": "Synthetic alternative B",
+        "is_baseline": false,
+        "steps": [
+          {
+            "crop_id": "test_cereal",
+            "profile_id": "synthetic_lowland",
+            "production_system": "irrigated_lowland",
+            "growing_window": {
+              "start": {
+                "year": 2026,
+                "month": 11
+              },
+              "end": {
+                "year": 2027,
+                "month": 2
+              }
+            }
+          },
+          {
+            "crop_id": "test_cereal",
+            "profile_id": "synthetic_upland",
+            "production_system": "upland",
+            "growing_window": {
+              "start": {
+                "year": 2026,
+                "month": 11
+              },
+              "end": {
+                "year": 2027,
+                "month": 2
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "region_id": "synthetic_region",
+  "farmer_intent": {
+    "current_crop": "test_cereal",
+    "recent_rotation": [
+      "test_cereal",
+      "fallow"
+    ],
+    "planting_month": 11,
+    "priorities": [
+      "less_water",
+      "soil_health"
+    ]
+  },
+  "soil_context": {
+    "texture": [
+      {
+        "id": "farmer-texture",
+        "value": "loam",
+        "provenance": {
+          "kind": "farmer_reported",
+          "source_refs": [
+            "synthetic-reference"
+          ],
+          "provider": "SYNTHETIC TEST PROVIDER",
+          "dataset": "synthetic-v02-test-records",
+          "observed_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 1
+          },
+          "retrieved_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 2
+          },
+          "spatial_resolution_m": null,
+          "uncertainty": "Synthetic data; no field accuracy established"
+        }
+      }
+    ],
+    "drainage": [
+      {
+        "id": "farmer-drainage",
+        "value": "well",
+        "provenance": {
+          "kind": "farmer_reported",
+          "source_refs": [
+            "synthetic-reference"
+          ],
+          "provider": "SYNTHETIC TEST PROVIDER",
+          "dataset": "synthetic-v02-test-records",
+          "observed_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 1
+          },
+          "retrieved_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 2
+          },
+          "spatial_resolution_m": null,
+          "uncertainty": "Synthetic data; no field accuracy established"
+        }
+      }
+    ],
+    "ph": [
+      {
+        "id": "modeled-ph",
+        "value": 6.0,
+        "provenance": {
+          "kind": "modeled",
+          "source_refs": [
+            "synthetic-reference"
+          ],
+          "provider": "SYNTHETIC TEST PROVIDER",
+          "dataset": "synthetic-v02-test-records",
+          "observed_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 1
+          },
+          "retrieved_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 2
+          },
+          "spatial_resolution_m": 40000,
+          "uncertainty": "Synthetic data; no field accuracy established"
+        }
+      }
+    ],
+    "organic_carbon_g_kg": [
+      {
+        "id": "sample-carbon",
+        "value": 12.0,
+        "provenance": {
+          "kind": "observed",
+          "source_refs": [
+            "synthetic-reference"
+          ],
+          "provider": "SYNTHETIC TEST PROVIDER",
+          "dataset": "synthetic-v02-test-records",
+          "observed_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 1
+          },
+          "retrieved_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 2
+          },
+          "spatial_resolution_m": null,
+          "uncertainty": "Synthetic data; no field accuracy established"
+        }
+      }
+    ],
+    "moisture": [
+      {
+        "observation": {
+          "id": "regional-moisture",
+          "value": 0.25,
+          "provenance": {
+            "kind": "modeled",
+            "source_refs": [
+              "synthetic-reference"
+            ],
+            "provider": "SYNTHETIC TEST PROVIDER",
+            "dataset": "synthetic-v02-test-records",
+            "observed_on": {
+              "year": 2026,
+              "month": 10,
+              "day": 1
+            },
+            "retrieved_on": {
+              "year": 2026,
+              "month": 10,
+              "day": 2
+            },
+            "spatial_resolution_m": 40000,
+            "uncertainty": "Synthetic data; no field accuracy established"
+          }
+        },
+        "unit": "volumetric_fraction",
+        "zone": "surface",
+        "depth_cm": {
+          "top": 0.0,
+          "bottom": 5.0
+        }
+      }
+    ],
+    "surface_condition": [
+      {
+        "id": "farmer-dryness",
+        "value": "dry",
+        "provenance": {
+          "kind": "farmer_reported",
+          "source_refs": [
+            "synthetic-reference"
+          ],
+          "provider": "SYNTHETIC TEST PROVIDER",
+          "dataset": "synthetic-v02-test-records",
+          "observed_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 1
+          },
+          "retrieved_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 2
+          },
+          "spatial_resolution_m": null,
+          "uncertainty": "Synthetic data; no field accuracy established"
+        }
+      }
+    ]
+  },
+  "history": {
+    "complete": false,
+    "cycles": [
+      {
+        "id": "cycle-one",
+        "fallow": false,
+        "crop_id": "test_cereal",
+        "crop_family": "Syntheticaceae",
+        "production_system": "irrigated_lowland",
+        "planting_date": {
+          "year": 2025,
+          "month": 11,
+          "day": 1
+        },
+        "harvest_date": {
+          "year": 2026,
+          "month": 1,
+          "day": 15
+        },
+        "irrigation_available": true,
+        "amendments": null,
+        "provenance": {
+          "kind": "farmer_reported",
+          "source_refs": [
+            "synthetic-reference"
+          ],
+          "provider": "SYNTHETIC TEST PROVIDER",
+          "dataset": "synthetic-v02-test-records",
+          "observed_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 1
+          },
+          "retrieved_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 2
+          },
+          "spatial_resolution_m": null,
+          "uncertainty": "Synthetic data; no field accuracy established"
+        }
+      },
+      {
+        "id": "cycle-two",
+        "fallow": true,
+        "crop_id": null,
+        "crop_family": null,
+        "production_system": null,
+        "planting_date": {
+          "year": 2026,
+          "month": 2,
+          "day": 1
+        },
+        "harvest_date": {
+          "year": 2026,
+          "month": 4,
+          "day": 1
+        },
+        "irrigation_available": null,
+        "amendments": [],
+        "provenance": {
+          "kind": "farmer_reported",
+          "source_refs": [
+            "synthetic-reference"
+          ],
+          "provider": "SYNTHETIC TEST PROVIDER",
+          "dataset": "synthetic-v02-test-records",
+          "observed_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 1
+          },
+          "retrieved_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 2
+          },
+          "spatial_resolution_m": null,
+          "uncertainty": "Synthetic data; no field accuracy established"
+        }
+      }
+    ]
+  },
+  "sequential_only": true,
+  "plans": [
+    {
+      "scenario_id": "alternative-a",
+      "step_index": 0,
+      "season": {
+        "planned_planting_date": {
+          "year": 2026,
+          "month": 11,
+          "day": 1
+        },
+        "planned_harvest_date": {
+          "year": 2027,
+          "month": 1,
+          "day": 15
+        },
+        "regional_label": "SYNTHETIC CROSS-YEAR SEASON",
+        "season_start": {
+          "year": 2026,
+          "month": 11,
+          "day": 1
+        },
+        "season_end": {
+          "year": 2027,
+          "month": 2,
+          "day": 28
+        },
+        "available_growing_days": 120,
+        "provenance": {
+          "kind": "farmer_reported",
+          "source_refs": [
+            "synthetic-reference"
+          ],
+          "provider": "SYNTHETIC TEST PROVIDER",
+          "dataset": "synthetic-v02-test-records",
+          "observed_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 1
+          },
+          "retrieved_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 2
+          },
+          "spatial_resolution_m": null,
+          "uncertainty": "Synthetic data; no field accuracy established"
+        }
+      }
+    },
+    {
+      "scenario_id": "existing",
+      "step_index": 0,
+      "season": {
+        "planned_planting_date": {
+          "year": 2026,
+          "month": 11,
+          "day": 1
+        },
+        "planned_harvest_date": {
+          "year": 2027,
+          "month": 1,
+          "day": 15
+        },
+        "regional_label": "SYNTHETIC CROSS-YEAR SEASON",
+        "season_start": {
+          "year": 2026,
+          "month": 11,
+          "day": 1
+        },
+        "season_end": {
+          "year": 2027,
+          "month": 2,
+          "day": 28
+        },
+        "available_growing_days": 120,
+        "provenance": {
+          "kind": "farmer_reported",
+          "source_refs": [
+            "synthetic-reference"
+          ],
+          "provider": "SYNTHETIC TEST PROVIDER",
+          "dataset": "synthetic-v02-test-records",
+          "observed_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 1
+          },
+          "retrieved_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 2
+          },
+          "spatial_resolution_m": null,
+          "uncertainty": "Synthetic data; no field accuracy established"
+        }
+      }
+    },
+    {
+      "scenario_id": "alternative-b",
+      "step_index": 0,
+      "season": {
+        "planned_planting_date": {
+          "year": 2026,
+          "month": 11,
+          "day": 1
+        },
+        "planned_harvest_date": {
+          "year": 2027,
+          "month": 1,
+          "day": 15
+        },
+        "regional_label": "SYNTHETIC CROSS-YEAR SEASON",
+        "season_start": {
+          "year": 2026,
+          "month": 11,
+          "day": 1
+        },
+        "season_end": {
+          "year": 2027,
+          "month": 2,
+          "day": 28
+        },
+        "available_growing_days": 120,
+        "provenance": {
+          "kind": "farmer_reported",
+          "source_refs": [
+            "synthetic-reference"
+          ],
+          "provider": "SYNTHETIC TEST PROVIDER",
+          "dataset": "synthetic-v02-test-records",
+          "observed_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 1
+          },
+          "retrieved_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 2
+          },
+          "spatial_resolution_m": null,
+          "uncertainty": "Synthetic data; no field accuracy established"
+        }
+      }
+    },
+    {
+      "scenario_id": "alternative-b",
+      "step_index": 1,
+      "season": {
+        "planned_planting_date": {
+          "year": 2026,
+          "month": 11,
+          "day": 1
+        },
+        "planned_harvest_date": {
+          "year": 2027,
+          "month": 1,
+          "day": 15
+        },
+        "regional_label": "SYNTHETIC CROSS-YEAR SEASON",
+        "season_start": {
+          "year": 2026,
+          "month": 11,
+          "day": 1
+        },
+        "season_end": {
+          "year": 2027,
+          "month": 2,
+          "day": 28
+        },
+        "available_growing_days": 120,
+        "provenance": {
+          "kind": "farmer_reported",
+          "source_refs": [
+            "synthetic-reference"
+          ],
+          "provider": "SYNTHETIC TEST PROVIDER",
+          "dataset": "synthetic-v02-test-records",
+          "observed_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 1
+          },
+          "retrieved_on": {
+            "year": 2026,
+            "month": 10,
+            "day": 2
+          },
+          "spatial_resolution_m": null,
+          "uncertainty": "Synthetic data; no field accuracy established"
+        }
+      }
+    }
+  ],
+  "duration_rules": [
+    {
+      "profile_id": "synthetic_lowland",
+      "min_days": 60,
+      "max_days": 90,
+      "applicability": {
+        "region_id": "synthetic_region",
+        "production_system": "irrigated_lowland",
+        "reviewed_for_context": true
+      },
+      "source_refs": [
+        "synthetic-reference"
+      ]
+    }
+  ],
+  "profile_applicability": [
+    {
+      "profile_id": "synthetic_lowland",
+      "applicability": {
+        "region_id": "synthetic_region",
+        "production_system": "irrigated_lowland",
+        "reviewed_for_context": true
+      }
+    },
+    {
+      "profile_id": "synthetic_upland",
+      "applicability": {
+        "region_id": "synthetic_region",
+        "production_system": "upland",
+        "reviewed_for_context": true
+      }
+    }
+  ],
+  "environmental_provenance": null
+}

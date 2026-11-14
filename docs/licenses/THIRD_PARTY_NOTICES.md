@@ -29,3 +29,9 @@ No NASA logos or mission insignia were generated.
 | `geolocator` | 14.1.2 (https://pub.dev/packages/geolocator) | MIT (Baseflow) |
 | `share_plus` | 13.3.1 (https://pub.dev/packages/share_plus) | BSD-3-Clause (Flutter Community) |
 | Flutter packages | Exact versions in `app/pubspec.lock`: flutter_riverpod, go_router, flutter_map, latlong2, fl_chart, intl, flutter_rust_bridge 2.13.0, cupertino_icons | Permissive (MIT / BSD-3-Clause / Apache-2.0); verify transitive notices before binary release. |
+
+v0.2 P0 fixture register: `engine/tests/fixtures/synthetic_v02_request.json` and
+`synthetic_v02_response.json` contain AI-assisted fictional observations, family
+names and duration bounds for software tests only. No agricultural dataset or
+NASA observation is redistributed by these fixtures. They are not scientific
+references or Myanmar recommendations. No new dependency or third-party code added.

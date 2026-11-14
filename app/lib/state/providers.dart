@@ -5,29 +5,49 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../data/environment/nasa_power_client.dart';
 import '../data/engine/engine_gateway.dart';
 import '../data/engine/mock_engine.dart';
 import '../data/engine/rust_engine.dart';
 import '../data/models/farm_boundary.dart';
+import '../data/engine/web_engine.dart';
 import '../data/models/farmer_input.dart';
 import '../data/models/field_analysis.dart';
 import '../data/models/field_note.dart';
 
 const _engineDefine = String.fromEnvironment('ENGINE');
 
-/// `rust` (team engine via bridge) on phones by default; `mock` on web,
-/// where the Rust bridge is not built. Override with --dart-define=ENGINE=...
+/// Native apps use FRB; browsers call the shared Rust engine on the demo host.
+/// Fixture presentation requires an explicit ENGINE=mock selection.
 final kEngine = _engineDefine.isNotEmpty
     ? _engineDefine
-    : (kIsWeb ? 'mock' : 'rust');
+    : (kIsWeb ? (Uri.base.queryParameters['engine'] ?? 'web') : 'rust');
 
 final engineProvider = Provider<EngineGateway>(
-  (ref) => kEngine == 'rust' ? RustEngine() : MockEngine(),
+  (ref) => switch (kEngine) {
+    'rust' => RustEngine(window: ref.watch(historicalWindowProvider)),
+    'web' => WebEngine(window: ref.watch(historicalWindowProvider)),
+    'mock' => MockEngine(),
+    _ => throw StateError(
+      'Unsupported ENGINE value. Choose rust, web or mock.',
+    ),
+  },
 );
 
 /// Device storage. Overridden in main(); null in tests = memory only.
 /// Farmer answers and notes never leave the phone (master plan §13).
 final prefsProvider = Provider<SharedPreferences?>((ref) => null);
+
+class HistoricalWindowNotifier extends Notifier<HistoricalWindow> {
+  @override
+  HistoricalWindow build() => const HistoricalWindow();
+  void setWindow(HistoricalWindow window) => state = window;
+}
+
+final historicalWindowProvider =
+    NotifierProvider<HistoricalWindowNotifier, HistoricalWindow>(
+      HistoricalWindowNotifier.new,
+    );
 
 // ---------------------------------------------------------------------------
 // The farmer's field and answers (saved on the phone)
@@ -328,19 +348,24 @@ class AnalysisFailed extends AnalysisState {
 
 class AnalysisNotifier extends Notifier<AnalysisState> {
   FieldAnalysis? _lastGood;
+  int _generation = 0;
 
   @override
   AnalysisState build() => const AnalysisIdle();
 
   Future<void> run(FarmerInput input) async {
+    final generation = ++_generation;
     state = const AnalysisRunning();
     try {
       final result = await ref.read(engineProvider).analyzeField(input);
+      if (generation != _generation) return;
       _lastGood = result;
       state = AnalysisReady(result);
     } on EngineError catch (e) {
+      if (generation != _generation) return;
       state = AnalysisFailed(e, lastGood: _lastGood);
     } catch (e) {
+      if (generation != _generation) return;
       state = AnalysisFailed(
         EngineError(code: 'unexpected', message: e.toString()),
         lastGood: _lastGood,
@@ -355,17 +380,22 @@ class AnalysisNotifier extends Notifier<AnalysisState> {
 
   /// Fallback for outages: the bundled demo fixture (master plan §12, H28).
   Future<void> runDemo() async {
+    final generation = ++_generation;
     state = const AnalysisRunning();
     try {
-      state = AnalysisReady(
-        await MockEngine(delay: Duration.zero).analyzeField(_demoInput),
-      );
+      final result = await MockEngine(
+        delay: Duration.zero,
+      ).analyzeField(_demoInput);
+      if (generation != _generation) return;
+      state = AnalysisReady(result);
     } on EngineError catch (e) {
+      if (generation != _generation) return;
       state = AnalysisFailed(e);
     }
   }
 
   void showLastGood() {
+    ++_generation;
     if (_lastGood != null) state = AnalysisReady(_lastGood!, fromCache: true);
   }
 }
@@ -375,6 +405,6 @@ final analysisProvider = NotifierProvider<AnalysisNotifier, AnalysisState>(
 );
 
 /// Sample field near Yangon used by "Use sample field" and the demo fallback.
-const kSampleLat = 16.8661;
-const kSampleLon = 96.1951;
+const kSampleLat = 16.85;
+const kSampleLon = 96.15;
 const _demoInput = FarmerInput(latitude: kSampleLat, longitude: kSampleLon);

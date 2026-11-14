@@ -41,25 +41,54 @@ class CropsTab extends StatelessWidget {
           const FsBanner(message: S.showLast, icon: CupertinoIcons.clock),
         ],
         const SizedBox(height: FsSpace.lg),
+        if (items.isEmpty)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              FsSpace.gutter,
+              FsSpace.xl,
+              FsSpace.gutter,
+              0,
+            ),
+            child: Column(
+              children: [
+                const Text('🌱❔', style: TextStyle(fontSize: 48)),
+                const SizedBox(height: FsSpace.md),
+                Text(
+                  S.cropsUnknownTitle,
+                  textAlign: TextAlign.center,
+                  style: context.type.title2,
+                ),
+                const SizedBox(height: FsSpace.sm),
+                Text(
+                  S.cropsUnknownBody,
+                  textAlign: TextAlign.center,
+                  style: context.type.body.copyWith(
+                    color: context.fs.secondaryLabel,
+                  ),
+                ),
+              ],
+            ),
+          ),
         for (final (i, (s, label, _)) in items.indexed)
           FsCropCard(
             scenario: s,
             highlight: i == 0 && s.eligibility == Feasibility.supported,
             onTap: () => showPlanSheet(context, s, label, a),
           ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(
-            FsSpace.gutter,
-            FsSpace.xs,
-            FsSpace.gutter,
-            0,
+        if (items.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              FsSpace.gutter,
+              FsSpace.xs,
+              FsSpace.gutter,
+              0,
+            ),
+            child: Text(
+              S.tapForWhy,
+              textAlign: TextAlign.center,
+              style: context.type.footnote,
+            ),
           ),
-          child: Text(
-            S.tapForWhy,
-            textAlign: TextAlign.center,
-            style: context.type.footnote,
-          ),
-        ),
       ],
     );
   }

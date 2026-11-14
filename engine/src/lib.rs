@@ -12,6 +12,9 @@ pub mod decision;
 /// Provisional orchestration for backend/Flutter integration; existing APIs unchanged.
 pub mod integration;
 
+/// Provisional v0.2 soil, history and daily-schedule extension.
+pub mod v02;
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

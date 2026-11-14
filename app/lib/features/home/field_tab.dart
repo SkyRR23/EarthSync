@@ -19,7 +19,9 @@ import '../../design/components/sheet.dart';
 import '../../design/components/status.dart';
 import '../../design/tokens.dart';
 import '../../state/providers.dart';
+import '../../data/environment/nasa_power_client.dart';
 import '../map/gibs_layer.dart';
+import '../questionnaire/historical_window_selector.dart';
 
 /// "rain_mm.Jul 2026" -> "Rain, Jul 2026"; "drainage" -> "After rain".
 String dataGapLabel(String field) {
@@ -177,6 +179,57 @@ class FieldTab extends ConsumerStatefulWidget {
 class _FieldTabState extends ConsumerState<FieldTab> {
   bool _plantHealth = false;
 
+  /// The team's NASA history window (completed months, up to 24).
+  Future<void> _pickWeatherMonths(BuildContext context) async {
+    final before = ref.read(historicalWindowProvider);
+    await showFsSheet<void>(
+      context,
+      title: S.weatherMonths,
+      builder: (ctx) => Padding(
+        padding: const EdgeInsets.all(FsSpace.gutter),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            FsButton(
+              S.last12,
+              kind: FsButtonKind.tinted,
+              icon: CupertinoIcons.calendar,
+              onPressed: () {
+                final now = DateTime.now().toUtc();
+                final end = DateTime.utc(now.year, now.month - 1);
+                final start = DateTime.utc(end.year, end.month - 11);
+                ref
+                    .read(historicalWindowProvider.notifier)
+                    .setWindow(
+                      HistoricalWindow(
+                        startYear: start.year,
+                        startMonth: start.month,
+                        endYear: end.year,
+                        endMonth: end.month,
+                      ),
+                    );
+                Navigator.of(ctx).pop();
+              },
+            ),
+            const SizedBox(height: FsSpace.lg),
+            const Material(
+              type: MaterialType.transparency,
+              child: HistoricalWindowSelector(),
+            ),
+            const SizedBox(height: FsSpace.lg),
+            FsButton(S.done, onPressed: () => Navigator.of(ctx).pop()),
+          ],
+        ),
+      ),
+    );
+    final after = ref.read(historicalWindowProvider);
+    if (!identical(before, after) && mounted) {
+      ref
+          .read(analysisProvider.notifier)
+          .run(ref.read(farmerDraftProvider).toInput());
+    }
+  }
+
   Future<void> _startOver() async {
     final ok = await showCupertinoDialog<bool>(
       context: context,
@@ -307,6 +360,12 @@ class _FieldTabState extends ConsumerState<FieldTab> {
         FsGroupedSection(
           separatorIndent: iconIndent,
           children: [
+            FsListRow(
+              leading: FsIconBadge(CupertinoIcons.calendar, color: p.rain),
+              title: S.weatherMonths,
+              value: a?.climateSummary.period,
+              onTap: () => _pickWeatherMonths(context),
+            ),
             if (a != null) ...[
               FsListRow(
                 leading: FsIconBadge(CupertinoIcons.share, color: p.tint),

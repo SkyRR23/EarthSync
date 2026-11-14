@@ -9,6 +9,7 @@ import '../../design/components/pressable.dart';
 import '../../design/components/scenario.dart' show monthNames, monthShort;
 import '../../design/components/status.dart';
 import '../../design/tokens.dart';
+import '../results/climate_provenance.dart';
 
 /// How a month compares with the other months of this record.
 enum MonthRain { most, middle, least, unknown }
@@ -238,6 +239,7 @@ class _WeatherTabState extends State<WeatherTab> {
                 ),
             ],
           ),
+        ClimateProvenance(analysis: a),
         if (ref != null)
           FsGroupedSection(
             header: S.whereFrom,

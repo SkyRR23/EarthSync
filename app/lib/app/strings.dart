@@ -167,6 +167,16 @@ abstract final class S {
   static const kindWeather = 'Weather';
   static const kindOther = 'Other';
 
+  // Live NASA data (team integration)
+  static const provenanceHeader = 'Where the weather comes from';
+  static const cropsUnknownTitle = 'Crop fit not known yet';
+  static const cropsUnknownBody =
+      'Your weather is real NASA data. Crop facts for your area are not added yet, so we will not guess which crop fits.';
+  static const weatherMonths = 'Weather months';
+  static const last12 = 'Use the last 12 months';
+  static const traceBackend = 'Exact backend response and provenance';
+  static const traceFarmer = 'Retained farmer answers (not all used by Rust)';
+
   // Sources
   static const sourcesIntro =
       'Every result comes from one of these sources. Satellite numbers describe your area, not your exact farm.';

@@ -12,11 +12,15 @@ void main() {
     'test/fixtures/engine_success_envelope.json',
   ).readAsStringSync();
 
-  test('success envelope maps to baseline-first scenarios', () {
+  test('success envelope preserves engine order and identifies baseline', () {
     final a = fieldAnalysisFromEnvelope(success);
     expect(a.scenarios, hasLength(3));
-    expect(a.scenarios.first.isBaseline, isTrue);
-    expect(a.scenarios.first.id, 'existing');
+    expect(a.scenarios.map((s) => s.id), [
+      'alternative-a',
+      'existing',
+      'alternative-b',
+    ]);
+    expect(a.baseline!.id, 'existing');
   });
 
   test('engine eligibility is kept, never upgraded', () {

@@ -52,7 +52,7 @@ const _monthLetters = [
 ];
 
 /// Picture for each crop — easier to recognise than words.
-String cropEmoji(String id) => switch (id) {
+String cropEmoji(String? id) => switch (id) {
   'rice' => '🌾',
   'mung_bean' || 'black_gram' || 'chickpea' => '🫘',
   'groundnut' => '🥜',

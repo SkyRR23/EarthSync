@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show SelectableText;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/strings.dart';
+import '../../design/components/sheet.dart';
+import '../results/climate_provenance.dart';
 import '../../data/models/field_analysis.dart';
 import '../../design/components/grouped.dart';
 import '../../design/components/page.dart';
@@ -35,6 +38,33 @@ class SourcesScreen extends ConsumerWidget {
             ),
           ),
         ),
+        if (a != null) ClimateProvenance(analysis: a),
+        if (a?.trace != null)
+          FsGroupedSection(
+            separatorIndent: indent,
+            children: [
+              for (final (title, body) in [
+                (S.traceBackend, a!.trace!.backendResponseJson),
+                (S.traceFarmer, a.trace!.farmerInputJson),
+              ])
+                FsListRow(
+                  leading: Icon(
+                    CupertinoIcons.doc_text,
+                    color: context.fs.secondaryLabel,
+                    size: 22,
+                  ),
+                  title: title,
+                  onTap: () => showFsSheet<void>(
+                    context,
+                    title: title,
+                    builder: (_) => Padding(
+                      padding: const EdgeInsets.all(FsSpace.gutter),
+                      child: SelectableText(body, style: context.type.footnote),
+                    ),
+                  ),
+                ),
+            ],
+          ),
         if (a != null && a.references.isNotEmpty)
           FsGroupedSection(
             header: S.sourcesUsed,
