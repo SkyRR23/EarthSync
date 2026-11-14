@@ -105,3 +105,13 @@ coverage. Inspect the exit status and new retrieval timestamp. Values may change
 with upstream revisions; a committed capture is historical evidence, not a promise
 of permanent connectivity or identical future climate values. Live requests are
 explicit and excluded from Python CI; offline replay is clearly labeled.
+
+
+## API reliability follow-up
+
+The integration task repeated real HTTP checks and captured an October 2026
+GEOS-IT response separately from the existing MERRA-2 fixture. See
+[verification evidence](RELIABILITY_VERIFICATION.md), the
+[source-verified GEOS-IT contract proposal](GEOS_IT_CONTRACT_PROPOSAL.md), and
+[Python 3.13 / Windows / Wi-Fi / USB commands](WINDOWS_RUNBOOK.md). The current
+adapter still rejects unsupported lineage; no GEOS-IT values are relabeled.

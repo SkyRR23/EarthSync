@@ -1,6 +1,7 @@
 """NASA POWER daily point transport and conservative full-month normalization."""
 
 import asyncio
+import json
 import math
 from calendar import monthrange
 from datetime import date, datetime, timezone
@@ -65,25 +66,34 @@ class PowerProvider:
                         content.extend(chunk)
                         if len(content) > 4_000_000:
                             raise ProviderError()
-                    import json
-
                     payload = json.loads(content)
                     if not isinstance(payload, dict):
                         raise ProviderError()
                     return payload, params, datetime.now(timezone.utc).isoformat()
-            except (httpx.TimeoutException, httpx.TransportError):
-                error = ProviderError("UPSTREAM_UNAVAILABLE", True)
+            except httpx.TimeoutException:
+                error = ProviderError("UPSTREAM_TIMEOUT", True)
+            except httpx.TransportError:
+                error = ProviderError("UPSTREAM_NETWORK_UNAVAILABLE", True)
             except ProviderError as exc:
                 if not exc.retryable:
                     raise
                 error = exc
-            except (ValueError, UnicodeError) as exc:
+            except (ValueError, UnicodeError, RecursionError) as exc:
                 raise ProviderError() from exc
             if attempt == 2:
                 raise error
             await self.sleep(0.25 * 2**attempt)
 
     async def season(self, query):
+        # Bound the whole multi-year operation, including retries and body streaming.
+        # Individual HTTP timeouts alone reset for every read and annual request.
+        try:
+            async with asyncio.timeout(70):
+                return await self._season(query)
+        except TimeoutError:
+            raise ProviderError("UPSTREAM_TIMEOUT", True) from None
+
+    async def _season(self, query):
         daily = {"T2M": {}, "PRECTOTCORR": {}}
         sources = []
         for year in range(query.start_year, query.end_year + 1):
