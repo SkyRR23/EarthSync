@@ -20,7 +20,7 @@ scripts, reports and receipts. Final-head checks remain authoritative.
 | 7P explicitly enabled live sources/discovery | **4 passed** | `evidence/7p-live.log`; source/discovery checks, not accepted numerical soil/satellite evidence |
 | Full 7V package/method/native checks | **32 passed**, zero skips | `evidence/7v-tests.log`, `7v-package.log`; all 60 candidates blocked |
 | 7W numerical/provider regression | **11 passed** | `evidence/7w-water-tests.log`; synthetic numerical/fault fixtures and cached original NASA captures are distinguished below |
-| Immutable hashes / derivative reconciliation | v1 exact hash; **49 v2 + 11 7V** hashes; **60** exact derivative matches; zero executable rules | `evidence/integrity.json`, `autocrlf-checkout.json`; fresh checkout with `core.autocrlf=true` |
+| Immutable hashes / derivative reconciliation | v1 exact hash; **49 v2 + 11 7V** artifact hashes; **35** original upstream input pins; **60** exact derivative matches; zero executable rules | `evidence/integrity.json`, `autocrlf-checkout.json`; fresh checkout with `core.autocrlf=true` and full 7V package check |
 | Flutter native/offline suite | **113 passed, 3 explicit live skips** | `evidence/flutter-tests.log`; actual newly compiled native FRB library |
 | Flutter opt-in live NASA/Web/platform | **11 passed**, no skips | `evidence/flutter-live.log`; both native and Web HTTP paths |
 | Flutter analyzer / release Web | No issues; build succeeded with Flutter **3.44.0 / Dart 3.12.0** | `evidence/flutter-analyze.log`, `flutter-web-build.log`, `flutter-pub.log`; lock enforced |

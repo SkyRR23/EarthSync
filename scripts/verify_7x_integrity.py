@@ -26,6 +26,9 @@ def verify(root=ROOT):
         assert len(raw) == item["bytes"], item["path"]
         assert hashlib.sha256(raw).hexdigest() == item["sha256"], item["path"]
     v7 = root / "data/crop-rule-candidates/v1"
+    input_pins = read(v7 / "input-pins.json")["files"]
+    for path, expected in input_pins.items():
+        assert hashlib.sha256((root / path).read_bytes()).hexdigest() == expected, path
     hashes = read(v7 / "integrity.json")["sha256"]
     for path, expected in hashes.items():
         assert hashlib.sha256((v7 / path).read_bytes()).hexdigest() == expected, path
@@ -54,6 +57,7 @@ def verify(root=ROOT):
         "v1_catalog_sha256": v1_hash,
         "v2_hashed_files": len(records),
         "7v_hashed_files": len(hashes),
+        "7v_pinned_inputs": len(input_pins),
         "blocked_candidates": len(originals),
         "executable_rules": 0,
     }

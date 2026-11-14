@@ -33,6 +33,9 @@ of all 60 derivative records against the full package, with zero executable rule
   its bytes are now preserved too. Original catalog, scientific records and
   manifest hashes are unchanged. The clean `core.autocrlf=true` checkout receipt
   includes v1, all 49 v2 manifest entries and all 11 7V entries.
+  All 35 original 7V input pins are checked too. Narrow root attributes preserve
+  its exact upstream Python/Rust sources and scientific handoffs; a full package
+  check runs in the Windows/Linux backend matrix without changing any pin.
 - Docker's file-specific ignore policy admits the v2 integrity closure and its
   single runtime lookup module, plus the existing versioned review sidecar.
   It excludes tests, capture/build tooling, source metadata, private databases,

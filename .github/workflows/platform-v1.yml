@@ -2,6 +2,7 @@ name: Backend evidence platform v1
 on:
   pull_request:
     paths:
+      - '.gitattributes'
       - 'data/crop-knowledge/**'
       - 'data/crop-rule-candidates/v1/**'
       - 'scripts/verify_7x_integrity.py'
@@ -58,6 +59,7 @@ jobs:
         run: |
           python -m pytest -q server/tests ops/staging/tests
           python scripts/verify_7x_integrity.py
+          python data/crop-rule-candidates/v1/tools/package.py --check
           python -m ruff check server/earthsync/platform_v1 server/tests/platform_v1 server/platform-v1
           python -m ruff format --check server/earthsync/platform_v1 server/tests/platform_v1 server/platform-v1
           python -m pip check

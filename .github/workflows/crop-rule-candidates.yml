@@ -3,6 +3,7 @@ name: Crop rule candidate review contracts
 on:
   pull_request:
     paths:
+      - ".gitattributes"
       - "data/crop-rule-candidates/**"
       - "docs/integration/7v/**"
       - "data/crop-knowledge/v2/**"

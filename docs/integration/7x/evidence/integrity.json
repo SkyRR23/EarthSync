@@ -2,6 +2,7 @@
   "v1_catalog_sha256": "2926584bce3693dff7433afe9c05c535a6d5d1e609fb502d4e2f6017f398fb0e",
   "v2_hashed_files": 49,
   "7v_hashed_files": 11,
+  "7v_pinned_inputs": 35,
   "blocked_candidates": 60,
   "executable_rules": 0
 }

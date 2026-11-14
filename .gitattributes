@@ -1,0 +1,19 @@
+# 7V input-pins.json hashes these exact upstream source/handoff bytes.
+# Keep the reviewed source unchanged on core.autocrlf Windows checkouts.
+data/crop-knowledge/v2/tools/importers.py -text
+data/crop-knowledge/v2/tools/knowledge.py -text
+docs/integration/7p/HANDOFF_7J.md -text
+docs/integration/7p/HANDOFF_7N.md -text
+docs/integration/7p/SCIENTIFIC_LIMITATIONS.md -text
+docs/integration/7p/VERIFICATION.md -text
+docs/science-audit/ARCHIVE_FINDINGS.md -text
+docs/science-audit/CROP_KNOWLEDGE.md -text
+docs/science-audit/DEFECTS.md -text
+docs/science-audit/HANDOFF_7N.md -text
+docs/science-audit/ISSUE_MATRIX.md -text
+docs/science-audit/README.md -text
+docs/science-audit/SOURCES.md -text
+docs/science-audit/VERIFICATION.md -text
+engine/src/v03/assess.rs -text
+engine/src/v03/types.rs -text
+engine/src/v03/validate.rs -text
