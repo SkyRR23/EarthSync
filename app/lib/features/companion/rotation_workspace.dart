@@ -21,7 +21,7 @@ class _RotationWorkspaceState extends ConsumerState<RotationWorkspace> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(journalProvider);
-    final snapshot = state.isLoading || state.hasError ? null : state.value;
+    final snapshot = state.hasError ? null : state.value;
     final farm = ref.watch(platformFarmProvider).value;
     final client = ref.watch(platformFarmClientProvider);
     final decisions = snapshot?.rows('decisions') ?? [];
@@ -147,20 +147,23 @@ class _RotationWorkspaceState extends ConsumerState<RotationWorkspace> {
                       : (v) => setState(() => _edit = v),
                 ),
                 if (!snapshot.cached && farm != null && client != null)
-                  AgriculturalIntelligencePanel(
-                    key: ValueKey('strategy:${snapshot.farmId}:$_edit'),
-                    farm: farm,
-                    client: client,
-                    records: snapshot.rows('evidence'),
-                    farmerReports: snapshot.rows('entries'),
-                    environmentalSnapshots: snapshot.rows('intelligence'),
-                    farmerObservations: snapshot.rows('observations'),
-                    initialDecision: selected,
-                    onSaved: () {
-                      ref.invalidate(journalProvider);
-                      ref.invalidate(platformDecisionsProvider);
-                      ref.invalidate(platformAssistantProvider);
-                    },
+                  AbsorbPointer(
+                    absorbing: state.isLoading,
+                    child: AgriculturalIntelligencePanel(
+                      key: ValueKey('strategy:${snapshot.farmId}:$_edit'),
+                      farm: farm,
+                      client: client,
+                      records: snapshot.rows('evidence'),
+                      farmerReports: snapshot.rows('entries'),
+                      environmentalSnapshots: snapshot.rows('intelligence'),
+                      farmerObservations: snapshot.rows('observations'),
+                      initialDecision: selected,
+                      onSaved: () {
+                        ref.invalidate(journalProvider);
+                        ref.invalidate(platformDecisionsProvider);
+                        ref.invalidate(platformAssistantProvider);
+                      },
+                    ),
                   ),
               ],
             ],

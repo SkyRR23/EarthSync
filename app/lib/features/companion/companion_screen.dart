@@ -1,3 +1,4 @@
+import 'environmental_timeline_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -370,6 +371,12 @@ class _Timeline extends ConsumerWidget {
             EvidenceDetails(title: tr('Evidence & sources'), data: e),
           ],
         ),
+      ));
+    }
+    for (final job in snapshot.rows('intelligence')) {
+      items.add((
+        date: '${job['updated'] ?? ''}',
+        child: EnvironmentalTimelineCard(job: job),
       ));
     }
     for (final d in snapshot.rows('decisions')) {

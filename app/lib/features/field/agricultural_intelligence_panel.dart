@@ -333,21 +333,28 @@ class _IntelligenceState extends State<AgriculturalIntelligencePanel> {
             Text(
               'Reference lookup: ${_reference!['status']} · recommendation eligible: false',
             ),
-            for (final p in profiles)
-              ExpansionTile(
-                title: Text('${p['id']} · source-reviewed reference'),
-                subtitle: Text('${p['region_id']} · ${p['production_system']}'),
-                children: [
-                  Text(
-                    'Identity projection: ${p['identity_projection_blocked'] == true ? 'blocked' : p['identity_projection_system']}',
+            ExpansionTile(
+              title: Text('Browse ${profiles.length} source profiles'),
+              children: [
+                for (final p in profiles)
+                  ExpansionTile(
+                    title: Text('${p['id']} · source-reviewed reference'),
+                    subtitle: Text(
+                      '${p['region_id']} · ${p['production_system']}',
+                    ),
+                    children: [
+                      Text(
+                        'Identity projection: ${p['identity_projection_blocked'] == true ? 'blocked' : p['identity_projection_system']}',
+                      ),
+                      EvidenceDetails(
+                        title:
+                            'Reference facts, units, scope and missing dependencies',
+                        data: p,
+                      ),
+                    ],
                   ),
-                  EvidenceDetails(
-                    title:
-                        'Reference facts, units, scope and missing dependencies',
-                    data: p,
-                  ),
-                ],
-              ),
+              ],
+            ),
             EvidenceDetails(
               title: 'Full source-backed reference lookup',
               data: _reference,

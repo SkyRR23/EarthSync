@@ -71,19 +71,23 @@ with sync_playwright() as p:
         page.wait_for_timeout(600)
 
     def raw_scroll(dy):
-        style = page.add_style_tag(
-            content="flt-semantics-host, flt-semantics-host * { pointer-events: none !important; }"
-        )
-        page.mouse.move(page.viewport_size["width"] - 8, 500)
-        try:
-            page.mouse.wheel(0, dy)
-        finally:
-            style.evaluate("e=>e.remove()")
-        page.wait_for_timeout(200)
+        page.mouse.move(page.viewport_size["width"] * 0.7, 500)
+        page.mouse.wheel(0, dy)
+        page.wait_for_timeout(300)
 
     def visible(text, exact=False, role=None):
+        current = (page.get_by_role(role, name=text, exact=exact) if role else page.get_by_text(text, exact=exact))
+        if current.count() and current.first.is_visible():
+            box = current.first.bounding_box()
+            if box and box['y'] >= 30 and box['y'] + box['height'] < page.viewport_size['height'] - 20:
+                return current.first
+        # A focused HTML editing overlay can consume wheel/scroll requests in
+        # Flutter Web. End native editing before scanning the outer viewport.
+        page.evaluate("document.activeElement?.blur()")
         raw_scroll(-50000)
-        for _ in range(110):
+        scans = []
+        for _ in range(180):
+            scans.append(page.locator("body").aria_snapshot())
             loc = (
                 page.get_by_role(role, name=text, exact=exact)
                 if role
@@ -97,7 +101,8 @@ with sync_playwright() as p:
                     and box["y"] + box["height"] < page.viewport_size["height"] - 20
                 ):
                     return loc.first
-            raw_scroll(450)
+            raw_scroll(200)
+        (out / "scroll-scans.json").write_text(json.dumps(scans), encoding="utf-8")
         (out / "failed-aria.txt").write_text(
             page.locator("body").aria_snapshot(), encoding="utf-8"
         )
@@ -212,6 +217,7 @@ with sync_playwright() as p:
 
         # Explicit per-crop source scopes are kept distinct, never inferred as farm regions.
         for crop in ("rice", "mung bean", "sesame", "groundnut"):
+            print("LOOKUP", crop, flush=True)
             fill("Exact crop name or identity (7P v2)", crop)
             with page.expect_response(lambda r: "/crop-references?" in r.url) as refs:
                 button("Look up crop references")
