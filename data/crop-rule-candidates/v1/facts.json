@@ -1,0 +1,781 @@
+[
+  {
+    "id": "method.etc",
+    "source_id": "fao56_ch5",
+    "crop_id": null,
+    "locator": "Chapter 5, equation 56; corroborated chapter 6 equation 58",
+    "claim": "ETc = Kc × ETo under standard conditions.",
+    "value": {
+      "equation": "ETc = Kc * ETo"
+    },
+    "unit": "mm/day",
+    "statistic": "Daily standard-condition evapotranspiration, grass reference",
+    "geographic_applicability": "General method; field applicability not established",
+    "production_system": "Non-stressed, well-managed crop",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Not effective rainfall or gross irrigation; no local daily ETo supplied.",
+      "Paddy land preparation, seepage and percolation require separate accounting."
+    ]
+  },
+  {
+    "id": "method.curve",
+    "source_id": "fao56_ch6",
+    "crop_id": null,
+    "locator": "Chapter 6, Construction of the Kc curve / equation 66 and Example 28",
+    "claim": "Initial and mid-season Kc are constant; development and late-season interpolate linearly.",
+    "value": {
+      "stage_lengths_days": [
+        25,
+        25,
+        30,
+        20
+      ],
+      "kc_initial": 0.15,
+      "kc_mid": 1.19,
+      "kc_end": 0.35,
+      "published_samples": {
+        "20": 0.15,
+        "40": 0.77,
+        "70": 1.19,
+        "95": 0.56
+      }
+    },
+    "unit": "dimensionless",
+    "statistic": "Daily single crop coefficient; Example 28 rounded values",
+    "geographic_applicability": "Illustrative dry bean example, not a priority crop calibration",
+    "production_system": "FAO-56 standard conditions",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Numerical verification of the published example does not validate any crop profile.",
+      "Rust constant stages do not automatically implement the linear daily curve."
+    ]
+  },
+  {
+    "id": "method.group_initial",
+    "source_id": "fao56_ch6",
+    "crop_id": null,
+    "locator": "Chapter 6, Table 12 group headings; Crop coefficient for the initial stage / Calculation procedure",
+    "claim": "Group initial values are planning approximations; specific wetting frequency and ETo affect initial Kc.",
+    "value": {
+      "legumes": 0.4,
+      "oil_crops": 0.35,
+      "cereals": 0.3
+    },
+    "unit": "dimensionless",
+    "statistic": "Approximate group Kc initial, not a measured crop-specific coefficient",
+    "geographic_applicability": "General planning reference",
+    "production_system": "Typical irrigation water management",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "7P blank crop-row initials are retained; group approximations are not automatically inherited.",
+      "No daily curve may be completed by silently filling nulls."
+    ]
+  },
+  {
+    "id": "rice.stage.1",
+    "source_id": "fao56_ch6",
+    "crop_id": "ecocrop.1574@1",
+    "locator": "Chapter 6, Table 11, Rice row 1",
+    "claim": "Tabulated initial/development/mid/late stage lengths and stated total; retain original planting/region context.",
+    "value": {
+      "stage_lengths_days": [
+        30,
+        30,
+        60,
+        30
+      ],
+      "stated_total_days": 150,
+      "stage_sum_days": 150,
+      "planting_context": "Dec; May"
+    },
+    "unit": "days",
+    "statistic": "Illustrative development-stage lengths, not a cultivar maturity constraint",
+    "geographic_applicability": "Tropics; Mediterranean",
+    "production_system": "Not fully specified in source row",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Local validation and establishment origin required; planting context is not a permitted planting window."
+    ]
+  },
+  {
+    "id": "rice.stage.2",
+    "source_id": "fao56_ch6",
+    "crop_id": "ecocrop.1574@1",
+    "locator": "Chapter 6, Table 11, Rice row 2",
+    "claim": "Tabulated initial/development/mid/late stage lengths and stated total; retain original planting/region context.",
+    "value": {
+      "stage_lengths_days": [
+        30,
+        30,
+        80,
+        40
+      ],
+      "stated_total_days": 180,
+      "stage_sum_days": 180,
+      "planting_context": "May"
+    },
+    "unit": "days",
+    "statistic": "Illustrative development-stage lengths, not a cultivar maturity constraint",
+    "geographic_applicability": "Tropics",
+    "production_system": "Not fully specified in source row",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Local validation and establishment origin required; planting context is not a permitted planting window."
+    ]
+  },
+  {
+    "id": "maize.stage.1",
+    "source_id": "fao56_ch6",
+    "crop_id": "ecocrop.2175@1",
+    "locator": "Chapter 6, Table 11, Maize (grain) row 1",
+    "claim": "Tabulated initial/development/mid/late stage lengths and stated total; retain original planting/region context.",
+    "value": {
+      "stage_lengths_days": [
+        30,
+        50,
+        60,
+        40
+      ],
+      "stated_total_days": 180,
+      "stage_sum_days": 180,
+      "planting_context": "April"
+    },
+    "unit": "days",
+    "statistic": "Illustrative development-stage lengths, not a cultivar maturity constraint",
+    "geographic_applicability": "East Africa (alt.)",
+    "production_system": "Not fully specified in source row",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Local validation and establishment origin required; planting context is not a permitted planting window."
+    ]
+  },
+  {
+    "id": "maize.stage.2",
+    "source_id": "fao56_ch6",
+    "crop_id": "ecocrop.2175@1",
+    "locator": "Chapter 6, Table 11, Maize (grain) row 2",
+    "claim": "Tabulated initial/development/mid/late stage lengths and stated total; retain original planting/region context.",
+    "value": {
+      "stage_lengths_days": [
+        25,
+        40,
+        45,
+        30
+      ],
+      "stated_total_days": 140,
+      "stage_sum_days": 140,
+      "planting_context": "Dec/Jan"
+    },
+    "unit": "days",
+    "statistic": "Illustrative development-stage lengths, not a cultivar maturity constraint",
+    "geographic_applicability": "Arid Climate",
+    "production_system": "Not fully specified in source row",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Local validation and establishment origin required; planting context is not a permitted planting window."
+    ]
+  },
+  {
+    "id": "maize.stage.3",
+    "source_id": "fao56_ch6",
+    "crop_id": "ecocrop.2175@1",
+    "locator": "Chapter 6, Table 11, Maize (grain) row 3",
+    "claim": "Tabulated initial/development/mid/late stage lengths and stated total; retain original planting/region context.",
+    "value": {
+      "stage_lengths_days": [
+        20,
+        35,
+        40,
+        30
+      ],
+      "stated_total_days": 125,
+      "stage_sum_days": 125,
+      "planting_context": "June"
+    },
+    "unit": "days",
+    "statistic": "Illustrative development-stage lengths, not a cultivar maturity constraint",
+    "geographic_applicability": "Nigeria (humid)",
+    "production_system": "Not fully specified in source row",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Local validation and establishment origin required; planting context is not a permitted planting window."
+    ]
+  },
+  {
+    "id": "maize.stage.4",
+    "source_id": "fao56_ch6",
+    "crop_id": "ecocrop.2175@1",
+    "locator": "Chapter 6, Table 11, Maize (grain) row 4",
+    "claim": "Tabulated initial/development/mid/late stage lengths and stated total; retain original planting/region context.",
+    "value": {
+      "stage_lengths_days": [
+        20,
+        35,
+        40,
+        30
+      ],
+      "stated_total_days": 125,
+      "stage_sum_days": 125,
+      "planting_context": "October"
+    },
+    "unit": "days",
+    "statistic": "Illustrative development-stage lengths, not a cultivar maturity constraint",
+    "geographic_applicability": "India (dry, cool)",
+    "production_system": "Not fully specified in source row",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Local validation and establishment origin required; planting context is not a permitted planting window."
+    ]
+  },
+  {
+    "id": "maize.stage.5",
+    "source_id": "fao56_ch6",
+    "crop_id": "ecocrop.2175@1",
+    "locator": "Chapter 6, Table 11, Maize (grain) row 5",
+    "claim": "Tabulated initial/development/mid/late stage lengths and stated total; retain original planting/region context.",
+    "value": {
+      "stage_lengths_days": [
+        30,
+        40,
+        50,
+        30
+      ],
+      "stated_total_days": 150,
+      "stage_sum_days": 150,
+      "planting_context": "April"
+    },
+    "unit": "days",
+    "statistic": "Illustrative development-stage lengths, not a cultivar maturity constraint",
+    "geographic_applicability": "Spain (spr, sum.); Calif.",
+    "production_system": "Not fully specified in source row",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Local validation and establishment origin required; planting context is not a permitted planting window."
+    ]
+  },
+  {
+    "id": "maize.stage.6",
+    "source_id": "fao56_ch6",
+    "crop_id": "ecocrop.2175@1",
+    "locator": "Chapter 6, Table 11, Maize (grain) row 6",
+    "claim": "Tabulated initial/development/mid/late stage lengths and stated total; retain original planting/region context.",
+    "value": {
+      "stage_lengths_days": [
+        30,
+        40,
+        50,
+        50
+      ],
+      "stated_total_days": 170,
+      "stage_sum_days": 170,
+      "planting_context": "April"
+    },
+    "unit": "days",
+    "statistic": "Illustrative development-stage lengths, not a cultivar maturity constraint",
+    "geographic_applicability": "Idaho, USA",
+    "production_system": "Not fully specified in source row",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Local validation and establishment origin required; planting context is not a permitted planting window."
+    ]
+  },
+  {
+    "id": "mung_bean.stage.1",
+    "source_id": "fao56_ch6",
+    "crop_id": "ecocrop.2150@1",
+    "locator": "Chapter 6, Table 11, Green gram, cowpeas row 1",
+    "claim": "Tabulated initial/development/mid/late stage lengths and stated total; retain original planting/region context.",
+    "value": {
+      "stage_lengths_days": [
+        20,
+        30,
+        30,
+        20
+      ],
+      "stated_total_days": 110,
+      "stage_sum_days": 100,
+      "planting_context": "March"
+    },
+    "unit": "days",
+    "statistic": "Illustrative development-stage lengths, not a cultivar maturity constraint",
+    "geographic_applicability": "Mediterranean",
+    "production_system": "Not fully specified in source row",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Local validation and establishment origin required; planting context is not a permitted planting window.",
+      "HTML total 100 contradicts stage sum 110; unresolved, no correction inferred.",
+      "Grouped green gram/cowpeas; not a selected Vigna radiata cultivar."
+    ]
+  },
+  {
+    "id": "sesame.stage.1",
+    "source_id": "fao56_ch6",
+    "crop_id": "ecocrop.1937@1",
+    "locator": "Chapter 6, Table 11, Sesame row 1",
+    "claim": "Tabulated initial/development/mid/late stage lengths and stated total; retain original planting/region context.",
+    "value": {
+      "stage_lengths_days": [
+        20,
+        30,
+        40,
+        20
+      ],
+      "stated_total_days": 100,
+      "stage_sum_days": 110,
+      "planting_context": "June"
+    },
+    "unit": "days",
+    "statistic": "Illustrative development-stage lengths, not a cultivar maturity constraint",
+    "geographic_applicability": "China",
+    "production_system": "Not fully specified in source row",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Local validation and establishment origin required; planting context is not a permitted planting window.",
+      "HTML total 100 contradicts stage sum 110; unresolved, no correction inferred."
+    ]
+  },
+  {
+    "id": "groundnut.stage.1",
+    "source_id": "fao56_ch6",
+    "crop_id": "ecocrop.2199@1",
+    "locator": "Chapter 6, Table 11, Groundnut row 1",
+    "claim": "Tabulated initial/development/mid/late stage lengths and stated total; retain original planting/region context.",
+    "value": {
+      "stage_lengths_days": [
+        25,
+        35,
+        45,
+        25
+      ],
+      "stated_total_days": 130,
+      "stage_sum_days": 130,
+      "planting_context": "Dry [as displayed]"
+    },
+    "unit": "days",
+    "statistic": "Illustrative development-stage lengths, not a cultivar maturity constraint",
+    "geographic_applicability": "West Africa",
+    "production_system": "Not fully specified in source row",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Local validation and establishment origin required; planting context is not a permitted planting window.",
+      "Groundnut planting cells appear split across HTML rows; retain literally, do not reconstruct."
+    ]
+  },
+  {
+    "id": "groundnut.stage.2",
+    "source_id": "fao56_ch6",
+    "crop_id": "ecocrop.2199@1",
+    "locator": "Chapter 6, Table 11, Groundnut row 2",
+    "claim": "Tabulated initial/development/mid/late stage lengths and stated total; retain original planting/region context.",
+    "value": {
+      "stage_lengths_days": [
+        35,
+        35,
+        35,
+        35
+      ],
+      "stated_total_days": 140,
+      "stage_sum_days": 140,
+      "planting_context": "season [as displayed]"
+    },
+    "unit": "days",
+    "statistic": "Illustrative development-stage lengths, not a cultivar maturity constraint",
+    "geographic_applicability": "High Latitudes",
+    "production_system": "Not fully specified in source row",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Local validation and establishment origin required; planting context is not a permitted planting window.",
+      "Groundnut planting cells appear split across HTML rows; retain literally, do not reconstruct."
+    ]
+  },
+  {
+    "id": "groundnut.stage.3",
+    "source_id": "fao56_ch6",
+    "crop_id": "ecocrop.2199@1",
+    "locator": "Chapter 6, Table 11, Groundnut row 3",
+    "claim": "Tabulated initial/development/mid/late stage lengths and stated total; retain original planting/region context.",
+    "value": {
+      "stage_lengths_days": [
+        35,
+        45,
+        35,
+        25
+      ],
+      "stated_total_days": 140,
+      "stage_sum_days": 140,
+      "planting_context": "May May/June [as displayed]"
+    },
+    "unit": "days",
+    "statistic": "Illustrative development-stage lengths, not a cultivar maturity constraint",
+    "geographic_applicability": "Mediterranean",
+    "production_system": "Not fully specified in source row",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Local validation and establishment origin required; planting context is not a permitted planting window.",
+      "Groundnut planting cells appear split across HTML rows; retain literally, do not reconstruct."
+    ]
+  },
+  {
+    "id": "rice.kc",
+    "source_id": "fao56_ch6",
+    "crop_id": "ecocrop.1574@1",
+    "locator": "Chapter 6, Table 12, Rice; Table 14 for rice initial",
+    "claim": "Source-row Kc values and alternatives preserved; endpoint alternatives are management states, not confidence intervals.",
+    "value": {
+      "initial": 1.05,
+      "mid": 1.2,
+      "end": {
+        "min": 0.6,
+        "max": 0.9
+      },
+      "stage_offsets": null,
+      "basis": "Paddy rice; Kc initial depends on water surface, humidity and wind; Table 14 adjustments needed"
+    },
+    "unit": "dimensionless",
+    "statistic": "Standard-condition single crop coefficient",
+    "geographic_applicability": "Sub-humid reference: RHmin about 45%, wind about 2 m/s",
+    "production_system": "Paddy standing water for rice; non-stressed crop for others",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Local climate, crop height, wetting and harvest endpoint selection required.",
+      "No accepted local cultivar, stage origin or daily ETo.",
+      "Rice initial 1.05 refers to paddy water depth 0.10–0.20 m; cannot transfer to upland rice."
+    ]
+  },
+  {
+    "id": "maize.kc",
+    "source_id": "fao56_ch6",
+    "crop_id": "ecocrop.2175@1",
+    "locator": "Chapter 6, Table 12, Maize, Field (grain), footnote 11; Table 14 for rice initial",
+    "claim": "Source-row Kc values and alternatives preserved; endpoint alternatives are management states, not confidence intervals.",
+    "value": {
+      "initial": null,
+      "mid": 1.2,
+      "end": {
+        "min": 0.35,
+        "max": 0.6
+      },
+      "stage_offsets": null,
+      "basis": "Field maize; end 0.60 high grain moisture / 0.35 field dry (footnote 11); sweet corn distinct"
+    },
+    "unit": "dimensionless",
+    "statistic": "Standard-condition single crop coefficient",
+    "geographic_applicability": "Sub-humid reference: RHmin about 45%, wind about 2 m/s",
+    "production_system": "Paddy standing water for rice; non-stressed crop for others",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Initial crop-row cell is blank; group approximation exists separately.",
+      "Do not select or average fresh/dry harvest endpoint alternatives without evidence.",
+      "No accepted local cultivar, stage origin or daily ETo."
+    ]
+  },
+  {
+    "id": "mung_bean.kc",
+    "source_id": "fao56_ch6",
+    "crop_id": "ecocrop.2150@1",
+    "locator": "Chapter 6, Table 12, Green Gram and Cowpeas, footnote 6; Table 14 for rice initial",
+    "claim": "Source-row Kc values and alternatives preserved; endpoint alternatives are management states, not confidence intervals.",
+    "value": {
+      "initial": null,
+      "mid": 1.05,
+      "end": {
+        "min": 0.35,
+        "max": 0.6
+      },
+      "stage_offsets": null,
+      "basis": "Green gram and cowpeas group; end 0.60 fresh / 0.35 dry (footnote 6)"
+    },
+    "unit": "dimensionless",
+    "statistic": "Standard-condition single crop coefficient",
+    "geographic_applicability": "Sub-humid reference: RHmin about 45%, wind about 2 m/s",
+    "production_system": "Paddy standing water for rice; non-stressed crop for others",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Initial crop-row cell is blank; group approximation exists separately.",
+      "Do not select or average fresh/dry harvest endpoint alternatives without evidence.",
+      "No accepted local cultivar, stage origin or daily ETo."
+    ]
+  },
+  {
+    "id": "sesame.kc",
+    "source_id": "fao56_ch6",
+    "crop_id": "ecocrop.1937@1",
+    "locator": "Chapter 6, Table 12, Sesame; Table 14 for rice initial",
+    "claim": "Source-row Kc values and alternatives preserved; endpoint alternatives are management states, not confidence intervals.",
+    "value": {
+      "initial": null,
+      "mid": 1.1,
+      "end": 0.25,
+      "stage_offsets": null,
+      "basis": "Sesame; initial column blank in row, no group-value inheritance"
+    },
+    "unit": "dimensionless",
+    "statistic": "Standard-condition single crop coefficient",
+    "geographic_applicability": "Sub-humid reference: RHmin about 45%, wind about 2 m/s",
+    "production_system": "Paddy standing water for rice; non-stressed crop for others",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Initial crop-row cell is blank; group approximation exists separately.",
+      "Do not select or average fresh/dry harvest endpoint alternatives without evidence.",
+      "No accepted local cultivar, stage origin or daily ETo."
+    ]
+  },
+  {
+    "id": "groundnut.kc",
+    "source_id": "fao56_ch6",
+    "crop_id": "ecocrop.2199@1",
+    "locator": "Chapter 6, Table 12, Groundnut (Peanut); Table 14 for rice initial",
+    "claim": "Source-row Kc values and alternatives preserved; endpoint alternatives are management states, not confidence intervals.",
+    "value": {
+      "initial": null,
+      "mid": 1.15,
+      "end": 0.6,
+      "stage_offsets": null,
+      "basis": "Groundnut; initial column blank in row, no group-value inheritance"
+    },
+    "unit": "dimensionless",
+    "statistic": "Standard-condition single crop coefficient",
+    "geographic_applicability": "Sub-humid reference: RHmin about 45%, wind about 2 m/s",
+    "production_system": "Paddy standing water for rice; non-stressed crop for others",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Initial crop-row cell is blank; group approximation exists separately.",
+      "Do not select or average fresh/dry harvest endpoint alternatives without evidence.",
+      "No accepted local cultivar, stage origin or daily ETo."
+    ]
+  },
+  {
+    "id": "rice.water_sensitivity",
+    "source_id": "water_stress",
+    "crop_id": "ecocrop.1574@1",
+    "locator": "Chapter 2, §2.1 Table 1 and §2.2 Table 2",
+    "claim": "Sensitivity to water shortages: high; Water-shortage-sensitive period: head development and flowering",
+    "value": {
+      "drought_tolerance": "Sensitivity to water shortages: high",
+      "stage_vulnerabilities": "Water-shortage-sensitive period: head development and flowering"
+    },
+    "unit": "qualitative",
+    "statistic": "Irrigation-training sensitivity classes and phenological periods",
+    "geographic_applicability": "General irrigation scheme guidance; no local validation",
+    "production_system": "Irrigation scheme context",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Qualitative susceptibility supplies neither drought/flood intensity-duration threshold nor yield-loss factor.",
+      "Phenological stages do not define day offsets; no stage sensor or model validated."
+    ]
+  },
+  {
+    "id": "maize.water_sensitivity",
+    "source_id": "water_stress",
+    "crop_id": "ecocrop.2175@1",
+    "locator": "Chapter 2, §2.1 Table 1 and §2.2 Table 2",
+    "claim": "Sensitivity to water shortages: medium-high; Water-shortage-sensitive period: flowering and grain filling",
+    "value": {
+      "drought_tolerance": "Sensitivity to water shortages: medium-high",
+      "stage_vulnerabilities": "Water-shortage-sensitive period: flowering and grain filling"
+    },
+    "unit": "qualitative",
+    "statistic": "Irrigation-training sensitivity classes and phenological periods",
+    "geographic_applicability": "General irrigation scheme guidance; no local validation",
+    "production_system": "Irrigation scheme context",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Qualitative susceptibility supplies neither drought/flood intensity-duration threshold nor yield-loss factor.",
+      "Phenological stages do not define day offsets; no stage sensor or model validated."
+    ]
+  },
+  {
+    "id": "groundnut.water_sensitivity",
+    "source_id": "water_stress",
+    "crop_id": "ecocrop.2199@1",
+    "locator": "Chapter 2, §2.1 Table 1 and §2.2 Table 2",
+    "claim": "Sensitivity to water shortages: low-medium; Water-shortage-sensitive period: flowering and pod setting",
+    "value": {
+      "drought_tolerance": "Sensitivity to water shortages: low-medium",
+      "stage_vulnerabilities": "Water-shortage-sensitive period: flowering and pod setting"
+    },
+    "unit": "qualitative",
+    "statistic": "Irrigation-training sensitivity classes and phenological periods",
+    "geographic_applicability": "General irrigation scheme guidance; no local validation",
+    "production_system": "Irrigation scheme context",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Qualitative susceptibility supplies neither drought/flood intensity-duration threshold nor yield-loss factor.",
+      "Phenological stages do not define day offsets; no stage sensor or model validated."
+    ]
+  },
+  {
+    "id": "groundnut.erect",
+    "source_id": "handbook",
+    "crop_id": "ecocrop.2199@1",
+    "locator": "Printed p.7 / PDF p.21, §1.3.1",
+    "claim": "Myanmar erect-type groundnut duration is 90–100 days; prostrate type 5–6 months.",
+    "value": {
+      "erect_days": [
+        90,
+        100
+      ],
+      "prostrate_months": [
+        5,
+        6
+      ]
+    },
+    "unit": "days and calendar months (distinct)",
+    "statistic": "Reported type-group duration; endpoints/establishment definition unspecified",
+    "geographic_applicability": "Myanmar; dry-zone handbook context",
+    "production_system": "Erect versus prostrate groundnut type, no named cultivar selected",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Do not convert months into fixed 30-day units.",
+      "Inclusive plan days in Rust may differ from source duration convention.",
+      "Listed named cultivars are not explicitly assigned these maturity bounds."
+    ]
+  },
+  {
+    "id": "rotation.lowland",
+    "source_id": "handbook",
+    "crop_id": null,
+    "locator": "Printed p.119 / PDF p.133, §12.2(a), CS1 and CS2; attributed to GRET (2019)",
+    "claim": "Reported lowland patterns include monsoon paddy with winter green gram or groundnut.",
+    "value": {
+      "CS1": "summer paddy / monsoon paddy / winter cash crops (chickpea, green gram or wheat)",
+      "CS2": "summer cash crops (green gram, black gram) / monsoon paddy / winter cash crops (wheat, chickpea or groundnut)"
+    },
+    "unit": "qualitative",
+    "statistic": "Reported cropping patterns; institutional secondary synthesis",
+    "geographic_applicability": "Some Myanmar project lowlands, not all global rice systems",
+    "production_system": "Lowland crop systems",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "GRET underlying field evidence not independently inspected.",
+      "No mandatory predecessor, pest benefit, nitrogen credit or minimum fallow days established.",
+      "Farm drainage, residual water, complete attributed history and timing need validation."
+    ]
+  },
+  {
+    "id": "rotation.cereal",
+    "source_id": "handbook",
+    "crop_id": "ecocrop.2199@1",
+    "locator": "Printed p.62 / PDF p.76, §6.8; attributed to Nataraja et al. (2014)",
+    "claim": "Handbook gives general cereal rotation pest context; maize is also mentioned as an intercrop.",
+    "value": null,
+    "unit": "qualitative",
+    "statistic": "Secondary IPM guidance, not verified pest outcome",
+    "geographic_applicability": "Handbook Myanmar context; underlying study transfer unreviewed",
+    "production_system": "Rotation and intercropping are distinct systems",
+    "cultivar": null,
+    "source_fact_status": "verified",
+    "independent_applicability_status": "not_approved",
+    "needs_agronomist_field_validation": true,
+    "uncertainty": "No quantified local uncertainty or transfer error established.",
+    "limitations": [
+      "Underlying experiments not independently checked; no maize-specific sequence or numerical benefit accepted.",
+      "Do not turn intercropping into ordered succession or invent minimum fallow."
+    ]
+  }
+]

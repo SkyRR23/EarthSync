@@ -1,0 +1,79 @@
+[
+  {
+    "id": "fao56_ch5",
+    "url": "https://www.fao.org/4/X0490E/x0490e0a.htm",
+    "final_url": "https://www.fao.org/4/X0490E/x0490e0a.htm",
+    "status": 200,
+    "content_type": "text/html",
+    "bytes": 36717,
+    "sha256": "2fd4400aa432d1341032a602f2bcf2bb5eff068bac99a5cb9cc09c29875f057a",
+    "started_at": "2026-11-14T15:49:22.291400+00:00",
+    "completed_at": "2026-11-14T15:49:22.560985+00:00"
+  },
+  {
+    "id": "fao56_ch6",
+    "url": "https://www.fao.org/4/X0490E/x0490e0b.htm",
+    "final_url": "https://www.fao.org/4/X0490E/x0490e0b.htm",
+    "status": 200,
+    "content_type": "text/html",
+    "bytes": 235891,
+    "sha256": "cad0afe7873296b2a91c1a70b0d1fdf4cb37b5ee94a892521a478b2b1a4a2e3c",
+    "started_at": "2026-11-14T15:49:22.292107+00:00",
+    "completed_at": "2026-11-14T15:49:22.612403+00:00"
+  },
+  {
+    "id": "water_stress",
+    "url": "https://www.fao.org/4/t7202e/t7202e05.htm",
+    "final_url": "https://www.fao.org/4/t7202e/t7202e05.htm",
+    "status": 200,
+    "content_type": "text/html",
+    "bytes": 13261,
+    "sha256": "1beb9f74e4acc22831c5939ecea0d5bcf4cde7a3e16e31dc13bb7c257bee6f9a",
+    "started_at": "2026-11-14T15:49:22.292541+00:00",
+    "completed_at": "2026-11-14T15:49:22.596805+00:00"
+  },
+  {
+    "id": "handbook",
+    "url": "https://openknowledge.fao.org/server/api/core/bitstreams/a825f44a-0409-466a-94b4-135e4bc9fd27/content",
+    "final_url": "https://openknowledge.fao.org/server/api/core/bitstreams/a825f44a-0409-466a-94b4-135e4bc9fd27/content",
+    "status": 200,
+    "content_type": "application/pdf;charset=UTF-8",
+    "bytes": 9301024,
+    "sha256": "7b38a1733989263b8cc7b12ba807679aa545ab6089f766f7497abc9a59e048c0",
+    "started_at": "2026-11-14T15:49:22.292952+00:00",
+    "completed_at": "2026-11-14T15:49:28.584956+00:00"
+  },
+  {
+    "id": "calendar",
+    "url": "https://api-cropcalendar.apps.fao.org/api/v1/countries/MM/cropCalendar?language=en",
+    "final_url": "https://api-cropcalendar.apps.fao.org/api/v1/countries/MM/cropCalendar?language=en",
+    "status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "bytes": 102535,
+    "sha256": "5566904e051b0df338a9a54dd7d241a83b270a532537facb1acaac86395ae842",
+    "started_at": "2026-11-14T15:50:33.568429+00:00",
+    "completed_at": "2026-11-14T15:50:38.054328+00:00"
+  },
+  {
+    "id": "calendar_mm_crops",
+    "url": "https://api-cropcalendar.apps.fao.org/api/v1/countries/MM/crops?language=en",
+    "final_url": "https://api-cropcalendar.apps.fao.org/api/v1/countries/MM/crops?language=en",
+    "status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "bytes": 17539,
+    "sha256": "e072f86087f6a3b945459279cf0202826181ad2c842f9941a4f504e1ec205fff",
+    "started_at": "2026-11-14T15:50:38.056478+00:00",
+    "completed_at": "2026-11-14T15:50:39.612601+00:00"
+  },
+  {
+    "id": "calendar_crops",
+    "url": "https://api-cropcalendar.apps.fao.org/api/v1/crops?language=en",
+    "final_url": "https://api-cropcalendar.apps.fao.org/api/v1/crops?language=en",
+    "status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "bytes": 109053,
+    "sha256": "042999fd0623804bd43ad67a81b1d0ca09a8ce3696d97450c2a94ad20e9c0c0d",
+    "started_at": "2026-11-14T15:50:39.613450+00:00",
+    "completed_at": "2026-11-14T15:50:41.139775+00:00"
+  }
+]
