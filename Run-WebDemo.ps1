@@ -13,9 +13,10 @@ if (-not $SkipBuild) {
         if ($LASTEXITCODE) { throw 'Flutter web build failed' }
     } finally { Pop-Location }
 }
-Write-Host "EarthSync live demo: http://127.0.0.1:$Port"
+Write-Host "EarthSync binds to ${BindAddress}:$Port; local demo: http://127.0.0.1:$Port"
+if ($BindAddress -eq '0.0.0.0') { Write-Host "Wi-Fi clients: open http://<this-PC-Wi-Fi-IPv4>:$Port on the same network. See server/docs/WINDOWS_RUNBOOK.md." }
 Write-Host "Captured NASA replay: http://127.0.0.1:$Port/?climate=captured"
 Write-Host "Real Rust API workbench: http://127.0.0.1:$Port/docs"
 Push-Location server
-try { & $python -m uvicorn earthsync.web_demo:app --host $BindAddress --port $Port }
+try { & $python -m uvicorn earthsync.web_demo:app --host $BindAddress --port $Port --no-access-log }
 finally { Pop-Location }

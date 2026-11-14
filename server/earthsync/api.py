@@ -1,5 +1,6 @@
 import asyncio
 import copy
+import os
 import time
 from collections import OrderedDict
 from contextlib import asynccontextmanager
@@ -7,9 +8,9 @@ from contextlib import asynccontextmanager
 import httpx
 from fastapi import FastAPI, Query, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
 from pydantic import ValidationError
 
+from .errors import ServiceError, error_response
 from .models import SeasonQuery, SeasonResponse
 from .power import PowerProvider, ProviderError
 
@@ -47,6 +48,8 @@ class SeasonCache:
 
 
 def create_app(provider=None, cache=None):
+    diagnostics_enabled = os.getenv("EARTHSYNC_DIAGNOSTICS") == "1"
+
     @asynccontextmanager
     async def lifespan(app):
         async with httpx.AsyncClient(
@@ -62,31 +65,83 @@ def create_app(provider=None, cache=None):
 
     @app.exception_handler(RequestValidationError)
     async def invalid_request(request, exc):
-        return JSONResponse(
-            status_code=422,
-            content={
-                "status": "error",
-                "error": {
-                    "code": "INVALID_INPUT",
-                    "message": "Provide valid coordinates and an ordered historical month window (maximum 24 months).",
-                    "retryable": False,
-                },
-            },
+        return error_response(
+            "INVALID_INPUT",
+            "Provide valid coordinates and an ordered historical month window (maximum 24 months).",
+            422,
         )
+
+    @app.exception_handler(ServiceError)
+    async def service_error(request, exc):
+        return error_response(exc.code, exc.message, exc.status_code, exc.retryable)
 
     @app.exception_handler(ProviderError)
     async def upstream_error(request, exc):
-        return JSONResponse(
-            status_code=503 if exc.retryable else 502,
-            content={
-                "status": "error",
-                "error": {
-                    "code": exc.code,
-                    "message": "NASA POWER climate data could not be retrieved or validated.",
-                    "retryable": exc.retryable,
-                },
-            },
+        messages = {
+            "UPSTREAM_NETWORK_UNAVAILABLE": "Cannot reach NASA POWER. Check the server's network and DNS connectivity.",
+            "UPSTREAM_TIMEOUT": "NASA POWER exceeded the retrieval deadline. Retry later or request fewer months.",
+            "UPSTREAM_UNAVAILABLE": "NASA POWER is temporarily unavailable or rate limited. Retry later.",
+            "UPSTREAM_REJECTED": "NASA POWER rejected the request. Check the supported parameters and historical window.",
+            "UPSTREAM_SOURCE_CHANGED": "NASA POWER returned unsupported source lineage. Only homogeneous MERRA-2 is accepted; no data were relabeled.",
+            "UPSTREAM_UNITS_CHANGED": "NASA POWER parameter units differ from the validated contract.",
+            "UPSTREAM_TIME_STANDARD_CHANGED": "NASA POWER did not return the requested LST time standard.",
+            "UPSTREAM_INTERVAL_CHANGED": "NASA POWER returned a different historical interval.",
+        }
+        return error_response(
+            exc.code,
+            messages.get(
+                exc.code, "NASA POWER returned an invalid response or metadata."
+            ),
+            504 if exc.code == "UPSTREAM_TIMEOUT" else (503 if exc.retryable else 502),
+            exc.retryable,
         )
+
+    async def diagnostic_nasa(request: Request):
+        # No user coordinates or arbitrary upstream URL; always a public test point.
+        if not diagnostics_enabled:
+            raise ServiceError(
+                "DIAGNOSTICS_DISABLED", "Developer diagnostics are disabled.", 404
+            )
+        if request.query_params or await request.body():
+            raise ServiceError(
+                "INVALID_INPUT", "This diagnostic accepts no inputs.", 422
+            )
+        result = await request.app.state.provider.season(
+            SeasonQuery(
+                latitude=16.85,
+                longitude=96.15,
+                start_year=2024,
+                start_month=2,
+                end_year=2024,
+                end_month=2,
+            )
+        )
+        if not all(
+            row.rainfall_complete and row.temperature_complete
+            for row in result.environment.seasonal.observations
+        ):
+            raise ServiceError(
+                "MISSING_DATA",
+                "NASA responded, but the diagnostic month has incomplete daily coverage.",
+            )
+        return result
+
+    app.state.diagnostic_nasa = diagnostic_nasa
+
+    @app.post("/api/v1/diagnostics/nasa")
+    async def nasa_diagnostic(request: Request):
+        await diagnostic_nasa(request)
+        return {
+            "schema_version": "1.0-diagnostic",
+            "status": "success",
+            "mode": "live_http",
+            "cache_used": False,
+            "checks": {
+                "nasa_transport": "passed",
+                "merra2_validation": "passed",
+                "daily_coverage": "complete",
+            },
+        }
 
     @app.get("/api/v1/health")
     async def health():
@@ -129,7 +184,19 @@ def create_app(provider=None, cache=None):
             )
         except ValidationError as exc:
             raise RequestValidationError([]) from exc
-        return await request.app.state.cache.get(query, request.app.state.provider)
+        try:
+            # Includes cache queueing: cannot wait indefinitely behind another miss.
+            async with asyncio.timeout(80):
+                return await request.app.state.cache.get(
+                    query, request.app.state.provider
+                )
+        except TimeoutError:
+            raise ServiceError(
+                "BACKEND_TIMEOUT",
+                "Climate request exceeded the server deadline; retry later.",
+                504,
+                True,
+            ) from None
 
     return app
 
