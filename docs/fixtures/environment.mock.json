@@ -1,0 +1,32 @@
+{
+  "monthly_rainfall_mm": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+  ],
+  "monthly_mean_temp_c": [
+    28,
+    28,
+    28,
+    28,
+    28,
+    28,
+    28,
+    28,
+    28,
+    28,
+    28,
+    28
+  ],
+  "source": "MOCK DATA - NOT NASA",
+  "period": "illustrative-2025"
+}
