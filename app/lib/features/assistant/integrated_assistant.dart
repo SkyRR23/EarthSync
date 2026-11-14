@@ -271,7 +271,10 @@ final integratedAssistantContextProvider = Provider.autoDispose.family<Assistant
   }.values.toList();
   final base = AssistantContext(
     contextId: 'snapshot',
-    approximateLocation: profile?.approximateDeviceLocation == null
+    approximateLocation:
+        profile?.approximateDeviceLocation == null ||
+            area is! ApproximateArea ||
+            area.source != AreaSource.device
         ? null
         : AssistantPoint(
             profile!.approximateDeviceLocation!.latitude,

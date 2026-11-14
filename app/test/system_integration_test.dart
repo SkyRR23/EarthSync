@@ -169,6 +169,43 @@ void main() {
     expect(tester.takeException(), isNull);
   });
   test(
+    'manual or skipped exploration does not send a previously saved device point',
+    () async {
+      final profile = HomeProfile(
+        onboarded: true,
+        approximateDeviceLocation: GeoPoint(12, 13),
+        userLocation: ApproximateArea(
+          point: GeoPoint(42, -93),
+          label: 'Manual area',
+          source: AreaSource.manual,
+        ),
+      );
+      final container = ProviderContainer(
+        overrides: [
+          profileStoreProvider.overrideWithValue(MemoryProfileStore(profile)),
+          integrationHttpProvider.overrideWithValue(
+            MockClient((_) async => http.Response('{}', 503)),
+          ),
+        ],
+      );
+      addTearDown(container.dispose);
+      await container.read(homeProfileProvider.future);
+      expect(
+        container
+            .read(integratedAssistantContextProvider(true))
+            .approximateLocation,
+        null,
+      );
+      await container.read(homeProfileProvider.notifier).skip();
+      expect(
+        container
+            .read(integratedAssistantContextProvider(true))
+            .approximateLocation,
+        null,
+      );
+    },
+  );
+  test(
     'location-free assistant never fabricates context or decisions',
     () async {
       final container = ProviderContainer(

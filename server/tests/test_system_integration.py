@@ -275,3 +275,20 @@ def test_assistant_stream_cap_and_machine_readable_safe_errors(client):
         response.status_code == 422
         and "private-data-must-not-echo" not in response.text
     )
+
+
+async def test_json_api_cap_is_enforced_across_multiple_asgi_chunks(tmp_path):
+    import httpx
+
+    async def chunks():
+        for _ in range(5):
+            yield b"x" * 500_000
+
+    async with httpx.AsyncClient(
+        transport=httpx.ASGITransport(app=create_demo_app(static_dir=tmp_path)),
+        base_url="http://localhost",
+    ) as client:
+        response = await client.post("/api/assistant/v1/chat", content=chunks())
+        assert response.status_code == 413
+        assert response.json()["error"]["code"] == "REQUEST_TOO_LARGE"
+        assert response.headers["cache-control"] == "no-store"

@@ -119,7 +119,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   if (ref.watch(assessmentProvider).result
                       case final result?) ...[
                     Text(
-                      result.synthetic
+                      result.validation != null
+                          ? 'Input validation failed · open Crop assessment for details'
+                          : result.synthetic
                           ? 'Synthetic software assessment · not your farm'
                           : 'Reference crop assessment · more information needed',
                     ),

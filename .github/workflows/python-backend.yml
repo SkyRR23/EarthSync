@@ -47,6 +47,8 @@ jobs:
           python -m ruff check earthsync tests
           python -m ruff format --check earthsync tests
       - name: Offline backend and Rust JSON compatibility tests
-        run: python -m pytest -vv --durations=10
+        # Turn a stalled runner into a diagnostic failure with all thread stacks;
+        # never skip a hanging test or allow it to report success.
+        run: python -c "import faulthandler, pytest; faulthandler.dump_traceback_later(120, exit=True); raise SystemExit(pytest.main(['-vv', '--durations=10']))"
       - name: Patch integrity
         run: git diff --check
