@@ -172,3 +172,9 @@ Open `http://127.0.0.1:8080` on the tester's computer. Keep both service listene
 on loopback and the browser origin exact. No private public proxy, wildcard CORS,
 remote-peer override or invented authentication is supported. No server has been
 accessed or deployed by 7N; approval is still required before any public deployment.
+
+Latest 7J head `7b27699f13c94461a9d3d6596c47debfcfb9fed6` is now integrated.
+The archive integrity/inventory blocker is resolved; new crop assertions remain
+research-only and cannot feed the live catalog. The complete reproduction source
+pin is `31cb7fd159ebb62c818bc6eee07274e0dde86e9b`. Runtime artifact hashes remain valid
+because app/provider/engine/live-catalog and operations runtime code are unchanged.

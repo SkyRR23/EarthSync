@@ -13,10 +13,12 @@ The final PR head is reported separately when delivery completes.
 | 7H #20 | `a7c33cc6b58703501bbba0ceba1bad1d6d42004b` |
 | 7I #19 | `b578a6df2764479ff9c9df006cc00e5ddb3ccfa3` |
 | 7L #21 | `bd8d245b0eae92aab353d852baf05adba5527384` |
-| 7J #22, including the later precision correction | `d7e43399c9fd296032e64b1c1b5623dbeb70cca6` |
+| 7J #22, full fixes and completed archive handoff | `7b27699f13c94461a9d3d6596c47debfcfb9fed6` |
 | 7Q #23 | `ef9a67ced98c9af98d677a679c9ab1761dc8904a` |
 
-All five remote heads were rechecked and remained unchanged. The original PRs and
+7H/7I/7L/7Q remained unchanged. At final recheck 7J had advanced from
+`d7e43399c9fd296032e64b1c1b5623dbeb70cca6` by three audit/documentation commits;
+these were reviewed and merged without changing any modern runtime or live catalog. The original PRs and
 other worktrees were not rewritten. The separate tested 7I precision patch is
 applied, with its artifact hash in source-manifest.json; its adjacent-point tests
 are retained and out-of-domain response coordinates are also rejected.
@@ -29,7 +31,7 @@ are retained and out-of-domain response coordinates are also rejected.
 | Scientific contract and operations focus | 40 passed, including J01–J06 boundary checks. `evidence/science-ops-tests.log` |
 | Rust engine, including 7J field-history regressions | 118 passed. `evidence/engine-tests.log` |
 | Actual native FRB bridge | 6 passed. `evidence/bridge-tests.log` |
-| Crop catalog + immutable archive inventory tool | 45 passed (39 catalog + 6 inventory), 32 subtests. `evidence/catalog-inventory-tests.log` |
+| Final NASA/catalog/research/inventory command | 83 passed, 32 subtests: 18 NASA + 39 catalog + 26 research/inventory tests. `evidence/final-scientific-audit-tests.log` |
 | Complete Flutter suite against rebuilt native Rust | 109 passed, 3 explicit opt-in live skips. `evidence/flutter-tests.log` |
 | Flutter analyzer and formatter | No analyzer issues; 108 Dart files checked, 0 changes. `evidence/flutter-analyze.log`, `evidence/dart-format-final.log` |
 | Python/Rust static checks | Ruff lint/format, pip compatibility, rustfmt and all-target Clippy passed; CI repeats the relevant checks. `evidence/engine-clippy.log`, `evidence/bridge-clippy.log` |
@@ -176,8 +178,10 @@ explicitly unreviewed and is not complete localization.
 
 **P2 / withheld capabilities:** accepted quantitative soil/satellite/forecast data,
 full hosted multi-user identity/authorization and scientific model extensions.
-7J's new split archive is still blocked on part 03; no unverified Myanmar profiles,
-archive calculations or generated artifacts were imported. All crop profiles remain
+7J's complete archive is now checksum-verified and inventoried. The 487 generated
+build files and historical weighted engine remain rejected. Twelve Myanmar profile
+assertions are retained only in a distinct research-quarantine schema with zero
+executable rules; none enters the live catalog or application. All crop profiles remain
 reference-only, recommendation-ineligible and without invented agricultural rankings,
 suitability percentages, nitrogen/pest credits or yield/profit forecasts.
 
@@ -187,3 +191,26 @@ API, database/photo and rollback details are in CONFLICTS.md, API_MATRIX.md,
 DATABASE.md and HANDOFF_7Q.md; canonical staging commands are in
 `ops/staging/README.md`. The two complete private stores and original backup were
 retained during restore; no source data were overwritten.
+
+## Final 7J head movement review
+
+Three new commits (`893553d`, `83e2eaf`, `7b27699`) completed the original archive
+checksum/inventory, documented historical negative tests, and independently
+confirmed all J01–J06 fixes in 7N's pinned runtime. The complete reviewed head
+`7b27699f13c94461a9d3d6596c47debfcfb9fed6` is integrated. Only the scientific CI
+path-list conflict needed resolution; both the engine/provider scopes and new
+research scope were retained. No fix was applied twice.
+
+All 600 original files were inventoried by 7J after checksum verification. Its
+historical engine's 12 intentionally failing scientific probes are retained as
+historical evidence, not production test failures or passing scientific validation.
+The 12 crop assertions use a distinct research-only schema; there are no runtime
+imports. The added source/catalog/quarantine tests passed 83 cases plus 32 subtests.
+
+A direct Git comparison confirms no changes to application code, modern engine,
+providers, live crop catalog or operations runtime relative to the built artifact
+source. Rebuilding unchanged binaries was unnecessary. The recommended complete
+reproduction checkout includes this handoff and Windows CI fixes:
+`31cb7fd159ebb62c818bc6eee07274e0dde86e9b`. Destination checks, field applicability,
+unavailable FAO material and reviewed agronomic rules remain separate acceptance
+requirements; archive integrity is not farming advice.

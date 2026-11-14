@@ -18,7 +18,8 @@
     "7J": {
       "pr": 22,
       "branch": "fix/earthsync-science-audit-v1",
-      "sha": "d7e43399c9fd296032e64b1c1b5623dbeb70cca6"
+      "sha": "7b27699f13c94461a9d3d6596c47debfcfb9fed6",
+      "initial_science_fix_sha": "d7e43399c9fd296032e64b1c1b5623dbeb70cca6"
     },
     "7Q": {
       "pr": 23,
@@ -46,5 +47,9 @@
   "verified_application_and_operations_code_sha": "530c1e1d06c9202dfc1f5d06c659399409b7270f",
   "ci_fail_closed_fix_sha": "ab745a027b7b66a6c63fb033b024b19053b12c55",
   "draft_pr": "https://github.com/SkyRR23/EarthSync/pull/24",
-  "recommended_reproducible_source_sha": "ab745a027b7b66a6c63fb033b024b19053b12c55"
+  "recommended_reproducible_source_sha": "31cb7fd159ebb62c818bc6eee07274e0dde86e9b",
+  "completed_archive_audit": {
+    "sha256": "241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788",
+    "disposition": "Verified 7J audit/inventory; research-only quarantine, never live rules"
+  }
 }

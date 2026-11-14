@@ -91,3 +91,13 @@ Python lock. No second API architecture or public proxy was added. Its structure
 PASS/FAIL/INCOMPLETE reporting, maintenance exclusion and restart-generation checks
 remain. The standalone 7N launcher is a development convenience; the reviewed
 operations workflow is the canonical restricted staging/recovery path.
+
+## Latest 7J handoff follow-up
+
+Final remote verification found 7J at
+`7b27699f13c94461a9d3d6596c47debfcfb9fed6`, three commits beyond the initially
+reviewed precision head. The delta adds completed archive/audit evidence, research
+validators and a non-executable data/research quarantine. Modern runtime and live
+catalog files are unchanged. The only new merge conflict was the scientific CI
+path list; both sets of triggers were preserved. New research regressions pass;
+no historical weighted engine or new crop rules were imported into the app.

@@ -83,7 +83,7 @@ Do not point these commands at another developer's active worktree.
 ```bash
 # Fetch reviewed objects and create ONE clean immutable combined checkout.
 git fetch origin '+refs/heads/*:refs/remotes/origin/*'
-RC_SHA=ab745a027b7b66a6c63fb033b024b19053b12c55
+RC_SHA=31cb7fd159ebb62c818bc6eee07274e0dde86e9b
 git worktree add --detach ../earthsync-rc "$RC_SHA"
 rustup toolchain install 1.99.0 --profile minimal
 export RUSTUP_TOOLCHAIN=1.99.0
@@ -107,10 +107,10 @@ python3.12 "$OPS/ops/staging/staging.py" run --source "$PLATFORM" --state "$PRIV
 python3.12 "$OPS/ops/staging/staging.py" run --source "$WEB" --state "$PRIVATE/web-release"
 ```
 
-The commands pin the CI-verified source including the fail-closed Windows/test
-corrections. Recorded runtime artifacts were built from `530c1e1d06c9202dfc1f5d06c659399409b7270f`;
+The commands pin the complete reviewed source including fail-closed Windows/test
+corrections and the completed 7J audit/quarantine handoff. Recorded runtime artifacts were built from `530c1e1d06c9202dfc1f5d06c659399409b7270f`;
 the application, provider, engine, database and operations runtime files are
-identical at `ab745a027b7b66a6c63fb033b024b19053b12c55`. Later PR delivery commits
+identical at `31cb7fd159ebb62c818bc6eee07274e0dde86e9b`; only test/CI/audit/quarantine changes follow that artifact build. Later PR delivery commits
 add reports and reproduction support. Use the full reviewed PR SHA supplied at
 acceptance if rebuilding that complete checkout; never guess or shorten a pin.
 
@@ -149,7 +149,7 @@ state operation; Python's chmod does not establish Windows privacy ACLs.
 $Ops = 'C:\src\earthsync-rc'
 $Web = $Ops
 $Platform = $Ops
-$RcSha = 'ab745a027b7b66a6c63fb033b024b19053b12c55'
+$RcSha = '31cb7fd159ebb62c818bc6eee07274e0dde86e9b'
 $Private = 'C:\EarthSyncPrivate'
 $env:RUSTUP_TOOLCHAIN = '1.99.0'
 # First create/restrict $Private in Explorer Security to your account and SYSTEM.
