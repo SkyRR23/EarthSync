@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 
 import '../models/farm_boundary.dart';
@@ -17,10 +20,16 @@ import '../models/field_note.dart';
 /// Every write is fire-and-forget: Firestore queues it offline and sends it
 /// when the phone is back online, so the farmer never waits on the network.
 class CloudSync {
-  CloudSync(this._db, this._auth);
+  CloudSync(this._db, this._auth, {this.storage});
 
   final FirebaseFirestore _db;
   final FirebaseAuth _auth;
+
+  /// Null = photos stay on the phone only.
+  final FirebaseStorage? storage;
+
+  static String photoPath(String uid, String noteId) =>
+      'users/$uid/photos/$noteId.jpg';
 
   String? get uid => _auth.currentUser?.uid;
 
@@ -52,6 +61,7 @@ class CloudSync {
     required String? currentCrop,
     required String? irrigation,
     required String? drainage,
+    String? soilTexture,
   }) {
     final id = uid;
     if (id == null || pinLat == null || pinLon == null) return;
@@ -75,6 +85,7 @@ class CloudSync {
           'current_crop': currentCrop,
           'irrigation': irrigation,
           'drainage': drainage,
+          'soil_texture': soilTexture,
         },
         'updated_at': FieldValue.serverTimestamp(),
       }),
@@ -88,6 +99,7 @@ class CloudSync {
       _user(id).collection('notes').doc(n.id).set({
         'kind': n.kind.name,
         'text': n.text,
+        'photo': n.cloudPhoto,
         'created_at': Timestamp.fromDate(n.createdAt),
       }),
     );
@@ -97,6 +109,27 @@ class CloudSync {
     final id = uid;
     if (id == null) return;
     _fire(_user(id).collection('notes').doc(noteId).delete());
+    final storage = this.storage;
+    if (storage != null) {
+      _fire(storage.ref(photoPath(id, noteId)).delete());
+    }
+  }
+
+  /// Uploads a note photo to the farmer's private folder. Returns its path.
+  Future<String?> uploadPhoto(String noteId, File file) async {
+    final id = uid;
+    final storage = this.storage;
+    if (id == null || storage == null || !await file.exists()) return null;
+    try {
+      final path = photoPath(id, noteId);
+      await storage
+          .ref(path)
+          .putFile(file, SettableMetadata(contentType: 'image/jpeg'));
+      return path;
+    } catch (e) {
+      debugPrint('photo upload failed: $e');
+      return null;
+    }
   }
 
   /// One check result: the engine's own numbers and verdicts, unchanged.
@@ -180,6 +213,7 @@ class CloudSync {
               orElse: () => NoteKind.other,
             ),
             text: d.data()['text'] as String? ?? '',
+            cloudPhoto: d.data()['photo'] as String?,
           ),
       ],
     );

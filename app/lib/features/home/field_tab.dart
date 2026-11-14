@@ -9,6 +9,7 @@ import 'package:share_plus/share_plus.dart';
 import '../../app/strings.dart';
 import '../../data/models/farm_boundary.dart';
 import '../../data/models/farmer_input.dart';
+import '../../data/models/soil_texture.dart';
 import '../../data/models/field_analysis.dart';
 import '../../design/components/buttons.dart';
 import '../../design/components/grouped.dart';
@@ -144,6 +145,12 @@ String answerDrain(Drainage? d) => switch (d) {
   _ => S.dontKnow,
 };
 
+String answerSoil(String? texture) {
+  if (texture == null) return S.soilNotChecked;
+  final t = soilTextureFromName(texture);
+  return t == null ? S.dontKnow : '${t.emoji} ${t.label}';
+}
+
 /// Plain-text summary the farmer can send to an extension officer (OpenFarm
 /// "share" idea, without accounts or links).
 String shareSummary(FarmerDraft d, FieldAnalysis a) {
@@ -157,6 +164,7 @@ String shareSummary(FarmerDraft d, FieldAnalysis a) {
     ..writeln('${S.growNow}: ${answerCrop(d.currentCrop)}')
     ..writeln('${S.water}: ${answerWater(d.irrigation)}')
     ..writeln('${S.drainage}: ${answerDrain(d.drainage)}')
+    ..writeln('${S.soil}: ${answerSoil(d.soilTexture)}')
     ..writeln();
   for (final (s, label, _) in sortedByFit(a.scenarios)) {
     final (fit, _, _) = feasibilityStyle(s.eligibility);
@@ -313,6 +321,8 @@ class _FieldTabState extends ConsumerState<FieldTab> {
               ),
             ],
           ),
+        if (d.soilTexture == null)
+          _SoilCard(onTap: () => context.push('/soil-test')),
         FsGroupedSection(
           header: S.yourAnswers,
           separatorIndent: iconIndent,
@@ -345,6 +355,15 @@ class _FieldTabState extends ConsumerState<FieldTab> {
               title: S.drainage,
               value: answerDrain(d.drainage),
               onTap: () => context.push('/question/3?edit=1'),
+            ),
+            FsListRow(
+              leading: FsIconBadge(
+                CupertinoIcons.hand_raised_fill,
+                color: p.crop2,
+              ),
+              title: S.soil,
+              value: answerSoil(d.soilTexture),
+              onTap: () => context.push('/soil-test'),
             ),
           ],
         ),
@@ -602,4 +621,47 @@ Widget farmOutlineLayer(BuildContext context, FarmBoundary farm) {
       ),
     ],
   );
+}
+
+class _SoilCard extends StatelessWidget {
+  const _SoilCard({required this.onTap});
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.fs;
+    final t = context.type;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        FsSpace.gutter,
+        FsSpace.xl,
+        FsSpace.gutter,
+        0,
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(FsSpace.lg),
+        decoration: BoxDecoration(
+          color: p.surface,
+          borderRadius: BorderRadius.circular(FsRadius.lg),
+          border: Border.all(color: p.separator),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                const Text('🤲', style: TextStyle(fontSize: 30)),
+                const SizedBox(width: FsSpace.md),
+                Expanded(child: Text(S.soilTitle, style: t.title3)),
+              ],
+            ),
+            const SizedBox(height: FsSpace.sm),
+            Text(S.soilCard, style: t.body),
+            const SizedBox(height: FsSpace.lg),
+            FsButton(S.soilTitle, kind: FsButtonKind.tinted, onPressed: onTap),
+          ],
+        ),
+      ),
+    );
+  }
 }

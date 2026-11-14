@@ -96,6 +96,12 @@ fn build_demo_request(farmer_json: &str) -> Result<String, String> {
             _ => Value::Null,
         };
 
+    // Farmer's soil feel test; unknown values stay null (never guessed).
+    request["soil"]["texture"] = match farmer.get("soil_texture").and_then(Value::as_str) {
+        Some(t @ ("sand" | "sandy_loam" | "loam" | "silt" | "clay_loam" | "clay")) => json!(t),
+        _ => Value::Null,
+    };
+
     request["soil"]["drainage"] = match farmer.get("drainage").and_then(Value::as_str) {
         Some("poor") => json!("poor"),
         Some("moderate") => json!("moderate"),
@@ -146,6 +152,17 @@ mod tests {
         assert_eq!(v["status"], "success", "{out}");
         assert_eq!(v["data"]["field"]["latitude"], 17.1);
         assert_eq!(v["data"]["field"]["longitude"], 95.9);
+    }
+
+    #[test]
+    fn farmer_soil_texture_reaches_engine() {
+        let out = analyze_synthetic_demo_json(r#"{"soil_texture":"clay_loam"}"#.into());
+        let v: Value = serde_json::from_str(&out).unwrap();
+        assert_eq!(v["status"], "success", "{out}");
+        assert_eq!(v["data"]["soil"]["texture"], "clay_loam");
+        let unknown = analyze_synthetic_demo_json(r#"{"soil_texture":"mud"}"#.into());
+        let u: Value = serde_json::from_str(&unknown).unwrap();
+        assert!(u["data"]["soil"]["texture"].is_null());
     }
 
     #[test]

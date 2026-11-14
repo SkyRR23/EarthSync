@@ -56,6 +56,7 @@ class RustEngine implements EngineGateway {
       'current_crop': input.currentCrop,
       'irrigation': input.irrigation.name,
       'drainage': input.drainage.name,
+      'soil_texture': input.soilTexture,
     });
     final envelope = await rust.analyzeSyntheticDemoJson(farmerJson: farmer);
     return fieldAnalysisFromEnvelope(envelope);

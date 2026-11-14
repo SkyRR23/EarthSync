@@ -171,6 +171,44 @@ abstract final class S {
   static const kindGrowth = 'Growth';
   static const kindWeather = 'Weather';
   static const kindOther = 'Other';
+  static const kindSoil = 'Soil';
+  static const takePhoto = 'Take photo';
+  static const choosePhoto = 'Choose photo';
+  static const removePhoto = 'Remove photo';
+  static const photoInCloud = 'Photo saved online';
+
+  // Soil feel test (farmer-reported texture, FAO "texture by feel")
+  static const soilTitle = 'Check your soil';
+  static const soilCard = 'Feel your soil with your hands. 1 minute.';
+  static const soil = 'Soil';
+  static const soilNotChecked = 'Not checked';
+  static const soilIntroTitle = 'Get your soil ready';
+  static const soilIntro1 = 'Dig a handful of soil from 10 cm deep.';
+  static const soilIntro2 = 'Remove stones and roots.';
+  static const soilIntro3 =
+      'Add water little by little until it feels like soft putty.';
+  static const soilPhotoHint =
+      'You can take a photo of your soil. It is saved in your notes.';
+  static const start = 'Start';
+  static const qBall = 'Squeeze it in your hand. Does it make a ball?';
+  static const ballYes = 'Makes a ball';
+  static const ballNo = 'Falls apart';
+  static const qRibbon =
+      'Push it out between thumb and finger. How long is the ribbon before it breaks?';
+  static const ribbonNone = 'No ribbon';
+  static const ribbonShort = 'Short (under 2.5 cm)';
+  static const ribbonMedium = 'Medium (2.5–5 cm)';
+  static const ribbonLong = 'Long (over 5 cm)';
+  static const qFeel = 'Rub a little wet soil. How does it feel?';
+  static const feelGritty = 'Gritty';
+  static const feelSmooth = 'Smooth like flour';
+  static const feelNeither = 'Neither';
+  static const soilResult = 'Your soil';
+  static const soilFromHands = 'From your hand test. Not a lab test.';
+  static const soilUnsure =
+      "That's OK. We will use satellite soil data when it is ready.";
+  static const saveSoil = 'Save';
+  static String soilNote(String label) => 'Soil test: $label';
 
   // Live NASA data (team integration)
   static const provenanceHeader = 'Where the weather comes from';

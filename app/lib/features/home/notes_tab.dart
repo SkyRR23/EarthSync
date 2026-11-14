@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 import '../../app/strings.dart';
 import '../../data/models/field_note.dart';
+import '../../data/photos/photo_store.dart';
 import '../../design/components/buttons.dart';
 import '../../design/components/grouped.dart';
 import '../../design/components/page.dart';
@@ -17,6 +21,7 @@ String noteEmoji(NoteKind kind) => switch (kind) {
   NoteKind.water => '💧',
   NoteKind.growth => '🌱',
   NoteKind.weather => '☁️',
+  NoteKind.soil => '🟤',
   NoteKind.other => '📝',
 };
 
@@ -25,11 +30,13 @@ String noteLabel(NoteKind kind) => switch (kind) {
   NoteKind.water => S.kindWater,
   NoteKind.growth => S.kindGrowth,
   NoteKind.weather => S.kindWeather,
+  NoteKind.soil => S.kindSoil,
   NoteKind.other => S.kindOther,
 };
 
-/// Notes tab (OpenFarm "scouting" idea): tap what you saw, words optional.
-/// Notes stay on this phone.
+/// Notes tab (OpenFarm "scouting" idea): tap what you saw, add a photo,
+/// words optional. Photos are for people to look at; the app measures nothing
+/// from them.
 class NotesTab extends ConsumerWidget {
   const NotesTab({super.key});
 
@@ -43,10 +50,7 @@ class NotesTab extends ConsumerWidget {
           top: Radius.circular(FsRadius.sheet),
         ),
       ),
-      builder: (_) => _AddNoteSheet(
-        kind: kind,
-        onSave: (text) => ref.read(notesProvider.notifier).add(kind, text),
-      ),
+      builder: (_) => AddNoteSheet(kind: kind),
     );
   }
 
@@ -61,21 +65,17 @@ class NotesTab extends ConsumerWidget {
       children: [
         FsPictureGrid<NoteKind>(
           choices: [
-            for (final k in [
-              NoteKind.pests,
-              NoteKind.water,
-              NoteKind.growth,
-              NoteKind.weather,
-            ])
-              FsPicture(k, noteEmoji(k), noteLabel(k)),
+            for (final k in NoteKind.values)
+              if (k != NoteKind.other) FsPicture(k, noteEmoji(k), noteLabel(k)),
+            FsPicture(
+              NoteKind.other,
+              noteEmoji(NoteKind.other),
+              noteLabel(NoteKind.other),
+            ),
           ],
-          unsure: FsPicture(
-            NoteKind.other,
-            noteEmoji(NoteKind.other),
-            noteLabel(NoteKind.other),
-          ),
+          columns: 3,
           selected: null,
-          tileHeight: 96,
+          tileHeight: 92,
           onSelect: (k) => _add(context, ref, k),
         ),
         if (notes.isEmpty)
@@ -95,7 +95,7 @@ class NotesTab extends ConsumerWidget {
         else
           FsGroupedSection(
             header: S.yourNotes,
-            separatorIndent: FsSpace.lg + 26 + FsSpace.md,
+            separatorIndent: FsSpace.lg + 52 + FsSpace.md,
             children: [
               for (final note in notes)
                 Dismissible(
@@ -132,37 +132,87 @@ class NotesTab extends ConsumerWidget {
   }
 }
 
-class _NoteRow extends StatelessWidget {
+class _NoteRow extends ConsumerWidget {
   const _NoteRow(this.note);
   final FieldNote note;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final store = ref.watch(photoStoreProvider);
     final label = noteLabel(note.kind);
     final text = note.text.isEmpty ? label : note.text;
     final date = DateFormat('d MMM').format(note.createdAt);
+    final file = (store != null && note.photo != null)
+        ? store.file(note.photo!)
+        : null;
     return FsListRow(
-      leading: Text(noteEmoji(note.kind), style: const TextStyle(fontSize: 26)),
+      leading: file == null
+          ? Text(noteEmoji(note.kind), style: const TextStyle(fontSize: 26))
+          : NotePhotoThumb(file: file),
       title: text,
       titleMaxLines: 3,
-      subtitle: note.text.isEmpty ? date : '$label · $date',
+      subtitle: [
+        if (note.text.isNotEmpty) label,
+        date,
+        if (note.cloudPhoto != null) '☁️',
+      ].join(' · '),
       chevron: false,
-      semanticLabel: '$label note, $date: $text',
+      semanticLabel:
+          '$label note, $date: $text${file == null ? '' : ', with photo'}',
+      onTap: file == null ? null : () => showNotePhoto(context, file),
     );
   }
 }
 
-class _AddNoteSheet extends StatefulWidget {
-  const _AddNoteSheet({required this.kind, required this.onSave});
-  final NoteKind kind;
-  final ValueChanged<String> onSave;
+class NotePhotoThumb extends StatelessWidget {
+  const NotePhotoThumb({super.key, required this.file, this.size = 52});
+  final File file;
+  final double size;
 
   @override
-  State<_AddNoteSheet> createState() => _AddNoteSheetState();
+  Widget build(BuildContext context) => ClipRRect(
+    borderRadius: BorderRadius.circular(FsRadius.sm),
+    child: Image.file(
+      file,
+      width: size,
+      height: size,
+      fit: BoxFit.cover,
+      cacheWidth: (size * 3).round(),
+      errorBuilder: (_, _, _) => SizedBox(
+        width: size,
+        height: size,
+        child: const Center(child: Text('🖼️', style: TextStyle(fontSize: 24))),
+      ),
+    ),
+  );
 }
 
-class _AddNoteSheetState extends State<_AddNoteSheet> {
+void showNotePhoto(BuildContext context, File file) {
+  showDialog<void>(
+    context: context,
+    builder: (ctx) => GestureDetector(
+      onTap: () => Navigator.of(ctx).pop(),
+      child: InteractiveViewer(
+        child: Center(child: Image.file(file, fit: BoxFit.contain)),
+      ),
+    ),
+  );
+}
+
+/// Add a note: big photo buttons, optional words, Save.
+class AddNoteSheet extends ConsumerStatefulWidget {
+  const AddNoteSheet({super.key, required this.kind});
+  final NoteKind kind;
+
+  @override
+  ConsumerState<AddNoteSheet> createState() => _AddNoteSheetState();
+}
+
+class _AddNoteSheetState extends ConsumerState<AddNoteSheet> {
   final _controller = TextEditingController();
+  final _id = DateTime.now().microsecondsSinceEpoch.toString();
+  String? _photo;
+  bool _busy = false;
 
   @override
   void dispose() {
@@ -170,10 +220,33 @@ class _AddNoteSheetState extends State<_AddNoteSheet> {
     super.dispose();
   }
 
+  Future<void> _pick(ImageSource source) async {
+    final store = ref.read(photoStoreProvider);
+    if (store == null) return;
+    setState(() => _busy = true);
+    try {
+      final picked = await pickPhoto(source);
+      if (picked != null) {
+        final old = _photo;
+        final name = await store.save(picked, _id);
+        if (old != null && old != name) await store.delete(old);
+        if (!mounted) return;
+        // Bust the image cache: same file name, new picture.
+        PaintingBinding.instance.imageCache.evict(FileImage(store.file(name)));
+        setState(() => _photo = name);
+      }
+    } catch (_) {
+      // Camera unavailable or permission refused: the note still works.
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final p = context.fs;
     final t = context.type;
+    final store = ref.watch(photoStoreProvider);
     return SafeArea(
       top: false,
       child: Padding(
@@ -201,7 +274,10 @@ class _AddNoteSheetState extends State<_AddNoteSheet> {
                   CupertinoButton(
                     padding: EdgeInsets.zero,
                     minimumSize: const Size.square(FsSpace.minTouch),
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () async {
+                      await store?.delete(_photo);
+                      if (context.mounted) Navigator.of(context).pop();
+                    },
                     child: Semantics(
                       button: true,
                       label: S.cancel,
@@ -214,6 +290,52 @@ class _AddNoteSheetState extends State<_AddNoteSheet> {
                   ),
                 ],
               ),
+              if (store != null) ...[
+                const SizedBox(height: FsSpace.lg),
+                if (_photo != null) ...[
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(FsRadius.md),
+                    child: AspectRatio(
+                      aspectRatio: 4 / 3,
+                      child: Image.file(store.file(_photo!), fit: BoxFit.cover),
+                    ),
+                  ),
+                  FsButton(
+                    S.removePhoto,
+                    kind: FsButtonKind.plain,
+                    onPressed: () async {
+                      await store.delete(_photo);
+                      setState(() => _photo = null);
+                    },
+                  ),
+                ] else
+                  Row(
+                    children: [
+                      Expanded(
+                        child: FsButton(
+                          S.takePhoto,
+                          kind: FsButtonKind.tinted,
+                          icon: CupertinoIcons.camera_fill,
+                          loading: _busy,
+                          onPressed: _busy
+                              ? null
+                              : () => _pick(ImageSource.camera),
+                        ),
+                      ),
+                      const SizedBox(width: FsSpace.sm),
+                      Expanded(
+                        child: FsButton(
+                          S.choosePhoto,
+                          kind: FsButtonKind.tinted,
+                          icon: CupertinoIcons.photo,
+                          onPressed: _busy
+                              ? null
+                              : () => _pick(ImageSource.gallery),
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
               const SizedBox(height: FsSpace.lg),
               CupertinoTextField(
                 controller: _controller,
@@ -233,10 +355,19 @@ class _AddNoteSheetState extends State<_AddNoteSheet> {
               FsButton(
                 S.save,
                 icon: CupertinoIcons.checkmark_alt,
-                onPressed: () {
-                  widget.onSave(_controller.text);
-                  Navigator.of(context).pop();
-                },
+                onPressed: _busy
+                    ? null
+                    : () {
+                        ref
+                            .read(notesProvider.notifier)
+                            .add(
+                              widget.kind,
+                              _controller.text,
+                              photo: _photo,
+                              id: _id,
+                            );
+                        Navigator.of(context).pop();
+                      },
               ),
             ],
           ),

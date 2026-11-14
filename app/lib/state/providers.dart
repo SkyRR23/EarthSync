@@ -14,6 +14,8 @@ import '../data/engine/rust_engine.dart';
 import '../data/models/farm_boundary.dart';
 import '../data/engine/web_engine.dart';
 import '../data/models/farmer_input.dart';
+import '../data/models/soil_texture.dart';
+import '../data/photos/photo_store.dart';
 import '../data/models/field_analysis.dart';
 import '../data/models/field_note.dart';
 
@@ -45,6 +47,9 @@ final prefsProvider = Provider<SharedPreferences?>((ref) => null);
 /// Team decision (Nov 2026): signed-in farmers' farm, answers, notes and
 /// check results upload automatically to their own Google account space.
 final cloudSyncProvider = Provider<CloudSync?>((ref) => null);
+
+/// The app's photo folder. Null on web and in tests (no photos there).
+final photoStoreProvider = Provider<PhotoStore?>((ref) => null);
 
 /// Last full calendar year (Jan–Dec). NASA POWER's newest months arrive
 /// late and the backend refuses incomplete ones, so in Jan–Feb we step back
@@ -92,6 +97,8 @@ class FarmerDraft {
     this.drainage,
     this.priorities,
     this.farm,
+    this.soilTexture,
+    this.soilCheckedOn,
   });
 
   /// The pin from setup (one tap or GPS).
@@ -106,6 +113,10 @@ class FarmerDraft {
 
   /// The whole farm (4 corners), marked later on the Field tab.
   final FarmBoundary? farm;
+
+  /// Farmer's soil feel test (engine name, e.g. `clay_loam`); kUnknown = not sure.
+  final String? soilTexture;
+  final DateTime? soilCheckedOn;
 
   bool get hasLocation => latitude != null && longitude != null;
   bool get hasFarm => farm?.isComplete ?? false;
@@ -132,6 +143,8 @@ class FarmerDraft {
     Drainage? drainage,
     Set<Priority>? priorities,
     FarmBoundary? farm,
+    String? soilTexture,
+    DateTime? soilCheckedOn,
   }) => FarmerDraft(
     latitude: latitude ?? this.latitude,
     longitude: longitude ?? this.longitude,
@@ -142,6 +155,8 @@ class FarmerDraft {
     drainage: drainage ?? this.drainage,
     priorities: priorities ?? this.priorities,
     farm: farm ?? this.farm,
+    soilTexture: soilTexture ?? this.soilTexture,
+    soilCheckedOn: soilCheckedOn ?? this.soilCheckedOn,
   );
 
   FarmerInput toInput() {
@@ -150,6 +165,9 @@ class FarmerDraft {
       latitude: fieldLatitude!,
       longitude: fieldLongitude!,
       boundary: farm?.toJson() ?? const [],
+      soilTexture: (soilTexture == null || soilTexture == kUnknown)
+          ? null
+          : soilTexture,
       currentCrop: crop(currentCrop),
       recentRotation: [if (crop(previousCrop) != null) previousCrop!],
       plantingMonth: (plantingMonth == null || plantingMonth == 0)
@@ -171,6 +189,8 @@ class FarmerDraft {
     'drainage': drainage?.name,
     'priorities': priorities?.map((p) => p.name).toList(),
     'farm': farm?.toJson(),
+    'soil_texture': soilTexture,
+    'soil_checked_on': soilCheckedOn?.toIso8601String(),
   };
 
   factory FarmerDraft.fromJson(Map<String, dynamic> j) {
@@ -189,6 +209,8 @@ class FarmerDraft {
           ? null
           : {for (final p in pr) ?e(Priority.values, p)},
       farm: FarmBoundary.fromJson(j['farm']),
+      soilTexture: j['soil_texture'] as String?,
+      soilCheckedOn: DateTime.tryParse(j['soil_checked_on'] as String? ?? ''),
     );
   }
 }
@@ -227,6 +249,7 @@ class FarmerDraftNotifier extends Notifier<FarmerDraft> {
           currentCrop: d.currentCrop,
           irrigation: d.irrigation?.name,
           drainage: d.drainage?.name,
+          soilTexture: d.soilTexture,
         );
   }
 
@@ -254,6 +277,7 @@ class FarmerDraftNotifier extends Notifier<FarmerDraft> {
       irrigation: e(Irrigation.values, answers['irrigation']),
       drainage: e(Drainage.values, answers['drainage']),
       farm: boundary,
+      soilTexture: answers['soil_texture'] as String?,
     );
     state = restored;
     ref
@@ -263,6 +287,14 @@ class FarmerDraftNotifier extends Notifier<FarmerDraft> {
 
   /// Moving the setup pin far away means a different farm: forget the old shape.
   void setLocation(double lat, double lon) {
+    final keepSoil =
+        state.hasLocation &&
+        const Distance().as(
+              LengthUnit.Kilometer,
+              LatLng(state.latitude!, state.longitude!),
+              LatLng(lat, lon),
+            ) <
+            2;
     final keepFarm =
         state.farm != null &&
         const Distance().as(
@@ -282,9 +314,20 @@ class FarmerDraftNotifier extends Notifier<FarmerDraft> {
         drainage: state.drainage,
         priorities: state.priorities,
         farm: keepFarm ? state.farm : null,
+        // Soil belongs to the place: keep it only for a nearby pin.
+        soilTexture: keepSoil ? state.soilTexture : null,
+        soilCheckedOn: keepSoil ? state.soilCheckedOn : null,
       ),
     );
   }
+
+  /// Result of the soil feel test (null = farmer not sure).
+  void setSoil(SoilTexture? t) => _set(
+    state.copyWith(
+      soilTexture: t?.engineName ?? kUnknown,
+      soilCheckedOn: DateTime.now(),
+    ),
+  );
 
   void setFarm(FarmBoundary farm) {
     _set(state.copyWith(farm: farm));
@@ -301,6 +344,8 @@ class FarmerDraftNotifier extends Notifier<FarmerDraft> {
       irrigation: state.irrigation,
       drainage: state.drainage,
       priorities: state.priorities,
+      soilTexture: state.soilTexture,
+      soilCheckedOn: state.soilCheckedOn,
     ),
   );
   void setCurrentCrop(String v) => _set(state.copyWith(currentCrop: v));
@@ -321,6 +366,8 @@ class FarmerDraftNotifier extends Notifier<FarmerDraft> {
       irrigation: state.irrigation,
       drainage: state.drainage,
       farm: state.farm,
+      soilTexture: state.soilTexture,
+      soilCheckedOn: state.soilCheckedOn,
     ),
   );
 
@@ -363,26 +410,49 @@ class NotesNotifier extends Notifier<List<FieldNote>> {
         ?.setString(_notesKey, jsonEncode([for (final n in notes) n.toJson()]));
   }
 
-  void add(NoteKind kind, String text) {
+  FieldNote add(NoteKind kind, String text, {String? photo, String? id}) {
     final now = DateTime.now();
     final note = FieldNote(
-      id: now.microsecondsSinceEpoch.toString(),
+      id: id ?? now.microsecondsSinceEpoch.toString(),
       createdAt: now,
       kind: kind,
       text: text.trim(),
+      photo: photo,
     );
     _save([note, ...state]);
     ref.read(cloudSyncProvider)
       ?..saveNote(note)
-      ..logEvent('note_added');
+      ..logEvent(photo == null ? 'note_added' : 'photo_note_added');
+    if (photo != null) _uploadPhoto(note);
+    return note;
   }
 
+  /// Copies the note's photo to Firebase Storage, then records its path.
+  Future<void> _uploadPhoto(FieldNote note) async {
+    final sync = ref.read(cloudSyncProvider);
+    final store = ref.read(photoStoreProvider);
+    if (sync == null || store == null || note.photo == null) return;
+    final path = await sync.uploadPhoto(note.id, store.file(note.photo!));
+    if (path == null) return;
+    final updated = note.withCloudPhoto(path);
+    if (!state.any((n) => n.id == note.id)) return; // deleted meanwhile
+    _save([for (final n in state) n.id == note.id ? updated : n]);
+    sync.saveNote(updated);
+  }
+
+  /// Removes a note now; its photo is deleted a little later unless the
+  /// farmer taps Undo first.
   void remove(String id) {
+    final gone = state.where((n) => n.id == id).firstOrNull;
     _save([
       for (final n in state)
         if (n.id != id) n,
     ]);
-    ref.read(cloudSyncProvider)?.deleteNote(id);
+    Future<void>.delayed(const Duration(seconds: 10), () {
+      if (state.any((n) => n.id == id)) return; // undone
+      ref.read(cloudSyncProvider)?.deleteNote(id);
+      ref.read(photoStoreProvider)?.delete(gone?.photo);
+    });
   }
 
   /// Adds cloud notes this phone does not have yet (new phone / reinstall),
@@ -393,6 +463,7 @@ class NotesNotifier extends Notifier<List<FieldNote>> {
     final sync = ref.read(cloudSyncProvider);
     for (final n in state) {
       if (!cloudIds.contains(n.id)) sync?.saveNote(n);
+      if (n.photo != null && n.cloudPhoto == null) _uploadPhoto(n);
     }
     final extra = [
       for (final n in cloud)

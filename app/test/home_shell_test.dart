@@ -157,6 +157,10 @@ void main() {
     await tester.tap(find.text(S.undo));
     await tester.pumpAndSettle();
     expect(find.text(sample), findsOneWidget);
+
+    // The photo-cleanup timer runs out; an undone note must survive it.
+    await tester.pump(const Duration(seconds: 11));
+    expect(find.text(sample), findsOneWidget);
   });
 
   testWidgets('Notes: saving without words keeps the picture as the note', (

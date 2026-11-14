@@ -37,6 +37,7 @@ class FarmerInput {
     this.drainage = Drainage.unknown,
     this.priorities = const [],
     this.boundary = const [],
+    this.soilTexture,
   });
 
   /// Field location used for every calculation: the farm centre once the
@@ -47,6 +48,9 @@ class FarmerInput {
   /// Farm corners as [lat, lon] pairs (empty = only a pin). Kept for P2's
   /// server request; the on-device engine uses [latitude]/[longitude].
   final List<List<double>> boundary;
+
+  /// Farmer's soil feel test, engine name (`clay_loam`…); null = not checked.
+  final String? soilTexture;
 
   /// null = farmer does not know / did not say.
   final String? currentCrop;
@@ -68,6 +72,7 @@ class FarmerInput {
     'drainage': drainage.name,
     'priorities': priorities.map(_priorityToJson).toList(),
     'field_boundary': boundary,
+    'soil_texture': soilTexture,
   };
 
   static String _priorityToJson(Priority p) => switch (p) {

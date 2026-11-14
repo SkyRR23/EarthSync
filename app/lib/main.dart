@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,6 +10,7 @@ import 'app/router.dart';
 import 'app/strings.dart';
 import 'data/cloud/cloud_sync.dart';
 import 'data/engine/rust_engine.dart';
+import 'data/photos/photo_store.dart';
 import 'firebase_options.dart';
 import 'design/theme.dart';
 import 'state/account.dart';
@@ -32,10 +34,15 @@ Future<void> main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
     auth = FirebaseAuth.instance;
-    cloud = CloudSync(FirebaseFirestore.instance, auth);
+    cloud = CloudSync(
+      FirebaseFirestore.instance,
+      auth,
+      storage: FirebaseStorage.instance,
+    );
   } catch (e) {
     debugPrint('Firebase not started: $e');
   }
+  final photos = await PhotoStore.open();
   final setupDone = loadSavedDraft(prefs).isComplete;
   runApp(
     ProviderScope(
@@ -43,6 +50,7 @@ Future<void> main() async {
         prefsProvider.overrideWithValue(prefs),
         authProvider.overrideWithValue(auth),
         cloudSyncProvider.overrideWithValue(cloud),
+        photoStoreProvider.overrideWithValue(photos),
       ],
       child: FieldShiftApp(setupDone: setupDone),
     ),

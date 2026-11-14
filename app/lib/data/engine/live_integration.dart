@@ -26,7 +26,8 @@ Map<String, dynamic> buildLiveIntegrationRequest(
     },
   },
   'soil': {
-    'texture': null,
+    // Farmer's soil feel test (farmer-reported); null when not checked.
+    'texture': input.soilTexture,
     'drainage': switch (input.drainage) {
       Drainage.good => 'well',
       Drainage.unknown => null,
