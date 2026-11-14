@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/strings.dart';
@@ -26,8 +27,10 @@ Future<String?> signInAndSync(WidgetRef ref) async {
     if (user == null) return S.signInFailed;
   } on FirebaseAuthException catch (e) {
     if (e.code == 'canceled' || e.code == 'web-context-canceled') return null;
+    debugPrint('Google sign-in failed: ${e.code} ${e.message}');
     return S.signInFailed;
-  } catch (_) {
+  } catch (e) {
+    debugPrint('Google sign-in failed: $e');
     return S.signInFailed;
   }
   sync.touchUser();
