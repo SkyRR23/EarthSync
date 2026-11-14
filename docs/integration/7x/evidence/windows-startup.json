@@ -1,0 +1,21 @@
+{
+  "source_sha": "5327a4af2df91d37922ed3226e5fa9f71ae1af45",
+  "run": "https://github.com/SkyRR23/EarthSync/actions/runs/43622707448",
+  "job": "windows-staging",
+  "conclusion": "success",
+  "python": "3.12 (actions/setup-python)",
+  "rust": "1.99.0",
+  "flutter": "3.44.0",
+  "dart": "3.12.0",
+  "raw_workflow_log_sha256": "060ab94bf41a2f89bf193d4e82e9dcd62fc14ad7a5c8e1a8c6a29abfc30c1b3d",
+  "observed_log_lines": [
+    "windows-staging\tRun actions/setup-python@v5\t2026-11-14T17:44:18.7277645Z Successfully set up CPython (3.12.10)",
+    "windows-staging\tRun dtolnay/rust-toolchain@1.99.0\t2026-11-14T17:44:27.8393557Z   1.99.0-x86_64-pc-windows-msvc installed - rustc 1.99.0 (b940084d7 2026-09-28)",
+    "windows-staging\tRun dtolnay/rust-toolchain@1.99.0\t2026-11-14T17:44:27.9816742Z   1.99.0-x86_64-pc-windows-msvc unchanged - rustc 1.99.0 (b940084d7 2026-09-28)",
+    "windows-staging\tRun dtolnay/rust-toolchain@1.99.0\t2026-11-14T17:44:29.2528612Z rustc 1.99.0 (b940084d7 2026-09-28)",
+    "windows-staging\tBuild actual Windows 7Q runtimes with private ACLs\t2026-11-14T17:47:29.9853039Z Flutter 3.44.0 \u2022 channel stable \u2022 https://github.com/flutter/flutter.git",
+    "windows-staging\tBuild actual Windows 7Q runtimes with private ACLs\t2026-11-14T17:47:29.9856018Z Tools \u2022 Dart 3.12.0 \u2022 DevTools 2.57.0",
+    "windows-staging\tBuild actual Windows 7Q runtimes with private ACLs\t2026-11-14T17:48:35.9851083Z PASS: pinned 7Q Web/platform startup, actual Rust readiness, v2 integrity/lookup and blocked 7V review; loopback only. No browser acceptance or live provider claim."
+  ],
+  "scope": "Actual Windows 7Q ACL-wrapper builds and loopback startup; no Windows browser/live-NASA claim"
+}

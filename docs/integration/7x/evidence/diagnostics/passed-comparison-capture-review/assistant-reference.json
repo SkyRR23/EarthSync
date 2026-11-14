@@ -1,0 +1,90 @@
+{
+  "schema_version": "assistant.v1-proposal",
+  "context_id": "selection-160211690",
+  "language": "en",
+  "intent": "crops",
+  "claims": [
+    {
+      "category": "general_knowledge",
+      "text": "A farm location is confirmed. Each source still has its own coverage; regional data remain regional.",
+      "evidence_ids": [],
+      "source_ids": []
+    },
+    {
+      "category": "general_knowledge",
+      "text": "I can explain supplied Rust findings as options to investigate. They are not ranked planting advice. Crop variety, local requirements, soil, water and planting dates still need review with a local adviser. Source-reviewed crop reference facts remain reference-only; exact facts, source sidecars and blocked conversions are in the saved assessment. A schedule conflict checks the declared order and dates, not crop suitability.",
+      "evidence_ids": [],
+      "source_ids": []
+    },
+    {
+      "category": "retrieved_fact",
+      "text": "Source-reviewed reference growing period for rice.mm.calendar-5-sessions-0@1: {\"max\": 165.0, \"min\": 135.0} days. Scope: A. Bago, Kachin River-Side Land; advisory agroecological zone, not farm boundary. This is an advisory reference, not your cultivar maturity prediction or an independently accepted crop rule.",
+      "evidence_ids": [],
+      "source_ids": [
+        "fao_calendar_mm"
+      ]
+    },
+    {
+      "category": "deterministic_calculation",
+      "text": "Supplied Rust finding for scenario \u201crequested:rice.mm.calendar-5-sessions-0@1\u201d: insufficient_information. This is the original status, not a new recommendation.",
+      "evidence_ids": [],
+      "source_ids": []
+    },
+    {
+      "category": "unavailable_evidence",
+      "text": "The supplied finding lacks complete source provenance or linked evidence. Its agricultural applicability remains unresolved.",
+      "evidence_ids": [],
+      "source_ids": []
+    },
+    {
+      "category": "deterministic_calculation",
+      "text": "Persisted Rust explanation: Profile has no requirements.",
+      "evidence_ids": [],
+      "source_ids": []
+    }
+  ],
+  "citations": [
+    {
+      "id": "fao_calendar_mm",
+      "provider": "FAO",
+      "title": "FAO Crop Calendar Myanmar sessions",
+      "url": "https://api-cropcalendar.apps.fao.org/api/v1/countries/MM/cropCalendar?language=en"
+    }
+  ],
+  "evidence": [],
+  "decisions": [
+    {
+      "id": "7188990f-e7d1-481c-adab-e9d68f3759bf:0",
+      "scenario_id": "requested:rice.mm.calendar-5-sessions-0@1",
+      "status": "insufficient_information",
+      "source_ids": [],
+      "evidence_ids": [],
+      "limitations": [
+        "Persisted reference assessment; no crop recommendation."
+      ],
+      "synthetic": false,
+      "explanation": "Profile has no requirements."
+    }
+  ],
+  "limitations": [
+    "No independently verified crop recommendation is available. Historical climate is not current weather.",
+    "All global catalog profiles are reference-only and recommendation_eligible=false. Daily climate, soil depth, cultivar duration and Kc gaps remain.",
+    "No reviewed positive crop recommendations. Full evidence and Rust decision details are available separately.",
+    "Only source records are projected; reference-only inputs must not be promoted. Boundaries exceeding assistant v1 limits are omitted; full farm geometry remains in farm context."
+  ],
+  "warnings": [
+    "7188990f-e7d1-481c-adab-e9d68f3759bf:0:source"
+  ],
+  "suggested_questions": [
+    "What is happening in my area?",
+    "How much rainfall did this area receive?",
+    "Why is soil information unavailable?",
+    "What crops could I investigate?",
+    "What are the limitations of this recommendation?",
+    "What does this satellite observation mean?",
+    "What information should I provide next?",
+    "What does the ET0 value mean?",
+    "What would I need to estimate irrigation requirement?",
+    "Why is this rotation in conflict?"
+  ]
+}

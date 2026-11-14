@@ -1,0 +1,15 @@
+- heading "Persisted farm evidence" [level=2]
+- group:
+  - 'group "Database farm: 5d781c1d-4c7a-4559-aca1-6d377c49568d Confirmed point: 42.0308, -93.6319 Declared system: rainfed"':
+    - group "Saved decision 17e2ac64-6843-499d-8a96-021aba4d042c No calibrated suitability score, yield prediction, pest benefit or forecast safety claim is produced. Reviewed/source/applicability flags are caller assertions requiring catalog-owner review; citations alone do not verify a rule. Regional, modeled, reported and observed evidence remain separate in the retained context. Photos and approximate user location are not field measurements. ETc is standard-condition crop evapotranspiration arithmetic, not irrigation requirement, effective rainfall, actual soil moisture or a water balance.":
+      - 'group "requested:rice.mm.calendar-5-sessions-0@1 · More information needed A supported comparison is not whole-crop suitability. Missing: These supplied rules are not an exhaustive crop recommendation or future safety assessment. plan:rice.mm.calendar-5-sessions-0@1: Profile has no requirements."':
+        - button "More information needed plan:rice.mm.calendar-5-sessions-0@1 · catalog.rules"
+        - button "All crop and rotation findings"
+      - button "Full Rust evidence, source references and validation response"
+      - button "Persisted evidence gaps and source lineage"
+- tablist:
+  - tab "Home"
+  - tab "My Farm" [selected]
+  - tab "Explore"
+  - tab "Assistant"
+  - tab "Settings"

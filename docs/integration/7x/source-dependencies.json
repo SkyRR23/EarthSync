@@ -1,0 +1,59 @@
+{
+  "branch": "integration/earthsync-final-release-v1",
+  "exact_start": "edefc0c4dedf232e7ddb9704f6f2180a4936fcc3",
+  "sources": {
+    "7n": {
+      "pr": 24,
+      "sha": "a6dd13213d629e6714575425169530c617cbffad",
+      "ancestor_of_integration": true
+    },
+    "7p": {
+      "pr": 25,
+      "sha": "940a8aad62da8b188cdd3af4d200f353d907997a",
+      "ancestor_of_integration": true
+    },
+    "7v": {
+      "pr": 26,
+      "sha": "5ffe71e45f0f141d0e383cd437ab35c843960dc6",
+      "ancestor_of_integration": true
+    },
+    "7w": {
+      "pr": 27,
+      "sha": "edefc0c4dedf232e7ddb9704f6f2180a4936fcc3",
+      "ancestor_of_integration": true
+    }
+  },
+  "edges": [
+    [
+      "7n",
+      "7p"
+    ],
+    [
+      "7p",
+      "7w"
+    ],
+    [
+      "7p",
+      "7v"
+    ],
+    [
+      "7w",
+      "7x"
+    ],
+    [
+      "7v",
+      "7x"
+    ]
+  ],
+  "7v_integration": "Complete pinned package merged once; existing bounded derivative retained and reconciled field-by-field",
+  "merge_commits": [
+    "a658d0d47bb357783d570921a13ca95e074a5b2e Integrate complete pinned 7V blocked scientific review into 7X"
+  ],
+  "retained_hashes": {
+    "data/crop-knowledge/v1/catalog.json": "2926584bce3693dff7433afe9c05c535a6d5d1e609fb502d4e2f6017f398fb0e",
+    "data/crop-knowledge/v2/catalog.json": "9c61fc394bd73f990fa12cba21d77a3e21028c233b956e1ce31f664178ad241b",
+    "data/crop-rule-candidates/v1/package.json": "0771cc950de3eda4c47c283616728102d3256d1f5233fb503f93ad34939d3c84",
+    "server/earthsync/platform_v1/rule_review.json": "63c5fa5b34f05a8b19114740ded3f73587775414e69846d693cd8b5ddec7a616"
+  },
+  "rules_promoted": 0
+}

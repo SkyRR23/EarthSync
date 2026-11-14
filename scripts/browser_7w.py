@@ -72,16 +72,30 @@ with sync_playwright() as p:
         page.keyboard.press("Tab")
         page.wait_for_timeout(100)
 
-    def visible(text):
+    def visible(text, role=None):
         viewport = page.viewport_size
         page.mouse.move(viewport["width"] / 2, viewport["height"] * 0.6)
-        page.mouse.wheel(0, -40000)
-        page.wait_for_timeout(750)
-        for _ in range(40):
-            if text in page.locator("body").aria_snapshot():
+        for _ in range(3):
+            page.mouse.wheel(0, -40000)
+            page.wait_for_timeout(500)
+        scans = []
+        for _ in range(60):
+            snapshot = page.locator("body").aria_snapshot()
+            scans.append(snapshot)
+            locator = (
+                page.get_by_role(role, name=re.compile("^" + re.escape(text)))
+                if role
+                else None
+            )
+            if (
+                locator is not None and locator.count() and locator.first.is_visible()
+            ) or (role is None and text in snapshot):
                 return
-            page.mouse.wheel(0, 500)
-            page.wait_for_timeout(150)
+            page.mouse.wheel(0, 400)
+            page.wait_for_timeout(250)
+        (out / "failed-scroll-scans.json").write_text(
+            json.dumps({"target": text, "scans": scans}, indent=2)
+        )
         raise AssertionError("Rendered text not found: " + text)
 
     def shot(name):
@@ -335,7 +349,15 @@ with sync_playwright() as p:
                     exact=True,
                 ).click()
                 page.get_by_role("menuitem", name=ident, exact=True).click()
-            visible("Alternative A · " + alternatives[0])
+            visible("Alternative A saved decision", role="button")
+            # Bring the actual comparison controls into the viewport. A parent
+            # semantic group's label can include off-screen descendant text.
+            page.get_by_role(
+                "button", name=re.compile("^Alternative A saved decision")
+            ).click()
+            page.keyboard.press("Escape")
+            page.mouse.wheel(0, 400)
+            page.wait_for_timeout(750)
             shot("alternative-sequences-desktop")
             visible("Alternative B · " + alternatives[1])
             record(

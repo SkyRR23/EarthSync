@@ -1,0 +1,9 @@
+PASS: Onboarding and useful global home without location permission
+PASS: Confirmed local farm restores after browser refresh
+PASS: Explicit 201 farm link and database UUID displayed
+PASS: Actual POWER daily job, bounded polling and three persisted 29-day source records
+Traceback (most recent call last):
+  File "/workspace/EarthSync/scripts/browser_7n.py", line 218, in <module>
+    assert len(result["result"]["data"]["context"]["climate"]) == 3
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

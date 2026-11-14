@@ -1,0 +1,30 @@
+- heading "Persisted farm evidence" [level=2]
+- group:
+  - 'group "Database farm: b121eaf1-6067-400d-bccb-1fa03a0da733 Confirmed point: 42.0302, -93.6202 Declared system: rainfed"':
+    - text: Photo ownership Existing photos remain in the authorized 7H workspace. Linking this farm does not transfer or expose them. Farm-owned 7I objects remain separate; migration requires a verified workspace token, explicit selection and sanitizer checks. No automatic migration is enabled.
+    - 'group "Crop references & water intelligence Historical regional evidence · English · global location support. ET0 describes reference-grass atmospheric water demand; it does not prescribe irrigation. Explicitly selected snapshots: 0 Next steps: confirm crop/cultivar and actual stage dates with an adviser; measure root-zone soil water, field capacity and wilting point; record rainfall, drainage, irrigation supply and delivery efficiency. Rainfed water stress and irrigated demand remain unknown without a field balance. Paddy also needs preparation, seepage/percolation and standing-water targets. Evidence labels: measured · modeled · farmer-reported · source-reviewed reference · independently accepted rule · synthetic software test · missing/unavailable. No 7P rule is independently accepted."':
+      - textbox "Water / first crop start (YYYY-MM-DD)"
+      - button "Choose Water / first crop start (YYYY-MM-DD)"
+      - textbox "Water / first crop end (YYYY-MM-DD)"
+      - button "Choose Water / first crop end (YYYY-MM-DD)"
+      - button "Retrieve NASA inputs & calculate ET0"
+      - textbox "Exact crop name or identity (7P v2)"
+      - checkbox "rice"
+      - checkbox "maize"
+      - checkbox "mung bean"
+      - checkbox "sesame"
+      - checkbox "groundnut"
+      - button "Look up crop references"
+      - button "Save crop & water evidence assessment"
+    - checkbox "Include POWER daily meteorology / MERRA-2 · PRECTOTCORR Retrieved 2026-11-14T17:50:10.403966Z · reviewed Technical metadata and transport contract only; no agronomic applicability approval"
+    - button "POWER daily meteorology / MERRA-2 · 2024-02-01 – 2024-02-29"
+    - checkbox "Include POWER hourly-derived daily extrema / MERRA-2 · T2M_MAX Retrieved 2026-11-14T17:50:09.128219Z · reviewed Technical metadata and transport contract only; no agronomic applicability approval" [checked]
+    - button "POWER hourly-derived daily extrema / MERRA-2 · 2024-02-01 – 2024-02-29"
+    - checkbox "Include POWER hourly-derived daily extrema / MERRA-2 · T2M_MIN Retrieved 2026-11-14T17:50:07.918368Z · reviewed Technical metadata and transport contract only; no agronomic applicability approval" [checked]
+    - button "POWER hourly-derived daily extrema / MERRA-2 · 2024-02-01 – 2024-02-29"
+    - group "Reference assessment and reported history Declare the period and optional reference profile. Region/system compatibility is checked by the server. All crop profiles remain recommendation-ineligible. Local planning notes are preserved separately and are not silently promoted into history. 2 source records selected. An empty selection produces an explicit evidence gap assessment. History submissions are explicit and not retried automatically. Inspect saved history after a network error before submitting again.":
+      - button "Optional reference profile Corn (maize) · us_ia_story"
+      - textbox "Start date (YYYY-MM-DD)"
+      - textbox "End date (YYYY-MM-DD)"
+      - button "Run and save actual Rust assessment"
+      - button "Save period as farmer-reported history"

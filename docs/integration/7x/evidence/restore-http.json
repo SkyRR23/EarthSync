@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "ready": true,
+  "exact_original_job": true,
+  "exact_evidence_records": 8,
+  "exact_assessments": 3,
+  "separate_photos_verified": 2,
+  "host_origin_protection": true
+}

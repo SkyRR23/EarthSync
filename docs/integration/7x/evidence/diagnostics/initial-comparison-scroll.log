@@ -1,0 +1,13 @@
+PASS: User confirms global point, farm and rainfed system; explicit database link
+PASS: Real NASA inputs validated, actual Rust ET0 and rainfall persist and render exactly
+PASS: 7P exact profile and separate source sidecar reach Rust with zero executable rules
+PASS: Browser refresh restores saved calculations and Rust decisions
+PASS: Deterministic assistant explains the same persisted water values and cited reference duration
+Traceback (most recent call last):
+  File "/workspace/EarthSync/scripts/browser_7w.py", line 296, in <module>
+    fill("Second declared planting (YYYY-MM-DD)", second_dates[0])
+  File "/workspace/EarthSync/scripts/browser_7w.py", line 65, in fill
+    visible(name)
+  File "/workspace/EarthSync/scripts/browser_7w.py", line 85, in visible
+    raise AssertionError("Rendered text not found: " + text)
+AssertionError: Rendered text not found: Second declared planting (YYYY-MM-DD)

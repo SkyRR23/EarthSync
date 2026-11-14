@@ -1,0 +1,9 @@
+PASS: SQLite integrity, exact table rows, separate photo stores and private token hashes; snapshot
+Maintenance completed; private contents omitted
+Maintenance completed; private contents omitted
+PASS: SQLite integrity, exact table rows, separate photo stores and private token hashes; backup-restore
+PASS: SQLite integrity, exact table rows, separate photo stores and private token hashes; verify
+PASS: restarted HTTP services retain exact NASA lineage, Rust assessments and both protected photos
+PASS: SQLite integrity, exact table rows, separate photo stores and private token hashes; verify
+PASS: restarted HTTP services retain exact NASA lineage, Rust assessments and both protected photos
+PASS: SQLite integrity, exact table rows, separate photo stores and private token hashes; verify

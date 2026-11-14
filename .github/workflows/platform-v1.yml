@@ -2,8 +2,9 @@ name: Backend evidence platform v1
 on:
   pull_request:
     paths:
-      - 'data/crop-knowledge/v2/**'
+      - 'data/crop-knowledge/**'
       - 'data/crop-rule-candidates/v1/**'
+      - 'scripts/verify_7x_integrity.py'
       - 'server/earthsync/platform_v1/**'
       - 'server/tests/platform_v1/**'
       - 'server/platform-v1/**'
