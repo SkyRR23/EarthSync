@@ -1,0 +1,36 @@
+name: Crop rule candidate review contracts
+
+on:
+  pull_request:
+    paths:
+      - "data/crop-rule-candidates/**"
+      - "docs/integration/7v/**"
+      - "data/crop-knowledge/v2/**"
+      - "engine/src/v03/**"
+      - ".github/workflows/crop-rule-candidates.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review-boundaries:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: data/crop-knowledge/v2/requirements.txt
+      - uses: dtolnay/rust-toolchain@1.99.0
+      - run: python -m pip install -r data/crop-knowledge/v2/requirements.txt
+      - run: python -m ruff check data/crop-rule-candidates/v1
+      - run: python -m ruff format --check data/crop-rule-candidates/v1
+      - run: python data/crop-rule-candidates/v1/tools/package.py --check
+      - run: cargo build --locked --manifest-path engine/Cargo.toml --example v03_demo
+      - run: python -m unittest discover -s data/crop-rule-candidates/v1/tests -v
+      - run: python -m unittest discover -s data/crop-knowledge/v2/tests -p test_scientific.py -v
+      - run: git diff --check
+      # No network science tests or automatic profile promotion/merge.
