@@ -9,6 +9,9 @@ pub mod seasonal;
 /// Provisional crop-reference and rotation foundation, independent of field analysis.
 pub mod decision;
 
+/// Provisional orchestration for backend/Flutter integration; existing APIs unchanged.
+pub mod integration;
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
