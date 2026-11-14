@@ -1,0 +1,1415 @@
+{
+  "archive_name": "field-shift-data-pack.zip",
+  "archive_bytes": 345833,
+  "archive_sha256": "f9d4eb2c5bcb6c73de5fc8bb17bc13a90241eee40715bf5522d369629b88f65c",
+  "scope": "All member bytes read and CRC checked; no member executed or imported. Structural inventory is not scientific acceptance or full manual source review.",
+  "recommendation_eligible": false,
+  "category_counts": {
+    "binary_or_generated_asset": 12,
+    "csv_data": 47,
+    "directory": 5,
+    "documentation_or_configuration": 2,
+    "python_source_static_review_only": 1
+  },
+  "members": [
+    {
+      "path": "data-pack/",
+      "kind": "directory",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "same_bytes_in_pr11": [],
+      "category": "directory"
+    },
+    {
+      "path": "data-pack/tiles/",
+      "kind": "directory",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "same_bytes_in_pr11": [],
+      "category": "directory"
+    },
+    {
+      "path": "data-pack/tiles/ndvi_magway.jpg",
+      "kind": "file",
+      "bytes": 46367,
+      "compressed_bytes": 45826,
+      "sha256": "99fbd2ffbb25498216475ada8889fe46a8a316afe2cb7a9290224805f0463e14",
+      "same_bytes_in_pr11": [
+        "data-pack/tiles/ndvi_magway.jpg"
+      ],
+      "category": "binary_or_generated_asset"
+    },
+    {
+      "path": "data-pack/tiles/truecolor_hlegu.jpg",
+      "kind": "file",
+      "bytes": 9629,
+      "compressed_bytes": 9473,
+      "sha256": "439ddea7644ea1f5af3e97a6b1a2b0acf48885ed9507496f17b49cff0a89ee31",
+      "same_bytes_in_pr11": [
+        "data-pack/tiles/truecolor_hlegu.jpg",
+        "data-pack/tiles/truecolor_bago.jpg"
+      ],
+      "category": "binary_or_generated_asset"
+    },
+    {
+      "path": "data-pack/tiles/truecolor_bago.jpg",
+      "kind": "file",
+      "bytes": 9629,
+      "compressed_bytes": 9473,
+      "sha256": "439ddea7644ea1f5af3e97a6b1a2b0acf48885ed9507496f17b49cff0a89ee31",
+      "same_bytes_in_pr11": [
+        "data-pack/tiles/truecolor_hlegu.jpg",
+        "data-pack/tiles/truecolor_bago.jpg"
+      ],
+      "category": "binary_or_generated_asset"
+    },
+    {
+      "path": "data-pack/tiles/truecolor_magway.jpg",
+      "kind": "file",
+      "bytes": 10314,
+      "compressed_bytes": 10172,
+      "sha256": "ad87a1c7977feca9d6c74f0eaae00c2ca99a92e60b9b087c150bb36f1763ae1f",
+      "same_bytes_in_pr11": [
+        "data-pack/tiles/truecolor_magway.jpg"
+      ],
+      "category": "binary_or_generated_asset"
+    },
+    {
+      "path": "data-pack/tiles/imerg_magway.jpg",
+      "kind": "file",
+      "bytes": 3544,
+      "compressed_bytes": 3362,
+      "sha256": "d511b9ec42fc2023767df43ab8d6099231409998d8fbb6c2af61c8fd210e3e02",
+      "same_bytes_in_pr11": [
+        "data-pack/tiles/imerg_magway.jpg"
+      ],
+      "category": "binary_or_generated_asset"
+    },
+    {
+      "path": "data-pack/tiles/ndvi_bago.jpg",
+      "kind": "file",
+      "bytes": 48660,
+      "compressed_bytes": 48120,
+      "sha256": "7855e6a6935bf56d0a903c8af2d3a8cb2914a5954f084a4548ec898d700a9bd1",
+      "same_bytes_in_pr11": [
+        "data-pack/tiles/ndvi_bago.jpg",
+        "data-pack/tiles/ndvi_hlegu.jpg"
+      ],
+      "category": "binary_or_generated_asset"
+    },
+    {
+      "path": "data-pack/tiles/imerg_bago.jpg",
+      "kind": "file",
+      "bytes": 3014,
+      "compressed_bytes": 2661,
+      "sha256": "11765d0c276f7a992953cd206d00be526d9a3a46b7c464945c949cb6aff3a106",
+      "same_bytes_in_pr11": [
+        "data-pack/tiles/imerg_bago.jpg",
+        "data-pack/tiles/imerg_hlegu.jpg"
+      ],
+      "category": "binary_or_generated_asset"
+    },
+    {
+      "path": "data-pack/tiles/lst_day_bago.jpg",
+      "kind": "file",
+      "bytes": 22433,
+      "compressed_bytes": 22079,
+      "sha256": "78709defcf97c18bbecbc42f9a7ce931562da602a31510893cda7876b0393790",
+      "same_bytes_in_pr11": [
+        "data-pack/tiles/lst_day_bago.jpg",
+        "data-pack/tiles/lst_day_hlegu.jpg"
+      ],
+      "category": "binary_or_generated_asset"
+    },
+    {
+      "path": "data-pack/tiles/lst_day_hlegu.jpg",
+      "kind": "file",
+      "bytes": 22433,
+      "compressed_bytes": 22079,
+      "sha256": "78709defcf97c18bbecbc42f9a7ce931562da602a31510893cda7876b0393790",
+      "same_bytes_in_pr11": [
+        "data-pack/tiles/lst_day_bago.jpg",
+        "data-pack/tiles/lst_day_hlegu.jpg"
+      ],
+      "category": "binary_or_generated_asset"
+    },
+    {
+      "path": "data-pack/tiles/imerg_hlegu.jpg",
+      "kind": "file",
+      "bytes": 3014,
+      "compressed_bytes": 2661,
+      "sha256": "11765d0c276f7a992953cd206d00be526d9a3a46b7c464945c949cb6aff3a106",
+      "same_bytes_in_pr11": [
+        "data-pack/tiles/imerg_bago.jpg",
+        "data-pack/tiles/imerg_hlegu.jpg"
+      ],
+      "category": "binary_or_generated_asset"
+    },
+    {
+      "path": "data-pack/tiles/ndvi_hlegu.jpg",
+      "kind": "file",
+      "bytes": 48660,
+      "compressed_bytes": 48120,
+      "sha256": "7855e6a6935bf56d0a903c8af2d3a8cb2914a5954f084a4548ec898d700a9bd1",
+      "same_bytes_in_pr11": [
+        "data-pack/tiles/ndvi_bago.jpg",
+        "data-pack/tiles/ndvi_hlegu.jpg"
+      ],
+      "category": "binary_or_generated_asset"
+    },
+    {
+      "path": "data-pack/tiles/lst_day_magway.jpg",
+      "kind": "file",
+      "bytes": 20938,
+      "compressed_bytes": 20569,
+      "sha256": "6809d43fdbd9516fa03c7210cc57e2f03ce1167fcab4330cc066f0b9caff9d26",
+      "same_bytes_in_pr11": [
+        "data-pack/tiles/lst_day_magway.jpg"
+      ],
+      "category": "binary_or_generated_asset"
+    },
+    {
+      "path": "data-pack/README.md",
+      "kind": "file",
+      "bytes": 5026,
+      "compressed_bytes": 2429,
+      "sha256": "03352b2b35982af9dcb274d44a60607c1dabb2c0bb4285993eda9003bb2aa48e",
+      "same_bytes_in_pr11": [
+        "data-pack/README.md"
+      ],
+      "text_lines": 98,
+      "category": "documentation_or_configuration"
+    },
+    {
+      "path": "data-pack/scripts/",
+      "kind": "directory",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "same_bytes_in_pr11": [],
+      "category": "directory"
+    },
+    {
+      "path": "data-pack/scripts/fetch_sources.py",
+      "kind": "file",
+      "bytes": 39433,
+      "compressed_bytes": 11822,
+      "sha256": "e5b594c238d82790a3db2cee33c07f1826a19d09d1dcd9154848e06a66c03d75",
+      "same_bytes_in_pr11": [
+        "data-pack/scripts/fetch_sources.py"
+      ],
+      "text_lines": 904,
+      "category": "python_source_static_review_only"
+    },
+    {
+      "path": "data-pack/api.txt",
+      "kind": "file",
+      "bytes": 35557,
+      "compressed_bytes": 13269,
+      "sha256": "391709ade5954a2d7bb9782991821e804669ff48b3a24a47e1eaebeb45aea2c9",
+      "same_bytes_in_pr11": [
+        "data-pack/api.txt"
+      ],
+      "text_lines": 586,
+      "category": "documentation_or_configuration"
+    },
+    {
+      "path": "data-pack/csv/",
+      "kind": "directory",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "same_bytes_in_pr11": [],
+      "category": "directory"
+    },
+    {
+      "path": "data-pack/csv/power_daily_magway.csv",
+      "kind": "file",
+      "bytes": 8158,
+      "compressed_bytes": 3081,
+      "sha256": "a8107f20144d36d6c25dc619f46b8ae8d5496d82cf67721570205ef8a15169cc",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/power_daily_magway.csv"
+      ],
+      "text_lines": 122,
+      "columns": [
+        "date",
+        "t2m_c",
+        "t2m_max_c",
+        "t2m_min_c",
+        "prectotcorr_mm_day",
+        "rh2m_pct",
+        "ws2m_m_s",
+        "wd2m_deg",
+        "allsky_sfc_sw_dwn_mj_m2_day",
+        "gwettop_frac",
+        "gwetroot_frac"
+      ],
+      "data_rows": 121,
+      "ragged_rows": [],
+      "empty_cells": 15,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/current_hlegu.csv",
+      "kind": "file",
+      "bytes": 128,
+      "compressed_bytes": 110,
+      "sha256": "abc1c3dbc487a91050e8330407b8a4fc049a35e5ebb01bc40f79c325091dc801",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/current_hlegu.csv"
+      ],
+      "text_lines": 2,
+      "columns": [
+        "observed_at_local",
+        "t2m_c",
+        "rh_pct",
+        "precip_mm",
+        "wind_kmh",
+        "wind_dir_deg",
+        "sm_0_7_m3m3",
+        "is_day"
+      ],
+      "data_rows": 1,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/terrain_grid_bago.csv",
+      "kind": "file",
+      "bytes": 606,
+      "compressed_bytes": 203,
+      "sha256": "e9276e9e60022190f799bfbb3d8062b021f560bdd00fa80fce1bc6a69b5108a2",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/terrain_grid_bago.csv"
+      ],
+      "text_lines": 26,
+      "columns": [
+        "north_km_offset",
+        "east_km_offset",
+        "lat",
+        "lon",
+        "elevation_m"
+      ],
+      "data_rows": 25,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/current_magway.csv",
+      "kind": "file",
+      "bytes": 130,
+      "compressed_bytes": 111,
+      "sha256": "82f4e6c1ea987740687b2e58ef886249c936700b9e1a552da0403341e51c1c0b",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/current_magway.csv"
+      ],
+      "text_lines": 2,
+      "columns": [
+        "observed_at_local",
+        "t2m_c",
+        "rh_pct",
+        "precip_mm",
+        "wind_kmh",
+        "wind_dir_deg",
+        "sm_0_7_m3m3",
+        "is_day"
+      ],
+      "data_rows": 1,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/current_bago.csv",
+      "kind": "file",
+      "bytes": 128,
+      "compressed_bytes": 109,
+      "sha256": "6460389079895f8ed0249b02c247fa573dd10801f33960dc8c3c6874e750aadf",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/current_bago.csv"
+      ],
+      "text_lines": 2,
+      "columns": [
+        "observed_at_local",
+        "t2m_c",
+        "rh_pct",
+        "precip_mm",
+        "wind_kmh",
+        "wind_dir_deg",
+        "sm_0_7_m3m3",
+        "is_day"
+      ],
+      "data_rows": 1,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/modis_landcover_hlegu.csv",
+      "kind": "file",
+      "bytes": 773,
+      "compressed_bytes": 160,
+      "sha256": "2539074d38cbeb9d2fab6c9bf5a2500f8f4e866c05c6aa2d7fd88405ebd051bd",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/modis_landcover_hlegu.csv"
+      ],
+      "text_lines": 11,
+      "columns": [
+        "date",
+        "product",
+        "band",
+        "raw_value",
+        "scale",
+        "value",
+        "source_unit",
+        "note"
+      ],
+      "data_rows": 10,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/era5land_daily_magway.csv",
+      "kind": "file",
+      "bytes": 15662,
+      "compressed_bytes": 4578,
+      "sha256": "48cc9d49cfdbaceaab578965ba17c074e38a8d583b0359a780a8e92fac8bc239",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/era5land_daily_magway.csv"
+      ],
+      "text_lines": 365,
+      "columns": [
+        "date",
+        "tmax_c",
+        "tmin_c",
+        "precip_mm",
+        "et0_mm",
+        "sm_0_7_m3m3",
+        "sm_7_28_m3m3"
+      ],
+      "data_rows": 364,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/modis_lst_day_bago.csv",
+      "kind": "file",
+      "bytes": 6025,
+      "compressed_bytes": 813,
+      "sha256": "41000499d7a3cd7f9fcbe1a86384fd2e0947db782aa329ac4c23b2f29ae0e530",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/modis_lst_day_bago.csv"
+      ],
+      "text_lines": 93,
+      "columns": [
+        "date",
+        "product",
+        "band",
+        "raw_value",
+        "scale",
+        "value",
+        "source_unit",
+        "note"
+      ],
+      "data_rows": 92,
+      "ragged_rows": [],
+      "empty_cells": 117,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/modis_ndvi_magway.csv",
+      "kind": "file",
+      "bytes": 3732,
+      "compressed_bytes": 589,
+      "sha256": "9a283a6da85fa3f361e478bdbd6f6c054b3d10097cf1629e6082497b190ff2a6",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/modis_ndvi_magway.csv"
+      ],
+      "text_lines": 47,
+      "columns": [
+        "date",
+        "product",
+        "band",
+        "raw_value",
+        "scale",
+        "value",
+        "source_unit",
+        "note"
+      ],
+      "data_rows": 46,
+      "ragged_rows": [],
+      "empty_cells": 46,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/modis_lst_night_magway.csv",
+      "kind": "file",
+      "bytes": 6426,
+      "compressed_bytes": 901,
+      "sha256": "ee3ecc6b700325f2b48b814c7f75bcee9083fc6275aed3f846d5e1eb7645389e",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/modis_lst_night_magway.csv"
+      ],
+      "text_lines": 93,
+      "columns": [
+        "date",
+        "product",
+        "band",
+        "raw_value",
+        "scale",
+        "value",
+        "source_unit",
+        "note"
+      ],
+      "data_rows": 92,
+      "ragged_rows": [],
+      "empty_cells": 96,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/forecast16_bago.csv",
+      "kind": "file",
+      "bytes": 1210,
+      "compressed_bytes": 524,
+      "sha256": "35d8639a95a83573f263ac33b25e051e9674bc3dc5c94765bcbbc1a3ef9860c2",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/forecast16_bago.csv"
+      ],
+      "text_lines": 17,
+      "columns": [
+        "date",
+        "tmax_c",
+        "tmin_c",
+        "precip_mm",
+        "precip_prob_pct",
+        "rh_pct",
+        "wind_max_kmh",
+        "gust_max_kmh",
+        "et0_mm",
+        "srad_mj_m2",
+        "sm_0_7_m3m3",
+        "sm_7_28_m3m3",
+        "soil_temp_0_7_c"
+      ],
+      "data_rows": 16,
+      "ragged_rows": [],
+      "empty_cells": 6,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/power_daily_bago.csv",
+      "kind": "file",
+      "bytes": 8192,
+      "compressed_bytes": 3034,
+      "sha256": "d9b505206f93b640ae55f4b9c205c28c323d06791e615e5ce045bbc6f7c3ae81",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/power_daily_bago.csv"
+      ],
+      "text_lines": 122,
+      "columns": [
+        "date",
+        "t2m_c",
+        "t2m_max_c",
+        "t2m_min_c",
+        "prectotcorr_mm_day",
+        "rh2m_pct",
+        "ws2m_m_s",
+        "wd2m_deg",
+        "allsky_sfc_sw_dwn_mj_m2_day",
+        "gwettop_frac",
+        "gwetroot_frac"
+      ],
+      "data_rows": 121,
+      "ragged_rows": [],
+      "empty_cells": 16,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/modis_evi_bago.csv",
+      "kind": "file",
+      "bytes": 3639,
+      "compressed_bytes": 572,
+      "sha256": "1b43158898bbaeb98ffa21df1a62f714f09ce155b121ff8a3efa1e13d7e23da5",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/modis_evi_bago.csv"
+      ],
+      "text_lines": 47,
+      "columns": [
+        "date",
+        "product",
+        "band",
+        "raw_value",
+        "scale",
+        "value",
+        "source_unit",
+        "note"
+      ],
+      "data_rows": 46,
+      "ragged_rows": [],
+      "empty_cells": 46,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/satellite_availability_cmr.csv",
+      "kind": "file",
+      "bytes": 1827,
+      "compressed_bytes": 742,
+      "sha256": "4defc2815057a4fd5906b110a14217acdec5d6c53e3faeaefe8adbfb2a322650",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/satellite_availability_cmr.csv"
+      ],
+      "text_lines": 11,
+      "columns": [
+        "layer",
+        "short_name",
+        "title",
+        "provider",
+        "access",
+        "coverage_2025",
+        "latest_granule",
+        "example_granule"
+      ],
+      "data_rows": 10,
+      "ragged_rows": [],
+      "empty_cells": 4,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/era5land_daily_hlegu.csv",
+      "kind": "file",
+      "bytes": 15712,
+      "compressed_bytes": 4459,
+      "sha256": "3e78894fee0002e0033ed22767bfff5bfae718733fee831ee03a23d89edb4864",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/era5land_daily_hlegu.csv"
+      ],
+      "text_lines": 365,
+      "columns": [
+        "date",
+        "tmax_c",
+        "tmin_c",
+        "precip_mm",
+        "et0_mm",
+        "sm_0_7_m3m3",
+        "sm_7_28_m3m3"
+      ],
+      "data_rows": 364,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/power_monthly_bago.csv",
+      "kind": "file",
+      "bytes": 8221,
+      "compressed_bytes": 3325,
+      "sha256": "9912e09de1514bc518f193ddb63c0d3a69463fb787e20fb4de8c66b4e89377ad",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/power_monthly_bago.csv"
+      ],
+      "text_lines": 121,
+      "columns": [
+        "year",
+        "month",
+        "month_name",
+        "t2m_c",
+        "t2m_max_c",
+        "t2m_min_c",
+        "prectotcorr_mm_day",
+        "rh2m_pct",
+        "ws2m_m_s",
+        "wd2m_deg",
+        "allsky_sfc_sw_dwn_mj_m2_day",
+        "gwettop_frac",
+        "gwetroot_frac"
+      ],
+      "data_rows": 120,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/forecast16_magway.csv",
+      "kind": "file",
+      "bytes": 1207,
+      "compressed_bytes": 530,
+      "sha256": "540bfa0108d2d083197eb892bb7da9427ccec9ff830ee41946703a2b324fe8b3",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/forecast16_magway.csv"
+      ],
+      "text_lines": 17,
+      "columns": [
+        "date",
+        "tmax_c",
+        "tmin_c",
+        "precip_mm",
+        "precip_prob_pct",
+        "rh_pct",
+        "wind_max_kmh",
+        "gust_max_kmh",
+        "et0_mm",
+        "srad_mj_m2",
+        "sm_0_7_m3m3",
+        "sm_7_28_m3m3",
+        "soil_temp_0_7_c"
+      ],
+      "data_rows": 16,
+      "ragged_rows": [],
+      "empty_cells": 6,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/power_climatology_bago.csv",
+      "kind": "file",
+      "bytes": 2544,
+      "compressed_bytes": 786,
+      "sha256": "a5279c74ca006aaa97cbe2a0e454c9ef80beb6a8ad3568169cc72f0c6f05bf89",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/power_climatology_bago.csv"
+      ],
+      "text_lines": 121,
+      "columns": [
+        "parameter",
+        "month",
+        "month_name",
+        "value"
+      ],
+      "data_rows": 120,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/power_daily_hlegu.csv",
+      "kind": "file",
+      "bytes": 8172,
+      "compressed_bytes": 3018,
+      "sha256": "bf9764e427f15995b8baed08bac5146d76a81fd3ee76cf79245d22ff2533df60",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/power_daily_hlegu.csv"
+      ],
+      "text_lines": 122,
+      "columns": [
+        "date",
+        "t2m_c",
+        "t2m_max_c",
+        "t2m_min_c",
+        "prectotcorr_mm_day",
+        "rh2m_pct",
+        "ws2m_m_s",
+        "wd2m_deg",
+        "allsky_sfc_sw_dwn_mj_m2_day",
+        "gwettop_frac",
+        "gwetroot_frac"
+      ],
+      "data_rows": 121,
+      "ragged_rows": [],
+      "empty_cells": 16,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/modis_ndvi_hlegu.csv",
+      "kind": "file",
+      "bytes": 3732,
+      "compressed_bytes": 581,
+      "sha256": "bfefac676449cc7f7804f990ab25e7fc74fc532999fc3e61ff9f72dc2f82062b",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/modis_ndvi_hlegu.csv"
+      ],
+      "text_lines": 47,
+      "columns": [
+        "date",
+        "product",
+        "band",
+        "raw_value",
+        "scale",
+        "value",
+        "source_unit",
+        "note"
+      ],
+      "data_rows": 46,
+      "ragged_rows": [],
+      "empty_cells": 46,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/river_discharge_bago.csv",
+      "kind": "file",
+      "bytes": 400,
+      "compressed_bytes": 154,
+      "sha256": "b4073a2c7bebfceca0c6cee5b7a300d61cadbdc530455dd282736d46919c5a3e",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/river_discharge_bago.csv"
+      ],
+      "text_lines": 17,
+      "columns": [
+        "date",
+        "river_discharge_m3s",
+        "river_discharge_max_m3s"
+      ],
+      "data_rows": 16,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/river_discharge_hlegu.csv",
+      "kind": "file",
+      "bytes": 400,
+      "compressed_bytes": 160,
+      "sha256": "2c82336ec9e42fb64239bc2434721774b11b55766fd4f28891bcd511c83bc399",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/river_discharge_hlegu.csv"
+      ],
+      "text_lines": 17,
+      "columns": [
+        "date",
+        "river_discharge_m3s",
+        "river_discharge_max_m3s"
+      ],
+      "data_rows": 16,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/us_nv_ssurgo_components.csv",
+      "kind": "file",
+      "bytes": 535,
+      "compressed_bytes": 223,
+      "sha256": "7b92b0042150cb512fcf2647293b2dbb6a34450455c0272285f264a8697b93f4",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/us_nv_ssurgo_components.csv"
+      ],
+      "text_lines": 6,
+      "columns": [
+        "mukey",
+        "map_unit",
+        "component",
+        "component_pct",
+        "drainage_class",
+        "hydrologic_group",
+        "tax_order",
+        "slope_pct"
+      ],
+      "data_rows": 5,
+      "ragged_rows": [],
+      "empty_cells": 4,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/terrain_summary.csv",
+      "kind": "file",
+      "bytes": 198,
+      "compressed_bytes": 133,
+      "sha256": "2340e0a2fb318ada882331216f75f69447ba6f6e5b66dc15015820d30ba0b1d9",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/terrain_summary.csv"
+      ],
+      "text_lines": 4,
+      "columns": [
+        "location",
+        "elev_min_m",
+        "elev_max_m",
+        "relief_m",
+        "elev_mean_m",
+        "elev_center_m",
+        "slope_to_center_pct"
+      ],
+      "data_rows": 3,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/power_climatology_magway.csv",
+      "kind": "file",
+      "bytes": 2551,
+      "compressed_bytes": 794,
+      "sha256": "cea00db6058e955cbad073c57cb52f077b07b6687bd39f6814f94b8a2ce464aa",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/power_climatology_magway.csv"
+      ],
+      "text_lines": 121,
+      "columns": [
+        "parameter",
+        "month",
+        "month_name",
+        "value"
+      ],
+      "data_rows": 120,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/soilgrids_hlegu.csv",
+      "kind": "file",
+      "bytes": 1898,
+      "compressed_bytes": 429,
+      "sha256": "9ce3d2edff725616b110490af859d261a36fbde948a9a921a2f23f69364c6275",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/soilgrids_hlegu.csv"
+      ],
+      "text_lines": 33,
+      "columns": [
+        "location",
+        "lat",
+        "lon",
+        "property",
+        "depth",
+        "value",
+        "unit",
+        "value_si",
+        "unit_si",
+        "note"
+      ],
+      "data_rows": 32,
+      "ragged_rows": [],
+      "empty_cells": 32,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/terrain_grid_magway.csv",
+      "kind": "file",
+      "bytes": 623,
+      "compressed_bytes": 206,
+      "sha256": "ce4f6407a1b06a666a4ef967e87c6e1367b750afeb63e2e2fbbfe3e6acffae4c",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/terrain_grid_magway.csv"
+      ],
+      "text_lines": 26,
+      "columns": [
+        "north_km_offset",
+        "east_km_offset",
+        "lat",
+        "lon",
+        "elevation_m"
+      ],
+      "data_rows": 25,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/modis_landcover_magway.csv",
+      "kind": "file",
+      "bytes": 748,
+      "compressed_bytes": 144,
+      "sha256": "a26c64205e295ce47b15418ff30b5011a50f35a9e9259b19b469fa83a04c53a3",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/modis_landcover_magway.csv"
+      ],
+      "text_lines": 11,
+      "columns": [
+        "date",
+        "product",
+        "band",
+        "raw_value",
+        "scale",
+        "value",
+        "source_unit",
+        "note"
+      ],
+      "data_rows": 10,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/modis_lst_day_magway.csv",
+      "kind": "file",
+      "bytes": 6769,
+      "compressed_bytes": 992,
+      "sha256": "db89edef93fb2b5c8273e90aaad302a831343474a1cf154eb8bedfa299d9580c",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/modis_lst_day_magway.csv"
+      ],
+      "text_lines": 93,
+      "columns": [
+        "date",
+        "product",
+        "band",
+        "raw_value",
+        "scale",
+        "value",
+        "source_unit",
+        "note"
+      ],
+      "data_rows": 92,
+      "ragged_rows": [],
+      "empty_cells": 45,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/terrain_grid_hlegu.csv",
+      "kind": "file",
+      "bytes": 596,
+      "compressed_bytes": 192,
+      "sha256": "a6cbf17128a12b9bd5b8d5507a35db30477635fc7b72be689e90340ff16e3f13",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/terrain_grid_hlegu.csv"
+      ],
+      "text_lines": 26,
+      "columns": [
+        "north_km_offset",
+        "east_km_offset",
+        "lat",
+        "lon",
+        "elevation_m"
+      ],
+      "data_rows": 25,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/soilgrids_bago.csv",
+      "kind": "file",
+      "bytes": 1897,
+      "compressed_bytes": 435,
+      "sha256": "bdc24e5687b6b0dbd51b51acddac0bd19cfae0f36efba2eb1f9124cfcaebf4c3",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/soilgrids_bago.csv"
+      ],
+      "text_lines": 33,
+      "columns": [
+        "location",
+        "lat",
+        "lon",
+        "property",
+        "depth",
+        "value",
+        "unit",
+        "value_si",
+        "unit_si",
+        "note"
+      ],
+      "data_rows": 32,
+      "ragged_rows": [],
+      "empty_cells": 32,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/us_nv_elevation.csv",
+      "kind": "file",
+      "bytes": 97,
+      "compressed_bytes": 92,
+      "sha256": "0aaa2a435eec45d1da9c2f17c439390b87a5286ce61677e66247f4fb658480f2",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/us_nv_elevation.csv"
+      ],
+      "text_lines": 2,
+      "columns": [
+        "location",
+        "lat",
+        "lon",
+        "elevation_m",
+        "source"
+      ],
+      "data_rows": 1,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/era5land_daily_bago.csv",
+      "kind": "file",
+      "bytes": 15750,
+      "compressed_bytes": 4561,
+      "sha256": "1cc33e182f2818ba41452504b3094424147905fddae41ff2b9f69184b780d3de",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/era5land_daily_bago.csv"
+      ],
+      "text_lines": 365,
+      "columns": [
+        "date",
+        "tmax_c",
+        "tmin_c",
+        "precip_mm",
+        "et0_mm",
+        "sm_0_7_m3m3",
+        "sm_7_28_m3m3"
+      ],
+      "data_rows": 364,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/forecast16_hlegu.csv",
+      "kind": "file",
+      "bytes": 1208,
+      "compressed_bytes": 520,
+      "sha256": "09b85f53cab2ee8b99ac2552b929b5d2aa30ed9aa7d9cf1856b36df3be580a8e",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/forecast16_hlegu.csv"
+      ],
+      "text_lines": 17,
+      "columns": [
+        "date",
+        "tmax_c",
+        "tmin_c",
+        "precip_mm",
+        "precip_prob_pct",
+        "rh_pct",
+        "wind_max_kmh",
+        "gust_max_kmh",
+        "et0_mm",
+        "srad_mj_m2",
+        "sm_0_7_m3m3",
+        "sm_7_28_m3m3",
+        "soil_temp_0_7_c"
+      ],
+      "data_rows": 16,
+      "ragged_rows": [],
+      "empty_cells": 6,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/modis_lst_night_bago.csv",
+      "kind": "file",
+      "bytes": 6209,
+      "compressed_bytes": 829,
+      "sha256": "f4ea39f1fe596be69f317bc137a4b7a0fb043bbe8e76050cec4b47d361fc4400",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/modis_lst_night_bago.csv"
+      ],
+      "text_lines": 93,
+      "columns": [
+        "date",
+        "product",
+        "band",
+        "raw_value",
+        "scale",
+        "value",
+        "source_unit",
+        "note"
+      ],
+      "data_rows": 92,
+      "ragged_rows": [],
+      "empty_cells": 117,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/power_monthly_hlegu.csv",
+      "kind": "file",
+      "bytes": 8231,
+      "compressed_bytes": 3348,
+      "sha256": "c3dcf5e93114822ddcddab0367a8ba5b67d93b293711431857c8c9eb0fe99d9a",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/power_monthly_hlegu.csv"
+      ],
+      "text_lines": 121,
+      "columns": [
+        "year",
+        "month",
+        "month_name",
+        "t2m_c",
+        "t2m_max_c",
+        "t2m_min_c",
+        "prectotcorr_mm_day",
+        "rh2m_pct",
+        "ws2m_m_s",
+        "wd2m_deg",
+        "allsky_sfc_sw_dwn_mj_m2_day",
+        "gwettop_frac",
+        "gwetroot_frac"
+      ],
+      "data_rows": 120,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/modis_evi_hlegu.csv",
+      "kind": "file",
+      "bytes": 3638,
+      "compressed_bytes": 590,
+      "sha256": "9b4d2a3596db8f46337e5af72dc8c5554cc190546b5548ac0e9eff0d5c54b34c",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/modis_evi_hlegu.csv"
+      ],
+      "text_lines": 47,
+      "columns": [
+        "date",
+        "product",
+        "band",
+        "raw_value",
+        "scale",
+        "value",
+        "source_unit",
+        "note"
+      ],
+      "data_rows": 46,
+      "ragged_rows": [],
+      "empty_cells": 46,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/power_climatology_hlegu.csv",
+      "kind": "file",
+      "bytes": 2548,
+      "compressed_bytes": 791,
+      "sha256": "59a28bcf90b492f15eee6a4dd949745be38d1e0f08e5f9985d8aaf268d03efc5",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/power_climatology_hlegu.csv"
+      ],
+      "text_lines": 121,
+      "columns": [
+        "parameter",
+        "month",
+        "month_name",
+        "value"
+      ],
+      "data_rows": 120,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/modis_lst_day_hlegu.csv",
+      "kind": "file",
+      "bytes": 5963,
+      "compressed_bytes": 810,
+      "sha256": "64da8e5fedc8ab032f89a0ee8c946d0969db6f633995359c2d575a82f57f9171",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/modis_lst_day_hlegu.csv"
+      ],
+      "text_lines": 93,
+      "columns": [
+        "date",
+        "product",
+        "band",
+        "raw_value",
+        "scale",
+        "value",
+        "source_unit",
+        "note"
+      ],
+      "data_rows": 92,
+      "ragged_rows": [],
+      "empty_cells": 123,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/modis_evi_magway.csv",
+      "kind": "file",
+      "bytes": 3644,
+      "compressed_bytes": 585,
+      "sha256": "efb49b93d9d37e7fee9ad22bb26d30193bd7c58323c63323a4674fd420aba495",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/modis_evi_magway.csv"
+      ],
+      "text_lines": 47,
+      "columns": [
+        "date",
+        "product",
+        "band",
+        "raw_value",
+        "scale",
+        "value",
+        "source_unit",
+        "note"
+      ],
+      "data_rows": 46,
+      "ragged_rows": [],
+      "empty_cells": 46,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/power_monthly_magway.csv",
+      "kind": "file",
+      "bytes": 8241,
+      "compressed_bytes": 3309,
+      "sha256": "5307ec81f9635fcce2f64226a1cf7771fad5fa3f217b6b9db264ea503b5ae650",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/power_monthly_magway.csv"
+      ],
+      "text_lines": 121,
+      "columns": [
+        "year",
+        "month",
+        "month_name",
+        "t2m_c",
+        "t2m_max_c",
+        "t2m_min_c",
+        "prectotcorr_mm_day",
+        "rh2m_pct",
+        "ws2m_m_s",
+        "wd2m_deg",
+        "allsky_sfc_sw_dwn_mj_m2_day",
+        "gwettop_frac",
+        "gwetroot_frac"
+      ],
+      "data_rows": 120,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/soilgrids_magway.csv",
+      "kind": "file",
+      "bytes": 1956,
+      "compressed_bytes": 437,
+      "sha256": "8d34990320418c4be679f32413453db582a8b044e5171ae4eaf2c61214569573",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/soilgrids_magway.csv"
+      ],
+      "text_lines": 33,
+      "columns": [
+        "location",
+        "lat",
+        "lon",
+        "property",
+        "depth",
+        "value",
+        "unit",
+        "value_si",
+        "unit_si",
+        "note"
+      ],
+      "data_rows": 32,
+      "ragged_rows": [],
+      "empty_cells": 32,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/river_discharge_magway.csv",
+      "kind": "file",
+      "bytes": 398,
+      "compressed_bytes": 158,
+      "sha256": "3790534c3bb30a55f4fdbfb8fe366e1e79752254b493324809c82c96a4d66bfd",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/river_discharge_magway.csv"
+      ],
+      "text_lines": 17,
+      "columns": [
+        "date",
+        "river_discharge_m3s",
+        "river_discharge_max_m3s"
+      ],
+      "data_rows": 16,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/modis_ndvi_bago.csv",
+      "kind": "file",
+      "bytes": 3729,
+      "compressed_bytes": 581,
+      "sha256": "df98ad22898542b3a02783423f118d72f1af7aefbee6cba483521b61fd03fa14",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/modis_ndvi_bago.csv"
+      ],
+      "text_lines": 47,
+      "columns": [
+        "date",
+        "product",
+        "band",
+        "raw_value",
+        "scale",
+        "value",
+        "source_unit",
+        "note"
+      ],
+      "data_rows": 46,
+      "ragged_rows": [],
+      "empty_cells": 46,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/modis_landcover_bago.csv",
+      "kind": "file",
+      "bytes": 758,
+      "compressed_bytes": 145,
+      "sha256": "77c56d5b3ff3e979fdc39dae4fd3316ebc1a5ded500a34daa588c77f5ff6b53e",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/modis_landcover_bago.csv"
+      ],
+      "text_lines": 11,
+      "columns": [
+        "date",
+        "product",
+        "band",
+        "raw_value",
+        "scale",
+        "value",
+        "source_unit",
+        "note"
+      ],
+      "data_rows": 10,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/csv/modis_lst_night_hlegu.csv",
+      "kind": "file",
+      "bytes": 6178,
+      "compressed_bytes": 831,
+      "sha256": "0d8f84c4d0c937162423d778bdd53bf8301e695a0a408544d7cf391d36c53c2b",
+      "same_bytes_in_pr11": [
+        "data-pack/csv/modis_lst_night_hlegu.csv"
+      ],
+      "text_lines": 93,
+      "columns": [
+        "date",
+        "product",
+        "band",
+        "raw_value",
+        "scale",
+        "value",
+        "source_unit",
+        "note"
+      ],
+      "data_rows": 92,
+      "ragged_rows": [],
+      "empty_cells": 120,
+      "category": "csv_data"
+    },
+    {
+      "path": "data-pack/_meta/",
+      "kind": "directory",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "same_bytes_in_pr11": [],
+      "category": "directory"
+    },
+    {
+      "path": "data-pack/_meta/fetch_log.csv",
+      "kind": "file",
+      "bytes": 179895,
+      "compressed_bytes": 10987,
+      "sha256": "3d9c78f002c406fac66e42e21739a6457204b67364581e23f0db70ba6656e401",
+      "same_bytes_in_pr11": [
+        "data-pack/_meta/fetch_log.csv"
+      ],
+      "text_lines": 523,
+      "columns": [
+        "fetched_at_utc",
+        "source",
+        "target",
+        "url",
+        "http_status",
+        "bytes",
+        "outcome",
+        "note",
+        "seconds"
+      ],
+      "data_rows": 522,
+      "ragged_rows": [],
+      "empty_cells": 0,
+      "category": "csv_data"
+    }
+  ]
+}

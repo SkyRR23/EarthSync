@@ -1,0 +1,62 @@
+# 7N handoff
+
+Consume only reviewed commits from `fix/earthsync-science-audit-v1`. This branch
+targets exact final 7H for an independent draft review. It does not merge 7H,
+7I or 7L, and does not edit another worktree, FastAPI application entrypoint,
+Flutter router, central database code or the 7N branch.
+
+## Concrete patch boundaries
+
+1. `server/earthsync/source_validation.py`, `server/earthsync/power.py`,
+   `server/tests/test_science_audit.py`, and the small NASA mock correction in
+   `server/tests/test_backend.py`: J01–J04. The mock now echoes requested
+   coordinates; formerly its hard-coded Yangon point passed arbitrary global
+   coordinate tests because production never checked geometry. No real capture
+   was altered. Keep exact response SHA-256 in provenance/cache/exports.
+2. `engine/src/v03/assess.rs`, `engine/tests/science_audit.rs`: J05. Scope crop
+   and fallow history to confirmed field for succession independently of the
+   rule's `field_only` flag. No ABI/schema changes; preserve existing contracts.
+3. `tools/science_audit/` and `docs/science-audit/`: independent research tooling,
+   source inventory and results. New attached archive acceptance remains blocked.
+
+Do not apply the 7H monthly provider changes to 7I's independent daily parser:
+its geometry/calendar/duplicate/hash protections already exist. If 7N retains
+the default 7H monthly history path, that path still needs these fixes.
+
+After the Rust patch, rebuild the web executable and native bridge artifacts from
+reviewed source. If a deployment pins executable SHA-256, recompute and explicitly
+update its reviewed deployment pin; do not weaken 7I's binary integrity check.
+No dependency/lockfile upgrade is required.
+
+## Demonstration acceptance
+
+Run the Jan/Feb 2024 NASA regression and the current source-capture/real-engine
+HTTP tests. Missing source geometry, a mismatched point, duplicate daily JSON
+keys and an annual/invalid date key must fail closed. One missing rain date must
+leave rainfall unknown while preserving valid temperature. NASA data remain
+modeled regional context, distinct from the confirmed farm.
+
+Run `cargo test --locked` including the new history regressions. No regional
+crop/fallow record can prove the confirmed farm's predecessor or fallow. Existing
+sequence order/overlap, missing ET0/Kc, unit, synthetic and unreviewed-rule tests
+must continue to pass. Availability must not become irrigation sufficiency.
+
+Keep the current catalog reference-only, all recommendation flags false, candidate
+approvals false and executable rule lists empty. Preserve full source sidecars and
+missingness when linking 7I to the final application. No weighted suitability
+engine, market-count finance proxy or automatic nitrogen/pest credit is accepted.
+
+## Outstanding handoff
+
+The actual release asset URL is missing. Downloading the large attachment failed
+at the 32 MiB tool limit; the expected checksum alone is not evidence of integrity.
+Do not integrate any new Myanmar crop profile, Rust implementation, calculation,
+provider CSV or generated asset from it until the complete archive audit is done.
+Do not claim 7J complete or independently verified farming advice from the test
+results in this draft.
+
+Forecast live acceptance remains a separate source-contract task. Generic v0.3
+issue-date provenance cannot represent verified run identity and subdaily run
+freshness. Keep current adapter rejection/unavailability behavior until an exact
+model/run identity interface and scientific acceptance are agreed. No change to
+the main app or central integration is included here.
