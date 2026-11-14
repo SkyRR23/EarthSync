@@ -99,3 +99,13 @@ All three scenarios remain `requires_agronomic_validation`.
 - `cdylib` alone does not expose a callable Flutter bridge. No bindings, Android
   build or Windows integration are verified. Generate v2 bindings only against
   P4's actual app. Networking belongs in a separate adapter, outside pure analysis.
+
+## Milestone 2: separate seasonal API (provisional)
+
+`seasonal::analyze_season(&SeasonalRequest)` and
+`seasonal::analyze_season_json(&str)` add dated, full-month window statistics.
+Existing field-analysis types, signatures and JSON remain unchanged, including
+its unweighted annual temperature summary. See [seasonal formulas, data contract
+and integration questions](SEASONAL_CLIMATE.md) before using the new API.
+Seasonal data include explicit units, inclusive year/month periods, declared
+completeness, source labels and data kind. No new agricultural decisions are made.

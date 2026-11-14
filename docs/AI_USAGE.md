@@ -12,3 +12,9 @@ measurements. Tests establish software behavior, not agronomic validity.
 No imagery, NASA logos, crop thresholds, scientific weights or suitability scores
 were generated. Human review of code, source references, scientific claims and
 submission disclosures remains necessary. Extend this record for later changes.
+
+Milestone 2: Codex implemented the separate date-aware seasonal API, Gregorian
+calendar handling, independent completeness/gap reporting and numerically guarded
+aggregation, plus synthetic seasonal fixtures/tests and formula/contract docs.
+No OpenFarm algorithms, NASA measurements, crop thresholds or suitability scores
+were integrated. Software tests are not agronomic validation.
