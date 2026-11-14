@@ -1,0 +1,2 @@
+# Install after requirements.lock; opt-in keeps existing climate installs unchanged.
+pillow==12.2.0
