@@ -8,6 +8,7 @@ import '../data/engine/rust_engine.dart';
 import '../data/engine/web_engine.dart';
 import '../data/models/farmer_input.dart';
 import '../data/models/field_analysis.dart';
+import 'home_provider.dart';
 
 const _engineDefine = String.fromEnvironment('ENGINE');
 
@@ -31,7 +32,7 @@ final engineProvider = Provider<EngineGateway>(
 class HistoricalWindowNotifier extends Notifier<HistoricalWindow> {
   @override
   HistoricalWindow build() {
-    if (!kIsWeb || Uri.base.queryParameters['climate'] == 'captured') {
+    if (kIsWeb && Uri.base.queryParameters['climate'] == 'captured') {
       return const HistoricalWindow();
     }
     final year = DateTime.now().toUtc().year - 1;
@@ -121,7 +122,13 @@ class FarmerDraft {
 
 class FarmerDraftNotifier extends Notifier<FarmerDraft> {
   @override
-  FarmerDraft build() => const FarmerDraft();
+  FarmerDraft build() {
+    final farm = ref.read(homeProfileProvider).value?.farm;
+    return FarmerDraft(
+      latitude: farm?.point.latitude,
+      longitude: farm?.point.longitude,
+    );
+  }
 
   void setLocation(double lat, double lon) =>
       state = state.copyWith(latitude: lat, longitude: lon);
@@ -217,6 +224,12 @@ class AnalysisNotifier extends Notifier<AnalysisState> {
       if (generation != _generation) return;
       state = AnalysisFailed(e);
     }
+  }
+
+  void reset() {
+    ++_generation;
+    _lastGood = null;
+    state = const AnalysisIdle();
   }
 
   void showLastGood() {
