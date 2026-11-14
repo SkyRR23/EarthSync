@@ -150,3 +150,25 @@ The reproducible API matrix, database mapping/photo policy, conflict report and
 verification receipts are in this directory. Scientific/hosting limitations are
 release gates, not permission to bypass source or privacy controls under the event
 cutoff (15 November 2026, 18:00 Myanmar time).
+
+## Final measured candidate and personal-server test
+
+Application/operations artifact source:
+`530c1e1d06c9202dfc1f5d06c659399409b7270f`. CI hardening/tests at
+`ab745a027b7b66a6c63fb033b024b19053b12c55` do not alter those runtime sources.
+All seven CI workflows and raw Windows/Linux logs pass. The complete browser
+journey and new-directory restore/fresh uncached POWER → pinned Rust history pass.
+See VERIFICATION.md and the hash receipts; Windows ACLs/device/server destination
+checks remain explicit manual gates.
+
+A dedicated trusted single-user personal server **can be tested** using the
+canonical operations runbook and standard SSH local forwarding:
+
+```sh
+ssh -N -L 8080:127.0.0.1:8080 -L 8021:127.0.0.1:8021 user@personal-server
+```
+
+Open `http://127.0.0.1:8080` on the tester's computer. Keep both service listeners
+on loopback and the browser origin exact. No private public proxy, wildcard CORS,
+remote-peer override or invented authentication is supported. No server has been
+accessed or deployed by 7N; approval is still required before any public deployment.

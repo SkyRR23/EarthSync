@@ -91,3 +91,14 @@ replayed. Completed/failed/cancelled statuses remain distinct. Cancellation is b
 effort; already authorized saved evidence may remain. Transactions/quota rollback,
 foreign keys, cross-owner isolation, changed-value rejection, repeat-cache recovery,
 restart and restore are covered in platform tests and the 7N HTTP integration test.
+
+## Final integrated recovery evidence
+
+The final 7Q workflow is rehearsed against migrations 001 and 002. Exact installed
+hashes are checked; injected failure uses the next version and rolls back all DDL.
+The complete original platform store was backed up offline, restored to a new
+private state root, and started under the final pinned Rust manifest. Farm UUIDs,
+old decisions/evidence/job state and sanitized photo hashes survived. A fresh
+uncached March POWER job then produced a new actual-Rust decision under the newly
+validated executable hash. See `evidence/final-ops-database.json` and
+`evidence/final-runtime-restore-live.json`. Original stores and backups remain.

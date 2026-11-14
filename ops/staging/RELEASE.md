@@ -1,3 +1,9 @@
+> Final 7N integration: use `docs/integration/7n/VERIFICATION.md` for measured
+> acceptance and `ops/staging/README.md` for the combined source pin and commands.
+> Original 7Q milestone gates below are historical handoff context; no deployment
+> approval is implied. Personal-server testing remains restricted to a trusted
+> single-user host and SSH loopback forwarding, with private APIs unpublished.
+
 # 7Q release and rollback gates
 
 No server deployment is authorized by this document. The final source pin and

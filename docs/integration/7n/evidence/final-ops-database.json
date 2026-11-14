@@ -1,0 +1,46 @@
+{
+  "generated_at": "2026-11-14T13:59:02.269574+00:00",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "migration and repeat startup",
+      "status": "PASS",
+      "detail": "Initial migration, repeat open, persisted farm, integrity and foreign keys"
+    },
+    {
+      "name": "backup and restore",
+      "status": "PASS",
+      "detail": "Database plus sanitized object hash round trip; existing destination rejected"
+    },
+    {
+      "name": "corrupt backup rejection",
+      "status": "PASS",
+      "detail": "Corrupt DB, corrupt object and missing object reference rejected"
+    },
+    {
+      "name": "migration failure recovery",
+      "status": "PASS",
+      "detail": "Injected migration rolls back all DDL; changed checksum fails; known backup recovers"
+    },
+    {
+      "name": "storage quotas",
+      "status": "PASS",
+      "detail": "Row and photo-byte limits reject writes without partial rows/files"
+    },
+    {
+      "name": "missing object handling",
+      "status": "PASS",
+      "detail": "Missing private object fails retrieval and prevents a complete backup"
+    },
+    {
+      "name": "private permissions",
+      "status": "PASS",
+      "detail": "POSIX data directories 0700 and private files 0600"
+    },
+    {
+      "name": "recovery suite",
+      "status": "PASS",
+      "detail": "Verified"
+    }
+  ]
+}

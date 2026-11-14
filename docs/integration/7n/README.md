@@ -1,12 +1,14 @@
 # Milestone 7N final application integration
 
-The complete 7L Flutter interface is reconciled onto final 7H and the usable 7I
+The complete 7L Flutter interface is reconciled onto final 7H, with reviewed 7J
+scientific fixes and the 7Q operations workflow. The usable 7I
 backend is connected through a separate private local service. The integration
 adds explicit durable farm links, persisted daily evidence, source selection,
 actual Rust assessments/history, reported historical periods and cited deterministic
 assistant context. It fixes 200/201/202/204 handling and a cache/immutable-JSON
 persistence defect found by the live combined test. There is no public deployment.
 
+- [Final measured verification and release limitations](VERIFICATION.md)
 - [Exact source pins and Git conflict resolution](CONFLICTS.md)
 - [API usage/security/schema/coverage matrix](API_MATRIX.md)
 - [Database identity, persistence and photo ownership policy](DATABASE.md)
@@ -23,3 +25,7 @@ suitability ranking, percentage, yield/profit forecast or farming recommendation
 Satellite/soil/forecast acceptance, complete Burmese localization, hosted identity,
 consented cross-store photo migration and Android device execution are not claimed.
 The Burmese navigation preview remains explicitly unreviewed.
+
+Draft PR: https://github.com/SkyRR23/EarthSync/pull/24. Restricted personal-server
+testing is supported through SSH local forwarding; public private-API exposure is
+not supported. See the canonical [operations runbook](../../../ops/staging/README.md).

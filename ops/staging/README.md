@@ -75,33 +75,32 @@ the operations manifest. Separate process venvs remain useful for artifact isola
 
 ## Linux: build and run tonight
 
-Use separate clean source checkouts and private absolute state paths outside
-every checkout/static directory. Examples use `/srv/earthsync-private`; create
+Use one clean immutable combined source checkout and separate private state paths
+outside every checkout/static directory. Examples use `/srv/earthsync-private`; create
 this directory as your account or choose an equivalent writable private path.
 Do not point these commands at another developer's active worktree.
 
 ```bash
-# In your repository, fetch the audited objects, then make disposable worktrees.
+# Fetch reviewed objects and create ONE clean immutable combined checkout.
 git fetch origin '+refs/heads/*:refs/remotes/origin/*'
-git worktree add --detach ../earthsync-web a7c33cc6b58703501bbba0ceba1bad1d6d42004b
-git worktree add --detach ../earthsync-platform b578a6df2764479ff9c9df006cc00e5ddb3ccfa3
+RC_SHA=530c1e1d06c9202dfc1f5d06c659399409b7270f
+git worktree add --detach ../earthsync-rc "$RC_SHA"
 rustup toolchain install 1.99.0 --profile minimal
 export RUSTUP_TOOLCHAIN=1.99.0
 umask 077
 mkdir -p /srv/earthsync-private
 chmod 700 /srv/earthsync-private
 
-# OPS is this operations checkout; WEB and PLATFORM are the new checkouts.
-OPS=/absolute/path/to/EarthSync-ops
-WEB=/absolute/path/to/earthsync-web
-PLATFORM=/absolute/path/to/earthsync-platform
+OPS=/absolute/path/to/earthsync-rc
+WEB=$OPS
+PLATFORM=$OPS
 PRIVATE=/srv/earthsync-private
-# Compatibility exports are 7I's existing exact #14/#15/#16/#18 sources.
-(cd "$PLATFORM" && python3.12 server/platform-v1/tools/prepare_compat.py "$PRIVATE/compat")
+# The final tree already contains the reviewed catalog, sanitizer and assistant.
+# Two private process states use one combined source and dependency lock.
 python3.12 "$OPS/ops/staging/staging.py" build --profile platform --source "$PLATFORM" \
-  --state "$PRIVATE/platform-release" --sha b578a6df2764479ff9c9df006cc00e5ddb3ccfa3 --compat "$PRIVATE/compat"
+  --state "$PRIVATE/platform-release" --sha "$RC_SHA"
 python3.12 "$OPS/ops/staging/staging.py" build --profile web --source "$WEB" \
-  --state "$PRIVATE/web-release" --sha a7c33cc6b58703501bbba0ceba1bad1d6d42004b --flutter-version 3.44.0
+  --state "$PRIVATE/web-release" --sha "$RC_SHA" --flutter-version 3.44.0
 
 # Separate terminals, foreground lifecycle. Ctrl+C stops and preserves data.
 python3.12 "$OPS/ops/staging/staging.py" run --source "$PLATFORM" --state "$PRIVATE/platform-release"
@@ -133,23 +132,22 @@ tool consistently; it cannot detect arbitrary manually launched writers.
 
 ## Windows PowerShell
 
-Install/select the same pinned toolchains. Create the two detached worktrees as
+Install/select the same pinned toolchains. Create the combined detached checkout as
 above. Use dedicated NTFS paths outside OneDrive/shared/static directories. The
 wrapper removes inherited permissions on its dedicated state root and grants
 only the current account and SYSTEM inheritable access. Run it for **every**
 state operation; Python's chmod does not establish Windows privacy ACLs.
 
 ```powershell
-$Ops = 'C:\src\EarthSync-ops'
-$Web = 'C:\src\earthsync-web'
-$Platform = 'C:\src\earthsync-platform'
+$Ops = 'C:\src\earthsync-rc'
+$Web = $Ops
+$Platform = $Ops
+$RcSha = '530c1e1d06c9202dfc1f5d06c659399409b7270f'
 $Private = 'C:\EarthSyncPrivate'
 $env:RUSTUP_TOOLCHAIN = '1.99.0'
 # First create/restrict $Private in Explorer Security to your account and SYSTEM.
-Push-Location $Platform
-try { py -3.12 server/platform-v1/tools/prepare_compat.py "$Private\compat" } finally { Pop-Location }
-& "$Ops\ops\staging\staging.ps1" -State "$Private\platform-release" build --profile platform --source $Platform --sha b578a6df2764479ff9c9df006cc00e5ddb3ccfa3 --compat "$Private\compat"
-& "$Ops\ops\staging\staging.ps1" -State "$Private\web-release" build --profile web --source $Web --sha a7c33cc6b58703501bbba0ceba1bad1d6d42004b --flutter-version 3.44.0
+& "$Ops\ops\staging\staging.ps1" -State "$Private\platform-release" build --profile platform --source $Platform --sha $RcSha
+& "$Ops\ops\staging\staging.ps1" -State "$Private\web-release" build --profile web --source $Web --sha $RcSha --flutter-version 3.44.0
 # Separate PowerShell windows; Ctrl+C stops the foreground process group.
 & "$Ops\ops\staging\staging.ps1" -State "$Private\platform-release" run --source $Platform
 & "$Ops\ops\staging\staging.ps1" -State "$Private\web-release" run --source $Web
@@ -339,3 +337,23 @@ published, even behind HTTPS, while its principal is local-single-user. Never
 rewrite Host/forwarded headers to bypass the peer/Origin restrictions. Without
 reviewed hosted authentication and authorization, shared team private access
 is a release blocker. CORS and TLS do not supply user identity.
+
+## Personal-server acceptance boundary
+
+Yes: the final candidate can be tested on a dedicated trusted single-user personal
+server using these loopback-only services and standard SSH local forwarding. No
+personal server has been accessed, and this is not a public deployment approval.
+Do not use a shared untrusted multi-user host: 7I trusts the local OS principal.
+
+From the tester's computer, after separately approving server setup:
+
+```sh
+ssh -N -L 8080:127.0.0.1:8080 -L 8021:127.0.0.1:8021 user@personal-server
+```
+
+Open `http://127.0.0.1:8080` locally. Both forwards are required because the
+private client intentionally targets loopback 8021. Keep the recorded browser
+origin `http://127.0.0.1:8080`; no Host/Origin/peer check is disabled. Do not expose
+8021 on a public interface, route it through a public parent API, enable wildcard
+CORS, or embed a workspace token in assets. Public/multi-user testing of private
+farmer records remains blocked without reviewed server identity/ownership.

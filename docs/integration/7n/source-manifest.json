@@ -42,5 +42,8 @@
   "flutter_image_digest": "sha256:46691e311715845de03a3ba4753a475476936805b29431b1f00f1816981033f8",
   "rust": "1.99.0",
   "public_deployment": false,
-  "7I_scientific_precision_patch_sha256": "4e780d2b4f33fea4c5e66643d564bfa95042ff9ab27387aa8bc261b8d0576052"
+  "7I_scientific_precision_patch_sha256": "4e780d2b4f33fea4c5e66643d564bfa95042ff9ab27387aa8bc261b8d0576052",
+  "verified_application_and_operations_code_sha": "530c1e1d06c9202dfc1f5d06c659399409b7270f",
+  "ci_fail_closed_fix_sha": "ab745a027b7b66a6c63fb033b024b19053b12c55",
+  "draft_pr": "https://github.com/SkyRR23/EarthSync/pull/24"
 }

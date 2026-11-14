@@ -1,3 +1,8 @@
+> 7N integration status: this handoff is now consumed. The final combined code
+> pin, unified SDK/Pillow locks, explicit farm mapping, photo policy and tested
+> process topology are documented in `docs/integration/7n/`. Statements below
+> describe the independent original 7Q handoff, not unresolved current gates.
+
 # 7Q operations handoff to 7N
 
 Operations branch: `ops/earthsync-staging-v1`, based on the explicitly supplied

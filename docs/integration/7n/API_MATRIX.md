@@ -74,3 +74,15 @@ Security boundaries: **A** = existing local/demo application (no production iden
 - Existing `/api/{path}` fallback creates duplicate operation-ID warnings because it handles six methods. Runtime behavior is covered and unchanged; full OpenAPI exports explicitly retain this documentation limitation.
 
 Coverage references identify tests that exercise the operation or its shared storage/security contract; they do not claim a live provider success or a separate test for every possible status. Live tests and CI results are reported in VERIFICATION.md.
+
+## Scientific boundary acceptance
+
+7J J01–J04 now protect the original monthly endpoint: requested/returned point
+association including POWER's measured three-decimal serialization, duplicate JSON
+key rejection, exact calendar-window checks and original-byte SHA-256 provenance.
+J05 scopes Rust crop/fallow succession history to the confirmed field. J06's separate
+7I precision patch is applied with adjacent-point and out-of-domain rejection.
+Regressions are in `server/tests/test_science_audit.py`,
+`server/tests/platform_v1/test_science_coordinate_precision.py` and
+`engine/tests/science_audit.rs`. No route/schema or recommendation eligibility was
+silently changed. The API schema exports remain structurally current.

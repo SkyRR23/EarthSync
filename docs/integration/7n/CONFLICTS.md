@@ -62,8 +62,8 @@ It contains Flutter **3.44.0**, Dart **3.12.0**, framework `559ffa3f75`.
 We selected this reproducible toolchain, inspected the lock diff, and verified
 `flutter pub get --enforce-lockfile` without altering 7L's lock. The new locale/font
 assets remain present. All three Flutter workflows now use 3.44.0 and enforce the
-lock; 7H's CI timeout and backend Windows fixes remain. Rust stays 1.99.0 / FRB
-2.13.0. The platform lock includes the combined backend lock, retaining Pillow
+lock; 7H's CI timeout and backend Windows fixes remain. Backend/host Rust stays 1.99.0 / FRB
+2.13.0; Android Cargokit resolved Rust 1.100.0, recorded in its build receipt. The platform lock includes the combined backend lock, retaining Pillow
 12.2.0 and tzdata rather than downgrading the newer photo/Windows dependencies.
 
 CI now exports compatibility interfaces from the actual integrated HEAD. The
