@@ -1,0 +1,43 @@
+{
+  "field_id": "demo-field",
+  "annual_rainfall_mm": 120,
+  "mean_of_monthly_temps_c": 28,
+  "climate_source": "MOCK DATA - NOT NASA",
+  "climate_period": "illustrative-2025",
+  "scenarios": [
+    {
+      "id": "existing",
+      "label": "Existing illustrative rotation",
+      "crop_sequence": [
+        "rice",
+        "fallow"
+      ],
+      "supporting_notes": [],
+      "status": "requires_agronomic_validation"
+    },
+    {
+      "id": "alternative-a",
+      "label": "Unvalidated alternative A",
+      "crop_sequence": [
+        "rice",
+        "black_gram"
+      ],
+      "supporting_notes": [],
+      "status": "requires_agronomic_validation"
+    },
+    {
+      "id": "alternative-b",
+      "label": "Unvalidated alternative B",
+      "crop_sequence": [
+        "rice",
+        "mung_bean"
+      ],
+      "supporting_notes": [],
+      "status": "requires_agronomic_validation"
+    }
+  ],
+  "warnings": [
+    "Crop suitability and rotation risks require validated crop rules and local context.",
+    "Irrigation availability was not provided."
+  ]
+}
