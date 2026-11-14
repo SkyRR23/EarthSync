@@ -1,0 +1,54 @@
+{
+  "schema_version": "assistant.v1-proposal",
+  "question": "What does the rainfall graph mean?",
+  "language": "en",
+  "expanded": false,
+  "context": {
+    "schema_version": "assistant.v1-proposal",
+    "context_id": "software-test:rainfall:r1",
+    "approximate_location": null,
+    "selected_area": {
+      "id": "test-region",
+      "point": {
+        "latitude": 42.0,
+        "longitude": -93.0
+      },
+      "boundary": []
+    },
+    "confirmed_farm": null,
+    "evidence": [
+      {
+        "id": "rain-2024-02",
+        "topic": "rainfall",
+        "metric": "rainfall_total",
+        "kind": "modeled",
+        "quality": "missing",
+        "value": null,
+        "unit": "mm",
+        "start_date": "2024-02-01",
+        "end_date": "2024-02-29",
+        "retrieved_at": null,
+        "spatial_support": "Software contract fixture; no scientific validation",
+        "scope": "regional",
+        "location_id": "test-region",
+        "source_ids": [
+          "nasa-docs"
+        ],
+        "limitations": [
+          "No measurement supplied. Coordinates are an example, not a restriction."
+        ],
+        "calculation": "none"
+      }
+    ],
+    "decisions": [],
+    "sources": [
+      {
+        "id": "nasa-docs",
+        "provider": "NASA POWER",
+        "title": "Daily API documentation",
+        "url": "https://power.larc.nasa.gov/docs/services/api/temporal/daily/"
+      }
+    ],
+    "limitations": []
+  }
+}
