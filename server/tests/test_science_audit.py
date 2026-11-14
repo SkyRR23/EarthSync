@@ -42,11 +42,11 @@ def payload():
     }
 
 
-async def normalize(body):
+async def normalize(body, query=QUERY):
     async with httpx.AsyncClient(
         transport=httpx.MockTransport(lambda req: httpx.Response(200, content=body))
     ) as client:
-        return await PowerProvider(client).season(QUERY)
+        return await PowerProvider(client).season(query)
 
 
 async def test_january_february_rates_and_exact_response_identity():
@@ -93,6 +93,30 @@ async def test_geometry_must_bind_provider_response_to_requested_point(geometry)
     data["geometry"] = geometry
     with pytest.raises(ProviderError):
         await normalize(json.dumps(data).encode())
+
+
+async def test_provider_coordinate_rounding_is_not_a_spatial_mismatch():
+    query = QUERY.model_copy(update={"latitude": 16.850234, "longitude": 96.150234})
+    result = await normalize(json.dumps(payload()).encode(), query)
+    assert result.environment.latitude == query.latitude
+    assert result.provenance["query_coordinates"]["longitude"] == query.longitude
+    # Keep the actual provider point, rather than replacing it with the query.
+    assert (
+        result.provenance["source_requests"][0]["source_geometry"]
+        == payload()["geometry"]
+    )
+
+
+async def test_coordinate_tolerance_does_not_accept_an_adjacent_rounded_point():
+    data = payload()
+    data["geometry"]["coordinates"][0] += 0.001
+    with pytest.raises(ProviderError):
+        await normalize(json.dumps(data).encode())
+    # Quantization allowance must not admit out-of-domain provider coordinates.
+    data["geometry"]["coordinates"] = [180.0001, 90]
+    query = QUERY.model_copy(update={"latitude": 90, "longitude": 180})
+    with pytest.raises(ProviderError):
+        await normalize(json.dumps(data).encode(), query)
 
 
 @pytest.mark.parametrize("value", ["20240230", "20241301", "20231231", "ANN"])

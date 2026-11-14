@@ -1,0 +1,140 @@
+{
+  "schema_version": "1.0-proposal",
+  "status": "success",
+  "environment": {
+    "latitude": 16.851234,
+    "longitude": 96.151234,
+    "seasonal": {
+      "window": {
+        "start": {
+          "year": 2024,
+          "month": 2
+        },
+        "end": {
+          "year": 2024,
+          "month": 2
+        }
+      },
+      "metadata": {
+        "source": "NASA POWER",
+        "dataset": "POWER daily meteorology / MERRA-2",
+        "data_kind": "modeled",
+        "rainfall_unit": "mm",
+        "temperature_unit": "deg_c"
+      },
+      "observations": [
+        {
+          "period": {
+            "year": 2024,
+            "month": 2
+          },
+          "rainfall_mm": 0.04,
+          "mean_temperature_c": 28.03655172413793,
+          "rainfall_complete": true,
+          "temperature_complete": true
+        }
+      ]
+    }
+  },
+  "provenance": {
+    "provider": "NASA POWER",
+    "product": "Daily point meteorology / MERRA-2",
+    "data_kind": "modeled",
+    "query_coordinates": {
+      "latitude": 16.851234,
+      "longitude": 96.151234
+    },
+    "interval": {
+      "start": "2024-02-01",
+      "end": "2024-02-29"
+    },
+    "time_standard": "LST",
+    "original_units": {
+      "T2M": "C",
+      "PRECTOTCORR": "mm/day"
+    },
+    "normalized_units": {
+      "mean_temperature_c": "deg_c",
+      "rainfall_mm": "mm"
+    },
+    "spatial_support": "Gridded meteorology, nominal MERRA-2 0.5 degree latitude x 0.625 degree longitude; query point is not a farm measurement or grid centroid.",
+    "aggregation": "Sum daily PRECTOTCORR rates multiplied by one day; arithmetic mean of daily T2M means over all calendar days in LST.",
+    "coverage": [
+      {
+        "period": {
+          "year": 2024,
+          "month": 2
+        },
+        "expected_days": 29,
+        "missing_or_invalid_dates": {
+          "T2M": [],
+          "PRECTOTCORR": []
+        },
+        "reason": "Complete only when every calendar day has a finite valid value; no gap filling."
+      }
+    ],
+    "source_requests": [
+      {
+        "endpoint": "https://power.larc.nasa.gov/api/temporal/daily/point",
+        "query": {
+          "parameters": "T2M,PRECTOTCORR",
+          "community": "AG",
+          "latitude": 16.851234,
+          "longitude": 96.151234,
+          "start": "20240201",
+          "end": "20240229",
+          "format": "JSON",
+          "time-standard": "LST"
+        },
+        "retrieved_at": "2026-11-14T13:13:42.042131+00:00",
+        "header": {
+          "title": "NASA/POWER Source Native Resolution Daily Data",
+          "api": {
+            "version": "v2.10.3",
+            "name": "POWER Daily API"
+          },
+          "sources": [
+            "MERRA2"
+          ],
+          "fill_value": -999.0,
+          "time_standard": "LST",
+          "start": "20240201",
+          "end": "20240229"
+        },
+        "parameters": {
+          "T2M": {
+            "units": "C",
+            "longname": "Temperature at 2 Meters"
+          },
+          "PRECTOTCORR": {
+            "units": "mm/day",
+            "longname": "Precipitation Corrected"
+          }
+        },
+        "source_geometry": {
+          "type": "Point",
+          "coordinates": [
+            96.151,
+            16.851,
+            10.91
+          ]
+        },
+        "source_messages": [],
+        "response_sha256": "9454a4067ef9067677deccb24334f89cb75bb2a8715015b63d9620c99f3d91a3"
+      }
+    ],
+    "documentation": [
+      "https://power.larc.nasa.gov/docs/services/api/temporal/daily/",
+      "https://power.larc.nasa.gov/docs/methodology/data/sources_meteorology/"
+    ],
+    "limitations": [
+      "Model/reanalysis context, not direct farm observations or crop suitability.",
+      "Completeness means daily record coverage, not independently verified scientific quality.",
+      "Retain this envelope beside Rust inputs: the Rust schema cannot carry all provenance."
+    ]
+  },
+  "cache": {
+    "hit": false,
+    "ttl_seconds": 3600
+  }
+}

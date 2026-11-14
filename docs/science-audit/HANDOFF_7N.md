@@ -12,7 +12,9 @@ Flutter router, central database code or the 7N branch.
    `server/tests/test_backend.py`: J01–J04. The mock now echoes requested
    coordinates; formerly its hard-coded Yangon point passed arbitrary global
    coordinate tests because production never checked geometry. No real capture
-   was altered. Keep exact response SHA-256 in provenance/cache/exports.
+   was altered. Keep exact response SHA-256 in provenance/cache/exports. Include
+   the follow-up coordinate-serialization repair: the initial `06145ee` guard
+   alone was too strict for POWER's observed three-decimal response coordinates.
 2. `engine/src/v03/assess.rs`, `engine/tests/science_audit.rs`: J05. Scope crop
    and fallow history to confirmed field for succession independently of the
    rule's `field_only` flag. No ABI/schema changes; preserve existing contracts.
@@ -22,6 +24,15 @@ Flutter router, central database code or the 7N branch.
 Do not apply the 7H monthly provider changes to 7I's independent daily parser:
 its geometry/calendar/duplicate/hash protections already exist. If 7N retains
 the default 7H monthly history path, that path still needs these fixes.
+
+**7I does need J06:** apply
+`docs/science-audit/patches/7i-power-coordinate-precision.patch` after the 7I
+provider files exist in the integration tree. It modifies only that provider and
+adds `test_science_coordinate_precision.py`. `git apply --check` and `git apply`
+were exercised on a separate exact 7I export; all 85 platform tests then passed
+with the three explicitly opt-in live tests skipped. Unpatched 7I fails its new
+high-precision query regression. Preserve strict rejection of an adjacent
+three-decimal point; tolerance is serialization association, not field accuracy.
 
 After the Rust patch, rebuild the web executable and native bridge artifacts from
 reviewed source. If a deployment pins executable SHA-256, recompute and explicitly
@@ -48,8 +59,9 @@ engine, market-count finance proxy or automatic nitrogen/pest credit is accepted
 
 ## Outstanding handoff
 
-The actual release asset URL is missing. Downloading the large attachment failed
-at the 32 MiB tool limit; the expected checksum alone is not evidence of integrity.
+The initial release asset URL was missing. Six subsequently supplied split
+wrappers and their contained chunks now match the manifest, but part 03 still
+fails transfer. The expected original checksum alone is not evidence of integrity.
 Do not integrate any new Myanmar crop profile, Rust implementation, calculation,
 provider CSV or generated asset from it until the complete archive audit is done.
 Do not claim 7J complete or independently verified farming advice from the test

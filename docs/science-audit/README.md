@@ -7,9 +7,15 @@ This is an independent draft on `fix/earthsync-science-audit-v1`, based on final
 The attachment `nasa_space_challenges.zip` could not be transferred: the downloader
 rejects attachments above 32 MiB. The subsequently supplied release URL was the
 literal placeholder `[PASTE ACTUAL GITHUB ASSET URL]`; the EarthSync releases API
-returned an empty list. The user-supplied **expected**, not verified, SHA-256 is
+returned an empty list. Six of seven subsequently supplied split wrappers and
+their chunks match the supplied manifest. Part 03 still fails transfer with the
+32 MiB error, although the manifest expects an 8,388,772-byte wrapper. The six
+verified wrappers are preserved read-only under
+`/workspace/shared/downloads/nasa_space_challenges_parts/`.
+The user-supplied **expected**, not verified, original SHA-256 is
 `241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788`.
-No bytes from this archive have been opened, executed, accepted, or imported.
+The split manifest/helper source were read and the available chunks hashed;
+the original archive's content has not been opened, executed, accepted or imported.
 Its Myanmar profiles, Rust/Python code, binaries, raw provider bodies and assets
 remain unreviewed. Do not confuse the older PR #11 inventory with this archive.
 Per the user's integrity gate, full archive audit resumes only after SHA-256

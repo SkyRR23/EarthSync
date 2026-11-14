@@ -1,0 +1,43 @@
+--- a/server/earthsync/platform_v1/providers/power_daily.py
++++ b/server/earthsync/platform_v1/providers/power_daily.py
+@@ -68,9 +68,11 @@
+             or not all(number(v) for v in coordinates)
+         ):
+             raise PlatformError("SPATIAL_MISMATCH", 502)
++        # Observed POWER v2.10.3 response point precision is three decimals.
++        # Preserve returned geometry; this does not establish the native cell.
+         if (
+-            abs(coordinates[0] - query.point.longitude) > 1e-6
+-            or abs(coordinates[1] - query.point.latitude) > 1e-6
++            abs(coordinates[0] - query.point.longitude) > 0.0005 + 1e-12
++            or abs(coordinates[1] - query.point.latitude) > 0.0005 + 1e-12
+         ):
+             raise PlatformError("SPATIAL_MISMATCH", 502)
+         daily = data["properties"]["parameter"][parameter]
+--- /dev/null
++++ b/server/tests/platform_v1/test_science_coordinate_precision.py
+@@ -0,0 +1,24 @@
++"""NASA point serialization checks; not field accuracy or crop advice."""
++
++import pytest
++
++from earthsync.platform_v1.errors import PlatformError
++from earthsync.platform_v1.providers.power_daily import read_daily
++
++from conftest import captured
++
++
++def test_power_point_serialization_preserves_high_precision_queries(query):
++    # Captured response point is [-93.62, 42.03]; model query precision must
++    # tolerate its documented-in-the-audit three-decimal serialization.
++    query.point.latitude = 42.030234
++    query.point.longitude = -93.620234
++    record = read_daily(captured("T2M_MIN"), query, "T2M_MIN")
++    assert record.spatial.query_point == query.point
++    assert record.spatial.original_geometry["coordinates"][:2] == [-93.62, 42.03]
++
++
++def test_neighboring_returned_point_is_not_rounding(query):
++    query.point.latitude = 42.031
++    with pytest.raises(PlatformError, match="SPATIAL_MISMATCH"):
++        read_daily(captured("T2M_MIN"), query, "T2M_MIN")

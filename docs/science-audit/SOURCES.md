@@ -61,7 +61,17 @@ reconstructed from a blank CSV. No generic maximum-code fill rule is accepted.
 
 ## Resume the newly contributed archive
 
-Download the **actual supplied URL** to
+Six supplied split wrappers and their contained pieces match all manifest
+SHA-256 values; see `evidence/split-transfer.json`. They and the reviewed manifest,
+README and helper source are preserved read-only under
+`/workspace/shared/downloads/nasa_space_challenges_parts/`. Part 03's download
+still fails with the 32 MiB transfer error, despite its declared 8,388,772-byte
+size. No original archive content has been inspected. Do not infer its full
+checksum from six valid pieces.
+
+After the missing piece becomes available, verify its wrapper/chunk hashes,
+concatenate all seven verified pieces in index order and verify the complete
+55,057,221-byte original. Alternatively download an **actual supplied URL** to
 `/workspace/shared/downloads/nasa_space_challenges.zip`; do not replace it with
 a GitHub source tarball or a re-created ZIP. Hash the complete original file and
 compare exactly with the expected SHA-256 above. On mismatch stop and report.

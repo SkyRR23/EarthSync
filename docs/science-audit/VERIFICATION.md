@@ -8,12 +8,15 @@ behavior and source-contract handling, not independent agronomic validity.
 | Unpatched 7H + new NASA regressions | 15 failed, 1 passed: failures expose J01–J04, not pre-existing Jan/Feb aggregation drift |
 | Unpatched v0.3 + new Rust regressions | 2 failed, 5 passed: regional predecessor/fallow wrongly supported |
 | Patched Rust full suite | 118 passed, no ignored tests; all 111 pre-existing tests retained plus 7 new tests |
-| Patched final 7H backend | 286 passed, no skips; includes actual compiled Rust HTTP boundary and retained real NASA capture replay |
+| Patched final 7H backend | 288 passed, no skips; includes actual compiled Rust HTTP boundary and retained real NASA capture replay |
 | Global catalog + inventory tool | 45 passed plus 32 subtests: existing 39 catalog tests and six new ZIP tests |
 | Exact 7I source with exact compatibility pins and original compiled v0.3 | 83 passed, 3 opt-in live-provider tests skipped; no compatibility-engine skips |
+| 7I plus isolated J06 handoff patch | 85 passed, 3 opt-in live-provider tests skipped; unpatched precision regression fails with SPATIAL_MISMATCH |
+| Combined scientific CI command | 63 passed plus 32 subtests; source regressions, catalog and ZIP inventory tool |
+| Live POWER high-precision query | Two-day original response preserved and hashed; patched full-February normalization succeeded with explicit query and rounded returned point |
 | Rust formatting / all-target Clippy | Passed |
 | Changed Python/tool Ruff lint | Passed |
-| New archive checksum/inventory/Myanmar sources | BLOCKED; original bytes unavailable. Expected hash is not verified. |
+| New archive checksum/inventory/Myanmar sources | BLOCKED on part 03; six wrapper/chunk hash pairs match manifest. Full original hash remains unverified. |
 
 The first broader backend attempt lacked Pillow and the new worktree's engine
 binary. Those setup failures were resolved with a separate pinned Python
@@ -25,6 +28,8 @@ environment. Neither existing workspace environment nor another branch was edite
 not the larger aggregate test count reported in its PR. The three skipped tests
 are NASA/soil/HLS opt-in network acceptance tests. No new live satellite, soil,
 forecast or NASA correctness claim follows from their omission or capture replay.
+The separate actual NASA precision probe verifies current provider serialization
+and adapter behavior; it does not establish farm accuracy or crop applicability.
 
 ## Commands
 
