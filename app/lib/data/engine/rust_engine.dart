@@ -34,6 +34,9 @@ class RustEngine implements EngineGateway {
       );
     }
     final farmer = jsonEncode({
+      // The farm centre (or setup pin): the engine checks this spot.
+      'latitude': input.latitude,
+      'longitude': input.longitude,
       'current_crop': input.currentCrop,
       'irrigation': input.irrigation.name,
       'drainage': input.drainage.name,

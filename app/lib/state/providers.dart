@@ -2,11 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/engine/engine_gateway.dart';
 import '../data/engine/mock_engine.dart';
 import '../data/engine/rust_engine.dart';
+import '../data/models/farm_boundary.dart';
 import '../data/models/farmer_input.dart';
 import '../data/models/field_analysis.dart';
 import '../data/models/field_note.dart';
@@ -45,8 +47,10 @@ class FarmerDraft {
     this.irrigation,
     this.drainage,
     this.priorities,
+    this.farm,
   });
 
+  /// The pin from setup (one tap or GPS).
   final double? latitude;
   final double? longitude;
   final String? currentCrop;
@@ -56,7 +60,16 @@ class FarmerDraft {
   final Drainage? drainage;
   final Set<Priority>? priorities; // empty set = "I don't know"
 
+  /// The whole farm (4 corners), marked later on the Field tab.
+  final FarmBoundary? farm;
+
   bool get hasLocation => latitude != null && longitude != null;
+  bool get hasFarm => farm?.isComplete ?? false;
+
+  /// Where the analysis is calculated: the farm centre once the farm is
+  /// marked, otherwise the setup pin.
+  double? get fieldLatitude => hasFarm ? farm!.center.latitude : latitude;
+  double? get fieldLongitude => hasFarm ? farm!.center.longitude : longitude;
 
   /// Setup is complete once the field and the three questions are answered.
   bool get isComplete =>
@@ -74,6 +87,7 @@ class FarmerDraft {
     Irrigation? irrigation,
     Drainage? drainage,
     Set<Priority>? priorities,
+    FarmBoundary? farm,
   }) => FarmerDraft(
     latitude: latitude ?? this.latitude,
     longitude: longitude ?? this.longitude,
@@ -83,13 +97,15 @@ class FarmerDraft {
     irrigation: irrigation ?? this.irrigation,
     drainage: drainage ?? this.drainage,
     priorities: priorities ?? this.priorities,
+    farm: farm ?? this.farm,
   );
 
   FarmerInput toInput() {
     String? crop(String? v) => (v == null || v == kUnknown) ? null : v;
     return FarmerInput(
-      latitude: latitude!,
-      longitude: longitude!,
+      latitude: fieldLatitude!,
+      longitude: fieldLongitude!,
+      boundary: farm?.toJson() ?? const [],
       currentCrop: crop(currentCrop),
       recentRotation: [if (crop(previousCrop) != null) previousCrop!],
       plantingMonth: (plantingMonth == null || plantingMonth == 0)
@@ -110,6 +126,7 @@ class FarmerDraft {
     'irrigation': irrigation?.name,
     'drainage': drainage?.name,
     'priorities': priorities?.map((p) => p.name).toList(),
+    'farm': farm?.toJson(),
   };
 
   factory FarmerDraft.fromJson(Map<String, dynamic> j) {
@@ -127,6 +144,7 @@ class FarmerDraft {
       priorities: pr == null
           ? null
           : {for (final p in pr) ?e(Priority.values, p)},
+      farm: FarmBoundary.fromJson(j['farm']),
     );
   }
 }
@@ -152,8 +170,44 @@ class FarmerDraftNotifier extends Notifier<FarmerDraft> {
     ref.read(prefsProvider)?.setString(_draftKey, jsonEncode(d.toJson()));
   }
 
-  void setLocation(double lat, double lon) =>
-      _set(state.copyWith(latitude: lat, longitude: lon));
+  /// Moving the setup pin far away means a different farm: forget the old shape.
+  void setLocation(double lat, double lon) {
+    final keepFarm =
+        state.farm != null &&
+        const Distance().as(
+              LengthUnit.Kilometer,
+              state.farm!.center,
+              LatLng(lat, lon),
+            ) <
+            2;
+    _set(
+      FarmerDraft(
+        latitude: lat,
+        longitude: lon,
+        currentCrop: state.currentCrop,
+        previousCrop: state.previousCrop,
+        plantingMonth: state.plantingMonth,
+        irrigation: state.irrigation,
+        drainage: state.drainage,
+        priorities: state.priorities,
+        farm: keepFarm ? state.farm : null,
+      ),
+    );
+  }
+
+  void setFarm(FarmBoundary farm) => _set(state.copyWith(farm: farm));
+  void clearFarm() => _set(
+    FarmerDraft(
+      latitude: state.latitude,
+      longitude: state.longitude,
+      currentCrop: state.currentCrop,
+      previousCrop: state.previousCrop,
+      plantingMonth: state.plantingMonth,
+      irrigation: state.irrigation,
+      drainage: state.drainage,
+      priorities: state.priorities,
+    ),
+  );
   void setCurrentCrop(String v) => _set(state.copyWith(currentCrop: v));
   void setPreviousCrop(String v) => _set(state.copyWith(previousCrop: v));
   void setPlantingMonth(int v) => _set(state.copyWith(plantingMonth: v));
@@ -171,6 +225,7 @@ class FarmerDraftNotifier extends Notifier<FarmerDraft> {
       plantingMonth: state.plantingMonth,
       irrigation: state.irrigation,
       drainage: state.drainage,
+      farm: state.farm,
     ),
   );
 

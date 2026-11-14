@@ -1,64 +1,106 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../app/strings.dart';
 import '../../data/models/field_analysis.dart';
+import '../../design/components/buttons.dart';
+import '../../design/components/feedback.dart';
 import '../../design/components/page.dart';
 import '../../design/components/scenario.dart';
-import '../../design/components/segmented.dart';
+import '../../design/components/sheet.dart';
 import '../../design/tokens.dart';
+import 'field_tab.dart' show showAboutResults;
 
-/// One crop plan at a time: Now / Plan 1 / Plan 2 (tap or swipe).
+/// Crops tab: the answer and nothing else. Big cards, best fit first.
 class CropsTab extends StatelessWidget {
-  const CropsTab({
-    super.key,
-    required this.analysis,
-    required this.index,
-    required this.onIndexChanged,
-  });
+  const CropsTab({super.key, required this.analysis, this.fromCache = false});
 
   final FieldAnalysis analysis;
-  final int index;
-  final ValueChanged<int> onIndexChanged;
+  final bool fromCache;
 
   @override
   Widget build(BuildContext context) {
-    final items = labelledScenarios(analysis.scenarios);
-    if (items.isEmpty) return const SizedBox.shrink();
-    final i = index.clamp(0, items.length - 1);
-    final (scenario, label, _) = items[i];
-
+    final a = analysis;
+    final items = sortedByFit(a.scenarios);
     return FsPage(
-      title: S.tabCrops,
+      title: S.nextSeason,
       showBack: false,
+      subtitle: S.bestFirst,
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(FsSpace.gutter, FsSpace.md, FsSpace.gutter, 0),
-          child: FsSegmented<int>(
-            value: i,
-            onChanged: onIndexChanged,
-            segments: {for (final (k, (_, _, short)) in items.indexed) k: short},
+        if (a.dataQuality.isDemo) ...[
+          const SizedBox(height: FsSpace.md),
+          FsBanner(
+            message: S.demoData,
+            tone: FsTone.caution,
+            icon: CupertinoIcons.exclamationmark_circle_fill,
+            onTap: () => showAboutResults(context, a),
           ),
-        ),
-        GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onHorizontalDragEnd: (d) {
-            final v = d.primaryVelocity ?? 0;
-            if (v < -300 && i < items.length - 1) onIndexChanged(i + 1);
-            if (v > 300 && i > 0) onIndexChanged(i - 1);
-          },
-          child: AnimatedSwitcher(
-            duration: FsMotion.of(context, FsMotion.normal),
-            switchInCurve: FsMotion.curve,
-            transitionBuilder: (child, anim) => FadeTransition(opacity: anim, child: child),
-            child: ScenarioDetailBody(
-              key: ValueKey(scenario.id),
-              scenario: scenario,
-              label: label,
-              analysis: analysis,
-            ),
+        ],
+        if (fromCache) ...[
+          const SizedBox(height: FsSpace.sm),
+          const FsBanner(message: S.showLast, icon: CupertinoIcons.clock),
+        ],
+        const SizedBox(height: FsSpace.lg),
+        for (final (i, (s, label, _)) in items.indexed)
+          FsCropCard(
+            scenario: s,
+            highlight: i == 0 && s.eligibility == Feasibility.supported,
+            onTap: () => showPlanSheet(context, s, label, a),
+          ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(
+            FsSpace.gutter,
+            FsSpace.xs,
+            FsSpace.gutter,
+            0,
+          ),
+          child: Text(
+            S.tapForWhy,
+            textAlign: TextAlign.center,
+            style: context.type.footnote,
           ),
         ),
       ],
     );
   }
+}
+
+/// Short "why" sheet for one plan; "More details" opens the full page.
+void showPlanSheet(
+  BuildContext context,
+  RotationScenario s,
+  String label,
+  FieldAnalysis a,
+) {
+  showFsSheet<void>(
+    context,
+    title: label,
+    builder: (ctx) => Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ScenarioDetailBody(
+          scenario: s,
+          label: label,
+          analysis: a,
+          compact: true,
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(
+            FsSpace.gutter,
+            FsSpace.lg,
+            FsSpace.gutter,
+            0,
+          ),
+          child: FsButton(
+            S.moreDetails,
+            kind: FsButtonKind.tinted,
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              context.push('/scenario/${s.id}');
+            },
+          ),
+        ),
+      ],
+    ),
+  );
 }

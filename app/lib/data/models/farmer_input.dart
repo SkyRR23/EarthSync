@@ -35,10 +35,17 @@ class FarmerInput {
     this.irrigation = Irrigation.unknown,
     this.drainage = Drainage.unknown,
     this.priorities = const [],
+    this.boundary = const [],
   });
 
+  /// Field location used for every calculation: the farm centre once the
+  /// farm is marked, otherwise the setup pin.
   final double latitude;
   final double longitude;
+
+  /// Farm corners as [lat, lon] pairs (empty = only a pin). Kept for P2's
+  /// server request; the on-device engine uses [latitude]/[longitude].
+  final List<List<double>> boundary;
 
   /// null = farmer does not know / did not say.
   final String? currentCrop;
@@ -59,6 +66,7 @@ class FarmerInput {
     'irrigation': irrigation.name,
     'drainage': drainage.name,
     'priorities': priorities.map(_priorityToJson).toList(),
+    'field_boundary': boundary,
   };
 
   static String _priorityToJson(Priority p) => switch (p) {

@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:earthsync/app/strings.dart';
 import 'package:earthsync/data/engine/engine_envelope.dart';
+import 'package:earthsync/data/models/farm_boundary.dart';
 import 'package:earthsync/data/models/field_analysis.dart';
 import 'package:earthsync/design/components/scenario.dart';
 import 'package:earthsync/design/theme.dart';
@@ -11,10 +13,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 FieldAnalysis _loadAnalysis() {
-  final raw = File('test/fixtures/engine_success_envelope.json').readAsStringSync();
+  final raw = File(
+    'test/fixtures/engine_success_envelope.json',
+  ).readAsStringSync();
   return fieldAnalysisFromEnvelope(raw);
 }
 
@@ -40,9 +45,9 @@ Widget _buildShell({
     child: MaterialApp(
       theme: theme,
       builder: (context, child) => MediaQuery(
-        data: MediaQuery.of(context).copyWith(
-          textScaler: TextScaler.linear(textScale),
-        ),
+        data: MediaQuery.of(
+          context,
+        ).copyWith(textScaler: TextScaler.linear(textScale)),
         child: child!,
       ),
       home: const HomeShell(),
@@ -50,8 +55,13 @@ Widget _buildShell({
   );
 }
 
+Finder _navTitle(String text) => find.descendant(
+  of: find.byType(CupertinoSliverNavigationBar),
+  matching: find.text(text),
+);
+
 Future<void> _visitTabs(WidgetTester tester) async {
-  for (final tab in [S.tabCrops, S.tabWeather, S.tabNotes, S.tabHome]) {
+  for (final tab in [S.tabWeather, S.tabField, S.tabNotes, S.tabCrops]) {
     await tester.tap(find.text(tab).last);
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull, reason: 'visiting tab $tab');
@@ -68,141 +78,153 @@ void main() {
     analysis = _loadAnalysis();
   });
 
-  testWidgets('4 tabs show and tapping each tab shows its page title', (tester) async {
+  testWidgets('4 tabs: Crops, Weather, Field, Notes — each shows its page', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       _buildShell(analysis: analysis, prefs: prefs, theme: fsLightTheme()),
     );
     await tester.pumpAndSettle();
 
-    // All 4 tabs show in the bar
-    expect(find.text(S.tabHome), findsWidgets);
-    expect(find.text(S.tabCrops), findsWidgets);
-    expect(find.text(S.tabWeather), findsWidgets);
-    expect(find.text(S.tabNotes), findsWidgets);
+    for (final tab in [S.tabCrops, S.tabWeather, S.tabField, S.tabNotes]) {
+      expect(find.text(tab), findsWidgets);
+    }
+    expect(_navTitle(S.nextSeason), findsOneWidget);
 
-    // Initial page title is "My field"
-    expect(find.text(S.myField), findsOneWidget);
-
-    // Tap Crops
-    await tester.tap(find.text(S.tabCrops).last);
-    await tester.pumpAndSettle();
-    expect(
-      find.descendant(
-        of: find.byType(CupertinoSliverNavigationBar),
-        matching: find.text(S.tabCrops),
-      ),
-      findsOneWidget,
-    );
-
-    // Tap Weather
     await tester.tap(find.text(S.tabWeather).last);
     await tester.pumpAndSettle();
-    expect(
-      find.descendant(
-        of: find.byType(CupertinoSliverNavigationBar),
-        matching: find.text(S.tabWeather),
-      ),
-      findsOneWidget,
-    );
+    expect(_navTitle(S.tabWeather), findsOneWidget);
 
-    // Tap Notes
+    await tester.tap(find.text(S.tabField).last);
+    await tester.pumpAndSettle();
+    expect(_navTitle(S.myFarm), findsOneWidget);
+
     await tester.tap(find.text(S.tabNotes).last);
     await tester.pumpAndSettle();
-    expect(
-      find.descendant(
-        of: find.byType(CupertinoSliverNavigationBar),
-        matching: find.text(S.tabNotes),
-      ),
-      findsOneWidget,
-    );
+    expect(_navTitle(S.notesTitle), findsOneWidget);
   });
 
-  testWidgets('tapping crop plan on Home switches to Crops tab with plan selected', (
-    tester,
-  ) async {
-    tester.view.physicalSize = const Size(412 * 3, 900 * 3);
-    tester.view.devicePixelRatio = 3;
-    addTearDown(tester.view.reset);
+  testWidgets(
+    'Crops: one card per plan, best fit first, tap opens "why" sheet',
+    (tester) async {
+      tester.view.physicalSize = const Size(412 * 3, 900 * 3);
+      tester.view.devicePixelRatio = 3;
+      addTearDown(tester.view.reset);
 
-    await tester.pumpWidget(
-      _buildShell(analysis: analysis, prefs: prefs, theme: fsLightTheme()),
-    );
-    await tester.pumpAndSettle();
+      await tester.pumpWidget(
+        _buildShell(analysis: analysis, prefs: prefs, theme: fsLightTheme()),
+      );
+      await tester.pumpAndSettle();
 
-    // Verify plans exist on Home tab
-    expect(find.byType(FsPlanRow), findsNWidgets(3));
+      final cards = find.byType(FsCropCard);
+      expect(cards, findsNWidgets(analysis.scenarios.length));
+      final first = tester.widget<FsCropCard>(cards.first).scenario;
+      expect(first.id, sortedByFit(analysis.scenarios).first.$1.id);
 
-    // Tap Plan 1 ("Other plan 1")
-    await tester.scrollUntilVisible(find.byType(FsPlanRow).at(1), 100);
-    await tester.tap(find.byType(FsPlanRow).at(1));
-    await tester.pumpAndSettle();
+      await tester.tap(cards.first);
+      await tester.pumpAndSettle();
+      expect(find.text(S.whyGood.toUpperCase()), findsOneWidget);
+      expect(find.text(S.moreDetails), findsOneWidget);
+      expect(find.textContaining('%'), findsNothing);
+    },
+  );
 
-    // Should be on Crops tab with Plan 1 selected
-    expect(find.text(S.plan(1)), findsOneWidget);
-    expect(find.text(S.planLong(1)), findsWidgets);
-
-    // Return to Home tab
-    await tester.tap(find.text(S.tabHome).last);
-    await tester.pumpAndSettle();
-
-    // Tap Plan 2 ("Other plan 2")
-    await tester.scrollUntilVisible(find.byType(FsPlanRow).at(2), 100);
-    await tester.tap(find.byType(FsPlanRow).at(2));
-    await tester.pumpAndSettle();
-
-    // Should be on Crops tab with Plan 2 selected
-    expect(find.text(S.plan(2)), findsOneWidget);
-    expect(find.text(S.planLong(2)), findsWidgets);
-  });
-
-  testWidgets('notes: empty state -> add note -> type -> save -> appears -> swipe to delete -> undo', (
+  testWidgets('Notes: tap a picture, type, save, swipe to delete, undo', (
     tester,
   ) async {
     await tester.pumpWidget(
       _buildShell(analysis: analysis, prefs: prefs, theme: fsLightTheme()),
     );
     await tester.pumpAndSettle();
-
-    // Switch to Notes tab
     await tester.tap(find.text(S.tabNotes).last);
     await tester.pumpAndSettle();
 
-    // Empty state
-    expect(find.text(S.notesEmptyTitle), findsOneWidget);
     expect(find.text(S.notesEmptyBody), findsOneWidget);
 
-    // Tap Add note
-    await tester.tap(find.text(S.addNote));
+    await tester.tap(find.text(S.kindPests));
     await tester.pumpAndSettle();
-
-    // Type note text
-    const sampleText = 'Spotted armyworms on leaves';
-    await tester.enterText(find.byType(CupertinoTextField), sampleText);
-    await tester.pumpAndSettle();
-
-    // Save
+    const sample = 'Spotted armyworms on leaves';
+    await tester.enterText(find.byType(CupertinoTextField), sample);
     await tester.tap(find.text(S.save));
     await tester.pumpAndSettle();
+    expect(find.text(sample), findsOneWidget);
 
-    // Note appears
-    expect(find.text(sampleText), findsOneWidget);
-
-    // Swipe to delete
-    await tester.drag(find.text(sampleText), const Offset(-500, 0));
+    await tester.drag(find.text(sample), const Offset(-500, 0));
     await tester.pumpAndSettle();
-
-    // Note deleted notification and note gone
     expect(find.text(S.deleted), findsOneWidget);
-    expect(find.text(sampleText), findsNothing);
+    expect(find.text(sample), findsNothing);
 
-    // Undo brings it back
     await tester.tap(find.text(S.undo));
     await tester.pumpAndSettle();
-
-    expect(find.text(sampleText), findsOneWidget);
+    expect(find.text(sample), findsOneWidget);
   });
 
-  testWidgets('shell in light mode renders without layout errors', (tester) async {
+  testWidgets('Notes: saving without words keeps the picture as the note', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _buildShell(analysis: analysis, prefs: prefs, theme: fsLightTheme()),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(S.tabNotes).last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text(S.kindWater));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(S.save));
+    await tester.pumpAndSettle();
+    expect(find.text(S.yourNotes.toUpperCase()), findsOneWidget);
+    expect(find.text(S.kindWater), findsNWidgets(2)); // tile + saved note
+  });
+
+  testWidgets('Field: asks to mark the farm until the 4 corners are saved', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _buildShell(analysis: analysis, prefs: prefs, theme: fsLightTheme()),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(S.tabField).last);
+    await tester.pumpAndSettle();
+    expect(find.text(S.markFarmBody), findsOneWidget);
+    expect(find.text(S.editFarm), findsNothing);
+  });
+
+  testWidgets('Field: a saved farm shows its size and the edit row', (
+    tester,
+  ) async {
+    final farm = FarmBoundary(const [
+      LatLng(16.8650, 96.1940),
+      LatLng(16.8650, 96.1960),
+      LatLng(16.8670, 96.1960),
+      LatLng(16.8670, 96.1940),
+    ]);
+    SharedPreferences.setMockInitialValues({
+      'farmer_draft_v1': jsonEncode(
+        FarmerDraft(
+          latitude: 16.866,
+          longitude: 96.195,
+          currentCrop: 'rice',
+          farm: farm,
+        ).toJson(),
+      ),
+    });
+    prefs = await SharedPreferences.getInstance();
+
+    await tester.pumpWidget(
+      _buildShell(analysis: analysis, prefs: prefs, theme: fsLightTheme()),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(S.tabField).last);
+    await tester.pumpAndSettle();
+    expect(find.text(S.editFarm), findsOneWidget);
+    expect(find.text(farmSizeLabel(farm)), findsWidgets);
+    expect(find.text(S.markFarmBody), findsNothing);
+  });
+
+  testWidgets('light mode renders every tab without layout errors', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       _buildShell(analysis: analysis, prefs: prefs, theme: fsLightTheme()),
     );
@@ -210,7 +232,9 @@ void main() {
     await _visitTabs(tester);
   });
 
-  testWidgets('shell in dark mode renders without layout errors', (tester) async {
+  testWidgets('dark mode renders every tab without layout errors', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       _buildShell(analysis: analysis, prefs: prefs, theme: fsDarkTheme()),
     );
@@ -218,7 +242,7 @@ void main() {
     await _visitTabs(tester);
   });
 
-  testWidgets('shell survives 130% text size', (tester) async {
+  testWidgets('every tab survives 130% text size', (tester) async {
     await tester.pumpWidget(
       _buildShell(
         analysis: analysis,
@@ -231,7 +255,9 @@ void main() {
     await _visitTabs(tester);
   });
 
-  testWidgets('tablet width (1024x768) shows sidebar with no overflow', (tester) async {
+  testWidgets('tablet width (1024x768) shows the sidebar with no overflow', (
+    tester,
+  ) async {
     tester.view.physicalSize = const Size(1024 * 3, 768 * 3);
     tester.view.devicePixelRatio = 3;
     addTearDown(tester.view.reset);
@@ -240,7 +266,6 @@ void main() {
       _buildShell(analysis: analysis, prefs: prefs, theme: fsLightTheme()),
     );
     await tester.pumpAndSettle();
-
     expect(find.text(S.appName), findsOneWidget);
     await _visitTabs(tester);
   });

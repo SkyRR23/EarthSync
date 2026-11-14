@@ -12,36 +12,50 @@ import '../../design/components/pressable.dart';
 import '../../design/components/segmented.dart';
 import '../../design/tokens.dart';
 import '../../state/providers.dart';
+import '../home/field_tab.dart' show farmOutlineLayer;
 import 'gibs_layer.dart';
 
-enum MapLayerKind { photo, plantHealth, street }
+enum MapLayerKind { street, plantHealth }
 
 GibsLayerConfig? configFor(MapLayerKind k) => switch (k) {
-  MapLayerKind.photo => GibsLayerConfig.provisional,
   MapLayerKind.plantHealth => GibsLayerConfig.plantHealth,
   MapLayerKind.street => null,
 };
 
-/// Full-screen field map: NASA photo, NASA plant health, or street map.
+/// Full-screen farm map: street map, or NASA plant health over it.
 class MapScreen extends ConsumerStatefulWidget {
-  const MapScreen({super.key});
+  const MapScreen({super.key, this.plantHealth = false});
+  final bool plantHealth;
 
   @override
   ConsumerState<MapScreen> createState() => _MapScreenState();
 }
 
 class _MapScreenState extends ConsumerState<MapScreen> {
-  MapLayerKind _layer = MapLayerKind.photo;
+  late MapLayerKind _layer = widget.plantHealth
+      ? MapLayerKind.plantHealth
+      : MapLayerKind.street;
   final _map = MapController();
-  static const _zoom = 9.0;
+  static const _zoom = 15.0;
 
   @override
   Widget build(BuildContext context) {
     final p = context.fs;
     final t = context.type;
     final d = ref.watch(farmerDraftProvider);
-    final pt = LatLng(d.latitude ?? kSampleLat, d.longitude ?? kSampleLon);
+    final pt = LatLng(
+      d.fieldLatitude ?? kSampleLat,
+      d.fieldLongitude ?? kSampleLon,
+    );
+    final farm = d.hasFarm ? d.farm! : null;
     final cfg = configFor(_layer);
+    final fit = farm == null
+        ? null
+        : CameraFit.coordinates(
+            coordinates: farm.corners,
+            padding: const EdgeInsets.all(72),
+            maxZoom: 18,
+          );
 
     return Scaffold(
       backgroundColor: p.background,
@@ -49,14 +63,29 @@ class _MapScreenState extends ConsumerState<MapScreen> {
         children: [
           FlutterMap(
             mapController: _map,
-            options: MapOptions(initialCenter: pt, initialZoom: _zoom, maxZoom: 13),
+            options: MapOptions(
+              initialCenter: pt,
+              initialZoom: _zoom,
+              initialCameraFit: fit,
+              maxZoom: 19,
+            ),
             children: [
               // Street map underneath so a missing satellite tile is never a hole.
               streetTileLayer(),
-              if (cfg != null) gibsTileLayer(cfg),
-              MarkerLayer(
-                markers: [Marker(point: pt, width: 44, height: 44, child: fieldMarker(context))],
-              ),
+              if (cfg != null)
+                Opacity(opacity: 0.75, child: gibsTileLayer(cfg)),
+              if (farm != null) farmOutlineLayer(context, farm),
+              if (farm == null)
+                MarkerLayer(
+                  markers: [
+                    Marker(
+                      point: pt,
+                      width: 44,
+                      height: 44,
+                      child: fieldMarker(context),
+                    ),
+                  ],
+                ),
             ],
           ),
           SafeArea(
@@ -75,7 +104,9 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                       FsCircleButton(
                         icon: CupertinoIcons.location_fill,
                         tooltip: S.recenter,
-                        onPressed: () => _map.move(pt, _zoom),
+                        onPressed: () => fit != null
+                            ? _map.fitCamera(fit)
+                            : _map.move(pt, _zoom),
                       ),
                     ],
                   ),
@@ -87,9 +118,8 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                         value: _layer,
                         onChanged: (v) => setState(() => _layer = v),
                         segments: const {
-                          MapLayerKind.photo: S.photo,
-                          MapLayerKind.plantHealth: S.plantHealth,
                           MapLayerKind.street: S.street,
+                          MapLayerKind.plantHealth: S.plantHealth,
                         },
                       ),
                     ),
@@ -112,22 +142,29 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                               children: [
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        cfg == null ? S.street : 'NASA · ${cfg.dateLabel}',
+                                        cfg == null
+                                            ? S.street
+                                            : 'NASA · ${cfg.dateLabel}',
                                         style: t.headline,
                                       ),
                                       Text(
                                         cfg == null
                                             ? '© OpenStreetMap contributors'
-                                            : cfg.legend,
+                                            : '${cfg.legend} ${S.pixelNote}',
                                         style: t.footnote,
                                       ),
                                     ],
                                   ),
                                 ),
-                                Icon(CupertinoIcons.info_circle, color: p.secondaryLabel, size: 20),
+                                Icon(
+                                  CupertinoIcons.info_circle,
+                                  color: p.secondaryLabel,
+                                  size: 20,
+                                ),
                               ],
                             ),
                             if (_layer == MapLayerKind.plantHealth) ...[
@@ -172,7 +209,10 @@ class MapGlass extends StatelessWidget {
         borderRadius: BorderRadius.circular(FsRadius.lg),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-          child: ColoredBox(color: p.surfaceRaised.withValues(alpha: 0.9), child: child),
+          child: ColoredBox(
+            color: p.surfaceRaised.withValues(alpha: 0.9),
+            child: child,
+          ),
         ),
       ),
     );

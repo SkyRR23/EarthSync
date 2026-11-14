@@ -170,7 +170,9 @@ class FsListRow extends StatelessWidget {
                     title,
                     style: titleStyle ?? t.body,
                     maxLines: titleMaxLines,
-                    overflow: titleMaxLines != null ? TextOverflow.ellipsis : null,
+                    overflow: titleMaxLines != null
+                        ? TextOverflow.ellipsis
+                        : null,
                   ),
                   if (subtitle != null)
                     Padding(

@@ -35,7 +35,9 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
   String? _gpsMessage;
 
   void _set(LatLng pt, {double zoom = 12}) {
-    ref.read(farmerDraftProvider.notifier).setLocation(pt.latitude, pt.longitude);
+    ref
+        .read(farmerDraftProvider.notifier)
+        .setLocation(pt.latitude, pt.longitude);
     _map.move(pt, zoom);
   }
 
@@ -118,12 +120,19 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
               if (picked != null)
                 MarkerLayer(
                   markers: [
-                    Marker(point: picked, width: 44, height: 44, child: fieldMarker(context)),
+                    Marker(
+                      point: picked,
+                      width: 44,
+                      height: 44,
+                      child: fieldMarker(context),
+                    ),
                   ],
                 ),
               const RichAttributionWidget(
                 alignment: AttributionAlignment.bottomLeft,
-                attributions: [TextSourceAttribution('OpenStreetMap contributors')],
+                attributions: [
+                  TextSourceAttribution('OpenStreetMap contributors'),
+                ],
               ),
             ],
           ),
@@ -152,7 +161,11 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(CupertinoIcons.map_pin_ellipse, size: 18, color: p.tint),
+                      Icon(
+                        CupertinoIcons.map_pin_ellipse,
+                        size: 18,
+                        color: p.tint,
+                      ),
                       const SizedBox(width: FsSpace.sm),
                       Text(S.locationHint, style: t.subhead),
                     ],
@@ -180,50 +193,57 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
                 padding: const EdgeInsets.only(bottom: FsSpace.md),
                 child: Row(
                   children: [
-                    Icon(CupertinoIcons.checkmark_circle_fill, color: p.tint, size: 22),
+                    Icon(
+                      CupertinoIcons.checkmark_circle_fill,
+                      color: p.positiveText,
+                      size: 26,
+                    ),
                     const SizedBox(width: FsSpace.sm),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(S.fieldMarked, style: t.headline),
-                          if (!_inMyanmar(picked))
-                            Text(
-                              S.outsideMyanmar,
-                              style: t.footnote.copyWith(color: p.cautionText),
+                          Text(
+                            _inMyanmar(picked) ? S.pinLater : S.outsideMyanmar,
+                            style: t.footnote.copyWith(
+                              color: _inMyanmar(picked) ? null : p.cautionText,
                             ),
+                          ),
                         ],
                       ),
                     ),
                   ],
                 ),
               ),
-            Row(
-              children: [
-                Expanded(
-                  child: FsButton(
-                    _locating ? S.findingYou : S.useMyLocation,
-                    kind: FsButtonKind.tinted,
-                    icon: CupertinoIcons.location_fill,
-                    loading: _locating,
-                    onPressed: _useGps,
-                  ),
-                ),
-                const SizedBox(width: FsSpace.sm),
-                Expanded(
-                  child: FsButton(
-                    S.useSampleField,
-                    kind: FsButtonKind.tinted,
-                    onPressed: () => _set(const LatLng(kSampleLat, kSampleLon), zoom: 10),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: FsSpace.sm),
-            FsButton(
-              widget.editing ? S.done : S.continueLabel,
-              onPressed: picked == null ? null : _continue,
-            ),
+            if (picked == null) ...[
+              FsButton(
+                _locating ? S.findingYou : S.useMyLocation,
+                icon: CupertinoIcons.location_fill,
+                loading: _locating,
+                onPressed: _useGps,
+              ),
+              const SizedBox(height: FsSpace.xs),
+              FsButton(
+                S.useSampleField,
+                kind: FsButtonKind.plain,
+                onPressed: () =>
+                    _set(const LatLng(kSampleLat, kSampleLon), zoom: 10),
+              ),
+            ] else ...[
+              FsButton(
+                widget.editing ? S.done : S.continueLabel,
+                onPressed: _continue,
+              ),
+              const SizedBox(height: FsSpace.xs),
+              FsButton(
+                _locating ? S.findingYou : S.useMyLocation,
+                kind: FsButtonKind.plain,
+                icon: CupertinoIcons.location_fill,
+                loading: _locating,
+                onPressed: _useGps,
+              ),
+            ],
           ],
         ),
       ),

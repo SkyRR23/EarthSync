@@ -57,7 +57,8 @@ class GibsLayerConfig {
     tileMatrixSet: 'GoogleMapsCompatible_Level9',
     format: 'png',
     maxNativeZoom: 9,
-    legend: 'Greener means more growing plants. Brown means bare ground or dry plants.',
+    legend:
+        'Greener means more growing plants. Brown means bare ground or dry plants.',
     dateLagDays: 10,
   );
 }
@@ -70,7 +71,8 @@ class PlantHealthLegend extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = context.type;
     return Semantics(
-      label: 'Colour scale: brown is ${S.lessGreen}, dark green is ${S.moreGreen}',
+      label:
+          'Colour scale: brown is ${S.lessGreen}, dark green is ${S.moreGreen}',
       excludeSemantics: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

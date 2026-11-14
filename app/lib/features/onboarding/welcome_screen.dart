@@ -41,9 +41,21 @@ class WelcomeScreen extends ConsumerWidget {
                   child: Text(S.welcomeTitle, style: t.largeTitle),
                 ),
                 const SizedBox(height: FsSpace.xxxl),
-                const _Step(n: 1, icon: CupertinoIcons.location_solid, text: S.how1),
-                const _Step(n: 2, icon: CupertinoIcons.hand_point_right_fill, text: S.how2),
-                const _Step(n: 3, icon: CupertinoIcons.checkmark_seal_fill, text: S.how3),
+                const _Step(
+                  n: 1,
+                  icon: CupertinoIcons.location_solid,
+                  text: S.how1,
+                ),
+                const _Step(
+                  n: 2,
+                  icon: CupertinoIcons.hand_point_right_fill,
+                  text: S.how2,
+                ),
+                const _Step(
+                  n: 3,
+                  icon: CupertinoIcons.checkmark_seal_fill,
+                  text: S.how3,
+                ),
               ],
             ),
           ),
@@ -53,7 +65,11 @@ class WelcomeScreen extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(S.welcomeDisclaimer, textAlign: TextAlign.center, style: t.footnote),
+            Text(
+              S.welcomeDisclaimer,
+              textAlign: TextAlign.center,
+              style: t.footnote,
+            ),
             const SizedBox(height: FsSpace.md),
             FsButton(S.getStarted, onPressed: () => context.push('/location')),
             if (kDebugMode)
@@ -90,7 +106,10 @@ class _Step extends StatelessWidget {
           Container(
             width: 44,
             height: 44,
-            decoration: BoxDecoration(color: p.tintSoft, shape: BoxShape.circle),
+            decoration: BoxDecoration(
+              color: p.tintSoft,
+              shape: BoxShape.circle,
+            ),
             child: Icon(icon, color: p.tint, size: 22),
           ),
           const SizedBox(width: FsSpace.lg),

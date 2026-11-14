@@ -30,7 +30,7 @@ void main() {
     await t.pumpWidget(_app('/question/1'));
     await t.pumpAndSettle();
     expect(find.text('1 of 3'), findsOneWidget);
-    await t.tap(find.text('🌾  Rice'));
+    await t.tap(find.text('Rice'));
     await t.pump(const Duration(milliseconds: 400));
     await t.pumpAndSettle();
     expect(find.text('2 of 3'), findsOneWidget);
@@ -50,13 +50,13 @@ void main() {
     );
     await t.pumpAndSettle();
     expect(find.text('3 of 3'), findsOneWidget);
-    await t.tap(find.text('No, it dries fast'));
+    await t.tap(find.text(S.drainFast));
     await t.pump(const Duration(milliseconds: 400));
     await t.pumpAndSettle();
-    expect(find.text(S.tabHome), findsOneWidget);
+    expect(find.text(S.tabField), findsOneWidget);
   });
 
-  testWidgets('"I don\'t know" is visible without scrolling on crop question', (
+  testWidgets('"Not sure" is visible without scrolling on crop question', (
     t,
   ) async {
     t.view.physicalSize = const Size(412 * 3, 880 * 3);
@@ -64,6 +64,6 @@ void main() {
     addTearDown(t.view.reset);
     await t.pumpWidget(_app('/question/1'));
     await t.pumpAndSettle();
-    expect(find.text("I don't know").hitTestable(), findsOneWidget);
+    expect(find.text(S.dontKnow).hitTestable(), findsOneWidget);
   });
 }

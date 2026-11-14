@@ -36,7 +36,9 @@ pub fn analyze_integration_json(request_json: String) -> String {
 /// then runs the real engine. Location and climate stay synthetic and are
 /// labelled `synthetic_demo` by the engine.
 ///
-/// `farmer_json` keys (all optional): `current_crop` (string),
+/// `farmer_json` keys (all optional): `latitude`/`longitude` (the farm centre,
+/// applied to both `field` and `environment` so the engine checks this farm),
+/// `current_crop` (string),
 /// `irrigation` ("full" | "partial" | "none" | "unknown"),
 /// `drainage` ("poor" | "moderate" | "good" | "unknown").
 pub fn analyze_synthetic_demo_json(farmer_json: String) -> String {
@@ -61,6 +63,15 @@ fn build_demo_request(farmer_json: &str) -> Result<String, String> {
         .map_err(|_| "Farmer answers could not be read.".to_string())?;
     let mut request: Value = serde_json::from_str(SYNTHETIC_REQUEST)
         .map_err(|_| "Built-in demo request is invalid.".to_string())?;
+
+    let lat = farmer.get("latitude").and_then(Value::as_f64);
+    let lon = farmer.get("longitude").and_then(Value::as_f64);
+    if let (Some(lat), Some(lon)) = (lat, lon) {
+        request["field"]["latitude"] = json!(lat);
+        request["field"]["longitude"] = json!(lon);
+        request["environment"]["latitude"] = json!(lat);
+        request["environment"]["longitude"] = json!(lon);
+    }
 
     if let Some(crop) = farmer.get("current_crop").and_then(Value::as_str) {
         request["field"]["current_crop"] = json!(crop);
@@ -110,6 +121,15 @@ mod tests {
         assert_eq!(v["status"], "success");
         assert_eq!(v["data"]["soil"]["drainage"], "poor");
         assert_eq!(v["data"]["field"]["irrigation_available"], false);
+    }
+
+    #[test]
+    fn farm_centre_reaches_engine() {
+        let out = analyze_synthetic_demo_json(r#"{"latitude":17.1,"longitude":95.9}"#.into());
+        let v: Value = serde_json::from_str(&out).unwrap();
+        assert_eq!(v["status"], "success", "{out}");
+        assert_eq!(v["data"]["field"]["latitude"], 17.1);
+        assert_eq!(v["data"]["field"]["longitude"], 95.9);
     }
 
     #[test]

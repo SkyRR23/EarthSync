@@ -1,121 +1,144 @@
 /// All English UI text in one place so P3 can review wording.
-/// Voice: short, plain words a farmer uses. No jargon. Sentence case.
+/// Voice: very short, plain words a farmer uses. No jargon. Sentence case.
 abstract final class S {
   static const appName = 'Field Shift';
 
   // Welcome
-  static const welcomeTitle = 'Plan your next crops with NASA data';
-  static const how1 = 'Show us your field';
-  static const how2 = 'Answer 3 quick questions';
+  static const welcomeTitle = 'Which crop fits your farm next?';
+  static const how1 = 'Pin your farm';
+  static const how2 = 'Answer 3 questions';
   static const how3 = 'See which crops fit';
-  static const welcomeDisclaimer = 'A guide to talk over with others. Not a guarantee.';
+  static const welcomeDisclaimer =
+      'A guide to talk over with others. Not a guarantee.';
   static const getStarted = 'Start';
 
-  // Location
-  static const locationTitle = 'Your field';
-  static const locationHint = 'Tap the map on your field';
-  static const useMyLocation = "I'm at my field";
+  // Location (setup: one pin only)
+  static const locationTitle = 'Where is your farm?';
+  static const locationHint = 'Tap your farm on the map';
+  static const useMyLocation = "I'm at my farm";
   static const findingYou = 'Finding you…';
-  static const gpsOff = 'Turn on location to use this. You can also tap the map.';
+  static const gpsOff = 'Turn on location, or tap the map.';
   static const gpsDenied = 'Location not allowed. Tap the map instead.';
-  static const gpsFailed = "Couldn't find your location. Tap the map instead.";
-  static const useSampleField = 'Use a sample field';
-  static const fieldMarked = 'Field marked';
+  static const gpsFailed = "Couldn't find you. Tap the map instead.";
+  static const useSampleField = 'Use a sample farm';
+  static const fieldMarked = 'Farm pinned';
+  static const pinLater = 'Later you can mark the whole farm on the Field tab.';
   static const outsideMyanmar = 'This is outside Myanmar. Results may not fit.';
   static const continueLabel = 'Continue';
   static const back = 'Back';
   static const done = 'Done';
-  static const recenter = 'Back to my field';
+  static const recenter = 'Back to my farm';
 
   // Questions (only what the engine uses)
   static String stepOf(int i, int n) => '$i of $n';
   static String stepSemantic(int i, int n) => 'Question $i of $n';
-  static const dontKnow = "I don't know";
+  static const dontKnow = 'Not sure';
   static const qCurrentCrop = 'What do you grow now?';
-  static const qIrrigation = 'Can you water your field?';
-  static const qDrainage = 'After heavy rain, does water stay on the field?';
+  static const qIrrigation = 'How do you water your farm?';
+  static const qDrainage = 'After heavy rain, the water…';
+  static const waterRain = 'Only rain';
+  static const waterSome = 'Sometimes';
+  static const waterAll = 'All year';
+  static const drainFast = 'Dries fast';
+  static const drainDays = 'Stays 1–2 days';
+  static const drainLong = 'Stays many days';
   static const next = 'Next';
-  static const seeResults = 'See my results';
+  static const seeResults = 'See my crops';
 
   // Tabs
-  static const tabHome = 'Home';
   static const tabCrops = 'Crops';
   static const tabWeather = 'Weather';
+  static const tabField = 'Field';
   static const tabNotes = 'Notes';
 
   // Loading / errors
-  static const preparing = 'Checking your field…';
+  static const preparing = 'Checking your farm…';
   static const step1 = 'Reading NASA weather records';
   static const step2 = 'Checking crop facts';
-  static const step3 = 'Comparing crop plans';
-  static const errorTitle = "Couldn't check your field";
+  static const step3 = 'Comparing crops';
+  static const errorTitle = "Couldn't check your farm";
   static const retry = 'Try again';
   static const useDemo = 'Show demo instead';
-  static const showLast = 'Show last result';
-  static const notFound = "This plan isn't available any more.";
+  static const showLast = 'Showing your last result';
+  static const notFound = "This crop plan isn't available any more.";
+  static const demoData = 'Practice data — not your real farm yet';
 
-  // Home
-  static const myField = 'My field';
-  static const demoData = 'Demo data — not your real field';
-  static const satellitePhoto = 'NASA satellite photo';
-  static const openMap = 'Open map';
-  static const cropPlans = 'Crop plans for your field';
-  static const warnings = 'Watch out';
-  static const yourAnswers = 'Your answers';
-  static const location = 'Location';
-  static const growNow = 'Growing now';
-  static const water = 'Water';
-  static const drainage = 'After rain';
-  static const share = 'Share with an advisor';
-  static const aboutResults = 'How we checked';
-  static const startOver = 'Start over with a new field';
-  static const startOverConfirm = 'Your answers will be cleared. Notes are kept.';
-  static const cancel = 'Cancel';
-
-  // Crops (one plan at a time)
-  static const now = 'Now';
-  static String plan(int n) => 'Plan $n';
+  // Crops tab
+  static const nextSeason = 'Next season';
+  static const bestFirst = 'Best fit first';
+  static const tapForWhy = 'Tap a card to see why';
   static const whatYouGrowNow = 'What you grow now';
-  static String planLong(int n) => 'Other plan $n';
-  static const when = 'When';
-  static const good = 'Good things';
+  static const then = 'then';
+  static const whyGood = 'Why it fits';
   static const watchOut = 'Watch out';
   static const dontKnowYet = "We don't know yet";
+  static const when = 'When';
+  static const moreDetails = 'More details';
   static const whereFrom = 'Where this comes from';
   static const noneYet = 'Nothing confirmed yet.';
-  static const noWarnings = 'Nothing flagged.';
   static const fitNote = 'Based on the crop facts we have. Not a guarantee.';
   static const windowUnknown = 'Months not known';
+  static String planLong(int n) => 'Other plan $n';
 
-  // Status words (plain, still honest)
-  static const supported = 'Fits';
-  static const conflicts = 'Does not fit';
-  static const constrained = 'Some problems';
-  static const unknown = 'Not sure yet';
+  // Fit words (traffic light, always with an icon too)
+  static const supported = 'Good fit';
+  static const constrained = 'Careful';
+  static const conflicts = 'Poor fit';
+  static const unknown = 'Not sure';
   static const riskHigh = 'High';
   static const riskMedium = 'Medium';
   static const riskLow = 'Low';
   static const riskNoData = 'Not sure';
 
+  // Weather tab
+  static const mostRain = 'Most rain';
+  static const leastRain = 'Least rain';
+  static const hottest = 'Hottest';
+  static const tapMonth = 'Tap a month for numbers';
+  static const rain = 'Rain';
+  static const heat = 'Heat';
+  static const noData = 'No data';
+  static const noDataMonth = 'No data for this month';
+  static String notMeasured(String kind) =>
+      'These numbers are $kind, not measured.';
+
+  // Field tab
+  static const myFarm = 'My farm';
+  static const markFarm = 'Mark your farm';
+  static const markFarmBody = 'Pin the 4 corners so we check only your farm.';
+  static const editFarm = 'Change farm shape';
+  static const farmSize = 'Farm size';
+  static const showPlantHealth = 'Show plant health';
+  static const yourAnswers = 'Your answers';
+  static const location = 'Farm pin';
+  static const growNow = 'Growing now';
+  static const water = 'Water';
+  static const drainage = 'After rain';
+  static const share = 'Send to a helper';
+  static const aboutResults = 'About this data';
+  static const sources = 'Sources';
+  static const startOver = 'Start over';
+  static const startOverConfirm =
+      'Your farm and answers will be cleared. Notes are kept.';
+  static const cancel = 'Cancel';
+  static const farmNote =
+      'Crops and weather are checked at the middle of your farm. NASA weather describes the wider area around it.';
+
+  // Mark-the-farm screen (4 corner pins)
+  static String cornerOf(int i) => 'Corner $i of 4';
+  static const cornerHint =
+      "Walk to a corner and tap \"I'm at this corner\". Or tap the map.";
+  static const atCorner = "I'm at this corner";
+  static const undo = 'Undo';
+  static const clear = 'Start again';
+  static const saveFarm = 'Save farm';
+  static const allCorners = 'All 4 corners pinned';
+  static const farmSaved = 'Farm saved. Checking your farm again.';
+
   // About sheet
   static const notices = 'Important';
   static const dataGaps = 'Missing information';
   static const assumptions = 'What we assumed';
-
-  // Weather
-  static const mostRain = 'Most rain';
-  static const leastRain = 'Least rain';
-  static const hottest = 'Hottest';
-  static const seasonRain = 'Total rain';
-  static const avgTemp = 'Average heat';
-  static const rainEachMonth = 'Rain each month';
-  static const heatEachMonth = 'Heat each month';
-  static const rain = 'Rain';
-  static const heat = 'Heat';
-  static const noData = 'No data';
-  static const tapBar = 'Tap a month to see it.';
-  static const gapNote = 'Grey means no data, not zero.';
-  static String notMeasured(String kind) => 'These numbers are $kind, not measured.';
 
   // Map
   static const photo = 'Photo';
@@ -126,18 +149,18 @@ abstract final class S {
   static const moreGreen = 'Very green';
   static const imageryNote =
       'For looking only. Satellite images are not used in any calculation.';
-  static const regionalNote = 'An estimate for your area, not your exact field.';
+  static const pixelNote =
+      'Each NASA plant-health square is about 250 m wide, so small farms share a square with their neighbours.';
 
   // Notes (field diary)
-  static const notesEmptyTitle = 'Your field diary';
-  static const notesEmptyBody =
-      'Write down what you see: pests, water, how crops grow. Notes stay on this phone.';
+  static const notesTitle = 'What did you see?';
+  static const yourNotes = 'Your notes';
+  static const notesEmptyBody = 'Tap what you saw. Notes stay on this phone.';
   static const addNote = 'Add note';
   static const newNote = 'New note';
-  static const noteHint = 'What did you see?';
+  static const noteHint = 'Write a few words (you can skip this)';
   static const save = 'Save';
   static const deleted = 'Note deleted';
-  static const undo = 'Undo';
   static const kindPests = 'Pests';
   static const kindWater = 'Water';
   static const kindGrowth = 'Growth';
@@ -145,9 +168,8 @@ abstract final class S {
   static const kindOther = 'Other';
 
   // Sources
-  static const sources = 'Sources';
   static const sourcesIntro =
-      'Every result comes from one of these sources. Satellite numbers describe your area, not your exact field.';
+      'Every result comes from one of these sources. Satellite numbers describe your area, not your exact farm.';
   static const evidenceTypes = 'Kinds of source';
   static const sourcesUsed = 'Sources used';
   static const evidence = 'Source';

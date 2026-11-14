@@ -8,11 +8,11 @@ import '../../data/models/field_note.dart';
 import '../../design/components/buttons.dart';
 import '../../design/components/grouped.dart';
 import '../../design/components/page.dart';
-import '../../design/components/pressable.dart';
+import '../../design/components/picture_tiles.dart';
 import '../../design/tokens.dart';
 import '../../state/providers.dart';
 
-String _kindEmoji(NoteKind kind) => switch (kind) {
+String noteEmoji(NoteKind kind) => switch (kind) {
   NoteKind.pests => '🐛',
   NoteKind.water => '💧',
   NoteKind.growth => '🌱',
@@ -20,7 +20,7 @@ String _kindEmoji(NoteKind kind) => switch (kind) {
   NoteKind.other => '📝',
 };
 
-String _kindLabel(NoteKind kind) => switch (kind) {
+String noteLabel(NoteKind kind) => switch (kind) {
   NoteKind.pests => S.kindPests,
   NoteKind.water => S.kindWater,
   NoteKind.growth => S.kindGrowth,
@@ -28,23 +28,24 @@ String _kindLabel(NoteKind kind) => switch (kind) {
   NoteKind.other => S.kindOther,
 };
 
-/// 4th tab: Field diary notes kept on the phone only.
+/// Notes tab (OpenFarm "scouting" idea): tap what you saw, words optional.
+/// Notes stay on this phone.
 class NotesTab extends ConsumerWidget {
   const NotesTab({super.key});
 
-  void _openAddSheet(BuildContext context, WidgetRef ref) {
-    final p = context.fs;
+  void _add(BuildContext context, WidgetRef ref, NoteKind kind) {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: p.background,
+      backgroundColor: context.fs.background,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(FsRadius.sheet)),
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(FsRadius.sheet),
+        ),
       ),
-      builder: (ctx) => _AddNoteSheet(
-        onSave: (kind, text) {
-          ref.read(notesProvider.notifier).add(kind, text);
-        },
+      builder: (_) => _AddNoteSheet(
+        kind: kind,
+        onSave: (text) => ref.read(notesProvider.notifier).add(kind, text),
       ),
     );
   }
@@ -55,73 +56,46 @@ class NotesTab extends ConsumerWidget {
     final notes = ref.watch(notesProvider);
 
     return FsPage(
-      title: S.tabNotes,
+      title: S.notesTitle,
       showBack: false,
-      trailing: CupertinoButton(
-        padding: EdgeInsets.zero,
-        minimumSize: const Size.square(FsSpace.minTouch),
-        onPressed: () => _openAddSheet(context, ref),
-        child: Semantics(
-          label: S.addNote,
-          button: true,
-          child: Icon(CupertinoIcons.plus, size: 24, color: p.tint),
-        ),
-      ),
       children: [
+        FsPictureGrid<NoteKind>(
+          choices: [
+            for (final k in [
+              NoteKind.pests,
+              NoteKind.water,
+              NoteKind.growth,
+              NoteKind.weather,
+            ])
+              FsPicture(k, noteEmoji(k), noteLabel(k)),
+          ],
+          unsure: FsPicture(
+            NoteKind.other,
+            noteEmoji(NoteKind.other),
+            noteLabel(NoteKind.other),
+          ),
+          selected: null,
+          tileHeight: 96,
+          onSelect: (k) => _add(context, ref, k),
+        ),
         if (notes.isEmpty)
           Padding(
             padding: const EdgeInsets.fromLTRB(
-              FsSpace.xxl,
-              FsSpace.xxxl,
-              FsSpace.xxl,
-              FsSpace.xxl,
+              FsSpace.gutter,
+              FsSpace.xl,
+              FsSpace.gutter,
+              0,
             ),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 360),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      width: 72,
-                      height: 72,
-                      decoration: BoxDecoration(
-                        color: p.tintSoft,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        CupertinoIcons.book,
-                        size: 34,
-                        color: p.tint,
-                      ),
-                    ),
-                    const SizedBox(height: FsSpace.xl),
-                    Text(
-                      S.notesEmptyTitle,
-                      textAlign: TextAlign.center,
-                      style: context.type.title2,
-                    ),
-                    const SizedBox(height: FsSpace.sm),
-                    Text(
-                      S.notesEmptyBody,
-                      textAlign: TextAlign.center,
-                      style: context.type.body.copyWith(
-                        color: p.secondaryLabel,
-                      ),
-                    ),
-                    const SizedBox(height: FsSpace.xxl),
-                    FsButton(
-                      S.addNote,
-                      onPressed: () => _openAddSheet(context, ref),
-                    ),
-                  ],
-                ),
-              ),
+            child: Text(
+              S.notesEmptyBody,
+              textAlign: TextAlign.center,
+              style: context.type.body.copyWith(color: p.secondaryLabel),
             ),
           )
         else
           FsGroupedSection(
-            separatorIndent: FsSpace.lg + 22 + FsSpace.md,
+            header: S.yourNotes,
+            separatorIndent: FsSpace.lg + 26 + FsSpace.md,
             children: [
               for (final note in notes)
                 Dismissible(
@@ -131,7 +105,10 @@ class NotesTab extends ConsumerWidget {
                     color: p.negativeText,
                     alignment: Alignment.centerRight,
                     padding: const EdgeInsets.only(right: FsSpace.xl),
-                    child: const Icon(CupertinoIcons.trash, color: Colors.white),
+                    child: const Icon(
+                      CupertinoIcons.trash,
+                      color: Colors.white,
+                    ),
                   ),
                   onDismissed: (_) {
                     final notifier = ref.read(notesProvider.notifier);
@@ -146,19 +123,7 @@ class NotesTab extends ConsumerWidget {
                       ),
                     );
                   },
-                  child: FsListRow(
-                    leading: Text(
-                      _kindEmoji(note.kind),
-                      style: const TextStyle(fontSize: 22),
-                    ),
-                    title: note.text,
-                    titleMaxLines: 3,
-                    subtitle:
-                        '${_kindLabel(note.kind)} · ${DateFormat('d MMM, h:mm a').format(note.createdAt)}',
-                    chevron: false,
-                    semanticLabel:
-                        '${_kindLabel(note.kind)} note, ${DateFormat('d MMM').format(note.createdAt)}: ${note.text}',
-                  ),
+                  child: _NoteRow(note),
                 ),
             ],
           ),
@@ -167,24 +132,37 @@ class NotesTab extends ConsumerWidget {
   }
 }
 
+class _NoteRow extends StatelessWidget {
+  const _NoteRow(this.note);
+  final FieldNote note;
+
+  @override
+  Widget build(BuildContext context) {
+    final label = noteLabel(note.kind);
+    final text = note.text.isEmpty ? label : note.text;
+    final date = DateFormat('d MMM').format(note.createdAt);
+    return FsListRow(
+      leading: Text(noteEmoji(note.kind), style: const TextStyle(fontSize: 26)),
+      title: text,
+      titleMaxLines: 3,
+      subtitle: note.text.isEmpty ? date : '$label · $date',
+      chevron: false,
+      semanticLabel: '$label note, $date: $text',
+    );
+  }
+}
+
 class _AddNoteSheet extends StatefulWidget {
-  const _AddNoteSheet({required this.onSave});
-  final void Function(NoteKind kind, String text) onSave;
+  const _AddNoteSheet({required this.kind, required this.onSave});
+  final NoteKind kind;
+  final ValueChanged<String> onSave;
 
   @override
   State<_AddNoteSheet> createState() => _AddNoteSheetState();
 }
 
 class _AddNoteSheetState extends State<_AddNoteSheet> {
-  late final TextEditingController _controller;
-  NoteKind _selectedKind = NoteKind.other;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-    _controller.addListener(() => setState(() {}));
-  }
+  final _controller = TextEditingController();
 
   @override
   void dispose() {
@@ -195,8 +173,7 @@ class _AddNoteSheetState extends State<_AddNoteSheet> {
   @override
   Widget build(BuildContext context) {
     final p = context.fs;
-    final canSave = _controller.text.trim().isNotEmpty;
-
+    final t = context.type;
     return SafeArea(
       top: false,
       child: Padding(
@@ -213,8 +190,13 @@ class _AddNoteSheetState extends State<_AddNoteSheet> {
             children: [
               Row(
                 children: [
+                  Text(
+                    noteEmoji(widget.kind),
+                    style: const TextStyle(fontSize: 34),
+                  ),
+                  const SizedBox(width: FsSpace.md),
                   Expanded(
-                    child: Text(S.newNote, style: context.type.title3),
+                    child: Text(noteLabel(widget.kind), style: t.title2),
                   ),
                   CupertinoButton(
                     padding: EdgeInsets.zero,
@@ -226,39 +208,20 @@ class _AddNoteSheetState extends State<_AddNoteSheet> {
                       child: Icon(
                         CupertinoIcons.xmark_circle_fill,
                         color: p.tertiaryLabel,
-                        size: 24,
+                        size: 28,
                       ),
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: FsSpace.lg),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    for (final kind in NoteKind.values) ...[
-                      _KindChip(
-                        kind: kind,
-                        selected: _selectedKind == kind,
-                        onTap: () => setState(() => _selectedKind = kind),
-                      ),
-                      const SizedBox(width: FsSpace.sm),
-                    ],
-                  ],
-                ),
-              ),
-              const SizedBox(height: FsSpace.lg),
               CupertinoTextField(
                 controller: _controller,
-                autofocus: true,
-                minLines: 4,
-                maxLines: 8,
+                minLines: 3,
+                maxLines: 6,
                 placeholder: S.noteHint,
-                placeholderStyle: context.type.body.copyWith(
-                  color: p.tertiaryLabel,
-                ),
-                style: context.type.body.copyWith(color: p.label),
+                placeholderStyle: t.body.copyWith(color: p.tertiaryLabel),
+                style: t.body.copyWith(color: p.label),
                 padding: const EdgeInsets.all(FsSpace.md),
                 decoration: BoxDecoration(
                   color: p.surface,
@@ -269,12 +232,11 @@ class _AddNoteSheetState extends State<_AddNoteSheet> {
               const SizedBox(height: FsSpace.xl),
               FsButton(
                 S.save,
-                onPressed: canSave
-                    ? () {
-                        widget.onSave(_selectedKind, _controller.text);
-                        Navigator.of(context).pop();
-                      }
-                    : null,
+                icon: CupertinoIcons.checkmark_alt,
+                onPressed: () {
+                  widget.onSave(_controller.text);
+                  Navigator.of(context).pop();
+                },
               ),
             ],
           ),
@@ -283,58 +245,3 @@ class _AddNoteSheetState extends State<_AddNoteSheet> {
     );
   }
 }
-
-class _KindChip extends StatelessWidget {
-  const _KindChip({
-    required this.kind,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final NoteKind kind;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final p = context.fs;
-    return Semantics(
-      button: true,
-      selected: selected,
-      label: _kindLabel(kind),
-      child: FsPressable(
-        onTap: onTap,
-        child: Container(
-          constraints: const BoxConstraints(minHeight: FsSpace.minTouch),
-          padding: const EdgeInsets.symmetric(
-            horizontal: FsSpace.md,
-            vertical: FsSpace.sm,
-          ),
-          decoration: BoxDecoration(
-            color: selected ? p.tintSoft : p.surface,
-            borderRadius: BorderRadius.circular(FsRadius.capsule),
-            border: Border.all(
-              color: selected ? p.tint : p.separator,
-              width: selected ? 1.5 : 0.5,
-            ),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(_kindEmoji(kind)),
-              const SizedBox(width: FsSpace.xs),
-              Text(
-                _kindLabel(kind),
-                style: context.type.footnote.copyWith(
-                  fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
-                  color: selected ? p.tint : p.label,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-

@@ -237,7 +237,7 @@ void showSourceSheet(BuildContext context, Reference r) {
               FsSpace.gutter + FsSpace.lg,
               0,
             ),
-            child: Text(S.regionalNote, style: ctx.type.footnote),
+            child: Text(S.farmNote, style: ctx.type.footnote),
           ),
       ],
     ),

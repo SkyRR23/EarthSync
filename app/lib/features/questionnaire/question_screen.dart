@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../app/strings.dart';
 import '../../data/models/farmer_input.dart';
 import '../../design/components/buttons.dart';
-import '../../design/components/choice.dart';
+import '../../design/components/picture_tiles.dart';
 import '../../design/components/page.dart';
 import '../../design/components/scenario.dart' show cropEmoji;
 import '../../design/tokens.dart';
@@ -16,8 +16,10 @@ const kQuestionCount = 3;
 
 final _cropChoices = [
   for (final e in Crops.options.entries)
-    FsChoice(e.key, '${cropEmoji(e.key)}  ${e.value}'),
+    FsPicture(e.key, cropEmoji(e.key), e.value),
 ];
+
+const _unsureCrop = FsPicture(kUnknown, '🤔', S.dontKnow);
 
 /// One widget for all questions; [step] is 1-based.
 /// [editing] = opened from Home's "Your answers": return there after.
@@ -60,39 +62,43 @@ class QuestionScreen extends ConsumerWidget {
     final (String question, Widget body, bool answered) = switch (step) {
       1 => (
         S.qCurrentCrop,
-        FsChoiceList<String>(
+        FsPictureGrid<String>(
           choices: _cropChoices,
-          unknownValue: kUnknown,
-          selected: {?d.currentCrop},
-          onChanged: (s) => answerThenAdvance(() => n.setCurrentCrop(s.first)),
+          unsure: _unsureCrop,
+          columns: 3,
+          tileHeight: 104,
+          selected: d.currentCrop,
+          onSelect: (v) => answerThenAdvance(() => n.setCurrentCrop(v)),
         ),
         d.currentCrop != null,
       ),
       2 => (
         S.qIrrigation,
-        FsChoiceList<Irrigation>(
+        FsPictureGrid<Irrigation>(
           choices: const [
-            FsChoice(Irrigation.full, 'Yes, all year', CupertinoIcons.drop_fill),
-            FsChoice(Irrigation.partial, 'Sometimes', CupertinoIcons.drop),
-            FsChoice(Irrigation.none, 'No, only rain', CupertinoIcons.cloud_rain),
+            FsPicture(Irrigation.none, '🌧️', S.waterRain),
+            FsPicture(Irrigation.partial, '💧', S.waterSome),
+            FsPicture(Irrigation.full, '🚰', S.waterAll),
           ],
-          unknownValue: Irrigation.unknown,
-          selected: {?d.irrigation},
-          onChanged: (s) => answerThenAdvance(() => n.setIrrigation(s.first)),
+          unsure: const FsPicture(Irrigation.unknown, '🤔', S.dontKnow),
+          columns: 3,
+          selected: d.irrigation,
+          onSelect: (v) => answerThenAdvance(() => n.setIrrigation(v)),
         ),
         d.irrigation != null,
       ),
       _ => (
         S.qDrainage,
-        FsChoiceList<Drainage>(
+        FsPictureGrid<Drainage>(
           choices: const [
-            FsChoice(Drainage.poor, 'Yes, for many days', CupertinoIcons.drop_fill),
-            FsChoice(Drainage.moderate, 'For a day or two', CupertinoIcons.drop),
-            FsChoice(Drainage.good, 'No, it dries fast', CupertinoIcons.sun_max),
+            FsPicture(Drainage.good, '☀️', S.drainFast),
+            FsPicture(Drainage.moderate, '⏳', S.drainDays),
+            FsPicture(Drainage.poor, '🌊', S.drainLong),
           ],
-          unknownValue: Drainage.unknown,
-          selected: {?d.drainage},
-          onChanged: (s) => answerThenAdvance(() => n.setDrainage(s.first)),
+          unsure: const FsPicture(Drainage.unknown, '🤔', S.dontKnow),
+          columns: 3,
+          selected: d.drainage,
+          onSelect: (v) => answerThenAdvance(() => n.setDrainage(v)),
         ),
         d.drainage != null,
       ),
@@ -114,13 +120,13 @@ class QuestionScreen extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(
             FsSpace.gutter + FsSpace.xs,
-            FsSpace.xxl,
+            FsSpace.xl,
             FsSpace.gutter,
             0,
           ),
           child: Semantics(
             header: true,
-            child: Text(question, style: context.type.title1),
+            child: Text(question, style: context.type.largeTitle),
           ),
         ),
         body,

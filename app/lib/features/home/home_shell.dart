@@ -10,11 +10,11 @@ import '../../design/components/grouped.dart';
 import '../../design/tokens.dart';
 import '../../state/providers.dart';
 import 'crops_tab.dart';
-import 'home_tab.dart';
+import 'field_tab.dart';
 import 'notes_tab.dart';
 import 'weather_tab.dart';
 
-/// The app after setup: 4 tabs — Home, Crops, Weather, Notes.
+/// The app after setup: 4 tabs — Crops, Weather, Field, Notes.
 /// Phones get a bottom tab bar; tablets a sidebar.
 class HomeShell extends ConsumerStatefulWidget {
   const HomeShell({super.key, this.initialTab = 0});
@@ -26,12 +26,15 @@ class HomeShell extends ConsumerStatefulWidget {
 
 class _HomeShellState extends ConsumerState<HomeShell> {
   late int _tab = widget.initialTab.clamp(0, 3);
-  int _plan = 0;
 
   static const _tabs = [
-    (S.tabHome, CupertinoIcons.house, CupertinoIcons.house_fill),
     (S.tabCrops, Icons.grass_outlined, Icons.grass),
-    (S.tabWeather, CupertinoIcons.cloud_sun_rain, CupertinoIcons.cloud_sun_rain_fill),
+    (
+      S.tabWeather,
+      CupertinoIcons.cloud_sun_rain,
+      CupertinoIcons.cloud_sun_rain_fill,
+    ),
+    (S.tabField, CupertinoIcons.map, CupertinoIcons.map_fill),
     (S.tabNotes, CupertinoIcons.book, CupertinoIcons.book_fill),
   ];
 
@@ -40,28 +43,21 @@ class _HomeShellState extends ConsumerState<HomeShell> {
     super.initState();
     // App reopened with a saved field: check it again.
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(analysisProvider.notifier).ensureFor(ref.read(farmerDraftProvider));
+      ref
+          .read(analysisProvider.notifier)
+          .ensureFor(ref.read(farmerDraftProvider));
     });
   }
-
-  void _openPlan(int i) => setState(() {
-    _plan = i;
-    _tab = 1;
-  });
 
   @override
   Widget build(BuildContext context) {
     final p = context.fs;
     final pages = [
-      AnalysisGate(builder: (a, cached) => HomeTab(analysis: a, fromCache: cached, onOpenPlan: _openPlan)),
       AnalysisGate(
-        builder: (a, _) => CropsTab(
-          analysis: a,
-          index: _plan,
-          onIndexChanged: (i) => setState(() => _plan = i),
-        ),
+        builder: (a, cached) => CropsTab(analysis: a, fromCache: cached),
       ),
       AnalysisGate(builder: (a, _) => WeatherTab(analysis: a)),
+      const FieldTab(),
       const NotesTab(),
     ];
     final body = IndexedStack(index: _tab, children: pages);
@@ -81,7 +77,12 @@ class _HomeShellState extends ConsumerState<HomeShell> {
                       padding: const EdgeInsets.only(top: FsSpace.xl),
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(FsSpace.xxl, 0, FsSpace.lg, 0),
+                          padding: const EdgeInsets.fromLTRB(
+                            FsSpace.xxl,
+                            0,
+                            FsSpace.lg,
+                            0,
+                          ),
                           child: Text(
                             S.appName,
                             maxLines: 1,
@@ -92,17 +93,22 @@ class _HomeShellState extends ConsumerState<HomeShell> {
                         FsGroupedSection(
                           separatorIndent: FsSpace.lg + 30 + FsSpace.md,
                           children: [
-                            for (final (i, (label, icon, active)) in _tabs.indexed)
+                            for (final (i, (label, icon, active))
+                                in _tabs.indexed)
                               Container(
                                 color: i == _tab ? p.tintSoft : null,
                                 child: FsListRow(
                                   leading: FsIconBadge(
                                     i == _tab ? active : icon,
-                                    color: i == _tab ? p.tint : p.secondaryLabel,
+                                    color: i == _tab
+                                        ? p.tint
+                                        : p.secondaryLabel,
                                   ),
                                   title: label,
                                   titleStyle: i == _tab
-                                      ? context.type.headline.copyWith(color: p.tint)
+                                      ? context.type.headline.copyWith(
+                                          color: p.tint,
+                                        )
                                       : null,
                                   chevron: false,
                                   onTap: () => setState(() => _tab = i),
@@ -156,8 +162,14 @@ class AnalysisGate extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(analysisProvider);
     return switch (state) {
-      AnalysisReady(:final analysis, :final fromCache) => builder(analysis, fromCache),
-      AnalysisFailed(:final error, :final lastGood) => _Failed(error: error, hasLast: lastGood != null),
+      AnalysisReady(:final analysis, :final fromCache) => builder(
+        analysis,
+        fromCache,
+      ),
+      AnalysisFailed(:final error, :final lastGood) => _Failed(
+        error: error,
+        hasLast: lastGood != null,
+      ),
       _ => const _Preparing(),
     };
   }
@@ -232,9 +244,17 @@ class _Failed extends ConsumerWidget {
               S.retry,
               onPressed: () => n.run(ref.read(farmerDraftProvider).toInput()),
             ),
-            FsButton(S.useDemo, kind: FsButtonKind.tinted, onPressed: n.runDemo),
+            FsButton(
+              S.useDemo,
+              kind: FsButtonKind.tinted,
+              onPressed: n.runDemo,
+            ),
             if (hasLast)
-              FsButton(S.showLast, kind: FsButtonKind.plain, onPressed: n.showLastGood),
+              FsButton(
+                S.showLast,
+                kind: FsButtonKind.plain,
+                onPressed: n.showLastGood,
+              ),
           ],
         ),
       ),

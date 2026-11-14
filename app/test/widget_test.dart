@@ -47,7 +47,7 @@ void main() {
     expect(find.text('Start'), findsOneWidget);
   });
 
-  testWidgets('scenario row and detail show status and no percentages', (
+  testWidgets('crop card and detail show fit word and no percentages', (
     tester,
   ) async {
     final a = _fixture();
@@ -59,7 +59,7 @@ void main() {
           body: SingleChildScrollView(
             child: Column(
               children: [
-                FsPlanRow(scenario: s, label: 'Option 1', onTap: () {}),
+                FsCropCard(scenario: s, onTap: () {}),
                 ScenarioDetailBody(scenario: s, label: 'Option 1', analysis: a),
               ],
             ),
@@ -67,7 +67,7 @@ void main() {
         ),
       ),
     );
-    expect(find.text(cropSequence(s)), findsNWidgets(2));
+    expect(find.text(cropNames(s)), findsNWidgets(2));
     expect(find.text(S.constrained), findsWidgets);
     expect(find.textContaining('%'), findsNothing);
   });

@@ -17,9 +17,9 @@ class ScenarioDetailScreen extends ConsumerWidget {
     final a = state is AnalysisReady ? state.analysis : null;
     final match = a == null
         ? null
-        : labelledScenarios(a.scenarios)
-            .where((e) => e.$1.id == scenarioId)
-            .firstOrNull;
+        : labelledScenarios(
+            a.scenarios,
+          ).where((e) => e.$1.id == scenarioId).firstOrNull;
     if (match == null) {
       return const FsPage(
         title: S.notFound,
@@ -38,13 +38,8 @@ class ScenarioDetailScreen extends ConsumerWidget {
       largeTitle: false,
       navMiddle: label,
       children: [
-        ScenarioDetailBody(
-          scenario: scenario,
-          label: label,
-          analysis: a!,
-        ),
+        ScenarioDetailBody(scenario: scenario, label: label, analysis: a!),
       ],
     );
   }
 }
-
