@@ -5,6 +5,7 @@ not independent field accuracy or farming advice.
 
 | Check | Observed result |
 | --- | --- |
+| Current 7N source snapshot | PR #24 at `530c1e1d`: all six modern corrections present; four scoped files match reviewed code and 7I adds coordinate-domain checks. Source-only scope |
 | Original reconstructed archive | 55,057,221 bytes; complete expected SHA-256 matched before content inspection |
 | Full inventory / unchanged originals | 743 members, 600 files hashed/CRC checked; 113 extracted non-build files rehashed unchanged; 487 build files rejected |
 | PR #11 comparison | 60 byte-identical files; README/API notes differ; new source/raw/crop records inspected separately |
@@ -80,3 +81,7 @@ run identity, satellite/soil QA and local representativeness, original fetch
 receipts, full unavailable FAO handbook review, crop-stage ET0/Kc/water balance,
 and validated regional/cultivar management evidence. No recommendation flag was
 promoted and no missing evidence was represented as measured.
+
+CI at code/artifact checkpoint `893553d` passed all eight reported checks: Rust,
+scientific contracts, Flutter bridge, and Linux/Windows Python 3.12/3.13. The
+subsequent 7N snapshot note changes documentation only.

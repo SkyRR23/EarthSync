@@ -1,5 +1,17 @@
 # Historical versus current issue matrix
 
+## Current 7N release snapshot
+
+A targeted read-only comparison against PR #24 at
+`530c1e1d06c9202dfc1f5d06c659399409b7270f` confirms **all six J01–J06
+corrections already present**. Four scoped files match reviewed audit code exactly;
+7I retains the reviewed coordinate fix and additionally validates returned
+coordinate domains. [Exact hashes and scope](evidence/7n-release-check.json).
+
+These are resolved in this snapshot, not outstanding release bugs. Do not
+cherry-pick or apply patches twice. This is not a full independent 7N runtime
+audit or scientific acceptance. Expanded crop-profile research belongs to 7P.
+
 Pins: final 7H `a7c33cc6`, 7I `b578a6df`, 7L `bd8d245b`, original v0.3
 `6f7f8107`, PR #11 `a85e2dd4`. The contributed ZIP is identified by its verified
 SHA-256, not assumed to be a repository version. All 20 concerns were checked.

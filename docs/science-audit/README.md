@@ -44,3 +44,8 @@ The archived engine's original 13 tests pass, but 12 new desired-property
 regressions fail against it. No old weighted engine was imported. All 12 Myanmar
 profiles stay in research quarantine, with zero executable rules and
 `recommendation_eligible=false`. Tests do not independently validate farming advice.
+
+Current 7N PR #24 at `530c1e1d` already includes all six modern corrections,
+confirmed by a targeted read-only source comparison. No duplicate application
+is needed. See the handoff and `evidence/7n-release-check.json`. Expanded crop
+research belongs to 7P.

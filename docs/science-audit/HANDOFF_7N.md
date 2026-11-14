@@ -5,6 +5,18 @@ targets exact final 7H for an independent draft review. It does not merge 7H,
 7I or 7L, and does not edit another worktree, FastAPI application entrypoint,
 Flutter router, central database code or the 7N branch.
 
+## Current 7N release snapshot
+
+A targeted read-only comparison against PR #24 at
+`530c1e1d06c9202dfc1f5d06c659399409b7270f` confirms **all six J01–J06
+corrections already present**. Four scoped files match reviewed audit code exactly;
+7I retains the reviewed coordinate fix and additionally validates returned
+coordinate domains. [Exact hashes and scope](evidence/7n-release-check.json).
+
+These are resolved in this snapshot, not outstanding release bugs. Do not
+cherry-pick or apply patches twice. This is not a full independent 7N runtime
+audit or scientific acceptance. Expanded crop-profile research belongs to 7P.
+
 ## Concrete patch boundaries
 
 1. `server/earthsync/source_validation.py`, `server/earthsync/power.py`,
@@ -25,9 +37,9 @@ Do not apply the 7H monthly provider changes to 7I's independent daily parser:
 its geometry/calendar/duplicate/hash protections already exist. If 7N retains
 the default 7H monthly history path, that path still needs these fixes.
 
-**7I does need J06:** apply
-`docs/science-audit/patches/7i-power-coordinate-precision.patch` after the 7I
-provider files exist in the integration tree. It modifies only that provider and
+For an older, unpatched standalone 7I checkout, J06 is supplied as
+`docs/science-audit/patches/7i-power-coordinate-precision.patch` ; current 7N already includes it. Apply only if absent and after the 7I
+provider files exist. It modifies only that provider and
 adds `test_science_coordinate_precision.py`. `git apply --check` and `git apply`
 were exercised on a separate exact 7I export; all 85 platform tests then passed
 with the three explicitly opt-in live tests skipped. Unpatched 7I fails its new
