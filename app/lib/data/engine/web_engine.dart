@@ -24,7 +24,11 @@ class WebEngine implements EngineGateway {
 
   @override
   Future<FieldAnalysis> analyzeField(FarmerInput input) async {
-    final captured = baseUri.queryParameters['climate'] == 'captured';
+    // A configured service origin must not discard the user's explicit replay
+    // choice from the application URL. Failures still never select this mode.
+    final captured =
+        baseUri.queryParameters['climate'] == 'captured' ||
+        Uri.base.queryParameters['climate'] == 'captured';
     final requestClient = client ?? http.Client();
     try {
       final evidence = captured

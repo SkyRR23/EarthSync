@@ -7,8 +7,8 @@ file; its value is never logged or written to the report/screenshots.
 
 import argparse
 import json
+import re
 from pathlib import Path
-
 from playwright.sync_api import expect, sync_playwright
 
 parser = argparse.ArgumentParser(description=__doc__)
@@ -21,6 +21,15 @@ root = Path(__file__).resolve().parents[1]
 output = Path(args.output).resolve()
 output.mkdir(parents=True, exist_ok=True)
 steps = []
+
+
+def redact(text):
+    private_token = Path(args.token_file).read_text().strip()
+    return re.sub(
+        r"(?m)(textbox[^\n]*:\s*)[^\n]+",
+        r"\1[REDACTED]",
+        text.replace(private_token, "[REDACTED]"),
+    )
 
 
 def passed(name):
@@ -56,6 +65,9 @@ with sync_playwright() as playwright:
         page.screenshot(path=str(output / f"browser-{name}.png"))
 
     def text_visible(fragment, direction=600):
+        page.mouse.move(
+            page.viewport_size["width"] / 2, page.viewport_size["height"] / 2
+        )
         for _ in range(24):
             snapshot = page.locator("body").aria_snapshot()
             if fragment in snapshot:
@@ -65,8 +77,19 @@ with sync_playwright() as playwright:
         raise AssertionError(f"Rendered text not found: {fragment}")
 
     def top():
+        page.mouse.move(
+            page.viewport_size["width"] / 2, page.viewport_size["height"] / 2
+        )
         page.mouse.wheel(0, -10000)
         page.wait_for_timeout(300)
+
+    def type_into(locator, value):
+        locator.click()
+        page.wait_for_timeout(150)
+        locator.press("ControlOrMeta+A")
+        locator.press_sequentially(value, delay=3)
+        locator.press("Tab")
+        page.wait_for_timeout(100)
 
     try:
         go("")
@@ -85,7 +108,7 @@ with sync_playwright() as playwright:
             lambda response: "/api/assistant/v1/chat" in response.url
         ) as response:
             question = page.get_by_role("textbox", name="Ask a question", exact=True)
-            question.fill("Why is soil information unavailable?")
+            type_into(question, "Why is soil information unavailable?")
             page.get_by_role("button", name="Send", exact=True).click()
         answer = response.value.json()
         assert (
@@ -117,14 +140,17 @@ with sync_playwright() as playwright:
         passed("B: actual live NASA request and rendered historical climate graphs")
         top()
         page.get_by_role("button", name="Add My Farm", exact=True).click()
-        page.get_by_role("textbox", name="Field name (optional)", exact=True).fill(
-            "7H acceptance field"
+        type_into(
+            page.get_by_role("textbox", name="Field name (optional)", exact=True),
+            "7H acceptance field",
         )
-        page.get_by_role("textbox", name="Latitude (−90 to 90)", exact=True).fill(
-            "16.85"
+        type_into(
+            page.get_by_role("textbox", name="Latitude (−90 to 90)", exact=True),
+            "16.85",
         )
-        page.get_by_role("textbox", name="Longitude (−180 to 180)", exact=True).fill(
-            "96.15"
+        type_into(
+            page.get_by_role("textbox", name="Longitude (−180 to 180)", exact=True),
+            "96.15",
         )
         page.get_by_role(
             "checkbox", name="I confirm this point marks my field.", exact=True
@@ -136,6 +162,31 @@ with sync_playwright() as playwright:
         expect(page.get_by_text("7H acceptance field", exact=True)).to_be_visible()
         shot("restored-farm")
         passed("C: explicit farm confirmation restores after browser refresh")
+        page.get_by_role("button", name="Open Farm Questionnaire", exact=True).click()
+        for step in range(1, 7):
+            expect(
+                page.get_by_text(f"Question {step} of 6", exact=True)
+            ).to_be_visible()
+            page.get_by_role("button", name="I don't know", exact=True).click()
+            if step < 6:
+                expect(
+                    page.get_by_role(
+                        "heading", name=f"Question {step + 1} of 6", exact=True
+                    )
+                ).to_be_visible()
+        page.get_by_role("button", name="Check my answers", exact=True).click()
+        with page.expect_response(
+            lambda response: "/api/engine/integration" in response.url, timeout=100000
+        ) as integration_response:
+            page.get_by_role("button", name="See my options", exact=True).click()
+        integrated = integration_response.value.json()
+        assert integrated["data"]["climate"]["calendar_days"] == 365
+        text_visible("2280.56")
+        shot("real-rust-results")
+        passed(
+            "H: main questionnaire invokes NASA/Python/compiled Rust and renders real results"
+        )
+        page.get_by_role("button", name="Dashboard", exact=True).click()
         page.get_by_role("button", name="Field situation", exact=True).click()
         text_visible("Environmental context")
         shot("environmental-unavailable")
@@ -150,7 +201,11 @@ with sync_playwright() as playwright:
             "textbox", name="Private workspace token (from local setup)", exact=True
         )
         token_field.click()
-        token_field.press_sequentially(token, delay=2)
+        page.wait_for_function(
+            "document.activeElement && document.activeElement.type === 'password'"
+        )
+        page.wait_for_timeout(150)
+        page.keyboard.insert_text(token)
         page.wait_for_timeout(200)
         page.get_by_role("button", name="Connect private workspace", exact=True).click()
         expect(
@@ -176,7 +231,7 @@ with sync_playwright() as playwright:
         assert (
             response.value.status == 201
             and photo["position"] is None
-            and photo["data_kind"] == "synthetic"
+            and (photo["data_kind"] == "synthetic")
         )
         text_visible("SYNTHETIC test photo")
         shot("uploaded-photo")
@@ -200,7 +255,7 @@ with sync_playwright() as playwright:
         assert (
             replacement["id"] == photo["id"]
             and replacement["sha256"] != photo["sha256"]
-            and replacement["position"] is None
+            and (replacement["position"] is None)
         )
         text_visible("Delete photo")
         with page.expect_response(
@@ -223,13 +278,21 @@ with sync_playwright() as playwright:
         page.get_by_role(
             "button", name="Reference profile and region", exact=True
         ).click()
-        page.get_by_text("Corn (maize) · us_ia_story", exact=True).click()
         page.get_by_role(
-            "textbox", name="Your declared planting date (YYYY-MM-DD)", exact=True
-        ).fill("2025-04-15")
-        page.get_by_role(
-            "textbox", name="Your declared harvest date (YYYY-MM-DD)", exact=True
-        ).fill("2025-10-01")
+            "menuitem", name="Corn (maize) · us_ia_story", exact=True
+        ).click()
+        type_into(
+            page.get_by_role(
+                "textbox", name="Your declared planting date (YYYY-MM-DD)", exact=True
+            ),
+            "2025-04-15",
+        )
+        type_into(
+            page.get_by_role(
+                "textbox", name="Your declared harvest date (YYYY-MM-DD)", exact=True
+            ),
+            "2025-10-01",
+        )
         with page.expect_response(
             lambda response: "/api/engine/v03" in response.url
         ) as response:
@@ -252,7 +315,7 @@ with sync_playwright() as playwright:
             lambda response: "/api/assistant/v1/chat" in response.url
         ) as crop_response:
             question = page.get_by_role("textbox", name="Ask a question", exact=True)
-            question.fill("Explain the crop findings")
+            type_into(question, "Explain the crop findings")
             page.get_by_role("button", name="Send", exact=True).click()
         assert (
             crop_response.value.json()["decisions"][0]["status"]
@@ -263,7 +326,7 @@ with sync_playwright() as playwright:
             lambda response: "/api/assistant/v1/chat" in response.url
         ) as response:
             question = page.get_by_role("textbox", name="Ask a question", exact=True)
-            question.fill("What does the rainfall graph mean?")
+            type_into(question, "What does the rainfall graph mean?")
             page.get_by_role("button", name="Send", exact=True).click()
         assert response.value.json()["claims"]
         shot("assistant-evidence")
@@ -272,9 +335,11 @@ with sync_playwright() as playwright:
         page.route("**/api/v1/environment/season?*", lambda route: route.abort())
         text_visible("Refresh climate")
         page.get_by_role("button", name="Refresh climate", exact=True).click()
+        top()
         text_visible("Climate data unavailable")
         shot("outage")
         page.unroute("**/api/v1/environment/season?*")
+        text_visible("Try climate again")
         with page.expect_response(
             lambda response: "/api/v1/environment/season" in response.url,
             timeout=100000,
@@ -285,18 +350,31 @@ with sync_playwright() as playwright:
             "L: explicitly simulated transport outage and real service recovery, no fallback"
         )
         page.set_viewport_size({"width": 360, "height": 800})
-        top()
+        page.reload(wait_until="domcontentloaded")
+        enable()
+        expect(
+            page.get_by_role("button", name="Field situation", exact=True)
+        ).to_be_visible()
+        page.wait_for_timeout(750)
         shot("phone-dashboard")
-        passed("Responsive Chromium viewport 360x800 renders main farm navigation")
+        passed("Fresh Chromium viewport 360x800 renders main farm navigation")
         assert not errors, errors
+        (output / "browser-results.json").write_text(
+            json.dumps(
+                {
+                    "passed": steps,
+                    "completed": True,
+                    "unhandled_browser_errors": errors,
+                },
+                indent=2,
+            )
+            + "\n"
+        )
     except Exception as error:
         shot("failure")
-        private_token = Path(args.token_file).read_text().strip()
-        snapshot = (
-            page.locator("body").aria_snapshot().replace(private_token, "[REDACTED]")
-        )
+        snapshot = redact(page.locator("body").aria_snapshot())
         print(snapshot, flush=True)
-        raise RuntimeError(str(error).replace(private_token, "[REDACTED]")) from None
+        raise RuntimeError(redact(str(error))) from None
     finally:
         context.close()
         browser.close()

@@ -202,6 +202,10 @@ async def test_separate_authorized_photo_gps_is_never_farm_confirmation(client):
         ("image/png", b"", 422),
         ("image/png", b"x" * (MAX_UPLOAD_BYTES + 1), 413),
     ],
+    # Pytest otherwise uses the entire 10 MiB payload as a node ID. Verbose CI
+    # and duration reports then emit a single enormous line and can stall the
+    # runner's log collector before it reports the actual test result.
+    ids=["unsupported-mime", "mime-mismatch", "truncated-png", "empty", "over-limit"],
 )
 async def test_upload_validation(client, mime, data, status):
     response = await client.post(

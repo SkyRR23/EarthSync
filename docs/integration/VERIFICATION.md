@@ -8,21 +8,57 @@ on the isolated integration branch; no source PR or `main` is modified.
 
 | Check | Observed result |
 | --- | --- |
-| Combined Python unit/API/compiled-Rust contracts | 265 passed, 2 opt-in live checks skipped; one existing Starlette/AnyIO deprecation warning |
-| Fresh Python environment from `server/requirements.lock` | 29 pinned packages installed, dependency compatibility passed, same 265 passed / 2 skipped |
+| Combined Python unit/API/compiled-Rust contracts | 266 passed, 2 opt-in live checks skipped; one existing Starlette/AnyIO deprecation warning |
+| Fresh Python environment from `server/requirements.lock` | 30 pinned packages installed, dependency compatibility passed, same 266 passed / 2 skipped |
 | Rust engine, including legacy/integration/v0.2/v0.3 | 111 passed |
 | Native bridge Rust tests | 6 passed, including real v0.3 through stable FRB ABI |
 | Crop catalog validation | 39 passed; 8 profiles / 13 sources; eligibility false |
-| Flutter combined suite | 89 passed, 2 opt-in network checks skipped |
+| Flutter combined suite | 90 passed, 2 opt-in network checks skipped |
 | Separate live web-engine Flutter run | All 5 passed, including NASA → Python HTTP → compiled Rust → Flutter widgets for 12 months of 2025 |
+| Combined live native and web Flutter paths | All 10 passed against this branch's unified backend; actual FRB and compiled web executable |
 | Web release build | Passed with renderer/fonts served locally |
 | Python Ruff lint/format and Rust Clippy/rustfmt | Passed; Clippy denies warnings for both engine and bridge |
-| Flutter analysis | No errors or warnings; Material-import migration infos remain visible; final count recorded below after final checks |
+| Flutter analysis | No errors or warnings; 45 existing/new Material-import migration infos remain visible |
 | Flutter committed dependency lock | `flutter pub get --enforce-lockfile` passed without changing pins |
 
 Toolchain actually used: Linux, Python 3.12.14, Rust 1.99.0, Flutter 3.50.0,
-Dart 3.14.0, Chromium with Playwright 1.65.2. Android compilation and the final
-browser acceptance run are being completed; their outcomes are recorded below.
+Dart 3.14.0, Chromium with Playwright 1.65.2. The Android debug APK and complete Chromium acceptance journey both passed.
+Runtime/device and scientific limits below still apply.
+
+## Acceptance coverage and remaining work
+
+| Requested journey | Evidence and scope |
+| --- | --- |
+| A: new user without location | Chromium skip flow and location-free assistant; no fabricated farm |
+| B: selected area and historical graphs | Actual 2025 POWER request, rendered graphs and source details in Chromium |
+| C: farm confirmation and restoration | Chromium confirmation and browser refresh; persistence/edit independence also covered by Flutter tests |
+| D/E: field dashboard and unavailable soil/weather | Main-app Chromium flow and mounted API tests; unavailable values remain empty/null |
+| F: photo upload/view/replace/delete | Actual Chromium file chooser, authenticated HTTP and rendered image; image sanitation, consent, quotas and authorization regressions |
+| G: unavailable satellite/SAR | Main-app Chromium timeline plus API tests; no live pixels claimed |
+| H: real NASA → Python → compiled Rust → Flutter | Complete Chromium questionnaire/results flow and separate live Flutter HTTP/widget checks |
+| I: synthetic v0.3 | Actual compiled executable through HTTP and main Flutter screen, visibly labeled software test |
+| J: reference-only catalog | All six mapped profiles tested through actual Rust; main Chromium profile/date flow with insufficient result |
+| K: evidence-bound chatbot | Chromium with no farm and with actual NASA/Rust context; source/status/privacy regression tests |
+| L: outage and recovery | Chromium transport abort followed by restored real HTTP; no fixture substitution |
+| M: legacy/mock/captured compatibility | Python compiled legacy/v0.2/v0.3 tests, native bridge tests and Flutter fixture/captured transport tests; explicit replay flag preserved |
+| N: Android | Debug APK built with all three native Rust ABIs; host bridge execution passed. Physical/emulator runtime remains unverified |
+
+The [HTTP receipt](evidence/http-smoke.json) additionally records 14 requests to
+the running unified server, including all three compiled engine versions,
+environmental and assistant routers, satellite availability, private photo
+authorization, and a JSON 404 instead of the static application for an unknown API.
+The photo success was authorized with the local test workspace token; the receipt
+does not contain it. Health success does not establish provider validation.
+
+| Capability classification | Delivered state |
+| --- | --- |
+| Implemented and software/browser tested | Primary onboarding/navigation, independent area/farm state, historical POWER graphs, field availability panels, private demo photos, compiled engine paths, catalog handoff, deterministic assistant |
+| Implemented but not live-provider validated | Opt-in environmental adapters and photo/satellite evidence contracts; their defaults remain unavailable |
+| Reference-only | All global catalog profiles and associated institutional guidance; no verified candidate eligibility |
+| Synthetic demonstrations | Explicit fictional v0.3 fixture and labeled browser photo; software behavior only |
+| Unavailable or blocked | Live soil/weather/HLS/OPERA products, GEOS-IT compatibility, real regional crop suitability and scientific field validation |
+| Not implemented for production | Account authentication, multi-user ownership/workspace association, production deployment, independently verified executable crop rules |
+| Not yet verified | Android device behavior, interactive Windows launcher/ACLs, physical Wi-Fi access; CI status is recorded separately below |
 
 ## Live provider and execution receipts
 
@@ -55,12 +91,14 @@ record completed steps. Synthetic uploaded test images and v0.3 evidence remain
 explicitly labeled. The browser fixture uses a public example point and an
 explicitly confirmed test farm, not a real user's private farm.
 
-The run verifies skip-location exploration, a location-free assistant, actual
-climate graphs, farm confirmation and refresh restoration, field context and
-unavailable providers, private upload/view/replace/delete, and actual synthetic
-Rust v0.3 execution. The final catalog/assistant/recovery/responsive outcomes are
-updated after the complete runner finishes. No incomplete browser assertion is
-counted as a pass.
+The completed run has **12 passing stages and zero unhandled browser errors**:
+skip-location exploration; a location-free assistant; actual climate graphs;
+farm confirmation/refresh restoration; the complete questionnaire → real NASA →
+compiled Rust → results screen; unavailable field providers; private photo CRUD;
+synthetic v0.3; reference catalog gap assessment; chat bound to the actual Rust
+result and NASA sources; simulated outage with real recovery; and a fresh
+360×800 Chromium viewport. Screenshots were inspected. This is browser viewport
+verification, not physical mobile-device behavior.
 
 Browser testing found and fixed these problems that compilation/unit tests alone
 missed:
@@ -88,7 +126,11 @@ Android SDK platforms/build tools 35/36, NDK 28.2.13676358, and a full Temurin J
 normal TLS verification, inherited proxy routing and the managed CA trust store.
 Earlier failures were a missing Java compiler, missing SDK 35 for JNI, and the
 new JDK's absent managed CA; each setup issue was addressed without bypassing
-validation. Final APK status is recorded after the in-progress build finishes.
+validation. **The final debug APK build passed**, packaging `libfield_shift_bridge.so` for
+`armeabi-v7a`, `arm64-v8a` and `x86_64`. The local artifact is
+`app/build/app/outputs/flutter-apk/app-debug.apk`; its checksum and ABI inventory
+are in [android-build.json](evidence/android-build.json). A repeat build with the
+installed SDK/JDK and all three Rust targets also passed.
 
 Android runtime, physical device/camera/location/gallery, actual device FFI,
 USB/LAN connectivity and restart behavior are **not yet device verified**. `adb`
@@ -99,6 +141,15 @@ The exact Windows launcher and private ACL setup are supplied in
 [setup instructions](README.md). Interactive Windows PowerShell hosting, Windows
 ACL inspection and physical Wi-Fi testing were not performed on this Linux host.
 Existing upstream CI evidence is not relabeled as this integration's Windows test.
+
+Remote CI exposed a test-reporting defect: the over-limit photo fixture became a
+10 MiB pytest node ID. Verbose/duration output repeated it into a 21 MB log,
+including 10 MB single lines. Explicit descriptive parameter IDs retain the exact
+large payload and assertions while bounding the reports. The local reproduction
+and the complete suite pass with short IDs. A 120-second traceback watchdog keeps
+future stalls diagnostic rather than silently skipping tests. Remote matrix
+results are still being checked; passing local Linux tests do not establish a
+Windows result.
 
 ## Scientific and security limitations
 

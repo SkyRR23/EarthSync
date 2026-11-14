@@ -45,6 +45,7 @@ async def test_transport_failures_are_distinct(failure, code):
         b'{"status":"success","data":{}}',
         b'{"status":"error","error":{}}',
     ],
+    ids=["not-json", "too-deep", "array", "empty", "bad-success", "bad-error"],
 )
 def test_wrong_engine_output_is_machine_readable(tmp_path, monkeypatch, output):
     executable = tmp_path / "engine"
