@@ -1,0 +1,505 @@
+{
+  "components": {
+    "schemas": {
+      "FarmAssociation": {
+        "additionalProperties": false,
+        "properties": {
+          "confirmed_by_farmer": {
+            "const": true,
+            "title": "Confirmed By Farmer",
+            "type": "boolean"
+          },
+          "farm_id": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^\\S(?:.*\\S)?$",
+            "title": "Farm Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "farm_id",
+          "confirmed_by_farmer"
+        ],
+        "title": "FarmAssociation",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "Photo": {
+        "additionalProperties": false,
+        "properties": {
+          "caption": {
+            "default": "",
+            "maxLength": 1000,
+            "title": "Caption",
+            "type": "string"
+          },
+          "capture_time_source": {
+            "default": "unknown",
+            "enum": [
+              "farmer_reported",
+              "unknown"
+            ],
+            "title": "Capture Time Source",
+            "type": "string"
+          },
+          "captured_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Captured At"
+          },
+          "captured_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Captured Date"
+          },
+          "category": {
+            "enum": [
+              "crop",
+              "soil",
+              "water"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "data_kind": {
+            "default": "farmer_supplied",
+            "enum": [
+              "farmer_supplied",
+              "synthetic"
+            ],
+            "title": "Data Kind",
+            "type": "string"
+          },
+          "evidence_kind": {
+            "const": "farmer_supplied_photo",
+            "default": "farmer_supplied_photo",
+            "title": "Evidence Kind",
+            "type": "string"
+          },
+          "farm": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FarmAssociation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "farmer_observations": {
+            "default": "",
+            "maxLength": 2000,
+            "title": "Farmer Observations",
+            "type": "string"
+          },
+          "height_px": {
+            "title": "Height Px",
+            "type": "integer"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "metadata_stripped": {
+            "const": true,
+            "default": true,
+            "title": "Metadata Stripped",
+            "type": "boolean"
+          },
+          "mime_type": {
+            "const": "image/png",
+            "default": "image/png",
+            "title": "Mime Type",
+            "type": "string"
+          },
+          "position": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PhotoPosition"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "quality": {
+            "const": "not_scientifically_validated",
+            "default": "not_scientifically_validated",
+            "title": "Quality",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "evidence.v1",
+            "default": "evidence.v1",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "sha256": {
+            "title": "Sha256",
+            "type": "string"
+          },
+          "size_bytes": {
+            "title": "Size Bytes",
+            "type": "integer"
+          },
+          "source": {
+            "enum": [
+              "camera",
+              "gallery",
+              "browser_file"
+            ],
+            "title": "Source",
+            "type": "string"
+          },
+          "spatial_support": {
+            "const": "photo_view_extent_unknown",
+            "default": "photo_view_extent_unknown",
+            "title": "Spatial Support",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "uploaded_at": {
+            "format": "date-time",
+            "title": "Uploaded At",
+            "type": "string"
+          },
+          "width_px": {
+            "title": "Width Px",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "source",
+          "category",
+          "id",
+          "uploaded_at",
+          "updated_at",
+          "width_px",
+          "height_px",
+          "size_bytes",
+          "sha256"
+        ],
+        "title": "Photo",
+        "type": "object"
+      },
+      "PhotoPosition": {
+        "additionalProperties": false,
+        "properties": {
+          "latitude": {
+            "maximum": 90.0,
+            "minimum": -90.0,
+            "title": "Latitude",
+            "type": "number"
+          },
+          "longitude": {
+            "maximum": 180.0,
+            "minimum": -180.0,
+            "title": "Longitude",
+            "type": "number"
+          },
+          "retention_authorized": {
+            "const": true,
+            "title": "Retention Authorized",
+            "type": "boolean"
+          },
+          "source": {
+            "enum": [
+              "consented_exif",
+              "farmer_reported"
+            ],
+            "title": "Source",
+            "type": "string"
+          },
+          "uncertainty_m": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Uncertainty M"
+          }
+        },
+        "required": [
+          "latitude",
+          "longitude",
+          "source",
+          "retention_authorized"
+        ],
+        "title": "PhotoPosition",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "EarthSync private evidence workspace",
+    "version": "1.0.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/v1/photos": {
+      "get": {
+        "operationId": "photos_v1_photos_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Photo"
+                  },
+                  "title": "Response Photos V1 Photos Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Photos"
+      },
+      "post": {
+        "operationId": "upload_v1_photos_post",
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Photo"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Upload"
+      }
+    },
+    "/v1/photos/{photo_id}": {
+      "delete": {
+        "operationId": "remove_v1_photos__photo_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "photo_id",
+            "required": true,
+            "schema": {
+              "title": "Photo Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Remove"
+      },
+      "get": {
+        "operationId": "photo_v1_photos__photo_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "photo_id",
+            "required": true,
+            "schema": {
+              "title": "Photo Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Photo"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Photo"
+      },
+      "put": {
+        "operationId": "replace_v1_photos__photo_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "photo_id",
+            "required": true,
+            "schema": {
+              "title": "Photo Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Photo"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Replace"
+      }
+    },
+    "/v1/photos/{photo_id}/image": {
+      "get": {
+        "operationId": "image_v1_photos__photo_id__image_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "photo_id",
+            "required": true,
+            "schema": {
+              "title": "Photo Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Image"
+      }
+    },
+    "/v1/timeline": {
+      "post": {
+        "operationId": "timeline_v1_timeline_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Timeline"
+      }
+    }
+  }
+}

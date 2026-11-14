@@ -1,0 +1,173 @@
+   Compiling field_shift_engine v0.1.0 (/workspace/EarthSync-final/engine)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.44s
+     Running unittests src/lib.rs (engine/target/debug/deps/field_shift_engine-fd40825400ea797e)
+
+running 4 tests
+test tests::json_boundary_roundtrip ... ok
+test tests::missing_month_is_unknown_not_zero ... ok
+test tests::rejects_invalid_rainfall ... ok
+test tests::summarizes_complete_climate_without_claiming_crop_suitability ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/contract.rs (engine/target/debug/deps/contract-29c89fa5e3c93d41)
+
+running 8 tests
+test json_errors_and_wrong_scenario_counts_are_not_successes ... ok
+test large_finite_temperatures_do_not_overflow_before_averaging ... ok
+test missing_data_does_not_hide_invalid_supplied_values ... ok
+test every_missing_month_yields_unknown_without_losing_metadata ... ok
+test overflowing_rainfall_is_an_error_in_rust_and_json ... ok
+test synthetic_fixture_has_deterministic_explainable_output ... ok
+test zero_rainfall_and_freezing_temperatures_are_known_values ... ok
+test validates_month_counts_and_coordinate_boundaries ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/decision.rs (engine/target/debug/deps/decision-b93038cbd23db021)
+
+running 16 tests
+test additional_alternatives_are_allowed_without_reordering ... ok
+test baseline_counts_duplicate_ids_and_empty_sequences_are_errors ... ok
+test invalid_catalog_identifiers_duplicates_and_dangling_sources_are_errors ... ok
+test invalid_planting_months_dates_and_unsupported_categories_are_errors ... ok
+test irrigation_access_is_a_prerequisite_not_a_water_balance ... ok
+test missing_profile_unknown_identity_and_crop_mismatch_are_distinct ... ok
+test missing_soil_is_unknown_and_drainage_mismatch_is_a_conflict ... ok
+test optional_profile_attributes_and_farmer_season_can_all_be_unknown ... ok
+test other_categories_are_unknown_inputs_not_positive_matches ... ok
+test planting_month_conflict_has_sources_and_is_not_climate_suitability ... ok
+test production_systems_are_not_interchangeable ... ok
+test repeated_families_and_overlapping_windows_do_not_invent_rotation_rules ... ok
+test json_is_deterministic_and_preserves_unknowns_sequences_and_synthetic_labels ... ok
+test synthetic_categorical_checks_support_steps_but_not_unimplemented_rotations ... ok
+test unsupported_requirements_and_unknown_catalog_are_never_silently_skipped ... ok
+test unreviewed_or_uncited_constraints_never_establish_support_or_conflict ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/integration.rs (engine/target/debug/deps/integration-aef7fbaa52725b87)
+
+running 16 tests
+test absent_observations_remain_successful_unknown_information ... ok
+test climate_only_missing_month_is_successful_unknown_not_zero ... ok
+test climate_only_still_validates_field_and_exact_point ... ok
+test climate_errors_and_overflow_do_not_return_partial_success ... ok
+test complete_synthetic_workflow_matches_existing_engines_without_rotation_claims ... ok
+test data_kinds_and_sources_are_never_rewritten_or_used_as_crop_scores ... ok
+test empty_scenarios_with_crop_evidence_still_rejects_invalid_rotations ... ok
+test irrigation_has_one_authority_and_constraints_preserve_sources ... ok
+test field_errors_and_location_mismatch_are_structured ... ok
+test malformed_json_wrong_units_and_multiple_series_are_rejected_without_echo ... ok
+test mismatched_crop_windows_are_visible_without_relabeling_climate ... ok
+test json_success_contract_is_deterministic_and_typed ... ok
+test real_capture_climate_only_never_invents_a_crop_or_suitability ... ok
+test rotation_errors_do_not_become_success_or_hide_the_baseline_problem ... ok
+test source_labels_completeness_and_reference_only_status_are_preserved ... ok
+test preserves_raw_completeness_gaps_and_unknown_soil ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/science_audit.rs (engine/target/debug/deps/science_audit-a2c7aeb99a58074a)
+
+running 7 tests
+test conflicting_climate_series_are_not_silently_selected_or_averaged ... ok
+test a_different_fields_crop_and_fallow_cannot_support_succession ... ok
+test irrigation_availability_cannot_fill_missing_rainfall_or_et0 ... ok
+test regional_crop_history_cannot_establish_a_confirmed_fields_predecessor ... ok
+test incomplete_daily_coverage_cannot_be_promoted_by_a_full_declared_period ... ok
+test unavailable_provider_cannot_supply_a_real_value ... ok
+test regional_fallow_cannot_establish_a_confirmed_fields_fallow_interval ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/seasonal.rs (engine/target/debug/deps/seasonal-5ee4261eaf2f1cc9)
+
+running 16 tests
+test absent_month_and_empty_series_are_explicit_unknowns ... ok
+test calendar_boundaries_do_not_wrap_and_all_month_lengths_are_accounted_for ... ok
+test json_rejects_rates_wrong_units_partial_months_and_nonfinite_numbers ... ok
+test gregorian_century_rules_and_single_month_seasons ... ok
+test large_signed_temperatures_have_finite_weighted_means ... ok
+test json_roundtrip_is_deterministic_and_preserves_unknowns_and_kind ... ok
+test november_to_february_includes_leap_day_and_preserves_metadata ... ok
+test nonleap_cross_year_window_uses_28_days_in_february ... ok
+test null_and_incomplete_values_gate_each_variable_independently ... ok
+test overflowing_rainfall_is_an_error_not_json_null_even_with_another_gap ... ok
+test rejects_blank_provenance_and_requires_explicit_completeness ... ok
+test rejects_invalid_values_even_when_incomplete_or_outside_window ... ok
+test rejects_reversed_windows_duplicates_and_unsorted_records ... ok
+test selected_complete_season_excludes_outside_records ... ok
+test zero_rainfall_and_negative_temperature_are_known_not_missing ... ok
+test validates_dates_before_calendar_arithmetic ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/v02.rs (engine/target/debug/deps/v02-491d6fde95669a9a)
+
+running 22 tests
+test cross_year_and_gregorian_leap_days_use_daily_inclusive_counts ... ok
+test disputed_soil_cannot_prove_drainage_incompatibility ... ok
+test applicability_review_region_and_production_system_gate_rules ... ok
+test environment_attribution_cannot_relabel_a_series_or_duplicate_farmer_answers ... ok
+test excess_season_capacity_is_not_a_maximum_duration_conflict ... ok
+test invalid_reference_and_plan_links_are_errors ... ok
+test invalid_dates_ranges_units_and_nonfinite_soil_fail_validation ... ok
+test legacy_validation_still_rejects_negative_rainfall_and_coordinates_but_allows_gaps ... ok
+test missing_crop_identity_cannot_apply_a_duration_rule ... ok
+test missing_forecasts_do_not_prevent_historical_or_hypothetical_climate_analysis ... ok
+test missing_irrigation_and_soil_are_not_supported_conditions ... ok
+test modeled_and_farmer_soil_disagreement_is_retained_without_fusion ... ok
+test multicycle_history_is_preserved_without_family_benefits_or_current_crop_inference ... ok
+test planting_outside_sourced_season_is_a_schedule_conflict ... ok
+test preserves_existing_result_and_baseline_order_without_ranking ... ok
+test reference_only_and_synthetic_rules_in_supplied_mode_are_not_trusted ... ok
+test json_envelope_roundtrips_and_keeps_existing_api_unchanged ... ok
+test sequential_overlap_requires_explicit_declaration_and_sources ... ok
+test short_season_and_long_scheduled_duration_conflict ... ok
+test trusted_drainage_and_irrigation_conflicts_cannot_be_averaged_away ... ok
+test unknown_duration_or_schedule_remains_unknown ... ok
+test unavailable_records_and_invalid_depth_are_not_usable_observations ... ok
+
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/v03.rs (engine/target/debug/deps/v03-5b17a0178b75dbc9)
+
+running 29 tests
+test absent_day_suspect_quality_and_overlapping_sources_are_unknown ... ok
+test candidate_generation_is_catalog_only_unranked_and_evidence_gated ... ok
+test crop_specific_temperature_and_gdd_base_produce_explicit_comparisons ... ok
+test day_alignment_and_reference_et0_method_are_explicit ... ok
+test density_and_volumetric_moisture_convert_without_becoming_modeled_wetness ... ok
+test etc_requires_complete_aligned_et0_and_every_day_of_sourced_kc ... ok
+test farmer_and_model_contradictions_are_retained_without_fusion ... ok
+test gregorian_leap_and_century_days_are_inclusive ... ok
+test growing_period_only_excludes_outside_rainfall_and_crosses_years ... ok
+test historical_and_forecast_are_never_interchangeable ... ok
+test each_missing_climate_day_stays_unknown_without_affecting_other_variables ... ok
+test history_overlap_is_visible_and_unknown_history_cannot_prove_succession ... ok
+test incompatible_system_and_cultivar_are_not_applicable ... ok
+test invalid_supplied_extremes_are_not_hidden_by_missing_climate_days ... ok
+test irrigated_rainfed_dryland_and_flooded_profiles_remain_distinct ... ok
+test known_and_unknown_crops_and_empty_catalog_do_not_substitute_names ... ok
+test invalid_contract_shapes_sources_duplicates_units_and_dates_are_errors ... ok
+test legacy_v02_and_integration_json_remain_byte_for_byte_compatible ... ok
+test numerical_soil_converts_supported_units_but_keeps_original_records ... ok
+test numerical_overflow_nonfinite_and_physical_errors_fail_closed ... ok
+test regional_data_cannot_become_field_measurements_or_follow_user_location ... ok
+test sequence_order_overlap_and_unknown_crop_do_not_hide_schedule_conflicts ... ok
+test soil_depth_method_and_validity_mismatches_are_unknown ... ok
+test succession_checks_explicit_fallow_not_just_an_empty_calendar_gap ... ok
+test synthetic_and_reference_profiles_cannot_create_real_recommendations ... ok
+test unknown_contract_example_matches_exact_versioned_envelope ... ok
+test synthetic_contract_is_deterministic_traceable_and_not_a_recommendation ... ok
+test unreviewed_reference_only_and_missing_sources_cannot_decide ... ok
+test zero_rain_and_et0_are_known_and_finite_large_temperatures_do_not_overflow_mean ... ok
+
+test result: ok. 29 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+   Doc-tests field_shift_engine
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

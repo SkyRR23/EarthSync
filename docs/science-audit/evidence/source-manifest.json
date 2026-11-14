@@ -1,0 +1,132 @@
+{
+  "scope": "Exact immutable repository artifact bytes; inventory is not blanket scientific acceptance. New attachment hash remains unverified.",
+  "pins": {
+    "7H": "a7c33cc6b58703501bbba0ceba1bad1d6d42004b",
+    "7I": "b578a6df2764479ff9c9df006cc00e5ddb3ccfa3",
+    "7L": "bd8d245b0eae92aab353d852baf05adba5527384",
+    "PR11": "a85e2dd48805a36faebfec93c6991d5babb1add2",
+    "v03": "6f7f81077bbc3709c6206b0a77cf1ff4db15a982",
+    "7N_release_snapshot": "530c1e1d06c9202dfc1f5d06c659399409b7270f"
+  },
+  "artifacts": [
+    {
+      "source": "7H",
+      "commit": "a7c33cc6b58703501bbba0ceba1bad1d6d42004b",
+      "path": "server/earthsync/power.py",
+      "bytes": 10156,
+      "sha256": "a4203df8208c4c4373a24128f33b0bc26a4f73113367d84d4bd2d49667104e7c"
+    },
+    {
+      "source": "7H",
+      "commit": "a7c33cc6b58703501bbba0ceba1bad1d6d42004b",
+      "path": "server/earthsync/models.py",
+      "bytes": 2505,
+      "sha256": "e6a7872380d2d98ec04c12b2c9ed56ef9ede6e6e19f80a3c2410057a71fa244f"
+    },
+    {
+      "source": "7H",
+      "commit": "a7c33cc6b58703501bbba0ceba1bad1d6d42004b",
+      "path": "server/earthsync/catalog_adapter.py",
+      "bytes": 7080,
+      "sha256": "eb2b2f19f55108054b529d20c7ee7c9ec70c8cce59ee446e24bbe8466a216a21"
+    },
+    {
+      "source": "7H",
+      "commit": "a7c33cc6b58703501bbba0ceba1bad1d6d42004b",
+      "path": "engine/src/v03/assess.rs",
+      "bytes": 23729,
+      "sha256": "a38ad09dd215990a563080c71ebce215b0b74b755e074909287e1e6567e7cc2b"
+    },
+    {
+      "source": "7H",
+      "commit": "a7c33cc6b58703501bbba0ceba1bad1d6d42004b",
+      "path": "engine/src/v03/validate.rs",
+      "bytes": 18862,
+      "sha256": "32ba420dd46776e9c67f2a6454802693acb01f6ed32513ce603370f697f16205"
+    },
+    {
+      "source": "7H",
+      "commit": "a7c33cc6b58703501bbba0ceba1bad1d6d42004b",
+      "path": "engine/src/v03/types.rs",
+      "bytes": 12568,
+      "sha256": "fb638964be97877e2acceb97b9bc192b9b126deda7747bcfef3c45686db70248"
+    },
+    {
+      "source": "7H",
+      "commit": "a7c33cc6b58703501bbba0ceba1bad1d6d42004b",
+      "path": "engine/src/seasonal.rs",
+      "bytes": 8532,
+      "sha256": "6cc7b5d74d01d36678c0021b0a59978b53b37035545aad2e446b23959fd71a81"
+    },
+    {
+      "source": "7H",
+      "commit": "a7c33cc6b58703501bbba0ceba1bad1d6d42004b",
+      "path": "data/crop-knowledge/v1/catalog.json",
+      "bytes": 86604,
+      "sha256": "2926584bce3693dff7433afe9c05c535a6d5d1e609fb502d4e2f6017f398fb0e"
+    },
+    {
+      "source": "7H",
+      "commit": "a7c33cc6b58703501bbba0ceba1bad1d6d42004b",
+      "path": "data/crop-knowledge/v1/catalog.schema.json",
+      "bytes": 32866,
+      "sha256": "f5e33b60a38555b40e0b270bb1eaa11e1cfe4aaa29ee9cf2d88c6ad08c7f2d88"
+    },
+    {
+      "source": "7H",
+      "commit": "a7c33cc6b58703501bbba0ceba1bad1d6d42004b",
+      "path": "data/crop-knowledge/v1/tools/catalog.py",
+      "bytes": 14341,
+      "sha256": "3927d2858c705523a87676aad737503e25978cf85533a1d09c203cd79ba2ce4f"
+    },
+    {
+      "source": "7I",
+      "commit": "b578a6df2764479ff9c9df006cc00e5ddb3ccfa3",
+      "path": "server/earthsync/platform_v1/providers/power_daily.py",
+      "bytes": 8734,
+      "sha256": "777b7537648fc5c87cef924d6f5741cabe013a934523f20e7a2b20392251cd65"
+    },
+    {
+      "source": "7I",
+      "commit": "b578a6df2764479ff9c9df006cc00e5ddb3ccfa3",
+      "path": "server/earthsync/platform_v1/providers/transport.py",
+      "bytes": 3571,
+      "sha256": "375bd87af0d19cc6f8a25ce32617698f98fe9aac06a6f5387b9afaeb274c67fd"
+    },
+    {
+      "source": "7I",
+      "commit": "b578a6df2764479ff9c9df006cc00e5ddb3ccfa3",
+      "path": "server/earthsync/platform_v1/models.py",
+      "bytes": 9688,
+      "sha256": "0d3071e50100380911c6da98c37327b8a655de03f5617be81808313350bc22b2"
+    },
+    {
+      "source": "7I",
+      "commit": "b578a6df2764479ff9c9df006cc00e5ddb3ccfa3",
+      "path": "server/earthsync/platform_v1/orchestrate.py",
+      "bytes": 10385,
+      "sha256": "98e338b1acf2fb98464e51e39439717f9b54857c072ef21351368fc8b60e92a6"
+    },
+    {
+      "source": "PR11",
+      "commit": "a85e2dd48805a36faebfec93c6991d5babb1add2",
+      "path": "data/research/field-shift/raw/field-shift-data-pack.zip",
+      "bytes": 345833,
+      "sha256": "f9d4eb2c5bcb6c73de5fc8bb17bc13a90241eee40715bf5522d369629b88f65c"
+    },
+    {
+      "source": "PR11",
+      "commit": "a85e2dd48805a36faebfec93c6991d5babb1add2",
+      "path": "data/research/field-shift/raw/original/data-pack/scripts/fetch_sources.py",
+      "bytes": 39433,
+      "sha256": "e5b594c238d82790a3db2cee33c07f1826a19d09d1dcd9154848e06a66c03d75"
+    },
+    {
+      "source": "v03",
+      "commit": "6f7f81077bbc3709c6206b0a77cf1ff4db15a982",
+      "path": "engine/src/v03/assess.rs",
+      "bytes": 23729,
+      "sha256": "a38ad09dd215990a563080c71ebce215b0b74b755e074909287e1e6567e7cc2b"
+    }
+  ]
+}

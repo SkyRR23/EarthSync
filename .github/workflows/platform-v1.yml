@@ -1,0 +1,85 @@
+name: Backend evidence platform v1
+on:
+  pull_request:
+    paths:
+      - 'server/earthsync/platform_v1/**'
+      - 'server/tests/platform_v1/**'
+      - 'server/platform-v1/**'
+      - 'server/docs/platform_v1/**'
+      - 'ops/staging/**'
+      - '.github/workflows/platform-v1.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline:
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.12', '3.13']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: '1.99.0'
+      - name: Install isolated dependencies and export reviewed interfaces
+        run: |
+          python -m pip install -r server/platform-v1/requirements.lock
+          python server/platform-v1/tools/prepare_compat.py .platform-compat --revision HEAD
+          cargo build --locked --manifest-path engine/Cargo.toml --example web_engine
+          cargo build --locked --manifest-path .platform-compat/18/engine/Cargo.toml --example v03_demo
+          cargo test --locked --manifest-path .platform-compat/18/engine/Cargo.toml
+      - name: Configure actual integration artifacts
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          suffix = '.exe' if os.name == 'nt' else ''
+          with open(os.environ['GITHUB_ENV'], 'a') as out:
+              out.write('PYTHONPATH=server\n')
+              out.write('EARTHSYNC_COMPAT_ROOT=' + str(Path('.platform-compat').resolve()) + '\n')
+              out.write('EARTHSYNC_TEST_V03=' + str(Path('.platform-compat/18/engine/target/debug/examples/v03_demo' + suffix).resolve()) + '\n')
+          PY
+      - name: Offline backend, real Rust, API ownership and raster tests
+        run: |
+          python -m pytest -q server/tests ops/staging/tests
+          python -m ruff check server/earthsync/platform_v1 server/tests/platform_v1 server/platform-v1
+          python -m ruff format --check server/earthsync/platform_v1 server/tests/platform_v1 server/platform-v1
+          python -m pip check
+          git diff --check
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: '1.99.0'
+      - name: Prepare offline build inputs
+        run: |
+          python server/platform-v1/tools/prepare_compat.py .platform-compat --revision HEAD
+          python -m pip download --only-binary=:all: --dest .platform-compat/wheels -r server/platform-v1/requirements.lock
+          cargo vendor --locked --manifest-path .platform-compat/18/engine/Cargo.toml .platform-compat/cargo-vendor
+      - name: Build and smoke actual container without public ports
+        run: |
+          docker build --build-context compat_source=.platform-compat -f server/platform-v1/Dockerfile -t earthsync-platform-v1:ci .
+          docker run -d --name platform-ci --read-only --tmpfs /tmp:rw,size=64m --tmpfs /data:rw,uid=10001,gid=10001,mode=700 --memory=1g --cpus=2 --pids-limit=64 --cap-drop=ALL --security-opt=no-new-privileges -e EARTHSYNC_PLATFORM_LOCAL=1 earthsync-platform-v1:ci
+          python server/platform-v1/tools/container_smoke.py platform-ci
+      - name: Stop disposable container
+        if: always()
+        run: docker rm -f platform-ci || true

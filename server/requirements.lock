@@ -31,3 +31,12 @@ referencing==0.37.0
 rpds-py==2026.9.1
 pillow==12.2.0
 tzdata==2026.6
+
+# Integrated local evidence platform and raster QA dependencies.
+affine==3.0.1
+click-plugins==1.1.1.2
+cligj==0.7.2
+numpy==2.3.5
+pyparsing==3.3.3
+rasterio==1.4.3
+shapely==2.1.2

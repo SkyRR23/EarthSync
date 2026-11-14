@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "source_code_sha": "530c1e1d06c9202dfc1f5d06c659399409b7270f",
+  "restored_farm_decision_evidence_job_photo_verified": true,
+  "original_data_directory_retained": true,
+  "private_boundary_rejections_verified": true,
+  "actual_rust_startup_probe_passed": true,
+  "live_provider": "NASA POWER",
+  "live_cache_hit": false,
+  "period": [
+    "2024-03-01",
+    "2024-03-31"
+  ],
+  "job_states": [
+    "queued",
+    "running",
+    "succeeded"
+  ],
+  "daily_record_count": 3,
+  "days_per_record": 31,
+  "original_response_hashes": [
+    "3d1dd9f94fff2d43ede61a14e60eff68f4987f7fc437303acf88d91bdd03ee21",
+    "26e223cf295b67e703523142edec8b55eebc4afef4393aeb9cbfad3dd2257785",
+    "9fe2a509f9ff6df6ba31bc2868062a23236b7985445a4e12941681b72d27cb20"
+  ],
+  "actual_rust_binary_sha256": "533c65583bedb998a98e62eb690311ad3aa8c5eae6e797001015755b18ed870b",
+  "persisted_new_decision_verified": true,
+  "recommendation_eligible": false
+}

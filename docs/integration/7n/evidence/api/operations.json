@@ -1,0 +1,1823 @@
+[
+  {
+    "endpoint": "/api/v1/diagnostics/nasa",
+    "method": "POST",
+    "operation_id": "nasa_diagnostic_api_v1_diagnostics_nasa_post",
+    "parameters": [],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/v1/health",
+    "method": "GET",
+    "operation_id": "health_api_v1_health_get",
+    "parameters": [],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/v1/environment/season",
+    "method": "GET",
+    "operation_id": "season_api_v1_environment_season_get",
+    "parameters": [
+      {
+        "in": "query",
+        "name": "latitude",
+        "required": true,
+        "schema": {
+          "maximum": 90,
+          "minimum": -90,
+          "title": "Latitude",
+          "type": "number"
+        }
+      },
+      {
+        "in": "query",
+        "name": "longitude",
+        "required": true,
+        "schema": {
+          "maximum": 180,
+          "minimum": -180,
+          "title": "Longitude",
+          "type": "number"
+        }
+      },
+      {
+        "in": "query",
+        "name": "start_year",
+        "required": true,
+        "schema": {
+          "maximum": 9998,
+          "minimum": 1981,
+          "title": "Start Year",
+          "type": "integer"
+        }
+      },
+      {
+        "in": "query",
+        "name": "start_month",
+        "required": true,
+        "schema": {
+          "maximum": 12,
+          "minimum": 1,
+          "title": "Start Month",
+          "type": "integer"
+        }
+      },
+      {
+        "in": "query",
+        "name": "end_year",
+        "required": true,
+        "schema": {
+          "maximum": 9998,
+          "minimum": 1981,
+          "title": "End Year",
+          "type": "integer"
+        }
+      },
+      {
+        "in": "query",
+        "name": "end_month",
+        "required": true,
+        "schema": {
+          "maximum": 12,
+          "minimum": 1,
+          "title": "End Month",
+          "type": "integer"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/SeasonResponse"
+            }
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/assistant/v1/chat",
+    "method": "POST",
+    "operation_id": "chat_api_assistant_v1_chat_post",
+    "parameters": [],
+    "request": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ChatRequest"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ChatResponse"
+            }
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/demo/capabilities",
+    "method": "GET",
+    "operation_id": "capabilities_api_demo_capabilities_get",
+    "parameters": [],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/environmental/v1/context",
+    "method": "POST",
+    "operation_id": "environmental_api_environmental_v1_context_post",
+    "parameters": [],
+    "request": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ContextQuery-Input"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ContextResponse"
+            }
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/environmental/v1/health",
+    "method": "GET",
+    "operation_id": "environmental_health_api_environmental_v1_health_get",
+    "parameters": [],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/satellite/v1/timeline",
+    "method": "POST",
+    "operation_id": "satellite_api_satellite_v1_timeline_post",
+    "parameters": [],
+    "request": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/TimelineQuery"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/v1/diagnostics/integration",
+    "method": "POST",
+    "operation_id": "integration_diagnostic_api_v1_diagnostics_integration_post",
+    "parameters": [],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/demo/captured-climate",
+    "method": "GET",
+    "operation_id": "captured_climate_api_demo_captured_climate_get",
+    "parameters": [],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/demo/synthetic-v02",
+    "method": "GET",
+    "operation_id": "synthetic_v02_api_demo_synthetic_v02_get",
+    "parameters": [],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/demo/synthetic-v03",
+    "method": "GET",
+    "operation_id": "synthetic_v03_api_demo_synthetic_v03_get",
+    "parameters": [],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/engine/{version}",
+    "method": "POST",
+    "operation_id": "analyze_api_engine__version__post",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "version",
+        "required": true,
+        "schema": {
+          "title": "Version",
+          "type": "string"
+        }
+      }
+    ],
+    "request": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/catalog/v1/profiles",
+    "method": "GET",
+    "operation_id": "profiles_api_catalog_v1_profiles_get",
+    "parameters": [],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/catalog/v1/assessment-request",
+    "method": "POST",
+    "operation_id": "build_assessment_api_catalog_v1_assessment_request_post",
+    "parameters": [],
+    "request": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/AssessmentQuery"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/{path}",
+    "method": "POST",
+    "operation_id": "unknown_api_api__path__post",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "path",
+        "required": true,
+        "schema": {
+          "title": "Path",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/{path}",
+    "method": "PUT",
+    "operation_id": "unknown_api_api__path__post",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "path",
+        "required": true,
+        "schema": {
+          "title": "Path",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/{path}",
+    "method": "DELETE",
+    "operation_id": "unknown_api_api__path__post",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "path",
+        "required": true,
+        "schema": {
+          "title": "Path",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/{path}",
+    "method": "GET",
+    "operation_id": "unknown_api_api__path__post",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "path",
+        "required": true,
+        "schema": {
+          "title": "Path",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/{path}",
+    "method": "OPTIONS",
+    "operation_id": "unknown_api_api__path__post",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "path",
+        "required": true,
+        "schema": {
+          "title": "Path",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/{path}",
+    "method": "PATCH",
+    "operation_id": "unknown_api_api__path__post",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "path",
+        "required": true,
+        "schema": {
+          "title": "Path",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "application"
+  },
+  {
+    "endpoint": "/api/evidence/v1/photos",
+    "method": "GET",
+    "operation_id": "photos_v1_photos_get",
+    "parameters": [],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "items": {
+                "$ref": "#/components/schemas/Photo"
+              },
+              "title": "Response Photos V1 Photos Get",
+              "type": "array"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    },
+    "service": "workspace_photos"
+  },
+  {
+    "endpoint": "/api/evidence/v1/photos",
+    "method": "POST",
+    "operation_id": "upload_v1_photos_post",
+    "parameters": [],
+    "request": null,
+    "responses": {
+      "201": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Photo"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    },
+    "service": "workspace_photos"
+  },
+  {
+    "endpoint": "/api/evidence/v1/photos/{photo_id}",
+    "method": "PUT",
+    "operation_id": "replace_v1_photos__photo_id__put",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "photo_id",
+        "required": true,
+        "schema": {
+          "title": "Photo Id",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Photo"
+            }
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "workspace_photos"
+  },
+  {
+    "endpoint": "/api/evidence/v1/photos/{photo_id}",
+    "method": "GET",
+    "operation_id": "photo_v1_photos__photo_id__get",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "photo_id",
+        "required": true,
+        "schema": {
+          "title": "Photo Id",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Photo"
+            }
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "workspace_photos"
+  },
+  {
+    "endpoint": "/api/evidence/v1/photos/{photo_id}",
+    "method": "DELETE",
+    "operation_id": "remove_v1_photos__photo_id__delete",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "photo_id",
+        "required": true,
+        "schema": {
+          "title": "Photo Id",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "204": {
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "workspace_photos"
+  },
+  {
+    "endpoint": "/api/evidence/v1/photos/{photo_id}/image",
+    "method": "GET",
+    "operation_id": "image_v1_photos__photo_id__image_get",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "photo_id",
+        "required": true,
+        "schema": {
+          "title": "Photo Id",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "workspace_photos"
+  },
+  {
+    "endpoint": "/api/evidence/v1/timeline",
+    "method": "POST",
+    "operation_id": "timeline_v1_timeline_post",
+    "parameters": [],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      }
+    },
+    "service": "workspace_photos"
+  },
+  {
+    "endpoint": "/api/platform/v1/health",
+    "method": "GET",
+    "operation_id": "liveness_api_platform_v1_health_get",
+    "parameters": [],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/ready",
+    "method": "GET",
+    "operation_id": "readiness_api_platform_v1_ready_get",
+    "parameters": [],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/providers",
+    "method": "GET",
+    "operation_id": "providers_api_platform_v1_providers_get",
+    "parameters": [],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/farms",
+    "method": "GET",
+    "operation_id": "farms_api_platform_v1_farms_get",
+    "parameters": [],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "items": {
+                "$ref": "#/components/schemas/Farm"
+              },
+              "title": "Response Farms Api Platform V1 Farms Get",
+              "type": "array"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/farms",
+    "method": "POST",
+    "operation_id": "create_farm_api_platform_v1_farms_post",
+    "parameters": [],
+    "request": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/FarmInput"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "201": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Farm"
+            }
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/farm-links",
+    "method": "POST",
+    "operation_id": "link_farm_api_platform_v1_farm_links_post",
+    "parameters": [],
+    "request": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/FarmLinkInput"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "201": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/farm-links/{local_profile_id}",
+    "method": "GET",
+    "operation_id": "farm_link_api_platform_v1_farm_links__local_profile_id__get",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "local_profile_id",
+        "required": true,
+        "schema": {
+          "title": "Local Profile Id",
+          "type": "string"
+        }
+      },
+      {
+        "in": "query",
+        "name": "revision",
+        "required": true,
+        "schema": {
+          "format": "date-time",
+          "title": "Revision",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/farms/{farm_id}",
+    "method": "GET",
+    "operation_id": "farm_api_platform_v1_farms__farm_id__get",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "farm_id",
+        "required": true,
+        "schema": {
+          "format": "uuid",
+          "title": "Farm Id",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Farm"
+            }
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/farms/{farm_id}/context",
+    "method": "GET",
+    "operation_id": "context_api_platform_v1_farms__farm_id__context_get",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "farm_id",
+        "required": true,
+        "schema": {
+          "format": "uuid",
+          "title": "Farm Id",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/farms/{farm_id}/assistant-context",
+    "method": "GET",
+    "operation_id": "assistant_api_platform_v1_farms__farm_id__assistant_context_get",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "farm_id",
+        "required": true,
+        "schema": {
+          "format": "uuid",
+          "title": "Farm Id",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/farms/{farm_id}/history",
+    "method": "POST",
+    "operation_id": "report_history_api_platform_v1_farms__farm_id__history_post",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "farm_id",
+        "required": true,
+        "schema": {
+          "format": "uuid",
+          "title": "Farm Id",
+          "type": "string"
+        }
+      }
+    ],
+    "request": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/HistoryInput"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "201": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/farms/{farm_id}/history",
+    "method": "GET",
+    "operation_id": "history_api_platform_v1_farms__farm_id__history_get",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "farm_id",
+        "required": true,
+        "schema": {
+          "format": "uuid",
+          "title": "Farm Id",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/climate/jobs",
+    "method": "POST",
+    "operation_id": "climate_api_platform_v1_climate_jobs_post",
+    "parameters": [],
+    "request": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ClimateInput"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "202": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/soil/jobs",
+    "method": "POST",
+    "operation_id": "soil_job_api_platform_v1_soil_jobs_post",
+    "parameters": [],
+    "request": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/SoilInput"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "202": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/optical/jobs",
+    "method": "POST",
+    "operation_id": "optical_job_api_platform_v1_optical_jobs_post",
+    "parameters": [],
+    "request": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/OpticalInput"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "202": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/jobs/{job_id}",
+    "method": "GET",
+    "operation_id": "job_api_platform_v1_jobs__job_id__get",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "job_id",
+        "required": true,
+        "schema": {
+          "format": "uuid",
+          "title": "Job Id",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/jobs/{job_id}",
+    "method": "DELETE",
+    "operation_id": "cancel_api_platform_v1_jobs__job_id__delete",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "job_id",
+        "required": true,
+        "schema": {
+          "format": "uuid",
+          "title": "Job Id",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/evidence/{evidence_id}",
+    "method": "GET",
+    "operation_id": "evidence_api_platform_v1_evidence__evidence_id__get",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "evidence_id",
+        "required": true,
+        "schema": {
+          "title": "Evidence Id",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Evidence"
+            }
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/catalog/{profile_id}",
+    "method": "GET",
+    "operation_id": "crop_api_platform_v1_catalog__profile_id__get",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "profile_id",
+        "required": true,
+        "schema": {
+          "title": "Profile Id",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/assessments",
+    "method": "POST",
+    "operation_id": "assess_api_platform_v1_assessments_post",
+    "parameters": [],
+    "request": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/AssessmentInput"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/farms/{farm_id}/decisions",
+    "method": "GET",
+    "operation_id": "decisions_api_platform_v1_farms__farm_id__decisions_get",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "farm_id",
+        "required": true,
+        "schema": {
+          "format": "uuid",
+          "title": "Farm Id",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/farms/{farm_id}/photos",
+    "method": "POST",
+    "operation_id": "upload_api_platform_v1_farms__farm_id__photos_post",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "farm_id",
+        "required": true,
+        "schema": {
+          "format": "uuid",
+          "title": "Farm Id",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "201": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/farms/{farm_id}/photos",
+    "method": "GET",
+    "operation_id": "photos_api_platform_v1_farms__farm_id__photos_get",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "farm_id",
+        "required": true,
+        "schema": {
+          "format": "uuid",
+          "title": "Farm Id",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/farms/{farm_id}/photos/{photo_id}/image",
+    "method": "GET",
+    "operation_id": "photo_image_api_platform_v1_farms__farm_id__photos__photo_id__image_get",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "farm_id",
+        "required": true,
+        "schema": {
+          "format": "uuid",
+          "title": "Farm Id",
+          "type": "string"
+        }
+      },
+      {
+        "in": "path",
+        "name": "photo_id",
+        "required": true,
+        "schema": {
+          "format": "uuid",
+          "title": "Photo Id",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {}
+          }
+        },
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  },
+  {
+    "endpoint": "/api/platform/v1/farms/{farm_id}/photos/{photo_id}",
+    "method": "DELETE",
+    "operation_id": "delete_photo_api_platform_v1_farms__farm_id__photos__photo_id__delete",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "farm_id",
+        "required": true,
+        "schema": {
+          "format": "uuid",
+          "title": "Farm Id",
+          "type": "string"
+        }
+      },
+      {
+        "in": "path",
+        "name": "photo_id",
+        "required": true,
+        "schema": {
+          "format": "uuid",
+          "title": "Photo Id",
+          "type": "string"
+        }
+      }
+    ],
+    "request": null,
+    "responses": {
+      "204": {
+        "description": "Successful Response"
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HTTPValidationError"
+            }
+          }
+        },
+        "description": "Validation Error"
+      }
+    },
+    "service": "local_platform"
+  }
+]

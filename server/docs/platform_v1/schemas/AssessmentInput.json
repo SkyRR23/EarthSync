@@ -1,0 +1,99 @@
+{
+  "$defs": {
+    "PlanSelection": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "profile_id": {
+          "maxLength": 150,
+          "minLength": 1,
+          "title": "Profile Id",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile_id",
+        "start",
+        "end"
+      ],
+      "title": "PlanSelection",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "end": {
+      "format": "date",
+      "title": "End",
+      "type": "string"
+    },
+    "evidence_ids": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 50,
+      "title": "Evidence Ids",
+      "type": "array"
+    },
+    "farm_id": {
+      "format": "uuid",
+      "title": "Farm Id",
+      "type": "string"
+    },
+    "pilot_id": {
+      "anyOf": [
+        {
+          "maxLength": 100,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Pilot Id"
+    },
+    "plans": {
+      "items": {
+        "$ref": "#/$defs/PlanSelection"
+      },
+      "maxItems": 20,
+      "title": "Plans",
+      "type": "array"
+    },
+    "profile_ids": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "title": "Profile Ids",
+      "type": "array"
+    },
+    "sequential_field": {
+      "default": false,
+      "title": "Sequential Field",
+      "type": "boolean"
+    },
+    "start": {
+      "format": "date",
+      "title": "Start",
+      "type": "string"
+    }
+  },
+  "required": [
+    "farm_id",
+    "start",
+    "end"
+  ],
+  "title": "AssessmentInput",
+  "type": "object"
+}

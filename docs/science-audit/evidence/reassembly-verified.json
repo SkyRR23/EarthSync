@@ -1,0 +1,16 @@
+{
+  "original_path": "/workspace/shared/downloads/nasa_space_challenges.zip",
+  "original_bytes": 55057221,
+  "original_sha256": "241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788",
+  "original_checksum_verified": true,
+  "restored_part03_sha256": "953a4cea81e5f8e7afce58f8ce46102a6f458d476131f83f4b520806fa5c2ebb",
+  "all_segment_wrapper_and_piece_hashes_verified": true,
+  "all_original_part_wrapper_and_piece_hashes_verified": true,
+  "helpers": "User-supplied scripts fully read before authorized execution; no archive source or binary executed.",
+  "extracted_nonbuild_original_files_rehashed_unchanged": 113,
+  "generated_build_files_rejected_without_execution": 487,
+  "archive_inventory_members": 743,
+  "archive_inventory_files": 600,
+  "historical_engine_execution": "Freshly compiled from fully inspected source in separate build; original precompiled artifacts excluded.",
+  "original_sha256_after_audit": "241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788"
+}

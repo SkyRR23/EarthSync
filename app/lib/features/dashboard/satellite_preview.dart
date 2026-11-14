@@ -3,11 +3,26 @@ import '../../data/models/home_profile.dart';
 import '../map/gibs_layer.dart';
 
 /// A point-centered NASA GIBS image; no street map presented as satellite data.
-class SatellitePreview extends StatelessWidget {
-  SatellitePreview({super.key, required this.point})
-    : date = GibsLayerConfig.provisional.dateString;
+class SatellitePreview extends StatefulWidget {
+  const SatellitePreview({super.key, required this.point});
   final GeoPoint point;
-  final String date;
+  @override
+  State<SatellitePreview> createState() => _SatellitePreviewState();
+}
+
+class _SatellitePreviewState extends State<SatellitePreview> {
+  late String date = GibsLayerConfig.provisional.dateString;
+  int _retry = 0;
+  @override
+  void didUpdateWidget(covariant SatellitePreview oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.point != widget.point) {
+      date = GibsLayerConfig.provisional.dateString;
+      ++_retry;
+    }
+  }
+
+  GeoPoint get point => widget.point;
   @override
   Widget build(BuildContext context) {
     final layer = GibsLayerConfig.provisional;
@@ -40,22 +55,55 @@ class SatellitePreview extends StatelessWidget {
             ),
             Text('NASA GIBS · ${layer.title}'),
             Text('Requested image date: $date (UTC) · provisional layer'),
+            TextButton.icon(
+              icon: const Icon(Icons.calendar_today_outlined),
+              label: const Text('Choose imagery date'),
+              onPressed: () async {
+                final selected = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.parse(date),
+                  firstDate: DateTime(2000, 2, 24),
+                  lastDate: DateTime.now().toUtc(),
+                );
+                if (mounted && selected != null) {
+                  setState(
+                    () => date = selected.toIso8601String().substring(0, 10),
+                  );
+                }
+              },
+            ),
             const SizedBox(height: 12),
             AspectRatio(
               aspectRatio: 2,
               child: Image.network(
                 uri.toString(),
+                key: ValueKey('${point.label}:$date:$_retry'),
                 fit: BoxFit.contain,
                 semanticLabel:
                     'NASA MODIS true-colour view around ${point.label}, requested date $date',
                 loadingBuilder: (_, child, progress) => progress == null
                     ? child
                     : const Center(child: Text('Loading satellite image…')),
-                errorBuilder: (_, _, _) => const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(12),
-                    child: Text(
-                      'Satellite image unavailable. Coverage may be missing or the service may be offline.',
+                errorBuilder: (_, _, _) => Center(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.satellite_alt_outlined),
+                        const Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Text(
+                            'Satellite image unavailable. Coverage may be missing or the service may be offline.',
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            imageCache.evict(NetworkImage(uri.toString()));
+                            setState(() => ++_retry);
+                          },
+                          child: const Text('Retry imagery'),
+                        ),
+                      ],
                     ),
                   ),
                 ),

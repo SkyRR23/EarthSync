@@ -1,0 +1,1431 @@
+{
+  "id": "e774c15e-c0e6-416e-b00b-f0cb68c18b56",
+  "kind": "climate",
+  "status": "succeeded",
+  "result": {
+    "cache_hit": true,
+    "contract_version": "power-daily-merra2.v1",
+    "gaps": [],
+    "records": [
+      {
+        "data_type": "modeled",
+        "dataset": "POWER hourly-derived daily extrema / MERRA-2",
+        "dataset_version": "v2.10.3",
+        "id": "ev_8881b8e0a7ab8e9fc2a55e8a3fb6d0da13b83d77b5ae5431bc60c0ad656126ba",
+        "limitations": [
+          "Daily coverage is not proof of local scientific accuracy.",
+          "LST is solar-time swath, not civil farm calendar; no timezone conversion inferred.",
+          "No forecast, ET0, GDD or recommendation calculated by Python."
+        ],
+        "measurements": [
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-01",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -0.18,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -0.18,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-02",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -1.15,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -1.15,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-03",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -1.84,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -1.84,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-04",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -2.59,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -2.59,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-05",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -2.8,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -2.8,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-06",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -2.01,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -2.01,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-07",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 2.59,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 2.59,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-08",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 1.45,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 1.45,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-09",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -2.75,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -2.75,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-10",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -3.79,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -3.79,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-11",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -3.24,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -3.24,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-12",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -4.31,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -4.31,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-13",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -2.7,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -2.7,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-14",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -3.16,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -3.16,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-15",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -5.11,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -5.11,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-16",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -10.05,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -10.05,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-17",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -10.23,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -10.23,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-18",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -6.36,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -6.36,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-19",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -4.15,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -4.15,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-20",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -1.8,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -1.8,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-21",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 0.58,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 0.58,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-22",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 1.84,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 1.84,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-23",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -2.76,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -2.76,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-24",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -5.46,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -5.46,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-25",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 0.13,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 0.13,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-26",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -0.42,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -0.42,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-27",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -8.33,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -8.33,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-28",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -11.27,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -11.27,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-29",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -3.93,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -3.93,
+            "variable": "tmin"
+          }
+        ],
+        "missing_reasons": [],
+        "provider": "NASA POWER",
+        "quality_flags": [
+          "REGIONAL_MODEL_NOT_FIELD_OBSERVATION"
+        ],
+        "response_sha256": "138e31dcb70c5c0aa4f5e808e66eaf723f9681e4f0a0cba2119de5895eb7efae",
+        "review": "reviewed",
+        "schema_version": "earthsync.evidence.v1.0",
+        "source_identifier": "power-daily-merra2.v1:T2M_MIN",
+        "source_metadata": {
+          "header": {
+            "api": {
+              "name": "POWER Daily API",
+              "version": "v2.10.3"
+            },
+            "end": "20240229",
+            "fill_value": -999.0,
+            "sources": [
+              "MERRA2",
+              "POWER"
+            ],
+            "start": "20240201",
+            "time_standard": "LST",
+            "title": "NASA/POWER Source Native Resolution Daily Data"
+          },
+          "http_headers": {
+            "content-type": "application/json"
+          },
+          "lineage": {
+            "attribution": "single-parameter header plus pinned NASA parameter catalog and methodology",
+            "provider_sources": [
+              "MERRA2",
+              "POWER"
+            ],
+            "source_review": "NASA-daily-source-review.v1"
+          },
+          "messages": [],
+          "parameter": "T2M_MIN",
+          "parameters": {
+            "T2M_MIN": {
+              "longname": "Temperature at 2 Meters Minimum",
+              "units": "C"
+            }
+          },
+          "policy": "power-daily-merra2.v1",
+          "review_scope": "Technical metadata and transport contract only; no agronomic applicability approval"
+        },
+        "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+        "spatial": {
+          "crs": "EPSG:4326",
+          "farm_id": null,
+          "original_crs": "EPSG:4326",
+          "original_geometry": {
+            "coordinates": [
+              -93.62,
+              42.03,
+              310.22
+            ],
+            "type": "Point"
+          },
+          "query_point": {
+            "latitude": 42.030234,
+            "longitude": -93.620234
+          },
+          "resolution_degrees": [
+            0.5,
+            0.625
+          ],
+          "resolution_m": null,
+          "role": "regional_context",
+          "support": "Native modeled grid context queried at point; not farm measurements or polygon average"
+        },
+        "temporal": {
+          "acquired_at": null,
+          "day_basis": "NASA_POWER_LST",
+          "end": "2024-02-29",
+          "issued_at": null,
+          "observed_at": null,
+          "retrieved_at": "2026-11-14T13:50:25.989004Z",
+          "start": "2024-02-01",
+          "unknown_reason": null
+        },
+        "usable_for_assessment": true
+      },
+      {
+        "data_type": "modeled",
+        "dataset": "POWER hourly-derived daily extrema / MERRA-2",
+        "dataset_version": "v2.10.3",
+        "id": "ev_5abc868ab49d27848af460df1f3004362645ebe9926cbe91ec73c615ed6ad6fc",
+        "limitations": [
+          "Daily coverage is not proof of local scientific accuracy.",
+          "LST is solar-time swath, not civil farm calendar; no timezone conversion inferred.",
+          "No forecast, ET0, GDD or recommendation calculated by Python."
+        ],
+        "measurements": [
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-01",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 13.35,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 13.35,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-02",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 7.72,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 7.72,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-03",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 8.18,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 8.18,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-04",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 9.12,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 9.12,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-05",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 11.31,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 11.31,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-06",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 13.13,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 13.13,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-07",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 11.33,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 11.33,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-08",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 14.96,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 14.96,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-09",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 7.15,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 7.15,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-10",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 4.43,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 4.43,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-11",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 5.71,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 5.71,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-12",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 7.99,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 7.99,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-13",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 8.58,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 8.58,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-14",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 11.77,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 11.77,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-15",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 4.61,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 4.61,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-16",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -0.89,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -0.89,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-17",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -0.03,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -0.03,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-18",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 5.6,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 5.6,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-19",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 11.41,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 11.41,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-20",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 13.23,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 13.23,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-21",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 14.36,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 14.36,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-22",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 17.11,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 17.11,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-23",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 11.05,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 11.05,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-24",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 10.08,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 10.08,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-25",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 17.2,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 17.2,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-26",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 23.25,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 23.25,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-27",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 11.12,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 11.12,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-28",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": -1.23,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": -1.23,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-29",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 11.91,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 11.91,
+            "variable": "tmax"
+          }
+        ],
+        "missing_reasons": [],
+        "provider": "NASA POWER",
+        "quality_flags": [
+          "REGIONAL_MODEL_NOT_FIELD_OBSERVATION"
+        ],
+        "response_sha256": "e0a112a33dbf626c90949907f8272d52fdb1431df455c17ba4d8efc0f042dd11",
+        "review": "reviewed",
+        "schema_version": "earthsync.evidence.v1.0",
+        "source_identifier": "power-daily-merra2.v1:T2M_MAX",
+        "source_metadata": {
+          "header": {
+            "api": {
+              "name": "POWER Daily API",
+              "version": "v2.10.3"
+            },
+            "end": "20240229",
+            "fill_value": -999.0,
+            "sources": [
+              "MERRA2",
+              "POWER"
+            ],
+            "start": "20240201",
+            "time_standard": "LST",
+            "title": "NASA/POWER Source Native Resolution Daily Data"
+          },
+          "http_headers": {
+            "content-type": "application/json"
+          },
+          "lineage": {
+            "attribution": "single-parameter header plus pinned NASA parameter catalog and methodology",
+            "provider_sources": [
+              "MERRA2",
+              "POWER"
+            ],
+            "source_review": "NASA-daily-source-review.v1"
+          },
+          "messages": [],
+          "parameter": "T2M_MAX",
+          "parameters": {
+            "T2M_MAX": {
+              "longname": "Temperature at 2 Meters Maximum",
+              "units": "C"
+            }
+          },
+          "policy": "power-daily-merra2.v1",
+          "review_scope": "Technical metadata and transport contract only; no agronomic applicability approval"
+        },
+        "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+        "spatial": {
+          "crs": "EPSG:4326",
+          "farm_id": null,
+          "original_crs": "EPSG:4326",
+          "original_geometry": {
+            "coordinates": [
+              -93.62,
+              42.03,
+              310.22
+            ],
+            "type": "Point"
+          },
+          "query_point": {
+            "latitude": 42.030234,
+            "longitude": -93.620234
+          },
+          "resolution_degrees": [
+            0.5,
+            0.625
+          ],
+          "resolution_m": null,
+          "role": "regional_context",
+          "support": "Native modeled grid context queried at point; not farm measurements or polygon average"
+        },
+        "temporal": {
+          "acquired_at": null,
+          "day_basis": "NASA_POWER_LST",
+          "end": "2024-02-29",
+          "issued_at": null,
+          "observed_at": null,
+          "retrieved_at": "2026-11-14T13:50:27.513492Z",
+          "start": "2024-02-01",
+          "unknown_reason": null
+        },
+        "usable_for_assessment": true
+      },
+      {
+        "data_type": "modeled",
+        "dataset": "POWER daily meteorology / MERRA-2",
+        "dataset_version": "v2.10.3",
+        "id": "ev_3bdc303762e99b7ab3e98eaf5ca9201c78d6d47f3f83dbafe9d5ea84c2ef7c49",
+        "limitations": [
+          "Daily coverage is not proof of local scientific accuracy.",
+          "LST is solar-time swath, not civil farm calendar; no timezone conversion inferred.",
+          "No forecast, ET0, GDD or recommendation calculated by Python."
+        ],
+        "measurements": [
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-01",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.05,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.05,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-02",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.06,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.06,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-03",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-04",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-05",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-06",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-07",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-08",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.08,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.08,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-09",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-10",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-11",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-12",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-13",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-14",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 2.09,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 2.09,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-15",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.53,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.53,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-16",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 1.95,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 1.95,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-17",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-18",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-19",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.26,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.26,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-20",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-21",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-22",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-23",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-24",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-25",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-26",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-27",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.02,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.02,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-28",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-02-29",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.0,
+            "variable": "rainfall"
+          }
+        ],
+        "missing_reasons": [],
+        "provider": "NASA POWER",
+        "quality_flags": [
+          "REGIONAL_MODEL_NOT_FIELD_OBSERVATION"
+        ],
+        "response_sha256": "442f6e2039534d7c69ecbac514394a424979328bf022a3d4df12dc4cb4d04655",
+        "review": "reviewed",
+        "schema_version": "earthsync.evidence.v1.0",
+        "source_identifier": "power-daily-merra2.v1:PRECTOTCORR",
+        "source_metadata": {
+          "header": {
+            "api": {
+              "name": "POWER Daily API",
+              "version": "v2.10.3"
+            },
+            "end": "20240229",
+            "fill_value": -999.0,
+            "sources": [
+              "MERRA2"
+            ],
+            "start": "20240201",
+            "time_standard": "LST",
+            "title": "NASA/POWER Source Native Resolution Daily Data"
+          },
+          "http_headers": {
+            "content-type": "application/json"
+          },
+          "lineage": {
+            "attribution": "single-parameter header plus pinned NASA parameter catalog and methodology",
+            "provider_sources": [
+              "MERRA2"
+            ],
+            "source_review": "NASA-daily-source-review.v1"
+          },
+          "messages": [],
+          "parameter": "PRECTOTCORR",
+          "parameters": {
+            "PRECTOTCORR": {
+              "longname": "Precipitation Corrected",
+              "units": "mm/day"
+            }
+          },
+          "policy": "power-daily-merra2.v1",
+          "review_scope": "Technical metadata and transport contract only; no agronomic applicability approval"
+        },
+        "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+        "spatial": {
+          "crs": "EPSG:4326",
+          "farm_id": null,
+          "original_crs": "EPSG:4326",
+          "original_geometry": {
+            "coordinates": [
+              -93.62,
+              42.03,
+              310.22
+            ],
+            "type": "Point"
+          },
+          "query_point": {
+            "latitude": 42.030234,
+            "longitude": -93.620234
+          },
+          "resolution_degrees": [
+            0.5,
+            0.625
+          ],
+          "resolution_m": null,
+          "role": "regional_context",
+          "support": "Native modeled grid context queried at point; not farm measurements or polygon average"
+        },
+        "temporal": {
+          "acquired_at": null,
+          "day_basis": "NASA_POWER_LST",
+          "end": "2024-02-29",
+          "issued_at": null,
+          "observed_at": null,
+          "retrieved_at": "2026-11-14T13:50:29.259357Z",
+          "start": "2024-02-01",
+          "unknown_reason": null
+        },
+        "usable_for_assessment": true
+      }
+    ]
+  },
+  "error": null,
+  "retryable": false
+}

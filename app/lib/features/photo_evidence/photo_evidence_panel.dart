@@ -1,3 +1,4 @@
+import '../../design/components/product.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -161,6 +162,18 @@ class _PhotoEvidencePanelState extends State<PhotoEvidencePanel> {
     });
     widget.onChanged?.call();
   });
+
+  Future<void> _confirmRemove(StoredPhoto photo) async {
+    final generation = _generation;
+    final confirmed = await confirmAction(
+      context,
+      title: 'Delete this photo?',
+      message:
+          'This removes the uploaded photo from your private workspace. This action cannot be undone.',
+      confirmLabel: 'Delete',
+    );
+    if (confirmed && mounted && generation == _generation) await _remove(photo);
+  }
 
   Future<void> _chooseDate() async {
     final generation = _generation;
@@ -387,15 +400,49 @@ class _PhotoEvidencePanelState extends State<PhotoEvidencePanel> {
                         child: Center(child: CircularProgressIndicator()),
                       );
                     }
-                    return Image.memory(
-                      snapshot.data!,
-                      height: 200,
-                      fit: BoxFit.contain,
-                      semanticLabel: photo.caption.isEmpty
-                          ? 'Uploaded field photo'
-                          : photo.caption,
-                      errorBuilder: (_, _, _) =>
-                          const Text('Photo preview unavailable'),
+                    return InkWell(
+                      onTap: () => showDialog<void>(
+                        context: context,
+                        useSafeArea: true,
+                        builder: (dialogContext) => Dialog.fullscreen(
+                          child: Scaffold(
+                            appBar: AppBar(
+                              title: Text(
+                                photo.caption.isEmpty
+                                    ? 'Field photo'
+                                    : photo.caption,
+                              ),
+                              leading: IconButton(
+                                tooltip: 'Close photo',
+                                icon: const Icon(Icons.close),
+                                onPressed: () => Navigator.pop(dialogContext),
+                              ),
+                            ),
+                            body: InteractiveViewer(
+                              minScale: .5,
+                              maxScale: 5,
+                              child: Center(
+                                child: Image.memory(
+                                  snapshot.data!,
+                                  semanticLabel: photo.caption.isEmpty
+                                      ? 'Uploaded field photo'
+                                      : photo.caption,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      child: Image.memory(
+                        snapshot.data!,
+                        height: 200,
+                        fit: BoxFit.contain,
+                        semanticLabel: photo.caption.isEmpty
+                            ? 'Uploaded field photo'
+                            : photo.caption,
+                        errorBuilder: (_, _, _) =>
+                            const Text('Photo preview unavailable'),
+                      ),
                     );
                   },
                 ),
@@ -425,7 +472,7 @@ class _PhotoEvidencePanelState extends State<PhotoEvidencePanel> {
                       child: const Text('Replace photo'),
                     ),
                     TextButton(
-                      onPressed: _busy ? null : () => _remove(photo),
+                      onPressed: _busy ? null : () => _confirmRemove(photo),
                       child: const Text('Delete photo'),
                     ),
                   ],

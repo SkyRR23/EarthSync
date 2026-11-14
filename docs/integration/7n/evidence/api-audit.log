@@ -1,0 +1,3 @@
+/workspace/7n-venv/lib/python3.12/site-packages/fastapi/openapi/utils.py:242: UserWarning: Duplicate Operation ID unknown_api_api__path__post for function unknown_api at /workspace/EarthSync-final/server/earthsync/web_demo.py
+  warnings.warn(message, stacklevel=1)
+53 actual OpenAPI operations exported

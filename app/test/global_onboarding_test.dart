@@ -53,7 +53,8 @@ Future<void> tapText(WidgetTester t, String text) async {
   } else {
     await t.ensureVisible(finder);
   }
-  await t.tap(finder);
+  await t.pumpAndSettle();
+  await t.tap(finder.hitTestable());
   await t.pumpAndSettle();
 }
 
@@ -156,6 +157,11 @@ void main() {
     await tapText(t, 'I confirm this point marks my field.');
     await tapText(t, 'Save Confirmed Farm');
     expect(find.text('East field'), findsOneWidget);
+    await t.scrollUntilVisible(
+      find.text('Open Farm Questionnaire'),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
     expect(find.text('Open Farm Questionnaire'), findsOneWidget);
     final farmId = store.profile.farm!.id;
     await tapText(t, 'Edit My Farm');

@@ -1,0 +1,13 @@
+**
+!server/
+!server/earthsync/
+!server/earthsync/__init__.py
+!server/earthsync/platform_v1/
+!server/earthsync/platform_v1/**
+!server/platform-v1/
+!server/platform-v1/requirements.lock
+!server/platform-v1/container_start.py
+**/__pycache__
+**/*.pyc
+
+!server/requirements.lock

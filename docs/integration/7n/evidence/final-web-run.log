@@ -1,0 +1,3 @@
+Private local workspace configured. Token file: /workspace/7n-final-web/data/workspace-token.txt
+LOCAL web listening at http://127.0.0.1:8080; Ctrl+C stops cleanly.
+Web health is liveness only; run smoke and browser acceptance for readiness.

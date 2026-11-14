@@ -1,0 +1,65 @@
+{
+  "schema_version": "assistant.v1-proposal",
+  "context_id": "selection-185184684",
+  "language": "en",
+  "intent": "crops",
+  "claims": [
+    {
+      "category": "general_knowledge",
+      "text": "A farm location is confirmed. Each source still has its own coverage; regional data remain regional.",
+      "evidence_ids": [],
+      "source_ids": []
+    },
+    {
+      "category": "general_knowledge",
+      "text": "I can explain supplied Rust findings as options to investigate. They are not ranked planting advice. Crop variety, local requirements, soil, water and planting dates still need review with a local adviser.",
+      "evidence_ids": [],
+      "source_ids": []
+    },
+    {
+      "category": "deterministic_calculation",
+      "text": "Supplied Rust finding for scenario \u201crequested:us_ia_story_corn_rainfed_v1\u201d: insufficient_information. This is the original status, not a new recommendation.",
+      "evidence_ids": [],
+      "source_ids": []
+    },
+    {
+      "category": "unavailable_evidence",
+      "text": "The supplied finding lacks complete source provenance or linked evidence. Its agricultural applicability remains unresolved.",
+      "evidence_ids": [],
+      "source_ids": []
+    }
+  ],
+  "citations": [],
+  "evidence": [],
+  "decisions": [
+    {
+      "id": "941e7b5a-d3a7-40be-8dd2-1638005ff1cc:0",
+      "scenario_id": "requested:us_ia_story_corn_rainfed_v1",
+      "status": "insufficient_information",
+      "source_ids": [],
+      "evidence_ids": [],
+      "limitations": [
+        "Persisted reference assessment; no crop recommendation."
+      ],
+      "synthetic": false
+    }
+  ],
+  "limitations": [
+    "No independently verified crop recommendation is available. Historical climate is not current weather.",
+    "All global catalog profiles are reference-only and recommendation_eligible=false. Daily climate, soil depth, cultivar duration and Kc gaps remain.",
+    "No reviewed positive crop recommendations. Full evidence and Rust decision details are available separately.",
+    "Only source records are projected; reference-only inputs must not be promoted. Boundaries exceeding assistant v1 limits are omitted; full farm geometry remains in farm context."
+  ],
+  "warnings": [
+    "941e7b5a-d3a7-40be-8dd2-1638005ff1cc:0:source"
+  ],
+  "suggested_questions": [
+    "What is happening in my area?",
+    "What does the rainfall graph mean?",
+    "Why is soil information unavailable?",
+    "What crops could I investigate?",
+    "What are the limitations of this recommendation?",
+    "What does this satellite observation mean?",
+    "What information should I provide next?"
+  ]
+}

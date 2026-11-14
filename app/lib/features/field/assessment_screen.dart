@@ -1,3 +1,7 @@
+import '../../data/environment/platform_climate.dart';
+import '../../app/ui_copy.dart';
+import '../../design/components/product.dart';
+import '../planning/planning_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -41,6 +45,17 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
           child: ListView(
             padding: const EdgeInsets.all(20),
             children: [
+              if (platformUrl.isNotEmpty)
+                OutlinedButton(
+                  onPressed: () => context.push('/farm-evidence'),
+                  child: const Text('Persisted farm evidence'),
+                ),
+              PageHeader(
+                title: UiCopy.text(context, 'assessment'),
+                subtitle: UiCopy.text(context, 'planningBody'),
+              ),
+              const PlanningPanel(),
+              const SizedBox(height: 20),
               const Text('Rust v0.3 · reference-only crop catalog'),
               const Text(
                 'No catalog profile is eligible for a crop recommendation. Choose a research profile and declare your own planting and harvest dates to inspect gaps. This does not establish local applicability. NASA monthly climate cannot fill daily temperature, soil or ET0 requirements.',
@@ -109,18 +124,21 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
                   );
                 },
               ),
+              const SizedBox(height: 16),
               TextField(
                 controller: _start,
                 decoration: const InputDecoration(
                   labelText: 'Your declared planting date (YYYY-MM-DD)',
                 ),
               ),
+              const SizedBox(height: 12),
               TextField(
                 controller: _end,
                 decoration: const InputDecoration(
                   labelText: 'Your declared harvest date (YYYY-MM-DD)',
                 ),
               ),
+              const SizedBox(height: 16),
               if (_dateError != null) Text(_dateError!),
               FilledButton(
                 onPressed: assessment.running
@@ -211,6 +229,33 @@ class V03ResultPanel extends StatelessWidget {
                 const Text(
                   'A supported comparison is not whole-crop suitability.',
                 ),
+                for (final unknown in summary['unknowns'] as List)
+                  Text('Missing: $unknown'),
+                for (final finding in result.findings.where(
+                  (f) => f['scenario_id'] == summary['scenario_id'],
+                ))
+                  ExpansionTile(
+                    title: Text(V03Status.decode(finding['status']).label),
+                    subtitle: Text(
+                      '${finding['plan_id']} · ${finding['rule_id']}',
+                    ),
+                    children: [
+                      ListTile(title: Text('${finding['explanation']}')),
+                      for (final gap in finding['unknowns'] as List)
+                        ListTile(
+                          leading: const Icon(Icons.help_outline),
+                          title: Text('$gap'),
+                        ),
+                      ListTile(
+                        title: const Text('Source evidence'),
+                        subtitle: Text(
+                          (finding['source_ids'] as List).join(', '),
+                        ),
+                      ),
+                      for (final limitation in finding['limitations'] as List)
+                        ListTile(title: Text('$limitation')),
+                    ],
+                  ),
                 for (final finding in (summary['findings'] as List).take(3))
                   Text('${finding['plan_id']}: ${finding['message']}'),
                 if ((summary['findings'] as List).length > 3)

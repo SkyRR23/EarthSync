@@ -1,0 +1,8 @@
+00:00 +0: loading /workspace/EarthSync-final/app/test/ui/platform_integration_test.dart
+00:00 +0: 201 farm link, 200 recovery and 204 deletion have endpoint-specific contracts
+00:00 +1: mutating transport error does not retry and preserves retryability
+00:00 +2: polling is bounded, preserves running status, and stops when selection changes
+00:00 +3: farm association survives queued/running/succeeded lifecycle and cancellation
+00:00 +4: a farm edit discards a delayed response for the old confirmation
+00:00 +5: phone farm linking is explicit and displays restored records
+00:01 +6: All tests passed!

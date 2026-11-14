@@ -1,0 +1,62 @@
+{
+  "$defs": {
+    "Point": {
+      "additionalProperties": false,
+      "properties": {
+        "latitude": {
+          "maximum": 90,
+          "minimum": -90,
+          "title": "Latitude",
+          "type": "number"
+        },
+        "longitude": {
+          "maximum": 180,
+          "minimum": -180,
+          "title": "Longitude",
+          "type": "number"
+        }
+      },
+      "required": [
+        "latitude",
+        "longitude"
+      ],
+      "title": "Point",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "power-daily-merra2.v1",
+      "default": "power-daily-merra2.v1",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "end": {
+      "format": "date",
+      "title": "End",
+      "type": "string"
+    },
+    "lineage": {
+      "const": "MERRA2",
+      "default": "MERRA2",
+      "title": "Lineage",
+      "type": "string"
+    },
+    "point": {
+      "$ref": "#/$defs/Point"
+    },
+    "start": {
+      "format": "date",
+      "title": "Start",
+      "type": "string"
+    }
+  },
+  "required": [
+    "point",
+    "start",
+    "end"
+  ],
+  "title": "ClimateQuery",
+  "type": "object"
+}

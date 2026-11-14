@@ -1,3 +1,4 @@
+import '../../state/platform_provider.dart';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -266,6 +267,29 @@ final integratedAssistantContextProvider = Provider.autoDispose.family<Assistant
         ? 'Crop catalog has not loaded; no crop evidence assumed.'
         : 'All global catalog profiles are reference-only and recommendation_eligible=false. Daily climate, soil depth, cultivar duration and Kc gaps remain.',
   );
+  if (farm != null) {
+    final persistedState = ref.watch(platformAssistantProvider);
+    final persisted = persistedState.isLoading ? null : persistedState.value;
+    if (persisted != null) {
+      final bound = AssistantContext.fromJson(persisted);
+      if (bound.confirmedFarm?.point.latitude == farm.point.latitude &&
+          bound.confirmedFarm?.point.longitude == farm.point.longitude) {
+        // Database UUIDs remain in source/decision IDs. Only the explicit,
+        // verified link maps evidence location IDs to this local selection.
+        sources.addAll(bound.sources);
+        evidence.addAll(
+          bound.evidence.map(
+            (e) => AssistantEvidence.fromJson({
+              ...e.toJson(),
+              'location_id': farm.id,
+            }),
+          ),
+        );
+        decisions.addAll(bound.decisions);
+        limitations.addAll(bound.limitations);
+      }
+    }
+  }
   final uniqueSources = {
     for (final source in sources) source.id: source,
   }.values.toList();
@@ -292,8 +316,8 @@ final integratedAssistantContextProvider = Provider.autoDispose.family<Assistant
             id: farm.id,
             point: AssistantPoint(farm.point.latitude, farm.point.longitude),
           ),
-    evidence: evidence,
-    decisions: decisions,
+    evidence: evidence.take(120).toList(),
+    decisions: decisions.take(30).toList(),
     sources: uniqueSources,
     limitations: limitations.take(30).toList(),
   );
@@ -307,16 +331,42 @@ class IntegratedAssistantScreen extends ConsumerWidget {
   const IntegratedAssistantScreen({super.key, this.areaOnly = false});
   final bool areaOnly;
   @override
-  Widget build(BuildContext context, WidgetRef ref) => Scaffold(
-    appBar: AppBar(title: const Text('EarthSync assistant')),
-    body: Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 840),
-        child: FarmerAssistant(
-          context: ref.watch(integratedAssistantContextProvider(areaOnly)),
-          service: ref.watch(assistantServiceProvider),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final profile = ref.watch(homeProfileProvider).value;
+    final farm = areaOnly ? null : profile?.farm;
+    final area = profile?.userLocation;
+    final label = farm != null
+        ? 'Confirmed farm · ${farm.name ?? 'My Farm'} · ${farm.point.label}'
+        : area is ApproximateArea
+        ? 'Selected area · ${area.label} · ${area.point.label}'
+        : 'No selected area or confirmed farm · general explanations only';
+    return Scaffold(
+      appBar: AppBar(title: const Text('EarthSync assistant')),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 840),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                child: Text(
+                  label,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
+              Expanded(
+                child: FarmerAssistant(
+                  context: ref.watch(
+                    integratedAssistantContextProvider(areaOnly),
+                  ),
+                  service: ref.watch(assistantServiceProvider),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }

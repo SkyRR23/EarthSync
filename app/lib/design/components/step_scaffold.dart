@@ -42,32 +42,40 @@ class FsStepScaffold extends StatelessWidget {
               ),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.all(FsSpace.gutter),
-                children: [
-                  Text(title, style: t.headlineMedium),
-                  if (subtitle != null) ...[
-                    const SizedBox(height: FsSpace.xs),
-                    Text(
-                      subtitle!,
-                      style: t.bodyLarge?.copyWith(
-                        color: FsColors.textSecondary,
-                      ),
-                    ),
-                  ],
-                  const SizedBox(height: FsSpace.lg),
-                  child,
-                ],
-              ),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 760),
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.all(FsSpace.gutter),
+                    children: [
+                      Text(title, style: t.headlineMedium),
+                      if (subtitle != null) ...[
+                        const SizedBox(height: FsSpace.xs),
+                        Text(
+                          subtitle!,
+                          style: t.bodyLarge?.copyWith(
+                            color: FsColors.textSecondary,
+                          ),
+                        ),
+                      ],
+                      const SizedBox(height: FsSpace.lg),
+                      child,
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(FsSpace.gutter),
+                  child: FilledButton(
+                    onPressed: onNext,
+                    child: Text(nextLabel),
+                  ),
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(FsSpace.gutter),
-              child: FilledButton(onPressed: onNext, child: Text(nextLabel)),
-            ),
-          ],
+          ),
         ),
       ),
     );
