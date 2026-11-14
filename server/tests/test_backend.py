@@ -28,6 +28,10 @@ PARAMS = dict(
 
 def nasa(request):
     payload = copy.deepcopy(FIXTURE)
+    payload["geometry"]["coordinates"][:2] = [
+        float(request.url.params["longitude"]),
+        float(request.url.params["latitude"]),
+    ]
     payload["header"].update(
         start=request.url.params["start"], end=request.url.params["end"]
     )
