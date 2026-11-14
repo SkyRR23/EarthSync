@@ -18,3 +18,10 @@ calendar handling, independent completeness/gap reporting and numerically guarde
 aggregation, plus synthetic seasonal fixtures/tests and formula/contract docs.
 No OpenFarm algorithms, NASA measurements, crop thresholds or suitability scores
 were integrated. Software tests are not agronomic validation.
+
+Milestone 3A: Codex inspected the unapproved PR #2 contract branch, documented
+seasonal/crop interface conflicts, and implemented separate typed crop references,
+categorical evidence checks and explicit-baseline rotation comparison models with
+synthetic fixtures/tests. No real crop parameters, source validation claims,
+OpenFarm algorithms, NASA data, recommendations or numeric suitability scores
+were introduced. P2/P4 review remains required before live-data integration.

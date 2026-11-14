@@ -6,6 +6,9 @@ mod climate;
 /// Provisional date-aware API, separate from the existing field analysis contract.
 pub mod seasonal;
 
+/// Provisional crop-reference and rotation foundation, independent of field analysis.
+pub mod decision;
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

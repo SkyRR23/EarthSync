@@ -43,3 +43,12 @@ independent missingness and calendar-day weighting of declared complete monthly
 means. It does not change the existing field-analysis JSON. See
 [the seasonal contract](../docs/SEASONAL_CLIMATE.md) and the explicitly hypothetical
 `tests/fixtures/synthetic_season.json`. No network or extra dependencies required.
+
+## Crop/rotation foundation (Milestone 3A)
+
+The separate `decision` module evaluates supplied categorical constraints and
+returns source-linked support/conflict/unknown findings. Whole rotations remain
+unvalidated pending sourced transition rules; no recommendations or scores are
+implemented. See [the foundation contract](../docs/CROP_ROTATION_FOUNDATION.md)
+and [PR #2 reconciliation](../docs/TEAM_CONTRACT_REVIEW.md). The
+`tests/fixtures/synthetic_rotations.json` records are fictional test data only.
