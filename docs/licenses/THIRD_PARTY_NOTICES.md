@@ -15,3 +15,9 @@ Before release, add all shipped code/data/text/image assets, exact versions and
 URLs, transformations, required attribution text and redistribution decisions.
 OpenFarm's root license does not license upstream datasets or dependencies.
 No NASA logos or mission insignia were generated.
+
+v0.2 P0 fixture register: `engine/tests/fixtures/synthetic_v02_request.json` and
+`synthetic_v02_response.json` contain AI-assisted fictional observations, family
+names and duration bounds for software tests only. No agricultural dataset or
+NASA observation is redistributed by these fixtures. They are not scientific
+references or Myanmar recommendations. No new dependency or third-party code added.

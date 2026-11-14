@@ -61,3 +61,11 @@ explicitly synthetic `tests/fixtures/synthetic_integration_request.json` via
 `cargo test --locked --test integration`. See
 [the proposed integration design](../docs/INTEGRATION_READINESS.md). Existing APIs
 remain available; real backend/Flutter/FRB configuration is still required.
+
+## v0.2 P0 (opt-in, provisional)
+
+The separate `v02` module preserves independent soil records and history, checks
+reviewed/applicable daily crop duration and sequential schedules, and retains
+existing integration output. It is not a production crop recommendation system.
+See [the v0.2 contract](../docs/ENGINE_CONTRACT_v0.2.md). Run the explicitly synthetic
+workflow with `cargo run --locked --example v02_demo`; no network required.
