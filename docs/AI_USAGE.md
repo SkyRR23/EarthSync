@@ -25,3 +25,9 @@ categorical evidence checks and explicit-baseline rotation comparison models wit
 synthetic fixtures/tests. No real crop parameters, source validation claims,
 OpenFarm algorithms, NASA data, recommendations or numeric suitability scores
 were introduced. P2/P4 review remains required before live-data integration.
+
+Milestone 3B: Codex inspected visible remote branch trees, existing Rust modules
+and the proposed PR #2 contract, then added deterministic integration orchestration,
+structured JSON error/success envelopes, synthetic workflow fixtures/tests and a
+proposed server/Flutter/FRB v2 handoff. No Flutter/backend files or generated bindings
+were created; no live observations, crop rules or benefits were invented.

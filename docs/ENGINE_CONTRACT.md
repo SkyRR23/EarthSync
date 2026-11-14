@@ -119,3 +119,12 @@ support for implemented supplied constraints; whole rotations remain insufficien
 without transition rules unless a supplied constraint conflicts. See
 [CROP_ROTATION_FOUNDATION.md](CROP_ROTATION_FOUNDATION.md) and the proposed PR #2
 [contract review](TEAM_CONTRACT_REVIEW.md). No scientific crop values are built in.
+
+## Milestone 3B: provisional integration adapter
+
+`integration::analyze_integration(&IntegrationRequest)` composes existing seasonal
+and decision functions. `integration::analyze_integration_json(&str)` returns a
+new success/error envelope; it does not replace earlier JSON adapters. See
+[INTEGRATION_READINESS.md](INTEGRATION_READINESS.md) for input/output, provenance,
+completeness, error semantics, proposed FRB v2 boundary and unresolved P2/P4 decisions.
+This adds no crop scoring, network calls, generated bindings or finalized schema.

@@ -52,3 +52,12 @@ unvalidated pending sourced transition rules; no recommendations or scores are
 implemented. See [the foundation contract](../docs/CROP_ROTATION_FOUNDATION.md)
 and [PR #2 reconciliation](../docs/TEAM_CONTRACT_REVIEW.md). The
 `tests/fixtures/synthetic_rotations.json` records are fictional test data only.
+
+## Integration adapter (Milestone 3B)
+
+`integration::analyze_integration_json` runs the existing seasonal and crop/rotation
+functions together and returns a structured success/error envelope. Try the
+explicitly synthetic `tests/fixtures/synthetic_integration_request.json` via
+`cargo test --locked --test integration`. See
+[the proposed integration design](../docs/INTEGRATION_READINESS.md). Existing APIs
+remain available; real backend/Flutter/FRB configuration is still required.
