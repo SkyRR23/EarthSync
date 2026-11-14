@@ -1,4 +1,4 @@
-param([switch]$SkipBuild, [int]$Port = 8080)
+param([switch]$SkipBuild, [int]$Port = 8080, [string]$BindAddress = '127.0.0.1')
 $ErrorActionPreference = 'Stop'
 Set-Location $PSScriptRoot
 $python = Join-Path $PSScriptRoot 'server/.venv/Scripts/python.exe'
@@ -17,5 +17,5 @@ Write-Host "EarthSync live demo: http://127.0.0.1:$Port"
 Write-Host "Captured NASA replay: http://127.0.0.1:$Port/?climate=captured"
 Write-Host "Real Rust API workbench: http://127.0.0.1:$Port/docs"
 Push-Location server
-try { & $python -m uvicorn earthsync.web_demo:app --host 127.0.0.1 --port $Port }
+try { & $python -m uvicorn earthsync.web_demo:app --host $BindAddress --port $Port }
 finally { Pop-Location }
