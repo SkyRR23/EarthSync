@@ -5,14 +5,35 @@ import '../../design/components/feedback.dart';
 
 /// Climate and crop evidence have separate labels even in mixed test payloads.
 class ClimateProvenance extends StatelessWidget {
-  const ClimateProvenance({super.key, required this.analysis});
+  const ClimateProvenance({
+    super.key,
+    required this.analysis,
+    this.compact = false,
+  });
   final FieldAnalysis analysis;
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
     final a = analysis;
     final c = a.climateSummary;
     final p = a.trace?.provenance;
+    if (compact && p != null) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            a.trace!.retrievalMode == 'live_http'
+                ? 'Live NASA POWER · modeled historical data'
+                : 'Captured NASA POWER · offline replay',
+          ),
+          ExpansionTile(
+            title: const Text('Source, retrieval date and limitations'),
+            children: [ClimateProvenance(analysis: a)],
+          ),
+        ],
+      );
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -40,8 +61,10 @@ class ClimateProvenance extends StatelessWidget {
           const Text(
             'Completeness describes daily coverage, not scientific accuracy. Missing values remain unknown.',
           ),
-          const Text(
-            'Crop suitability: unknown — no source-backed crop constraints supplied.',
+          Text(
+            a.scenarios.isEmpty
+                ? 'Crop suitability: unknown — no reviewed crop constraints supplied.'
+                : 'Crop suitability: unknown — reference-only profiles, not verified for this field.',
           ),
         ],
         if (a.dataQuality.syntheticCropReferences)

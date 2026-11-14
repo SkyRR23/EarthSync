@@ -30,7 +30,19 @@ final engineProvider = Provider<EngineGateway>(
 
 class HistoricalWindowNotifier extends Notifier<HistoricalWindow> {
   @override
-  HistoricalWindow build() => const HistoricalWindow();
+  HistoricalWindow build() {
+    if (!kIsWeb || Uri.base.queryParameters['climate'] == 'captured') {
+      return const HistoricalWindow();
+    }
+    final year = DateTime.now().toUtc().year - 1;
+    return HistoricalWindow(
+      startYear: year,
+      startMonth: 1,
+      endYear: year,
+      endMonth: 12,
+    );
+  }
+
   void setWindow(HistoricalWindow window) => state = window;
 }
 

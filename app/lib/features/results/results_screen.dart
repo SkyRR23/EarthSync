@@ -15,6 +15,7 @@ import '../../state/providers.dart';
 import '../map/gibs_layer.dart';
 import 'climate_tab.dart';
 import 'climate_provenance.dart';
+import 'result_evidence.dart';
 
 /// Shows the analysis state machine: loading -> results tabs | error.
 class ResultsScreen extends ConsumerStatefulWidget {
@@ -33,14 +34,36 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
     final notifier = ref.read(analysisProvider.notifier);
 
     return switch (state) {
-      AnalysisIdle() ||
-      AnalysisRunning() => const Scaffold(body: FsStateView.loading()),
+      AnalysisIdle() => Scaffold(
+        appBar: AppBar(),
+        body: FsStateView.error(
+          title: 'Start a field analysis',
+          message:
+              'Results are kept for this session. Review your field to run an analysis.',
+          actions: [
+            TextButton(
+              onPressed: () => context.go('/location'),
+              child: const Text('Choose field'),
+            ),
+          ],
+        ),
+      ),
+      AnalysisRunning() => const Scaffold(
+        body: FsStateView.loading(
+          message:
+              'Retrieving climate data and running the Rust engine. Live NASA requests can take up to 90 seconds.',
+        ),
+      ),
       AnalysisFailed(:final error, :final lastGood) => Scaffold(
         appBar: AppBar(),
         body: FsStateView.error(
           title: S.errorTitle,
           message: error.message,
           actions: [
+            TextButton(
+              onPressed: () => context.go('/review'),
+              child: const Text('Review field and dates'),
+            ),
             if (error.retryable)
               FilledButton(
                 onPressed: () =>
@@ -54,7 +77,7 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
               ),
             OutlinedButton(
               onPressed: notifier.runDemo,
-              child: const Text(S.useDemo),
+              child: const Text('Preview synthetic fixture (no Rust)'),
             ),
           ],
         ),
@@ -161,26 +184,39 @@ class _OverviewTab extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: FsSpace.sm),
             child: b,
           ),
-        ClimateProvenance(analysis: a),
-        const FsSectionTitle(S.atAGlance),
-        if (a.scenarios.isEmpty)
-          const Text(
-            'Climate-only result. Crop suitability and rotations are unknown; no crop constraints supplied.',
-          ),
-        FsScenarioSummaryList(scenarios: a.scenarios),
+        if (a.trace != null) ResultReadings(analysis: a),
+        ClimateProvenance(analysis: a, compact: true),
+        if (a.scenarios.isNotEmpty) ...[
+          const FsSectionTitle('Crop sequences'),
+          if (a.trace != null)
+            const Text('Reference options only — suitability unknown.'),
+          FsScenarioSummaryList(scenarios: a.scenarios),
+        ],
         const SizedBox(height: FsSpace.sm),
         OutlinedButton.icon(
           onPressed: onCompare,
           icon: const Icon(Icons.compare_arrows),
-          label: const Text(S.compareOptions),
+          label: Text(
+            a.scenarios.isEmpty
+                ? 'View recommendation status'
+                : S.compareOptions,
+          ),
         ),
+        if (a.trace != null || a.scenarios.isEmpty)
+          RecommendationStatus(analysis: a),
         const FsSectionTitle(S.alerts),
-        if (a.alerts.isEmpty) const Text(S.noAlerts),
+        if (a.alerts.isEmpty)
+          Text(
+            a.trace == null
+                ? S.noAlerts
+                : 'Crop hazards have not been assessed. No alert does not mean the field is risk-free.',
+          ),
         for (final al in a.alerts)
           Padding(
             padding: const EdgeInsets.only(bottom: FsSpace.sm),
             child: FsAlertCard(al),
           ),
+        FieldEvidence(analysis: a),
         if (a.dataGaps.isNotEmpty) ...[
           const FsSectionTitle(S.dataGaps),
           FsBulletList(
@@ -465,11 +501,13 @@ class _RotationsTab extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(FsSpace.gutter),
       children: [
-        ClimateProvenance(analysis: analysis),
-        if (list.isEmpty)
+        ClimateProvenance(analysis: analysis, compact: true),
+        if (list.isEmpty) RecommendationStatus(analysis: analysis),
+        if (analysis.trace != null && list.isNotEmpty)
           const Text(
-            'Rotations are unknown. No source-backed crop constraints or scenarios supplied.',
+            'Reference options only — suitability unknown. Open an option for the Rust assessment and missing evidence.',
           ),
+        const SizedBox(height: FsSpace.md),
         if (analysis.dataQuality.isDemo)
           const Padding(
             padding: EdgeInsets.only(bottom: FsSpace.md),
@@ -487,6 +525,8 @@ class _RotationsTab extends StatelessWidget {
               onOpenDetail: () => context.push('/scenario/${s.id}'),
             ),
           ),
+        if (analysis.trace != null && list.isNotEmpty)
+          RecommendationStatus(analysis: analysis),
       ],
     );
   }

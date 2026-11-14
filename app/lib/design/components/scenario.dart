@@ -77,30 +77,33 @@ class FsRotationTimeline extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              for (var m = 1; m <= 12; m++)
-                Expanded(
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 28,
-                        margin: const EdgeInsets.symmetric(horizontal: 1),
-                        decoration: BoxDecoration(
-                          color: _colorFor(m),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(4),
+          if (steps.every((step) => step.startMonth == null))
+            const Text('Planting and harvest dates are unknown.'),
+          if (steps.any((step) => step.startMonth != null))
+            Row(
+              children: [
+                for (var m = 1; m <= 12; m++)
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 28,
+                          margin: const EdgeInsets.symmetric(horizontal: 1),
+                          decoration: BoxDecoration(
+                            color: _colorFor(m),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(4),
+                            ),
+                            border: Border.all(color: FsColors.border),
                           ),
-                          border: Border.all(color: FsColors.border),
                         ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(_monthLetters[m - 1], style: t.bodySmall),
-                    ],
+                        const SizedBox(height: 2),
+                        Text(_monthLetters[m - 1], style: t.bodySmall),
+                      ],
+                    ),
                   ),
-                ),
-            ],
-          ),
+              ],
+            ),
           const SizedBox(height: FsSpace.sm),
           Wrap(
             spacing: FsSpace.md,
@@ -128,11 +131,13 @@ class FsRotationTimeline extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: FsSpace.xs),
-                    Text(
-                      steps[i].startMonth == null
-                          ? '${Crops.label(steps[i].cropId)} (${S.unknown.toLowerCase()} window)'
-                          : Crops.label(steps[i].cropId),
-                      style: t.bodyMedium,
+                    Flexible(
+                      child: Text(
+                        steps[i].startMonth == null
+                            ? '${Crops.label(steps[i].cropId)} (dates unknown)'
+                            : Crops.label(steps[i].cropId),
+                        style: t.bodyMedium,
+                      ),
                     ),
                   ],
                 ),

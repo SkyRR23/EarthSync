@@ -23,6 +23,7 @@ class HistoricalWindowSelector extends ConsumerWidget {
         );
     Widget month(String label, int value, ValueChanged<int> change) => Expanded(
       child: DropdownButtonFormField<int>(
+        key: ValueKey('$label-$value'),
         initialValue: value,
         decoration: InputDecoration(labelText: label),
         items: [
@@ -36,6 +37,7 @@ class HistoricalWindowSelector extends ConsumerWidget {
     );
     Widget year(String label, int value, ValueChanged<int> change) => Expanded(
       child: DropdownButtonFormField<int>(
+        key: ValueKey('$label-$value'),
         initialValue: value,
         decoration: InputDecoration(labelText: label),
         items: [
@@ -53,6 +55,13 @@ class HistoricalWindowSelector extends ConsumerWidget {
         const Text('NASA historical climate window (LST)'),
         const Text(
           'Choose completed months, up to 24. This is separate from your planting month.',
+        ),
+        TextButton(
+          onPressed: () {
+            final year = DateTime.now().toUtc().year - 1;
+            update(sy: year, sm: 1, ey: year, em: 12);
+          },
+          child: const Text('Use last complete year (12 months)'),
         ),
         Row(
           children: [

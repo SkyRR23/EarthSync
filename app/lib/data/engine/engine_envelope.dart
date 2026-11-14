@@ -78,6 +78,11 @@ List<String> _messages(Object? explanations) => [
   for (final e in _list(explanations)) e['message'] as String? ?? '',
 ];
 
+List<String> _missingMessages(Object? explanations) => [
+  for (final e in _list(explanations))
+    '${(e['code'] as String? ?? 'evidence').replaceAll('_', ' ')}: ${e['message'] ?? ''}',
+];
+
 Feasibility _eligibility(Object? raw) => switch (raw) {
   'supported_by_supplied_evidence' => Feasibility.supported,
   'conflicts_with_supplied_evidence' => Feasibility.conflicts,
@@ -185,7 +190,9 @@ FieldAnalysis _fromData(Map<String, dynamic> d, IntegrationTrace? trace) {
     }
     final evidence = [
       ..._list(a['evidence']),
+      ..._list(a['missing_information']),
       for (final c in crops) ..._list(c['evidence']),
+      for (final c in crops) ..._list(c['missing_information']),
     ];
     scenarios.add(
       RotationScenario(
@@ -207,8 +214,8 @@ FieldAnalysis _fromData(Map<String, dynamic> d, IntegrationTrace? trace) {
             ),
         ],
         limitations: {
-          ..._messages(a['missing_information']),
-          for (final c in crops) ..._messages(c['missing_information']),
+          ..._missingMessages(a['missing_information']),
+          for (final c in crops) ..._missingMessages(c['missing_information']),
         }.toList(),
         evidenceIds: {
           for (final e in evidence)
@@ -294,7 +301,7 @@ FieldAnalysis _fromData(Map<String, dynamic> d, IntegrationTrace? trace) {
     notices: [
       if (trace != null)
         'Previous crops, planting month and priorities are retained as farmer answers; Rust climate calculations do not use them.',
-      if (trace != null)
+      if (trace != null && scenarios.isEmpty)
         'Crop suitability is unknown. No source-backed crop constraints or candidate rotations were supplied.',
       for (final n in _list(d['notices'])) n['message'] as String? ?? '',
     ],

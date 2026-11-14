@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/strings.dart';
 import 'climate_provenance.dart';
+import 'result_evidence.dart';
 import '../../data/models/field_analysis.dart';
 import '../../design/components/badges.dart';
 import '../../design/components/feedback.dart';
@@ -111,6 +112,8 @@ class ClimateTab extends StatelessWidget {
           ],
           const SizedBox(height: FsSpace.xl),
         ],
+        MonthlyEvidenceTable(analysis: analysis),
+        const SizedBox(height: FsSpace.lg),
         Text('${S.rainfall} (mm per month)', style: t.titleLarge),
         const SizedBox(height: FsSpace.md),
         Semantics(
@@ -182,7 +185,7 @@ class ClimateTab extends StatelessWidget {
           child: LineChart(
             LineChartData(
               minX: 0,
-              maxX: (c.months.length - 1).toDouble().clamp(1, 11),
+              maxX: (c.months.length - 1).toDouble().clamp(1, 23),
               minY: tMin,
               maxY: tMax,
               gridData: const FlGridData(

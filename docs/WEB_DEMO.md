@@ -33,8 +33,26 @@ deployment. Keep it running while testing the browser.
 The latest Flutter flow consumes the legacy integration envelope. Rust v0.2 is
 available for real API testing; its additional factors are not yet rendered by
 the farmer screens. Live climate has no verified crop profiles or rotation
-recommendations, so missing recommendations remain unavailable. Use the explicit
-mock mode only to preview the existing scenario-card design.
+recommendations. Rice fields now have an explicitly reference-only comparison
+of the reported rice crop, rice followed by mung bean, and rice followed by
+black gram. Rust evaluates these supplied examples; suitability remains unknown.
+Other crops retain a clear unavailable-recommendation state. The native Android
+request builder remains climate-only. Mock mode is only a fixture preview.
+
+The rice–pulse reference is IRRI's 2016 Myanmar guide, ACIAR CoP29:
+https://www.aciar.gov.au/sites/default/files/legacy/green_gram_and_black_gram_final.pdf
+(printed pages 1–4 and 9–11). The catalogue carries only a drainage reference,
+keeps unreviewed requirements unknown, and does not infer planting dates or local
+applicability. The source status is `reference_only`, never verified.
+
+The result screen now shows Rust totals, field inputs, monthly values, daily
+coverage and evidence still needed. It no longer displays an empty option card
+or claims that absent hazard assessments mean no warnings. Web live mode defaults
+to the last completed calendar year; captured mode still requires February 2024
+and the sample coordinates. No source or mode is substituted on request failure.
+
+See [the OpenFarm comparison](OPENFARM_COMPARISON.md) for additional data ideas
+and the reasons its crop scores were not imported.
 
 Verification:
 
@@ -79,3 +97,30 @@ field, complete the questionnaire and analyze February 2024. Check that the
 climate tab displays the Rust totals and NASA provenance. Repeat with the explicit
 captured link and check its offline-replay label. Stop the service to confirm
 that a new analysis shows an error rather than silently substituting a fixture.
+
+## Results-screen follow-up verification
+
+After adding visible climate readings, reference-only options and phone-width
+regressions on 14 November 2026:
+
+- Rust engine: 82 passed; native bridge: 5 passed.
+- Python: 48 passed (one existing Starlette/AnyIO deprecation warning).
+- Flutter full suite: 31 passed, two opt-in network tests skipped.
+- Separate `web_engine_test.dart` run with `RUN_WEB_DEMO=true`: all 5 passed,
+  including live NASA for January–December 2025 through the HTTP Python-to-Rust
+  endpoint into Flutter result widgets. Captured tests also execute compiled
+  Rust; their HTTP transport is mocked.
+- Flutter analysis: no errors/warnings, 24 informational Material-import
+  deprecations. Flutter web release build passed.
+- The phone-width test found and verified a fix for overflowing crop labels.
+  Entirely unknown crop dates show an explicit message instead of a blank
+  calendar strip.
+- Browser visual verification is still pending; widget rendering and successful
+  HTTP tests are not a substitute for observing the released browser screen.
+
+Reproduce the web integration test with the demo server running:
+
+```powershell
+cd app
+flutter test test/web_engine_test.dart --dart-define=RUN_WEB_DEMO=true --reporter expanded
+```

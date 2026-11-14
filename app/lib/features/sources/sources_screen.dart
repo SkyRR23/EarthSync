@@ -42,6 +42,14 @@ class SourcesScreen extends ConsumerWidget {
                     ),
                     children: [SelectableText(a.trace!.farmerInputJson)],
                   ),
+                  ExpansionTile(
+                    title: const Text('Exact Rust request and result'),
+                    children: [
+                      SelectableText(a.trace!.rustRequestJson),
+                      const Divider(),
+                      SelectableText(a.trace!.rustResultJson),
+                    ],
+                  ),
                 ],
                 const FsSectionTitle('Evidence types'),
                 for (final type in EvidenceType.values)

@@ -45,11 +45,13 @@ Future<FieldAnalysis> analyzeNasaEvidence({
   required NasaPowerEvidence evidence,
   required Future<String> Function(String) analyzeIntegration,
   required String retrievalMode,
+  Map<String, dynamic> Function(FarmerInput, NasaPowerEvidence) buildRequest =
+      buildLiveIntegrationRequest,
 }) async {
   // Revalidate at the boundary so a previously parsed response cannot be reused
   // accidentally for a different selected field/window.
   NasaPowerEvidence.parse(evidence.rawJson, input, window);
-  final request = jsonEncode(buildLiveIntegrationRequest(input, evidence));
+  final request = jsonEncode(buildRequest(input, evidence));
   final output = await analyzeIntegration(request);
   final trace = IntegrationTrace(
     backendResponseJson: evidence.rawJson,
