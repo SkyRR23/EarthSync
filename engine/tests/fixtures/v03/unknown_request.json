@@ -1,0 +1,44 @@
+{
+  "schema_version": "earthsync.engine.v0.3.0",
+  "mode": "evidence_assessment",
+  "region_id": null,
+  "approximate_user_location": null,
+  "farm": null,
+  "photos": [],
+  "climate_intent": "historical",
+  "sources": [],
+  "catalog": [],
+  "observations": [],
+  "climate": [],
+  "history_complete": false,
+  "history": [],
+  "scenarios": [
+    {
+      "id": "synthetic-baseline",
+      "plans": [
+        {
+          "id": "test-plan",
+          "crop_id": "test.crop@1",
+          "profile_id": "test.crop.rainfed@1",
+          "system": "rainfed",
+          "cultivar": null,
+          "period": {
+            "start": {
+              "year": 2024,
+              "month": 12,
+              "day": 30
+            },
+            "end": {
+              "year": 2025,
+              "month": 1,
+              "day": 2
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "sequential_field": false,
+  "candidate_window": null,
+  "day_basis": "synthetic_farm_local_calendar"
+}

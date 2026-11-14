@@ -1,0 +1,1220 @@
+{
+  "schema_version": "earthsync.engine.v0.3.0",
+  "mode": "software_test",
+  "region_id": "global-test-region",
+  "approximate_user_location": {
+    "latitude": 41.9,
+    "longitude": -93.6
+  },
+  "farm": {
+    "field_id": "synthetic-field",
+    "point": {
+      "latitude": 16.8,
+      "longitude": 96.15
+    },
+    "boundary": null,
+    "confirmed_on": {
+      "year": 2024,
+      "month": 12,
+      "day": 1
+    }
+  },
+  "photos": [
+    {
+      "id": "test-photo",
+      "captured_on": null,
+      "location": null,
+      "source_ids": []
+    }
+  ],
+  "climate_intent": "historical",
+  "sources": [
+    {
+      "id": "synthetic-software-fixture",
+      "title": "SYNTHETIC software fixture, not crop evidence",
+      "citation": "Fictional test data created for contract arithmetic; no agronomic source.",
+      "url": null,
+      "published_on": null,
+      "reviewed_on": null,
+      "review": "synthetic",
+      "limitations": [
+        "No real crops, source validation, or recommendations."
+      ]
+    }
+  ],
+  "catalog": [
+    {
+      "id": "test.crop.rainfed@1",
+      "crop_id": "test.crop@1",
+      "family": "TestFamily",
+      "cultivar": null,
+      "system": "rainfed",
+      "approved_for_candidates": true,
+      "review": "synthetic",
+      "rules": [
+        {
+          "id": "test.temperature",
+          "review": "synthetic",
+          "source_ids": [
+            "synthetic-software-fixture"
+          ],
+          "applicability": {
+            "regions": [],
+            "systems": [
+              "rainfed"
+            ],
+            "cultivar": null,
+            "field_only": false
+          },
+          "requirement": {
+            "condition": "temperature",
+            "range_c": {
+              "min": 10,
+              "max": 35
+            }
+          },
+          "limitations": [
+            "SYNTHETIC SOFTWARE TEST ONLY: thresholds have no agronomic validity."
+          ]
+        },
+        {
+          "id": "test.gdd",
+          "review": "synthetic",
+          "source_ids": [
+            "synthetic-software-fixture"
+          ],
+          "applicability": {
+            "regions": [],
+            "systems": [
+              "rainfed"
+            ],
+            "cultivar": null,
+            "field_only": false
+          },
+          "requirement": {
+            "condition": "growing_degree_days",
+            "base_c": 10,
+            "range_c_days": {
+              "min": 50,
+              "max": 70
+            }
+          },
+          "limitations": [
+            "SYNTHETIC SOFTWARE TEST ONLY: thresholds have no agronomic validity."
+          ]
+        },
+        {
+          "id": "test.rainfall",
+          "review": "synthetic",
+          "source_ids": [
+            "synthetic-software-fixture"
+          ],
+          "applicability": {
+            "regions": [],
+            "systems": [
+              "rainfed"
+            ],
+            "cultivar": null,
+            "field_only": false
+          },
+          "requirement": {
+            "condition": "growing_period_rainfall",
+            "range_mm": {
+              "min": 8,
+              "max": 12
+            }
+          },
+          "limitations": [
+            "SYNTHETIC SOFTWARE TEST ONLY: thresholds have no agronomic validity."
+          ]
+        },
+        {
+          "id": "test.duration",
+          "review": "synthetic",
+          "source_ids": [
+            "synthetic-software-fixture"
+          ],
+          "applicability": {
+            "regions": [],
+            "systems": [
+              "rainfed"
+            ],
+            "cultivar": null,
+            "field_only": false
+          },
+          "requirement": {
+            "condition": "duration",
+            "range_days": {
+              "min": 4,
+              "max": 4
+            }
+          },
+          "limitations": [
+            "SYNTHETIC SOFTWARE TEST ONLY: thresholds have no agronomic validity."
+          ]
+        },
+        {
+          "id": "test.planting",
+          "review": "synthetic",
+          "source_ids": [
+            "synthetic-software-fixture"
+          ],
+          "applicability": {
+            "regions": [],
+            "systems": [
+              "rainfed"
+            ],
+            "cultivar": null,
+            "field_only": false
+          },
+          "requirement": {
+            "condition": "planting_window",
+            "first_mmdd": 1201,
+            "last_mmdd": 131
+          },
+          "limitations": [
+            "SYNTHETIC SOFTWARE TEST ONLY: thresholds have no agronomic validity."
+          ]
+        },
+        {
+          "id": "test.ph",
+          "review": "synthetic",
+          "source_ids": [
+            "synthetic-software-fixture"
+          ],
+          "applicability": {
+            "regions": [],
+            "systems": [
+              "rainfed"
+            ],
+            "cultivar": null,
+            "field_only": false
+          },
+          "requirement": {
+            "condition": "soil_numeric",
+            "property": "ph",
+            "range": {
+              "min": 6,
+              "max": 7
+            },
+            "unit": "ph",
+            "depth": {
+              "top_cm": 0,
+              "bottom_cm": 15
+            },
+            "method": "water"
+          },
+          "limitations": [
+            "SYNTHETIC SOFTWARE TEST ONLY: thresholds have no agronomic validity."
+          ]
+        },
+        {
+          "id": "test.carbon",
+          "review": "synthetic",
+          "source_ids": [
+            "synthetic-software-fixture"
+          ],
+          "applicability": {
+            "regions": [],
+            "systems": [
+              "rainfed"
+            ],
+            "cultivar": null,
+            "field_only": false
+          },
+          "requirement": {
+            "condition": "soil_numeric",
+            "property": "organic_carbon",
+            "range": {
+              "min": 10,
+              "max": 30
+            },
+            "unit": "g_per_kg",
+            "depth": {
+              "top_cm": 0,
+              "bottom_cm": 15
+            },
+            "method": null
+          },
+          "limitations": [
+            "SYNTHETIC SOFTWARE TEST ONLY: thresholds have no agronomic validity."
+          ]
+        },
+        {
+          "id": "test.texture",
+          "review": "synthetic",
+          "source_ids": [
+            "synthetic-software-fixture"
+          ],
+          "applicability": {
+            "regions": [],
+            "systems": [
+              "rainfed"
+            ],
+            "cultivar": null,
+            "field_only": false
+          },
+          "requirement": {
+            "condition": "soil_category",
+            "property": "texture",
+            "allowed": [
+              "test_loam"
+            ]
+          },
+          "limitations": [
+            "SYNTHETIC SOFTWARE TEST ONLY: thresholds have no agronomic validity."
+          ]
+        },
+        {
+          "id": "test.drainage",
+          "review": "synthetic",
+          "source_ids": [
+            "synthetic-software-fixture"
+          ],
+          "applicability": {
+            "regions": [],
+            "systems": [
+              "rainfed"
+            ],
+            "cultivar": null,
+            "field_only": false
+          },
+          "requirement": {
+            "condition": "soil_category",
+            "property": "drainage",
+            "allowed": [
+              "test_well_drained"
+            ]
+          },
+          "limitations": [
+            "SYNTHETIC SOFTWARE TEST ONLY: thresholds have no agronomic validity."
+          ]
+        },
+        {
+          "id": "test.etc",
+          "review": "synthetic",
+          "source_ids": [
+            "synthetic-software-fixture"
+          ],
+          "applicability": {
+            "regions": [],
+            "systems": [
+              "rainfed"
+            ],
+            "cultivar": null,
+            "field_only": false
+          },
+          "requirement": {
+            "condition": "crop_evapotranspiration",
+            "stages": [
+              {
+                "id": "test-stage-a",
+                "first_day": 1,
+                "last_day": 2,
+                "kc": 0.5
+              },
+              {
+                "id": "test-stage-b",
+                "first_day": 3,
+                "last_day": 4,
+                "kc": 1.0
+              }
+            ]
+          },
+          "limitations": [
+            "SYNTHETIC SOFTWARE TEST ONLY: thresholds have no agronomic validity."
+          ]
+        },
+        {
+          "id": "test.succession",
+          "review": "synthetic",
+          "source_ids": [
+            "synthetic-software-fixture"
+          ],
+          "applicability": {
+            "regions": [],
+            "systems": [
+              "rainfed"
+            ],
+            "cultivar": null,
+            "field_only": false
+          },
+          "requirement": {
+            "condition": "succession",
+            "previous_crop_id": "test.preceding@1",
+            "previous_family": "TestFamily",
+            "minimum_fallow_days": 2
+          },
+          "limitations": [
+            "SYNTHETIC SOFTWARE TEST ONLY: thresholds have no agronomic validity."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test.crop.dryland@1",
+      "crop_id": "test.crop@1",
+      "family": "TestFamily",
+      "cultivar": null,
+      "system": "dryland",
+      "approved_for_candidates": true,
+      "review": "synthetic",
+      "rules": [
+        {
+          "id": "test.dryland.duration",
+          "review": "synthetic",
+          "source_ids": [
+            "synthetic-software-fixture"
+          ],
+          "applicability": {
+            "regions": [],
+            "systems": [
+              "dryland"
+            ],
+            "cultivar": null,
+            "field_only": false
+          },
+          "requirement": {
+            "condition": "duration",
+            "range_days": {
+              "min": 4,
+              "max": 4
+            }
+          },
+          "limitations": [
+            "SYNTHETIC SOFTWARE TEST ONLY: thresholds have no agronomic validity."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test.crop.irrigated@1",
+      "crop_id": "test.crop@1",
+      "family": "TestFamily",
+      "cultivar": null,
+      "system": "irrigated",
+      "approved_for_candidates": true,
+      "review": "synthetic",
+      "rules": [
+        {
+          "id": "test.irrigated.duration",
+          "review": "synthetic",
+          "source_ids": [
+            "synthetic-software-fixture"
+          ],
+          "applicability": {
+            "regions": [],
+            "systems": [
+              "irrigated"
+            ],
+            "cultivar": null,
+            "field_only": false
+          },
+          "requirement": {
+            "condition": "duration",
+            "range_days": {
+              "min": 4,
+              "max": 4
+            }
+          },
+          "limitations": [
+            "SYNTHETIC SOFTWARE TEST ONLY: thresholds have no agronomic validity."
+          ]
+        },
+        {
+          "id": "test.irrigation",
+          "review": "synthetic",
+          "source_ids": [
+            "synthetic-software-fixture"
+          ],
+          "applicability": {
+            "regions": [],
+            "systems": [
+              "irrigated"
+            ],
+            "cultivar": null,
+            "field_only": false
+          },
+          "requirement": {
+            "condition": "irrigation_required"
+          },
+          "limitations": [
+            "SYNTHETIC SOFTWARE TEST ONLY: thresholds have no agronomic validity."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test.crop.flooded_lowland@1",
+      "crop_id": "test.crop@1",
+      "family": "TestFamily",
+      "cultivar": null,
+      "system": "flooded_lowland",
+      "approved_for_candidates": true,
+      "review": "synthetic",
+      "rules": [
+        {
+          "id": "test.flooded_lowland.duration",
+          "review": "synthetic",
+          "source_ids": [
+            "synthetic-software-fixture"
+          ],
+          "applicability": {
+            "regions": [],
+            "systems": [
+              "flooded_lowland"
+            ],
+            "cultivar": null,
+            "field_only": false
+          },
+          "requirement": {
+            "condition": "duration",
+            "range_days": {
+              "min": 4,
+              "max": 4
+            }
+          },
+          "limitations": [
+            "SYNTHETIC SOFTWARE TEST ONLY: thresholds have no agronomic validity."
+          ]
+        },
+        {
+          "id": "test.flood",
+          "review": "synthetic",
+          "source_ids": [
+            "synthetic-software-fixture"
+          ],
+          "applicability": {
+            "regions": [],
+            "systems": [
+              "flooded_lowland"
+            ],
+            "cultivar": null,
+            "field_only": false
+          },
+          "requirement": {
+            "condition": "flooded_management",
+            "required": "test_bunded_with_controlled_water"
+          },
+          "limitations": [
+            "SYNTHETIC SOFTWARE TEST ONLY: thresholds have no agronomic validity."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test.preceding@1",
+      "crop_id": "test.preceding@1",
+      "family": "TestFamily",
+      "cultivar": null,
+      "system": "rainfed",
+      "approved_for_candidates": false,
+      "review": "synthetic",
+      "rules": []
+    }
+  ],
+  "observations": [
+    {
+      "id": "soil-ph",
+      "property": "ph",
+      "value": {
+        "type": "number",
+        "value": 6.5
+      },
+      "unit": "ph",
+      "depth": {
+        "top_cm": 0,
+        "bottom_cm": 15
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source_ids": [
+          "synthetic-software-fixture"
+        ],
+        "period": {
+          "start": {
+            "year": 2024,
+            "month": 12,
+            "day": 30
+          },
+          "end": {
+            "year": 2025,
+            "month": 1,
+            "day": 2
+          }
+        },
+        "retrieved_on": {
+          "year": 2025,
+          "month": 1,
+          "day": 3
+        },
+        "issued_on": null,
+        "spatial": {
+          "scope": "field",
+          "field_id": "synthetic-field"
+        },
+        "quality": "usable",
+        "uncertainty": "Fictional values; no real agricultural evidence.",
+        "method": "water"
+      }
+    },
+    {
+      "id": "soil-carbon",
+      "property": "organic_carbon",
+      "value": {
+        "type": "number",
+        "value": 2
+      },
+      "unit": "percent_mass",
+      "depth": {
+        "top_cm": 0,
+        "bottom_cm": 15
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source_ids": [
+          "synthetic-software-fixture"
+        ],
+        "period": {
+          "start": {
+            "year": 2024,
+            "month": 12,
+            "day": 30
+          },
+          "end": {
+            "year": 2025,
+            "month": 1,
+            "day": 2
+          }
+        },
+        "retrieved_on": {
+          "year": 2025,
+          "month": 1,
+          "day": 3
+        },
+        "issued_on": null,
+        "spatial": {
+          "scope": "field",
+          "field_id": "synthetic-field"
+        },
+        "quality": "usable",
+        "uncertainty": "Fictional values; no real agricultural evidence.",
+        "method": null
+      }
+    },
+    {
+      "id": "soil-texture",
+      "property": "texture",
+      "value": {
+        "type": "category",
+        "value": "test_loam"
+      },
+      "unit": "category",
+      "depth": null,
+      "provenance": {
+        "kind": "synthetic",
+        "source_ids": [
+          "synthetic-software-fixture"
+        ],
+        "period": {
+          "start": {
+            "year": 2024,
+            "month": 12,
+            "day": 30
+          },
+          "end": {
+            "year": 2025,
+            "month": 1,
+            "day": 2
+          }
+        },
+        "retrieved_on": {
+          "year": 2025,
+          "month": 1,
+          "day": 3
+        },
+        "issued_on": null,
+        "spatial": {
+          "scope": "field",
+          "field_id": "synthetic-field"
+        },
+        "quality": "usable",
+        "uncertainty": "Fictional values; no real agricultural evidence.",
+        "method": null
+      }
+    },
+    {
+      "id": "farmer-drainage",
+      "property": "drainage",
+      "value": {
+        "type": "category",
+        "value": "test_well_drained"
+      },
+      "unit": "category",
+      "depth": null,
+      "provenance": {
+        "kind": "synthetic",
+        "source_ids": [
+          "synthetic-software-fixture"
+        ],
+        "period": {
+          "start": {
+            "year": 2024,
+            "month": 12,
+            "day": 30
+          },
+          "end": {
+            "year": 2025,
+            "month": 1,
+            "day": 2
+          }
+        },
+        "retrieved_on": {
+          "year": 2025,
+          "month": 1,
+          "day": 3
+        },
+        "issued_on": null,
+        "spatial": {
+          "scope": "field",
+          "field_id": "synthetic-field"
+        },
+        "quality": "usable",
+        "uncertainty": "Fictional values; no real agricultural evidence.",
+        "method": null
+      }
+    },
+    {
+      "id": "irrigation",
+      "property": "irrigation_available",
+      "value": {
+        "type": "boolean",
+        "value": false
+      },
+      "unit": "boolean",
+      "depth": null,
+      "provenance": {
+        "kind": "synthetic",
+        "source_ids": [
+          "synthetic-software-fixture"
+        ],
+        "period": {
+          "start": {
+            "year": 2024,
+            "month": 12,
+            "day": 30
+          },
+          "end": {
+            "year": 2025,
+            "month": 1,
+            "day": 2
+          }
+        },
+        "retrieved_on": {
+          "year": 2025,
+          "month": 1,
+          "day": 3
+        },
+        "issued_on": null,
+        "spatial": {
+          "scope": "field",
+          "field_id": "synthetic-field"
+        },
+        "quality": "usable",
+        "uncertainty": "Fictional values; no real agricultural evidence.",
+        "method": null
+      }
+    },
+    {
+      "id": "flood-management",
+      "property": "flood_management",
+      "value": {
+        "type": "category",
+        "value": "test_bunded_with_controlled_water"
+      },
+      "unit": "category",
+      "depth": null,
+      "provenance": {
+        "kind": "synthetic",
+        "source_ids": [
+          "synthetic-software-fixture"
+        ],
+        "period": {
+          "start": {
+            "year": 2024,
+            "month": 12,
+            "day": 30
+          },
+          "end": {
+            "year": 2025,
+            "month": 1,
+            "day": 2
+          }
+        },
+        "retrieved_on": {
+          "year": 2025,
+          "month": 1,
+          "day": 3
+        },
+        "issued_on": null,
+        "spatial": {
+          "scope": "field",
+          "field_id": "synthetic-field"
+        },
+        "quality": "usable",
+        "uncertainty": "Fictional values; no real agricultural evidence.",
+        "method": null
+      }
+    }
+  ],
+  "climate": [
+    {
+      "id": "daily-tmin",
+      "variable": "tmin",
+      "unit": "celsius",
+      "provenance": {
+        "kind": "synthetic",
+        "source_ids": [
+          "synthetic-software-fixture"
+        ],
+        "period": {
+          "start": {
+            "year": 2024,
+            "month": 12,
+            "day": 30
+          },
+          "end": {
+            "year": 2025,
+            "month": 1,
+            "day": 2
+          }
+        },
+        "retrieved_on": {
+          "year": 2025,
+          "month": 1,
+          "day": 3
+        },
+        "issued_on": null,
+        "spatial": {
+          "scope": "regional",
+          "region_id": "global-test-region",
+          "resolution_m": 25000
+        },
+        "quality": "usable",
+        "uncertainty": "Fictional values; no real agricultural evidence.",
+        "method": null
+      },
+      "days": [
+        {
+          "date": {
+            "year": 2024,
+            "month": 12,
+            "day": 30
+          },
+          "value": 20,
+          "quality": "usable"
+        },
+        {
+          "date": {
+            "year": 2024,
+            "month": 12,
+            "day": 31
+          },
+          "value": 20,
+          "quality": "usable"
+        },
+        {
+          "date": {
+            "year": 2025,
+            "month": 1,
+            "day": 1
+          },
+          "value": 20,
+          "quality": "usable"
+        },
+        {
+          "date": {
+            "year": 2025,
+            "month": 1,
+            "day": 2
+          },
+          "value": 20,
+          "quality": "usable"
+        }
+      ],
+      "day_basis": "synthetic_farm_local_calendar"
+    },
+    {
+      "id": "daily-tmax",
+      "variable": "tmax",
+      "unit": "celsius",
+      "provenance": {
+        "kind": "synthetic",
+        "source_ids": [
+          "synthetic-software-fixture"
+        ],
+        "period": {
+          "start": {
+            "year": 2024,
+            "month": 12,
+            "day": 30
+          },
+          "end": {
+            "year": 2025,
+            "month": 1,
+            "day": 2
+          }
+        },
+        "retrieved_on": {
+          "year": 2025,
+          "month": 1,
+          "day": 3
+        },
+        "issued_on": null,
+        "spatial": {
+          "scope": "regional",
+          "region_id": "global-test-region",
+          "resolution_m": 25000
+        },
+        "quality": "usable",
+        "uncertainty": "Fictional values; no real agricultural evidence.",
+        "method": null
+      },
+      "days": [
+        {
+          "date": {
+            "year": 2024,
+            "month": 12,
+            "day": 30
+          },
+          "value": 30,
+          "quality": "usable"
+        },
+        {
+          "date": {
+            "year": 2024,
+            "month": 12,
+            "day": 31
+          },
+          "value": 30,
+          "quality": "usable"
+        },
+        {
+          "date": {
+            "year": 2025,
+            "month": 1,
+            "day": 1
+          },
+          "value": 30,
+          "quality": "usable"
+        },
+        {
+          "date": {
+            "year": 2025,
+            "month": 1,
+            "day": 2
+          },
+          "value": 30,
+          "quality": "usable"
+        }
+      ],
+      "day_basis": "synthetic_farm_local_calendar"
+    },
+    {
+      "id": "daily-rainfall",
+      "variable": "rainfall",
+      "unit": "mm_per_day",
+      "provenance": {
+        "kind": "synthetic",
+        "source_ids": [
+          "synthetic-software-fixture"
+        ],
+        "period": {
+          "start": {
+            "year": 2024,
+            "month": 12,
+            "day": 30
+          },
+          "end": {
+            "year": 2025,
+            "month": 1,
+            "day": 2
+          }
+        },
+        "retrieved_on": {
+          "year": 2025,
+          "month": 1,
+          "day": 3
+        },
+        "issued_on": null,
+        "spatial": {
+          "scope": "regional",
+          "region_id": "global-test-region",
+          "resolution_m": 25000
+        },
+        "quality": "usable",
+        "uncertainty": "Fictional values; no real agricultural evidence.",
+        "method": null
+      },
+      "days": [
+        {
+          "date": {
+            "year": 2024,
+            "month": 12,
+            "day": 30
+          },
+          "value": 2.5,
+          "quality": "usable"
+        },
+        {
+          "date": {
+            "year": 2024,
+            "month": 12,
+            "day": 31
+          },
+          "value": 2.5,
+          "quality": "usable"
+        },
+        {
+          "date": {
+            "year": 2025,
+            "month": 1,
+            "day": 1
+          },
+          "value": 2.5,
+          "quality": "usable"
+        },
+        {
+          "date": {
+            "year": 2025,
+            "month": 1,
+            "day": 2
+          },
+          "value": 2.5,
+          "quality": "usable"
+        }
+      ],
+      "day_basis": "synthetic_farm_local_calendar"
+    },
+    {
+      "id": "daily-et0",
+      "variable": "et0",
+      "unit": "mm_per_day",
+      "provenance": {
+        "kind": "synthetic",
+        "source_ids": [
+          "synthetic-software-fixture"
+        ],
+        "period": {
+          "start": {
+            "year": 2024,
+            "month": 12,
+            "day": 30
+          },
+          "end": {
+            "year": 2025,
+            "month": 1,
+            "day": 2
+          }
+        },
+        "retrieved_on": {
+          "year": 2025,
+          "month": 1,
+          "day": 3
+        },
+        "issued_on": null,
+        "spatial": {
+          "scope": "regional",
+          "region_id": "global-test-region",
+          "resolution_m": 25000
+        },
+        "quality": "usable",
+        "uncertainty": "Fictional values; no real agricultural evidence.",
+        "method": "SYNTHETIC reference ET0 fixture, not a computed or verified FAO product"
+      },
+      "days": [
+        {
+          "date": {
+            "year": 2024,
+            "month": 12,
+            "day": 30
+          },
+          "value": 4,
+          "quality": "usable"
+        },
+        {
+          "date": {
+            "year": 2024,
+            "month": 12,
+            "day": 31
+          },
+          "value": 4,
+          "quality": "usable"
+        },
+        {
+          "date": {
+            "year": 2025,
+            "month": 1,
+            "day": 1
+          },
+          "value": 4,
+          "quality": "usable"
+        },
+        {
+          "date": {
+            "year": 2025,
+            "month": 1,
+            "day": 2
+          },
+          "value": 4,
+          "quality": "usable"
+        }
+      ],
+      "day_basis": "synthetic_farm_local_calendar"
+    }
+  ],
+  "history_complete": true,
+  "history": [
+    {
+      "id": "previous-crop",
+      "crop_id": "test.preceding@1",
+      "profile_id": "test.preceding@1",
+      "fallow": false,
+      "period": {
+        "start": {
+          "year": 2024,
+          "month": 12,
+          "day": 1
+        },
+        "end": {
+          "year": 2024,
+          "month": 12,
+          "day": 27
+        }
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source_ids": [
+          "synthetic-software-fixture"
+        ],
+        "period": {
+          "start": {
+            "year": 2024,
+            "month": 12,
+            "day": 1
+          },
+          "end": {
+            "year": 2024,
+            "month": 12,
+            "day": 27
+          }
+        },
+        "retrieved_on": {
+          "year": 2025,
+          "month": 1,
+          "day": 3
+        },
+        "issued_on": null,
+        "spatial": {
+          "scope": "field",
+          "field_id": "synthetic-field"
+        },
+        "quality": "usable",
+        "uncertainty": "Fictional values; no real agricultural evidence.",
+        "method": null
+      }
+    },
+    {
+      "id": "explicit-fallow",
+      "crop_id": null,
+      "profile_id": null,
+      "fallow": true,
+      "period": {
+        "start": {
+          "year": 2024,
+          "month": 12,
+          "day": 28
+        },
+        "end": {
+          "year": 2024,
+          "month": 12,
+          "day": 29
+        }
+      },
+      "provenance": {
+        "kind": "synthetic",
+        "source_ids": [
+          "synthetic-software-fixture"
+        ],
+        "period": {
+          "start": {
+            "year": 2024,
+            "month": 12,
+            "day": 28
+          },
+          "end": {
+            "year": 2024,
+            "month": 12,
+            "day": 29
+          }
+        },
+        "retrieved_on": {
+          "year": 2025,
+          "month": 1,
+          "day": 3
+        },
+        "issued_on": null,
+        "spatial": {
+          "scope": "field",
+          "field_id": "synthetic-field"
+        },
+        "quality": "usable",
+        "uncertainty": "Fictional values; no real agricultural evidence.",
+        "method": null
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "synthetic-baseline",
+      "plans": [
+        {
+          "id": "test-plan",
+          "crop_id": "test.crop@1",
+          "profile_id": "test.crop.rainfed@1",
+          "system": "rainfed",
+          "cultivar": null,
+          "period": {
+            "start": {
+              "year": 2024,
+              "month": 12,
+              "day": 30
+            },
+            "end": {
+              "year": 2025,
+              "month": 1,
+              "day": 2
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "sequential_field": true,
+  "candidate_window": {
+    "period": {
+      "start": {
+        "year": 2024,
+        "month": 12,
+        "day": 30
+      },
+      "end": {
+        "year": 2025,
+        "month": 1,
+        "day": 2
+      }
+    },
+    "system": "rainfed"
+  },
+  "day_basis": "synthetic_farm_local_calendar"
+}
