@@ -8,6 +8,10 @@ on:
       - "server/earthsync/source_validation.py"
       - "server/tests/test_science_audit.py"
       - "data/crop-knowledge/v1/**"
+      - "engine/src/v03/**"
+      - "engine/tests/science_audit.rs"
+      - "server/earthsync/platform_v1/providers/power_daily.py"
+      - "server/tests/platform_v1/test_science_coordinate_precision.py"
       - ".github/workflows/science-audit.yml"
   workflow_dispatch:
 

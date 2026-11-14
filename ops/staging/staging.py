@@ -16,6 +16,7 @@ import subprocess
 import sys
 import time
 import urllib.request
+from urllib.parse import urlsplit
 
 
 def run(command, **kwargs):
@@ -32,6 +33,29 @@ def private_path(value):
     if path.resolve() != path:
         raise ValueError("Use absolute paths without symlinks")
     return path
+
+
+def loopback_origin(value):
+    try:
+        parsed = urlsplit(value)
+        valid = (
+            parsed.scheme == "http"
+            and parsed.hostname in ("127.0.0.1", "localhost", "::1")
+            and parsed.username is None
+            and parsed.password is None
+            and parsed.path in ("", "/")
+            and not parsed.query
+            and not parsed.fragment
+            and parsed.port is not None
+            and 1024 <= parsed.port <= 65535
+        )
+    except ValueError:
+        valid = False
+    if not valid:
+        raise argparse.ArgumentTypeError(
+            "Use an exact unprivileged HTTP loopback origin"
+        )
+    return value.rstrip("/")
 
 
 def save_json(path, value):
@@ -100,7 +124,9 @@ def environment(source, state, manifest):
         env.update(
             EARTHSYNC_PLATFORM_LOCAL="1",
             EARTHSYNC_PLATFORM_DIR=str(state / "data"),
-            EARTHSYNC_PLATFORM_ORIGINS="http://127.0.0.1:8080,http://localhost:8080",
+            EARTHSYNC_PLATFORM_ORIGINS=manifest.get(
+                "web_origin", "http://127.0.0.1:8080"
+            ),
             EARTHSYNC_V03_EXECUTABLE=manifest["engine"],
             EARTHSYNC_V03_SHA256=manifest["files"][manifest["engine"]],
             EARTHSYNC_CATALOG_PATH=manifest["catalog"],
@@ -132,7 +158,7 @@ def build(args, source, state):
     run([python, "-m", "pip", "install", "--disable-pip-version-check", "-r", lock])
     run([python, "-m", "pip", "check"])
     suffix = ".exe" if os.name == "nt" else ""
-    files = [lock, source / "engine/Cargo.lock"]
+    files = [lock, source / "server/requirements.lock", source / "engine/Cargo.lock"]
     manifest = {
         "source": str(source),
         "source_sha": args.sha,
@@ -140,6 +166,8 @@ def build(args, source, state):
         "python": str(python),
         "python_version": sys.version.split()[0],
         "rust": rust,
+        "platform_url": args.platform_url,
+        "web_origin": args.web_origin,
     }
     if args.profile == "web":
         flutter = subprocess.check_output(
@@ -170,6 +198,7 @@ def build(args, source, state):
                 "--no-web-resources-cdn",
                 "--pwa-strategy=none",
                 "--no-wasm-dry-run",
+                "--dart-define=PLATFORM_URL=" + manifest["platform_url"],
             ],
             cwd=source / "app",
         )
@@ -299,6 +328,9 @@ def serve(args, source, state, manifest, env):
             # in TIME_WAIT; an actively listening worker still rejects this bind.
             probe.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         probe.bind(("127.0.0.1", port))
+    expected_origin = manifest.get("web_origin" if profile == "web" else "platform_url")
+    if expected_origin and urlsplit(expected_origin).port != port:
+        raise ValueError("Run port must match the origin recorded at build time")
     python = manifest["python"]
     if profile == "web":
         run([python, "-m", "earthsync.demo_workspace", state / "data"], env=env)
@@ -397,7 +429,13 @@ def main():
     parser.add_argument("--state", type=private_path, required=True)
     parser.add_argument("--sha", help="Full reviewed source SHA, required for build")
     parser.add_argument("--profile", choices=["web", "platform"], default="web")
-    parser.add_argument("--flutter-version", default="3.50.0")
+    parser.add_argument("--flutter-version", default="3.44.0")
+    parser.add_argument(
+        "--platform-url", type=loopback_origin, default="http://127.0.0.1:8021"
+    )
+    parser.add_argument(
+        "--web-origin", type=loopback_origin, default="http://127.0.0.1:8080"
+    )
     parser.add_argument(
         "--compat", help="Existing prepare_compat export for standalone 7I"
     )

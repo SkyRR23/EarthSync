@@ -59,7 +59,9 @@ with sync_playwright() as p:
 
     def fill(locator, value):
         locator.click()
+        page.wait_for_timeout(150)
         page.keyboard.press("ControlOrMeta+A")
+        page.wait_for_timeout(50)
         page.keyboard.type(value, delay=3)
         page.keyboard.press("Tab")
         page.wait_for_timeout(100)
@@ -98,11 +100,11 @@ with sync_playwright() as p:
         )
         fill(
             page.get_by_role("textbox", name="Latitude (−90 to 90)", exact=True),
-            "42.03",
+            "42.030234",
         )
         fill(
             page.get_by_role("textbox", name="Longitude (−180 to 180)", exact=True),
-            "-93.62",
+            "-93.620234",
         )
         page.get_by_role(
             "checkbox", name="I confirm this point marks my field.", exact=True
@@ -137,10 +139,10 @@ with sync_playwright() as p:
         page.get_by_role("button", name="Choose historical dates", exact=True).click()
         page.get_by_role("button", name="Switch to input", exact=True).click()
         fill(
-            page.get_by_role("textbox", name="Start Date mm/dd/yyyy", exact=True),
+            page.get_by_role("textbox", name=re.compile(r"^Start Date")),
             "02/01/2024",
         )
-        fill(page.get_by_role("textbox", name="End Date", exact=True), "02/29/2024")
+        fill(page.get_by_role("textbox", name=re.compile(r"^End Date")), "02/29/2024")
         page.get_by_role("button", name="OK", exact=True).click()
         with page.expect_response(
             lambda r: "/climate/jobs" in r.url and r.request.method == "POST"

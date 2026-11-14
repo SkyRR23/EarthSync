@@ -8,7 +8,14 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
 from report import Report
-from staging import digest, exclusive, private_path, source_pin
+from staging import (
+    digest,
+    exclusive,
+    private_path,
+    source_pin,
+    loopback_origin,
+    environment,
+)
 from smoke import local_url
 
 
@@ -123,3 +130,35 @@ def test_state_cannot_contain_source_checkout(tmp_path):
     assert result.returncode == 2
     assert "must not overlap" in result.stderr
     assert not (tmp_path / "operation.lock").exists()
+
+
+@pytest.mark.parametrize(
+    "value",
+    [
+        "https://example.org",
+        "http://0.0.0.0:8080",
+        "http://127.0.0.1:8021@evil.example",
+        "http://127.0.0.1:8021/path",
+        "http://127.0.0.1:8021?private=1",
+        "http://127.0.0.1:80",
+        "http://127.0.0.1:bad",
+    ],
+)
+def test_final_build_rejects_nonlocal_platform_and_browser_origins(value):
+    with pytest.raises(argparse.ArgumentTypeError):
+        loopback_origin(value)
+
+
+def test_final_platform_environment_uses_exact_recorded_web_origin(tmp_path):
+    manifest = {
+        "profile": "platform",
+        "engine": "/reviewed/v03",
+        "catalog": "/reviewed/catalog",
+        "files": {"/reviewed/v03": "a" * 64, "/reviewed/catalog": "b" * 64},
+        "web_origin": "http://127.0.0.1:8091",
+    }
+    env = environment(tmp_path / "source", tmp_path / "state", manifest)
+    assert env["EARTHSYNC_PLATFORM_ORIGINS"] == "http://127.0.0.1:8091"
+    assert env["EARTHSYNC_V03_SHA256"] == "a" * 64
+    assert env["EARTHSYNC_PLATFORM_LOCAL"] == "1"
+    assert loopback_origin("http://127.0.0.1:8021/") == "http://127.0.0.1:8021"

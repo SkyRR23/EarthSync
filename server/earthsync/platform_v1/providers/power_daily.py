@@ -66,11 +66,15 @@ def read_daily(capture, query, parameter):
             data["geometry"]["type"] != "Point"
             or len(coordinates) not in (2, 3)
             or not all(number(v) for v in coordinates)
+            or not -180 <= coordinates[0] <= 180
+            or not -90 <= coordinates[1] <= 90
         ):
             raise PlatformError("SPATIAL_MISMATCH", 502)
+        # Observed POWER v2.10.3 response point precision is three decimals.
+        # Preserve returned geometry; this does not establish the native cell.
         if (
-            abs(coordinates[0] - query.point.longitude) > 1e-6
-            or abs(coordinates[1] - query.point.latitude) > 1e-6
+            abs(coordinates[0] - query.point.longitude) > 0.0005 + 1e-12
+            or abs(coordinates[1] - query.point.latitude) > 0.0005 + 1e-12
         ):
             raise PlatformError("SPATIAL_MISMATCH", 502)
         daily = data["properties"]["parameter"][parameter]

@@ -1,3 +1,17 @@
+# Integrated 7Q operations status
+
+7Q PR #23 at `ef9a67ced98c9af98d677a679c9ab1761dc8904a` is now merged into
+this release candidate. `ops/staging/staging.py` is the canonical restricted
+staging/artifact/backup workflow. It invokes the same existing web and platform
+entrypoints; `scripts/run_final_local.py` remains a development convenience.
+Do not run both supervisors against the same ports/data.
+
+The SDK/Pillow/farm-ID/photo/job/security gates below are resolved or explicitly
+bounded. Operations now defaults to Flutter 3.44, builds the Web platform client,
+records the exact loopback browser/service origins, and hashes both included
+Python lockfiles. A clean source checkout at the final full RC SHA is required.
+Use the final verification report for tested commands/manifests and source SHA.
+
 # Trusted local staging handoff for 7Q
 
 This handoff is reviewable code/configuration, not permission for public deployment.

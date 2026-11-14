@@ -14,6 +14,16 @@
       "pr": 21,
       "branch": "feat/flutter-complete-ui-v1",
       "sha": "bd8d245b0eae92aab353d852baf05adba5527384"
+    },
+    "7J": {
+      "pr": 22,
+      "branch": "fix/earthsync-science-audit-v1",
+      "sha": "d7e43399c9fd296032e64b1c1b5623dbeb70cca6"
+    },
+    "7Q": {
+      "pr": 23,
+      "branch": "ops/earthsync-staging-v1",
+      "sha": "ef9a67ced98c9af98d677a679c9ab1761dc8904a"
     }
   },
   "7L_merge_base": "5addde741cb9a0efbea9492b2bf8f889d5862517",
@@ -31,5 +41,6 @@
   "dart": "3.12.0",
   "flutter_image_digest": "sha256:46691e311715845de03a3ba4753a475476936805b29431b1f00f1816981033f8",
   "rust": "1.99.0",
-  "public_deployment": false
+  "public_deployment": false,
+  "7I_scientific_precision_patch_sha256": "4e780d2b4f33fea4c5e66643d564bfa95042ff9ab27387aa8bc261b8d0576052"
 }

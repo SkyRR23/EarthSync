@@ -68,3 +68,26 @@ lock; 7H's CI timeout and backend Windows fixes remain. Rust stays 1.99.0 / FRB
 
 CI now exports compatibility interfaces from the actual integrated HEAD. The
 original pinned export mode remains available for historical source verification.
+
+## Final acceptance update: 7J and 7Q
+
+Reviewed and merged complete 7J `d7e43399c9fd296032e64b1c1b5623dbeb70cca6`
+(including precision follow-up `d7e4339`, not only initial `06145ee`) and 7Q
+`ef9a67ced98c9af98d677a679c9ab1761dc8904a`. Both true merges were conflict-free
+and original PRs remain untouched. Applied the separate reviewed 7I precision
+patch with `git apply --check` before applying it; retained both regressions and
+added an out-of-domain response-coordinate rejection at the same boundary.
+
+7J supplies monthly response coordinate/date/duplicate-key guards, exact response
+hashes and confirmed-field succession/fallow rules. Existing 7I duplicate/calendar/
+hash protections were verified rather than replaced. The 7N cache-immutability fix
+remains in place. Rust binaries/FRB libraries must be rebuilt and hashes refreshed
+before these scientific fixes are claimed in execution receipts.
+
+7Q's operations bundle is integrated using the existing two ASGI entrypoints.
+Targeted adaptations select Flutter 3.44, include the platform URL in the Web build,
+record exact loopback browser/service origins, check run ports, and hash the combined
+Python lock. No second API architecture or public proxy was added. Its structured
+PASS/FAIL/INCOMPLETE reporting, maintenance exclusion and restart-generation checks
+remain. The standalone 7N launcher is a development convenience; the reviewed
+operations workflow is the canonical restricted staging/recovery path.

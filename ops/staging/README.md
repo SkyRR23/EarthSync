@@ -20,7 +20,7 @@ not complete UI/server acceptance.
 | 7H #20 | `a7c33cc6b58703501bbba0ceba1bad1d6d42004b` | `docs/integration/README.md`, `Run-WebDemo.ps1`, `earthsync.web_demo:app` |
 | 7I #19 | `b578a6df2764479ff9c9df006cc00e5ddb3ccfa3` | `server/docs/platform_v1/README.md`, `earthsync.platform_v1.api:app_factory` |
 | 7L #21 | `bd8d245b0eae92aab353d852baf05adba5527384` | `docs/MILESTONE_7L.md`, locked Flutter app |
-| Final 7N RC | **PENDING** | Must supply full SHA, resolved dependency lock and approved runtime contracts |
+| Final 7N RC | See `docs/integration/7n/source-manifest.json` and final verification | Combined source; build a clean immutable checkout with the final full SHA |
 
 The web host serves Flutter and existing 7H services on 8080. Its health endpoint
 is liveness, not provider/Rust readiness. The independent 7I service uses 8021 and
@@ -31,10 +31,10 @@ worker per service. Neither process may expose 7I routes through a reverse proxy
 7H photo data are SQLite **image BLOBs** (`evidence.sqlite3`) plus a private
 workspace token. 7I photo rows refer to separate sanitized PNG objects beside
 `platform.sqlite3`. These stores, ownership models, and farm IDs are different.
-7H/7L browser farm persistence is not proof of durable 7I farm persistence.
-7L's platform adapter is opt-in; it does not migrate farms/photos. 7N owns the
-final product connection and any reviewed migration. Running two existing
-processes here does not claim the final UI uses 7I for all operations.
+7N adds explicit local-farm-ID/confirmation-revision links to server UUIDs.
+Daily evidence, history and real Rust decisions are persisted after explicit UI
+actions; selected area/device position stay separate. Workspace photos do not
+migrate automatically. See `docs/integration/7n/DATABASE.md` for the ownership model.
 
 ## Install and pin tools
 
@@ -47,11 +47,13 @@ On Windows, use Git for Windows, Python with the `py` launcher, and Visual Studi
 Build Tools with Desktop C++ and the Windows SDK. A full Android SDK/JDK is not
 required for Flutter Web. See Android below for its additional toolchain.
 
-7H and both app CI files pin Flutter **3.50.0**. 7L's narrative says **3.44/Dart
-3.12**, despite inheriting the 3.50 CI pin. This discrepancy needs 7N's explicit
-choice and a successful `flutter pub get --enforce-lockfile`; do not resolve it
-by running `pub upgrade` or quietly rewriting the lock. The build tool defaults
-to 3.50.0 and accepts an explicit `--flutter-version` for the reviewed choice.
+7N selected Flutter **3.44.0** / Dart **3.12.0** after reviewing both locks and
+verifying `flutter pub get --enforce-lockfile`, tests, analyzer and release builds.
+The operations build defaults to that SDK and includes
+`--dart-define=PLATFORM_URL=http://127.0.0.1:8021`. `--platform-url` and
+`--web-origin` allow only exact loopback origins; both values are recorded in the
+manifest. The platform admits only the recorded browser origin (default
+`http://127.0.0.1:8080`). A run-port override must match its build manifest.
 Rust's crate package version 0.1.0 is not the protocol version: the runtime smoke
 checks `earthsync.engine.v0.3.0`.
 
@@ -65,9 +67,11 @@ retain it independently. It is not an external signature or reproducible-build
 attestation. Lock versions are reproducible inputs, not a bit-identical binary
 guarantee across operating systems or SDK distributions.
 
-Never combine the locks blindly: 7H uses Pillow 12.2.0 and 7I uses 12.0.0.
-Use separate venvs until 7N supplies one tested unified lock. The operations
-profiles keep the existing dependency sets intact.
+7N reconciled the dependency sets: both profiles use the combined lock retaining
+Pillow **12.2.0**, Windows tzdata and the reviewed platform/raster dependencies.
+The platform lock includes `server/requirements.lock`; both files are hashed in
+the operations manifest. Separate process venvs remain useful for artifact isolation.
+
 
 ## Linux: build and run tonight
 
@@ -97,7 +101,7 @@ PRIVATE=/srv/earthsync-private
 python3.12 "$OPS/ops/staging/staging.py" build --profile platform --source "$PLATFORM" \
   --state "$PRIVATE/platform-release" --sha b578a6df2764479ff9c9df006cc00e5ddb3ccfa3 --compat "$PRIVATE/compat"
 python3.12 "$OPS/ops/staging/staging.py" build --profile web --source "$WEB" \
-  --state "$PRIVATE/web-release" --sha a7c33cc6b58703501bbba0ceba1bad1d6d42004b --flutter-version 3.50.0
+  --state "$PRIVATE/web-release" --sha a7c33cc6b58703501bbba0ceba1bad1d6d42004b --flutter-version 3.44.0
 
 # Separate terminals, foreground lifecycle. Ctrl+C stops and preserves data.
 python3.12 "$OPS/ops/staging/staging.py" run --source "$PLATFORM" --state "$PRIVATE/platform-release"
@@ -145,7 +149,7 @@ $env:RUSTUP_TOOLCHAIN = '1.99.0'
 Push-Location $Platform
 try { py -3.12 server/platform-v1/tools/prepare_compat.py "$Private\compat" } finally { Pop-Location }
 & "$Ops\ops\staging\staging.ps1" -State "$Private\platform-release" build --profile platform --source $Platform --sha b578a6df2764479ff9c9df006cc00e5ddb3ccfa3 --compat "$Private\compat"
-& "$Ops\ops\staging\staging.ps1" -State "$Private\web-release" build --profile web --source $Web --sha a7c33cc6b58703501bbba0ceba1bad1d6d42004b --flutter-version 3.50.0
+& "$Ops\ops\staging\staging.ps1" -State "$Private\web-release" build --profile web --source $Web --sha a7c33cc6b58703501bbba0ceba1bad1d6d42004b --flutter-version 3.44.0
 # Separate PowerShell windows; Ctrl+C stops the foreground process group.
 & "$Ops\ops\staging\staging.ps1" -State "$Private\platform-release" run --source $Platform
 & "$Ops\ops\staging\staging.ps1" -State "$Private\web-release" run --source $Web
