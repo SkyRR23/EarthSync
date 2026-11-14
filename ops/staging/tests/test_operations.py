@@ -162,3 +162,11 @@ def test_final_platform_environment_uses_exact_recorded_web_origin(tmp_path):
     assert env["EARTHSYNC_V03_SHA256"] == "a" * 64
     assert env["EARTHSYNC_PLATFORM_LOCAL"] == "1"
     assert loopback_origin("http://127.0.0.1:8021/") == "http://127.0.0.1:8021"
+
+
+def test_complete_recovery_rehearsal_uses_current_migration_set(tmp_path):
+    from database_check import exercise
+
+    report = Report()
+    exercise(report, tmp_path)
+    assert report.write(tmp_path / "recovery-report.json") == 0

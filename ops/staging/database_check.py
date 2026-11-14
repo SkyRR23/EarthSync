@@ -4,6 +4,7 @@ Run with the pinned platform venv and its PYTHONPATH. No user DB argument exists
 """
 
 import argparse
+import hashlib
 import io
 import json
 import os
@@ -32,6 +33,12 @@ def exercise(report, root):
             return
         raise AssertionError("Expected rejection")
 
+    migrations = sorted((Path(module.__file__).parent / "migrations").glob("*.sql"))
+    expected_migrations = [
+        (int(path.name.split("_")[0]), hashlib.sha256(path.read_bytes()).hexdigest())
+        for path in migrations
+    ]
+    next_version = max(version for version, _ in expected_migrations) + 1
     store = Store(root / "data")
     farm = store.create_farm(
         "ops-test",
@@ -47,9 +54,12 @@ def exercise(report, root):
         assert store.ready()
         assert Store(root / "data").farm("ops-test", farm.id) == farm
         with store.connection() as db:
-            assert (
-                db.execute("SELECT count(*) FROM schema_migrations").fetchone()[0] == 1
-            )
+            assert [
+                tuple(row)
+                for row in db.execute(
+                    "SELECT version,sha256 FROM schema_migrations ORDER BY version"
+                )
+            ] == expected_migrations
             assert db.execute("PRAGMA integrity_check").fetchone()[0] == "ok"
             assert not db.execute("PRAGMA foreign_key_check").fetchall()
             rejected(
@@ -110,7 +120,7 @@ def exercise(report, root):
         shutil.copytree(
             Path(module.__file__).parent / "migrations", fake / "migrations"
         )
-        (fake / "migrations/002_failure.sql").write_text(
+        (fake / "migrations" / f"{next_version:03d}_failure.sql").write_text(
             "CREATE TABLE must_rollback (id INTEGER); INVALID SQL;"
         )
         with patch.object(module, "__file__", str(fake / "store.py")):
@@ -122,9 +132,12 @@ def exercise(report, root):
                 ).fetchone()[0]
                 == 0
             )
-            assert (
-                db.execute("SELECT count(*) FROM schema_migrations").fetchone()[0] == 1
-            )
+            assert [
+                tuple(row)
+                for row in db.execute(
+                    "SELECT version,sha256 FROM schema_migrations ORDER BY version"
+                )
+            ] == expected_migrations
         assert Store(root / "data").farm("ops-test", farm.id) == farm
         # Exercise immutable checksums on a COPY, then recover to a fresh target.
         damaged = restore(backup_path, root / "bad-migration")

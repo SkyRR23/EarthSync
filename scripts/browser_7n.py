@@ -247,7 +247,7 @@ with sync_playwright() as p:
 
         go("assistant")
         question = page.get_by_role("textbox", name="Ask a question", exact=True)
-        fill(question, "Explain the crop findings and rainfall evidence")
+        fill(question, "Explain the crop findings")
         with page.expect_response(
             lambda r: "/api/assistant/v1/chat" in r.url
         ) as answer:
@@ -255,6 +255,10 @@ with sync_playwright() as p:
         payload = answer.value.request.post_data_json
         response = answer.value.json()
         assert answer.value.status == 200, response
+        assert any(
+            d["status"] == "insufficient_information"
+            for d in payload["context"]["decisions"]
+        )
         assert any(e["id"].startswith("ev_") for e in payload["context"]["evidence"])
         assert any(
             d["status"] == "insufficient_information" for d in response["decisions"]
@@ -296,6 +300,11 @@ with sync_playwright() as p:
             }
         )
         visible("Upload photo")
+        page.get_by_role(
+            "checkbox",
+            name="This is a synthetic test image, not a field observation",
+            exact=True,
+        ).click()
         with page.expect_response(
             lambda r: r.url.endswith("/photos") and r.request.method == "POST"
         ) as photo:
