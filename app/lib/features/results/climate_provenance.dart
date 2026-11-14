@@ -28,54 +28,63 @@ class ClimateProvenance extends StatelessWidget {
           header: S.provenanceHeader,
           padded: true,
           children: [
-            Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(CupertinoIcons.globe, color: context.fs.tint, size: 22),
-                const SizedBox(width: FsSpace.sm),
-                Expanded(
-                  child: Text(
-                    p == null
-                        ? 'Climate: ${c.dataKind ?? "unverified demo"}'
-                        : a.trace!.retrievalMode == 'live_http'
-                        ? 'Real NASA POWER climate · modeled data'
-                        : 'Captured real NASA POWER climate · offline replay',
-                    style: t.headline,
-                  ),
+                Row(
+                  children: [
+                    Icon(
+                      CupertinoIcons.globe,
+                      color: context.fs.tint,
+                      size: 22,
+                    ),
+                    const SizedBox(width: FsSpace.sm),
+                    Expanded(
+                      child: Text(
+                        p == null
+                            ? 'Climate: ${c.dataKind ?? "unverified demo"}'
+                            : a.trace!.retrievalMode == 'live_http'
+                            ? 'Real NASA POWER climate · modeled data'
+                            : 'Captured real NASA POWER climate · offline replay',
+                        style: t.headline,
+                      ),
+                    ),
+                  ],
                 ),
+                if (p != null) ...[
+                  const SizedBox(height: FsSpace.sm),
+                  Text('Dataset: ${p['product']}', style: small),
+                  Text(
+                    'Historical window: ${c.period} · ${p['time_standard']}',
+                    style: small,
+                  ),
+                  Text(
+                    'Requested point: ${a.location.latitude}, ${a.location.longitude}',
+                    style: small,
+                  ),
+                  Text(
+                    'Retrieved: ${a.dataQuality.fetchedAt?.toUtc().toIso8601String() ?? "unknown"}',
+                    style: small,
+                  ),
+                  Text(
+                    'Precipitation: ${c.totalRainMm?.toStringAsFixed(2) ?? "unknown"} mm · '
+                    'Mean temperature: ${c.meanTempC?.toStringAsFixed(4) ?? "unknown"} °C',
+                    style: small,
+                  ),
+                  if (p['spatial_support'] is String)
+                    Text(p['spatial_support'] as String, style: small),
+                  const SizedBox(height: FsSpace.xs),
+                  Text(
+                    'Completeness describes daily coverage, not scientific accuracy. Missing values remain unknown.',
+                    style: small,
+                  ),
+                  Text(
+                    'Crop suitability: unknown — no source-backed crop constraints supplied.',
+                    style: small,
+                  ),
+                ],
               ],
             ),
-            if (p != null) ...[
-              const SizedBox(height: FsSpace.sm),
-              Text('Dataset: ${p['product']}', style: small),
-              Text(
-                'Historical window: ${c.period} · ${p['time_standard']}',
-                style: small,
-              ),
-              Text(
-                'Requested point: ${a.location.latitude}, ${a.location.longitude}',
-                style: small,
-              ),
-              Text(
-                'Retrieved: ${a.dataQuality.fetchedAt?.toUtc().toIso8601String() ?? "unknown"}',
-                style: small,
-              ),
-              Text(
-                'Precipitation: ${c.totalRainMm?.toStringAsFixed(2) ?? "unknown"} mm · '
-                'Mean temperature: ${c.meanTempC?.toStringAsFixed(4) ?? "unknown"} °C',
-                style: small,
-              ),
-              if (p['spatial_support'] is String)
-                Text(p['spatial_support'] as String, style: small),
-              const SizedBox(height: FsSpace.xs),
-              Text(
-                'Completeness describes daily coverage, not scientific accuracy. Missing values remain unknown.',
-                style: small,
-              ),
-              Text(
-                'Crop suitability: unknown — no source-backed crop constraints supplied.',
-                style: small,
-              ),
-            ],
           ],
         ),
         if (a.dataQuality.syntheticCropReferences)

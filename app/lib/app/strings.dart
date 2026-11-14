@@ -134,6 +134,8 @@ abstract final class S {
   static const saveFarm = 'Save farm';
   static const allCorners = 'All 4 corners pinned';
   static const farmSaved = 'Farm saved. Checking your farm again.';
+  static String cornerTooFar(String km) =>
+      'That spot is $km km from your other corners, so it was not added. Walk to the farm corner and try again, or tap the map.';
 
   // About sheet
   static const notices = 'Important';

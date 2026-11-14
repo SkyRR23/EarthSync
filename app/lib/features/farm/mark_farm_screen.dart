@@ -34,8 +34,22 @@ class _MarkFarmScreenState extends ConsumerState<MarkFarmScreen> {
 
   bool get _full => _corners.length == FarmBoundary.cornerCount;
 
+  /// Farthest a corner may be from the others (a big Myanmar farm is well
+  /// under 1 km across; 2 km catches GPS from somewhere else).
+  static const _maxSpreadKm = 2.0;
+
   void _add(LatLng p) {
     if (_full) return;
+    const dist = Distance();
+    final far = _corners
+        .map((c) => dist.as(LengthUnit.Meter, c, p) / 1000)
+        .fold<double>(0, (a, b) => a > b ? a : b);
+    if (far > _maxSpreadKm) {
+      setState(
+        () => _message = S.cornerTooFar(far.toStringAsFixed(far < 10 ? 1 : 0)),
+      );
+      return;
+    }
     setState(() {
       _corners.add(p);
       _message = null;

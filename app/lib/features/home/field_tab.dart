@@ -20,7 +20,6 @@ import '../../design/components/status.dart';
 import '../../design/tokens.dart';
 import '../../state/account.dart';
 import '../../state/providers.dart';
-import '../../data/environment/nasa_power_client.dart';
 import '../map/gibs_layer.dart';
 import '../questionnaire/historical_window_selector.dart';
 
@@ -196,19 +195,9 @@ class _FieldTabState extends ConsumerState<FieldTab> {
               kind: FsButtonKind.tinted,
               icon: CupertinoIcons.calendar,
               onPressed: () {
-                final now = DateTime.now().toUtc();
-                final end = DateTime.utc(now.year, now.month - 1);
-                final start = DateTime.utc(end.year, end.month - 11);
                 ref
                     .read(historicalWindowProvider.notifier)
-                    .setWindow(
-                      HistoricalWindow(
-                        startYear: start.year,
-                        startMonth: start.month,
-                        endYear: end.year,
-                        endMonth: end.month,
-                      ),
-                    );
+                    .setWindow(lastTwelveMonths());
                 Navigator.of(ctx).pop();
               },
             ),

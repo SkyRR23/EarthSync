@@ -45,9 +45,24 @@ final prefsProvider = Provider<SharedPreferences?>((ref) => null);
 /// check results upload automatically to their own Google account space.
 final cloudSyncProvider = Provider<CloudSync?>((ref) => null);
 
+/// The last 12 completed months — a full year of weather for the strip.
+HistoricalWindow lastTwelveMonths([DateTime? now]) {
+  final n = (now ?? DateTime.now()).toUtc();
+  final end = DateTime.utc(n.year, n.month - 1);
+  final start = DateTime.utc(end.year, end.month - 11);
+  return HistoricalWindow(
+    startYear: start.year,
+    startMonth: start.month,
+    endYear: end.year,
+    endMonth: end.month,
+  );
+}
+
 class HistoricalWindowNotifier extends Notifier<HistoricalWindow> {
+  /// Farmers see a whole year by default (the team's class default is one
+  /// verified month, kept for its captured-data tests).
   @override
-  HistoricalWindow build() => const HistoricalWindow();
+  HistoricalWindow build() => lastTwelveMonths();
   void setWindow(HistoricalWindow window) => state = window;
 }
 
