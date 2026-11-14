@@ -1,0 +1,40 @@
+name: Scientific source regression checks
+
+on:
+  pull_request:
+    paths:
+      - "tools/science_audit/**"
+      - "server/earthsync/power.py"
+      - "server/earthsync/source_validation.py"
+      - "server/tests/test_science_audit.py"
+      - "data/crop-knowledge/v1/**"
+      - ".github/workflows/science-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-scientific-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: server/requirements.lock
+      - run: python -m pip install -r server/requirements.lock
+      - name: Offline source, catalog and immutable archive-tool regressions
+        env:
+          PYTHONPATH: server
+        run: >-
+          python -m pytest -q -c server/pyproject.toml
+          server/tests/test_science_audit.py
+          data/crop-knowledge/v1/tests tools/science_audit
+      - name: Check scientific validator and tool style
+        run: >-
+          ruff check server/earthsync/source_validation.py server/earthsync/power.py
+          server/tests/test_science_audit.py tools/science_audit
+      - run: git diff --check

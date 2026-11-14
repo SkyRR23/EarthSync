@@ -523,6 +523,12 @@ fn succession(
             .push("Confirmed field and explicit sequential-use assertion required.".into());
         return;
     }
+    // A region-wide rule may apply to this field, but regional crop/fallow
+    // history cannot establish what actually occupied the confirmed field.
+    let field = Applicability {
+        field_only: true,
+        ..rule.applicability.clone()
+    };
     let (prev_crop, prev_family, end, id) = if index > 0 {
         let prev = &s.plans[index - 1];
         let family = r
@@ -546,7 +552,7 @@ fn succession(
         if r.history.iter().any(|h| {
             h.period.is_none()
                 || (!h.fallow && h.crop_id.is_none())
-                || !usable(&h.provenance, &rule.applicability, r)
+                || !usable(&h.provenance, &field, r)
                 || h.provenance.kind == Kind::Forecast
         }) {
             f.unknowns
@@ -615,7 +621,7 @@ fn succession(
             && h.period.as_ref().is_some_and(|t| {
                 t.start.ordinal().unwrap() <= end + 1 && t.end.ordinal().unwrap() >= start - 1
             })
-            && usable(&h.provenance, &rule.applicability, r)
+            && usable(&h.provenance, &field, r)
             && h.provenance.kind != Kind::Forecast
     });
     let crop_in_gap = r.history.iter().any(|h| {
