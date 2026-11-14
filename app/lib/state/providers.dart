@@ -17,9 +17,11 @@ final kEngine = _engineDefine.isNotEmpty
     : (kIsWeb ? 'mock' : 'rust');
 
 final engineProvider = Provider<EngineGateway>(
-  (ref) => kEngine == 'rust'
-      ? RustEngine(window: ref.watch(historicalWindowProvider))
-      : MockEngine(),
+  (ref) => switch (kEngine) {
+    'rust' => RustEngine(window: ref.watch(historicalWindowProvider)),
+    'mock' => MockEngine(),
+    _ => throw StateError('Unsupported ENGINE value. Choose rust or mock.'),
+  },
 );
 
 class HistoricalWindowNotifier extends Notifier<HistoricalWindow> {

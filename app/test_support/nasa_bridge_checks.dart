@@ -30,18 +30,7 @@ void registerNasaBridgeChecks() {
   late String originalCapture;
   late FieldAnalysis capturedResult, missingResult;
   FieldAnalysis? liveResult;
-  setUpAll(() async {
-    debugPrint('Initializing the actual native Rust bridge.');
-    await RustEngine.init().timeout(const Duration(seconds: 30));
-    debugPrint('Native bridge initialized; analyzing the captured NASA response.');
-    originalCapture = await rootBundle.loadString('assets/fixtures/nasa_power_real.json');
-    capturedResult = await captured().timeout(const Duration(seconds: 30));
-    missingResult = await captured(missing: true).timeout(const Duration(seconds: 30));
-    if (const bool.fromEnvironment('RUN_LIVE_NASA')) {
-      liveResult = await HttpOverrides.runWithHttpOverrides(
-          () => RustEngine().analyzeField(_point), _LiveHttp());
-    }
-  });
+
 
   Future<FieldAnalysis> captured({bool missing = false}) async {
     var raw = await rootBundle.loadString(
@@ -61,6 +50,19 @@ void registerNasaBridgeChecks() {
       retrievalMode: 'captured_real_response',
     );
   }
+
+  setUpAll(() async {
+    debugPrint('Initializing the actual native Rust bridge.');
+    await RustEngine.init().timeout(const Duration(seconds: 30));
+    debugPrint('Native bridge initialized; analyzing the captured NASA response.');
+    originalCapture = await rootBundle.loadString('assets/fixtures/nasa_power_real.json');
+    capturedResult = await captured().timeout(const Duration(seconds: 30));
+    missingResult = await captured(missing: true).timeout(const Duration(seconds: 30));
+    if (const bool.fromEnvironment('RUN_LIVE_NASA')) {
+      liveResult = await HttpOverrides.runWithHttpOverrides(
+          () => RustEngine().analyzeField(_point), _LiveHttp());
+    }
+  });
 
   testWidgets(
     'captured real NASA -> actual FRB -> Rust -> Flutter climate display',
