@@ -132,7 +132,7 @@ class ClimateReadings extends StatelessWidget {
                           if (row.rainMm != null)
                             BarChartRodData(
                               toY: row.rainMm!,
-                              color: Colors.blue,
+                              color: const Color(0xFF4385A4),
                               width: 12,
                             ),
                         ],
@@ -162,7 +162,7 @@ class ClimateReadings extends StatelessWidget {
                   gridData: const FlGridData(drawVerticalLine: false),
                   lineBarsData: [
                     LineChartBarData(
-                      color: Colors.deepOrange,
+                      color: const Color(0xFF9B6225),
                       isCurved: false,
                       spots: [
                         for (final (i, row) in rows.indexed)
@@ -180,12 +180,20 @@ class ClimateReadings extends StatelessWidget {
           const Text('Temperature unavailable for this period.'),
         const SizedBox(height: 16),
         // Readable values also serve screen readers and single-month windows.
-        for (final row in rows)
-          Text(
-            '${DateFormat.yMMM().format(row.month)}: '
-            '${row.rainMm?.toStringAsFixed(2) ?? "Unknown"} mm · '
-            '${row.temperatureC?.toStringAsFixed(1) ?? "Unknown"} °C',
-          ),
+        ExpansionTile(
+          key: PageStorageKey('climate.readings:${climate.hashCode}'),
+          tilePadding: EdgeInsets.zero,
+          title: const Text('Monthly readings · accessible table'),
+          initiallyExpanded: !hasRain && !hasTemp,
+          children: [
+            for (final row in rows)
+              Text(
+                '${DateFormat.yMMM().format(row.month)}: '
+                '${row.rainMm?.toStringAsFixed(2) ?? "Unknown"} mm · '
+                '${row.temperatureC?.toStringAsFixed(1) ?? "Unknown"} °C',
+              ),
+          ],
+        ),
         const SizedBox(height: 12),
         Text('Source: ${p['provider']} / ${p['product']}'),
         Text(
@@ -198,6 +206,7 @@ class ClimateReadings extends StatelessWidget {
           'Daily coverage is not scientific accuracy. These records are historical, not a forecast. Local soils, water and crop conditions may differ.',
         ),
         ExpansionTile(
+          key: PageStorageKey('climate.sources:${climate.hashCode}'),
           tilePadding: EdgeInsets.zero,
           title: const Text('Source details and data quality'),
           children: [

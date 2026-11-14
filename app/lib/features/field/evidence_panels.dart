@@ -1,3 +1,4 @@
+import '../../design/components/product.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,6 +10,7 @@ class EvidenceDetails extends StatelessWidget {
   final Object? data;
   @override
   Widget build(BuildContext context) => ExpansionTile(
+    key: PageStorageKey('evidence:$title:${data.hashCode}'),
     title: Text(title),
     children: [
       Padding(
@@ -26,9 +28,8 @@ class EnvironmentalPanel extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) => ref
       .watch(environmentalProvider(target))
       .when(
-        loading: () => const LinearProgressIndicator(
-          semanticsLabel: 'Loading environmental context',
-        ),
+        loading: () =>
+            const EvidenceLoading(label: 'Loading environmental context'),
         error: (error, _) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -106,9 +107,8 @@ class SatelliteEvidencePanel extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) => ref
       .watch(satelliteProvider(target))
       .when(
-        loading: () => const LinearProgressIndicator(
-          semanticsLabel: 'Loading satellite availability',
-        ),
+        loading: () =>
+            const EvidenceLoading(label: 'Loading satellite availability'),
         error: (_, _) => Column(
           children: [
             const Text(

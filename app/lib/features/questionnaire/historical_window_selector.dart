@@ -21,33 +21,48 @@ class HistoricalWindowSelector extends ConsumerWidget {
             endMonth: em ?? w.endMonth,
           ),
         );
-    Widget month(String label, int value, ValueChanged<int> change) => Expanded(
-      child: DropdownButtonFormField<int>(
-        key: ValueKey('$label-$value'),
-        initialValue: value,
-        decoration: InputDecoration(labelText: label),
-        items: [
-          for (var m = 1; m <= 12; m++)
-            DropdownMenuItem(value: m, child: Text(monthNames[m - 1])),
-        ],
-        onChanged: (v) {
-          if (v != null) change(v);
-        },
-      ),
-    );
-    Widget year(String label, int value, ValueChanged<int> change) => Expanded(
-      child: DropdownButtonFormField<int>(
-        key: ValueKey('$label-$value'),
-        initialValue: value,
-        decoration: InputDecoration(labelText: label),
-        items: [
-          for (var y = DateTime.now().toUtc().year; y >= 1981; y--)
-            DropdownMenuItem(value: y, child: Text('$y')),
-        ],
-        onChanged: (v) {
-          if (v != null) change(v);
-        },
-      ),
+    Widget month(String label, int value, ValueChanged<int> change) =>
+        DropdownButtonFormField<int>(
+          key: ValueKey('$label-$value'),
+          initialValue: value,
+          isExpanded: true,
+          decoration: InputDecoration(labelText: label),
+          items: [
+            for (var m = 1; m <= 12; m++)
+              DropdownMenuItem(value: m, child: Text(monthNames[m - 1])),
+          ],
+          onChanged: (v) {
+            if (v != null) change(v);
+          },
+        );
+    Widget year(String label, int value, ValueChanged<int> change) =>
+        DropdownButtonFormField<int>(
+          key: ValueKey('$label-$value'),
+          initialValue: value,
+          isExpanded: true,
+          decoration: InputDecoration(labelText: label),
+          items: [
+            for (var y = DateTime.now().toUtc().year; y >= 1981; y--)
+              DropdownMenuItem(value: y, child: Text('$y')),
+          ],
+          onChanged: (v) {
+            if (v != null) change(v);
+          },
+        );
+    Widget pair(Widget first, Widget second) => LayoutBuilder(
+      builder: (context, box) =>
+          box.maxWidth < 400 || MediaQuery.textScalerOf(context).scale(1) > 1.4
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [first, const SizedBox(height: 12), second],
+            )
+          : Row(
+              children: [
+                Expanded(child: first),
+                const SizedBox(width: 12),
+                Expanded(child: second),
+              ],
+            ),
     );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,19 +78,14 @@ class HistoricalWindowSelector extends ConsumerWidget {
           },
           child: const Text('Use last complete year (12 months)'),
         ),
-        Row(
-          children: [
-            month('Start month', w.startMonth, (m) => update(sm: m)),
-            const SizedBox(width: 12),
-            year('Start year', w.startYear, (y) => update(sy: y)),
-          ],
+        pair(
+          month('Start month', w.startMonth, (m) => update(sm: m)),
+          year('Start year', w.startYear, (y) => update(sy: y)),
         ),
-        Row(
-          children: [
-            month('End month', w.endMonth, (m) => update(em: m)),
-            const SizedBox(width: 12),
-            year('End year', w.endYear, (y) => update(ey: y)),
-          ],
+        const SizedBox(height: 12),
+        pair(
+          month('End month', w.endMonth, (m) => update(em: m)),
+          year('End year', w.endYear, (y) => update(ey: y)),
         ),
         const Text(
           'Crop suitability remains unknown. Farmer answers are retained; previous crops, planting month and priorities are not used in climate calculations.',

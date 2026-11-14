@@ -1,3 +1,5 @@
+import '../../app/ui_copy.dart';
+import '../../design/components/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../state/home_provider.dart';
@@ -32,11 +34,21 @@ class _PhotosScreenState extends ConsumerState<PhotosScreen> {
           child: ListView(
             padding: const EdgeInsets.all(20),
             children: [
+              PageHeader(
+                title: UiCopy.text(context, 'photoTitle'),
+                subtitle: UiCopy.text(context, 'photoBody'),
+              ),
               const Text('Local/demo workspace · no production accounts'),
               const Text(
                 'The private workspace token grants access to all photos in that workspace. Farm IDs are farmer labels, not authorization. Only connect your own workspace. Use localhost or HTTPS; do not send this token over plain Wi-Fi HTTP. The token stays in session memory and must be entered again after refresh.',
               ),
               if (repository == null) ...[
+                const SizedBox(height: 16),
+                EvidenceNotice(
+                  title: UiCopy.text(context, 'emptyPhotos'),
+                  message: UiCopy.text(context, 'emptyPhotosBody'),
+                  icon: Icons.photo_library_outlined,
+                ),
                 TextField(
                   controller: _token,
                   obscureText: true,

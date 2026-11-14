@@ -131,6 +131,10 @@ void main() {
       ),
     );
     await t.pumpAndSettle();
+    await t.ensureVisible(find.text('Monthly readings · accessible table'));
+    await t.pumpAndSettle();
+    await t.tap(find.text('Monthly readings · accessible table'));
+    await t.pumpAndSettle();
     expect(find.textContaining('0.04 mm'), findsOneWidget);
     fail = true;
     container.invalidate(dashboardClimateProvider(query));

@@ -385,11 +385,19 @@ void main() {
       );
       expect(find.text('My crop photo'), findsOneWidget);
       expect(find.text('Unlocated evidence'), findsOneWidget);
+      await tapVisible(tester, find.byType(Image).last);
+      expect(find.byType(InteractiveViewer), findsOneWidget);
+      await tapVisible(tester, find.byTooltip('Close photo'));
       await tapVisible(tester, find.text('Replace photo'));
       expect(find.text('Replacement photo preview'), findsOneWidget);
       await tapVisible(tester, find.text('Save replacement'));
       expect(repository.replacedId, photoId);
       await tapVisible(tester, find.text('Delete photo'));
+      expect(find.text('Delete this photo?'), findsOneWidget);
+      await tapVisible(tester, find.text('Cancel'));
+      expect(repository.photos, isNotEmpty);
+      await tapVisible(tester, find.text('Delete photo'));
+      await tapVisible(tester, find.text('Delete'));
       expect(repository.photos, isEmpty);
       expect(find.text('No uploaded photos.'), findsOneWidget);
     },

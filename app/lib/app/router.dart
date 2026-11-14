@@ -1,3 +1,7 @@
+import '../features/dashboard/daily_climate_screen.dart';
+import '../design/app_shell.dart';
+import '../features/explore/explore_screen.dart';
+import '../features/settings/settings_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/location/location_screen.dart';
@@ -16,57 +20,69 @@ import '../features/assistant/integrated_assistant.dart';
 
 GoRouter buildRouter() => GoRouter(
   routes: [
-    GoRoute(path: '/', builder: (_, _) => const HomeEntry()),
-    GoRoute(path: '/dashboard', builder: (_, _) => const DashboardScreen()),
-    GoRoute(
-      path: '/field',
-      builder: (_, _) => const FarmRequired(child: FieldScreen()),
-    ),
-    GoRoute(
-      path: '/photos',
-      builder: (_, _) => const FarmRequired(child: PhotosScreen()),
-    ),
-    GoRoute(
-      path: '/assessment',
-      builder: (_, _) => const FarmRequired(child: AssessmentScreen()),
-    ),
-    GoRoute(
-      path: '/assistant',
-      builder: (_, s) => IntegratedAssistantScreen(
-        areaOnly: s.uri.queryParameters['area'] == '1',
-      ),
-    ),
-    GoRoute(
-      path: '/area',
-      builder: (_, _) => const LocationScreen(areaOnly: true),
-    ),
-    GoRoute(
-      path: '/location',
-      builder: (_, s) =>
-          LocationScreen(editing: s.uri.queryParameters['edit'] == '1'),
-    ),
-    GoRoute(
-      path: '/question/:step',
-      builder: (_, s) => FarmRequired(
-        child: QuestionScreen(
-          step: (int.tryParse(s.pathParameters['step'] ?? '') ?? 1).clamp(
-            1,
-            kQuestionCount,
-          ),
-          editing: s.uri.queryParameters['edit'] == '1',
+    ShellRoute(
+      builder: (_, state, child) =>
+          AppShell(path: state.uri.path, child: child),
+      routes: [
+        GoRoute(
+          path: '/daily-climate',
+          builder: (_, _) => const DailyClimateScreen(),
         ),
-      ),
+        GoRoute(path: '/explore', builder: (_, _) => const ExploreScreen()),
+        GoRoute(path: '/settings', builder: (_, _) => const SettingsScreen()),
+        GoRoute(path: '/', builder: (_, _) => const HomeEntry()),
+        GoRoute(path: '/dashboard', builder: (_, _) => const DashboardScreen()),
+        GoRoute(
+          path: '/field',
+          builder: (_, _) => const FarmRequired(child: FieldScreen()),
+        ),
+        GoRoute(
+          path: '/photos',
+          builder: (_, _) => const FarmRequired(child: PhotosScreen()),
+        ),
+        GoRoute(
+          path: '/assessment',
+          builder: (_, _) => const FarmRequired(child: AssessmentScreen()),
+        ),
+        GoRoute(
+          path: '/assistant',
+          builder: (_, s) => IntegratedAssistantScreen(
+            areaOnly: s.uri.queryParameters['area'] == '1',
+          ),
+        ),
+        GoRoute(
+          path: '/area',
+          builder: (_, _) => const LocationScreen(areaOnly: true),
+        ),
+        GoRoute(
+          path: '/location',
+          builder: (_, s) =>
+              LocationScreen(editing: s.uri.queryParameters['edit'] == '1'),
+        ),
+        GoRoute(
+          path: '/question/:step',
+          builder: (_, s) => FarmRequired(
+            child: QuestionScreen(
+              step: (int.tryParse(s.pathParameters['step'] ?? '') ?? 1).clamp(
+                1,
+                kQuestionCount,
+              ),
+              editing: s.uri.queryParameters['edit'] == '1',
+            ),
+          ),
+        ),
+        GoRoute(
+          path: '/review',
+          builder: (_, _) => const FarmRequired(child: ReviewScreen()),
+        ),
+        GoRoute(path: '/results', builder: (_, _) => const ResultsScreen()),
+        GoRoute(
+          path: '/scenario/:id',
+          builder: (_, s) =>
+              ScenarioDetailScreen(scenarioId: s.pathParameters['id']!),
+        ),
+        GoRoute(path: '/sources', builder: (_, _) => const SourcesScreen()),
+      ],
     ),
-    GoRoute(
-      path: '/review',
-      builder: (_, _) => const FarmRequired(child: ReviewScreen()),
-    ),
-    GoRoute(path: '/results', builder: (_, _) => const ResultsScreen()),
-    GoRoute(
-      path: '/scenario/:id',
-      builder: (_, s) =>
-          ScenarioDetailScreen(scenarioId: s.pathParameters['id']!),
-    ),
-    GoRoute(path: '/sources', builder: (_, _) => const SourcesScreen()),
   ],
 );

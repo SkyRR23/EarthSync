@@ -1,86 +1,150 @@
+import '../../app/ui_labels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../app/strings.dart';
-import '../results/climate_provenance.dart';
-import '../../data/models/field_analysis.dart';
-import '../../design/components/badges.dart';
-import '../../design/components/feedback.dart';
-import '../../design/tokens.dart';
+import '../../app/ui_copy.dart';
+import '../../data/environment/area_climate.dart';
+import '../../data/models/home_profile.dart';
+import '../../design/components/product.dart';
 import '../../state/providers.dart';
+import '../../state/home_provider.dart';
+import '../../state/dashboard_provider.dart';
+import '../results/climate_provenance.dart';
+import '../field/evidence_panels.dart';
+import '../../state/integration_provider.dart';
 
 class SourcesScreen extends ConsumerWidget {
   const SourcesScreen({super.key});
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(analysisProvider);
-    final a = state is AnalysisReady ? state.analysis : null;
-    final t = Theme.of(context).textTheme;
-
+    String tr(String k) => UiCopy.text(context, k);
+    final profile = ref.watch(homeProfileProvider).value;
+    final area = profile?.userLocation;
+    final point =
+        profile?.farm?.point ?? (area is ApproximateArea ? area.point : null);
+    final legacy = ref.watch(analysisProvider);
+    final analysis = legacy is AnalysisReady ? legacy.analysis : null;
+    final climate = point == null
+        ? null
+        : ref.watch(
+            dashboardClimateProvider(
+              ClimateQuery(point, ref.watch(historicalWindowProvider)),
+            ),
+          );
+    final provenance = climate?.value?.evidence.provenance;
     return Scaffold(
-      appBar: AppBar(title: const Text(S.sources)),
-      body: a == null
-          ? const FsStateView.loading()
-          : ListView(
-              padding: const EdgeInsets.all(FsSpace.gutter),
-              children: [
-                Text(
-                  'Each result comes from one of these sources. Satellite grids and soil '
-                  'models describe your region, not your exact plot.',
-                  style: t.bodyLarge,
+      appBar: AppBar(title: Text(tr('sources'))),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 960),
+          child: ListView(
+            padding: const EdgeInsets.all(24),
+            children: [
+              PageHeader(title: tr('sources'), subtitle: tr('sourceNote')),
+              EvidenceNotice(
+                title: UiLabels.readTheEvidenceInContext,
+                message: UiLabels.availableMeansASourceReturnedDataNotThat,
+              ),
+              if (point == null)
+                const EvidenceNotice(
+                  title: UiLabels.noLocationSpecificEvidenceLoaded,
+                  message: UiLabels.chooseAnAreaOrConfirmAFarmTo,
+                  icon: Icons.location_off_outlined,
                 ),
-                ClimateProvenance(analysis: a),
-                if (a.trace != null) ...[
-                  ExpansionTile(
-                    title: const Text('Exact backend response and provenance'),
-                    children: [SelectableText(a.trace!.backendResponseJson)],
-                  ),
-                  ExpansionTile(
-                    title: const Text(
-                      'Retained farmer answers (not all used by Rust)',
-                    ),
-                    children: [SelectableText(a.trace!.farmerInputJson)],
-                  ),
-                  ExpansionTile(
-                    title: const Text('Exact Rust request and result'),
+              if (climate?.isLoading == true)
+                const LinearProgressIndicator(
+                  semanticsLabel: UiLabels.loadingClimateSourceInformation,
+                ),
+              if (climate?.hasError == true)
+                const EvidenceNotice(
+                  title: UiLabels.climateSourceUnavailable,
+                  message: UiLabels.theClimateServiceDidNotReturnAValidated,
+                ),
+              if (provenance != null)
+                SectionCard(
+                  title: UiLabels.nasaPOWERHistoricalClimate,
+                  icon: Icons.water_drop_outlined,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      SelectableText(a.trace!.rustRequestJson),
-                      const Divider(),
-                      SelectableText(a.trace!.rustResultJson),
+                      Text('Provider: ${provenance['provider']}'),
+                      Text('Dataset: ${provenance['product']}'),
+                      Text('Spatial support: ${provenance['spatial_support']}'),
+                      const Text(
+                        UiLabels.unitsRainfallMmPerMonthTemperatureMonthlyMean,
+                      ),
+                      for (final request
+                          in provenance['source_requests'] as List) ...[
+                        Text('Retrieved: ${request['retrieved_at']}'),
+                        SelectableText(
+                          Uri.parse(request['endpoint'] as String)
+                              .replace(
+                                queryParameters: (request['query'] as Map).map(
+                                  (k, v) => MapEntry('$k', '$v'),
+                                ),
+                              )
+                              .toString(),
+                        ),
+                      ],
+                      EvidenceDetails(
+                        title: UiLabels.sourceDatesCoverageQualityLimitations,
+                        data: provenance,
+                      ),
                     ],
                   ),
-                ],
-                const FsSectionTitle('Evidence types'),
-                for (final type in EvidenceType.values)
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: Icon(
-                      evidenceStyle(type).$2,
-                      color: evidenceStyle(type).$1,
+                ),
+              SectionCard(
+                title: UiLabels.nasaGIBSDisplayImagery,
+                icon: Icons.satellite_alt_outlined,
+                child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(UiLabels.modisTerraTrueColourProvisionalDisplayLayer),
+                    Text(UiLabels.requestedImageDatesAreShownWithEachView),
+                    SelectableText('https://gibs.earthdata.nasa.gov'),
+                  ],
+                ),
+              ),
+              if (point != null)
+                EnvironmentalPanel(
+                  target: environmentalKey(point, farmId: profile?.farm?.id),
+                ),
+              if (analysis != null) ...[
+                ClimateProvenance(analysis: analysis),
+                for (final source in analysis.references)
+                  SectionCard(
+                    title: source.title,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Evidence type: ${source.type.name}'),
+                        if (source.period != null) Text(source.period!),
+                        if (source.spatialScale != null)
+                          Text(source.spatialScale!),
+                        if (source.url != null) SelectableText(source.url!),
+                        if (source.note != null) Text(source.note!),
+                      ],
                     ),
-                    title: Text(evidenceTypeLabel(type)),
                   ),
-                const FsSectionTitle('Sources used'),
-                for (final r in a.references)
-                  Card(
-                    margin: const EdgeInsets.only(bottom: FsSpace.sm),
-                    child: ListTile(
-                      minTileHeight: FsSpace.minTouch + 8,
-                      leading: Icon(
-                        evidenceStyle(r.type).$2,
-                        color: evidenceStyle(r.type).$1,
-                      ),
-                      title: Text(r.title),
-                      subtitle: Text(evidenceTypeLabel(r.type)),
-                      trailing: const Icon(Icons.chevron_right),
-                      onTap: () => showSourceSheet(context, r),
-                    ),
+                if (analysis.trace != null)
+                  EvidenceDetails(
+                    title: UiLabels.technicalIntegrationTrace,
+                    data: {
+                      'backend': analysis.trace!.backendResponseJson,
+                      'rustRequest': analysis.trace!.rustRequestJson,
+                      'rustResult': analysis.trace!.rustResultJson,
+                    },
                   ),
-                const FsSectionTitle(S.assumptions),
-                FsBulletList(a.assumptions),
               ],
-            ),
+              const EvidenceNotice(
+                title: UiLabels.cropProfilesRemainReferenceOnly,
+                message:
+                    UiLabels.theGlobalCatalogIsRecommendationIneligibleAProfile,
+              ),
+              const SourceNote(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -99,40 +99,49 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
           ],
         ),
         body: SafeArea(
-          child: switch (_tab) {
-            0 => _OverviewTab(
-              analysis: analysis,
-              fromCache: fromCache,
-              onCompare: () => setState(() => _tab = 3),
-            ),
-            1 => _MapTab(analysis: analysis),
-            2 => ClimateTab(analysis: analysis),
-            _ => _RotationsTab(analysis: analysis),
-          },
-        ),
-        bottomNavigationBar: NavigationBar(
-          selectedIndex: _tab,
-          onDestinationSelected: (i) => setState(() => _tab = i),
-          destinations: const [
-            NavigationDestination(
-              icon: Icon(Icons.dashboard_outlined),
-              selectedIcon: Icon(Icons.dashboard),
-              label: S.tabOverview,
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.satellite_alt),
-              label: S.tabMap,
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.water_drop_outlined),
-              selectedIcon: Icon(Icons.water_drop),
-              label: S.tabClimate,
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.autorenew),
-              label: S.tabRotations,
-            ),
-          ],
+          child: Column(
+            children: [
+              Wrap(
+                children: [
+                  for (final (i, label) in [
+                    S.tabOverview,
+                    S.tabMap,
+                    S.tabClimate,
+                    S.tabRotations,
+                  ].indexed)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: TextButton(
+                        onPressed: () => setState(() => _tab = i),
+                        style: TextButton.styleFrom(
+                          backgroundColor: _tab == i
+                              ? Theme.of(context).colorScheme.primaryContainer
+                              : null,
+                        ),
+                        child: Text(label),
+                      ),
+                    ),
+                ],
+              ),
+              Expanded(
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 1160),
+                    child: switch (_tab) {
+                      0 => _OverviewTab(
+                        analysis: analysis,
+                        fromCache: fromCache,
+                        onCompare: () => setState(() => _tab = 3),
+                      ),
+                      1 => _MapTab(analysis: analysis),
+                      2 => ClimateTab(analysis: analysis),
+                      _ => _RotationsTab(analysis: analysis),
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     };

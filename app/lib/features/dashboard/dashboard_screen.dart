@@ -1,17 +1,17 @@
+import '../../app/ui_labels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../app/ui_copy.dart';
 import '../../data/environment/area_climate.dart';
 import '../../data/models/home_profile.dart';
+import '../../design/components/product.dart';
 import '../../state/home_provider.dart';
 import '../../state/providers.dart';
 import '../onboarding/location_choices.dart';
 import '../questionnaire/historical_window_selector.dart';
 import 'climate_panel.dart';
 import 'satellite_preview.dart';
-import '../field/evidence_panels.dart';
-import '../../state/integration_provider.dart';
-import '../../data/engine/v03_engine.dart';
 
 class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
@@ -27,6 +27,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     if (profile == null) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
+    String tr(String k) => UiCopy.text(context, k);
     final farm = profile.farm;
     final area = profile.userLocation;
     final showingFarm = farm != null && !_areaView;
@@ -40,95 +41,155 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         title: const Text('EarthSync'),
         actions: [
           IconButton(
-            tooltip: 'Sources and limits',
+            tooltip: tr('sources'),
             onPressed: () => context.push('/sources'),
-            icon: const Icon(Icons.info_outline),
+            icon: const Icon(Icons.menu_book_outlined),
           ),
         ],
       ),
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 840),
+            constraints: const BoxConstraints(maxWidth: 1200),
             child: ListView(
               key: const PageStorageKey('home-dashboard'),
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(24),
               children: [
                 if (profile.storageNotice != null) Text(profile.storageNotice!),
-                OutlinedButton.icon(
-                  onPressed: () =>
-                      context.push('/assistant${_areaView ? '?area=1' : ''}'),
-                  icon: const Icon(Icons.chat_outlined),
-                  label: const Text('Ask the EarthSync assistant'),
+                PageHeader(
+                  eyebrow: UiLabels.nasaSpaceAppsFieldShift,
+                  title: tr('overview'),
+                  subtitle: tr('overviewBody'),
                 ),
                 if (farm != null) ...[
-                  SegmentedButton<bool>(
-                    segments: const [
-                      ButtonSegment(
-                        value: false,
-                        label: Text('My Farm'),
-                        icon: Icon(Icons.agriculture),
-                      ),
-                      ButtonSegment(
-                        value: true,
-                        label: Text('Your Area'),
-                        icon: Icon(Icons.public),
-                      ),
-                    ],
-                    selected: {_areaView},
-                    onSelectionChanged: (v) =>
-                        setState(() => _areaView = v.single),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: SegmentedButton<bool>(
+                      segments: const [
+                        ButtonSegment(
+                          value: false,
+                          label: Text('My Farm'),
+                          icon: Icon(Icons.grass),
+                        ),
+                        ButtonSegment(
+                          value: true,
+                          label: Text('Your Area'),
+                          icon: Icon(Icons.public),
+                        ),
+                      ],
+                      selected: {_areaView},
+                      onSelectionChanged: (v) =>
+                          setState(() => _areaView = v.single),
+                    ),
                   ),
                   const SizedBox(height: 20),
                 ],
-                Text(
-                  showingFarm
-                      ? farm.name ?? 'My Farm'
-                      : point == null
-                      ? 'Explore the world'
-                      : 'Your Area',
-                  style: Theme.of(context).textTheme.headlineMedium,
+                Container(
+                  clipBehavior: Clip.antiAlias,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF173D30),
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: CustomPaint(
+                    painter: LandContours(),
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            showingFarm ? Icons.grass_outlined : Icons.public,
+                            color: const Color(0xFFC8DFBF),
+                            size: 30,
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            showingFarm
+                                ? farm.name ?? 'My Farm'
+                                : point == null
+                                ? UiLabels.exploreTheWorld
+                                : 'Your Area',
+                            style: Theme.of(context).textTheme.headlineMedium
+                                ?.copyWith(color: Colors.white),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            showingFarm
+                                ? 'Farmer-confirmed point · ${farm.point.label}'
+                                : area is ApproximateArea
+                                ? '${area.source == AreaSource.example ? 'Example region · ' : ''}${area.label} · ${area.point.label}'
+                                : tr('discoverBody'),
+                            style: const TextStyle(color: Color(0xFFDFEBDD)),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            showingFarm
+                                ? UiLabels.thisPointStaysFixedWhenYouChangeYour
+                                : UiLabels
+                                      .regionalContextOnlyNoPersonalizedCropRecommendations,
+                            style: const TextStyle(color: Color(0xFFDFEBDD)),
+                          ),
+                          const SizedBox(height: 20),
+                          Wrap(
+                            spacing: 12,
+                            runSpacing: 12,
+                            children: [
+                              FilledButton.icon(
+                                style: FilledButton.styleFrom(
+                                  backgroundColor: const Color(0xFFDBEBCF),
+                                  foregroundColor: const Color(0xFF173D30),
+                                ),
+                                onPressed: () => context.push(
+                                  showingFarm ? '/field' : '/area',
+                                ),
+                                icon: Icon(
+                                  showingFarm
+                                      ? Icons.arrow_forward
+                                      : Icons.public,
+                                ),
+                                label: Text(
+                                  showingFarm
+                                      ? UiLabels.fieldSituation
+                                      : tr('areaAction'),
+                                ),
+                              ),
+                              if (farm == null)
+                                FilledButton.tonalIcon(
+                                  onPressed: () => context.push('/location'),
+                                  icon: const Icon(
+                                    Icons.add_location_alt_outlined,
+                                  ),
+                                  label: const Text(UiLabels.addMyFarm),
+                                ),
+                              if (showingFarm)
+                                TextButton(
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: Colors.white,
+                                  ),
+                                  onPressed: () => context.push('/location'),
+                                  child: const Text(UiLabels.editMyFarm),
+                                ),
+                            ],
+                          ),
+                        ],
+                      ),
+
+                    ),
+                  ),
                 ),
+                const SizedBox(height: 24),
                 if (showingFarm) ...[
-                  Text('Farmer-confirmed point · ${farm.point.label}'),
-                  Text(
-                    'Confirmed: ${farm.confirmedAt.toUtc().toIso8601String()}',
-                  ),
-                  const Text(
-                    'This point stays fixed when you change your area. It is not a field boundary.',
-                  ),
-                  const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      FilledButton(
-                        onPressed: () => context.push('/field'),
-                        child: const Text('Field situation'),
-                      ),
-                      OutlinedButton(
-                        onPressed: () => context.push('/photos'),
-                        child: const Text('Field photos'),
-                      ),
-                      OutlinedButton(
-                        onPressed: () => context.push('/assessment'),
-                        child: const Text('Crop assessment'),
-                      ),
-                    ],
-                  ),
-                  if (ref.watch(assessmentProvider).result
-                      case final result?) ...[
-                    Text(
-                      result.validation != null
+                  if (ref.watch(assessmentProvider).result case final result?)
+                    EvidenceNotice(
+                      title: 'Latest assessment',
+                      message: result.validation != null
                           ? 'Input validation failed · open Crop assessment for details'
                           : result.synthetic
                           ? 'Synthetic software assessment · not your farm'
                           : 'Reference crop assessment · more information needed',
                     ),
-                    for (final summary in result.summaries.take(2))
-                      Text(V03Status.decode(summary['status']).label),
-                  ],
-                  FilledButton.icon(
+                  const SizedBox(height: 12),
+                  OutlinedButton.icon(
                     onPressed: () {
                       ref
                           .read(farmerDraftProvider.notifier)
@@ -139,62 +200,59 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                       context.push('/question/1');
                     },
                     icon: const Icon(Icons.checklist),
-                    label: const Text('Open Farm Questionnaire'),
+                    label: const Text(UiLabels.openFarmQuestionnaire),
                   ),
-                  TextButton(
-                    onPressed: () => context.push('/location'),
-                    child: const Text('Edit My Farm'),
+                ],
+                ResponsivePair(
+                  first: ActionCard(
+                    title: tr('planning'),
+                    body: tr('planningBody'),
+                    icon: Icons.spa_outlined,
+                    onTap: () => context.push(
+                      farm == null ? '/location' : '/assessment',
+                    ),
+                  ),
+                  second: ActionCard(
+                    title: tr('ask'),
+                    body: tr('askBody'),
+                    icon: Icons.chat_bubble_outline,
+                    onTap: () =>
+                        context.push('/assistant${_areaView ? '?area=1' : ''}'),
+                  ),
+                ),
+                if (point == null) ...[
+                  SectionCard(
+                    title: tr('discover'),
+                    icon: Icons.travel_explore,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        if (area is UnknownLocation &&
+                            area.reason == LocationUnavailableReason.denied)
+                          const Text(
+                            UiLabels.locationPermissionWasDeniedChooseAnAreaOr,
+                          ),
+                        if (area is UnknownLocation &&
+                            area.reason ==
+                                LocationUnavailableReason.unavailable)
+                          const Text(
+                            UiLabels
+                                .deviceLocationIsUnavailableBrowsersUsuallyNeedHTTPS,
+                          ),
+                        const LocationChoices(showSkip: false),
+                        const SizedBox(height: 12),
+                        const Text(
+                          UiLabels
+                              .tryClearlyLabeledExampleRegionsYangonNairobiOr,
+                        ),
+                      ],
+                    ),
                   ),
                 ] else ...[
-                  if (area is ApproximateArea) ...[
-                    Text(
-                      '${area.source == AreaSource.example ? "Example region · " : ""}${area.label} · ${area.point.label}',
-                    ),
-                    const Text(
-                      'Area context only. This point has not been confirmed as your field. No personalized crop recommendations.',
-                    ),
-                  ] else
-                    const Text(
-                      'Choose an area to explore climate records and satellite images. Location permission and a farm are optional.',
-                    ),
-                  const SizedBox(height: 12),
-                  if (farm == null)
-                    FilledButton.icon(
-                      onPressed: () => context.push('/location'),
-                      icon: const Icon(Icons.add_location_alt_outlined),
-                      label: const Text('Add My Farm'),
-                    ),
-                  if (area is UnknownLocation &&
-                      area.reason == LocationUnavailableReason.denied)
-                    const Text(
-                      'Location permission was denied. Choose an area or explore without GPS.',
-                    ),
-                  if (area is UnknownLocation &&
-                      area.reason == LocationUnavailableReason.unavailable)
-                    const Text(
-                      'Device location is unavailable. Browsers usually need HTTPS or localhost. You can choose an area manually.',
-                    ),
-                  LocationChoices(
-                    showSkip: false,
-                    areaLabel: point == null ? 'Choose an Area' : 'Switch Area',
-                  ),
-                  if (point == null)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 12),
-                      child: Text(
-                        'Try clearly labeled example regions: Yangon, Nairobi or São Paulo in Choose an Area. No data are loaded until you select an area.',
-                      ),
-                    ),
-                ],
-                if (point != null) ...[
-                  const SizedBox(height: 12),
-                  const Text(
-                    'For these views, selected coordinates go to our climate service and NASA POWER; imagery requests go to NASA GIBS. Choices and farm records stay on this device.',
-                  ),
-                  const SizedBox(height: 16),
                   ExpansionTile(
+                    key: const PageStorageKey('dashboard.historical-dates'),
                     tilePadding: EdgeInsets.zero,
-                    title: const Text('Change historical dates'),
+                    title: const Text(UiLabels.changeHistoricalDates),
                     children: const [HistoricalWindowSelector()],
                   ),
                   const SizedBox(height: 12),
@@ -204,16 +262,43 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                       ref.watch(historicalWindowProvider),
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  SatellitePreview(point: point),
+                  const SizedBox(height: 12),
+                  ResponsivePair(
+                    first: SatellitePreview(point: point),
+                    second: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        ActionCard(
+                          title: tr('satellite'),
+                          body: tr('satelliteBody'),
+                          icon: Icons.layers_outlined,
+                          onTap: () => context.push('/explore'),
+                        ),
+                        EvidenceNotice(
+                          title: tr('forecast'),
+                          message: tr('forecastBody'),
+                          icon: Icons.cloud_off_outlined,
+                        ),
+                        if (showingFarm)
+                          OutlinedButton.icon(
+                            onPressed: () => context.push('/photos'),
+                            icon: const Icon(Icons.photo_library_outlined),
+                            label: const Text(UiLabels.fieldPhotos),
+                          ),
+                      ],
+                    ),
+                  ),
                   if (!showingFarm)
-                    EnvironmentalPanel(target: environmentalKey(point)),
+                    TextButton(
+                      onPressed: () => context.push('/area'),
+                      child: const Text(UiLabels.switchArea),
+                    ),
                 ],
-                const SizedBox(height: 20),
-                const Text(
-                  'Missing data do not mean safe conditions. Climate and imagery are decision support, not crop suitability advice.',
+                const SourceNote(),
+                TextButton(
+                  onPressed: () => context.push('/sources'),
+                  child: Text(tr('sources')),
                 ),
-                const SizedBox(height: 12),
               ],
             ),
           ),

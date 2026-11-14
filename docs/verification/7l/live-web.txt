@@ -1,0 +1,9 @@
+00:00 +0: loading /workspace/EarthSync-ui/app/test/web_engine_test.dart
+00:00 +0: (setUpAll)
+00:00 +0: web reference options use actual Rust and cannot become verified advice
+00:00 +1: live failure never requests captured data or invokes Rust
+00:00 +2: phone results show Rust values, crop options and monthly coverage
+00:03 +3: no crop shows climate and an actionable empty recommendation state
+00:03 +4: live web HTTP to Python to Rust returns and displays twelve months
+00:03 +5: (tearDownAll)
+00:03 +5: All tests passed!
