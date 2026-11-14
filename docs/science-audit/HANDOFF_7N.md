@@ -34,12 +34,13 @@ audit or scientific acceptance. Expanded crop-profile research belongs to 7P.
    source inventory and results. The original archive is now fully inventoried after checksum verification; scientific acceptance remains separate.
 
 Do not apply the 7H monthly provider changes to 7I's independent daily parser:
-its geometry/calendar/duplicate/hash protections already exist. If 7N retains
-the default 7H monthly history path, that path still needs these fixes.
+its geometry/calendar/duplicate/hash protections already exist. Older unpatched
+7H monthly history deployments need J01–J04; the pinned current 7N path already
+contains them.
 
 For an older, unpatched standalone 7I checkout, J06 is supplied as
-`docs/science-audit/patches/7i-power-coordinate-precision.patch` ; current 7N already includes it. Apply only if absent and after the 7I
-provider files exist. It modifies only that provider and
+`docs/science-audit/patches/7i-power-coordinate-precision.patch`; current 7N
+already includes it. Apply only if absent and after the 7I provider files exist. It modifies only that provider and
 adds `test_science_coordinate_precision.py`. `git apply --check` and `git apply`
 were exercised on a separate exact 7I export; all 85 platform tests then passed
 with the three explicitly opt-in live tests skipped. Unpatched 7I fails its new
