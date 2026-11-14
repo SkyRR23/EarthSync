@@ -405,6 +405,35 @@ Official NASA participant resources: https://www.spaceappschallenge.org/resource
 
 **Research → team:** "These crop profiles and rotation constraints are supported by [sources], [specific season/production system], with license and citation notes. Unknown fields remain null. Slides [n of 7], public demo link [URL]."
 
-## 12. Contract change log
+## 12. Suggested function ownership map (implementation-stage names)
+
+**These are proposed source names, not deployed endpoints or functions.** External JSON paths and Rust v0.1 symbols are the critical contract; internal implementation filenames can be changed only after notifying the respective owner.
+
+| Owner | Proposed source file | Function/method | Responsibility |
+|---|---|---|---|
+| Backend (if FastAPI/Python chosen) | server/src/main.py | create_app() | construct API and register routes |
+| Backend | server/src/routes/health.py | health_check() | GET /api/v1/health |
+| Backend | server/src/routes/environment.py | get_environment(lat, lon, year) | GET /api/v1/environment |
+| Backend | server/src/routes/crops.py | list_crops() | GET /api/v1/crops |
+| Backend | server/src/routes/crops.py | get_crop(crop_id) | GET /api/v1/crops/{id} |
+| Backend | server/src/services/nasa_power.py | fetch_nasa_power_daily(lat, lon, start, end) | NASA POWER adapter |
+| Backend | server/src/services/climate_normalizer.py | normalize_power_to_environment(raw, year) | produce EnvironmentalContext |
+| Backend | server/src/services/crop_catalog.py | load_crop_catalog() | load curated crop records + sources |
+| Rust | engine/src/lib.rs | analyze_field(request) | PURE validation + analysis; implemented |
+| Rust | engine/src/lib.rs | analyze_field_json(input_json) | JSON adapter; implemented |
+| Rust | engine/src/client.rs | fetch_environment(...) | planned server request, typed response |
+| Rust | engine/src/api.rs | analyze_field_json(...) wrapper | planned FRB export, avoid duplicate conflicting names |
+| Flutter | app/lib/core/bridge/engine_bridge.dart | analyzeFieldJson(String inputJson) | proposed Dart adapter to generated Rust API |
+| Flutter | app/lib/features/farms/farm_input_page.dart | FarmInputPage | farmer data collection |
+| Flutter | app/lib/features/map/farm_map_page.dart | FarmMapPage | GIBS map display |
+| Flutter | app/lib/features/analysis/analysis_page.dart | AnalysisPage | analysis result and warnings |
+| Flutter | app/lib/features/analysis/climate_summary_card.dart | ClimateSummaryCard | climate source/units/chart |
+| Flutter | app/lib/features/analysis/scenario_comparison_card.dart | ScenarioComparisonCard | 3 unvalidated/validated comparisons |
+
+Backend implementation language (FastAPI vs Cloudflare Worker) is NOT finalized. If choosing Cloudflare, retain identical HTTP routes/JSON but propose equivalent TypeScript handler names in team chat before writing backend code. Avoid parallel Python and Worker server implementations for the MVP.
+
+**Never infer from this list that code already exists.** Only the two engine/lib.rs functions are implemented on PR #1; every other function must be created/tested by its owner.
+
+## 13. Contract change log
 
 - **v1.0 / 2026-11-14:** First proposed team-wide naming, ownership, routes and fixtures document. NOT approved/merged yet. Rust contract in PR #1 remains provisional until team integration.
