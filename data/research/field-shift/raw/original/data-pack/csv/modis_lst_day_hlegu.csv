@@ -1,0 +1,93 @@
+date,product,band,raw_value,scale,value,source_unit,note
+2024-01-01,MOD11A2,LST_Day_1km,15205,0.02,30.95,Kelvin,converted from Kelvin
+2024-01-09,MOD11A2,LST_Day_1km,15192,0.02,30.69,Kelvin,converted from Kelvin
+2024-01-17,MOD11A2,LST_Day_1km,15212,0.02,31.09,Kelvin,converted from Kelvin
+2024-01-25,MOD11A2,LST_Day_1km,15265,0.02,32.15,Kelvin,converted from Kelvin
+2024-02-02,MOD11A2,LST_Day_1km,15283,0.02,32.51,Kelvin,converted from Kelvin
+2024-02-10,MOD11A2,LST_Day_1km,15284,0.02,32.53,Kelvin,converted from Kelvin
+2024-02-18,MOD11A2,LST_Day_1km,15269,0.02,32.23,Kelvin,converted from Kelvin
+2024-02-26,MOD11A2,LST_Day_1km,15408,0.02,35.01,Kelvin,converted from Kelvin
+2024-03-05,MOD11A2,LST_Day_1km,15384,0.02,34.53,Kelvin,converted from Kelvin
+2024-03-13,MOD11A2,LST_Day_1km,15382,0.02,34.49,Kelvin,converted from Kelvin
+2024-03-21,MOD11A2,LST_Day_1km,15547,0.02,37.79,Kelvin,converted from Kelvin
+2024-03-29,MOD11A2,LST_Day_1km,15497,0.02,36.79,Kelvin,converted from Kelvin
+2024-04-06,MOD11A2,LST_Day_1km,15432,0.02,35.49,Kelvin,converted from Kelvin
+2024-04-14,MOD11A2,LST_Day_1km,15481,0.02,36.47,Kelvin,converted from Kelvin
+2024-04-22,MOD11A2,LST_Day_1km,15364,0.02,34.13,Kelvin,converted from Kelvin
+2024-04-30,MOD11A2,LST_Day_1km,15446,0.02,35.77,Kelvin,converted from Kelvin
+2024-05-08,MOD11A2,LST_Day_1km,15630,0.02,39.45,Kelvin,converted from Kelvin
+2024-05-16,MOD11A2,LST_Day_1km,15537,0.02,37.59,Kelvin,converted from Kelvin
+2024-05-24,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2024-06-01,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2024-06-09,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2024-06-17,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2024-06-25,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2024-07-03,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2024-07-11,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2024-07-19,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2024-07-27,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2024-08-04,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2024-08-12,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2024-08-20,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2024-08-28,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2024-09-05,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2024-09-13,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2024-09-21,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2024-09-29,MOD11A2,LST_Day_1km,15334,0.02,33.53,Kelvin,converted from Kelvin
+2024-10-07,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2024-10-15,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2024-10-23,MOD11A2,LST_Day_1km,15399,0.02,34.83,Kelvin,converted from Kelvin
+2024-10-31,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2024-11-08,MOD11A2,LST_Day_1km,15236,0.02,31.57,Kelvin,converted from Kelvin
+2024-11-16,MOD11A2,LST_Day_1km,15232,0.02,31.49,Kelvin,converted from Kelvin
+2024-11-24,MOD11A2,LST_Day_1km,15152,0.02,29.89,Kelvin,converted from Kelvin
+2024-12-02,MOD11A2,LST_Day_1km,15185,0.02,30.55,Kelvin,converted from Kelvin
+2024-12-10,MOD11A2,LST_Day_1km,15157,0.02,29.99,Kelvin,converted from Kelvin
+2024-12-18,MOD11A2,LST_Day_1km,15067,0.02,28.19,Kelvin,converted from Kelvin
+2024-12-26,MOD11A2,LST_Day_1km,15124,0.02,29.33,Kelvin,converted from Kelvin
+2025-01-01,MOD11A2,LST_Day_1km,15139,0.02,29.63,Kelvin,converted from Kelvin
+2025-01-09,MOD11A2,LST_Day_1km,15080,0.02,28.45,Kelvin,converted from Kelvin
+2025-01-17,MOD11A2,LST_Day_1km,15129,0.02,29.43,Kelvin,converted from Kelvin
+2025-01-25,MOD11A2,LST_Day_1km,15144,0.02,29.73,Kelvin,converted from Kelvin
+2025-02-02,MOD11A2,LST_Day_1km,15208,0.02,31.01,Kelvin,converted from Kelvin
+2025-02-10,MOD11A2,LST_Day_1km,15260,0.02,32.05,Kelvin,converted from Kelvin
+2025-02-18,MOD11A2,LST_Day_1km,15312,0.02,33.09,Kelvin,converted from Kelvin
+2025-02-26,MOD11A2,LST_Day_1km,15368,0.02,34.21,Kelvin,converted from Kelvin
+2025-03-06,MOD11A2,LST_Day_1km,15385,0.02,34.55,Kelvin,converted from Kelvin
+2025-03-14,MOD11A2,LST_Day_1km,15348,0.02,33.81,Kelvin,converted from Kelvin
+2025-03-22,MOD11A2,LST_Day_1km,15302,0.02,32.89,Kelvin,converted from Kelvin
+2025-03-30,MOD11A2,LST_Day_1km,15452,0.02,35.89,Kelvin,converted from Kelvin
+2025-04-07,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-04-15,MOD11A2,LST_Day_1km,15291,0.02,32.67,Kelvin,converted from Kelvin
+2025-04-23,MOD11A2,LST_Day_1km,15389,0.02,34.63,Kelvin,converted from Kelvin
+2025-05-01,MOD11A2,LST_Day_1km,15460,0.02,36.05,Kelvin,converted from Kelvin
+2025-05-09,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-05-17,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-05-25,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-06-02,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-06-10,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-06-18,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-06-26,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-07-04,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-07-12,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-07-20,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-07-28,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-08-05,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-08-13,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-08-21,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-08-29,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-09-06,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-09-14,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-09-22,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-09-30,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-10-08,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-10-16,MOD11A2,LST_Day_1km,15292,0.02,32.69,Kelvin,converted from Kelvin
+2025-10-24,MOD11A2,LST_Day_1km,15259,0.02,32.03,Kelvin,converted from Kelvin
+2025-11-01,MOD11A2,LST_Day_1km,,0.02,,Kelvin,
+2025-11-09,MOD11A2,LST_Day_1km,15138,0.02,29.61,Kelvin,converted from Kelvin
+2025-11-17,MOD11A2,LST_Day_1km,15138,0.02,29.61,Kelvin,converted from Kelvin
+2025-11-25,MOD11A2,LST_Day_1km,15026,0.02,27.37,Kelvin,converted from Kelvin
+2025-12-03,MOD11A2,LST_Day_1km,15114,0.02,29.13,Kelvin,converted from Kelvin
+2025-12-11,MOD11A2,LST_Day_1km,15088,0.02,28.61,Kelvin,converted from Kelvin
+2025-12-19,MOD11A2,LST_Day_1km,15066,0.02,28.17,Kelvin,converted from Kelvin
+2025-12-27,MOD11A2,LST_Day_1km,15048,0.02,27.81,Kelvin,converted from Kelvin

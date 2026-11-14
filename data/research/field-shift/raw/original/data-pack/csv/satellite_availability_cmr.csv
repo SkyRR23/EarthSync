@@ -1,0 +1,11 @@
+layer,short_name,title,provider,access,coverage_2025,latest_granule,example_granule
+surface_soil_moisture_smap_9km,SPL3SMP_E,SMAP L3 Enhanced 9 km surface soil moisture,NSIDC DAAC,Earthdata Login (earthaccess),available,2025-12-31,SMAP_L3_SM_P_E_20251231_R19240_002.h5
+rootzone_soil_moisture_smap_l4,SPL4SMGP,SMAP L4 9 km root-zone soil moisture + ET,NSIDC DAAC,Earthdata Login (earthaccess),available,2025-12-31,SMAP_L4_SM_gph_20251231T223000_Vv8013_001.h5_u9loH5HD
+precipitation_imerg_daily,GPM_3IMERGDF,GPM IMERG Final 0.1 deg daily precipitation,GES DISC,Earthdata Login (earthaccess),available,2025-09-30,GPM_3IMERGDF.07:3B-DAY.MS.MRG.3IMERG.20250930-S000000-E235959.V07B.nc4
+precipitation_imerg_halfhourly,GPM_3IMERGHH,GPM IMERG 0.1 deg half-hourly precipitation,GES DISC,Earthdata Login (earthaccess),available,2025-09-30,GPM_3IMERGHH.07:3B-HHR.MS.MRG.3IMERG.20250930-S233000-E235959.1410.V07B.HDF5
+vegetation_modis_ndvi,MOD13Q1,MODIS 250 m 16-day NDVI/EVI,LP DAAC,earthaccess or ORNL point API,available,2025-12-19,MOD13Q1.A2025353.h27v07.061.2026005202520
+vegetation_viirs_ndvi,VNP13A1,VIIRS 500 m 16-day NDVI/EVI,LP DAAC,earthaccess,available,2025-12-27,VNP13A1.A2025361.h27v07.002.2026015182044
+land_surface_temp_modis,MOD11A2,MODIS 1 km 8-day land surface temperature,LP DAAC,earthaccess or ORNL point API,available,2025-12-27,MOD11A2.A2025361.h27v07.061.2026006011702
+land_cover_modis,MCD12Q1,MODIS 500 m yearly land cover,LP DAAC,earthaccess or ORNL point API,available,2025-01-01,MCD12Q1.A2025001.h27v07.061.2026293135733
+land_surface_temp_ecostress,ECO2LSTE,ECOSTRESS 70 m land surface temperature,LP DAAC,Earthdata Login (earthaccess),no granule over this bbox in 2025,,
+biomass_gedi,GEDI04_A,GEDI L4A above-ground biomass,ORNL DAAC,Earthdata Login (earthaccess),no granule over this bbox in 2025,,

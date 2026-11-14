@@ -1,0 +1,119 @@
+{
+  "url": "https://power.larc.nasa.gov/api/system/manager/parameters?community=AG&temporal=climatology",
+  "retrieved_at": "2026-11-14T07:42:30.882250+00:00",
+  "http_status": 200,
+  "response_sha256": "de73e65fd135a6608b71d278cf1ca0388fb6a235101ecdd5c6330fcab8bf9b66",
+  "retained_parameter_subset": {
+    "T2M": {
+      "type": "METEOROLOGY",
+      "temporal": "CLIMATOLOGY",
+      "source": "SOURCE",
+      "community": "AG",
+      "calculated": false,
+      "inputs": null,
+      "units": "C",
+      "name": "Temperature at 2 Meters",
+      "definition": "The average air (dry bulb) temperature at 2 meters above the surface of the earth."
+    },
+    "T2M_MAX": {
+      "type": "METEOROLOGY",
+      "temporal": "CLIMATOLOGY",
+      "source": "POWER",
+      "community": "AG",
+      "calculated": false,
+      "inputs": null,
+      "units": "C",
+      "name": "Temperature at 2 Meters Maximum",
+      "definition": "The maximum hourly air (dry bulb) temperature at 2 meters above the surface of the earth in the period of interest."
+    },
+    "T2M_MIN": {
+      "type": "METEOROLOGY",
+      "temporal": "CLIMATOLOGY",
+      "source": "POWER",
+      "community": "AG",
+      "calculated": false,
+      "inputs": null,
+      "units": "C",
+      "name": "Temperature at 2 Meters Minimum",
+      "definition": "The minimum hourly air (dry bulb) temperature at 2 meters above the surface of the earth in the period of interest."
+    },
+    "PRECTOTCORR": {
+      "type": "METEOROLOGY",
+      "temporal": "CLIMATOLOGY",
+      "source": "SOURCE",
+      "community": "AG",
+      "calculated": false,
+      "inputs": null,
+      "units": "mm/day",
+      "name": "Precipitation Corrected",
+      "definition": "The average MERRA-2 bias corrected total precipitation at the surface of the earth."
+    },
+    "RH2M": {
+      "type": "METEOROLOGY",
+      "temporal": "CLIMATOLOGY",
+      "source": "POWER",
+      "community": "AG",
+      "calculated": false,
+      "inputs": null,
+      "units": "%",
+      "name": "Relative Humidity at 2 Meters",
+      "definition": "The ratio of vapor pressure to the saturation vapor pressure with respect to a plane surface of pure water, expressed in percent."
+    },
+    "WS2M": {
+      "type": "METEOROLOGY",
+      "temporal": "CLIMATOLOGY",
+      "source": "POWER",
+      "community": "AG",
+      "calculated": false,
+      "inputs": null,
+      "units": "m/s",
+      "name": "Wind Speed at 2 Meters",
+      "definition": "The average of wind speed at 2 meters above the surface of the earth."
+    },
+    "WD2M": {
+      "type": "METEOROLOGY",
+      "temporal": "CLIMATOLOGY",
+      "source": "POWER",
+      "community": "AG",
+      "calculated": false,
+      "inputs": null,
+      "units": "Degrees",
+      "name": "Wind Direction at 2 Meters",
+      "definition": "The average of the wind direction at 2 meters above the surface of the earth."
+    },
+    "ALLSKY_SFC_SW_DWN": {
+      "type": "RADIATION",
+      "temporal": "CLIMATOLOGY",
+      "source": "SOURCE",
+      "community": "AG",
+      "calculated": false,
+      "inputs": null,
+      "units": "MJ/m^2/day",
+      "name": "All Sky Surface Shortwave Downward Irradiance",
+      "definition": "The total solar irradiance incident (direct plus diffuse) on a horizontal plane at the surface of the earth under all sky conditions. An alternative term for the total solar irradiance is the \"Global Horizontal Irradiance\" or GHI."
+    },
+    "GWETTOP": {
+      "type": "METEOROLOGY",
+      "temporal": "CLIMATOLOGY",
+      "source": "SOURCE",
+      "community": "AG",
+      "calculated": false,
+      "inputs": null,
+      "units": "1",
+      "name": "Surface Soil Wetness",
+      "definition": "The amount of water and water vapor present in the soil. Top indicates the upper 5 cm of soil. Values range from 0 for completely dry conditions to 1 for completely saturated soil."
+    },
+    "GWETROOT": {
+      "type": "METEOROLOGY",
+      "temporal": "CLIMATOLOGY",
+      "source": "SOURCE",
+      "community": "AG",
+      "calculated": false,
+      "inputs": null,
+      "units": "1",
+      "name": "Root Zone Soil Wetness",
+      "definition": "The amount of water and water vapor available to plants in the root zone, generally considered to be the upper 1 m of soil, expressed as the proportion of water present in a given amount of soil. Values range from 0 for completely dry conditions to 1 for completely saturated soil."
+    }
+  },
+  "purpose": "Provider metadata verification only; not contributed retrieval evidence or location measurements"
+}

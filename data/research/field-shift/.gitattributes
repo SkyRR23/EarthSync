@@ -1,0 +1,3 @@
+# Preserve contributed bytes on every platform, including original CSV CRLF.
+# Whitespace cleanup applies to authored files, never to immutable evidence.
+raw/** -text -whitespace

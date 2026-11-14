@@ -1,0 +1,6 @@
+mukey,map_unit,component,component_pct,drainage_class,hydrologic_group,tax_order,slope_pct
+643831,"Parran silty clay, 0 to 2 percent slopes",Parran,85,Somewhat poorly drained,D,Aridisols,1
+643831,"Parran silty clay, 0 to 2 percent slopes",Isolde,6,Excessively drained,A,Entisols,2
+643831,"Parran silty clay, 0 to 2 percent slopes",Appian,5,Well drained,C,Aridisols,1
+643831,"Parran silty clay, 0 to 2 percent slopes",Badland,2,Well drained,,,9
+643831,"Parran silty clay, 0 to 2 percent slopes",Playas,2,Very poorly drained,,,0.5

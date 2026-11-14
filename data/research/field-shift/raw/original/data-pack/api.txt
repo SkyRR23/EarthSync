@@ -1,0 +1,586 @@
+================================================================================
+FIELD SHIFT - ADAPTING FARMS WITH NASA DATA
+Farm-decision data sources: factor -> API -> what it returns -> sample
+================================================================================
+Compiled 2026-11-14 for the Northeast Bay / NASA Space Apps 2026 challenge.
+Everything marked [WORKS] was called from the team laptop today and the result
+is stored in data-pack/csv/. Nothing here is invented: a source that needs a
+login is labelled, and a factor with no honest source is labelled [GAP].
+
+HOW TO READ THE TAGS
+  [WORKS]      public, no key, called today, output in data-pack/csv/
+  [KEY]        free, but you must create an account and get a key/token
+  [LOGIN]      Earthdata Login (free) + earthaccess; granule download, not a
+               simple JSON call
+  [US ONLY]    the dataset or API covers the United States only
+  [NO API]     bulk download or manual entry only
+  [GAP]        no defensible data source. Show "not known" in the UI.
+  [FAILED]     endpoint did not answer from our network today
+
+WHY THE SPLIT MATTERS FOR OUR PILOT
+  Our three fields are in Myanmar (Hlegu 16.87N 96.20E, Bago 17.33N 96.48E,
+  Magway 20.15N 94.93E). USDA SSURGO, CDL, NASS and PRISM are US-only, so they
+  CANNOT be the backbone of our demo. Global sources carry the demo:
+  NASA POWER + MODIS + GIBS + ISRIC SoilGrids + Open-Meteo. The US-only paths
+  are documented and demonstrated on a Nevada reference point because the
+  challenge statement itself uses a Nevada alfalfa farm.
+
+--------------------------------------------------------------------------------
+0. THE SHORT ANSWER - WHAT TO PUT IN THE APP
+--------------------------------------------------------------------------------
+FACTOR                     PRIMARY SOURCE                    CADENCE / GRID
+1 Weather & climate        NASA POWER daily + monthly        1 day / 0.5 deg
+                           Open-Meteo 16-day forecast       1 day / ~9 km
+2 Soil condition           ISRIC SoilGrids (pH, texture,     250 m / 6 depths
+                           SOC, N, CEC, Ksat)
+                           NASA POWER GWETTOP/GWETROOT      1 day / 0.5 deg
+                           SMAP L3/L4 (optional, needs login) 9 km / daily
+3 NASA Earth observation   MODIS NDVI/EVI, LST, land cover   250 m-1 km
+                           GIBS map tiles (no key)           pre-rendered
+4 Crop information         Farmer input + our crop library   n/a
+                           + NASA POWER climate suitability  monthly
+5 Crop health              MODIS NDVI anomaly + LST anomaly  weekly
+                           + farmer photo (our own model)    on demand
+6 Farm management          Farmer input (local storage)      n/a
+                           + GloFAS river discharge          1 day
+
+The honest one-liner: NASA tells us what the weather, soil and vegetation did;
+the farmer tells us what he did; our engine combines the two and says which
+rotation is defensible. We never claim a satellite measured pH or disease.
+
+--------------------------------------------------------------------------------
+1. FACTOR 1 - WEATHER AND CLIMATE
+--------------------------------------------------------------------------------
+Need: current temperature, daily min/max, weekly forecast, rainfall amount and
+probability, humidity, wind speed/direction, solar radiation, drought and
+heavy-rain signals.
+
+1.1 NASA POWER - daily point time series                        [WORKS]
+    https://power.larc.nasa.gov/api/temporal/daily/point
+      ?parameters=T2M,T2M_MAX,T2M_MIN,PRECTOTCORR,RH2M,WS2M,WD2M,
+                  ALLSKY_SFC_SW_DWN,GWETTOP,GWETROOT
+      &community=AG&latitude=16.87&longitude=96.20
+      &start=20260715&end=20261112&format=CSV
+    Auth: none. One request per point. CSV or JSON.
+    Returns: one row per day. Columns and units:
+      T2M                C          mean temperature at 2 m
+      T2M_MAX / T2M_MIN  C          daily max / min
+      PRECTOTCORR        mm/day     corrected precipitation
+      RH2M               %          relative humidity
+      WS2M               m/s        wind speed
+      WD2M               deg        wind direction
+      ALLSKY_SFC_SW_DWN  MJ/m2/day  solar radiation
+      GWETTOP            fraction   surface soil wetness (0-1)
+      GWETROOT           fraction   root-zone soil wetness (0-1)
+    Sample (data-pack/csv/power_daily_hlegu.csv):
+      date,t2m_c,t2m_max_c,t2m_min_c,prectotcorr_mm_day,rh2m_pct,...
+      2026-07-15,27.0,30.24,24.38,24.37,87.87,3.19,207.6,13.98,0.97,0.99
+    Limits: MERRA-2 reanalysis on a 0.5 x 0.625 deg cell (~55 x 69 km). It is
+    NOT a forecast: expect a 1-2 day lag and no "rain probability" field.
+    App use: seasonal water balance, GDD, heat-stress months, soil wetness.
+
+1.2 NASA POWER - monthly means                                  [WORKS]
+    https://power.larc.nasa.gov/api/temporal/monthly/point
+      ?parameters=...&community=AG&latitude=...&longitude=...
+      &start=2016&end=2025&format=CSV
+    Returns: one row per parameter per year, JAN..DEC + ANN. We pivot it to
+    year,month,<parameter>. NOTE: PRECTOTCORR stays a mm/DAY rate here; the
+    engine multiplies by days in month (this is the trap in our build_data.py).
+    Sample: 2016,1,JAN,23.62,36.02,13.81,1.19,54.84,...
+    App use: the 10-year normals the rotation engine already consumes.
+
+1.3 NASA POWER - climatology (25-year normals)                   [WORKS]
+    https://power.larc.nasa.gov/api/temporal/climatology/point
+      ?parameters=...&community=AG&latitude=...&longitude=...&format=CSV
+    Returns: JAN..DEC + ANN long-term means (2001-2025). No start/end needed.
+    App use: "is this season normal?" baseline without downloading 25 years.
+
+1.4 Open-Meteo - 16-day daily forecast                          [WORKS]
+    https://api.open-meteo.com/v1/forecast
+      ?latitude=16.87&longitude=96.20
+      &daily=temperature_2m_max,temperature_2m_min,precipitation_sum,
+             precipitation_probability_max,relative_humidity_2m_mean,
+             wind_speed_10m_max,wind_gusts_10m_max,et0_fao_evapotranspiration,
+             shortwave_radiation_sum,soil_moisture_0_to_7cm_mean,
+             soil_moisture_7_to_28cm_mean,soil_temperature_0_to_7cm_mean
+      &forecast_days=16&timezone=auto
+    Auth: none for non-commercial use (check their terms before shipping).
+    Returns: units are in daily_units; our CSV renames them to tmax_c,
+    precip_mm, precip_prob_pct, et0_mm, sm_0_7_m3m3, ...
+    Sample (forecast16_hlegu.csv):
+      2026-11-14,31.6,23.7,0.2,22,78,10.2,23.4,3.84,17.91,0.236,0.266,27.8
+    Why it is here: POWER has no forecast and no rain probability. This is the
+    ONLY real "next 7-16 days" feed in the pack, and it is global.
+    App use: "irrigate in the next 3 days?" and "can I spray before rain?".
+
+1.5 Open-Meteo - current conditions                             [WORKS]
+    https://api.open-meteo.com/v1/forecast?latitude=...&longitude=...
+      &current=temperature_2m,relative_humidity_2m,precipitation,
+               wind_speed_10m,wind_direction_10m,soil_moisture_0_to_7cm,is_day
+      &timezone=auto
+    Sample: 2026-11-14T11:30,30.3,62,0.0,7.4,34,0.238,1
+    App use: the home-screen "right now at your field" card.
+
+1.6 Open-Meteo - ERA5-Land daily archive                         [WORKS]
+    https://archive-api.open-meteo.com/v1/archive
+      ?latitude=...&longitude=...&start_date=2025-11-14&end_date=2026-11-12
+      &daily=temperature_2m_max,temperature_2m_min,precipitation_sum,
+             et0_fao_evapotranspiration,soil_moisture_0_to_7cm_mean,
+             soil_moisture_7_to_28cm_mean&timezone=auto
+    Sample: 2025-11-14,31.3,25.1,1.1,3.29,0.284,0.333
+    App use: daily ET0 and soil moisture for the water budget between POWER
+    months; a second product to sanity-check POWER's rainfall.
+
+1.7 Open-Meteo - GloFAS river discharge (flood signal)           [WORKS]
+    https://flood-api.open-meteo.com/v1/flood?latitude=...&longitude=...
+      &daily=river_discharge,river_discharge_max&forecast_days=16
+    Sample: 2026-11-14,0.51,0.51
+    App use: heavy-rain / flood proxy near the field. It is river discharge,
+    not a field inundation map; label it as a regional signal.
+
+1.8 NASA GPM IMERG - satellite precipitation                    [LOGIN]
+    Daily:     short_name GPM_3IMERGDF   (0.1 deg, daily, GES DISC)
+    Half-hour: short_name GPM_3IMERGHH   (0.1 deg, 30 min, GES DISC)
+    Search:    https://cmr.earthdata.nasa.gov/search/granules.json
+                 ?short_name=GPM_3IMERGDF&bounding_box=95.8,16.7,96.6,17.5
+    Access:    earthaccess.login(); earthaccess.search_data(...);
+               earthaccess.download(...)   (HDF5/NetCDF4, needs h5py/xarray)
+    Why: independent satellite rain to validate POWER's reanalysis rain. This
+    is the product the challenge explicitly names for rainfall reliability.
+    Cost: don't ship granules in the app; reduce to monthly totals server-side.
+
+1.9 CoCoRaHS - ground rain gauges                               [NO API]
+    https://www.cocorahs.org/Content.aspx?page=ObtainData
+    Daily crowd-sourced gauge reports, CSV download, North America only.
+    Use: validate IMERG/POWER where available; not usable for Myanmar.
+
+1.10 PRISM climate normals                                      [NO API][US ONLY]
+    https://prism.oregonstate.edu/  - bulk grids / data explorer, no REST API.
+    Use: US frost dates and high-resolution normals if we demo Nevada.
+
+1.11 NLDAS / GLDAS land data assimilation                       [LOGIN]
+    GES DISC, searchable in CMR by keyword NLDAS / GLDAS.
+    NLDAS 0.125 deg hourly (US), GLDAS 0.25 deg 3-hourly (global).
+    Use: gap-free soil moisture / ET time series when SMAP is too sparse.
+
+--------------------------------------------------------------------------------
+2. FACTOR 2 - SOIL CONDITION
+--------------------------------------------------------------------------------
+Need: texture, pH, organic matter, N/P/K, moisture, drainage, fertility.
+Rule we must keep: a satellite or a photo cannot measure N, P, K or pH.
+
+2.1 ISRIC SoilGrids - global soil properties at 250 m              [WORKS]
+    Point query over the public map server (WMS GetFeatureInfo):
+    https://maps.isric.org/mapserv?map=/map/{PROPERTY}.map
+      &SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo
+      &LAYERS={PROPERTY}_{DEPTH}_mean&QUERY_LAYERS={PROPERTY}_{DEPTH}_mean
+      &STYLES=&FORMAT=image/png&INFO_FORMAT=text/html&SRS=EPSG:4326
+      &BBOX={lon-0.25},{lat-0.25},{lon+0.25},{lat+0.25}
+      &WIDTH=101&HEIGHT=101&X=50&Y=50
+    PROPERTY: phh2o, clay, sand, silt, soc, nitrogen, cec, bdod, cfvo
+    DEPTH:    0-5cm, 5-15cm, 15-30cm, 30-60cm, 60-100cm, 100-200cm
+    Returns: an HTML fragment with Value + Unit (the WMS does not serve JSON).
+    Sample (real answer at Hlegu, 0-5 cm):
+      phh2o   Value 63  | Unit pH*10      -> pH 6.3
+      clay    Value 334 | Unit g/kg       -> 33.4 % clay
+      soc     Value 429 | Unit dg/kg      -> 42.9 g/kg
+      nitrogen Value 274 | Unit cg/kg     -> 2.74 g/kg
+    Units to respect: phh2o is pH x 10; clay/sand/silt are g/kg (divide by 10
+    for %); soc is dg/kg; nitrogen is cg/kg; cec is mmol(c)/kg; bdod is cg/cm3.
+    Every CSV row keeps BOTH: value/unit exactly as the provider sent it, and
+    value_si/unit_si already converted (pH 6.3, clay 33.4 %). The app should
+    read value_si; value/unit stays so a reviewer can check us against the API.
+    NOTE: ksat is advertised in the SoilGrids docs but the /map/ksat.map layer
+    does not answer, so we collect bulk density (bdod) and derive a drainage
+    class from clay % + bulk density instead of pretending to have Ksat.
+    NOTE: the nicer REST API rest.isric.org timed out from our network today;
+    the map server above answered. Both are the same 250 m product.
+    App use: texture class, drainage proxy (clay + Ksat), acidity flag, SOC.
+    This is the replacement for SSURGO outside the US - it covers Myanmar.
+
+2.2 USDA SSURGO / STATSGO2 via Soil Data Access                  [WORKS][US ONLY]
+    POST https://sdmdataaccess.sc.egov.usda.gov/Tabular/post.rest
+    Body: {"query": "<SQL>", "format": "JSON"}
+    Auth: none. It is a SQL endpoint, so it returns exactly the columns asked.
+    Point lookup helper: SDA_Get_Mukey_from_intersection_with_WktWgs84()
+    Sample query (components at the Nevada reference point):
+      SELECT TOP 10 mu.mukey, mu.muname, c.compname, c.comppct_r,
+             c.drainagecl, c.hydgrp, c.taxorder, c.slope_r
+      FROM mapunit mu INNER JOIN component c ON c.mukey = mu.mukey
+      WHERE mu.mukey IN (SELECT mukey FROM
+        SDA_Get_Mukey_from_intersection_with_WktWgs84('POINT(-118.8 39.5)'))
+      ORDER BY c.comppct_r DESC
+    Returns: map unit, component name, %, drainage class, hydrologic group,
+    taxonomic order, slope. Horizon query (chorizon) adds clay/sand/silt,
+    organic matter, pH 1:1, available water capacity.
+    App use: US demo only. Do NOT call it for Myanmar - it returns no rows.
+
+2.3 NASA POWER - surface and root-zone soil wetness              [WORKS]
+    Parameters GWETTOP (surface) and GWETROOT (root zone) on the POWER point
+    API above. Returns a 0-1 wetness fraction, daily.
+    Sample: GWETTOP 0.97, GWETROOT 0.99 on 2026-07-15 at Hlegu (monsoon).
+    App use: a free, key-less soil-moisture series today; no login required.
+    Limit: 0.5 deg cell, a wetness index rather than m3/m3 at the field.
+
+2.4 SMAP - soil moisture                                        [LOGIN]
+    Surface 9 km daily:  short_name SPL3SMP_E   (NSIDC DAAC, HDF5)
+    Root zone 9 km 3-hr: short_name SPL4SMGP    (NSIDC DAAC, HDF5)
+    CMR check today: both have granules over our bbox (2025-01-01).
+    Access: earthaccess.search_data(short_name="SPL3SMP_E",
+             bounding_box=(95.8,16.7,96.6,17.5), temporal=(...))
+    App use: an independent soil-moisture check on POWER/Open-Meteo; optional
+    for MVP because 9 km cannot answer a field-level question and the granules
+    need QA masking. Show it as regional context, never as "your field is 32%".
+
+2.5 Open-Meteo - soil moisture and soil temperature              [WORKS]
+    soil_moisture_0_to_7cm_mean, soil_moisture_7_to_28cm_mean,
+    soil_temperature_0_to_7cm_mean (forecast + archive calls above).
+    Units: m3/m3 and C. Sample: 0.236, 0.266, 27.8
+    App use: the "is the topsoil wet enough to sow?" card, no key, global.
+
+2.6 Photo-based soil assessment - our idea, kept honest            [GAP]
+    There is NO public API that returns pH, N, P, K or exact moisture from a
+    soil photo. Anyone claiming otherwise is guessing. A photo CAN support:
+      - texture class (visual sand/silt/clay impression)  -> low confidence
+      - surface colour (organic matter, iron, pale leached layer)
+      - surface crusting / cracking (clay behaviour, compaction)
+      - visible wetness, residue cover, erosion rills
+      - stones / coarse fragments
+    Recommended 5-photo protocol (farmer takes all 5, same visit):
+      1 soil surface, 2 handful broken open (texture), 3 colour next to a
+      white reference (paper/coin), 4 wider view of the bed, 5 a 30 cm hole
+      profile with a ruler in frame for scale.
+    Output must be a CLASS + CONFIDENCE, never a number: e.g.
+      "looks clay-rich (medium confidence) - matches SoilGrids 39% clay".
+    The photo's real job is to CONFIRM or CONTRADICT SoilGrids/POWER at that
+    point. When they disagree, show both and ask for a lab test.
+    Fusion rule for the app:
+      soil_value = SoilGrids (base) + POWER wetness (state)
+                   + photo (confidence modifier, never replaces the base)
+    If we want chemistry: a $10 soil test kit or a lab. Add those as manual
+    fields in the same form, with a "measured by" date.
+
+2.7 Soil test kit / lab result                                    [NO API]
+    Manual entry: pH, N-P-K (ppm), organic matter %, lab name, sample date.
+    This is the only route to real chemistry and it must outrank any estimate.
+
+--------------------------------------------------------------------------------
+3. FACTOR 3 - NASA EARTH OBSERVATION
+--------------------------------------------------------------------------------
+Need: vegetation health (NDVI), land surface temperature, soil moisture,
+rainfall, vegetation change, land cover, drought indicators.
+
+3.1 MODIS NDVI / EVI - 250 m, 16-day (point API)                   [WORKS]
+    https://modis.ornl.gov/rst/api/v1/MOD13Q1/subset
+      ?latitude=16.87&longitude=96.20
+      &startDate=A2024001&endDate=A2025365
+      &band=250m_16_days_NDVI&kmAboveBelow=0&kmLeftRight=0
+    Auth: none (ORNL DAAC MODIS/VIIRS web service, one pixel, no image).
+    Returns JSON: every 16-day composite with a raw integer and a scale.
+    Sample (Hlegu, 2025-01-01): data 4981, scale 0.0001 -> NDVI 0.4981
+    Band names: 250m_16_days_NDVI and 250m_16_days_EVI.
+    LIMIT WE HIT: one call may cover at most ~10 composites, so a 2-year
+    request returns HTTP 400 "exceeds maximum subset tiles support of 10".
+    Our collector splits the range into 140-day chunks and merges them.
+    App use: crop vigour curve, seasonal green-up, anomaly vs the same
+    fortnight in previous years. This is the "vegetation health" factor.
+
+3.2 MODIS land surface temperature - 1 km, 8-day                    [WORKS]
+    Same service, product MOD11A2, bands LST_Day_1km / LST_Night_1km.
+    Raw integer, scale 0.02, unit Kelvin -> we convert to C in the CSV.
+    Raw integer, scale 0.02, unit Kelvin; our CSV converts to C.
+    Sample (Hlegu 2024-2025): day mean 32.4 C (27.4-39.5), night mean 24.8 C.
+    COVERAGE TRAP: 41 of 92 day composites came back as raw 0 at this pixel.
+    MODIS uses 0/65535 as "not produced", so a naive conversion shows -273 C.
+    Our collector blanks them; treat a gap as unknown, never as cold.
+    App use: heat stress on the canopy surface (not air temperature), and
+    the night value as a proxy for heat retention / crop respiration stress.
+
+3.3 MODIS land cover - 500 m, yearly                                [WORKS]
+    Product MCD12Q1, band LC_Type1, startDate=A2015001&endDate=A2024365.
+    Returns IGBP class codes (12 = cropland, 14 = cropland/natural mosaic).
+    App use: confirm the pixel really is cropland; context for the field.
+
+3.4 VIIRS NDVI/EVI - 500 m, 16-day                        [AVAILABLE][LOGIN]
+    Product VNP13A1, band 500m_16_days_NDVI. Higher revisit than MODIS.
+    CMR confirms granules over our bbox (latest example A2025361, 2025-12-27),
+    but the point-value pull was not run here (LP DAAC/AppEEARS login).
+    Use it when MODIS has a cloudy gap; same anomaly method.
+
+3.5 Landsat 8/9 Collection 2 Level-2 - 30 m                    [LOGIN/USGS]
+    Search: CMR short_name LANDSAT_8_C2_L2 / LANDSAT_9_C2_L2
+            (confirm the exact short_name with
+             https://cmr.earthdata.nasa.gov/search/collections.json?keyword=Landsat)
+    Access: USGS M2M API (token) or earthaccess/Planetary Computer.
+    Bands: red, NIR, SWIR -> NDVI, NDMI, bare-soil mapping at 30 m.
+    Use: a single clear scene per season for field-level detail; 16-day
+    revisit and clouds make it a supplement, not the time series.
+
+3.6 ECOSTRESS - 70 m LST and evapotranspiration                 [LOGIN]
+    short_name ECO2LSTE (LP DAAC). CMR returned NO granule over our bbox for
+    the whole of 2025: the ISS target is irregular and clear-sky only, so a
+    small Myanmar field can go a year without a usable scene. Keep it as an
+    "if available" layer, never a dependency.
+
+3.7 GEDI L4A biomass                                            [LOGIN]
+    short_name GEDI04_A (ORNL DAAC), 25 m footprints, sparse sampling.
+    Not meaningful for annual cropland; use only for surrounding tree cover.
+    CMR returned no granule for our field bbox in 2025 - expected for GEDI's
+    sampling pattern over a 0.8 x 0.8 degree box.
+
+3.8 NASA GIBS - pre-rendered map tiles (no key)                    [WORKS]
+    https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/{LAYER}/default/
+      {DATE}/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg
+    Layers we use: VIIRS_SNPP_NDVI_8Day, IMERG_Precipitation_Rate,
+    MODIS_Terra_L3_Land_Surface_Temp_8Day_Day,
+    MODIS_Terra_CorrectedReflectance_TrueColor.
+    GOTCHA: every layer has its OWN tile matrix set - IMERG stops at Level6,
+    LST at Level7, NDVI at Level8, true colour at Level9. Requesting Level9
+    for IMERG returns HTTP 400, not a blank image. Our collector reads the
+    advertised set from capabilities; {DATE} also comes from Dimension/Default
+    (IMERG's current window is only 2026-05-27..2026-11-12).
+    Sample: tiles saved in data-pack/tiles/ (~20-60 KB each).
+    App use: instant map background for the Flutter field screen, no GDAL.
+
+3.9 NASA CMR - which products actually cover the field            [WORKS]
+    https://cmr.earthdata.nasa.gov/search/granules.json
+      ?short_name={SHORT_NAME}&bounding_box={w,s,e,n}
+      &temporal=2025-01-01T00:00:00Z,2025-12-31T23:59:59Z
+      &sort_key=-start_date&page_size=1
+    Returns: granule metadata (title, time_start, data links) without login.
+    Sample: SPL3SMP_E -> SMAP_L3_SM_P_E_20250101_R19240_001.h5
+    App use: our "data availability" check. Before promising a layer, CMR tells
+    us whether a granule exists over these coordinates at all.
+
+3.10 SRTM / 3DEP elevation and terrain                          [WORKS][US EPQS]
+    US:  https://epqs.nationalmap.gov/v1/json?x=-118.8&y=39.5
+           &units=Meters&wkid=4326     -> 1211.25 m at the Nevada point
+    Anywhere: https://api.open-meteo.com/v1/elevation?latitude=a,b,c
+              &longitude=x,y,z        -> Copernicus DEM 90 m, used for our
+              5x5 grid and slope/relief in terrain_summary.csv
+    SRTM GL1/GL3 via earthaccess for the raw 30/90 m product.
+    App use: slope -> erosion/runoff risk; relief -> microclimate context.
+
+3.11 OpenET - field-scale evapotranspiration                   [KEY][US ONLY]
+    https://openet-api.org/  (API key, GeoJSON field boundary, monthly ET).
+    Use for the US demo if we show irrigation scheduling; not available for MM.
+
+3.12 NLCD / NAIP / LANDFIRE                                    [US ONLY]
+    NLCD land cover (MRLC WMS), NAIP 1 m aerial imagery, LANDFIRE fuel/veg.
+    Use: US context layers only; do not build the Myanmar demo on them.
+
+--------------------------------------------------------------------------------
+4. FACTOR 4 - CROP INFORMATION
+--------------------------------------------------------------------------------
+Need: crop type, planting date, growth stage, harvest date, water requirement,
+temperature range, nutrients, cycle length.
+
+4.1 Farmer input + our crop library - the real source here           [REQUIRED]
+    There is no global API that says "this field is planted with X on date Y".
+    Crop type, planting date, irrigation type and drainage come from the
+    farmer; agronomic limits come from our curated crop-profiles.v1.json
+    (FAO/IRRI/DOA sources, currently flagged unverified until the data owner
+    finishes the sheet).
+    App use: the input screen. Two questions replace a dozen datasets:
+    "what is growing now?" and "when did you sow it?".
+    REALITY CHECK from our own data: MCD12Q1 at the Hlegu point says savanna
+    (2016-2019) and grassland (2020-2024), not cropland. A 500 m land-cover
+    pixel cannot see our field, so land cover must never be used to infer the
+    crop. It is context ("this area is a mix of grass and farmland"), nothing
+    more.
+
+4.2 USDA Cropland Data Layer (CDL) / CropScape              [US ONLY][FAILED]
+    https://nassgeodata.gmu.edu/axis2/services/CDLService/GetCDLValue
+      ?year=2024&x={lon}&y={lat}
+    Returns the crop class at a 30 m pixel (e.g. 36 = alfalfa).
+    Status 2026-11-14: the CropScape host did not answer from our network
+    (connection timeout, three attempts). The service itself is documented;
+    retry from the US or use the CDL GeoTIFF download.
+    App use: US demo only. It answers "what was grown here last year", which
+    is exactly the rotation baseline the challenge asks about.
+
+4.3 USDA NASS QuickStats                                     [KEY][US ONLY]
+    https://quickstats.nass.usda.gov/api/api_GET/?key={KEY}&commodity_desc=CORN
+      &year=2023&format=JSON
+    Status today: HTTP 401 without a key (as expected).
+    Returns county yields, planted acreage, production history.
+    App use: calibrate "is this yield normal for this county" in the US demo.
+
+4.4 FAO GAEZ v4 - agro-ecological suitability                  [NO API]
+    https://gaez.fao.org/  - bulk layers (crop suitability, yield potential,
+    soil/water constraints). Download once, join by grid cell.
+    App use: independently check whether a proposed rotation crop is
+    agro-climatically plausible in Myanmar.
+
+4.5 FAOSTAT - national production and prices                    [KEY-ish]
+    https://faostatservices.fao.org/api/v1/en/data/QCL?area=28&item=27
+      &element=5419&year=2021,2022,2023
+    Status today: DNS did not resolve from our network. The service is public
+    but documented as unreliable in some regions; cache the CSV if used.
+    App use: national rice/pulse context for Myanmar (area=28).
+
+4.6 Market viability                                            [KEY / NO API]
+    USDA AMS Market News API (key) for US prices;
+    World Bank Pink Sheet (monthly xlsx) for global commodity prices;
+    national/wholesale price lists for Myanmar.
+    App use: "is there a buyer for this rotation crop?" - a farmer constraint
+    the challenge explicitly mentions. Keep it as a display, not a model.
+
+--------------------------------------------------------------------------------
+5. FACTOR 5 - CROP HEALTH AND DISEASE
+--------------------------------------------------------------------------------
+Need: leaf colour, yellowing, spots, pest damage, fungal disease, growth
+abnormality.
+
+5.1 NDVI anomaly - vegetation stress detector                     [WORKS]
+    Method (no new API): take MOD13Q1 NDVI for the field, compare each
+    16-day composite to the same composite window averaged over 2024-2025.
+    anomaly = (NDVI_now - NDVI_normal) / NDVI_normal
+    App message: "vegetation is 18% below its normal for this fortnight".
+    What it means: water stress, heat, nutrient deficiency, pest damage, or
+    harvest - the index cannot tell which. Never say "disease detected".
+
+5.2 LST anomaly - heat stress detector                            [WORKS]
+    Same method on MOD11A2 LST_Day_1km. A hot canopy with normal NDVI points
+    to early heat/water stress; a hot canopy with low NDVI points to bare soil.
+
+5.3 Farmer photo diagnosis - our own model                        [GAP]
+    No NASA product detects disease and no free API returns a diagnosis.
+    Plan: 1-3 leaf photos -> our own classifier -> "possible nutrient
+    deficiency / possible leaf spot / unclear", with confidence and a
+    recommendation to confirm with the local extension officer.
+    Never output a pesticide dose from a photo.
+
+5.4 NASA FIRMS - fire and burning                                  [KEY]
+    https://firms.modaps.eosdis.nasa.gov/api/area/  (free MAP_KEY)
+    Use: smoke/burning near the field, residue burning detection in the
+    rotation story. Not essential for the MVP.
+
+5.5 SMAP / IMERG drought context                                  [LOGIN]
+    Combine root-zone wetness (SPL4SMGP) with 30-day IMERG rainfall deficit
+    to label "dry spell", "wet spell". Keep it a label, not a probability.
+
+--------------------------------------------------------------------------------
+6. FACTOR 6 - FARM MANAGEMENT
+--------------------------------------------------------------------------------
+Need: irrigation history, fertiliser, pesticide, planting schedule, previous
+yields, expenses, water availability.
+
+6.1 Everything in this factor is farmer-entered                    [REQUIRED]
+    None of it exists in a satellite. Store locally (SQLite/SharedPreferences)
+    with a date stamp. The engine already reads irrigation and drainage enums;
+    the rest is for the "what we assumed" panel and future scoring.
+
+6.2 Water availability                                          [WORKS/LOGIN]
+    GloFAS river discharge (Open-Meteo flood, works) for a regional water
+    signal; USGS Water Data OGC API for US gauges (works, US only):
+      https://api.waterdata.usgs.gov/ogcapi/v0/collections
+    Groundwater: GRACE-FO at ~300 km monthly - trend slide only, never a
+    field number.
+
+6.3 Expenses and yield history                                     [NO API]
+    Manual. If the farmer does not know, leave null - the engine must not
+    invent a baseline (that is the MISSING_BASELINE rule already implemented).
+
+--------------------------------------------------------------------------------
+7. THE CHALLENGE'S OWN RESOURCE LIST -> WHAT WE ACTUALLY CALL
+--------------------------------------------------------------------------------
+SMAP (soil moisture)         -> SPL3SMP_E / SPL4SMGP  [LOGIN] + POWER GWET*
+GPM / IMERG (precipitation)  -> GPM_3IMERGDF [LOGIN] + POWER PRECTOTCORR [WORKS]
+Landsat (30 m reflectance)   -> LANDSAT_8/9_C2_L2 [LOGIN]
+MODIS / VIIRS (NDVI)         -> MOD13Q1, VNP13A1, MOD11A2, MCD12Q1 [WORKS]
+NASA POWER (agroclimate)     -> daily/monthly/climatology point API [WORKS]
+SRTM (terrain)               -> EPQS (US) + Copernicus DEM 90 m [WORKS]
+ECOSTRESS (LST/ET)           -> ECO2LSTE [LOGIN], sparse overpass
+USDA Ag Data Commons         -> bulk datasets, no REST API
+Web Soil Survey / SSURGO     -> Soil Data Access SQL [WORKS][US ONLY]
+CDL / CropScape              -> GetCDLValue [US ONLY][FAILED today]
+PRISM                        -> bulk download [NO API][US ONLY]
+SSURGO / STATSGO2            -> same SDA endpoint [US ONLY]
+NAIP                         -> public S3 / STAC [US ONLY]
+NLCD                         -> MRLC WMS [US ONLY]
+NLDAS / GLDAS                -> GES DISC [LOGIN]
+FAO GAEZ                     -> bulk download
+CoCoRaHS                     -> CSV download, North America
+USGS NWIS                    -> Water Data OGC API [WORKS][US ONLY]
+USDA AMS Market News         -> API [KEY][US ONLY]
+USDA NASS QuickStats         -> API [KEY][US ONLY]
+OpenET                       -> API [KEY][US ONLY]
+LANDFIRE                     -> bulk download [US ONLY]
+GEDI                         -> GEDI04_A [LOGIN], sparse
+Sentinel-2 (ESA)             -> Copernicus Data Space / AWS open data
+ERA5 (ECMWF)                 -> Copernicus CDS API [KEY], we use Open-Meteo's
+                                ERA5-Land mirror instead (no key)
+
+--------------------------------------------------------------------------------
+8. THE SIX THINGS WE MUST SHOW AS "NOT KNOWN"
+--------------------------------------------------------------------------------
+1. Soil pH / N / P / K unless the farmer enters a lab or kit result.
+2. Soil texture beyond a 250 m prior + a photo-based class with confidence.
+3. Crop type and planting date unless the farmer tells us.
+4. Disease identity from a leaf photo - only "possible" categories.
+5. Field-level soil moisture: SMAP is 9 km, POWER is ~55 km.
+6. Any yield, profit or success percentage - no data supports it.
+
+If the UI hides these, the project becomes another app that guesses. The
+engine already refuses to guess; the data pack must not undercut that.
+
+--------------------------------------------------------------------------------
+9. COPY-PASTE CHEAT SHEET (all called successfully today)
+--------------------------------------------------------------------------------
+POWER daily:
+https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M,T2M_MAX,T2M_MIN,PRECTOTCORR,RH2M,WS2M,WD2M,ALLSKY_SFC_SW_DWN,GWETTOP,GWETROOT&community=AG&latitude=16.87&longitude=96.20&start=20260601&end=20261112&format=CSV
+
+POWER monthly:
+https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_MAX,T2M_MIN,PRECTOTCORR,RH2M,WS2M,WD2M,ALLSKY_SFC_SW_DWN,GWETTOP,GWETROOT&community=AG&latitude=16.87&longitude=96.20&start=2016&end=2025&format=CSV
+
+POWER climatology:
+https://power.larc.nasa.gov/api/temporal/climatology/point?parameters=T2M,T2M_MAX,T2M_MIN,PRECTOTCORR,RH2M,WS2M,WD2M,ALLSKY_SFC_SW_DWN,GWETTOP,GWETROOT&community=AG&latitude=16.87&longitude=96.20&format=CSV
+
+16-day forecast:
+https://api.open-meteo.com/v1/forecast?latitude=16.87&longitude=96.20&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,relative_humidity_2m_mean,wind_speed_10m_max,et0_fao_evapotranspiration,soil_moisture_0_to_7cm_mean&forecast_days=16&timezone=auto
+
+MODIS NDVI (one pixel, 2 years):
+https://modis.ornl.gov/rst/api/v1/MOD13Q1/subset?latitude=16.87&longitude=96.20&startDate=A2024001&endDate=A2025365&band=250m_16_days_NDVI&kmAboveBelow=0&kmLeftRight=0
+
+MODIS LST:
+https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=16.87&longitude=96.20&startDate=A2024001&endDate=A2025365&band=LST_Day_1km&kmAboveBelow=0&kmLeftRight=0
+
+SoilGrids pH 0-5 cm:
+https://maps.isric.org/mapserv?map=/map/phh2o.map&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo&LAYERS=phh2o_0-5cm_mean&QUERY_LAYERS=phh2o_0-5cm_mean&STYLES=&FORMAT=image/png&INFO_FORMAT=text/html&SRS=EPSG:4326&BBOX=95.95,16.62,96.45,17.12&WIDTH=101&HEIGHT=101&X=50&Y=50
+
+CMR availability:
+https://cmr.earthdata.nasa.gov/search/granules.json?short_name=SPL3SMP_E&bounding_box=95.8,16.7,96.6,17.5&temporal=2025-01-01T00:00:00Z,2025-12-31T23:59:59Z&sort_key=-start_date&page_size=1
+
+GIBS tile (NDVI, z8; note Level8, not Level9):
+https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_NDVI_8Day/default/2026-11-02/GoogleMapsCompatible_Level8/8/115/196.jpg
+
+--------------------------------------------------------------------------------
+10. VERIFICATION LOG - 2026-11-14
+--------------------------------------------------------------------------------
+TESTED AND RETURNED DATA
+  NASA POWER daily / monthly / climatology (3 townships)          HTTP 200
+  Open-Meteo forecast / current / archive / flood / elevation     HTTP 200
+  ISRIC SoilGrids WMS point query (8 properties x 4 depths x 3)   HTTP 200
+  MODIS MOD13Q1 NDVI/EVI (46 composites per field)                HTTP 200
+  MODIS MOD11A2 LST day/night (8-day, 70-day request windows)     HTTP 200
+  MODIS MCD12Q1 land cover (10 yearly classes)                    HTTP 200
+  NASA GIBS WMTS tiles (4 layers x 3 fields = 12 tiles)           HTTP 200
+  NASA CMR granule search (SMAP, IMERG, MODIS, ECOSTRESS, GEDI)   HTTP 200
+  USDA Soil Data Access SQL (Nevada reference)                    HTTP 200
+  USGS EPQS elevation (Nevada reference)                          HTTP 200
+  USGS Water Data OGC API collections                             HTTP 200
+TESTED AND REFUSED (expected)
+  USDA NASS QuickStats without a key                              HTTP 401
+FAILED TODAY (retry, do not trust a cached claim)
+  USDA CropScape / CDL  (host connection timeout, 3 attempts)      no response
+  ISRIC SoilGrids REST rest.isric.org (timeout; WMS mirror worked) no response
+  FAOSTAT API (DNS did not resolve)                                no response
+  World Bank API (HTTP 502 from their edge)                        no response
+NEEDS AN ACCOUNT BEFORE IT CAN BE TESTED
+  SMAP, IMERG, ECOSTRESS, GEDI, Landsat, NLDAS/GLDAS: Earthdata Login.
+  QuickStats, AMS Market News, OpenET, FIRMS: provider API key.
+
+Every request above is logged with its URL and status in
+data-pack/_meta/fetch_log.csv. If a number is not in a CSV, it was not measured.
+================================================================================
