@@ -22,7 +22,7 @@ impl YearMonth {
     fn days(self) -> u32 {
         match self.month {
             4 | 6 | 9 | 11 => 30,
-            2 if self.year % 4 == 0 && (self.year % 100 != 0 || self.year % 400 == 0) => 29,
+            2 if self.year.rem_euclid(4) == 0 && (self.year.rem_euclid(100) != 0 || self.year.rem_euclid(400) == 0) => 29,
             2 => 28,
             _ => 31,
         }
