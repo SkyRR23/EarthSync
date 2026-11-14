@@ -77,6 +77,7 @@ Create a stable service instance outside the host's build method.
 
 The adapter carries Rust climate calculations, monthly rainfall, dates, units,
 quality, retrieval mode and original NASA request links from `IntegrationTrace`.
+Monthly normalized records remain retrieved facts; seasonal summaries retain Rust calculation attribution.
 It rejects a different selected location or climate-kind provenance. Gridded
 climate always stays **regional**, including when a farm point is confirmed.
 Without a trace, original URLs/dates may be missing; values are then withheld by
@@ -190,7 +191,7 @@ a test's presence is not a claim that it ran successfully.
 
 Actual implementation-session verification:
 
-- Local complete backend suite: **91 passed**, including **43 assistant tests**;
+- Local complete backend suite: **92 passed**, including **44 assistant tests**;
   the existing Rust web executable was built with the locked Cargo manifest.
 - Local real HTTP request to the standalone assistant on `127.0.0.1:8017` matched
   `response.v1.json` exactly, preserving null rainfall. Port 8001 was already in

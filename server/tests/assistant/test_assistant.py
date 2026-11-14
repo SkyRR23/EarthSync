@@ -311,3 +311,11 @@ def test_json_schemas_match_the_proposed_models():
         assert model.model_json_schema() == json.loads(
             (directory / f"{name}.schema.json").read_text()
         )
+
+
+def test_retrieved_fact_is_not_relabeled_as_a_rust_calculation():
+    data = payload()
+    data["context"]["evidence"][0]["calculation"] = "none"
+    result = answer(data)
+    assert any(c.category == "retrieved_fact" for c in result.claims)
+    assert not any(c.category == "deterministic_calculation" for c in result.claims)

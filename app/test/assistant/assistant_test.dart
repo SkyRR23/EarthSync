@@ -235,6 +235,8 @@ void main() {
         analysis: fieldAnalysisFromEnvelope(raw, trace: trace()),
       );
       final rain = context.evidence.first;
+      expect(rain.calculation, 'rust');
+      expect(context.evidence.last.calculation, 'none');
       expect(rain.kind, AssistantKind.modeled);
       expect(rain.scope, AssistantScope.regional);
       expect(rain.startDate, '2024-02-01');

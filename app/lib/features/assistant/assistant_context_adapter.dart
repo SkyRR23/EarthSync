@@ -115,6 +115,7 @@ AssistantContext assistantContextFromAnalysis({
       String unit,
       String? start,
       String? end,
+      String calculation,
     ) => AssistantEvidence(
       id: id,
       topic: topic,
@@ -133,7 +134,7 @@ AssistantContext assistantContextFromAnalysis({
       locationId: selection.id,
       sourceIds: sourceIds,
       limitations: notes,
-      calculation: 'rust',
+      calculation: calculation,
     );
     evidence.add(
       climateRecord(
@@ -144,6 +145,7 @@ AssistantContext assistantContextFromAnalysis({
         'mm',
         interval?['start'] as String?,
         interval?['end'] as String?,
+        'rust',
       ),
     );
     evidence.add(
@@ -155,6 +157,7 @@ AssistantContext assistantContextFromAnalysis({
         'deg_c',
         interval?['start'] as String?,
         interval?['end'] as String?,
+        'rust',
       ),
     );
     for (var i = 0; i < climate.months.length; i++) {
@@ -175,6 +178,8 @@ AssistantContext assistantContextFromAnalysis({
           'mm',
           start,
           end,
+          // Monthly values are retrieved normalized records, not Rust totals.
+          'none',
         ),
       );
     }
