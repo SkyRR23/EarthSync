@@ -100,10 +100,10 @@ class NasaPowerEvidence {
 }
 
 class NasaPowerClient {
-  NasaPowerClient({http.Client? client, this.baseUrl = const String.fromEnvironment(
+  NasaPowerClient({this.client, this.baseUrl = const String.fromEnvironment(
     'BACKEND_URL', defaultValue: 'http://127.0.0.1:8000'),
-    this.timeout = const Duration(seconds: 90)}) : _client = client;
-  final http.Client? _client;
+    this.timeout = const Duration(seconds: 90)});
+  final http.Client? client;
   final String baseUrl;
   final Duration timeout;
 
@@ -123,9 +123,9 @@ class NasaPowerClient {
       'start_year': '${window.startYear}', 'start_month': '${window.startMonth}',
       'end_year': '${window.endYear}', 'end_month': '${window.endMonth}',
     });
-    final client = _client ?? http.Client();
+    final requestClient = client ?? http.Client();
     try {
-      final response = await client.get(uri, headers: {'Accept': 'application/json'}).timeout(timeout);
+      final response = await requestClient.get(uri, headers: {'Accept': 'application/json'}).timeout(timeout);
       if (response.statusCode != 200) {
         throw EngineError(code: 'backend_http_${response.statusCode}',
             message: 'Climate server returned HTTP ${response.statusCode}. No climate data were substituted.',
@@ -141,7 +141,7 @@ class NasaPowerClient {
       throw const EngineError(code: 'backend_unavailable',
           message: 'Could not reach the climate server. Check the URL and USB connection.', retryable: true);
     } finally {
-      if (_client == null) client.close();
+      if (client == null) requestClient.close();
     }
   }
 }
