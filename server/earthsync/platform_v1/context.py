@@ -227,6 +227,74 @@ def assistant_context(store, owner, farm_id):
                 ],
             }
         )
+    if comparisons:
+        group = comparisons[0]
+        selected_by_id = {d["id"]: d for d in saved_decisions}
+        for index, ident in enumerate(
+            [group["baseline_decision_id"], *group["alternative_decision_ids"]]
+        ):
+            decision = selected_by_id.get(ident)
+            if decision is None:
+                continue
+            label = (
+                "Baseline: farmer-declared existing plan"
+                if index == 0
+                else f"Alternative {chr(64 + index)}: proposed strategy"
+            )
+            assessment = decision["assessment"]
+            names = {
+                sidecar["profile"]["id"]: (
+                    (
+                        sidecar.get("crop", {}).get("aliases")
+                        or [sidecar["profile"]["id"]]
+                    )[0]
+                )
+                for sidecar in assessment.get("catalog_projection", [])
+            }
+            sequence = []
+            for scenario in (
+                assessment["result"]
+                .get("data", {})
+                .get("context", {})
+                .get("scenarios", [])
+            ):
+                for plan in scenario.get("plans", []):
+
+                    def day(value):
+                        return (
+                            f"{value['year']:04}-{value['month']:02}-{value['day']:02}"
+                            if value
+                            else "unknown"
+                        )
+
+                    period = plan.get("period", {})
+                    profile = plan.get("profile_id", "Crop unknown")
+                    sequence.append(
+                        f"{names.get(profile, profile)} ({day(period.get('start'))} to {day(period.get('end'))})"
+                    )
+            # Attribution is a separate farmer record, never added to Rust's explanation.
+            evidence.insert(
+                len(evidence) - len(comparisons[:2]),
+                {
+                    "id": f"comparison:{group['id']}:strategy{index}",
+                    "topic": "farmer_input",
+                    "metric": "comparison_report",
+                    "kind": "farmer_reported",
+                    "quality": "unverified",
+                    "value": f"{label}; saved decision {ident}; proposed sequence: {' then '.join(sequence) or 'unknown'}. These are declared dates, not recommended crop durations. No suitability ranking is approved."[
+                        :500
+                    ],
+                    "start_date": group["recorded_at"][:10],
+                    "end_date": group["recorded_at"][:10],
+                    "retrieved_at": group["recorded_at"],
+                    "scope": "field",
+                    "location_id": str(farm.id),
+                    "source_ids": [],
+                    "limitations": [
+                        "Farmer-declared strategy identity; scientific findings remain in the original saved assessment."
+                    ],
+                },
+            )
     source_views, reference_views = assistant_references(store, owner, farm_id)
     sources.extend(source_views)
     evidence.extend(reference_views)

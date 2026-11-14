@@ -19,7 +19,7 @@ void main() {
                   job: {
                     'kind': 'soil_map',
                     'status': 'succeeded',
-                    'updated': '2026-11-14',
+                    'updated': 1794682706.9411082,
                     'result': {
                       'provider': 'Software test source',
                       'retrieved_at': '2026-11-13',
@@ -49,6 +49,10 @@ void main() {
         findsOneWidget,
       );
       expect(find.textContaining('250 m modeled grid'), findsOneWidget);
+      expect(
+        find.textContaining('Request saved 2026-11-14T18:58:26.941Z'),
+        findsOneWidget,
+      );
       expect(
         find.text('Cell at query point: Missing pH · nodata'),
         findsOneWidget,

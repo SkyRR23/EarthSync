@@ -77,9 +77,19 @@ jobs:
         run: flutter test --reporter expanded
       - name: Build browser demo
         working-directory: app
-        run: flutter build web --no-web-resources-cdn --pwa-strategy=none --no-wasm-dry-run
+        run: flutter build web --no-web-resources-cdn --pwa-strategy=none --no-wasm-dry-run --dart-define=PLATFORM_URL=http://127.0.0.1:8021
       - name: Prepare public offline shell
         run: python scripts/finalize_offline.py app/build/web
+      - name: Preserve combined public Web artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: earthsync-local-web-${{ github.sha }}
+          path: |
+            app/build/web
+            app/pubspec.lock
+            docs/release/RUNBOOK.md
+            docs/release/PROVENANCE.md
+          if-no-files-found: error
       - uses: actions/setup-python@v5
         if: github.event_name == 'workflow_dispatch' && inputs.live_nasa
         with:

@@ -148,6 +148,11 @@ def explain(request: ChatRequest) -> ChatResponse:
     context = request.context
     words = catalog(request.language)
     intent = resolve_intent(request.question)
+    comparison_requested = intent == "crops" and bool(
+        re.search(
+            r"rotation|compar|strateg|baseline|alternative", request.question, re.I
+        )
+    )
     scope = (
         "farm"
         if context.confirmed_farm
@@ -186,7 +191,12 @@ def explain(request: ChatRequest) -> ChatResponse:
     relevant = [record for record in context.evidence if record.topic in wanted]
     conflicts = _conflicts(relevant)
     warnings = []
-    visible = relevant if request.expanded else relevant[:2]
+    if comparison_requested:
+        # A short response must not bury the selected comparison behind recent notes.
+        relevant.sort(key=lambda record: record.metric != "comparison_report")
+    visible = (
+        relevant if request.expanded else relevant[: 7 if comparison_requested else 2]
+    )
     for record in visible:
         if (
             record.topic == "farmer_input"
@@ -283,7 +293,11 @@ def explain(request: ChatRequest) -> ChatResponse:
     if not relevant and intent not in {"crops", "next", "fallback"}:
         claims.append(Claim(category="unavailable_evidence", text=words["none"]))
     selected_decisions = context.decisions if intent in {"crops", "limitations"} else []
-    decisions = selected_decisions if request.expanded else selected_decisions[:2]
+    decisions = (
+        selected_decisions
+        if request.expanded
+        else selected_decisions[: 6 if comparison_requested else 2]
+    )
     for decision in decisions:
         refs = [ref for ref in decision.source_ids if ref in sources]
         claims.append(

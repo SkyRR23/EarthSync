@@ -193,13 +193,35 @@ class _SeasonSummary extends StatelessWidget {
             ),
           );
     final current = seasons.where((e) => e['harvest_on'] == null).firstOrNull;
+    final displayed = current ?? seasons.firstOrNull;
+    final plannedHarvests = snapshot
+        .rows('entries')
+        .where(
+          (e) =>
+              e['kind'] == 'plan' &&
+              displayed != null &&
+              e['crop_name'] == displayed['crop_name'] &&
+              e['occurred_on'] == displayed['occurred_on'] &&
+              e['harvest_on'] != null,
+        );
+
     final stages =
         snapshot
             .rows('entries')
             .where(
               (e) =>
                   e['kind'] == 'stage' &&
-                  e['crop_name'] == current?['crop_name'],
+                  displayed != null &&
+                  e['crop_name'] == displayed['crop_name'] &&
+                  (e['occurred_on'] as String).compareTo(
+                        displayed['occurred_on'] as String,
+                      ) >=
+                      0 &&
+                  (displayed['harvest_on'] == null ||
+                      (e['occurred_on'] as String).compareTo(
+                            displayed['harvest_on'] as String,
+                          ) <=
+                          0),
             )
             .toList()
           ..sort(
@@ -208,7 +230,7 @@ class _SeasonSummary extends StatelessWidget {
             ),
           );
     final stage =
-        stages.firstOrNull?['stage'] ?? current?['stage'] ?? 'unknown';
+        stages.firstOrNull?['stage'] ?? displayed?['stage'] ?? 'unknown';
     final planted = DateTime.tryParse(current?['occurred_on'] as String? ?? '');
     final today = DateUtils.dateOnly(DateTime.now());
     return SectionCard(
@@ -217,10 +239,23 @@ class _SeasonSummary extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            current?['crop_name'] as String? ??
+            displayed?['crop_name'] as String? ??
                 CompanionCopy.text(context, 'Unknown'),
           ),
-          Text('Reported planting: ${current?['occurred_on'] ?? 'Unknown'}'),
+          Text(
+            displayed == null
+                ? 'No actual crop period reported.'
+                : current == null
+                ? 'Latest reported completed crop period; no active crop confirmed.'
+                : 'Current farmer-reported crop; not independently verified.',
+          ),
+          Text('Reported planting: ${displayed?['occurred_on'] ?? 'Unknown'}'),
+          Text(
+            'Actual harvest reported: ${displayed?['harvest_on'] ?? 'Unknown / not reported'}',
+          ),
+          Text(
+            'Expected harvest (farmer plans for the same crop and planting date): ${plannedHarvests.isEmpty ? 'Unknown' : plannedHarvests.map((p) => p['harvest_on']).join(', ')}',
+          ),
           if (planted != null)
             Text(
               '${today.difference(planted).inDays} calendar days since reported planting. This does not identify biological stage.',
@@ -425,19 +460,19 @@ class _Calendar extends StatelessWidget {
         children: [
           for (final p in data?['periods'] as List? ?? [])
             Text(
-              '${p['start']} → ${p['end'] ?? 'Harvest not reported'} · ${p['label']} · farmer reported',
+              '${p['start']} to ${p['end'] ?? 'Harvest not reported'} · ${p['label']} · farmer reported',
             ),
           for (final gap in data?['unknown_gaps'] as List? ?? [])
             ListTile(
               leading: const Icon(Icons.help_outline),
-              title: Text('${gap['start']} → ${gap['end']} · Unknown'),
+              title: Text('${gap['start']} to ${gap['end']} · Unknown'),
               subtitle: Text(gap['explanation'] as String),
             ),
           for (final overlap in data?['overlaps'] as List? ?? [])
             ListTile(
               leading: const Icon(Icons.warning_amber),
               title: Text(
-                '${overlap['start']} → ${overlap['end']} · Reported overlap',
+                '${overlap['start']} to ${overlap['end']} · Reported overlap',
               ),
               subtitle: Text(overlap['explanation'] as String),
             ),

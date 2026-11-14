@@ -148,6 +148,7 @@ class _RotationWorkspaceState extends ConsumerState<RotationWorkspace> {
                 ),
                 if (!snapshot.cached && farm != null && client != null)
                   AbsorbPointer(
+                    key: ValueKey('editor:${snapshot.farmId}:$_edit'),
                     absorbing: state.isLoading,
                     child: AgriculturalIntelligencePanel(
                       key: ValueKey('strategy:${snapshot.farmId}:$_edit'),

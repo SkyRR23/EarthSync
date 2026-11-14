@@ -51,23 +51,18 @@ void main() {
           ),
         );
         await tester.pumpAndSettle();
-        expect(
-          find.text('Baseline · existing plan · baseline'),
-          findsOneWidget,
-        );
-        expect(find.text('Alternative A · alternative-a'), findsOneWidget);
-        expect(find.text('Alternative B · alternative-b'), findsOneWidget);
+        expect(find.text('Baseline · existing plan'), findsOneWidget);
+        expect(find.text('Alternative A'), findsOneWidget);
+        expect(find.text('Alternative B'), findsOneWidget);
         expect(
           find.text(
-            'rice.mm.calendar-5-sessions-0@1 · 2024-07-03 → 2024-07-07 · declared rainfed',
+            'rice · 2024-07-03 to 2024-07-07\n5 declared calendar days; not a reviewed crop duration · rainfed',
           ),
           findsNWidgets(3),
         );
         expect(find.textContaining('No preferred crop'), findsOneWidget);
-        final a = tester.getTopLeft(
-          find.text('Baseline · existing plan · baseline'),
-        );
-        final b = tester.getTopLeft(find.text('Alternative A · alternative-a'));
+        final a = tester.getTopLeft(find.text('Baseline · existing plan'));
+        final b = tester.getTopLeft(find.text('Alternative A'));
         if (width >= 1000) {
           expect(a.dy, b.dy);
           expect(b.dx, greaterThan(a.dx));

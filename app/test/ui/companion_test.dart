@@ -34,7 +34,20 @@ void main() {
                 (ref) async => FarmJournalSnapshot({
                   'farm_id': 'db-farm',
                   'retrieved_at': '2024-01-01T00:00:00Z',
-                  'entries': [],
+                  'entries': [
+                    for (final kind in ['season', 'plan'])
+                      {
+                        'id': kind,
+                        'kind': kind,
+                        'crop_name': 'Software-test rice',
+                        'occurred_on': '2026-11-01',
+                        'harvest_on': kind == 'plan' ? '2027-02-01' : null,
+                        'stage': 'unknown',
+                        'priorities': [],
+                        'photo_ids': [],
+                        'evidence_ids': [],
+                      },
+                  ],
                   'evidence': [],
                   'decisions': [],
                   'photos': [],
@@ -52,12 +65,46 @@ void main() {
         await tester.pumpAndSettle();
         expect(find.textContaining('2024-01-01T00:00:00Z'), findsOneWidget);
         await tester.scrollUntilVisible(
+          find.textContaining('Expected harvest (farmer plans'),
+          250,
+          scrollable: find.byType(Scrollable).first,
+        );
+        await tester.pumpAndSettle();
+        expect(
+          find.textContaining(
+            'Expected harvest (farmer plans for the same crop and planting date): 2027-02-01',
+          ),
+          findsOneWidget,
+        );
+        expect(find.text('Farmer-reported stage: unknown'), findsOneWidget);
+        await tester.scrollUntilVisible(
           find.byType(RawAutocomplete<String>),
           400,
           scrollable: find.byType(Scrollable).first,
         );
         await tester.pumpAndSettle();
         expect(tester.takeException(), isNull);
+        await tester.enterText(
+          find.descendant(
+            of: find.byType(RawAutocomplete<String>),
+            matching: find.byType(TextField),
+          ),
+          'Unsubmitted software-test crop',
+        );
+        FocusManager.instance.primaryFocus?.unfocus();
+        await tester.fling(
+          find.byType(ListView).first,
+          const Offset(0, 10000),
+          4000,
+        );
+        await tester.pumpAndSettle();
+        await tester.scrollUntilVisible(
+          find.byType(RawAutocomplete<String>),
+          400,
+          scrollable: find.byType(Scrollable).first,
+        );
+        await tester.pumpAndSettle();
+        expect(find.text('Unsubmitted software-test crop'), findsOneWidget);
         await tester.scrollUntilVisible(
           find.byType(FilterChip).first,
           350,

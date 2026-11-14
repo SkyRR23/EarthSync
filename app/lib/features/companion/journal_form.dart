@@ -32,7 +32,8 @@ class JournalForm extends ConsumerStatefulWidget {
   ConsumerState<JournalForm> createState() => _JournalFormState();
 }
 
-class _JournalFormState extends ConsumerState<JournalForm> {
+class _JournalFormState extends ConsumerState<JournalForm>
+    with AutomaticKeepAliveClientMixin<JournalForm> {
   final _notes = TextEditingController(), _resources = TextEditingController();
   final _crop = TextEditingController();
   final _cropFocus = FocusNode();
@@ -275,7 +276,10 @@ class _JournalFormState extends ConsumerState<JournalForm> {
         ),
       );
   @override
+  bool get wantKeepAlive => true;
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     final snapshot = widget.snapshot;
     final catalog = ref.watch(catalogProvider).value;
     final identities = <String, Map>{

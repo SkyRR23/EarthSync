@@ -31,7 +31,8 @@ class AgriculturalIntelligencePanel extends StatefulWidget {
   State<AgriculturalIntelligencePanel> createState() => _IntelligenceState();
 }
 
-class _IntelligenceState extends State<AgriculturalIntelligencePanel> {
+class _IntelligenceState extends State<AgriculturalIntelligencePanel>
+    with AutomaticKeepAliveClientMixin<AgriculturalIntelligencePanel> {
   final _query = TextEditingController(text: 'rice');
   final _start = TextEditingController(), _end = TextEditingController();
   final _nextStart = TextEditingController(),
@@ -211,7 +212,10 @@ class _IntelligenceState extends State<AgriculturalIntelligencePanel> {
   }
 
   @override
+  bool get wantKeepAlive => true;
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     final profiles = _profiles.values.toList();
     final selected = profiles.where((p) => p['id'] == _profile).firstOrNull;
     final saved = widget.records

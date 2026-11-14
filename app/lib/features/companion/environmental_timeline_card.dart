@@ -10,9 +10,16 @@ class EnvironmentalTimelineCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final result = job['result'] as Map?;
     final kind = job['kind'];
+    final updated = job['updated'];
+    final savedAt = updated is num
+        ? DateTime.fromMillisecondsSinceEpoch(
+            (updated * 1000).round(),
+            isUtc: true,
+          ).toIso8601String()
+        : updated ?? 'Unknown';
     return ExpansionTile(
       title: Text('Environmental context · $kind · ${job['status']}'),
-      subtitle: Text('Request saved ${job['updated']} · on demand'),
+      subtitle: Text('Request saved $savedAt · on demand'),
       expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
       childrenPadding: const EdgeInsets.all(12),
       children: [

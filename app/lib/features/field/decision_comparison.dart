@@ -24,7 +24,8 @@ class DecisionComparison extends StatefulWidget {
   State<DecisionComparison> createState() => _DecisionComparisonState();
 }
 
-class _DecisionComparisonState extends State<DecisionComparison> {
+class _DecisionComparisonState extends State<DecisionComparison>
+    with AutomaticKeepAliveClientMixin<DecisionComparison> {
   late List<String?> _selected;
   final _priorities = <String>{};
   final _name = TextEditingController(),
@@ -60,7 +61,10 @@ class _DecisionComparisonState extends State<DecisionComparison> {
   }
 
   @override
+  bool get wantKeepAlive => true;
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     String tr(String text) => CompanionCopy.text(context, text);
     final ids = widget.decisions.map((d) => d['id'] as String).toSet();
     final selectedIds = _selected.whereType<String>().toList();
@@ -327,7 +331,7 @@ String _decisionLabel(Map<String, dynamic> d) {
   final sequence = [
     for (final s in scenarios)
       for (final p in s['plans'] as List) p['profile_id'] ?? 'Crop unknown',
-  ].join(' → ');
+  ].join(' to ');
   return '$sequence · ${d['assessment']['assessed_at']} · ${d['id']}';
 }
 
@@ -357,10 +361,27 @@ class _SavedAlternative extends StatelessWidget {
     final result = Map<String, dynamic>.from(assessment['result'] as Map);
     final data = result['data'] as Map?;
     final contextData = data?['context'] as Map?;
+    final names = <String, String>{
+      for (final sidecar in assessment['catalog_projection'] as List? ?? [])
+        '${sidecar['profile']['id']}':
+            ((sidecar['crop']?['aliases'] as List? ?? []).firstOrNull ??
+                    sidecar['crop']?['scientific_name'] ??
+                    sidecar['profile']['id'])
+                .toString(),
+    };
+    String duration(Map period) {
+      final start = DateTime.tryParse(date(period['start'] as Map));
+      final end = DateTime.tryParse(date(period['end'] as Map));
+      return start == null || end == null
+          ? 'Duration unknown'
+          : '${end.difference(start).inDays + 1} declared calendar days; not a reviewed crop duration';
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text('$label · ${decision['id']}'),
+        Text(label, style: Theme.of(context).textTheme.titleMedium),
+        const Text('Exploration only · recommendation unavailable'),
         Text('Assessed: ${assessment['assessed_at']}'),
         if (baseline != null && baseline!['id'] != decision['id'])
           _InputChanges(baseline: baseline!, alternative: decision),
@@ -379,13 +400,19 @@ class _SavedAlternative extends StatelessWidget {
         for (final scenario in (contextData?['scenarios'] as List?) ?? [])
           for (final plan in scenario['plans'] as List)
             Text(
-              '${plan['profile_id']} · ${date(plan['period']['start'] as Map)} → ${date(plan['period']['end'] as Map)} · declared ${plan['system']}',
+              '${names[plan['profile_id']] ?? plan['profile_id']} · ${date(plan['period']['start'] as Map)} to ${date(plan['period']['end'] as Map)}\n${duration(plan['period'] as Map)} · ${plan['system']}',
             ),
         _StrategyEvidence(
           assessment: Map<String, dynamic>.from(assessment),
           priorities: priorities,
         ),
-        V03ResultPanel(result: V03Result.decode(result)),
+        for (final finding in data?['findings'] as List? ?? [])
+          if (finding['rule_id'] == 'schedule.sequential')
+            Text('${finding['explanation']}'),
+        ExpansionTile(
+          title: const Text('Chronology, risks & missing requirements'),
+          children: [V03ResultPanel(result: V03Result.decode(result))],
+        ),
         EvidenceDetails(
           title: '$label reference scope, sources and missing requirements',
           data: {
@@ -395,6 +422,7 @@ class _SavedAlternative extends StatelessWidget {
             'water_findings': assessment['water_findings'],
             'history': contextData?['history'],
             'history_complete': contextData?['history_complete'],
+            'decision_id': decision['id'],
             'engine_binary_sha256': assessment['engine_binary_sha256'],
           },
         ),
@@ -451,9 +479,19 @@ class _StrategyEvidence extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        for (final e in evidence)
+          if (e['source_metadata']?['calculation'] case final Map calculation)
+            Text(
+              'Historical period ${e['temporal']['start']} to ${e['temporal']['end']}: reference ET0 ${calculation['et0_total_mm'] is num ? (calculation['et0_total_mm'] as num).toStringAsFixed(2) : 'Unknown'} mm; rainfall ${calculation['rainfall_total_mm'] is num ? (calculation['rainfall_total_mm'] as num).toStringAsFixed(2) : 'Unknown'} mm. Not an irrigation prescription.',
+            ),
+        Text(
+          '${environmentalSnapshots.length} selected soil / forecast reference snapshots; ${reports.length} selected farmer reports. Original dates and sources are below.',
+        ),
+        const Text(
+          'Suitability and field benefits remain unknown without reviewed crop requirements and applicable soil, water, cultivar and management evidence.',
+        ),
         ExpansionTile(
           title: const Text('NASA, soil & water context'),
-          initiallyExpanded: true,
           expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             for (final job in environmentalSnapshots) ...[
@@ -507,7 +545,7 @@ class _StrategyEvidence extends StatelessWidget {
                       '${e['provider']} · ${e['dataset']} · ${e['data_type']}',
                     ),
                     Text(
-                      '${e['temporal']['start'] ?? e['temporal']['acquired_at'] ?? 'Time unknown'} → ${e['temporal']['end'] ?? ''} · retrieved ${e['temporal']['retrieved_at']}',
+                      '${e['temporal']['start'] ?? e['temporal']['acquired_at'] ?? 'Time unknown'} to ${e['temporal']['end'] ?? ''} · retrieved ${e['temporal']['retrieved_at']}',
                     ),
                     Text(
                       '${e['spatial']['support']} · native resolution: ${e['spatial']['resolution_m'] ?? e['spatial']['resolution_degrees'] ?? 'Unquantified'}',
