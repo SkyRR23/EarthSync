@@ -1,0 +1,7 @@
+{
+  "error": {
+    "code": "SOURCE_UNAVAILABLE",
+    "message": "Environmental data are temporarily unavailable.",
+    "retryable": true
+  }
+}

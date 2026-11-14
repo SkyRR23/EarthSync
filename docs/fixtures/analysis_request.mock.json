@@ -1,0 +1,70 @@
+{
+  "field": {
+    "field_id": "demo-field",
+    "latitude": 16.8,
+    "longitude": 96.15,
+    "current_crop": "rice",
+    "irrigation_available": null
+  },
+  "environment": {
+    "monthly_rainfall_mm": [
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10
+    ],
+    "monthly_mean_temp_c": [
+      28,
+      28,
+      28,
+      28,
+      28,
+      28,
+      28,
+      28,
+      28,
+      28,
+      28,
+      28
+    ],
+    "source": "MOCK DATA - NOT NASA",
+    "period": "illustrative-2025"
+  },
+  "scenarios": [
+    {
+      "id": "existing",
+      "label": "Existing illustrative rotation",
+      "crop_sequence": [
+        "rice",
+        "fallow"
+      ],
+      "supporting_notes": []
+    },
+    {
+      "id": "alternative-a",
+      "label": "Unvalidated alternative A",
+      "crop_sequence": [
+        "rice",
+        "black_gram"
+      ],
+      "supporting_notes": []
+    },
+    {
+      "id": "alternative-b",
+      "label": "Unvalidated alternative B",
+      "crop_sequence": [
+        "rice",
+        "mung_bean"
+      ],
+      "supporting_notes": []
+    }
+  ]
+}
