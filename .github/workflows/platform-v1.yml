@@ -6,6 +6,7 @@ on:
       - 'server/tests/platform_v1/**'
       - 'server/platform-v1/**'
       - 'server/docs/platform_v1/**'
+      - 'ops/staging/**'
       - '.github/workflows/platform-v1.yml'
   workflow_dispatch:
 permissions:
@@ -49,7 +50,7 @@ jobs:
           PY
       - name: Offline backend, real Rust, API ownership and raster tests
         run: |
-          python -m pytest -q server/tests
+          python -m pytest -q server/tests ops/staging/tests
           python -m ruff check server/earthsync/platform_v1 server/tests/platform_v1 server/platform-v1
           python -m ruff format --check server/earthsync/platform_v1 server/tests/platform_v1 server/platform-v1
           python -m pip check
