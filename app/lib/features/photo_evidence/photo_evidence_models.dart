@@ -57,6 +57,7 @@ class PhotoDraft {
     this.farmerObservations = '',
     this.capturedDate,
     this.farm,
+    this.synthetic = false,
   });
   final PreparedPhoto photo;
   final PhotoCategory category;
@@ -64,10 +65,11 @@ class PhotoDraft {
   final String farmerObservations;
   final DateTime? capturedDate;
   final ConfirmedFarmReference? farm;
+  final bool synthetic;
 
   Map<String, Object?> toJson() => {
     'schema_version': 'evidence.v1',
-    'data_kind': 'farmer_supplied',
+    'data_kind': synthetic ? 'synthetic' : 'farmer_supplied',
     'source': switch (photo.origin) {
       PhotoOrigin.camera => 'camera',
       PhotoOrigin.gallery => 'gallery',

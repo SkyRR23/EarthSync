@@ -55,6 +55,60 @@ class PlatformFieldPhotoPicker implements FieldPhotoPicker {
 
 typedef GpsReader = Future<PhotoGps?> Function(Uint8List bytes);
 
+/// Read bounded dimensions before allocating decoded pixels. Flutter Web's
+/// encoded ImageDescriptor.width/height getters throw UnsupportedError.
+/// This is only a preflight; the codec and server still validate the image.
+(int, int) encodedPhotoDimensions(Uint8List bytes, {required bool png}) {
+  final data = ByteData.sublistView(bytes);
+  if (png) {
+    if (bytes.length < 33 ||
+        data.getUint32(8) != 13 ||
+        !listEquals(bytes.sublist(12, 16), [73, 72, 68, 82])) {
+      throw const PhotoEvidenceException('PNG has no valid image-size header.');
+    }
+    return (data.getUint32(16), data.getUint32(20));
+  }
+  var offset = 2;
+  (int, int)? dimensions;
+  const starts = {
+    0xc0,
+    0xc1,
+    0xc2,
+    0xc3,
+    0xc5,
+    0xc6,
+    0xc7,
+    0xc9,
+    0xca,
+    0xcb,
+    0xcd,
+    0xce,
+    0xcf,
+  };
+  while (offset < bytes.length) {
+    if (bytes[offset++] != 255) break;
+    while (offset < bytes.length && bytes[offset] == 255) {
+      offset++;
+    }
+    if (offset >= bytes.length) break;
+    final marker = bytes[offset++];
+    if (marker == 0xda || marker == 0xd9) break;
+    if (marker == 1 || marker >= 0xd0 && marker <= 0xd7) continue;
+    if (offset + 2 > bytes.length) break;
+    final length = data.getUint16(offset);
+    if (length < 2 || offset + length > bytes.length) break;
+    if (starts.contains(marker)) {
+      if (length < 8 || dimensions != null)
+        throw const PhotoEvidenceException('Ambiguous JPEG image-size header.');
+      dimensions = (data.getUint16(offset + 5), data.getUint16(offset + 3));
+    }
+    offset += length;
+  }
+  if (dimensions == null)
+    throw const PhotoEvidenceException('JPEG has no valid image-size header.');
+  return dimensions;
+}
+
 Future<PhotoGps?> readConsentedGps(Uint8List bytes) async {
   try {
     final tags = await readExifFromBytes(bytes, details: false);
@@ -111,19 +165,20 @@ Future<PreparedPhoto> preparePhoto(
       'Choose a valid JPEG or PNG no larger than 10 MiB.',
     );
   }
+  final (width, height) = encodedPhotoDimensions(bytes, png: png);
+  if (width < 1 ||
+      height < 1 ||
+      width > 8192 ||
+      height > 8192 ||
+      width * height > maxPhotoPixels) {
+    throw const PhotoEvidenceException(
+      'Image exceeds 8192 pixels per side or 16 megapixels.',
+    );
+  }
   final buffer = await ui.ImmutableBuffer.fromUint8List(bytes);
   try {
     final descriptor = await ui.ImageDescriptor.encoded(buffer);
     try {
-      if (descriptor.width < 1 ||
-          descriptor.height < 1 ||
-          descriptor.width > 8192 ||
-          descriptor.height > 8192 ||
-          descriptor.width * descriptor.height > maxPhotoPixels) {
-        throw const PhotoEvidenceException(
-          'Image exceeds 8192 pixels per side or 16 megapixels.',
-        );
-      }
       final codec = await descriptor.instantiateCodec();
       try {
         if (codec.frameCount != 1) {

@@ -5,7 +5,7 @@ import pytest
 from earthsync.environmental.common import SourceError
 from earthsync.environmental.soil import PROPERTIES, read_soil
 
-from conftest import capture
+from .conftest import capture
 
 
 def test_all_documented_conversions_and_provenance(query, soil_payload):

@@ -19,7 +19,7 @@ class FarmRequired extends ConsumerWidget {
         padding: const EdgeInsets.all(24),
         children: [
           const Text(
-            'Confirm your field point before opening the farm questionnaire. You can explore area data without a farm.',
+            'Confirm your field point before opening farm features. You can explore area data and ask the assistant without a farm.',
           ),
           const SizedBox(height: 16),
           FilledButton(

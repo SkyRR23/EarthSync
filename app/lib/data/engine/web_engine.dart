@@ -8,11 +8,16 @@ import '../models/field_analysis.dart';
 import 'engine_gateway.dart';
 import 'live_integration.dart';
 import 'web_reference_candidates.dart';
+import '../service_client.dart';
 
 /// The web demo runs the shared Rust engine on the local demo host.
 class WebEngine implements EngineGateway {
   WebEngine({required this.window, Uri? baseUri, this.client})
-    : baseUri = baseUri ?? Uri.base;
+    : baseUri =
+          baseUri ??
+          (const String.fromEnvironment('BACKEND_URL').isEmpty
+              ? Uri.base
+              : serviceBaseUri());
   final HistoricalWindow window;
   final Uri baseUri;
   final http.Client? client;

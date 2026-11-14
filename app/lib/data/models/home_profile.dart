@@ -107,12 +107,14 @@ class HomeProfile {
     this.farms = const [],
     this.activeFarmId,
     this.storageNotice,
+    this.approximateDeviceLocation,
   });
   final bool onboarded;
   final UserLocation userLocation;
   final List<ConfirmedFarm> farms;
   final String? activeFarmId;
   final String? storageNotice;
+  final GeoPoint? approximateDeviceLocation;
   ConfirmedFarm? get farm {
     for (final farm in farms) {
       if (farm.id == activeFarmId) return farm;
@@ -125,12 +127,17 @@ class HomeProfile {
     userLocation: location,
     farms: farms,
     activeFarmId: activeFarmId,
+    approximateDeviceLocation:
+        location is ApproximateArea && location.source == AreaSource.device
+        ? location.point
+        : approximateDeviceLocation,
   );
   HomeProfile withFarm(ConfirmedFarm farm) => HomeProfile(
     onboarded: true,
     userLocation: userLocation,
     activeFarmId: farm.id,
     farms: List.unmodifiable([...farms.where((f) => f.id != farm.id), farm]),
+    approximateDeviceLocation: approximateDeviceLocation,
   );
   Map<String, dynamic> toJson() => {
     'version': 1,
@@ -138,6 +145,7 @@ class HomeProfile {
     'user_location': userLocation.toJson(),
     'farms': farms.map((f) => f.toJson()).toList(),
     'active_farm_id': activeFarmId,
+    'approximate_device_location': approximateDeviceLocation?.toJson(),
   };
   factory HomeProfile.fromJson(Map<String, dynamic> json) {
     if (json['version'] != 1) {
@@ -154,6 +162,11 @@ class HomeProfile {
         ),
       ),
       activeFarmId: json['active_farm_id'] as String?,
+      approximateDeviceLocation: json['approximate_device_location'] == null
+          ? null
+          : GeoPoint.fromJson(
+              json['approximate_device_location'] as Map<String, dynamic>,
+            ),
     );
   }
 }

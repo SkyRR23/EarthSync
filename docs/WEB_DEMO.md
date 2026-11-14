@@ -1,5 +1,7 @@
 # Browser demo
 
+Milestone 7H unified application: [setup, endpoints, Android and verification](integration/README.md).
+
 This branch combines the latest fetched Flutter live-NASA integration, NASA
 POWER backend, Rust v0.2 and local Android fixes. The existing farmer screens are
 retained. Browser requests run the actual shared Rust engine as a local process;

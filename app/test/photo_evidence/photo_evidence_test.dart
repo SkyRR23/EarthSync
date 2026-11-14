@@ -112,6 +112,29 @@ Future<void> tapVisible(WidgetTester tester, Finder finder) async {
 }
 
 void main() {
+  test(
+    'preflight dimensions are bounded without web-unsupported descriptor getters',
+    () {
+      final png = File(
+        'test/photo_evidence/fixtures/synthetic.png',
+      ).readAsBytesSync();
+      final dimensions = encodedPhotoDimensions(png, png: true);
+      expect(dimensions.$1, greaterThan(0));
+      final huge = Uint8List.fromList(png);
+      ByteData.sublistView(huge).setUint32(16, 8193);
+      expect(
+        preparePhoto(huge, PhotoOrigin.browserFile, readGps: false),
+        throwsA(isA<PhotoEvidenceException>()),
+      );
+      expect(
+        () => encodedPhotoDimensions(
+          Uint8List.fromList([255, 216, 255, 217]),
+          png: false,
+        ),
+        throwsA(isA<PhotoEvidenceException>()),
+      );
+    },
+  );
   TestWidgetsFlutterBinding.ensureInitialized();
 
   test('shared v1 response keeps unknown states', () {
@@ -385,10 +408,20 @@ void main() {
       expect(find.textContaining('Consented EXIF coordinates'), findsOneWidget);
       await tapVisible(tester, find.byType(SwitchListTile));
       expect(find.textContaining('Consented EXIF coordinates'), findsNothing);
-      await tapVisible(tester, find.byType(CheckboxListTile));
+      await tapVisible(
+        tester,
+        find.text(
+          'Associate with farmer-confirmed farm synthetic-confirmed-farm',
+        ),
+      );
+      await tapVisible(
+        tester,
+        find.text('This is a synthetic test image, not a field observation'),
+      );
       await tapVisible(tester, find.text('Upload photo'));
       expect(repository.savedDraft?.photo.gps, isNull);
       expect(repository.savedDraft?.farm?.id, 'synthetic-confirmed-farm');
+      expect(repository.savedDraft?.synthetic, isTrue);
     },
   );
 

@@ -1,0 +1,109 @@
+{
+  "status": "success",
+  "data": {
+    "data_mode": "supplied_data",
+    "field": {
+      "field_id": "public-test-point",
+      "latitude": 16.85,
+      "longitude": 96.15,
+      "current_crop": "",
+      "irrigation_available": null
+    },
+    "soil": {
+      "texture": null,
+      "drainage": null
+    },
+    "environment": {
+      "latitude": 16.85,
+      "longitude": 96.15,
+      "seasonal": {
+        "window": {
+          "start": {
+            "year": 2024,
+            "month": 2
+          },
+          "end": {
+            "year": 2024,
+            "month": 2
+          }
+        },
+        "metadata": {
+          "source": "NASA POWER",
+          "dataset": "POWER daily meteorology / MERRA-2",
+          "data_kind": "modeled",
+          "rainfall_unit": "mm",
+          "temperature_unit": "deg_c"
+        },
+        "observations": [
+          {
+            "period": {
+              "year": 2024,
+              "month": 2
+            },
+            "rainfall_mm": 0.04,
+            "mean_temperature_c": 28.03655172413793,
+            "rainfall_complete": true,
+            "temperature_complete": true
+          }
+        ]
+      }
+    },
+    "climate": {
+      "window": {
+        "start": {
+          "year": 2024,
+          "month": 2
+        },
+        "end": {
+          "year": 2024,
+          "month": 2
+        }
+      },
+      "metadata": {
+        "source": "NASA POWER",
+        "dataset": "POWER daily meteorology / MERRA-2",
+        "data_kind": "modeled",
+        "rainfall_unit": "mm",
+        "temperature_unit": "deg_c"
+      },
+      "month_count": 1,
+      "calendar_days": 29,
+      "rainfall_total_mm": 0.04,
+      "calendar_day_weighted_mean_temperature_c": 28.03655172413793,
+      "rainfall_gap_months": [],
+      "temperature_gap_months": [],
+      "limitations": [
+        "Full calendar months only; no partial-month estimates or gap filling.",
+        "Day weighting assumes complete monthly means of daily mean temperatures; completeness is supplied by the caller, not verified against daily data.",
+        "Source comparability and spatial representativeness require upstream review; these statistics do not establish crop suitability or forecast skill."
+      ]
+    },
+    "rotations": {
+      "baseline_id": "",
+      "scenarios": [],
+      "sources": [],
+      "contains_synthetic_references": false,
+      "limitations": [
+        "Crop suitability is unknown: no crop constraints or scenarios supplied."
+      ]
+    },
+    "notices": [
+      {
+        "code": "CLIMATE_CONTEXT_ONLY",
+        "message": "Climate statistics are shown separately; no water/temperature suitability rules are implemented or inferred."
+      },
+      {
+        "code": "ROTATION_RULES_UNAVAILABLE",
+        "message": "Rotation transitions, calendar feasibility and benefits remain unevaluated. Read per-step and rotation missing information."
+      },
+      {
+        "code": "SOURCE_APPLICABILITY_UNVERIFIED",
+        "message": "Dataset comparability, spatial scale and crop-reference applicability require upstream review; supplied data does not imply live or validated data."
+      },
+      {
+        "code": "ENVIRONMENT_KIND",
+        "message": "Caller labels this environmental series modeled; do not display it as direct field measurements."
+      }
+    ]
+  }
+}

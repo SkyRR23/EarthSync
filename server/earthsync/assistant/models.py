@@ -116,6 +116,8 @@ class Decision(Model):
         "supported_by_supplied_evidence",
         "conflicts_with_supplied_evidence",
         "insufficient_information",
+        "evidence_not_applicable",
+        "input_or_source_validation_failure",
         "unsuitable",
         "requires_agronomic_validation",
         "supported",

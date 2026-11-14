@@ -9,6 +9,9 @@ import '../onboarding/location_choices.dart';
 import '../questionnaire/historical_window_selector.dart';
 import 'climate_panel.dart';
 import 'satellite_preview.dart';
+import '../field/evidence_panels.dart';
+import '../../state/integration_provider.dart';
+import '../../data/engine/v03_engine.dart';
 
 class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
@@ -52,6 +55,12 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               padding: const EdgeInsets.all(20),
               children: [
                 if (profile.storageNotice != null) Text(profile.storageNotice!),
+                OutlinedButton.icon(
+                  onPressed: () =>
+                      context.push('/assistant${_areaView ? '?area=1' : ''}'),
+                  icon: const Icon(Icons.chat_outlined),
+                  label: const Text('Ask the EarthSync assistant'),
+                ),
                 if (farm != null) ...[
                   SegmentedButton<bool>(
                     segments: const [
@@ -89,6 +98,34 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     'This point stays fixed when you change your area. It is not a field boundary.',
                   ),
                   const SizedBox(height: 12),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      FilledButton(
+                        onPressed: () => context.push('/field'),
+                        child: const Text('Field situation'),
+                      ),
+                      OutlinedButton(
+                        onPressed: () => context.push('/photos'),
+                        child: const Text('Field photos'),
+                      ),
+                      OutlinedButton(
+                        onPressed: () => context.push('/assessment'),
+                        child: const Text('Crop assessment'),
+                      ),
+                    ],
+                  ),
+                  if (ref.watch(assessmentProvider).result
+                      case final result?) ...[
+                    Text(
+                      result.synthetic
+                          ? 'Synthetic software assessment · not your farm'
+                          : 'Reference crop assessment · more information needed',
+                    ),
+                    for (final summary in result.summaries.take(2))
+                      Text(V03Status.decode(summary['status']).label),
+                  ],
                   FilledButton.icon(
                     onPressed: () {
                       ref
@@ -167,6 +204,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   ),
                   const SizedBox(height: 20),
                   SatellitePreview(point: point),
+                  if (!showingFarm)
+                    EnvironmentalPanel(target: environmentalKey(point)),
                 ],
                 const SizedBox(height: 20),
                 const Text(

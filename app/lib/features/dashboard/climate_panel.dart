@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../../data/environment/area_climate.dart';
 import '../../state/dashboard_provider.dart';
+import '../../data/models/field_analysis.dart';
 
 class ClimatePanel extends ConsumerWidget {
   const ClimatePanel({super.key, required this.query});
@@ -14,6 +15,7 @@ class ClimatePanel extends ConsumerWidget {
     final state = ref.watch(dashboardClimateProvider(query));
     final climate = state.value;
     return Card(
+      semanticContainer: false,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -42,6 +44,7 @@ class ClimatePanel extends ConsumerWidget {
               const Text(
                 'Climate data unavailable. Try again when the service is reachable. No example or synthetic climate was substituted. Missing data do not mean safe conditions.',
               ),
+              if (state.error case final EngineError error) Text(error.message),
             ],
             if (climate != null) ...[
               if (state.hasError || state.isLoading)
@@ -113,27 +116,29 @@ class ClimateReadings extends StatelessWidget {
           const SizedBox(height: 12),
           SizedBox(
             height: 160,
-            child: BarChart(
-              BarChartData(
-                minY: 0,
-                maxY: rainTop,
-                titlesData: _titles(rows, rainStep),
-                borderData: FlBorderData(show: false),
-                gridData: const FlGridData(drawVerticalLine: false),
-                barGroups: [
-                  for (final (i, row) in rows.indexed)
-                    BarChartGroupData(
-                      x: i,
-                      barRods: [
-                        if (row.rainMm != null)
-                          BarChartRodData(
-                            toY: row.rainMm!,
-                            color: Colors.blue,
-                            width: 12,
-                          ),
-                      ],
-                    ),
-                ],
+            child: ExcludeSemantics(
+              child: BarChart(
+                BarChartData(
+                  minY: 0,
+                  maxY: rainTop,
+                  titlesData: _titles(rows, rainStep),
+                  borderData: FlBorderData(show: false),
+                  gridData: const FlGridData(drawVerticalLine: false),
+                  barGroups: [
+                    for (final (i, row) in rows.indexed)
+                      BarChartGroupData(
+                        x: i,
+                        barRods: [
+                          if (row.rainMm != null)
+                            BarChartRodData(
+                              toY: row.rainMm!,
+                              color: Colors.blue,
+                              width: 12,
+                            ),
+                        ],
+                      ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -145,27 +150,29 @@ class ClimateReadings extends StatelessWidget {
           const SizedBox(height: 12),
           SizedBox(
             height: 160,
-            child: LineChart(
-              LineChartData(
-                minX: 0,
-                maxX: (rows.length - 1).toDouble().clamp(1, 23),
-                minY: tempMin,
-                maxY: tempMax,
-                titlesData: _titles(rows, tempStep),
-                borderData: FlBorderData(show: false),
-                gridData: const FlGridData(drawVerticalLine: false),
-                lineBarsData: [
-                  LineChartBarData(
-                    color: Colors.deepOrange,
-                    isCurved: false,
-                    spots: [
-                      for (final (i, row) in rows.indexed)
-                        row.temperatureC == null
-                            ? FlSpot.nullSpot
-                            : FlSpot(i.toDouble(), row.temperatureC!),
-                    ],
-                  ),
-                ],
+            child: ExcludeSemantics(
+              child: LineChart(
+                LineChartData(
+                  minX: 0,
+                  maxX: (rows.length - 1).toDouble().clamp(1, 23),
+                  minY: tempMin,
+                  maxY: tempMax,
+                  titlesData: _titles(rows, tempStep),
+                  borderData: FlBorderData(show: false),
+                  gridData: const FlGridData(drawVerticalLine: false),
+                  lineBarsData: [
+                    LineChartBarData(
+                      color: Colors.deepOrange,
+                      isCurved: false,
+                      spots: [
+                        for (final (i, row) in rows.indexed)
+                          row.temperatureC == null
+                              ? FlSpot.nullSpot
+                              : FlSpot(i.toDouble(), row.temperatureC!),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

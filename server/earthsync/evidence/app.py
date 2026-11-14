@@ -21,7 +21,14 @@ from .timeline import build_timeline
 PREFIX = "/api/evidence/v1"
 
 
-def create_app(store=None, token=None, adapters=None, allowed_origins=None):
+def create_app(
+    store=None,
+    token=None,
+    adapters=None,
+    allowed_origins=None,
+    prefix=PREFIX,
+    require_secure_transport=False,
+):
     """One bearer token = one private farmer workspace, not multi-tenant auth."""
     token = token or os.environ.get("EARTHSYNC_EVIDENCE_TOKEN")
     if not token or len(token) < 32 or not token.isascii():
@@ -39,6 +46,15 @@ def create_app(store=None, token=None, adapters=None, allowed_origins=None):
         authorization = request.headers.get("authorization", "")
         if not hmac.compare_digest(authorization.encode(), f"Bearer {token}".encode()):
             raise HTTPException(401, "Evidence workspace authorization required")
+        if (
+            require_secure_transport
+            and request.url.scheme != "https"
+            and (
+                request.client is None
+                or request.client.host not in {"127.0.0.1", "::1"}
+            )
+        ):
+            raise HTTPException(403, "Private photo access requires HTTPS or loopback")
 
     app = FastAPI(
         title="EarthSync private evidence workspace",
@@ -131,13 +147,13 @@ def create_app(store=None, token=None, adapters=None, allowed_origins=None):
             raise HTTPException(422, str(exc)) from None
         return metadata, clean
 
-    @app.post(f"{PREFIX}/photos", response_model=Photo, status_code=201)
+    @app.post(f"{prefix}/photos", response_model=Photo, status_code=201)
     async def upload(request: Request):
         async with slots:
             metadata, image = await read_upload(request)
             return await asyncio.to_thread(store.save, metadata, image)
 
-    @app.put(f"{PREFIX}/photos/{{photo_id}}", response_model=Photo)
+    @app.put(f"{prefix}/photos/{{photo_id}}", response_model=Photo)
     async def replace(photo_id: str, request: Request):
         photo_key(photo_id)
         await asyncio.to_thread(store.get, photo_id)
@@ -145,15 +161,15 @@ def create_app(store=None, token=None, adapters=None, allowed_origins=None):
             metadata, image = await read_upload(request)
             return await asyncio.to_thread(store.save, metadata, image, photo_id)
 
-    @app.get(f"{PREFIX}/photos", response_model=list[Photo])
+    @app.get(f"{prefix}/photos", response_model=list[Photo])
     async def photos():
         return await asyncio.to_thread(store.list)
 
-    @app.get(f"{PREFIX}/photos/{{photo_id}}", response_model=Photo)
+    @app.get(f"{prefix}/photos/{{photo_id}}", response_model=Photo)
     async def photo(photo_id: str):
         return await asyncio.to_thread(store.get, photo_key(photo_id))
 
-    @app.get(f"{PREFIX}/photos/{{photo_id}}/image")
+    @app.get(f"{prefix}/photos/{{photo_id}}/image")
     async def image(photo_id: str):
         data = await asyncio.to_thread(store.image, photo_key(photo_id))
         return Response(
@@ -165,12 +181,12 @@ def create_app(store=None, token=None, adapters=None, allowed_origins=None):
             },
         )
 
-    @app.delete(f"{PREFIX}/photos/{{photo_id}}", status_code=204)
+    @app.delete(f"{prefix}/photos/{{photo_id}}", status_code=204)
     async def remove(photo_id: str):
         await asyncio.to_thread(store.delete, photo_key(photo_id))
         return Response(status_code=204)
 
-    @app.post(f"{PREFIX}/timeline")
+    @app.post(f"{prefix}/timeline")
     async def timeline(request: Request):
         body = bytearray()
         async for chunk in request.stream():

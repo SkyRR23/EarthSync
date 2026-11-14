@@ -5,7 +5,7 @@ import pytest
 from earthsync.environmental.common import SourceError
 from earthsync.environmental.weather import FreshnessPolicy, read_weather
 
-from conftest import NOW, capture
+from .conftest import NOW, capture
 
 
 def test_metadata_missing_run_and_half_hour_timezone(query, weather_payload):

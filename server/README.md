@@ -1,5 +1,7 @@
 # EarthSync NASA POWER backend — Milestone 4A
 
+Milestone 7H unified application: [setup, endpoints, Android and verification](../docs/integration/README.md).
+
 Python 3.12/3.13; FastAPI climate transport and normalization. No crop suitability,
 soil estimates, forecasting or agricultural thresholds. Current engine contract
 was read at main commit `1ea3df7b09637cf8162f834411d830aa8621590c`.

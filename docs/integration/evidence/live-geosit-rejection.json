@@ -1,0 +1,1 @@
+{"status":"error","error":{"code":"UPSTREAM_SOURCE_CHANGED","message":"NASA POWER returned unsupported source lineage. Only homogeneous MERRA-2 is accepted; no data were relabeled.","retryable":false}}

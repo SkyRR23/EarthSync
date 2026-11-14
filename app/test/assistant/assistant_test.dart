@@ -52,6 +52,20 @@ Widget host(AssistantContext context, AssistantService service) => MaterialApp(
 );
 
 void main() {
+  testWidgets('background evidence refresh preserves an unsent question', (
+    tester,
+  ) async {
+    final service = DeferredAssistant();
+    await tester.pumpWidget(host(testContext('before-retrieval'), service));
+    await tester.enterText(
+      find.byType(TextField),
+      'Explain the available soil evidence',
+    );
+    await tester.pumpWidget(host(testContext('after-retrieval'), service));
+    await tester.pump();
+    expect(find.text('Explain the available soil evidence'), findsOneWidget);
+    expect(service.calls, isEmpty);
+  });
   test(
     'shared wire fixture preserves null, evidence provenance and citations',
     () {

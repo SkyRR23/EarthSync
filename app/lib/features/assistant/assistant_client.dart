@@ -25,10 +25,12 @@ class HttpAssistantService implements AssistantService {
     required this.endpoint,
     this.client,
     this.timeout = const Duration(seconds: 15),
+    this.allowInsecureLocalDemo = false,
   });
   final Uri endpoint;
   final http.Client? client;
   final Duration timeout;
+  final bool allowInsecureLocalDemo;
 
   @override
   Future<AssistantAnswer> ask({
@@ -46,7 +48,8 @@ class HttpAssistantService implements AssistantService {
     if (!endpoint.hasAuthority ||
         endpoint.userInfo.isNotEmpty ||
         endpoint.fragment.isNotEmpty ||
-        !(endpoint.scheme == 'https' || (local && endpoint.scheme == 'http'))) {
+        !(endpoint.scheme == 'https' ||
+            ((local || allowInsecureLocalDemo) && endpoint.scheme == 'http'))) {
       throw const AssistantUnavailable('configuration');
     }
     final transport = client ?? http.Client();

@@ -47,7 +47,7 @@ class SeasonCache:
             return value
 
 
-def create_app(provider=None, cache=None):
+def create_app(provider=None, cache=None, context_service=None):
     diagnostics_enabled = os.getenv("EARTHSYNC_DIAGNOSTICS") == "1"
 
     @asynccontextmanager
@@ -57,6 +57,16 @@ def create_app(provider=None, cache=None):
         ) as client:
             app.state.provider = provider or PowerProvider(client)
             app.state.cache = cache or SeasonCache()
+            if context_service is not None:
+                app.state.context_service = context_service
+            else:
+                from .environmental.service import ContextService
+                from .environmental.soil import SoilGridsAdapter
+                from .environmental.weather import WeatherAdapter
+
+                app.state.context_service = ContextService(
+                    SoilGridsAdapter(client), WeatherAdapter(client)
+                )
             yield
 
     app = FastAPI(
@@ -65,6 +75,19 @@ def create_app(provider=None, cache=None):
 
     @app.exception_handler(RequestValidationError)
     async def invalid_request(request, exc):
+        if request.url.path.startswith(
+            (
+                "/api/assistant/",
+                "/api/environmental/",
+                "/api/catalog/",
+                "/api/satellite/",
+            )
+        ):
+            return error_response(
+                "INVALID_INPUT",
+                "The versioned context request is invalid. Check the selected target, dates and evidence schema.",
+                422,
+            )
         return error_response(
             "INVALID_INPUT",
             "Provide valid coordinates and an ordered historical month window (maximum 24 months).",

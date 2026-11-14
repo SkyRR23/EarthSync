@@ -50,6 +50,7 @@ ThemeData fsTheme() {
   );
 
   return ThemeData(
+    fontFamily: 'EarthSyncSans',
     useMaterial3: true,
     colorScheme: scheme,
     scaffoldBackgroundColor: FsColors.bg,

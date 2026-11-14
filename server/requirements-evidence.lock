@@ -1,2 +1,2 @@
-# Install after requirements.lock; opt-in keeps existing climate installs unchanged.
+# Compatibility extra; the unified requirements.lock already includes Pillow.
 pillow==12.2.0

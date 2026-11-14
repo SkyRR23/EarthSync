@@ -36,6 +36,7 @@ class _PhotoEvidencePanelState extends State<PhotoEvidencePanel> {
   String? _replaceId;
   bool _readGps = false;
   bool _associate = false;
+  bool _synthetic = false;
   bool _busy = true;
   String? _error;
   int _generation = 0;
@@ -74,6 +75,7 @@ class _PhotoEvidencePanelState extends State<PhotoEvidencePanel> {
     _observations.clear();
     _capturedDate = null;
     _associate = false;
+    _synthetic = false;
     _readGps = false;
     _category = PhotoCategory.crop;
   }
@@ -136,6 +138,7 @@ class _PhotoEvidencePanelState extends State<PhotoEvidencePanel> {
         farmerObservations: _observations.text,
         capturedDate: _capturedDate,
         farm: _associate ? widget.confirmedFarm : null,
+        synthetic: _synthetic,
       ),
       replaceId: _replaceId,
     );
@@ -332,6 +335,16 @@ class _PhotoEvidencePanelState extends State<PhotoEvidencePanel> {
                 : (value) => setState(() => _associate = value ?? false),
           ),
         if (!_associate) const Text('Will be retained as unlocated evidence.'),
+        CheckboxListTile(
+          contentPadding: EdgeInsets.zero,
+          title: const Text(
+            'This is a synthetic test image, not a field observation',
+          ),
+          value: _synthetic,
+          onChanged: _busy
+              ? null
+              : (value) => setState(() => _synthetic = value ?? false),
+        ),
         Wrap(
           spacing: 8,
           children: [

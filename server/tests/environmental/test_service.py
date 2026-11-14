@@ -19,7 +19,7 @@ from earthsync.environmental.soil import SoilGridsAdapter
 from earthsync.environmental.vegetation import PRODUCTS, VegetationAdapter
 from earthsync.environmental.weather import WeatherAdapter
 
-from conftest import NOW
+from .conftest import NOW
 
 
 @pytest.mark.parametrize("kind", PRODUCTS)
@@ -256,7 +256,7 @@ async def test_cache_does_not_store_failures_or_serve_expired_forecasts(
         await soil.context(query)
         assert len(calls) == 2
     from earthsync.environmental.soil import read_soil
-    from conftest import capture
+    from .conftest import capture
 
     evidence = read_soil(capture(soil_payload), query)
     evidence.temporal_support.expires_at = NOW + timedelta(seconds=1)
@@ -273,7 +273,7 @@ async def test_cache_does_not_store_failures_or_serve_expired_forecasts(
 
 
 def test_malformed_json_does_not_escape_as_a_success():
-    from conftest import capture
+    from .conftest import capture
 
     base = capture({})
     with pytest.raises(SourceError):

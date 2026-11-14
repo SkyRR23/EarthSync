@@ -18,7 +18,14 @@ class ScenarioDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(analysisProvider);
     if (state is! AnalysisReady) {
-      return const Scaffold(body: FsStateView.loading());
+      return Scaffold(
+        appBar: AppBar(),
+        body: const Center(
+          child: Text(
+            'Run a field analysis to view this option. Results are not retained after refresh.',
+          ),
+        ),
+      );
     }
     final a = state.analysis;
     final s = a.scenarios.where((x) => x.id == scenarioId).firstOrNull;

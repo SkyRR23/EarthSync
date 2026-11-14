@@ -42,6 +42,17 @@ class _FarmerAssistantState extends State<FarmerAssistant> {
   @override
   void didUpdateWidget(covariant FarmerAssistant oldWidget) {
     super.didUpdateWidget(oldWidget);
+    final selectionChanged =
+        jsonEncode([
+          oldWidget.context.approximateLocation?.toJson(),
+          oldWidget.context.selectedArea?.toJson(),
+          oldWidget.context.confirmedFarm?.toJson(),
+        ]) !=
+        jsonEncode([
+          widget.context.approximateLocation?.toJson(),
+          widget.context.selectedArea?.toJson(),
+          widget.context.confirmedFarm?.toJson(),
+        ]);
     if (jsonEncode(oldWidget.context.toJson()) !=
             jsonEncode(widget.context.toJson()) ||
         oldWidget.language != widget.language ||
@@ -51,7 +62,10 @@ class _FarmerAssistantState extends State<FarmerAssistant> {
       _loading = false;
       _pendingQuestion = null;
       _failedQuestion = null;
-      _input.clear();
+      // A provider finishing in the background changes evidence, not the
+      // farmer's draft question. Selection/language changes still clear it.
+      if (selectionChanged || oldWidget.language != widget.language)
+        _input.clear();
     }
   }
 

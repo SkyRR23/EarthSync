@@ -61,7 +61,8 @@ abstract final class S {
   static const recenter = 'Back to my field';
   static const showLegend = 'About this image';
   static const alerts = 'Warnings';
-  static const noAlerts = 'No warnings for this season.';
+  static const noAlerts =
+      'No hazard assessment is available. Risks remain unknown.';
   static const dataGaps = 'Missing data';
   static const assumptions = 'What we assumed';
   static const notices = 'Important to know';

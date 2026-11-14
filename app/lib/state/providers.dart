@@ -188,7 +188,14 @@ class AnalysisNotifier extends Notifier<AnalysisState> {
   int _generation = 0;
 
   @override
-  AnalysisState build() => const AnalysisIdle();
+  AnalysisState build() {
+    ref.watch(homeProfileProvider.select((p) => p.value?.farm));
+    ref.watch(historicalWindowProvider);
+    ++_generation;
+    _lastGood = null;
+    ref.onDispose(() => ++_generation);
+    return const AnalysisIdle();
+  }
 
   Future<void> run(FarmerInput input) async {
     final generation = ++_generation;

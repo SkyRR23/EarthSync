@@ -9,11 +9,33 @@ import '../features/questionnaire/review_screen.dart';
 import '../features/results/results_screen.dart';
 import '../features/results/scenario_detail_screen.dart';
 import '../features/sources/sources_screen.dart';
+import '../features/field/field_screen.dart';
+import '../features/field/photos_screen.dart';
+import '../features/field/assessment_screen.dart';
+import '../features/assistant/integrated_assistant.dart';
 
 GoRouter buildRouter() => GoRouter(
   routes: [
     GoRoute(path: '/', builder: (_, _) => const HomeEntry()),
     GoRoute(path: '/dashboard', builder: (_, _) => const DashboardScreen()),
+    GoRoute(
+      path: '/field',
+      builder: (_, _) => const FarmRequired(child: FieldScreen()),
+    ),
+    GoRoute(
+      path: '/photos',
+      builder: (_, _) => const FarmRequired(child: PhotosScreen()),
+    ),
+    GoRoute(
+      path: '/assessment',
+      builder: (_, _) => const FarmRequired(child: AssessmentScreen()),
+    ),
+    GoRoute(
+      path: '/assistant',
+      builder: (_, s) => IntegratedAssistantScreen(
+        areaOnly: s.uri.queryParameters['area'] == '1',
+      ),
+    ),
     GoRoute(
       path: '/area',
       builder: (_, _) => const LocationScreen(areaOnly: true),
