@@ -60,6 +60,9 @@ abstract final class S {
   static const retry = 'Try again';
   static const useDemo = 'Show demo instead';
   static const showLast = 'Showing your last result';
+  static String savedResult(String when) => 'Saved result from $when';
+  static const updating = 'Checking for new data…';
+  static const noInternet = "No internet right now. Tap to try again.";
   static const notFound = "This crop plan isn't available any more.";
   static const demoData = 'Practice data — not your real farm yet';
 

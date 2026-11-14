@@ -10,6 +10,7 @@ import '../../design/components/scenario.dart' show monthNames, monthShort;
 import '../../design/components/status.dart';
 import '../../design/tokens.dart';
 import '../results/climate_provenance.dart';
+import 'freshness_banner.dart';
 
 /// How a month compares with the other months of this record.
 enum MonthRain { most, middle, least, unknown }
@@ -102,6 +103,7 @@ class _WeatherTabState extends State<WeatherTab> {
       showBack: false,
       subtitle: c.period.isEmpty ? null : c.period,
       children: [
+        const FreshnessBanner(),
         if (c.dataKind != null && c.dataKind != 'observed') ...[
           const SizedBox(height: FsSpace.md),
           FsBanner(

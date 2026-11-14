@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../data/cache/last_result.dart';
 import '../data/cloud/cloud_sync.dart';
 import '../data/environment/nasa_power_client.dart';
 import '../data/engine/engine_gateway.dart';
@@ -433,9 +434,26 @@ class AnalysisRunning extends AnalysisState {
 }
 
 class AnalysisReady extends AnalysisState {
-  const AnalysisReady(this.analysis, {this.fromCache = false});
+  const AnalysisReady(
+    this.analysis, {
+    this.fromCache = false,
+    this.savedAt,
+    this.refreshing = false,
+    this.refreshFailed = false,
+  });
   final FieldAnalysis analysis;
+
+  /// Shown from the phone's saved copy, not a fresh check.
   final bool fromCache;
+
+  /// When the saved copy was made (null for in-memory results).
+  final DateTime? savedAt;
+
+  /// A fresh check is running quietly behind the saved result.
+  final bool refreshing;
+
+  /// The latest fresh check failed (e.g. no internet); still showing saved.
+  final bool refreshFailed;
 }
 
 class AnalysisFailed extends AnalysisState {
@@ -446,37 +464,76 @@ class AnalysisFailed extends AnalysisState {
 
 class AnalysisNotifier extends Notifier<AnalysisState> {
   FieldAnalysis? _lastGood;
+  String? _lastGoodKey;
+  DateTime? _lastGoodAt;
   int _generation = 0;
 
+  /// App opened: show the saved result for this farm and answers at once.
   @override
-  AnalysisState build() => const AnalysisIdle();
+  AnalysisState build() {
+    final draft = ref.read(farmerDraftProvider);
+    final saved = loadLastResult(ref.read(prefsProvider));
+    if (saved == null || !draft.hasLocation) return const AnalysisIdle();
+    final restored = saved.restore();
+    if (restored == null) return const AnalysisIdle();
+    _lastGood = restored;
+    _lastGoodKey = saved.inputKey;
+    _lastGoodAt = saved.savedAt;
+    if (!saved.matches(draft.toInput())) return const AnalysisIdle();
+    return AnalysisReady(restored, fromCache: true, savedAt: saved.savedAt);
+  }
 
-  Future<void> run(FarmerInput input) async {
+  /// [quiet]: keep showing the current result while checking again.
+  Future<void> run(FarmerInput input, {bool quiet = false}) async {
     final generation = ++_generation;
-    state = const AnalysisRunning();
+    final current = state;
+    state = quiet && current is AnalysisReady
+        ? AnalysisReady(
+            current.analysis,
+            fromCache: current.fromCache,
+            savedAt: current.savedAt,
+            refreshing: true,
+          )
+        : const AnalysisRunning();
     try {
       final result = await ref.read(engineProvider).analyzeField(input);
       if (generation != _generation) return;
       _lastGood = result;
+      _lastGoodKey = inputKeyOf(input);
+      _lastGoodAt =
+          saveLastResult(ref.read(prefsProvider), result, input) ?? _lastGoodAt;
       state = AnalysisReady(result);
       ref.read(cloudSyncProvider)
         ?..saveCheck(result)
         ..logEvent('check_run');
-    } on EngineError catch (e) {
-      if (generation != _generation) return;
-      state = AnalysisFailed(e, lastGood: _lastGood);
     } catch (e) {
       if (generation != _generation) return;
-      state = AnalysisFailed(
-        EngineError(code: 'unexpected', message: e.toString()),
-        lastGood: _lastGood,
-      );
+      final error = e is EngineError
+          ? e
+          : EngineError(code: 'unexpected', message: e.toString());
+      // Same farm and answers as the saved result: keep showing it.
+      if (_lastGood != null && _lastGoodKey == inputKeyOf(input)) {
+        state = AnalysisReady(
+          _lastGood!,
+          fromCache: true,
+          savedAt: _lastGoodAt,
+          refreshFailed: true,
+        );
+      } else {
+        state = AnalysisFailed(error, lastGood: _lastGood);
+      }
     }
   }
 
-  /// Run for the saved field if nothing has run yet (app reopened).
+  /// App reopened with a saved farm: check it (quietly if a result shows).
   void ensureFor(FarmerDraft draft) {
-    if (state is AnalysisIdle && draft.hasLocation) run(draft.toInput());
+    if (!draft.hasLocation) return;
+    final s = state;
+    if (s is AnalysisIdle) {
+      run(draft.toInput());
+    } else if (s is AnalysisReady && s.fromCache && !s.refreshing) {
+      run(draft.toInput(), quiet: true);
+    }
   }
 
   /// Fallback for outages: the bundled demo fixture (master plan §12, H28).
@@ -497,7 +554,19 @@ class AnalysisNotifier extends Notifier<AnalysisState> {
 
   void showLastGood() {
     ++_generation;
-    if (_lastGood != null) state = AnalysisReady(_lastGood!, fromCache: true);
+    if (_lastGood != null) {
+      state = AnalysisReady(_lastGood!, fromCache: true, savedAt: _lastGoodAt);
+    }
+  }
+
+  /// Start over: forget the saved result too (it belongs to the old farm).
+  void forget() {
+    ++_generation;
+    _lastGood = null;
+    _lastGoodKey = null;
+    _lastGoodAt = null;
+    clearLastResult(ref.read(prefsProvider));
+    state = const AnalysisIdle();
   }
 }
 

@@ -241,7 +241,7 @@ class _FieldTabState extends ConsumerState<FieldTab> {
     );
     if (ok == true && mounted) {
       ref.read(farmerDraftProvider.notifier).reset();
-      ref.invalidate(analysisProvider);
+      ref.read(analysisProvider.notifier).forget();
       context.go('/');
     }
   }

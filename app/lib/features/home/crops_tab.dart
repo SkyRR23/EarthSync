@@ -10,6 +10,7 @@ import '../../design/components/scenario.dart';
 import '../../design/components/sheet.dart';
 import '../../design/tokens.dart';
 import 'field_tab.dart' show showAboutResults;
+import 'freshness_banner.dart';
 
 /// Crops tab: the answer and nothing else. Big cards, best fit first.
 class CropsTab extends StatelessWidget {
@@ -36,10 +37,7 @@ class CropsTab extends StatelessWidget {
             onTap: () => showAboutResults(context, a),
           ),
         ],
-        if (fromCache) ...[
-          const SizedBox(height: FsSpace.sm),
-          const FsBanner(message: S.showLast, icon: CupertinoIcons.clock),
-        ],
+        const FreshnessBanner(),
         const SizedBox(height: FsSpace.lg),
         if (items.isEmpty)
           Padding(
