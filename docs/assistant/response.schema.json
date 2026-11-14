@@ -1,0 +1,434 @@
+{
+  "$defs": {
+    "Claim": {
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "enum": [
+            "retrieved_fact",
+            "deterministic_calculation",
+            "general_knowledge",
+            "unavailable_evidence"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "category",
+        "text"
+      ],
+      "title": "Claim",
+      "type": "object"
+    },
+    "Decision": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "scenario_id": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Scenario Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "supported_by_supplied_evidence",
+            "conflicts_with_supplied_evidence",
+            "insufficient_information",
+            "unsuitable",
+            "requires_agronomic_validation",
+            "supported",
+            "conditional",
+            "unknown"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Source Ids",
+          "type": "array"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Limitations",
+          "type": "array"
+        },
+        "synthetic": {
+          "default": false,
+          "title": "Synthetic",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "scenario_id",
+        "status"
+      ],
+      "title": "Decision",
+      "type": "object"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "topic": {
+          "enum": [
+            "climate",
+            "rainfall",
+            "temperature",
+            "soil",
+            "vegetation",
+            "radar",
+            "photo",
+            "farmer_input"
+          ],
+          "title": "Topic",
+          "type": "string"
+        },
+        "metric": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Metric",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "observed",
+            "modeled",
+            "forecast",
+            "farmer_reported",
+            "synthetic",
+            "unavailable"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "quality": {
+          "enum": [
+            "available",
+            "missing",
+            "partial",
+            "stale",
+            "contradictory",
+            "unavailable",
+            "unverified"
+          ],
+          "title": "Quality",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "start_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start Date"
+        },
+        "end_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Date"
+        },
+        "retrieved_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retrieved At"
+        },
+        "spatial_support": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Spatial Support"
+        },
+        "scope": {
+          "enum": [
+            "regional",
+            "field",
+            "unlocated"
+          ],
+          "title": "Scope",
+          "type": "string"
+        },
+        "location_id": {
+          "anyOf": [
+            {
+              "maxLength": 100,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Location Id"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Source Ids",
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Limitations",
+          "type": "array"
+        },
+        "calculation": {
+          "default": "none",
+          "enum": [
+            "none",
+            "rust"
+          ],
+          "title": "Calculation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "topic",
+        "metric",
+        "kind",
+        "quality",
+        "scope"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "Source": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "provider": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Provider",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 400,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "url": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Url"
+        }
+      },
+      "required": [
+        "id",
+        "provider",
+        "title"
+      ],
+      "title": "Source",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "assistant.v1-proposal",
+      "default": "assistant.v1-proposal",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "context_id": {
+      "title": "Context Id",
+      "type": "string"
+    },
+    "language": {
+      "enum": [
+        "en",
+        "es"
+      ],
+      "title": "Language",
+      "type": "string"
+    },
+    "intent": {
+      "title": "Intent",
+      "type": "string"
+    },
+    "claims": {
+      "items": {
+        "$ref": "#/$defs/Claim"
+      },
+      "title": "Claims",
+      "type": "array"
+    },
+    "citations": {
+      "items": {
+        "$ref": "#/$defs/Source"
+      },
+      "title": "Citations",
+      "type": "array"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/Evidence"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "decisions": {
+      "items": {
+        "$ref": "#/$defs/Decision"
+      },
+      "title": "Decisions",
+      "type": "array"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    },
+    "suggested_questions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Suggested Questions",
+      "type": "array"
+    }
+  },
+  "required": [
+    "context_id",
+    "language",
+    "intent",
+    "claims",
+    "citations",
+    "evidence",
+    "decisions",
+    "limitations",
+    "warnings",
+    "suggested_questions"
+  ],
+  "title": "ChatResponse",
+  "type": "object"
+}

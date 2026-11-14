@@ -1,0 +1,60 @@
+name: Farmer assistant contract and UI
+
+on:
+  pull_request:
+    paths:
+      - 'app/lib/features/assistant/**'
+      - 'app/lib/assistant_demo.dart'
+      - 'app/test/assistant/**'
+      - 'server/earthsync/assistant/**'
+      - 'server/tests/assistant/**'
+      - 'docs/assistant/**'
+      - '.github/workflows/farmer-assistant.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  assistant-backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r server/requirements.lock
+      - run: python -m pip install --no-deps -e server
+      - run: python -m pytest -q server/tests/assistant
+      - run: python -m ruff check server/earthsync/assistant server/tests/assistant
+      - run: python -m ruff format --check server/earthsync/assistant server/tests/assistant
+
+  assistant-flutter:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.50.0'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+        working-directory: app
+      - name: Format assistant Dart files
+        run: |
+          dart format app/lib/features/assistant app/lib/assistant_demo.dart app/test/assistant
+          git diff --binary > assistant-format.patch
+      - name: Analyze assistant
+        run: flutter analyze --no-fatal-infos lib/features/assistant lib/assistant_demo.dart test/assistant
+        working-directory: app
+      - run: flutter test test/assistant --reporter expanded
+        working-directory: app
+      - run: flutter build web --target lib/assistant_demo.dart --no-wasm-dry-run
+        working-directory: app
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: assistant-format
+          path: assistant-format.patch

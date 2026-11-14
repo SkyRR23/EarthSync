@@ -1,0 +1,76 @@
+{
+  "schema_version": "assistant.v1-proposal",
+  "context_id": "software-test:rainfall:r1",
+  "language": "en",
+  "intent": "rainfall",
+  "claims": [
+    {
+      "category": "general_knowledge",
+      "text": "These answers use regional context. An area or climate grid does not establish conditions in a particular field.",
+      "evidence_ids": [],
+      "source_ids": []
+    },
+    {
+      "category": "general_knowledge",
+      "text": "A rainfall graph shows water depth over the labeled period, usually in millimeters. A missing point means unknown, not no rain. Historical rain is not a forecast or the water available to crop roots.",
+      "evidence_ids": [],
+      "source_ids": []
+    },
+    {
+      "category": "unavailable_evidence",
+      "text": "Evidence “rain-2024-02” remains unknown or needs review: missing, partial, stale, conflicting or unverified quality.",
+      "evidence_ids": [
+        "rain-2024-02"
+      ],
+      "source_ids": [
+        "nasa-docs"
+      ]
+    }
+  ],
+  "citations": [
+    {
+      "id": "nasa-docs",
+      "provider": "NASA POWER",
+      "title": "Daily API documentation",
+      "url": "https://power.larc.nasa.gov/docs/services/api/temporal/daily/"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "rain-2024-02",
+      "topic": "rainfall",
+      "metric": "rainfall_total",
+      "kind": "modeled",
+      "quality": "missing",
+      "value": null,
+      "unit": "mm",
+      "start_date": "2024-02-01",
+      "end_date": "2024-02-29",
+      "retrieved_at": null,
+      "spatial_support": "Software contract fixture; no scientific validation",
+      "scope": "regional",
+      "location_id": "test-region",
+      "source_ids": [
+        "nasa-docs"
+      ],
+      "limitations": [
+        "No measurement supplied. Coordinates are an example, not a restriction."
+      ],
+      "calculation": "none"
+    }
+  ],
+  "decisions": [],
+  "limitations": [],
+  "warnings": [
+    "rain-2024-02:quality"
+  ],
+  "suggested_questions": [
+    "What is happening in my area?",
+    "What does the rainfall graph mean?",
+    "Why is soil information unavailable?",
+    "What crops could I investigate?",
+    "What are the limitations of this recommendation?",
+    "What does this satellite observation mean?",
+    "What information should I provide next?"
+  ]
+}
