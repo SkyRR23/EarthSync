@@ -207,12 +207,14 @@ class AssistantDecision {
     List<String> evidenceIds = const [],
     List<String> limitations = const [],
     this.synthetic = false,
+    this.explanation,
   }) : sourceIds = List.unmodifiable(sourceIds),
        evidenceIds = List.unmodifiable(evidenceIds),
        limitations = List.unmodifiable(limitations);
   final String id, scenarioId, status;
   final List<String> sourceIds, evidenceIds, limitations;
   final bool synthetic;
+  final String? explanation;
   Map<String, dynamic> toJson() => {
     'id': id,
     'scenario_id': scenarioId,
@@ -221,6 +223,7 @@ class AssistantDecision {
     'evidence_ids': evidenceIds,
     'limitations': limitations,
     'synthetic': synthetic,
+    if (explanation != null) 'explanation': explanation,
   };
   factory AssistantDecision.fromJson(Map<String, dynamic> j) =>
       AssistantDecision(
@@ -231,6 +234,7 @@ class AssistantDecision {
         evidenceIds: _strings(j['evidence_ids']),
         limitations: _strings(j['limitations']),
         synthetic: j['synthetic'] as bool? ?? false,
+        explanation: j['explanation'] as String?,
       );
 }
 
@@ -244,6 +248,7 @@ class AssistantContext {
     List<AssistantDecision> decisions = const [],
     List<AssistantSource> sources = const [],
     List<String> limitations = const [],
+    this.referenceFacts = const [],
   }) : evidence = List.unmodifiable(evidence),
        decisions = List.unmodifiable(decisions),
        sources = List.unmodifiable(sources),
@@ -254,6 +259,7 @@ class AssistantContext {
   final List<AssistantEvidence> evidence;
   final List<AssistantDecision> decisions;
   final List<AssistantSource> sources;
+  final List<Map<String, dynamic>> referenceFacts;
   final List<String> limitations;
   Map<String, dynamic> toJson() => {
     'schema_version': assistantVersion,
@@ -265,6 +271,7 @@ class AssistantContext {
     'decisions': decisions.map((d) => d.toJson()).toList(),
     'sources': sources.map((s) => s.toJson()).toList(),
     'limitations': limitations,
+    if (referenceFacts.isNotEmpty) 'reference_facts': referenceFacts,
   };
   factory AssistantContext.fromJson(Map<String, dynamic> j) {
     if ((j['schema_version'] ?? assistantVersion) != assistantVersion) {
@@ -291,6 +298,7 @@ class AssistantContext {
       decisions: _maps(j['decisions']).map(AssistantDecision.fromJson).toList(),
       sources: _maps(j['sources']).map(AssistantSource.fromJson).toList(),
       limitations: _strings(j['limitations']),
+      referenceFacts: _maps(j['reference_facts']),
     );
   }
 }

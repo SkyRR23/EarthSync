@@ -18,6 +18,40 @@ class PlatformFarm {
 class PlatformFarmClient {
   const PlatformFarmClient(this.transport);
   final PlatformTransport transport;
+  Future<Map<String, dynamic>> references(
+    String query,
+  ) async => Map<String, dynamic>.from(
+    await transport.request(
+          'GET',
+          '$prefix/crop-references?${Uri(queryParameters: {'q': query}).query}',
+          expectedStatus: 200,
+        )
+        as Map,
+  );
+
+  Future<Map<String, dynamic>> water(
+    String id,
+    GeoPoint point,
+    String start,
+    String end,
+  ) async => Map<String, dynamic>.from(
+    await transport.request(
+          'POST',
+          '$prefix/water/jobs',
+          expectedStatus: 202,
+          body: {
+            'farm_id': id,
+            'query': {'point': point.toJson(), 'start': start, 'end': end},
+          },
+        )
+        as Map,
+  );
+
+  Future<Map<String, dynamic>> job(String id) async =>
+      Map<String, dynamic>.from(
+        await transport.request('GET', '$prefix/jobs/$id', expectedStatus: 200)
+            as Map,
+      );
   static const prefix = '/api/platform/v1';
   Future<PlatformFarm?> link(ConfirmedFarm local) async {
     try {

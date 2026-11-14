@@ -44,6 +44,7 @@ final integratedAssistantContextProvider = Provider.autoDispose.family<Assistant
   final evidence = <AssistantEvidence>[];
   final sources = <AssistantSource>[];
   final decisions = <AssistantDecision>[];
+  final referenceFacts = <Map<String, dynamic>>[];
   final limitations = <String>[
     'No independently verified crop recommendation is available. Historical climate is not current weather.',
   ];
@@ -286,6 +287,7 @@ final integratedAssistantContextProvider = Provider.autoDispose.family<Assistant
           ),
         );
         decisions.addAll(bound.decisions);
+        referenceFacts.addAll(bound.referenceFacts);
         limitations.addAll(bound.limitations);
       }
     }
@@ -320,6 +322,7 @@ final integratedAssistantContextProvider = Provider.autoDispose.family<Assistant
     decisions: decisions.take(30).toList(),
     sources: uniqueSources,
     limitations: limitations.take(30).toList(),
+    referenceFacts: referenceFacts.take(20).toList(),
   );
   return AssistantContext.fromJson({
     ...base.toJson(),

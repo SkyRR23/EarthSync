@@ -3,6 +3,7 @@
 mod assess;
 mod types;
 mod validate;
+pub mod water;
 use serde_json::json;
 pub use types::*;
 

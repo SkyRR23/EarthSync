@@ -57,7 +57,7 @@ class RustEngine:
             }
         )
 
-    async def analyze(self, request):
+    async def _execute(self, request, flag="--stdin"):
         if not self.ready:
             raise PlatformError("RUST_NOT_CONFIGURED", 503)
         raw = json.dumps(request, allow_nan=False, separators=(",", ":")).encode()
@@ -69,7 +69,7 @@ class RustEngine:
                 async with self.slots:
                     process = await asyncio.create_subprocess_exec(
                         str(self.path),
-                        "--stdin",
+                        flag,
                         stdin=asyncio.subprocess.PIPE,
                         stdout=asyncio.subprocess.PIPE,
                         stderr=asyncio.subprocess.DEVNULL,
@@ -101,29 +101,6 @@ class RustEngine:
                 "error",
             ):
                 raise PlatformError("RUST_SCHEMA_MISMATCH", 502)
-            if data["status"] == "error":
-                error = data.get("error", {})
-                if (
-                    data.get("schema_version") != ENGINE_VERSION
-                    or error.get("status") != "input_or_source_validation_failure"
-                    or not isinstance(error.get("path"), str)
-                    or not isinstance(error.get("message"), str)
-                ):
-                    raise PlatformError("RUST_SCHEMA_MISMATCH", 502)
-                raise PlatformError(
-                    "SCIENTIFIC_QUALITY_REJECTION", 422, validation=data
-                )
-            value = data.get("data")
-            if (
-                not isinstance(value, dict)
-                or value.get("schema_version") != ENGINE_VERSION
-                or value.get("context") != request
-                or value.get("software_test_only") is not False
-            ):
-                raise PlatformError("RUST_SCHEMA_MISMATCH", 502)
-            for key in ("findings", "summaries", "candidates", "limitations"):
-                if not isinstance(value.get(key), list):
-                    raise PlatformError("RUST_SCHEMA_MISMATCH", 502)
             return data
         except PlatformError:
             raise
@@ -138,3 +115,40 @@ class RustEngine:
                 except ProcessLookupError:
                     pass
                 await process.wait()
+
+    async def analyze(self, request):
+        data = await self._execute(request)
+        if data["status"] == "error":
+            error = data.get("error", {})
+            if (
+                data.get("schema_version") != ENGINE_VERSION
+                or error.get("status") != "input_or_source_validation_failure"
+                or not isinstance(error.get("path"), str)
+                or not isinstance(error.get("message"), str)
+            ):
+                raise PlatformError("RUST_SCHEMA_MISMATCH", 502)
+            raise PlatformError("SCIENTIFIC_QUALITY_REJECTION", 422, validation=data)
+        value = data.get("data")
+        if (
+            not isinstance(value, dict)
+            or value.get("schema_version") != ENGINE_VERSION
+            or value.get("context") != request
+            or value.get("software_test_only") is not False
+        ):
+            raise PlatformError("RUST_SCHEMA_MISMATCH", 502)
+        for key in ("findings", "summaries", "candidates", "limitations"):
+            if not isinstance(value.get(key), list):
+                raise PlatformError("RUST_SCHEMA_MISMATCH", 502)
+        return data
+
+    async def water(self, request):
+        data = await self._execute(request, "--water-stdin")
+        if data["status"] != "success":
+            raise PlatformError("SCIENTIFIC_QUALITY_REJECTION", 422)
+        result = data.get("data", {})
+        if (
+            result.get("input") != request
+            or result.get("method") != "fao56-daily-pm.v1"
+        ):
+            raise PlatformError("RUST_SCHEMA_MISMATCH", 502)
+        return result

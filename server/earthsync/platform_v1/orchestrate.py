@@ -4,6 +4,7 @@ from datetime import date, datetime, timezone
 
 from .errors import PlatformError
 from .models import ENGINE_VERSION
+from .water import water_dependencies
 
 
 def engine_date(day):
@@ -11,8 +12,9 @@ def engine_date(day):
 
 
 class Orchestrator:
-    def __init__(self, store, engine, catalog):
+    def __init__(self, store, engine, catalog, reference_catalog=None):
         self.store, self.engine, self.catalog = store, engine, catalog
+        self.reference_catalog = reference_catalog
 
     async def assess(self, owner, query):
         farm = self.store.farm(owner, query.farm_id)
@@ -23,7 +25,10 @@ class Orchestrator:
             "schema_version": ENGINE_VERSION,
             "mode": "evidence_assessment",
             "day_basis": "NASA_POWER_LST",
-            "region_id": query.pilot_id,
+            # A v2 profile's advisory region is not a located farm region.
+            # Keep its exact scope in the reference sidecar, never relabel
+            # an arbitrary global POWER point as that advisory zone.
+            "region_id": query.pilot_id if query.catalog_version == "v1" else None,
             "approximate_user_location": None,
             "farm": {
                 "field_id": str(farm.id),
@@ -69,15 +74,27 @@ class Orchestrator:
                 gaps.append({"evidence_id": record.id, "code": "INCOMPLETE_PERIOD"})
                 continue
             # Only the independently accepted daily adapter may feed this version.
-            if record.source_metadata.get("policy") != "power-daily-merra2.v1":
+            if record.source_metadata.get("policy") not in (
+                "power-daily-merra2.v1",
+                "power-fao56-inputs.v1",
+                "fao56-daily-pm.v1",
+            ):
                 gaps.append(
                     {"evidence_id": record.id, "code": "UNSUPPORTED_SOURCE_LINEAGE"}
                 )
                 continue
             variables = {m.variable for m in record.measurements}
-            if len(variables) != 1 or not variables <= {"tmin", "tmax", "rainfall"}:
+            if len(variables) != 1:
                 raise PlatformError("SCHEMA_MISMATCH")
             variable = next(iter(variables))
+            if variable not in {"tmin", "tmax", "rainfall", "et0"}:
+                gaps.append(
+                    {
+                        "evidence_id": record.id,
+                        "code": "RETAINED_WEATHER_INPUT_NOT_V03_VARIABLE",
+                    }
+                )
+                continue
             if variable in seen_variables:
                 raise PlatformError("AMBIGUOUS_EVIDENCE")
             seen_variables.add(variable)
@@ -112,7 +129,7 @@ class Orchestrator:
                         "issued_on": None,
                         "spatial": {
                             "scope": "regional",
-                            "region_id": query.pilot_id or "power-query-context",
+                            "region_id": request["region_id"] or "power-query-context",
                             "resolution_m": None,
                         },
                         "quality": "usable",
@@ -179,7 +196,14 @@ class Orchestrator:
             dict.fromkeys(query.profile_ids + [p.profile_id for p in query.plans])
         )
         for ident in profile_ids:
-            profile, sidecar = self.catalog.project(
+            catalog = (
+                self.reference_catalog
+                if query.catalog_version == "v2"
+                else self.catalog
+            )
+            if catalog is None:
+                raise PlatformError("CATALOG_NOT_INSTALLED", 503)
+            profile, sidecar = catalog.project(
                 ident, query.pilot_id, farm.production_system
             )
             projections.append(sidecar)
@@ -234,6 +258,12 @@ class Orchestrator:
             "result": result,
             "evidence_gaps": gaps,
             "catalog_projection": projections,
+            "water_findings": water_dependencies(farm.production_system),
+            "environmental_metrics": [
+                r.source_metadata["calculation"]
+                for r in records
+                if r.source_metadata.get("policy") == "fao56-daily-pm.v1"
+            ],
             "evidence": [r.model_dump(mode="json") for r in records],
             "limitations": [
                 "Reference-only crop profiles cannot authorize recommendations.",

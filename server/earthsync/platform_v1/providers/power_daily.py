@@ -32,9 +32,11 @@ def number(value):
     return type(value) in (float, int) and math.isfinite(value)
 
 
-def read_daily(capture, query, parameter):
+def read_daily(capture, query, parameter, *, contract=None):
     """One parameter per capture prevents aggregate headers hiding attribution."""
-    if parameter not in PARAMETERS:
+    parameters = PARAMETERS if contract is None else contract["parameters"]
+    policy = POLICY if contract is None else contract["policy"]
+    if parameter not in parameters:
         raise PlatformError("UNSUPPORTED_PRODUCT")
     data = capture.json()
     try:
@@ -47,6 +49,8 @@ def read_daily(capture, query, parameter):
         expected_sources = (
             ["MERRA2"] if parameter == "PRECTOTCORR" else ["MERRA2", "POWER"]
         )
+        if contract is not None:
+            expected_sources = contract["sources"][parameter]
         if header["sources"] != expected_sources:
             raise PlatformError("UNSUPPORTED_SOURCE_LINEAGE", 502)
         if header["start"] != query.start.strftime("%Y%m%d") or header[
@@ -58,7 +62,7 @@ def read_daily(capture, query, parameter):
         if header["api"]["version"] != "v2.10.3":
             raise PlatformError("SCHEMA_MISMATCH", 502)
         fill = header["fill_value"]
-        variable, native_unit, unit = PARAMETERS[parameter]
+        variable, native_unit, unit = parameters[parameter]
         if not number(fill) or data["parameters"][parameter]["units"] != native_unit:
             raise PlatformError("UNIT_MISMATCH", 502)
         coordinates = data["geometry"]["coordinates"]
@@ -111,19 +115,23 @@ def read_daily(capture, query, parameter):
             )
         document = dict(
             provider="NASA POWER",
-            dataset="POWER daily meteorology / MERRA-2"
+            dataset="POWER daily / " + "/".join(expected_sources)
+            if contract is not None
+            else "POWER daily meteorology / MERRA-2"
             if parameter == "PRECTOTCORR"
             else "POWER hourly-derived daily extrema / MERRA-2",
             dataset_version=header["api"]["version"],
             source_url=ENDPOINT,
-            source_identifier=f"{POLICY}:{parameter}",
+            source_identifier=f"{policy}:{parameter}",
             data_type="modeled",
             spatial=Spatial(
                 role="regional_context",
                 query_point=query.point,
                 original_geometry=data["geometry"],
                 support="Native modeled grid context queried at point; not farm measurements or polygon average",
-                resolution_degrees=(0.5, 0.625),
+                resolution_degrees=(1.0, 1.0)
+                if expected_sources == ["SYN1DEG"]
+                else (0.5, 0.625),
             ),
             temporal=Temporal(
                 start=query.start,
@@ -145,7 +153,7 @@ def read_daily(capture, query, parameter):
             review="reviewed",
             response_sha256=capture.sha256,
             source_metadata={
-                "policy": POLICY,
+                "policy": policy,
                 "parameter": parameter,
                 "header": header,
                 "parameters": data["parameters"],
@@ -154,7 +162,9 @@ def read_daily(capture, query, parameter):
                 "lineage": {
                     "provider_sources": expected_sources,
                     "attribution": "single-parameter header plus pinned NASA parameter catalog and methodology",
-                    "source_review": "NASA-daily-source-review.v1",
+                    "source_review": "NASA-daily-source-review.v1"
+                    if contract is None
+                    else "NASA-water-source-review.v1",
                 },
                 "review_scope": "Technical metadata and transport contract only; no agronomic applicability approval",
             },

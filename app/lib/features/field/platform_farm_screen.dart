@@ -10,6 +10,7 @@ import '../../state/integration_provider.dart';
 import '../../state/platform_provider.dart';
 import 'assessment_screen.dart';
 import 'evidence_panels.dart';
+import 'agricultural_intelligence_panel.dart';
 
 class PlatformFarmScreen extends ConsumerWidget {
   const PlatformFarmScreen({super.key});
@@ -242,6 +243,13 @@ class _FarmRecordsState extends ConsumerState<_FarmRecords> {
         if (data.isLoading || decisions.isLoading || _busy)
           const LinearProgressIndicator(),
         if (data.hasError) Text('Saved evidence unavailable: ${data.error}'),
+        AgriculturalIntelligencePanel(
+          key: ValueKey('water:${farm.id}'),
+          farm: farm,
+          client: client,
+          records: records,
+          onSaved: _refresh,
+        ),
         for (final r in records) ...[
           CheckboxListTile(
             title: Text(

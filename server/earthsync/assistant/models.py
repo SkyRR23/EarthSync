@@ -4,7 +4,14 @@ from datetime import date, datetime
 from typing import Annotated, Literal
 from urllib.parse import urlsplit
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator, field_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    model_validator,
+    field_validator,
+    model_serializer,
+)
 
 VERSION = "assistant.v1-proposal"
 Identifier = str
@@ -128,6 +135,23 @@ class Decision(Model):
     evidence_ids: list[str] = Field(default_factory=list, max_length=20)
     limitations: list[str] = Field(default_factory=list, max_length=20)
     synthetic: bool = False
+    explanation: str | None = Field(default=None, max_length=1000)
+
+    @model_serializer(mode="wrap")
+    def omit_absent_explanation(self, handler):
+        value = handler(self)
+        if self.explanation is None:
+            value.pop("explanation", None)
+        return value
+
+
+class ReferenceFact(Model):
+    profile_id: str = Field(min_length=1, max_length=150)
+    parameter: Literal["growing_duration"]
+    value_text: str = Field(max_length=200)
+    unit: str = Field(max_length=80)
+    scope: str = Field(max_length=500)
+    source_ids: list[str] = Field(min_length=1, max_length=20)
 
 
 class Context(Model):
@@ -140,6 +164,7 @@ class Context(Model):
     decisions: list[Decision] = Field(default_factory=list, max_length=30)
     sources: list[Source] = Field(default_factory=list, max_length=100)
     limitations: list[str] = Field(default_factory=list, max_length=30)
+    reference_facts: list[ReferenceFact] = Field(default_factory=list, max_length=20)
 
     @model_validator(mode="after")
     def unique_ids(self):

@@ -98,6 +98,19 @@
           "default": false,
           "title": "Synthetic",
           "type": "boolean"
+        },
+        "explanation": {
+          "anyOf": [
+            {
+              "maxLength": 1000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Explanation"
         }
       },
       "required": [
