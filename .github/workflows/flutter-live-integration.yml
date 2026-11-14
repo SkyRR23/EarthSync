@@ -42,7 +42,29 @@ jobs:
           & ./ops/staging/staging.ps1 -State (Join-Path $private 'web') build --profile web --source $env:GITHUB_WORKSPACE --sha $env:GITHUB_SHA --flutter-version 3.44.0
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python scripts/ci_staging_startup.py --source $env:GITHUB_WORKSPACE --private $private
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Package and smoke the complete Windows artifact
+        shell: pwsh
+        run: |
+          $private = Join-Path $env:RUNNER_TEMP 'earthsync-7x-private'
+          $manifest = Get-Content (Join-Path $private 'platform/manifest.json') -Raw | ConvertFrom-Json
+          $out = Join-Path $env:RUNNER_TEMP 'earthsync-windows-release'
+          New-Item -ItemType Directory -Path $out | Out-Null
+          python -B scripts/package_release.py build --source $env:GITHUB_WORKSPACE --sha $env:GITHUB_SHA --output "$out/earthsync-windows.zip" --v03 $manifest.engine --web-engine "$env:GITHUB_WORKSPACE/engine/target/debug/examples/web_engine.exe"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Expand-Archive -LiteralPath "$out/earthsync-windows.zip" -DestinationPath "$out/unpacked"
+          & $manifest.python -B scripts/ci_package_startup.py --package "$out/unpacked" --expected-sha $env:GITHUB_SHA --private "$private/package-smoke" | Tee-Object -FilePath "$out/package-smoke.json"
           exit $LASTEXITCODE
+      - name: Preserve verified Windows full-stack package
+        uses: actions/upload-artifact@v4
+        with:
+          name: earthsync-windows-full-stack-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/earthsync-windows-release/earthsync-windows.zip
+            ${{ runner.temp }}/earthsync-windows-release/earthsync-windows.zip.sha256
+            ${{ runner.temp }}/earthsync-windows-release/package-smoke.json
+          retention-days: 14
+          if-no-files-found: error
   verify-flutter-bridge:
     runs-on: ubuntu-latest
     timeout-minutes: 25
@@ -91,9 +113,26 @@ jobs:
             docs/release/PROVENANCE.md
           if-no-files-found: error
       - uses: actions/setup-python@v5
-        if: github.event_name == 'workflow_dispatch' && inputs.live_nasa
         with:
           python-version: '3.12'
+      - name: Build and smoke the complete Linux artifact
+        run: |
+          python -m pip install -r server/requirements.lock
+          cargo build --locked --manifest-path engine/Cargo.toml --examples
+          mkdir "$RUNNER_TEMP/earthsync-linux-release"
+          python -B scripts/package_release.py build --source "$GITHUB_WORKSPACE" --sha "$GITHUB_SHA" --output "$RUNNER_TEMP/earthsync-linux-release/earthsync-linux.zip" --v03 engine/target/debug/examples/v03_demo --web-engine engine/target/debug/examples/web_engine
+          python -m zipfile -e "$RUNNER_TEMP/earthsync-linux-release/earthsync-linux.zip" "$RUNNER_TEMP/earthsync-linux-release/unpacked"
+          python -B scripts/ci_package_startup.py --package "$RUNNER_TEMP/earthsync-linux-release/unpacked" --expected-sha "$GITHUB_SHA" --private "$RUNNER_TEMP/earthsync-package-private" | tee "$RUNNER_TEMP/earthsync-linux-release/package-smoke.json"
+      - name: Preserve verified Linux full-stack package
+        uses: actions/upload-artifact@v4
+        with:
+          name: earthsync-linux-full-stack-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/earthsync-linux-release/earthsync-linux.zip
+            ${{ runner.temp }}/earthsync-linux-release/earthsync-linux.zip.sha256
+            ${{ runner.temp }}/earthsync-linux-release/package-smoke.json
+          retention-days: 14
+          if-no-files-found: error
       - name: Live NASA through the unified backend and both Flutter execution paths
         if: github.event_name == 'workflow_dispatch' && inputs.live_nasa
         run: |

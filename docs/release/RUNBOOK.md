@@ -129,6 +129,13 @@ isolation, or a separate sanitized read-only demo. This release retains the
 loopback local demonstration while mandatory data/acceptance gates remain open.
 No paid resources, billing changes or public tunnel have been created.
 
+The subsequent [Cloudflare/account and free-host assessment](HOSTING.md) records
+actual connected permission failures and persistence limits. The
+[full-stack packages](ARTIFACTS.md) include the built Web frontend and both native
+executables, with verification and unpacked process/HTTP smoke checks. Final
+[local Windows acceptance and user merge approval](WINDOWS_ACCEPTANCE.md) remain
+required; CI success cannot substitute for them.
+
 
 ## Private browser receipts and safe publication
 

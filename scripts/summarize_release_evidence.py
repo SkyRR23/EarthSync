@@ -19,6 +19,7 @@ PUBLIC_PACKAGES = {
     "ancestry.json",
     "artifact-hashes.json",
     "acceptance-28.json",
+    "integration-refresh.json",
 }
 PUBLIC_JSON = {
     "results.json",
@@ -67,6 +68,8 @@ PUBLIC_LOGS = {
     "precision-api-regression.log",
     "publication-privacy-tests.log",
     "python-integrated.log",
+    "python-release-refresh.log",
+    "package-tests.log",
     "recovery.log",
     "rotation-editor-regression.log",
     "rust-integrated.log",

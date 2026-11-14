@@ -17,11 +17,16 @@ an irrigation prescription.
 - [Local startup, Windows commands and rollback](docs/release/RUNBOOK.md)
 - [NASA demonstration script and screenshots](docs/release/DEMO.md)
 - [Source provenance, licenses and privacy](docs/release/PROVENANCE.md)
+- [Full-stack Windows/Linux packages](docs/release/ARTIFACTS.md)
+- [Verified hosting assessment and blockers](docs/release/HOSTING.md)
+- [Required local Windows acceptance](docs/release/WINDOWS_ACCEPTANCE.md)
 
 Use a fresh checkout of the reviewed PR head with Python 3.12, Rust 1.99.0 and
 Flutter 3.44.0 / Dart 3.12.0. Keep private databases, tokens and photos outside
 Git and static assets. Follow the runbook to build both pinned runtime profiles
 and run them on loopback. No public deployment is claimed.
+Main also requires final local Windows acceptance and explicit user approval;
+green cloud CI does not authorize a merge.
 
 The application connects farm maps and modeled soil pH, sparse regional GFS
 forecasts, NASA POWER historical climate and Rust FAO-56 reference ET0 to saved

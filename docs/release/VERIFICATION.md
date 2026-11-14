@@ -10,7 +10,7 @@ not a report inferred from three separately passing branches.
 
 | Check | Result | Classification / evidence |
 |---|---|---|
-| Python backend plus operations, actual native v0.3 enabled | **456 passed, 1 skipped** | REAL opted-in NASA/HLS discovery/SoilGrids WebDAV/GFS requests plus CACHED REAL, SYNTHETIC and MOCKED contract fixtures. `evidence/python-integrated.log`, `evidence/live-providers/`. The sole skip is legacy SoilGrids WCS; WebDAV was tested live. |
+| Python backend plus operations, actual native v0.3 enabled | **471 passed, 1 skipped** in final release refresh (previous combined run 456/1) | REAL opted-in NASA/HLS discovery/SoilGrids WebDAV/GFS requests plus CACHED REAL, SYNTHETIC and MOCKED contract fixtures. `evidence/python-release-refresh.log`, earlier `python-integrated.log` and `live-providers/`. The sole skip is legacy SoilGrids WCS; WebDAV was tested live. |
 | Rust after exact-coordinate fix | **124 passed** | Actual native calculations on labeled synthetic/cached-real inputs. `evidence/rust-integrated.log`. |
 | Flutter including native bridge | **131 passed, 3 skipped** | Actual native bridge, CACHED REAL source fixtures and MOCKED/SYNTHETIC UI states. Optional live Flutter cases are explicitly skipped; real browser NASA/Rust evidence is separately recorded. `evidence/flutter-integrated.log`. |
 | Flutter analyze / production Web build | **Passed** | `flutter-analyze.log`, `flutter-build.log`; compiled with the private loopback PLATFORM_URL, bundled Web resources and a generated public-only offline shell. |
@@ -31,6 +31,34 @@ not a report inferred from three separately passing branches.
 | CI on completed product source | **All 11 workflows green at `393b89af913ad4a3afd078a9f164fdc4430d9f06`** | Includes Windows/Linux backend, actual Docker, scientific contracts, Flutter/native and Windows 7Q build/startup. Final report/trait-interpretation update requires its own exact-head checks; the final result is recorded on PR #29. Earlier green heads never certify a later change. |
 | Interactive Windows / assistive devices | **SKIPPED** | Linux Chromium and responsive/widget coverage do not establish interactive Windows acceptance, destination-specific ACLs or every screen-reader behavior. |
 | Hosting | **SKIPPED / not deployed** | Mandatory full-product gates remain open. Static hosting alone cannot run native Rust/FastAPI with persistent SQLite/photos. No billing changes, public private-port exposure or tunnel. |
+
+## Full-stack release preparation refresh
+
+The completed 7X/7G chat handoffs and exact PR/branch heads were checked again;
+neither dependency has a newer commit or running turn. All 11 workflows were
+green at the already combined `9d7ad9a` head. 7G's historical standalone failures
+are retained as failures, not silently relabeled; their Docker-context and Windows
+catalog-byte causes are separately corrected/tested in the combined candidate.
+See `evidence/integration-refresh.json`.
+
+The new release packager has **15 synthetic packaging regression tests**, plus
+four publication-privacy regressions. It includes tracked snapshot source, public
+Web resources and both native executables; validates the selected local backend,
+host, exact files/hashes and immutable source identity; rejects changed/unlisted
+files and symlinks; and excludes Git history and private runtime state. New CI
+steps unpack each Windows/Linux package, execute the actual packaged Rust engine
+and start both real HTTP services with fresh disposable state before upload.
+Final exact-head workflow/artifact results are recorded on PR #29. Neither
+packaging unit fixtures nor native/process smoke constitute a live satellite
+observation or interactive Windows acceptance.
+
+Actual Cloudflare identity/account reads succeeded, but Pages/Workers/Tunnel/
+Access/billing scope and enablement checks blocked safe deployment. No resource
+was changed. Official free-host documentation was checked; Render Free lacks
+persistent disks, Cloudflare Containers require a paid plan, and no qualifying
+Oracle/persistent host is available through this task. No hosted application was
+tested or claimed. [Hosting](HOSTING.md) and [artifacts](ARTIFACTS.md) provide
+precise limits and reproducible local deployment commands.
 
 ## Execution scope
 
@@ -119,6 +147,11 @@ an exhaustive external security attestation.
 
 Main must not merge while mandatory acceptance remains incomplete. The local
 candidate and exact build/run/restore commands are the demonstration fallback.
+The final release refresh additionally requires [local Windows acceptance and
+explicit user merge approval](WINDOWS_ACCEPTANCE.md), even if every cloud CI job
+passes. [Hosting](HOSTING.md) records actual account permission checks and
+free-provider persistence constraints; [artifacts](ARTIFACTS.md) describe the
+hashed full-stack packages and their distinct process/HTTP smoke scope.
 
 The 28 requested acceptance objectives, including step-specific limits and the
 optional Undecided choice, are recorded in `evidence/acceptance-28.json`.

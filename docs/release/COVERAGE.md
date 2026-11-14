@@ -41,3 +41,11 @@ See [verification](VERIFICATION.md) and machine-readable receipts for precise te
 classifications. Synthetic browser records deliberately identify themselves as
 software tests, including the farmer-declared baseline; no actual farmer practice
 or realistic growing duration is claimed for those test dates.
+
+The final release refresh rechecks all three exact PR heads and their completed
+chat handoffs. 7G's old standalone Windows/catalog and Docker-context failures
+remain historical failures; the combined candidate resolves them and has separate
+Windows/Linux/Docker CI evidence. See [hosting](HOSTING.md) and
+[full-stack artifacts](ARTIFACTS.md). No hosted workflow or final interactive
+Windows acceptance is inferred from those package startup checks, and main now
+explicitly requires user approval after local Windows acceptance.
