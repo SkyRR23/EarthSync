@@ -155,32 +155,9 @@ def create_demo_app(
         # Public availability only. Private photos require the workspace token.
         return await build_timeline(query, [], [HlsAdapter(), RtcS1Adapter()])
 
-    @app.middleware("http")
-    async def private_api(request, call_next):
-        # Bound JSON bodies before FastAPI/Pydantic loads them into memory.
-        if request.url.path.startswith(
-            (
-                "/api/assistant/",
-                "/api/environmental/",
-                "/api/catalog/",
-                "/api/satellite/",
-            )
-        ):
-            body = bytearray()
-            async for chunk in request.stream():
-                body.extend(chunk)
-                if len(body) > 2_000_000:
-                    return JSONResponse(
-                        status_code=413,
-                        content={
-                            "error": {"code": "REQUEST_TOO_LARGE", "retryable": False}
-                        },
-                    )
-            request._body = bytes(body)
-        response = await call_next(request)
-        if request.url.path.startswith("/api/"):
-            response.headers["Cache-Control"] = "no-store"
-        return response
+    from .demo_middleware import DemoApiMiddleware
+
+    app.add_middleware(DemoApiMiddleware)
 
     async def run_engine(body, version):
         if not Path(engine).is_file():
