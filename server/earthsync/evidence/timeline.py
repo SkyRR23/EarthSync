@@ -1,6 +1,7 @@
 """Conservative field/date matching and differences of comparable point samples."""
 
 from datetime import timezone
+from math import isfinite
 
 from .models import Photo, SatelliteRecord, TimelineQuery, capture_day
 from .satellite import ProviderResult, SatelliteAdapter
@@ -150,6 +151,17 @@ async def build_timeline(
         key = (provider, key)
         earlier = previous.get(key)
         if earlier and earlier.acquired_at < record.acquired_at:
+            difference = record.value - earlier.value
+            if not isfinite(difference):
+                rejected.append(
+                    {
+                        "provider": provider,
+                        "record_id": record.id,
+                        "reason": "nonfinite_difference",
+                    }
+                )
+                previous[key] = record
+                continue
             differences.append(
                 {
                     "provider": provider,
@@ -159,7 +171,7 @@ async def build_timeline(
                     "to_at": record.acquired_at,
                     "metric": record.metric,
                     "units": record.units,
-                    "difference": record.value - earlier.value,
+                    "difference": difference,
                     "evidence_kind": record.evidence_kind,
                     "spatial_support": record.spatial_support,
                     "interpretation": "numeric_difference_only",

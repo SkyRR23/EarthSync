@@ -171,7 +171,16 @@ def create_app(store=None, token=None, adapters=None, allowed_origins=None):
         return Response(status_code=204)
 
     @app.post(f"{PREFIX}/timeline")
-    async def timeline(query: TimelineQuery):
+    async def timeline(request: Request):
+        body = bytearray()
+        async for chunk in request.stream():
+            if len(body) + len(chunk) > 8192:
+                raise HTTPException(413, "Timeline request exceeds 8 KiB")
+            body.extend(chunk)
+        try:
+            query = TimelineQuery.model_validate_json(body)
+        except ValidationError:
+            raise HTTPException(422, "Invalid evidence.v1 timeline request") from None
         return await build_timeline(
             query, await asyncio.to_thread(store.list), adapters
         )

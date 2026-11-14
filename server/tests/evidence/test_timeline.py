@@ -302,3 +302,28 @@ async def test_duplicate_ids_and_same_acquisition_do_not_create_differences():
     assert len(result["events"]) == 2
     assert result["rejected_records"][0]["reason"] == "duplicate_record"
     assert result["differences"] == []
+
+
+async def test_timeline_body_is_bounded_before_json_parsing(store):
+    async with httpx.AsyncClient(
+        transport=httpx.ASGITransport(app=create_app(store=store, token=TOKEN)),
+        base_url="http://test",
+    ) as client:
+        response = await client.post(
+            f"{PREFIX}/timeline",
+            headers={"Authorization": f"Bearer {TOKEN}"},
+            content=b" " * 8193,
+        )
+        assert response.status_code == 413
+
+
+async def test_nonfinite_arithmetic_never_emits_a_measurement():
+    records = [
+        record(value=-1e308),
+        record("overflow", value=1e308, acquired_at="2026-11-10T00:00:00Z"),
+    ]
+    result = await build_timeline(
+        TimelineQuery(**QUERY), [], [SuppliedAdapter(records)]
+    )
+    assert result["differences"] == []
+    assert result["rejected_records"][0]["reason"] == "nonfinite_difference"

@@ -244,7 +244,7 @@ ruff format --check earthsync/evidence tests/evidence
 # From app/ with a Flutter SDK whose Dart satisfies pubspec.yaml (^3.12.0):
 flutter pub get
 dart format lib/features/photo_evidence test/photo_evidence example/photo_evidence_main.dart
-flutter analyze lib/features/photo_evidence test/photo_evidence example/photo_evidence_main.dart
+flutter analyze --no-fatal-infos lib/features/photo_evidence test/photo_evidence example/photo_evidence_main.dart
 flutter test test/photo_evidence
 flutter build web --target example/photo_evidence_main.dart
 # From repository root:
@@ -259,6 +259,20 @@ synthetic differences. Flutter tests cover picker cancellation, previews,
 upload/replace/delete, consent revocation, explicit farm association, Unicode JSON
 transport, no GPS reads without consent, sanitization and contract unknown states.
 All test imagery and numerical satellite fixtures are synthetic and labeled.
+Python and Flutter both deserialize `server/tests/evidence/fixtures/synthetic_v1_photo.json`
+to verify the shared version, synthetic label and unknown capture/location states.
+
+Validation performed for this branch: the full local Python suite passed (122
+passed, 2 live-service tests skipped), including the existing Rust-backed web
+endpoints after building `web_engine`; scoped Ruff checks passed; actual local HTTP
+upload/view/hash/timeline/delete passed. GitHub Actions with Flutter 3.50.0 resolved
+and locked dependencies, passed the component tests and the repository's full
+Flutter/native-bridge suite, and built both web targets. Local Flutter is absent
+and its SDK host is blocked; CI supplied the verified formatting/lockfile.
+Material-import deprecation infos are kept visible using the baseline CI policy.
+The baseline backend CI also required formatting two pre-existing assertions in
+`server/tests/test_web_demo.py`; only their line wrapping changed. No browser
+interaction, Android execution or satellite/scientific validation was performed.
 
 Embed `PhotoEvidencePanel(repository: ..., picker: ..., confirmedFarm: ...)` after
 the dashboard/farm owners approve the reference and auth handoff. The component

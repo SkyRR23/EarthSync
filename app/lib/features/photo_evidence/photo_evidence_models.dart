@@ -12,10 +12,7 @@ class ConfirmedFarmReference {
     }
   }
   final String id;
-  Map<String, Object> toJson() => {
-    'farm_id': id,
-    'confirmed_by_farmer': true,
-  };
+  Map<String, Object> toJson() => {'farm_id': id, 'confirmed_by_farmer': true};
 }
 
 class PhotoGps {
@@ -48,9 +45,8 @@ class PreparedPhoto {
   final PhotoGps? gps;
   final bool gpsRequested;
 
-  PreparedPhoto withoutGps() => PreparedPhoto(
-    png: png, origin: origin, width: width, height: height,
-  );
+  PreparedPhoto withoutGps() =>
+      PreparedPhoto(png: png, origin: origin, width: width, height: height);
 }
 
 class PhotoDraft {
@@ -95,7 +91,8 @@ String dateLabel(DateTime day) =>
     '${day.day.toString().padLeft(2, '0')}';
 
 class StoredPhoto {
-  StoredPhoto.fromJson(Map<String, dynamic> json) : data = Map.unmodifiable(json) {
+  StoredPhoto.fromJson(Map<String, dynamic> json)
+    : data = Map.unmodifiable(json) {
     if (json['schema_version'] != 'evidence.v1' ||
         json['metadata_stripped'] != true ||
         json['mime_type'] != 'image/png' ||

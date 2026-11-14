@@ -15,28 +15,39 @@ abstract interface class FieldPhotoPicker {
 }
 
 class PlatformFieldPhotoPicker implements FieldPhotoPicker {
-  PlatformFieldPhotoPicker({ImagePicker? picker}) : _picker = picker ?? ImagePicker();
+  PlatformFieldPhotoPicker({ImagePicker? picker})
+    : _picker = picker ?? ImagePicker();
   final ImagePicker _picker;
 
   @override
-  bool get supportsCamera => kIsWeb ||
+  bool get supportsCamera =>
+      kIsWeb ||
       defaultTargetPlatform == TargetPlatform.android ||
       defaultTargetPlatform == TargetPlatform.iOS;
 
   @override
-  Future<PreparedPhoto?> pick(PhotoOrigin origin, {required bool readGps}) async {
+  Future<PreparedPhoto?> pick(
+    PhotoOrigin origin, {
+    required bool readGps,
+  }) async {
     if (origin == PhotoOrigin.camera && !supportsCamera) {
-      throw const PhotoEvidenceException('Camera selection is unavailable on this platform.');
+      throw const PhotoEvidenceException(
+        'Camera selection is unavailable on this platform.',
+      );
     }
     // Only request platform metadata after explicit GPS consent. It remains
     // local; the upload always consists of newly encoded pixels and approved GPS.
     final selected = await _picker.pickImage(
-      source: origin == PhotoOrigin.camera ? ImageSource.camera : ImageSource.gallery,
+      source: origin == PhotoOrigin.camera
+          ? ImageSource.camera
+          : ImageSource.gallery,
       requestFullMetadata: readGps,
     );
     if (selected == null) return null;
     if (await selected.length() > maxPhotoBytes) {
-      throw const PhotoEvidenceException('Choose a JPEG or PNG no larger than 10 MiB.');
+      throw const PhotoEvidenceException(
+        'Choose a JPEG or PNG no larger than 10 MiB.',
+      );
     }
     return preparePhoto(await selected.readAsBytes(), origin, readGps: readGps);
   }
@@ -51,9 +62,12 @@ Future<PhotoGps?> readConsentedGps(Uint8List bytes) async {
       final values = tags['GPS $name']?.values.toList();
       final reference = tags['GPS $ref']?.printable;
       if (values == null || values.length != 3) return null;
-      final parts = values.map((value) => value is Ratio ? value.toDouble() : double.nan).toList();
+      final parts = values
+          .map((value) => value is Ratio ? value.toDouble() : double.nan)
+          .toList();
       if (parts.any((part) => !part.isFinite || part < 0) ||
-          parts[1] >= 60 || parts[2] >= 60) {
+          parts[1] >= 60 ||
+          parts[2] >= 60) {
         return null;
       }
       final latitude = name == 'GPSLatitude';
@@ -65,9 +79,12 @@ Future<PhotoGps?> readConsentedGps(Uint8List bytes) async {
       if (reference == 'S' || reference == 'W') result = -result;
       return result;
     }
+
     final latitude = coordinate('GPSLatitude', 'GPSLatitudeRef', 90);
     final longitude = coordinate('GPSLongitude', 'GPSLongitudeRef', 180);
-    return latitude == null || longitude == null ? null : PhotoGps(latitude, longitude);
+    return latitude == null || longitude == null
+        ? null
+        : PhotoGps(latitude, longitude);
   } catch (_) {
     return null; // Missing/malformed EXIF is unknown, never (0,0).
   }
@@ -81,33 +98,54 @@ Future<PreparedPhoto> preparePhoto(
   required bool readGps,
   GpsReader gpsReader = readConsentedGps,
 }) async {
-  final png = bytes.length >= 8 && listEquals(bytes.sublist(0, 8), [137, 80, 78, 71, 13, 10, 26, 10]);
-  final jpeg = bytes.length >= 3 && bytes[0] == 255 && bytes[1] == 216 && bytes[2] == 255;
+  final png =
+      bytes.length >= 8 &&
+      listEquals(bytes.sublist(0, 8), [137, 80, 78, 71, 13, 10, 26, 10]);
+  final jpeg =
+      bytes.length >= 3 &&
+      bytes[0] == 255 &&
+      bytes[1] == 216 &&
+      bytes[2] == 255;
   if (bytes.isEmpty || bytes.length > maxPhotoBytes || (!png && !jpeg)) {
-    throw const PhotoEvidenceException('Choose a valid JPEG or PNG no larger than 10 MiB.');
+    throw const PhotoEvidenceException(
+      'Choose a valid JPEG or PNG no larger than 10 MiB.',
+    );
   }
   final buffer = await ui.ImmutableBuffer.fromUint8List(bytes);
   try {
     final descriptor = await ui.ImageDescriptor.encoded(buffer);
     try {
-      if (descriptor.width < 1 || descriptor.height < 1 ||
-          descriptor.width > 8192 || descriptor.height > 8192 ||
+      if (descriptor.width < 1 ||
+          descriptor.height < 1 ||
+          descriptor.width > 8192 ||
+          descriptor.height > 8192 ||
           descriptor.width * descriptor.height > maxPhotoPixels) {
-        throw const PhotoEvidenceException('Image exceeds 8192 pixels per side or 16 megapixels.');
+        throw const PhotoEvidenceException(
+          'Image exceeds 8192 pixels per side or 16 megapixels.',
+        );
       }
       final codec = await descriptor.instantiateCodec();
       try {
         if (codec.frameCount != 1) {
-          throw const PhotoEvidenceException('Animated images are not supported.');
+          throw const PhotoEvidenceException(
+            'Animated images are not supported.',
+          );
         }
         final frame = await codec.getNextFrame();
         try {
-          final data = await frame.image.toByteData(format: ui.ImageByteFormat.png);
+          final data = await frame.image.toByteData(
+            format: ui.ImageByteFormat.png,
+          );
           if (data == null || data.lengthInBytes > maxPhotoBytes) {
-            throw const PhotoEvidenceException('Resize the image; sanitized upload exceeds 10 MiB.');
+            throw const PhotoEvidenceException(
+              'Resize the image; sanitized upload exceeds 10 MiB.',
+            );
           }
           return PreparedPhoto(
-            png: data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes),
+            png: data.buffer.asUint8List(
+              data.offsetInBytes,
+              data.lengthInBytes,
+            ),
             origin: origin,
             width: frame.image.width,
             height: frame.image.height,

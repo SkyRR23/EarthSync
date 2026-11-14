@@ -1,6 +1,7 @@
 import io
 import json
 import sqlite3
+from pathlib import Path
 
 import httpx
 import pytest
@@ -18,10 +19,22 @@ from earthsync.evidence.images import (  # noqa: E402
     sanitize_image,
 )
 from earthsync.evidence.models import PhotoInput  # noqa: E402
+from earthsync.evidence.models import Photo  # noqa: E402
 from earthsync.evidence.store import PhotoStore  # noqa: E402
 
 TOKEN = "test-private-workspace-token-123456789"
 META = {"source": "gallery", "category": "crop"}
+
+
+def test_shared_photo_response_contract():
+    photo = Photo.model_validate_json(
+        (Path(__file__).parent / "fixtures/synthetic_v1_photo.json").read_text()
+    )
+    assert photo.schema_version == "evidence.v1"
+    assert photo.data_kind == "synthetic"
+    assert photo.position is None and photo.farm is None
+    assert photo.captured_at is None and photo.captured_date is None
+    assert photo.quality == "not_scientifically_validated"
 
 
 def png(size=(12, 8), color="green"):
@@ -273,3 +286,46 @@ def test_missing_capture_time_is_unknown(store):
     photo = store.save(PhotoInput(**META), sanitize_image(png(), "image/png"))
     assert photo.captured_at is None and photo.captured_date is None
     assert photo.capture_time_source == "unknown"
+
+
+async def test_cors_is_exact_origin_and_does_not_grant_other_origins(store):
+    app = create_app(
+        store=store, token=TOKEN, allowed_origins=["http://localhost:8018"]
+    )
+    async with httpx.AsyncClient(
+        transport=httpx.ASGITransport(app=app), base_url="http://test"
+    ) as client:
+        for origin, status in [
+            ("http://localhost:8018", 200),
+            ("https://other.example.org", 400),
+        ]:
+            response = await client.options(
+                f"{PREFIX}/photos",
+                headers={
+                    "Origin": origin,
+                    "Access-Control-Request-Method": "POST",
+                    "Access-Control-Request-Headers": "authorization,content-type,x-earthsync-metadata",
+                },
+            )
+            assert response.status_code == status
+            assert response.headers.get("access-control-allow-origin") == (
+                origin if status == 200 else None
+            )
+    with pytest.raises(ValueError, match="exact"):
+        create_app(store=store, token=TOKEN, allowed_origins=["*"])
+
+
+async def test_photo_count_is_bounded_and_excess_metadata_is_rejected(client, store):
+    store.max_photos = 1
+    assert (
+        await client.post(f"{PREFIX}/photos", headers=headers(), content=png())
+    ).status_code == 201
+    assert (
+        await client.post(f"{PREFIX}/photos", headers=headers(), content=png())
+    ).status_code == 507
+    response = await client.post(
+        f"{PREFIX}/photos",
+        headers={**headers(), "X-EarthSync-Metadata": "x" * 8193},
+        content=png(),
+    )
+    assert response.status_code == 422

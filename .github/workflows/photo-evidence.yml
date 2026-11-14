@@ -41,13 +41,10 @@ jobs:
           cache: true
       - run: flutter pub get
         working-directory: app
-      - run: dart format lib/features/photo_evidence test/photo_evidence example/photo_evidence_main.dart
+      - run: dart format --output=none --set-exit-if-changed lib/features/photo_evidence test/photo_evidence example/photo_evidence_main.dart
         working-directory: app
-      - name: Record formatting and dependency resolution for local review
-        run: |
-          echo EVIDENCE_TOOLING_PATCH_START
-          git diff --binary -- app/pubspec.lock app/lib/features/photo_evidence app/test/photo_evidence app/example/photo_evidence_main.dart
-          echo EVIDENCE_TOOLING_PATCH_END
+      - name: Verify locked dependency resolution
+        run: git diff --exit-code -- app/pubspec.lock
       - run: flutter analyze --no-fatal-infos lib/features/photo_evidence test/photo_evidence example/photo_evidence_main.dart
         working-directory: app
       - run: flutter test test/photo_evidence
