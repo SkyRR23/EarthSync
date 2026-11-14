@@ -122,6 +122,19 @@ class HomeProfile {
     return null;
   }
 
+  HomeProfile withActiveFarm(String id) {
+    if (!farms.any((farm) => farm.id == id)) {
+      throw StateError('Unknown saved farm');
+    }
+    return HomeProfile(
+      onboarded: onboarded,
+      userLocation: userLocation,
+      farms: farms,
+      activeFarmId: id,
+      approximateDeviceLocation: approximateDeviceLocation,
+    );
+  }
+
   HomeProfile withLocation(UserLocation location) => HomeProfile(
     onboarded: true,
     userLocation: location,

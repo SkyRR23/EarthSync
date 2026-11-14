@@ -364,6 +364,9 @@ class IntegratedAssistantScreen extends ConsumerWidget {
                     integratedAssistantContextProvider(areaOnly),
                   ),
                   service: ref.watch(assistantServiceProvider),
+                  interfaceLanguage: Localizations.localeOf(
+                    context,
+                  ).languageCode,
                 ),
               ),
             ],

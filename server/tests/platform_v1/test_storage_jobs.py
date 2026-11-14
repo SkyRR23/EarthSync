@@ -1,4 +1,6 @@
 import asyncio
+import hashlib
+from pathlib import Path
 import json
 import sqlite3
 
@@ -15,7 +17,15 @@ def test_migration_idempotent_and_foreign_keys(store, farm_input, records):
     store.save_evidence("alice", records[0], farm.id)
     assert store.ready()
     with store.connection() as db:
-        assert db.execute("SELECT COUNT(*) FROM schema_migrations").fetchone()[0] == 2
+        expected = {
+            int(p.name.split("_")[0]): hashlib.sha256(p.read_bytes()).hexdigest()
+            for p in (
+                Path(__file__).parents[2] / "earthsync/platform_v1/migrations"
+            ).glob("*.sql")
+        }
+        assert (
+            dict(db.execute("SELECT version,sha256 FROM schema_migrations")) == expected
+        )
         with pytest.raises(sqlite3.IntegrityError):
             db.execute(
                 "INSERT INTO farm_evidence VALUES (?,?,?)",

@@ -9,6 +9,10 @@ from .models import ChatRequest, ChatResponse, Claim
 
 # Agricultural content and translations live in locales; these are routing terms.
 INTENTS = (
+    (
+        "history",
+        r"\bhistory\b|\btimeline\b|\bstage\b|\bmanagement\b|priorit|field observation|planted|harvest|မှတ်တမ်း|အဆင့်",
+    ),
     ("water", r"\bet0\b|evapotranspiration|irrigation|water demand|water requirement"),
     ("limitations", r"limit|uncertain|reliab|confiden|segur"),
     ("soil", r"soil|suelo|\bph\b|salinity"),
@@ -28,6 +32,7 @@ INTENTS = (
     ),
 )
 TOPICS = {
+    "history": {"farmer_input"},
     "water": {"climate"},
     "soil": {"soil"},
     "satellite": {"vegetation", "radar", "photo"},
@@ -183,6 +188,27 @@ def explain(request: ChatRequest) -> ChatResponse:
     warnings = []
     visible = relevant if request.expanded else relevant[:2]
     for record in visible:
+        if (
+            record.topic == "farmer_input"
+            and record.metric == "journal_report"
+            and record.kind == "farmer_reported"
+            and record.quality == "unverified"
+            and record.scope == "field"
+            and context.confirmed_farm
+            and record.location_id == context.confirmed_farm.id
+            and isinstance(record.value, str)
+            and record.start_date
+        ):
+            claims.append(
+                Claim(
+                    category="retrieved_fact",
+                    text=words["farmer_report"].format(
+                        date=record.start_date, text=record.value
+                    ),
+                    evidence_ids=[record.id],
+                )
+            )
+            continue
         reason = _reason(record, context, sources, conflicts)
         refs = [ref for ref in record.source_ids if ref in sources]
         if reason:

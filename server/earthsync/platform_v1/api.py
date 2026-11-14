@@ -16,6 +16,9 @@ from fastapi.responses import JSONResponse
 from pydantic import AwareDatetime, Field
 from starlette.concurrency import run_in_threadpool
 
+from .journal import Journal, JournalInput
+from .farmer_timeline import timeline
+from .comparisons import Comparisons, ComparisonInput
 from .availability import SourceHealth
 from .catalog import Catalog
 from .context import assistant_context
@@ -422,6 +425,32 @@ def create_app(
     def history(farm_id: UUID):
         return store.history(OWNER, farm_id)
 
+    @app.get(PREFIX + "/farms/{farm_id}/timeline")
+    def farmer_timeline(farm_id: UUID):
+        return timeline(store, OWNER, farm_id)
+
+    @app.get(PREFIX + "/farms/{farm_id}/comparisons")
+    def comparisons(farm_id: UUID):
+        return Comparisons(store).list(OWNER, farm_id)
+
+    @app.post(PREFIX + "/farms/{farm_id}/comparisons", status_code=201)
+    def save_comparison(farm_id: UUID, value: ComparisonInput):
+        return Comparisons(store).save(OWNER, farm_id, value)
+
+    @app.get(PREFIX + "/farms/{farm_id}/journal")
+    def journal(farm_id: UUID):
+        return Journal(store).list(OWNER, farm_id)
+
+    @app.post(PREFIX + "/farms/{farm_id}/journal", status_code=201)
+    def report_journal(farm_id: UUID, value: JournalInput):
+        return Journal(store).save(OWNER, farm_id, value)
+
+    @app.post(
+        PREFIX + "/farms/{farm_id}/journal/{entry_id}/confirm-history", status_code=201
+    )
+    def confirm_journal_history(farm_id: UUID, entry_id: UUID):
+        return Journal(store).confirm_history(OWNER, farm_id, entry_id)
+
     @app.post(PREFIX + "/climate/jobs", status_code=202)
     async def climate(value: ClimateInput):
         association(value.farm_id, value.query.point)
@@ -458,6 +487,28 @@ def create_app(
         if reference_catalog is None:
             raise PlatformError("CATALOG_NOT_INSTALLED", 503)
         return reference_catalog.lookup(q, region, system, cultivar)
+
+    @app.get(PREFIX + "/crop-options")
+    def crop_options(q: str = Query(default="", max_length=150)):
+        if reference_catalog is None:
+            raise PlatformError("CATALOG_NOT_INSTALLED", 503)
+        query = q.strip().casefold()
+        crops = [
+            c
+            for c in reference_catalog.data["crops"]
+            if not query
+            or any(
+                query in name.casefold()
+                for name in [c["scientific_name"], *c["aliases"]]
+            )
+        ]
+        return {
+            "schema_version": "earthsync.crop-options.v1",
+            "catalog_sha256": reference_catalog.sha256,
+            "crops": crops[:100],
+            "total_matches": len(crops),
+            "recommendation_eligible": False,
+        }
 
     @app.post(PREFIX + "/optical/jobs", status_code=202)
     async def optical_job(value: OpticalInput):

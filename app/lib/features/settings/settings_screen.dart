@@ -75,10 +75,7 @@ class SettingsScreen extends ConsumerWidget {
                       isExpanded: true,
                       items: const [
                         DropdownMenuItem(value: 'en', child: Text('English')),
-                        DropdownMenuItem(
-                          value: 'my',
-                          child: Text(UiLabels.navigationPreview),
-                        ),
+                        DropdownMenuItem(value: 'my', child: Text('မြန်မာ')),
                       ],
                       onChanged: (v) => save(language: v),
                     ),
@@ -93,6 +90,40 @@ class SettingsScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    if ((profile?.farms.length ?? 0) > 1)
+                      DropdownButtonFormField<String>(
+                        key: ValueKey(profile?.activeFarmId),
+                        initialValue: profile?.activeFarmId,
+                        isExpanded: true,
+                        decoration: InputDecoration(labelText: tr('farm')),
+                        items: [
+                          for (final f in profile!.farms)
+                            DropdownMenuItem(
+                              value: f.id,
+                              child: Text(f.name ?? f.point.label),
+                            ),
+                        ],
+                        onChanged: (v) async {
+                          if (v == null) return;
+                          try {
+                            await ref
+                                .read(homeProfileProvider.notifier)
+                                .selectFarm(v);
+                          } catch (_) {
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Could not switch saved farm.'),
+                                ),
+                              );
+                            }
+                          }
+                        },
+                      ),
+                    TextButton(
+                      onPressed: () => context.push('/location?new=1'),
+                      child: Text(tr('farmAction')),
+                    ),
                     if (profile?.farm case final farm?)
                       Text('${farm.name ?? tr('farm')} · ${farm.point.label}'),
                     TextButton(

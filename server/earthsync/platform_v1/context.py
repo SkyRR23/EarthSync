@@ -3,6 +3,8 @@
 import hashlib
 import json
 
+from .journal import Journal
+
 
 def assistant_context(store, owner, farm_id):
     farm = store.farm(owner, farm_id)
@@ -170,6 +172,28 @@ def assistant_context(store, owner, farm_id):
                     ],
                 }
             )
+    # Farmer reports are displayed as attributed records, never scientific inputs.
+    for report in Journal(store).list(owner, farm_id)[:10]:
+        summary = f"{report['kind']}; crop={report['crop_name'] or 'unknown'}; stage={report['stage']}; priorities={','.join(report['priorities']) or 'unknown'}; notes={report['notes']}"
+        evidence.append(
+            {
+                "id": "journal:" + report["id"],
+                "topic": "farmer_input",
+                "metric": "journal_report",
+                "kind": "farmer_reported",
+                "quality": "unverified",
+                "value": summary[:500],
+                "start_date": report["occurred_on"],
+                "end_date": report["harvest_on"] or report["occurred_on"],
+                "retrieved_at": report["recorded_at"],
+                "scope": "field",
+                "location_id": str(farm.id),
+                "source_ids": [],
+                "limitations": [
+                    "Farmer report, not independently verified. Plans are not completed operations."
+                ],
+            }
+        )
     value = {
         "schema_version": "assistant.v1-proposal",
         "context_id": "pending",

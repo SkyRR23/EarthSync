@@ -47,6 +47,24 @@ class FieldScreen extends ConsumerWidget {
                   onPressed: () => context.push('/farm-evidence'),
                   child: const Text('Persisted farm evidence'),
                 ),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  OutlinedButton(
+                    onPressed: () => context.push('/season'),
+                    child: Text(tr('season')),
+                  ),
+                  OutlinedButton(
+                    onPressed: () => context.push('/crops'),
+                    child: Text(tr('cropReferences')),
+                  ),
+                  OutlinedButton(
+                    onPressed: () => context.push('/farm-photos'),
+                    child: Text(tr('photoTitle')),
+                  ),
+                ],
+              ),
               PageHeader(
                 eyebrow: tr('point'),
                 title: farm.name ?? tr('farm'),

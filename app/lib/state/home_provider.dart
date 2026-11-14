@@ -46,11 +46,18 @@ class HomeProfileNotifier extends AsyncNotifier<HomeProfile> {
   Future<void> skip([
     LocationUnavailableReason reason = LocationUnavailableReason.skipped,
   ]) => _update((p) => p.withLocation(UnknownLocation(reason)));
-  Future<void> confirmFarm(GeoPoint point, String name) => _update((p) {
+  Future<void> selectFarm(String id) => _update((p) => p.withActiveFarm(id));
+  Future<void> confirmFarm(
+    GeoPoint point,
+    String name, {
+    bool createNew = false,
+  }) => _update((p) {
     final now = DateTime.now().toUtc();
     return p.withFarm(
       ConfirmedFarm(
-        id: p.farm?.id ?? 'farm-${now.microsecondsSinceEpoch}',
+        id:
+            (createNew ? null : p.farm?.id) ??
+            'farm-${now.microsecondsSinceEpoch}',
         point: point,
         confirmedAt: now,
         name: name.trim().isEmpty ? null : name.trim(),

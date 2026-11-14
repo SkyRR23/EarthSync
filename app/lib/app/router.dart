@@ -1,3 +1,6 @@
+import '../features/companion/companion_screen.dart';
+import '../features/companion/crop_explorer.dart';
+import '../features/companion/farm_photos.dart';
 import '../features/field/platform_farm_screen.dart';
 import '../features/dashboard/daily_climate_screen.dart';
 import '../design/app_shell.dart';
@@ -35,6 +38,15 @@ GoRouter buildRouter() => GoRouter(
           path: '/farm-evidence',
           builder: (_, _) => const FarmRequired(child: PlatformFarmScreen()),
         ),
+        GoRoute(
+          path: '/season',
+          builder: (_, _) => const FarmRequired(child: CompanionScreen()),
+        ),
+        GoRoute(path: '/crops', builder: (_, _) => const CropExplorer()),
+        GoRoute(
+          path: '/farm-photos',
+          builder: (_, _) => const FarmRequired(child: FarmPhotosScreen()),
+        ),
         GoRoute(path: '/explore', builder: (_, _) => const ExploreScreen()),
         GoRoute(path: '/settings', builder: (_, _) => const SettingsScreen()),
         GoRoute(path: '/', builder: (_, _) => const HomeEntry()),
@@ -63,8 +75,10 @@ GoRouter buildRouter() => GoRouter(
         ),
         GoRoute(
           path: '/location',
-          builder: (_, s) =>
-              LocationScreen(editing: s.uri.queryParameters['edit'] == '1'),
+          builder: (_, s) => LocationScreen(
+            editing: s.uri.queryParameters['edit'] == '1',
+            newFarm: s.uri.queryParameters['new'] == '1',
+          ),
         ),
         GoRoute(
           path: '/question/:step',

@@ -14,8 +14,9 @@ class LocationScreen extends ConsumerStatefulWidget {
     super.key,
     this.editing = false,
     this.areaOnly = false,
+    this.newFarm = false,
   });
-  final bool editing, areaOnly;
+  final bool editing, areaOnly, newFarm;
   @override
   ConsumerState<LocationScreen> createState() => _LocationScreenState();
 }
@@ -84,7 +85,11 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
           ),
         );
       } else {
-        await notifier.confirmFarm(point, _name.text);
+        await notifier.confirmFarm(
+          point,
+          _name.text,
+          createNew: widget.newFarm,
+        );
         ref
             .read(farmerDraftProvider.notifier)
             .setLocation(point.latitude, point.longitude);
@@ -137,7 +142,7 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
       final area = profile.userLocation;
       final point = widget.areaOnly
           ? (area is ApproximateArea ? area.point : null)
-          : profile.farm?.point ??
+          : (widget.newFarm ? null : profile.farm?.point) ??
                 (area is ApproximateArea ? area.point : null);
       if (point != null) {
         _lat.text = '${point.latitude}';
@@ -145,7 +150,7 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
       }
       _name.text = widget.areaOnly
           ? (area is ApproximateArea ? area.label : '')
-          : profile.farm?.name ?? '';
+          : (widget.newFarm ? null : profile.farm?.name) ?? '';
       if (widget.areaOnly && area is ApproximateArea) _source = area.source;
       _initialized = true;
     }
@@ -154,7 +159,7 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
         title: Text(
           widget.areaOnly
               ? 'Choose an Area'
-              : profile?.farm == null
+              : widget.newFarm || profile?.farm == null
               ? 'Add My Farm'
               : 'Edit My Farm',
         ),

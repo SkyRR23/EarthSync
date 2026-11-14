@@ -19,10 +19,12 @@ class AppShell extends ConsumerWidget {
       ? 4
       : path == '/assistant'
       ? 3
-      : ['/explore', '/area'].contains(path)
+      : ['/explore', '/area', '/crops'].contains(path)
       ? 2
       : [
               '/field',
+              '/season',
+              '/farm-photos',
               '/farm-evidence',
               '/photos',
               '/assessment',

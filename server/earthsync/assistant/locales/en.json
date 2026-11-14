@@ -53,5 +53,7 @@
   "decision_unverified": "The supplied finding lacks complete source provenance or linked evidence. Its agricultural applicability remains unresolved.",
   "water": "ET0 is calculated atmospheric demand for reference grass under standard conditions. It is not crop ETc or irrigation requirement. ETc needs independently accepted crop stage coefficients and actual stage dates. Irrigation needs effective rainfall, root-zone storage/depletion, drainage/capillary rise and delivery efficiency. Paddy additionally needs preparation, seepage and standing-water targets. Missing dependencies remain unknown.",
   "reference_duration": "Source-reviewed reference growing period for {profile}: {value} {unit}. Scope: {scope}. This is an advisory reference, not your cultivar maturity prediction or an independently accepted crop rule.",
-  "persisted_explanation": "Persisted Rust explanation: {text}"
+  "persisted_explanation": "Persisted Rust explanation: {text}",
+  "history": "Saved farm reports describe what the farmer recorded, including plans and unknowns. Calendar days do not establish biological growth stage. Review the dated timeline and select sources explicitly before reassessing.",
+  "farmer_report": "Farmer-reported record dated {date} (unverified; not a scientific measurement): {text}"
 }

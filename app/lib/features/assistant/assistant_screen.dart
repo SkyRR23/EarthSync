@@ -14,10 +14,12 @@ class FarmerAssistant extends StatefulWidget {
     required this.context,
     required this.service,
     this.language = 'en',
+    this.interfaceLanguage,
   });
   final AssistantContext context;
   final AssistantService service;
   final String language;
+  final String? interfaceLanguage;
 
   @override
   State<FarmerAssistant> createState() => _FarmerAssistantState();
@@ -37,7 +39,8 @@ class _FarmerAssistantState extends State<FarmerAssistant> {
   bool _loading = false;
   String? _pendingQuestion, _failedQuestion;
   bool _failedExpanded = false;
-  AssistantStrings get _strings => AssistantStrings(widget.language);
+  AssistantStrings get _strings =>
+      AssistantStrings(widget.interfaceLanguage ?? widget.language);
 
   @override
   void didUpdateWidget(covariant FarmerAssistant oldWidget) {
