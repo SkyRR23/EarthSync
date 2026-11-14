@@ -14,8 +14,15 @@ gcloud run deploy fieldshift-backend \
   --cpu 1 --memory 512Mi --timeout 120
 ```
 
-Then check `https://<service-url>/api/v1/health` and build the app with
-`--dart-define=BACKEND_URL=https://<service-url>`.
+Then check `https://<service-url>/api/v1/health`.
+
+**Phones use the Firebase Hosting address, not `*.run.app`.** On 14 Nov 2026
+a Myanmar mobile network refused connections to `*.run.app` while
+`*.web.app` worked, so `app/firebase.json` forwards `/api/**` from
+`https://fieldshift-yangon-2026.web.app` to this service
+(`firebase deploy --only hosting` from `app/`). The app's
+`config/cloud.json` uses that address. Hosting-to-Cloud-Run requests time
+out after 60 s.
 
 Notes
 - `--max-instances 2` caps cost and NASA POWER load; the service scales to

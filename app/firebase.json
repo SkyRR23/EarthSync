@@ -30,5 +30,21 @@
   },
   "firestore": {
     "rules": "firestore.rules"
+  },
+  "hosting": {
+    "public": "hosting",
+    "ignore": [
+      "firebase.json",
+      "**/.*"
+    ],
+    "rewrites": [
+      {
+        "source": "/api/**",
+        "run": {
+          "serviceId": "fieldshift-backend",
+          "region": "asia-southeast1"
+        }
+      }
+    ]
   }
 }

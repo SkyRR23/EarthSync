@@ -7,7 +7,7 @@ NASA Space Apps 2026 · farmer crop-rotation explorer. Design: [docs/flutter-des
 ```bash
 flutter run                              # native Rust engine, live backend required
 flutter run --dart-define=ENGINE=rust    # on-device Rust engine via flutter_rust_bridge
-flutter run --dart-define-from-file=config/cloud.json  # Rust + hosted NASA backend (Cloud Run, Singapore)
+flutter run --dart-define-from-file=config/cloud.json  # Rust + hosted NASA backend (Firebase Hosting -> Cloud Run, Singapore)
 flutter run --dart-define=ENGINE=mock --dart-define=MOCK_FAIL=true # test the error screen
 ```
 
