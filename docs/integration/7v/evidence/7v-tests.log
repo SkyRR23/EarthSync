@@ -1,0 +1,37 @@
+test_daily_curve_encoding_matches_closed_form_synthetic_etc (test_native_math.NativeMethodContracts.test_daily_curve_encoding_matches_closed_form_synthetic_etc) ... ok
+test_four_constant_stages_do_not_reproduce_published_curve (test_native_math.NativeMethodContracts.test_four_constant_stages_do_not_reproduce_published_curve) ... ok
+test_missing_daily_et0_does_not_become_zero (test_native_math.NativeMethodContracts.test_missing_daily_et0_does_not_become_zero) ... ok
+test_constant_development_or_late_stage_changes_published_method (test_package.PublishedNumericalChecks.test_constant_development_or_late_stage_changes_published_method) ... ok
+test_curve_boundaries_and_daily_day_convention (test_package.PublishedNumericalChecks.test_curve_boundaries_and_daily_day_convention) ... ok
+test_example28_published_four_day_values (test_package.PublishedNumericalChecks.test_example28_published_four_day_values) ... ok
+test_all_priority_domains_covered (test_package.ReviewContracts.test_all_priority_domains_covered) ... ok
+test_all_profile_parameters_have_blocked_trace (test_package.ReviewContracts.test_all_profile_parameters_have_blocked_trace) ... ok
+test_annual_rainfall_cannot_be_prorated_into_season_rule (test_package.ReviewContracts.test_annual_rainfall_cannot_be_prorated_into_season_rule) ... ok
+test_average_temperature_not_daily_or_monthly_extreme (test_package.ReviewContracts.test_average_temperature_not_daily_or_monthly_extreme) ... ok
+test_calendar_dates_keep_aez_and_old_update (test_package.ReviewContracts.test_calendar_dates_keep_aez_and_old_update) ... ok
+test_candidates_cannot_be_promoted_by_mechanical_success (test_package.ReviewContracts.test_candidates_cannot_be_promoted_by_mechanical_success) ... ok
+test_disk_promotion_rejected_by_actual_loader (test_package.ReviewContracts.test_disk_promotion_rejected_by_actual_loader) ... ok
+test_drought_stage_labels_never_become_offsets_or_injury (test_package.ReviewContracts.test_drought_stage_labels_never_become_offsets_or_injury) ... ok
+test_exact_source_claim_units_dates_and_scope_retained (test_package.ReviewContracts.test_exact_source_claim_units_dates_and_scope_retained) ... ok
+test_fact_cannot_self_certify_independent_applicability (test_package.ReviewContracts.test_fact_cannot_self_certify_independent_applicability) ... ok
+test_flooded_rice_not_upland_or_flood_tolerance (test_package.ReviewContracts.test_flooded_rice_not_upland_or_flood_tolerance) ... ok
+test_groundnut_type_and_months_not_conflated (test_package.ReviewContracts.test_groundnut_type_and_months_not_conflated) ... ok
+test_group_initial_is_only_an_approximation (test_package.ReviewContracts.test_group_initial_is_only_an_approximation) ... ok
+test_identity_conflicts_do_not_resolve_by_duration (test_package.ReviewContracts.test_identity_conflicts_do_not_resolve_by_duration) ... ok
+test_kc_harvest_alternatives_are_not_confidence_intervals (test_package.ReviewContracts.test_kc_harvest_alternatives_are_not_confidence_intervals) ... ok
+test_no_executable_payload_or_field_approval (test_package.ReviewContracts.test_no_executable_payload_or_field_approval) ... ok
+test_original_authority_and_exact_locators_for_new_facts (test_package.ReviewContracts.test_original_authority_and_exact_locators_for_new_facts) ... ok
+test_package_cannot_become_recommendation_eligible (test_package.ReviewContracts.test_package_cannot_become_recommendation_eligible) ... ok
+test_rotation_not_intercropping_or_elapsed_gap (test_package.ReviewContracts.test_rotation_not_intercropping_or_elapsed_gap) ... ok
+test_sesame_source_arithmetic_disagreement_remains_blocked (test_package.ReviewContracts.test_sesame_source_arithmetic_disagreement_remains_blocked) ... ok
+test_soil_method_depth_and_maize_missingness (test_package.ReviewContracts.test_soil_method_depth_and_maize_missingness) ... ok
+test_stage_rows_retain_region_and_planting_context (test_package.ReviewContracts.test_stage_rows_retain_region_and_planting_context) ... ok
+test_strict_json_rejects_duplicates_and_nonfinite (test_package.ReviewContracts.test_strict_json_rejects_duplicates_and_nonfinite) ... ok
+test_strict_schema_unknown_fields_and_types (test_package.ReviewContracts.test_strict_schema_unknown_fields_and_types) ... ok
+test_upstream_drift_rejected_before_rebuild (test_package.ReviewContracts.test_upstream_drift_rejected_before_rebuild) ... ok
+test_upstream_profiles_remain_quarantined (test_package.ReviewContracts.test_upstream_profiles_remain_quarantined) ... ok
+
+----------------------------------------------------------------------
+Ran 32 tests in 1.964s
+
+OK
