@@ -1,0 +1,11 @@
+{
+  "engine/target/debug/examples/v03_demo": "9706717bddb7f863220e8de475a76df87c433f3f63d26918628ecf9f55e6499b",
+  "engine/target/debug/examples/web_engine": "618dbebfb086168ca39372728bd4350bb61055a59eec59431bdd030a6f9d60ee",
+  "app/rust/target/release/libfield_shift_bridge.so": "57a21a7f6b94caa1fa7003be73994ef9d26ef6791f9babc0e39b7a0f602137bd",
+  "app/build/web/main.dart.js": "393f378511c4ac5c058b21afa6d07d8bc0fc9eaa3faff358b33486909acda889",
+  "app/pubspec.lock": "b70d5c5d8201b2504cf59568e096bd9da24f1793980842fb26a997ef5c316d1f",
+  "server/requirements.lock": "d4b0cf8b2617c37e4f12f22e053c490ca6b80ed14f25247345d2aaa1a4dcc57d",
+  "data/crop-knowledge/v1/catalog.json": "2926584bce3693dff7433afe9c05c535a6d5d1e609fb502d4e2f6017f398fb0e",
+  "data/crop-knowledge/v2/catalog.json": "9c61fc394bd73f990fa12cba21d77a3e21028c233b956e1ce31f664178ad241b",
+  "server/earthsync/platform_v1/rule_review.json": "63c5fa5b34f05a8b19114740ded3f73587775414e69846d693cd8b5ddec7a616"
+}

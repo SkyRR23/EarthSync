@@ -48,5 +48,9 @@
     "platform": 8614,
     "web": 8624
   },
-  "restart": "pending"
+  "restart": "passed; all original saved rows retained byte-for-byte; later explicit browser records may be added",
+  "current_processes": {
+    "platform": 11583,
+    "web": 11594
+  }
 }

@@ -4,7 +4,9 @@ import copy
 import json
 from pathlib import Path
 
-REVIEW = json.loads(Path(__file__).with_name("rule_review.json").read_text())
+REVIEW = json.loads(
+    Path(__file__).with_name("rule_review.json").read_text(encoding="utf-8")
+)
 if (
     REVIEW["executable_rule_count"] != 0
     or len(REVIEW["candidates"]) != 60

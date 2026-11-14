@@ -25,7 +25,10 @@ class Orchestrator:
             "schema_version": ENGINE_VERSION,
             "mode": "evidence_assessment",
             "day_basis": "NASA_POWER_LST",
-            "region_id": query.pilot_id,
+            # A v2 profile's advisory region is not a located farm region.
+            # Keep its exact scope in the reference sidecar, never relabel
+            # an arbitrary global POWER point as that advisory zone.
+            "region_id": query.pilot_id if query.catalog_version == "v1" else None,
             "approximate_user_location": None,
             "farm": {
                 "field_id": str(farm.id),
@@ -126,7 +129,7 @@ class Orchestrator:
                         "issued_on": None,
                         "spatial": {
                             "scope": "regional",
-                            "region_id": query.pilot_id or "power-query-context",
+                            "region_id": request["region_id"] or "power-query-context",
                             "resolution_m": None,
                         },
                         "quality": "usable",

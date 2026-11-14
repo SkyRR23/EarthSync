@@ -67,7 +67,10 @@ with sync_playwright() as p:
         page.wait_for_timeout(100)
 
     def visible(text):
-        page.mouse.move(800, 500)
+        viewport = page.viewport_size
+        page.mouse.move(viewport["width"] / 2, viewport["height"] * 0.6)
+        page.mouse.wheel(0, -40000)
+        page.wait_for_timeout(250)
         for _ in range(25):
             if text in page.locator("body").aria_snapshot():
                 return
@@ -180,9 +183,13 @@ with sync_playwright() as p:
         )
 
         go("farm-evidence")
-        expect(page.get_by_role("checkbox")).to_have_count(3)
-        for index in range(3):
-            page.get_by_role("checkbox").nth(index).click()
+        # Flutter only exposes on-screen semantics. The added water panel can
+        # put these rows below the viewport; select each actual source explicitly.
+        for parameter in ("PRECTOTCORR", "T2M_MAX", "T2M_MIN"):
+            visible(parameter)
+            checkbox = page.get_by_role("checkbox", name=re.compile(parameter))
+            checkbox.click()
+            expect(checkbox).to_be_checked()
         page.get_by_role(
             "button", name="Optional reference profile", exact=True
         ).click()

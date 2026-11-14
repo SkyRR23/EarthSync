@@ -133,6 +133,11 @@ async def test_real_calculation_persistence_rust_reference_assistant_restore(
         owner, query
     )
     context = decision["result"]["data"]["context"]
+    assert context["region_id"] is None
+    assert all(
+        s["provenance"]["spatial"]["region_id"] == "power-query-context"
+        for s in context["climate"]
+    )
     assert len(context["climate"]) == 4 and context["catalog"] == [selection[0]]
     assert not decision["result"]["data"]["candidates"]
     assert decision["catalog_projection"][0]["sources"]

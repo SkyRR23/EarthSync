@@ -1,0 +1,21 @@
+{
+  "status": "superseded; not final acceptance",
+  "reason": "v2 reference scope is now kept out of Rust farm region_id",
+  "file_hashes": {
+    "after-job.txt": "745428bb2588a3611255ff34a62b2a395702688fd2fd178da24e44f0c70d40f2",
+    "real-water-calculation-desktop.png": "34740acfdc74f001b9826dfc58d77fa9acd563eb94227458f54d84fcab75397d",
+    "saved-rust-v2-assessment.json": "6643b9fbd635dac977e04238c36558fb6bdc624371070793cf975149856cbfea",
+    "assistant-water.json": "ef9d9033663cbed524c54cd94b580190affbaa9b1522f6768244791d3818298d",
+    "assistant-reference.json": "b0f2a4beab420ccacd6fa8041f060c6e68878d254c3e50fe9ad5e9499f6cbaa4",
+    "assistant-persisted-reference-and-water.png": "9285c85a49ca406ad2373a555b0ecd77bfb4fecb23dfc3378a1a30e17a73ba1c",
+    "results.json": "d6a10d192b44f3019343c28cf9124f3478705d7877471e7634da53b96e6c9e83",
+    "water-phone.png": "3cd1b7146963b018f623d4a854ff57676da15d8b19357161607989e6d4c1b72c",
+    "farm-confirmation.json": "a6a7290f3817659a629c91a7820214454af035a80c58d3280b46e2ca88952abc",
+    "v2-reference-lookup.json": "eb0a77a32170b66eb5045d9972281e4a99b665cbef9d02cab6b5a624f1db2a38",
+    "crop-constraints-and-water-gaps.png": "386d102bc742d7bec8f267e0537bcb3bc1728288dee0831f46b9b5d5a7d9e804",
+    "water-submission.json": "276e533a2b5b878e8d739c55aa261f30866ec062a88cde525d9f477308f15c01",
+    "source-reviewed-reference.png": "104804bffa01fb2bf402c878978441b469bd947dfc1b99b8f9479a3c712e7deb",
+    "live-water-job.json": "dc7896713d842416a698e8cfa2c42fee53edb6d5068034eb1620a320475d562c",
+    "explicit-simulated-transport-outage.png": "4f49f833d9d1f73f65ddfea07ad73953b2cdc0e472c1718613f8e2197cd29547"
+  }
+}

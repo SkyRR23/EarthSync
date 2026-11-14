@@ -1,0 +1,81 @@
+{
+  "classification": "synthetic software verification using FAO-56 Chapter 4 Example 18 published inputs; not live field data",
+  "reference_url": "https://www.fao.org/4/X0490E/x0490e08.htm",
+  "reference_et0_mm_day": 3.88,
+  "tolerance_mm_day": 0.03,
+  "actual_et0_mm_day": 3.8796934649677484,
+  "absolute_difference": 0.00030653503225153145,
+  "engine_sha256": "9706717bddb7f863220e8de475a76df87c433f3f63d26918628ecf9f55e6499b",
+  "input_note": "Non-leap year selected only to encode published day-of-year 187. Dewpoint inverted from published ea=1.409 kPa for numerical comparison. No measurement year is asserted.",
+  "native_output": {
+    "data": {
+      "day_basis": "NASA_POWER_LST",
+      "days": [
+        {
+          "date": {
+            "day": 6,
+            "month": 7,
+            "year": 2023
+          },
+          "et0_mm": 3.8796934649677484,
+          "intermediate": {
+            "aerodynamic_term_mm": 1.072145870139752,
+            "day_of_year": 187.0,
+            "declination_rad": 0.3954358299138177,
+            "delta_kpa_c": 0.12211265844598747,
+            "denominator": 0.23570972202598747,
+            "ea_kpa": 1.409,
+            "es_kpa": 1.9974855625338357,
+            "g_mj_m2_day": 0.0,
+            "gamma_kpa_c": 0.0665665,
+            "inverse_distance": 0.9670989613924745,
+            "ra_mj_m2_day": 41.08837556354228,
+            "radiation_term_mm": 2.807547594827996,
+            "rn_mj_m2_day": 13.282620784912385,
+            "rnl_mj_m2_day": 3.711279215087615,
+            "rns_mj_m2_day": 16.9939,
+            "rs_rso_raw": 0.7142751168133303,
+            "rs_rso_used": 0.7142751168133303,
+            "rso_mj_m2_day": 30.898458423783794,
+            "sunset_angle_rad": 2.108088739330915,
+            "tmean_c": 16.9,
+            "vpd_kpa": 0.5884855625338357
+          },
+          "rainfall_mm": null
+        }
+      ],
+      "et0_partial_sum_mm": 3.8796934649677484,
+      "et0_total_mm": 3.8796934649677484,
+      "et0_usable_days": 1,
+      "expected_days": 1,
+      "input": {
+        "day_basis": "NASA_POWER_LST",
+        "days": [
+          {
+            "date": {
+              "day": 6,
+              "month": 7,
+              "year": 2023
+            },
+            "dewpoint_c": 12.06945169592114,
+            "pressure_kpa": 100.1,
+            "rainfall_mm": null,
+            "solar_mj_m2_day": 22.07,
+            "tmax_c": 21.5,
+            "tmin_c": 12.3,
+            "wind_2m_m_s": 2.078
+          }
+        ],
+        "elevation_m": 100.0,
+        "latitude": 50.8,
+        "method": "fao56-daily-pm.v1"
+      },
+      "method": "fao56-daily-pm.v1",
+      "rainfall_partial_sum_mm": null,
+      "rainfall_total_mm": null,
+      "rainfall_usable_days": 0
+    },
+    "status": "success"
+  },
+  "passed": true
+}

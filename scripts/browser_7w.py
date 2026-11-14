@@ -195,6 +195,7 @@ with sync_playwright() as p:
         receipt("saved-rust-v2-assessment", assessment)
         assert assessment["recommendation_eligible"] is False
         assert len(assessment["result"]["data"]["context"]["climate"]) == 4
+        assert assessment["result"]["data"]["context"]["region_id"] is None
         assert assessment["result"]["data"]["context"]["catalog"][0]["rules"] == []
         assert assessment["environmental_metrics"][0] == calculated
         visible("More information needed")
@@ -233,6 +234,7 @@ with sync_playwright() as p:
         page.set_viewport_size({"width": 390, "height": 844})
         go("farm-evidence")
         visible("Crop references & water intelligence")
+        visible(str(calculated["et0_total_mm"]))
         shot("water-phone")
         record("Phone layout renders evidence and actions")
 
