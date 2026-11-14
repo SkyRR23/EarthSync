@@ -11,7 +11,9 @@ const _engineDefine = String.fromEnvironment('ENGINE');
 
 /// `rust` (team engine via bridge) on phones by default; `mock` on web,
 /// where the Rust bridge is not built. Override with --dart-define=ENGINE=...
-final kEngine = _engineDefine.isNotEmpty ? _engineDefine : (kIsWeb ? 'mock' : 'rust');
+final kEngine = _engineDefine.isNotEmpty
+    ? _engineDefine
+    : (kIsWeb ? 'mock' : 'rust');
 
 final engineProvider = Provider<EngineGateway>(
   (ref) => kEngine == 'rust' ? RustEngine() : MockEngine(),

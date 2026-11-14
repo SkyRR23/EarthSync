@@ -1,278 +1,348 @@
+import 'dart:math' as math;
+
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../app/strings.dart';
 import '../../data/models/field_analysis.dart';
-import '../../design/components/badges.dart';
 import '../../design/components/feedback.dart';
-import '../../design/components/scenario.dart' show monthNames;
+import '../../design/components/grouped.dart';
+import '../../design/components/page.dart';
+import '../../design/components/scenario.dart' show monthNames, monthShort;
+import '../../design/components/segmented.dart';
+import '../../design/components/status.dart';
 import '../../design/tokens.dart';
+import 'overview_tab.dart' show SeasonMetrics;
 
-const _m = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
+enum _Metric { rain, temp }
 
-/// Round the axis up to a clean step so the top label never collides.
-({double max, double step}) _niceAxis(double maxValue) {
-  final step = maxValue > 600 ? 200.0 : 100.0;
-  final top = ((maxValue * 1.05) / step).ceil() * step;
-  return (max: top <= 0 ? step : top, step: step);
-}
-
-Widget _axisLabel(double v, TitleMeta meta) =>
-    SideTitleWidget(meta: meta, child: Text(v.round().toString()));
-
-/// Bottom labels by position in the series, so season windows that cross
-/// the new year (e.g. Nov -> Feb) stay in order.
-GetTitleWidgetFunction _monthTitles(List<MonthlyClimate> months) =>
-    (double v, TitleMeta meta) {
-      final i = v.round();
-      if (i < 0 || i >= months.length || (v - i).abs() > 0.01) {
-        return const SizedBox.shrink();
-      }
-      final label = months.length > 6
-          ? _m[months[i].month - 1]
-          : monthNames[months[i].month - 1].substring(0, 3);
-      return SideTitleWidget(meta: meta, child: Text(label));
-    };
-
-class ClimateTab extends StatelessWidget {
+/// Apple Health / Weather-style climate view: one chart at a time,
+/// tap a month to read its value in the header.
+class ClimateTab extends StatefulWidget {
   const ClimateTab({super.key, required this.analysis});
   final FieldAnalysis analysis;
 
   @override
-  Widget build(BuildContext context) {
-    final c = analysis.climateSummary;
-    final t = Theme.of(context).textTheme;
-    final ref = analysis.reference(c.sourceId);
-    final missingRain = [
-      for (final m in c.months)
-        if (m.rainMm == null) monthNames[m.month - 1],
-    ];
-    final rainSummary = c.months
-        .map(
-          (m) =>
-              '${monthNames[m.month - 1]}: ${m.rainMm == null ? S.noData : '${m.rainMm!.round()} mm'}',
-        )
-        .join(', ');
-
-    final rainValues = [for (final m in c.months) ?m.rainMm];
-    final rainAxis = _niceAxis(
-      rainValues.isEmpty ? 0 : rainValues.reduce((a, b) => a > b ? a : b),
-    );
-    final temps = [for (final m in c.months) ?m.tempMeanC];
-    final tMin = temps.isEmpty
-        ? 0.0
-        : temps.reduce((a, b) => a < b ? a : b).floorToDouble() - 1;
-    final tMax = temps.isEmpty
-        ? 1.0
-        : temps.reduce((a, b) => a > b ? a : b).ceilToDouble() + 1;
-
-    return ListView(
-      padding: const EdgeInsets.all(FsSpace.gutter),
-      children: [
-        if (c.totalRainMm != null || c.meanTempC != null) ...[
-          Text(S.seasonSummary, style: t.titleLarge),
-          const SizedBox(height: FsSpace.xs),
-          Text(c.period, style: t.bodyMedium),
-          const SizedBox(height: FsSpace.sm),
-          Row(
-            children: [
-              if (c.totalRainMm != null)
-                Expanded(
-                  child: _Stat(
-                    icon: Icons.water_drop_outlined,
-                    color: FsColors.sky,
-                    value: '${c.totalRainMm!.round()} mm',
-                    label: 'Total rain',
-                  ),
-                ),
-              if (c.totalRainMm != null && c.meanTempC != null)
-                const SizedBox(width: FsSpace.sm),
-              if (c.meanTempC != null)
-                Expanded(
-                  child: _Stat(
-                    icon: Icons.thermostat,
-                    color: FsColors.riskHigh,
-                    value: '${c.meanTempC!.toStringAsFixed(1)} °C',
-                    label: 'Average temperature',
-                  ),
-                ),
-            ],
-          ),
-          if (c.dataKind != null && c.dataKind != 'observed') ...[
-            const SizedBox(height: FsSpace.sm),
-            FsDataQualityBanner(
-              message:
-                  'These climate values are ${c.dataKind}, not observed measurements.',
-              kind: FsBannerKind.warning,
-            ),
-          ],
-          const SizedBox(height: FsSpace.xl),
-        ],
-        Text('${S.rainfall} (mm per month)', style: t.titleLarge),
-        const SizedBox(height: FsSpace.md),
-        Semantics(
-          label: 'Rainfall chart. $rainSummary',
-          excludeSemantics: true,
-          child: SizedBox(
-            height: 220,
-            child: BarChart(
-              BarChartData(
-                maxY: rainAxis.max,
-                gridData: FlGridData(
-                  drawVerticalLine: false,
-                  horizontalInterval: rainAxis.step,
-                ),
-                borderData: FlBorderData(show: false),
-                titlesData: FlTitlesData(
-                  topTitles: const AxisTitles(),
-                  rightTitles: const AxisTitles(),
-                  leftTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      reservedSize: 44,
-                      interval: rainAxis.step,
-                      getTitlesWidget: _axisLabel,
-                    ),
-                  ),
-                  bottomTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      reservedSize: 30,
-                      getTitlesWidget: _monthTitles(c.months),
-                    ),
-                  ),
-                ),
-                barGroups: [
-                  for (final (i, m) in c.months.indexed)
-                    BarChartGroupData(
-                      x: i,
-                      barRods: m.rainMm == null
-                          ? []
-                          : [
-                              BarChartRodData(
-                                toY: m.rainMm!,
-                                color: FsColors.sky,
-                                width: 14,
-                                borderRadius: const BorderRadius.vertical(
-                                  top: Radius.circular(4),
-                                ),
-                              ),
-                            ],
-                    ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        if (missingRain.isNotEmpty) ...[
-          const SizedBox(height: FsSpace.sm),
-          Text(
-            '${S.noData}: ${missingRain.join(', ')} (gap in chart, not zero rain)',
-            style: t.bodyMedium?.copyWith(color: FsColors.unknown),
-          ),
-        ],
-        const SizedBox(height: FsSpace.xl),
-        Text('${S.temperature} (°C, monthly average)', style: t.titleLarge),
-        const SizedBox(height: FsSpace.md),
-        SizedBox(
-          height: 180,
-          child: LineChart(
-            LineChartData(
-              minX: 0,
-              maxX: (c.months.length - 1).toDouble().clamp(1, 11),
-              minY: tMin,
-              maxY: tMax,
-              gridData: const FlGridData(
-                drawVerticalLine: false,
-                horizontalInterval: 1,
-              ),
-              borderData: FlBorderData(show: false),
-              titlesData: FlTitlesData(
-                topTitles: const AxisTitles(),
-                rightTitles: const AxisTitles(),
-                leftTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: true,
-                    reservedSize: 44,
-                    interval: (tMax - tMin) > 8 ? 2 : 1,
-                    getTitlesWidget: _axisLabel,
-                  ),
-                ),
-                bottomTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: true,
-                    reservedSize: 30,
-                    interval: 1,
-                    getTitlesWidget: _monthTitles(c.months),
-                  ),
-                ),
-              ),
-              lineBarsData: [
-                LineChartBarData(
-                  spots: [
-                    for (final (i, m) in c.months.indexed)
-                      m.tempMeanC == null
-                          ? FlSpot.nullSpot
-                          : FlSpot(i.toDouble(), m.tempMeanC!),
-                  ],
-                  color: FsColors.riskHigh,
-                  barWidth: 3,
-                  dotData: const FlDotData(show: true),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const FsSectionTitle(S.evidence),
-        Text('Period: ${c.period}', style: t.bodyMedium),
-        if (c.gridResolution != null)
-          Text(
-            'Scale: ${c.gridResolution} (regional estimate, not your exact field)',
-            style: t.bodyMedium,
-          ),
-        const SizedBox(height: FsSpace.sm),
-        if (ref != null)
-          Align(alignment: Alignment.centerLeft, child: FsEvidenceChip(ref)),
-        if (c.limitations.isNotEmpty) ...[
-          const FsSectionTitle(S.limitations),
-          FsBulletList(
-            c.limitations,
-            icon: Icons.info_outline,
-            color: FsColors.unknown,
-          ),
-        ],
-      ],
-    );
-  }
+  State<ClimateTab> createState() => _ClimateTabState();
 }
 
-class _Stat extends StatelessWidget {
-  const _Stat({
-    required this.icon,
-    required this.color,
-    required this.value,
-    required this.label,
-  });
-  final IconData icon;
-  final Color color;
-  final String value;
-  final String label;
+class _ClimateTabState extends State<ClimateTab> {
+  _Metric _metric = _Metric.rain;
+  int? _selected;
+
+  String _monthLabel(MonthlyClimate m, {bool long = false}) {
+    final name = long ? monthNames[m.month - 1] : monthShort[m.month - 1];
+    return m.year == null ? name : '$name ${m.year}';
+  }
 
   @override
   Widget build(BuildContext context) {
-    final t = Theme.of(context).textTheme;
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(FsSpace.md),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    final a = widget.analysis;
+    final c = a.climateSummary;
+    final p = context.fs;
+    final t = context.type;
+    final ref = a.reference(c.sourceId);
+    final months = c.months;
+    final rain = _metric == _Metric.rain;
+    final color = rain ? p.rain : p.heat;
+
+    // Header: selected month value, or the series summary.
+    final sel = _selected != null && _selected! < months.length
+        ? months[_selected!]
+        : null;
+    final v = sel == null ? null : (rain ? sel.rainMm : sel.tempMeanC);
+    final (String big, String small) = sel != null
+        ? (
+            v == null
+                ? S.noData
+                : (rain ? '${v.round()} mm' : '${v.toStringAsFixed(1)} °C'),
+            _monthLabel(sel, long: true),
+          )
+        : (
+            rain
+                ? (c.totalRainMm != null
+                      ? '${c.totalRainMm!.round()} mm'
+                      : S.rainfall)
+                : (c.meanTempC != null
+                      ? '${c.meanTempC!.toStringAsFixed(1)} °C'
+                      : S.temperature),
+            rain
+                ? (c.totalRainMm != null ? 'Total · ${c.period}' : c.period)
+                : (c.meanTempC != null ? 'Average · ${c.period}' : c.period),
+          );
+
+    return FsPage(
+      title: S.tabClimate,
+      subtitle: c.period.isEmpty ? null : c.period,
+      children: [
+        SeasonMetrics(c),
+        if (c.dataKind != null && c.dataKind != 'observed') ...[
+          const SizedBox(height: FsSpace.md),
+          FsBanner(
+            message: 'These values are ${c.dataKind}, not measured',
+            tone: FsTone.caution,
+            icon: CupertinoIcons.exclamationmark_circle_fill,
+          ),
+        ],
+        Padding(
+          padding: const EdgeInsets.fromLTRB(
+            FsSpace.gutter,
+            FsSpace.xl,
+            FsSpace.gutter,
+            0,
+          ),
+          child: FsSegmented<_Metric>(
+            value: _metric,
+            onChanged: (m) => setState(() {
+              _metric = m;
+              _selected = null;
+            }),
+            segments: const {
+              _Metric.rain: S.rainfall,
+              _Metric.temp: S.temperature,
+            },
+          ),
+        ),
+        FsGroupedSection(
+          padded: true,
+          footer: rain ? '${S.tapBar} ${S.gapNote}' : S.tapBar,
           children: [
-            Icon(icon, color: color),
-            const SizedBox(height: FsSpace.xs),
-            Text(value, style: t.titleLarge),
-            Text(label, style: t.bodySmall),
+            Semantics(
+              liveRegion: true,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    small.toUpperCase(),
+                    style: t.caption.copyWith(
+                      letterSpacing: 0.4,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: FsSpace.xxs),
+                  Text(big, style: t.title1),
+                ],
+              ),
+            ),
+            const SizedBox(height: FsSpace.lg),
+            SizedBox(
+              height: 210,
+              child: months.isEmpty
+                  ? Center(child: Text(S.noData, style: t.footnote))
+                  : (rain
+                        ? _rainChart(months, color)
+                        : _tempChart(months, color)),
+            ),
           ],
         ),
+        if (ref != null)
+          FsGroupedSection(
+            header: S.evidence,
+            separatorIndent: FsSpace.lg + 22 + FsSpace.md,
+            children: [FsEvidenceRow(ref)],
+          ),
+        if (c.limitations.isNotEmpty)
+          FsGroupedSection(
+            header: S.limitations,
+            separatorIndent: FsSpace.lg + 22 + FsSpace.md,
+            children: [
+              for (final l in c.limitations)
+                FsListRow(
+                  leading: Icon(
+                    CupertinoIcons.info_circle,
+                    color: p.secondaryLabel,
+                    size: 22,
+                  ),
+                  title: l,
+                  titleStyle: t.callout,
+                ),
+            ],
+          ),
+      ],
+    );
+  }
+
+  ({double max, double step}) _niceAxis(double maxValue) {
+    final raw = maxValue <= 0 ? 1.0 : maxValue;
+    final mag = math.pow(10, (math.log(raw) / math.ln10).floor()).toDouble();
+    final step = raw / mag > 5 ? mag * 2 : (raw / mag > 2 ? mag : mag / 2);
+    return (max: (raw * 1.08 / step).ceil() * step, step: step);
+  }
+
+  Widget _monthTitle(List<MonthlyClimate> months, double v, TitleMeta meta) {
+    final i = v.round();
+    if (i < 0 || i >= months.length || (v - i).abs() > 0.01) {
+      return const SizedBox.shrink();
+    }
+    final m = months[i];
+    final label = months.length > 6
+        ? monthShort[m.month - 1][0]
+        : monthShort[m.month - 1];
+    return SideTitleWidget(
+      meta: meta,
+      child: Text(
+        label,
+        style: context.type.caption.copyWith(
+          color: i == _selected ? context.fs.label : context.fs.secondaryLabel,
+          fontWeight: i == _selected ? FontWeight.w700 : FontWeight.w400,
+        ),
+      ),
+    );
+  }
+
+  Widget _rightAxis(double v, TitleMeta meta) => SideTitleWidget(
+    meta: meta,
+    child: Text(
+      v.round().toString(),
+      style: context.type.caption.copyWith(color: context.fs.tertiaryLabel),
+    ),
+  );
+
+  FlTitlesData _titles(List<MonthlyClimate> months, double step) =>
+      FlTitlesData(
+        topTitles: const AxisTitles(),
+        leftTitles: const AxisTitles(),
+        rightTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            reservedSize: 36,
+            interval: step,
+            getTitlesWidget: _rightAxis,
+          ),
+        ),
+        bottomTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            reservedSize: 26,
+            interval: 1,
+            getTitlesWidget: (v, m) => _monthTitle(months, v, m),
+          ),
+        ),
+      );
+
+  FlGridData _grid(double step) => FlGridData(
+    drawVerticalLine: false,
+    horizontalInterval: step,
+    getDrawingHorizontalLine: (_) => FlLine(
+      color: context.fs.separator,
+      strokeWidth: 0.5,
+      dashArray: const [3, 3],
+    ),
+  );
+
+  Widget _rainChart(List<MonthlyClimate> months, Color color) {
+    final values = [for (final m in months) ?m.rainMm];
+    final axis = _niceAxis(values.isEmpty ? 0 : values.reduce(math.max));
+    final width = months.length > 6 ? 14.0 : 30.0;
+    return Semantics(
+      label:
+          'Rain by month. ${[for (final m in months) '${_monthLabel(m, long: true)}: ${m.rainMm == null ? S.noData : '${m.rainMm!.round()} millimetres'}'].join(', ')}',
+      child: BarChart(
+        BarChartData(
+          maxY: axis.max,
+          gridData: _grid(axis.step),
+          borderData: FlBorderData(show: false),
+          titlesData: _titles(months, axis.step),
+          barTouchData: BarTouchData(
+            enabled: true,
+            handleBuiltInTouches: false,
+            touchCallback: (e, r) {
+              if (e is FlTapUpEvent || e is FlPanUpdateEvent) {
+                final i = r?.spot?.touchedBarGroupIndex;
+                if (i != null) {
+                  setState(
+                    () => _selected = _selected == i && e is FlTapUpEvent
+                        ? null
+                        : i,
+                  );
+                }
+              }
+            },
+          ),
+          barGroups: [
+            for (final (i, m) in months.indexed)
+              BarChartGroupData(
+                x: i,
+                barRods: [
+                  BarChartRodData(
+                    // Missing month: faint stub so the gap is visible and tappable, never "zero rain".
+                    toY: m.rainMm ?? axis.max * 0.015,
+                    width: width,
+                    color: m.rainMm == null
+                        ? context.fs.fillStrong
+                        : (_selected == null || _selected == i
+                              ? color
+                              : color.withValues(alpha: 0.3)),
+                    borderRadius: BorderRadius.circular(width / 2.6),
+                  ),
+                ],
+              ),
+          ],
+        ),
+        duration: FsMotion.of(context, FsMotion.normal),
+      ),
+    );
+  }
+
+  Widget _tempChart(List<MonthlyClimate> months, Color color) {
+    final values = [for (final m in months) ?m.tempMeanC];
+    final lo = values.isEmpty ? 0.0 : values.reduce(math.min);
+    final hi = values.isEmpty ? 1.0 : values.reduce(math.max);
+    final step = (hi - lo) > 12 ? 5.0 : ((hi - lo) > 5 ? 2.0 : 1.0);
+    final minY = (lo / step).floor() * step - step;
+    final maxY = (hi / step).ceil() * step + step;
+    return Semantics(
+      label:
+          'Temperature by month. ${[for (final m in months) '${_monthLabel(m, long: true)}: ${m.tempMeanC == null ? S.noData : '${m.tempMeanC!.toStringAsFixed(1)} degrees'}'].join(', ')}',
+      child: LineChart(
+        LineChartData(
+          minX: 0,
+          maxX: math.max(1, months.length - 1).toDouble(),
+          minY: minY,
+          maxY: maxY,
+          gridData: _grid(step),
+          borderData: FlBorderData(show: false),
+          titlesData: _titles(months, step),
+          lineTouchData: LineTouchData(
+            enabled: true,
+            handleBuiltInTouches: false,
+            touchCallback: (e, r) {
+              if (e is FlTapUpEvent || e is FlPanUpdateEvent) {
+                final x = r?.lineBarSpots?.firstOrNull?.x;
+                if (x != null) setState(() => _selected = x.round());
+              }
+            },
+          ),
+          lineBarsData: [
+            LineChartBarData(
+              isCurved: true,
+              curveSmoothness: 0.3,
+              preventCurveOverShooting: true,
+              color: color,
+              barWidth: 3,
+              spots: [
+                for (final (i, m) in months.indexed)
+                  m.tempMeanC == null
+                      ? FlSpot.nullSpot
+                      : FlSpot(i.toDouble(), m.tempMeanC!),
+              ],
+              belowBarData: BarAreaData(
+                show: true,
+                color: color.withValues(alpha: 0.08),
+              ),
+              dotData: FlDotData(
+                show: true,
+                getDotPainter: (spot, _, _, i) => FlDotCirclePainter(
+                  radius: i == _selected ? 6 : 3,
+                  color: i == _selected ? color : context.fs.surface,
+                  strokeWidth: 2,
+                  strokeColor: color,
+                ),
+              ),
+            ),
+          ],
+        ),
+        duration: FsMotion.of(context, FsMotion.normal),
       ),
     );
   }

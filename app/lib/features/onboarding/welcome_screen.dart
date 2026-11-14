@@ -1,100 +1,103 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/strings.dart';
+import '../../design/components/buttons.dart';
+import '../../design/components/page.dart';
 import '../../design/tokens.dart';
 import '../../state/providers.dart';
 
+/// "What's new"-style welcome: app mark, promise, three steps, one action.
 class WelcomeScreen extends ConsumerWidget {
   const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final t = Theme.of(context).textTheme;
+    final p = context.fs;
+    final t = context.type;
     return Scaffold(
+      backgroundColor: p.surface,
       body: SafeArea(
-        child: Column(
-          children: [
-            // Scrolls on small phones / large text instead of overflowing.
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.all(FsSpace.gutter),
-                children: [
-                  const SizedBox(height: FsSpace.lg),
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Icon(
-                      Icons.satellite_alt,
-                      size: 56,
-                      color: FsColors.primary,
-                    ),
-                  ),
-                  const SizedBox(height: FsSpace.md),
-                  Text(
-                    S.appName,
-                    style: t.titleLarge?.copyWith(color: FsColors.primary),
-                  ),
-                  const SizedBox(height: FsSpace.sm),
-                  Text(S.welcomeTitle, style: t.headlineMedium),
-                  const SizedBox(height: FsSpace.md),
-                  Text(S.welcomeBody, style: t.bodyLarge),
-                  const SizedBox(height: FsSpace.lg),
-                  Text(S.howItWorks, style: t.titleMedium),
-                  const SizedBox(height: FsSpace.sm),
-                  const _Step(
-                    n: 1,
-                    icon: Icons.location_on_outlined,
-                    text: S.how1,
-                  ),
-                  const _Step(n: 2, icon: Icons.checklist, text: S.how2),
-                  const _Step(n: 3, icon: Icons.autorenew, text: S.how3),
-                  const SizedBox(height: FsSpace.md),
-                  Container(
-                    padding: const EdgeInsets.all(FsSpace.md),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 520),
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(
+                FsSpace.xxxl,
+                FsSpace.huge,
+                FsSpace.xxxl,
+                FsSpace.xxl,
+              ),
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    width: 64,
+                    height: 64,
                     decoration: BoxDecoration(
-                      color: FsColors.primaryContainer.withValues(alpha: 0.4),
-                      borderRadius: const BorderRadius.all(FsRadius.md),
+                      color: p.tint,
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Icon(Icons.info_outline, color: FsColors.primary),
-                        const SizedBox(width: FsSpace.sm),
-                        Expanded(
-                          child: Text(S.welcomeDisclaimer, style: t.bodyMedium),
-                        ),
-                      ],
+                    child: Icon(
+                      CupertinoIcons.globe,
+                      color: p.onTint,
+                      size: 34,
                     ),
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(height: FsSpace.xxl),
+                Text(S.appName, style: t.headline.copyWith(color: p.tint)),
+                const SizedBox(height: FsSpace.xs),
+                Semantics(
+                  header: true,
+                  child: Text(S.welcomeTitle, style: t.largeTitle),
+                ),
+                const SizedBox(height: FsSpace.xxxl),
+                const _Feature(
+                  icon: CupertinoIcons.location_solid,
+                  title: S.how1Title,
+                  body: S.how1Body,
+                ),
+                const _Feature(
+                  icon: CupertinoIcons.list_bullet,
+                  title: S.how2Title,
+                  body: S.how2Body,
+                ),
+                const _Feature(
+                  icon: CupertinoIcons.arrow_right_arrow_left,
+                  title: S.how3Title,
+                  body: S.how3Body,
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(FsSpace.gutter),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // Developer info only — hidden in release builds.
-                  if (kDebugMode)
-                    FutureBuilder<String>(
-                      future: ref.read(engineProvider).engineVersion(),
-                      builder: (_, snap) => Padding(
-                        padding: const EdgeInsets.only(bottom: FsSpace.sm),
-                        child: Text(
-                          'Engine: ${snap.data ?? '…'}',
-                          style: t.bodySmall,
-                        ),
-                      ),
-                    ),
-                  FilledButton(
-                    onPressed: () => context.push('/location'),
-                    child: const Text(S.start),
+          ),
+        ),
+      ),
+      bottomNavigationBar: FsBottomBar(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              S.welcomeDisclaimer,
+              textAlign: TextAlign.center,
+              style: t.footnote,
+            ),
+            const SizedBox(height: FsSpace.md),
+            FsButton(S.getStarted, onPressed: () => context.push('/location')),
+            if (kDebugMode)
+              FutureBuilder<String>(
+                future: ref.read(engineProvider).engineVersion(),
+                builder: (_, snap) => Padding(
+                  padding: const EdgeInsets.only(top: FsSpace.sm),
+                  child: Text(
+                    'Engine: ${snap.data ?? '…'}',
+                    style: t.caption.copyWith(color: p.tertiaryLabel),
                   ),
-                ],
+                ),
               ),
-            ),
           ],
         ),
       ),
@@ -102,31 +105,37 @@ class WelcomeScreen extends ConsumerWidget {
   }
 }
 
-class _Step extends StatelessWidget {
-  const _Step({required this.n, required this.icon, required this.text});
-  final int n;
+class _Feature extends StatelessWidget {
+  const _Feature({required this.icon, required this.title, required this.body});
   final IconData icon;
-  final String text;
+  final String title;
+  final String body;
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: FsSpace.xs),
-    child: Row(
-      children: [
-        CircleAvatar(
-          radius: 18,
-          backgroundColor: FsColors.primaryContainer,
-          child: Icon(icon, size: 20, color: FsColors.primary),
-        ),
-        const SizedBox(width: FsSpace.md),
-        Expanded(
-          child: Text(
-            '$n. $text',
-            style: Theme.of(context).textTheme.bodyLarge,
-            semanticsLabel: 'Step $n: $text',
+  Widget build(BuildContext context) {
+    final p = context.fs;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: FsSpace.xxl),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(width: 40, child: Icon(icon, color: p.tint, size: 28)),
+          const SizedBox(width: FsSpace.lg),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: context.type.headline),
+                const SizedBox(height: FsSpace.xxs),
+                Text(
+                  body,
+                  style: context.type.callout.copyWith(color: p.secondaryLabel),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  }
 }

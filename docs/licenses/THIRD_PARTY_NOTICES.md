@@ -15,3 +15,12 @@ Before release, add all shipped code/data/text/image assets, exact versions and
 URLs, transformations, required attribution text and redistribution decisions.
 OpenFarm's root license does not license upstream datasets or dependencies.
 No NASA logos or mission insignia were generated.
+
+## Flutter app (`app/`, P4) — shipped assets and packages
+
+| Component | Source / version | License / disposition |
+| --- | --- | --- |
+| Inter font (400/500/600/700, latin subset) | Fontsource `@fontsource/inter` 5.2.5 via cdn.jsdelivr.net; bundled in `app/assets/fonts/` | SIL Open Font License 1.1 (Rasmus Andersson). Bundled unmodified; include OFL text in release notices. |
+| OpenStreetMap tiles | `tile.openstreetmap.org`, loaded at runtime (not bundled) | ODbL data; attribution "© OpenStreetMap contributors" shown in app. Light demo use only per OSM tile usage policy; switch provider for wider release. |
+| NASA GIBS imagery | `MODIS_Terra_CorrectedReflectance_TrueColor`, GoogleMapsCompatible_Level9, loaded at runtime (not bundled) | NASA open data; source, layer and date shown in app. Provisional layer until P2 confirms. |
+| Flutter packages | Exact versions in `app/pubspec.lock`: flutter_riverpod, go_router, flutter_map, latlong2, fl_chart, intl, flutter_rust_bridge 2.13.0, cupertino_icons | Permissive (MIT / BSD-3-Clause / Apache-2.0); verify transitive notices before binary release. |

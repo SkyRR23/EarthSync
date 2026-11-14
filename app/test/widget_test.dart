@@ -43,25 +43,31 @@ void main() {
 
   testWidgets('welcome screen shows start button', (tester) async {
     await tester.pumpWidget(const ProviderScope(child: FieldShiftApp()));
-    expect(find.text('Start'), findsOneWidget);
+    expect(find.text('Get started'), findsOneWidget);
   });
 
-  testWidgets('scenario card shows title, status and no percentages', (
+  testWidgets('scenario row and detail show status and no percentages', (
     tester,
   ) async {
-    final s = _fixture().scenarios[1];
+    final a = _fixture();
+    final s = a.scenarios[1];
     await tester.pumpWidget(
       MaterialApp(
         theme: fsTheme(),
         home: Scaffold(
           body: SingleChildScrollView(
-            child: FsScenarioCard(scenario: s, optionNumber: 1),
+            child: Column(
+              children: [
+                FsScenarioRow(scenario: s, label: 'Option 1', onTap: () {}),
+                ScenarioDetailBody(scenario: s, label: 'Option 1', analysis: a),
+              ],
+            ),
           ),
         ),
       ),
     );
-    expect(find.text(s.title), findsOneWidget);
-    expect(find.text('Partly limited'), findsOneWidget);
+    expect(find.text(s.title), findsNWidgets(2));
+    expect(find.text('Partly limited'), findsWidgets);
     expect(find.textContaining('%'), findsNothing);
   });
 }

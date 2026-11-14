@@ -1,47 +1,26 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/strings.dart';
 import '../../data/models/farmer_input.dart';
-import '../../design/components/choice_group.dart';
-import '../../design/components/step_scaffold.dart';
+import '../../design/components/buttons.dart';
+import '../../design/components/choice.dart';
+import '../../design/components/page.dart';
+import '../../design/components/scenario.dart' show cropIcon, monthShort;
+import '../../design/tokens.dart';
 import '../../state/providers.dart';
 
 const kQuestionCount = 6;
 
-IconData _cropIcon(String id) => switch (id) {
-  'rice' => Icons.grass,
-  'mung_bean' || 'black_gram' || 'chickpea' => Icons.spa_outlined,
-  'groundnut' || 'sesame' => Icons.grain,
-  'maize' => Icons.agriculture,
-  'vegetables' => Icons.eco_outlined,
-  'fallow' => Icons.landscape_outlined,
-  _ => Icons.grass,
-};
-
 final _cropChoices = [
   for (final e in Crops.options.entries)
-    FsChoice(e.key, e.value, _cropIcon(e.key)),
-];
-
-const _monthShort = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
+    FsChoice(e.key, e.value, cropIcon(e.key)),
 ];
 
 /// One widget for all six questions; [step] is 1-based.
-/// [editing] = opened from the review screen's "Change": return there after.
+/// [editing] = opened from Review's rows: return there after answering.
 class QuestionScreen extends ConsumerWidget {
   const QuestionScreen({super.key, required this.step, this.editing = false});
   final int step;
@@ -65,28 +44,27 @@ class QuestionScreen extends ConsumerWidget {
     }
 
     /// Single-choice questions move on by themselves after a short pause,
-    /// so farmers can answer with one tap. Next stays available too.
+    /// so farmers can answer with one tap. The button stays available too.
     void answerThenAdvance(VoidCallback save) {
       final route = ModalRoute.of(context);
       save();
       Future<void>.delayed(_autoAdvanceDelay, () {
-        // Only advance if the user is still on this question.
         if (!context.mounted || route == null || !route.isCurrent) return;
         next();
       });
     }
 
     final (
-      String title,
-      String? subtitle,
+      String question,
+      String? hint,
       Widget body,
       bool answered,
     ) = switch (step) {
       1 => (
         S.qCurrentCrop,
         null,
-        FsChoiceGroup<String>(
-          columns: 2,
+        FsChoiceList<String>(
+          header: S.crops,
           choices: _cropChoices,
           unknownValue: kUnknown,
           selected: {?d.currentCrop},
@@ -97,8 +75,8 @@ class QuestionScreen extends ConsumerWidget {
       2 => (
         S.qRecentRotation,
         null,
-        FsChoiceGroup<String>(
-          columns: 2,
+        FsChoiceList<String>(
+          header: S.crops,
           choices: _cropChoices,
           unknownValue: kUnknown,
           selected: {?d.previousCrop},
@@ -109,10 +87,10 @@ class QuestionScreen extends ConsumerWidget {
       3 => (
         S.qPlantingMonth,
         null,
-        FsChoiceGroup<int>(
-          columns: 3,
+        FsChoiceGrid<int>(
+          header: S.months,
           choices: [
-            for (var m = 1; m <= 12; m++) FsChoice(m, _monthShort[m - 1]),
+            for (var m = 1; m <= 12; m++) FsChoice(m, monthShort[m - 1]),
           ],
           unknownValue: 0,
           selected: {?d.plantingMonth},
@@ -124,15 +102,23 @@ class QuestionScreen extends ConsumerWidget {
       4 => (
         S.qIrrigation,
         null,
-        FsChoiceGroup<Irrigation>(
+        FsChoiceList<Irrigation>(
           choices: const [
-            FsChoice(Irrigation.full, 'Yes, all year', Icons.water_drop),
+            FsChoice(
+              Irrigation.full,
+              'Yes, all year',
+              CupertinoIcons.drop_fill,
+            ),
             FsChoice(
               Irrigation.partial,
-              'Sometimes / a little',
-              Icons.water_drop_outlined,
+              'Sometimes or a little',
+              CupertinoIcons.drop,
             ),
-            FsChoice(Irrigation.none, 'No, only rain', Icons.cloud_outlined),
+            FsChoice(
+              Irrigation.none,
+              'No, only rain',
+              CupertinoIcons.cloud_rain,
+            ),
           ],
           unknownValue: Irrigation.unknown,
           selected: {?d.irrigation},
@@ -143,11 +129,23 @@ class QuestionScreen extends ConsumerWidget {
       5 => (
         S.qDrainage,
         null,
-        FsChoiceGroup<Drainage>(
+        FsChoiceList<Drainage>(
           choices: const [
-            FsChoice(Drainage.poor, 'Yes, for many days', Icons.water),
-            FsChoice(Drainage.moderate, 'For a day or two', Icons.waves),
-            FsChoice(Drainage.good, 'No, it drains fast', Icons.check),
+            FsChoice(
+              Drainage.poor,
+              'Yes, for many days',
+              CupertinoIcons.drop_fill,
+            ),
+            FsChoice(
+              Drainage.moderate,
+              'For a day or two',
+              CupertinoIcons.drop,
+            ),
+            FsChoice(
+              Drainage.good,
+              'No, it drains fast',
+              CupertinoIcons.sun_max,
+            ),
           ],
           unknownValue: Drainage.unknown,
           selected: {?d.drainage},
@@ -168,14 +166,43 @@ class QuestionScreen extends ConsumerWidget {
     };
 
     final last = step == kQuestionCount;
-    return FsStepScaffold(
-      progressLabel: S.stepOf(step, kQuestionCount),
-      progress: step / kQuestionCount,
-      title: title,
-      subtitle: subtitle,
-      nextLabel: editing ? S.done : (last ? S.reviewAnswers : S.next),
-      onNext: answered ? next : null,
-      child: body,
+    final t = context.type;
+    return FsPage(
+      title: question,
+      largeTitle: false,
+      navMiddle: S.stepOf(step, kQuestionCount),
+      below: FsProgressLine(
+        step / kQuestionCount,
+        semanticLabel: S.stepSemantic(step, kQuestionCount),
+      ),
+      bottomBar: FsButton(
+        editing ? S.done : (last ? S.reviewAnswers : S.next),
+        onPressed: answered ? next : null,
+      ),
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(
+            FsSpace.gutter + FsSpace.xs,
+            FsSpace.xxl,
+            FsSpace.gutter,
+            0,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Semantics(header: true, child: Text(question, style: t.title1)),
+              if (hint != null) ...[
+                const SizedBox(height: FsSpace.xs),
+                Text(
+                  hint,
+                  style: t.body.copyWith(color: context.fs.secondaryLabel),
+                ),
+              ],
+            ],
+          ),
+        ),
+        body,
+      ],
     );
   }
 }
@@ -196,25 +223,25 @@ class _PrioritiesQuestion extends StatelessWidget {
   Widget build(BuildContext context) {
     final sel = selected;
     final current = <Priority?>{if (sel != null && sel.isEmpty) null, ...?sel};
-    return FsChoiceGroup<Priority?>(
+    return FsChoiceList<Priority?>(
       multi: true,
       choices: const [
-        FsChoice(Priority.income, 'More income', Icons.payments_outlined),
         FsChoice(
-          Priority.lessWater,
-          'Use less water',
-          Icons.water_drop_outlined,
+          Priority.income,
+          'More income',
+          CupertinoIcons.money_dollar_circle,
         ),
+        FsChoice(Priority.lessWater, 'Use less water', CupertinoIcons.drop),
         FsChoice(Priority.soilHealth, 'Healthier soil', Icons.eco_outlined),
         FsChoice(
           Priority.lowerRisk,
           'Lower risk of crop loss',
-          Icons.shield_outlined,
+          CupertinoIcons.shield,
         ),
         FsChoice(
           Priority.foodForFamily,
           'Food for my family',
-          Icons.restaurant,
+          CupertinoIcons.house,
         ),
       ],
       unknownValue: null,

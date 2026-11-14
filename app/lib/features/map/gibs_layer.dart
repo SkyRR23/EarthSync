@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:intl/intl.dart';
 
 import '../../app/strings.dart';
+import '../../design/components/grouped.dart';
+import '../../design/components/sheet.dart';
 import '../../design/tokens.dart';
 
 /// GIBS layer settings. PROVISIONAL until P2 confirms the layer (plan §09).
@@ -31,6 +34,7 @@ class GibsLayerConfig {
   DateTime get date =>
       DateTime.now().toUtc().subtract(Duration(days: dateLagDays));
   String get dateString => DateFormat('yyyy-MM-dd').format(date);
+  String get dateLabel => DateFormat.yMMMd().format(date);
 
   String get urlTemplate =>
       'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/$layerId/default/'
@@ -42,77 +46,81 @@ class GibsLayerConfig {
     tileMatrixSet: 'GoogleMapsCompatible_Level9',
     format: 'jpg',
     maxNativeZoom: 9,
-    legend:
-        'True-colour satellite photo. Clouds appear white. Visual only — not used for calculations.',
+    legend: 'True-colour satellite photo. Clouds appear white.',
   );
 }
 
-/// Base street map (for finding the field) + optional NASA overlay.
-List<Widget> baseMapLayers() => [
-  TileLayer(
-    urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-    userAgentPackageName: 'org.fieldshift.app',
-    maxNativeZoom: 19,
-  ),
-];
+const _userAgent = 'org.fieldshift.app';
 
-Widget gibsTileLayer(GibsLayerConfig c, {double opacity = 1}) => Opacity(
-  opacity: opacity,
-  child: TileLayer(
-    urlTemplate: c.urlTemplate,
-    userAgentPackageName: 'org.fieldshift.app',
-    maxNativeZoom: c.maxNativeZoom,
-    errorTileCallback: (_, _, _) {},
-  ),
+/// Street base map (for finding the field and filling satellite gaps).
+Widget streetTileLayer() => TileLayer(
+  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+  userAgentPackageName: _userAgent,
+  maxNativeZoom: 19,
 );
 
-/// Legend + date + source, always visible over the map.
-class FsMapLegend extends StatelessWidget {
-  const FsMapLegend({
-    super.key,
-    required this.config,
-    required this.showingNasa,
-  });
-  final GibsLayerConfig config;
-  final bool showingNasa;
+Widget gibsTileLayer(GibsLayerConfig c) => TileLayer(
+  urlTemplate: c.urlTemplate,
+  userAgentPackageName: _userAgent,
+  maxNativeZoom: c.maxNativeZoom,
+  errorTileCallback: (_, _, _) {},
+);
 
-  @override
-  Widget build(BuildContext context) {
-    final t = Theme.of(context).textTheme;
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(FsSpace.md),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              children: [
-                const Icon(
-                  Icons.image_outlined,
-                  color: FsColors.evidenceImagery,
-                ),
-                const SizedBox(width: FsSpace.sm),
-                Expanded(child: Text(config.title, style: t.titleMedium)),
-              ],
+/// Field pin in the accent colour with a soft halo.
+Widget fieldMarker(BuildContext context) {
+  final p = context.fs;
+  return Stack(
+    alignment: Alignment.center,
+    children: [
+      Container(
+        width: 44,
+        height: 44,
+        decoration: BoxDecoration(
+          color: p.tint.withValues(alpha: 0.18),
+          shape: BoxShape.circle,
+        ),
+      ),
+      Container(
+        width: 20,
+        height: 20,
+        decoration: BoxDecoration(
+          color: p.tint,
+          shape: BoxShape.circle,
+          border: Border.all(color: Colors.white, width: 3),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.25),
+              blurRadius: 6,
+              offset: const Offset(0, 2),
             ),
-            const SizedBox(height: FsSpace.xs),
-            Text('Date: ${config.dateString} (UTC)', style: t.bodyMedium),
-            const SizedBox(height: FsSpace.xs),
-            Text(config.legend, style: t.bodySmall),
-            const SizedBox(height: FsSpace.xs),
-            Text(
-              '${S.imagery}: NASA GIBS / ${config.layerId}',
-              style: t.bodySmall,
-            ),
-            if (!showingNasa)
-              Text(
-                'Street map: © OpenStreetMap contributors',
-                style: t.bodySmall,
-              ),
           ],
         ),
       ),
-    );
-  }
+    ],
+  );
+}
+
+void showImageryLegend(BuildContext context, GibsLayerConfig c, bool nasa) {
+  showFsSheet<void>(
+    context,
+    title: S.aboutImage,
+    builder: (ctx) => FsGroupedSection(
+      footer: S.imageryNote,
+      children: [
+        if (nasa) ...[
+          FsListRow(
+            leading: Icon(CupertinoIcons.photo, color: ctx.fs.tint),
+            title: c.title,
+            subtitle: c.legend,
+          ),
+          FsListRow(title: 'Date', value: '${c.dateLabel} (UTC)'),
+          FsListRow(title: 'Source', subtitle: 'NASA GIBS · ${c.layerId}'),
+        ],
+        const FsListRow(
+          title: 'Street map',
+          subtitle: '© OpenStreetMap contributors',
+        ),
+      ],
+    ),
+  );
 }

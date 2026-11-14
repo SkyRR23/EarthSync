@@ -15,11 +15,11 @@ void main() {
   testWidgets('single-choice answer auto-advances to next question', (t) async {
     await t.pumpWidget(_app('/question/1'));
     await t.pumpAndSettle();
-    expect(find.text('Question 1 of 6'), findsOneWidget);
+    expect(find.text('1 of 6'), findsOneWidget);
     await t.tap(find.text('Rice'));
     await t.pump(const Duration(milliseconds: 400));
     await t.pumpAndSettle();
-    expect(find.text('Question 2 of 6'), findsOneWidget);
+    expect(find.text('2 of 6'), findsOneWidget);
   });
 
   testWidgets('"I don\'t know" is visible without scrolling on crop question', (

@@ -27,7 +27,9 @@ class _FieldShiftAppState extends State<FieldShiftApp> {
   Widget build(BuildContext context) => MaterialApp.router(
     title: S.appName,
     debugShowCheckedModeBanner: false,
-    theme: fsTheme(),
+    theme: fsLightTheme(),
+    darkTheme: fsDarkTheme(),
+    themeMode: ThemeMode.system,
     routerConfig: _router,
   );
 }
