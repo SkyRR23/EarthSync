@@ -1,15 +1,17 @@
 """Local demo host: Flutter web + NASA backend + native Rust engine."""
 
 import asyncio
+import hashlib
 import json
 import os
 from pathlib import Path
 
-from fastapi import HTTPException, Request
+from fastapi import Request
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from .api import create_app
+from .errors import ServiceError
 
 ROOT = Path(__file__).resolve().parents[2]
 ENGINE = (
@@ -26,9 +28,139 @@ class DemoStaticFiles(StaticFiles):
         return response
 
 
-def create_demo_app(engine=ENGINE, static_dir=ROOT / "app/build/web"):
-    app = create_app()
+def validate_engine_output(output, version):
+    """Check the existing envelope without translating or replacing Rust results."""
+    try:
+        result = json.loads(output)
+        if not isinstance(result, dict):
+            raise ValueError
+        if result.get("status") == "error":
+            error = result["error"]
+            if not (
+                isinstance(error, dict)
+                and isinstance(error.get("code"), str)
+                and isinstance(error.get("message"), str)
+                and type(error.get("retryable")) is bool
+            ):
+                raise ValueError
+        elif result.get("status") == "success":
+            data = result["data"]
+            if version == "v02":
+                if data["schema_version"] != "0.2-provisional":
+                    raise ValueError
+                data = data["integration"]
+            if data["data_mode"] not in {"supplied_data", "synthetic_demo"} or not all(
+                isinstance(data[key], dict)
+                for key in ("field", "environment", "climate", "rotations")
+            ):
+                raise ValueError
+        else:
+            raise ValueError
+        # JSONResponse rejects NaN/infinity even though json.loads accepts them.
+        json.dumps(result, allow_nan=False)
+        return result
+    except (ValueError, TypeError, KeyError, UnicodeError, RecursionError):
+        raise ServiceError(
+            "ENGINE_INVALID_RESPONSE",
+            "Rust returned an unreadable or unexpected response envelope.",
+        ) from None
+
+
+def create_demo_app(engine=ENGINE, static_dir=ROOT / "app/build/web", provider=None):
+    app = create_app(provider=provider)
     slots = asyncio.Semaphore(2)
+
+    async def run_engine(body, version):
+        if not Path(engine).is_file():
+            raise ServiceError(
+                "ENGINE_CONFIGURATION",
+                "Build the web_engine Rust example before starting this service.",
+                503,
+            )
+        args = [str(engine)] + (["--v02"] if version == "v02" else [])
+        try:
+            await asyncio.wait_for(slots.acquire(), 5)
+        except TimeoutError:
+            raise ServiceError(
+                "ENGINE_BUSY", "Rust workers are busy; retry later.", 503, True
+            ) from None
+        try:
+            try:
+                process = await asyncio.create_subprocess_exec(
+                    *args,
+                    stdin=asyncio.subprocess.PIPE,
+                    stdout=asyncio.subprocess.PIPE,
+                    stderr=asyncio.subprocess.PIPE,
+                )
+            except (OSError, NotImplementedError):
+                raise ServiceError(
+                    "ENGINE_CONFIGURATION",
+                    "Cannot launch the compiled Rust executable. Check the build, permissions and Python event loop.",
+                    503,
+                ) from None
+            try:
+                output, _ = await asyncio.wait_for(process.communicate(body), 20)
+            except (TimeoutError, asyncio.CancelledError) as exc:
+                if process.returncode is None:
+                    try:
+                        process.kill()
+                    except ProcessLookupError:
+                        pass
+                # Resume draining pipes after cancelled communicate(), so wait()
+                # cannot hang behind a full stdout/stderr pipe after termination.
+                await process.communicate()
+                await process.wait()
+                if isinstance(exc, asyncio.CancelledError):
+                    raise
+                raise ServiceError(
+                    "ENGINE_TIMEOUT", "Rust execution exceeded 20 seconds.", 504, True
+                ) from None
+            if process.returncode:
+                raise ServiceError(
+                    "ENGINE_FAILED",
+                    "Rust exited unsuccessfully. Rebuild the executable and check its inputs.",
+                )
+            return validate_engine_output(output, version)
+        finally:
+            slots.release()
+
+    @app.post("/api/v1/diagnostics/integration")
+    async def integration_diagnostic(request: Request):
+        evidence = await app.state.diagnostic_nasa(request)
+        # No crop profiles or recommendations. This tests climate integration only.
+        document = {
+            "data_mode": "supplied_data",
+            "field": {
+                "field_id": "public-diagnostic-point",
+                "latitude": evidence.environment.latitude,
+                "longitude": evidence.environment.longitude,
+                "current_crop": "",
+                "irrigation_available": None,
+            },
+            "soil": {"texture": None, "drainage": None},
+            "environment": evidence.environment.model_dump(),
+            "crop_references": {"sources": [], "profiles": []},
+            "scenarios": [],
+        }
+        result = await run_engine(json.dumps(document).encode(), "integration")
+        if result["status"] != "success":
+            raise ServiceError(
+                "ENGINE_FAILED",
+                "Rust rejected the validated diagnostic climate request.",
+            )
+        return {
+            "schema_version": "1.0-diagnostic",
+            "status": "success",
+            "mode": "live_http",
+            "cache_used": False,
+            "checks": {
+                "nasa_transport": "passed",
+                "merra2_validation": "passed",
+                "daily_coverage": "complete",
+                "rust_execution": "passed",
+            },
+            "engine_sha256": hashlib.sha256(Path(engine).read_bytes()).hexdigest(),
+        }
 
     @app.get("/api/demo/captured-climate")
     async def captured_climate():
@@ -51,37 +183,23 @@ def create_demo_app(engine=ENGINE, static_dir=ROOT / "app/build/web"):
     )
     async def analyze(version: str, request: Request):
         if version not in {"integration", "v02"}:
-            raise HTTPException(404, "Unknown engine interface")
+            raise ServiceError("UNKNOWN_INTERFACE", "Unknown engine interface.", 404)
         body = bytearray()
         async for chunk in request.stream():
             body.extend(chunk)
             if len(body) > 2_000_000:
-                raise HTTPException(413, "Request exceeds demo limit")
+                raise ServiceError(
+                    "REQUEST_TOO_LARGE", "Request exceeds the 2 MB demo limit.", 413
+                )
         try:
             document = json.loads(body)
-        except (ValueError, UnicodeError):
-            raise HTTPException(422, "Provide a UTF-8 JSON object") from None
+        except (ValueError, UnicodeError, RecursionError):
+            raise ServiceError(
+                "INVALID_INPUT", "Provide a UTF-8 JSON object.", 422
+            ) from None
         if not isinstance(document, dict):
-            raise HTTPException(422, "Provide a JSON object")
-        if not Path(engine).is_file():
-            raise HTTPException(503, "Build the web_engine Rust example first")
-        args = [str(engine)] + (["--v02"] if version == "v02" else [])
-        async with slots:
-            process = await asyncio.create_subprocess_exec(
-                *args,
-                stdin=asyncio.subprocess.PIPE,
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE,
-            )
-            try:
-                output, _ = await asyncio.wait_for(process.communicate(bytes(body)), 20)
-            except asyncio.TimeoutError:
-                process.kill()
-                await process.wait()
-                raise HTTPException(504, "Rust engine timed out") from None
-        if process.returncode:
-            raise HTTPException(502, "Rust engine process failed")
-        return JSONResponse(json.loads(output))
+            raise ServiceError("INVALID_INPUT", "Provide a JSON object.", 422)
+        return JSONResponse(await run_engine(bytes(body), version))
 
     if Path(static_dir).is_dir():
         app.mount("/", DemoStaticFiles(directory=static_dir, html=True), name="flutter")

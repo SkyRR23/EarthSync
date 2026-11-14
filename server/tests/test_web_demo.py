@@ -1,6 +1,6 @@
 import asyncio
 import json
-from unittest.mock import AsyncMock
+from unittest.mock import AsyncMock, Mock
 
 import pytest
 from fastapi.testclient import TestClient
@@ -46,18 +46,25 @@ def test_captured_evidence_keeps_original_provenance(client):
 
 def test_unknown_interface_and_oversized_request(client):
     assert client.post("/api/engine/unknown", json={}).status_code == 404
-    assert client.post("/api/engine/integration", content=b"x" * 2_000_001).status_code == 413
-    assert client.post("/api/engine/integration", content=b"not JSON").status_code == 422
+    assert (
+        client.post("/api/engine/integration", content=b"x" * 2_000_001).status_code
+        == 413
+    )
+    assert (
+        client.post("/api/engine/integration", content=b"not JSON").status_code == 422
+    )
     assert client.post("/api/engine/integration", json=[]).status_code == 422
 
 
 def test_timeout_kills_process_and_uses_fixed_executable(client, monkeypatch):
     process = AsyncMock()
     process.returncode = None
-    process.kill = lambda: None
+    process.kill = Mock()
     launch = AsyncMock(return_value=process)
 
     async def timeout(coroutine, seconds):
+        if seconds == 5:
+            return await coroutine
         coroutine.close()
         assert seconds == 20
         raise asyncio.TimeoutError
@@ -67,7 +74,12 @@ def test_timeout_kills_process_and_uses_fixed_executable(client, monkeypatch):
     assert client.post("/api/engine/integration", json={}).status_code == 504
     assert launch.call_args.args == (str(ENGINE),)
     assert "shell" not in launch.call_args.kwargs
+    process.kill.assert_called_once()
     process.wait.assert_awaited_once()
+    # The first communication coroutine is closed by the timeout stub; the
+    # cleanup call is awaited to drain the child pipes.
+    assert process.communicate.call_count == 2
+    assert process.communicate.await_count == 1
 
 
 def test_missing_engine_is_explicitly_unavailable(tmp_path):
