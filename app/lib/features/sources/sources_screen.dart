@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/strings.dart';
+import '../results/climate_provenance.dart';
 import '../../data/models/field_analysis.dart';
 import '../../design/components/badges.dart';
 import '../../design/components/feedback.dart';
@@ -29,6 +30,13 @@ class SourcesScreen extends ConsumerWidget {
                   'models describe your region, not your exact plot.',
                   style: t.bodyLarge,
                 ),
+                ClimateProvenance(analysis: a),
+                if (a.trace != null) ...[
+                  ExpansionTile(title: const Text('Exact backend response and provenance'),
+                    children: [SelectableText(a.trace!.backendResponseJson)]),
+                  ExpansionTile(title: const Text('Retained farmer answers (not all used by Rust)'),
+                    children: [SelectableText(a.trace!.farmerInputJson)]),
+                ],
                 const FsSectionTitle('Evidence types'),
                 for (final type in EvidenceType.values)
                   ListTile(

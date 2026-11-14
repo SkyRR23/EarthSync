@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import '../models/field_analysis.dart';
+import '../models/integration_trace.dart';
 
 /// Maps the team engine's `analyze_integration_json` envelope
 /// (engine/src/integration.rs, docs/INTEGRATION_READINESS.md) onto the
@@ -8,7 +9,7 @@ import '../models/field_analysis.dart';
 /// agricultural rules are added here.
 ///
 /// Throws [EngineError] for `status: "error"` or unreadable output.
-FieldAnalysis fieldAnalysisFromEnvelope(String envelopeJson) {
+FieldAnalysis fieldAnalysisFromEnvelope(String envelopeJson, {IntegrationTrace? trace}) {
   final Map<String, dynamic> env;
   try {
     env = jsonDecode(envelopeJson) as Map<String, dynamic>;
@@ -37,7 +38,7 @@ FieldAnalysis fieldAnalysisFromEnvelope(String envelopeJson) {
   }
 
   try {
-    return _fromData(env['data'] as Map<String, dynamic>);
+    return _fromData(env['data'] as Map<String, dynamic>, trace);
   } on EngineError {
     rethrow;
   } catch (e) {
@@ -93,7 +94,7 @@ EvidenceType _dataKindType(Object? kind) => switch (kind) {
 
 const _envRefId = 'environment-series';
 
-FieldAnalysis _fromData(Map<String, dynamic> d) {
+FieldAnalysis _fromData(Map<String, dynamic> d, IntegrationTrace? trace) {
   final field = d['field'] as Map<String, dynamic>;
   final envr = d['environment'] as Map<String, dynamic>;
   final seasonal = envr['seasonal'] as Map<String, dynamic>;
@@ -108,20 +109,23 @@ FieldAnalysis _fromData(Map<String, dynamic> d) {
       : '${_ym(window['start'] as Map<String, dynamic>?)} – '
             '${_ym(window['end'] as Map<String, dynamic>?)}';
 
-  // Climate: incomplete months are shown as gaps (null), never zero.
-  final months = <MonthlyClimate>[
-    for (final o in _list(seasonal['observations']))
-      MonthlyClimate(
-        month: (o['period'] as Map<String, dynamic>)['month'] as int,
-        year: (o['period'] as Map<String, dynamic>)['year'] as int?,
-        rainMm: o['rainfall_complete'] == true
-            ? (o['rainfall_mm'] as num?)?.toDouble()
-            : null,
-        tempMeanC: o['temperature_complete'] == true
-            ? (o['mean_temperature_c'] as num?)?.toDouble()
-            : null,
-      ),
-  ];
+  // Present every selected month, including entirely absent observations.
+  // Values are still supplied/calculated by the backend and Rust, never filled.
+  final observations = _list(seasonal['observations']);
+  final byPeriod = {for (final o in observations)
+    '${o['period']['year']}-${o['period']['month']}': o};
+  final start = window!['start'] as Map<String, dynamic>;
+  final end = window['end'] as Map<String, dynamic>;
+  final months = <MonthlyClimate>[];
+  for (var index = (start['year'] as int) * 12 + (start['month'] as int) - 1;
+      index <= (end['year'] as int) * 12 + (end['month'] as int) - 1; index++) {
+    final year = index ~/ 12;
+    final month = index % 12 + 1;
+    final o = byPeriod['$year-$month'];
+    months.add(MonthlyClimate(month: month, year: year,
+      rainMm: o?['rainfall_complete'] == true ? (o?['rainfall_mm'] as num?)?.toDouble() : null,
+      tempMeanC: o?['temperature_complete'] == true ? (o?['mean_temperature_c'] as num?)?.toDouble() : null));
+  }
 
   final dataGaps = <DataGap>[
     for (final m in _list(climate['rainfall_gap_months']))
@@ -134,7 +138,7 @@ FieldAnalysis _fromData(Map<String, dynamic> d) {
         field: 'temp_mean_c.${_ym(m)}',
         reason: 'Month incomplete in supplied data.',
       ),
-    if (field['current_crop'] == null)
+    if (field['current_crop'] == null || field['current_crop'] == '')
       const DataGap(field: 'current_crop', reason: 'Not reported by farmer.'),
     if (field['irrigation_available'] == null)
       const DataGap(field: 'irrigation', reason: 'Not reported by farmer.'),
@@ -153,7 +157,7 @@ FieldAnalysis _fromData(Map<String, dynamic> d) {
       final w = st['growing_window'] as Map<String, dynamic>?;
       steps.add(
         RotationStep(
-          cropId: st['crop_id'] as String,
+          cropId: st['crop_id'] as String?,
           startMonth: (w?['start'] as Map<String, dynamic>?)?['month'] as int?,
           endMonth: (w?['end'] as Map<String, dynamic>?)?['month'] as int?,
           feasibility: i < crops.length
@@ -197,18 +201,23 @@ FieldAnalysis _fromData(Map<String, dynamic> d) {
       ),
     );
   }
-  // Baseline first, keep engine order otherwise.
-  scenarios.sort((a, b) => (b.isBaseline ? 1 : 0) - (a.isBaseline ? 1 : 0));
+  // Preserve Rust scenario order, including a baseline that is not first.
 
+  final provenance = trace?.provenance;
+  final retrievals = provenance?['source_requests'] as List<dynamic>? ?? const [];
+  final retrievedAt = retrievals.isEmpty ? null :
+      DateTime.tryParse(retrievals.first['retrieved_at'] as String? ?? '');
   final references = <Reference>[
     Reference(
       id: _envRefId,
       title: meta['source'] as String? ?? 'Environmental series',
       type: _dataKindType(meta['data_kind']),
       period: period,
+      spatialScale: provenance?['spatial_support'] as String?,
       note: [
         if (meta['dataset'] != null) 'Dataset: ${meta['dataset']}',
         if (meta['data_kind'] != null) 'Kind: ${meta['data_kind']}',
+        if (retrievedAt != null) 'Retrieved: ${retrievedAt.toUtc().toIso8601String()}',
       ].join(' · '),
     ),
     for (final s in _list(rotations['sources']))
@@ -226,15 +235,17 @@ FieldAnalysis _fromData(Map<String, dynamic> d) {
       meta['data_kind'] == 'hypothetical';
 
   return FieldAnalysis(
+    trace: trace,
     location: FieldLocation(
       latitude: (envr['latitude'] as num).toDouble(),
       longitude: (envr['longitude'] as num).toDouble(),
-      name: synthetic ? 'Synthetic demo field' : field['field_id'] as String?,
+      name: meta['data_kind'] == 'hypothetical' ? 'Synthetic demo field' : field['field_id'] as String?,
     ),
     climateSummary: ClimateSummary(
       months: months,
       period: period,
       sourceId: _envRefId,
+      gridResolution: provenance?['spatial_support'] as String?,
       totalRainMm: (climate['rainfall_total_mm'] as num?)?.toDouble(),
       meanTempC: (climate['calendar_day_weighted_mean_temperature_c'] as num?)
           ?.toDouble(),
@@ -252,8 +263,11 @@ FieldAnalysis _fromData(Map<String, dynamic> d) {
     ],
     dataGaps: dataGaps,
     references: references,
-    dataQuality: DataQuality(isDemo: synthetic),
+    dataQuality: DataQuality(isDemo: synthetic, fetchedAt: retrievedAt,
+      syntheticCropReferences: rotations['contains_synthetic_references'] == true),
     notices: [
+      if (trace != null) 'Previous crops, planting month and priorities are retained as farmer answers; Rust climate calculations do not use them.',
+      if (trace != null) 'Crop suitability is unknown. No source-backed crop constraints or candidate rotations were supplied.',
       for (final n in _list(d['notices'])) n['message'] as String? ?? '',
     ],
   );

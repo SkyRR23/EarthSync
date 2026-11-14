@@ -1,0 +1,45 @@
+name: Flutter live integration
+
+on:
+  push:
+    branches: [feat/flutter-live-nasa-integration]
+  pull_request:
+    paths: ["app/**", "engine/**", ".github/workflows/flutter-live-integration.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-flutter-bridge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: "1.99.0"
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.50.0"
+          channel: stable
+          cache: true
+      - name: Inspect Flutter toolchain
+        run: flutter doctor -v
+      - name: Build actual native Rust bridge for host tests
+        run: cargo build --release --locked --manifest-path app/rust/Cargo.toml
+      - name: Resolve Flutter dependencies
+        working-directory: app
+        run: flutter pub get
+      - name: Analyze Flutter
+        working-directory: app
+        run: flutter analyze
+      - name: Flutter widget, adapter and real native bridge tests (offline)
+        working-directory: app
+        run: flutter test
+      - name: Save resolved dependency lock
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: resolved-flutter-lock
+          path: app/pubspec.lock

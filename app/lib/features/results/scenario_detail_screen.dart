@@ -111,7 +111,7 @@ class ScenarioDetailScreen extends ConsumerWidget {
   }
 }
 
-String _stepTitle(String crop, int? start, int? end) {
+String _stepTitle(String? crop, int? start, int? end) {
   final name = Crops.label(crop);
   if (start == null || end == null) return '$name — planting window unknown';
   return '$name — ${monthNames[start - 1]} to ${monthNames[end - 1]}';

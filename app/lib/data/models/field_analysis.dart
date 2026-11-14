@@ -2,6 +2,8 @@
 /// Field names follow snake_case JSON from the Rust engine / fixtures.
 library;
 
+import 'integration_trace.dart';
+
 /// supported   = matches supplied crop facts (engine: supported_by_supplied_evidence)
 /// conflicts   = conflicts with supplied crop facts
 /// constrained = partly limited (mock data only)
@@ -35,12 +37,14 @@ class FieldAnalysis {
     required this.references,
     required this.dataQuality,
     this.notices = const [],
+    this.trace,
   });
 
+  final IntegrationTrace? trace;
   final FieldLocation location;
   final ClimateSummary climateSummary;
 
-  /// scenarios[0] is the baseline (farmer's current practice).
+  /// Ordered exactly as supplied by the engine; may be empty in climate-only mode.
   final List<RotationScenario> scenarios;
   final List<Alert> alerts;
   final List<String> assumptions;
@@ -111,7 +115,7 @@ class ClimateSummary {
     this.gridResolution,
   });
 
-  /// Always 12 entries Jan..Dec; values may be null (missing, never zero).
+  /// Entries in the selected historical window; null means missing, never zero.
   final List<MonthlyClimate> months;
   final String period;
   final String sourceId;
@@ -206,7 +210,7 @@ class RotationStep {
     this.feasibility = Feasibility.unknown,
   });
 
-  final String cropId;
+  final String? cropId;
 
   /// 1–12. null = window unknown.
   final int? startMonth;
@@ -214,7 +218,7 @@ class RotationStep {
   final Feasibility feasibility;
 
   factory RotationStep.fromJson(Map<String, dynamic> j) => RotationStep(
-    cropId: j['crop_id'] as String,
+    cropId: j['crop_id'] as String?,
     startMonth: j['start_month'] as int?,
     endMonth: j['end_month'] as int?,
     feasibility: _enum(
@@ -305,8 +309,9 @@ class Reference {
 }
 
 class DataQuality {
-  const DataQuality({this.isDemo = false, this.fetchedAt, this.stale = false});
+  const DataQuality({this.isDemo = false, this.fetchedAt, this.stale = false, this.syntheticCropReferences = false});
   final bool isDemo;
+  final bool syntheticCropReferences;
   final DateTime? fetchedAt;
   final bool stale;
 

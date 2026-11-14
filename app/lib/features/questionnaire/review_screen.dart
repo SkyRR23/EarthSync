@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/strings.dart';
+import 'historical_window_selector.dart';
 import '../../data/models/farmer_input.dart';
 import '../../design/components/scenario.dart' show monthNames;
 import '../../design/components/step_scaffold.dart';
@@ -76,6 +77,7 @@ class ReviewScreen extends ConsumerWidget {
       child: Card(
         child: Column(
           children: [
+            const Padding(padding: EdgeInsets.all(FsSpace.md), child: HistoricalWindowSelector()),
             for (final (label, value, route) in rows)
               ListTile(
                 minTileHeight: FsSpace.minTouch + 8,

@@ -2,20 +2,21 @@ import 'dart:convert';
 
 import '../../src/rust/api/bridge.dart' as rust;
 import '../../src/rust/frb_generated.dart';
+import '../environment/nasa_power_client.dart';
+import 'live_integration.dart';
 import '../models/farmer_input.dart';
 import '../models/field_analysis.dart';
 import 'engine_envelope.dart';
 import 'engine_gateway.dart';
 
-/// Calls the team's on-device Rust engine (engine/) through the
-/// field_shift_bridge crate (app/rust/).
-///
-/// Until P2's server exists, analysis uses the engine's synthetic request with
-/// the farmer's own answers applied (`analyze_synthetic_demo_json`). Results
-/// are labelled synthetic by the engine and shown with a demo banner.
-/// Regenerate bindings after changing app/rust/src/api:
-/// `flutter_rust_bridge_codegen generate`.
+/// Fetches climate from Python, then calls the existing on-device JSON bridge.
+/// Synthetic mode is an explicit developer choice, never an outage fallback.
 class RustEngine implements EngineGateway {
+  RustEngine({NasaPowerClient? climateClient, this.window = const HistoricalWindow()})
+      : _climateClient = climateClient ?? NasaPowerClient();
+  final NasaPowerClient _climateClient;
+  final HistoricalWindow window;
+  static const syntheticDemo = String.fromEnvironment('CLIMATE_MODE', defaultValue: 'live') == 'synthetic_demo';
   static bool _ready = false;
 
   /// Call once before runApp when ENGINE=rust.
@@ -32,6 +33,12 @@ class RustEngine implements EngineGateway {
         code: 'bridge_not_ready',
         message: 'The analysis engine did not start.',
       );
+    }
+    if (!syntheticDemo) {
+      final evidence = await _climateClient.fetch(input, window);
+      return analyzeNasaEvidence(input: input, window: window, evidence: evidence,
+        analyzeIntegration: (request) => rust.analyzeIntegrationJson(requestJson: request),
+        retrievalMode: 'live_http');
     }
     final farmer = jsonEncode({
       'current_crop': input.currentCrop,

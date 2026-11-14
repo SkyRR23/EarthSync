@@ -14,6 +14,7 @@ import '../../design/tokens.dart';
 import '../../state/providers.dart';
 import '../map/gibs_layer.dart';
 import 'climate_tab.dart';
+import 'climate_provenance.dart';
 
 /// Shows the analysis state machine: loading -> results tabs | error.
 class ResultsScreen extends ConsumerStatefulWidget {
@@ -160,7 +161,10 @@ class _OverviewTab extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: FsSpace.sm),
             child: b,
           ),
+        ClimateProvenance(analysis: a),
         const FsSectionTitle(S.atAGlance),
+        if (a.scenarios.isEmpty)
+          const Text('Climate-only result. Crop suitability and rotations are unknown; no crop constraints supplied.'),
         FsScenarioSummaryList(scenarios: a.scenarios),
         const SizedBox(height: FsSpace.sm),
         OutlinedButton.icon(
@@ -459,6 +463,8 @@ class _RotationsTab extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(FsSpace.gutter),
       children: [
+        ClimateProvenance(analysis: analysis),
+        if (list.isEmpty) const Text('Rotations are unknown. No source-backed crop constraints or scenarios supplied.'),
         if (analysis.dataQuality.isDemo)
           const Padding(
             padding: EdgeInsets.only(bottom: FsSpace.md),
