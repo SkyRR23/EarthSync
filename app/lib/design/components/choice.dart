@@ -78,7 +78,7 @@ class FsChoiceList<T> extends StatelessWidget {
           children: [for (final c in choices) _row(context, c)],
         ),
         FsGroupedSection(
-          header: S.notSure,
+
           separatorIndent: indent,
           children: [
             _row(
@@ -175,7 +175,7 @@ class FsChoiceGrid<T> extends StatelessWidget {
           ),
         ),
         FsGroupedSection(
-          header: S.notSure,
+
           separatorIndent: FsSpace.lg + 22 + FsSpace.md,
           children: [
             FsListRow(

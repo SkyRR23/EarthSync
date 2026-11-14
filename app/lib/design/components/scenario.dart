@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 import '../../app/strings.dart';
 import '../../data/models/farmer_input.dart';
@@ -9,87 +8,62 @@ import 'grouped.dart';
 import 'status.dart';
 
 const monthNames = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
 ];
 const monthShort = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
 ];
+const _monthLetters = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
 
-/// Per-crop icon used in questions and season plans.
-IconData cropIcon(String id) => switch (id) {
-  'rice' => Icons.grass_rounded,
-  'mung_bean' || 'black_gram' || 'chickpea' => Icons.spa_outlined,
-  'groundnut' || 'sesame' => Icons.grain_rounded,
-  'maize' => Icons.agriculture_outlined,
-  'vegetables' => Icons.eco_outlined,
-  'fallow' => Icons.landscape_outlined,
-  _ => Icons.grass_rounded,
+/// Picture for each crop — easier to recognise than words.
+String cropEmoji(String id) => switch (id) {
+  'rice' => '🌾',
+  'mung_bean' || 'black_gram' || 'chickpea' => '🫘',
+  'groundnut' => '🥜',
+  'sesame' => '🌻',
+  'maize' => '🌽',
+  'vegetables' => '🥬',
+  'fallow' => '🟫',
+  _ => '🌱',
 };
 
-const _monthLetters = [
-  'J',
-  'F',
-  'M',
-  'A',
-  'M',
-  'J',
-  'J',
-  'A',
-  'S',
-  'O',
-  'N',
-  'D',
-];
+/// Short crop sequence, e.g. "🌾 Rice → 🫘 Mung bean".
+String cropSequence(RotationScenario s) =>
+    s.steps.map((st) => '${cropEmoji(st.cropId)} ${Crops.label(st.cropId)}').join('  →  ');
 
-/// "Your current practice" / "Option 1" … in the engine's order.
-List<(RotationScenario, String)> labelledScenarios(
-  List<RotationScenario> list,
-) {
+/// "What you grow now" / "Other plan 1" … in the engine's order.
+List<(RotationScenario, String, String)> labelledScenarios(List<RotationScenario> list) {
   var alt = 0;
   return [
-    for (final s in list) (s, s.isBaseline ? S.yourPractice : S.option(++alt)),
+    for (final s in list)
+      s.isBaseline
+          ? (s, S.whatYouGrowNow, S.now)
+          : () {
+              alt++;
+              return (s, S.planLong(alt), S.plan(alt));
+            }(),
   ];
 }
 
 /// Month runs for a window, split when it wraps the year: Nov–Feb → [10..11], [0..1].
-List<(int, int)> _runs(int start, int end) =>
-    start <= end ? [(start - 1, end - 1)] : [(start - 1, 11), (0, end - 1)];
+List<(int, int)> _runs(int start, int end) => start <= end
+    ? [(start - 1, end - 1)]
+    : [(start - 1, 11), (0, end - 1)];
 
 String stepWindowText(RotationStep s) {
   if (s.startMonth == null || s.endMonth == null) return S.windowUnknown;
   return '${monthShort[s.startMonth! - 1]} – ${monthShort[s.endMonth! - 1]}';
 }
 
-/// Gantt-style season plan: one row per crop step on a 12-month track.
-/// Handles overlapping and year-wrapping windows.
+/// Year strip: one row per crop, coloured where it is in the field.
 class FsTimeline extends StatelessWidget {
   const FsTimeline(this.steps, {super.key});
   final List<RotationStep> steps;
 
-  static const _labelWidth = 96.0;
-  static const _trackHeight = 22.0;
+  static const _labelWidth = 110.0;
+  static const _trackHeight = 26.0;
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +74,7 @@ class FsTimeline extends StatelessWidget {
         .join('. ');
 
     return Semantics(
-      label: '${S.timeline}. $summary',
+      label: '${S.when}. $summary',
       excludeSemantics: true,
       child: Column(
         children: [
@@ -112,13 +86,10 @@ class FsTimeline extends StatelessWidget {
                   SizedBox(
                     width: _labelWidth,
                     child: Text(
-                      Crops.label(s.cropId),
+                      '${cropEmoji(s.cropId)} ${Crops.label(s.cropId)}',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: t.footnote.copyWith(
-                        color: p.label,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: t.subhead.copyWith(fontWeight: FontWeight.w500),
                     ),
                   ),
                   Expanded(
@@ -139,17 +110,12 @@ class FsTimeline extends StatelessWidget {
                               ? Center(
                                   child: Text(
                                     S.windowUnknown,
-                                    style: t.caption.copyWith(
-                                      color: p.tertiaryLabel,
-                                    ),
+                                    style: t.caption.copyWith(color: p.tertiaryLabel),
                                   ),
                                 )
                               : Stack(
                                   children: [
-                                    for (final (a, b) in _runs(
-                                      s.startMonth!,
-                                      s.endMonth!,
-                                    ))
+                                    for (final (a, b) in _runs(s.startMonth!, s.endMonth!))
                                       Positioned(
                                         left: a / 12 * w + 1,
                                         width: (b - a + 1) / 12 * w - 2,
@@ -158,9 +124,7 @@ class FsTimeline extends StatelessWidget {
                                         child: Container(
                                           decoration: BoxDecoration(
                                             color: fill,
-                                            borderRadius: BorderRadius.circular(
-                                              FsRadius.xs,
-                                            ),
+                                            borderRadius: BorderRadius.circular(FsRadius.xs),
                                           ),
                                         ),
                                       ),
@@ -192,9 +156,9 @@ class FsTimeline extends StatelessWidget {
   }
 }
 
-/// Summary row for a scenario (Overview list, sidebars).
-class FsScenarioRow extends StatelessWidget {
-  const FsScenarioRow({
+/// One plan as a big, simple row (Home).
+class FsPlanRow extends StatelessWidget {
+  const FsPlanRow({
     super.key,
     required this.scenario,
     required this.label,
@@ -210,7 +174,7 @@ class FsScenarioRow extends StatelessWidget {
     final risk = scenario.risks.firstOrNull;
     return FsListRow(
       overline: label,
-      title: scenario.title,
+      title: cropSequence(scenario),
       titleStyle: context.type.headline,
       onTap: onTap,
       below: Wrap(
@@ -225,114 +189,92 @@ class FsScenarioRow extends StatelessWidget {
   }
 }
 
-/// Full scenario content — used by the detail screen and the Compare tab.
+/// Everything about one plan, in plain sections.
 class ScenarioDetailBody extends StatelessWidget {
   const ScenarioDetailBody({
     super.key,
     required this.scenario,
     required this.label,
     required this.analysis,
-    this.showHeader = true,
   });
 
   final RotationScenario scenario;
   final String label;
   final FieldAnalysis analysis;
-  final bool showHeader;
 
   @override
   Widget build(BuildContext context) {
     final p = context.fs;
     final t = context.type;
     final s = scenario;
-    final refs = [for (final id in s.evidenceIds) ?analysis.reference(id)];
+    final refs = [
+      for (final id in s.evidenceIds) ?analysis.reference(id),
+    ];
+    const iconIndent = FsSpace.lg + 22 + FsSpace.md;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (showHeader)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(
-              FsSpace.gutter + FsSpace.xs,
-              FsSpace.lg,
-              FsSpace.gutter,
-              0,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(label, style: t.footnote),
-                const SizedBox(height: FsSpace.xxs),
-                Text(s.title, style: t.title2),
-                const SizedBox(height: FsSpace.sm),
-                FsFeasibilityLabel(s.eligibility),
-              ],
-            ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(
+            FsSpace.gutter + FsSpace.xs,
+            FsSpace.xl,
+            FsSpace.gutter,
+            0,
           ),
-        FsGroupedSection(
-          header: S.timeline,
-          padded: true,
-          children: [FsTimeline(s.steps)],
-        ),
-        FsGroupedSection(
-          separatorIndent: FsSpace.lg + 22 + FsSpace.md,
-          children: [
-            for (final step in s.steps)
-              FsListRow(
-                leading: Icon(
-                  cropIcon(step.cropId),
-                  color: p.secondaryLabel,
-                  size: 22,
-                ),
-                title: Crops.label(step.cropId),
-                subtitle: stepWindowText(step),
-                below: FsFeasibilityLabel(step.feasibility),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(label, style: t.footnote),
+              const SizedBox(height: FsSpace.xs),
+              Text(cropSequence(s), style: t.title2),
+              const SizedBox(height: FsSpace.md),
+              Transform.scale(
+                scale: 1.15,
+                alignment: Alignment.centerLeft,
+                child: FsFeasibilityLabel(s.eligibility),
               ),
-          ],
+              const SizedBox(height: FsSpace.sm),
+              Text(S.fitNote, style: t.footnote),
+            ],
+          ),
         ),
+        FsGroupedSection(header: S.when, padded: true, children: [FsTimeline(s.steps)]),
         FsGroupedSection(
-          header: S.benefits,
-          separatorIndent: FsSpace.lg + 22 + FsSpace.md,
-          footer: s.likelyBenefits.isEmpty ? S.noBenefits : null,
+          header: S.good,
+          separatorIndent: iconIndent,
+          footer: s.likelyBenefits.isEmpty ? S.noneYet : null,
           children: [
             for (final b in s.likelyBenefits)
               FsListRow(
-                leading: Icon(
-                  CupertinoIcons.checkmark_circle,
-                  color: p.positiveText,
-                  size: 22,
-                ),
+                leading: Icon(CupertinoIcons.hand_thumbsup_fill, color: p.positiveText, size: 22),
                 title: b,
               ),
           ],
         ),
         FsGroupedSection(
-          header: S.risks,
-          footer: s.risks.isEmpty ? S.noRisks : null,
+          header: S.watchOut,
+          separatorIndent: iconIndent,
+          footer: s.risks.isEmpty ? S.noWarnings : null,
           children: [
             for (final r in s.risks)
               FsListRow(
+                leading: Icon(hazardIcon(r.hazard), color: p.tone(riskTone(r.level)).$1, size: 22),
                 title: hazardLabel(r.hazard),
                 titleStyle: t.headline,
                 subtitle: r.note.isEmpty ? null : r.note,
-                below: r.level == null
-                    ? null
-                    : FsRiskLabel(hazard: r.hazard, level: r.level),
+                below: r.level == null ? null : FsRiskLabel(hazard: r.hazard, level: r.level),
               ),
           ],
         ),
         if (s.limitations.isNotEmpty)
           FsGroupedSection(
-            header: S.limitations,
-            separatorIndent: FsSpace.lg + 22 + FsSpace.md,
+            header: S.dontKnowYet,
+            separatorIndent: iconIndent,
             children: [
               for (final l in s.limitations)
                 FsListRow(
-                  leading: Icon(
-                    CupertinoIcons.info_circle,
-                    color: p.secondaryLabel,
-                    size: 22,
-                  ),
+                  leading: Icon(CupertinoIcons.question_circle, color: p.secondaryLabel, size: 22),
                   title: l,
                   titleStyle: t.callout,
                 ),
@@ -340,8 +282,8 @@ class ScenarioDetailBody extends StatelessWidget {
           ),
         if (refs.isNotEmpty)
           FsGroupedSection(
-            header: S.evidence,
-            separatorIndent: FsSpace.lg + 22 + FsSpace.md,
+            header: S.whereFrom,
+            separatorIndent: iconIndent,
             children: [for (final r in refs) FsEvidenceRow(r)],
           ),
       ],

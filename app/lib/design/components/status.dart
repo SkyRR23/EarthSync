@@ -113,11 +113,10 @@ String humanize(String code) {
 }
 
 String hazardLabel(String hazard) => switch (hazard) {
-  'drought' => 'Drought',
-  'heat' => 'Heat',
-  'waterlogging' => 'Waterlogging',
-  'flood' => 'Flood',
-  'storm' => 'Storm',
+  'drought' => 'Too dry',
+  'heat' => 'Too hot',
+  'waterlogging' || 'flood' => 'Too much water',
+  'storm' => 'Storms',
   _ => humanize(hazard),
 };
 

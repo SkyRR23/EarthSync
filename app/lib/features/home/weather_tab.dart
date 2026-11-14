@@ -12,95 +12,127 @@ import '../../design/components/scenario.dart' show monthNames, monthShort;
 import '../../design/components/segmented.dart';
 import '../../design/components/status.dart';
 import '../../design/tokens.dart';
-import 'overview_tab.dart' show SeasonMetrics;
 
-enum _Metric { rain, temp }
+enum _Metric { rain, heat }
 
-/// Apple Health / Weather-style climate view: one chart at a time,
-/// tap a month to read its value in the header.
-class ClimateTab extends StatefulWidget {
-  const ClimateTab({super.key, required this.analysis});
+/// Weather in plain words: big cards first, then one simple chart.
+/// Cards follow OpenFarm's weather-cards idea; numbers come from the engine
+/// data — Flutter only picks the highest/lowest month to show.
+class WeatherTab extends StatefulWidget {
+  const WeatherTab({super.key, required this.analysis});
   final FieldAnalysis analysis;
 
   @override
-  State<ClimateTab> createState() => _ClimateTabState();
+  State<WeatherTab> createState() => _WeatherTabState();
 }
 
-class _ClimateTabState extends State<ClimateTab> {
+class _WeatherTabState extends State<WeatherTab> {
   _Metric _metric = _Metric.rain;
   int? _selected;
 
-  String _monthLabel(MonthlyClimate m, {bool long = false}) {
-    final name = long ? monthNames[m.month - 1] : monthShort[m.month - 1];
-    return m.year == null ? name : '$name ${m.year}';
+  String _month(MonthlyClimate m, {bool long = false}) =>
+      long ? monthNames[m.month - 1] : monthShort[m.month - 1];
+
+  MonthlyClimate? _pick(bool Function(double a, double b) better, double? Function(MonthlyClimate) v) {
+    MonthlyClimate? best;
+    for (final m in widget.analysis.climateSummary.months) {
+      final x = v(m);
+      if (x == null) continue;
+      if (best == null || better(x, v(best)!)) best = m;
+    }
+    return best;
   }
 
   @override
   Widget build(BuildContext context) {
-    final a = widget.analysis;
-    final c = a.climateSummary;
+    final c = widget.analysis.climateSummary;
     final p = context.fs;
     final t = context.type;
-    final ref = a.reference(c.sourceId);
+    final ref = widget.analysis.reference(c.sourceId);
     final months = c.months;
     final rain = _metric == _Metric.rain;
-    final color = rain ? p.rain : p.heat;
 
-    // Header: selected month value, or the series summary.
-    final sel = _selected != null && _selected! < months.length
-        ? months[_selected!]
-        : null;
+    final wettest = _pick((a, b) => a > b, (m) => m.rainMm);
+    final driest = _pick((a, b) => a < b, (m) => m.rainMm);
+    final hottest = _pick((a, b) => a > b, (m) => m.tempMeanC);
+
+    final cards = <Widget>[
+      if (wettest != null)
+        FsMetricTile(
+          icon: CupertinoIcons.cloud_heavyrain_fill,
+          color: p.rain,
+          label: S.mostRain,
+          value: '${_month(wettest)} · ${wettest.rainMm!.round()} mm',
+        ),
+      if (driest != null)
+        FsMetricTile(
+          icon: CupertinoIcons.sun_max_fill,
+          color: p.cautionText,
+          label: S.leastRain,
+          value: '${_month(driest)} · ${driest.rainMm!.round()} mm',
+        ),
+      if (hottest != null)
+        FsMetricTile(
+          icon: CupertinoIcons.thermometer,
+          color: p.heat,
+          label: S.hottest,
+          value: '${_month(hottest)} · ${hottest.tempMeanC!.toStringAsFixed(0)} °C',
+        ),
+      if (c.totalRainMm != null)
+        FsMetricTile(
+          icon: CupertinoIcons.drop_fill,
+          color: p.rain,
+          label: S.seasonRain,
+          value: '${c.totalRainMm!.round()} mm',
+        ),
+      if (c.meanTempC != null)
+        FsMetricTile(
+          icon: CupertinoIcons.thermometer,
+          color: p.heat,
+          label: S.avgTemp,
+          value: '${c.meanTempC!.toStringAsFixed(1)} °C',
+        ),
+    ];
+
+    final sel = _selected != null && _selected! < months.length ? months[_selected!] : null;
     final v = sel == null ? null : (rain ? sel.rainMm : sel.tempMeanC);
-    final (String big, String small) = sel != null
-        ? (
-            v == null
-                ? S.noData
-                : (rain ? '${v.round()} mm' : '${v.toStringAsFixed(1)} °C'),
-            _monthLabel(sel, long: true),
-          )
-        : (
-            rain
-                ? (c.totalRainMm != null
-                      ? '${c.totalRainMm!.round()} mm'
-                      : S.rainfall)
-                : (c.meanTempC != null
-                      ? '${c.meanTempC!.toStringAsFixed(1)} °C'
-                      : S.temperature),
-            rain
-                ? (c.totalRainMm != null ? 'Total · ${c.period}' : c.period)
-                : (c.meanTempC != null ? 'Average · ${c.period}' : c.period),
-          );
 
     return FsPage(
-      title: S.tabClimate,
+      title: S.tabWeather,
+      showBack: false,
       subtitle: c.period.isEmpty ? null : c.period,
       children: [
-        SeasonMetrics(c),
         if (c.dataKind != null && c.dataKind != 'observed') ...[
           const SizedBox(height: FsSpace.md),
           FsBanner(
-            message: 'These values are ${c.dataKind}, not measured',
+            message: S.notMeasured(c.dataKind!),
             tone: FsTone.caution,
             icon: CupertinoIcons.exclamationmark_circle_fill,
           ),
         ],
-        Padding(
-          padding: const EdgeInsets.fromLTRB(
-            FsSpace.gutter,
-            FsSpace.xl,
-            FsSpace.gutter,
-            0,
+        if (cards.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(FsSpace.gutter, FsSpace.lg, FsSpace.gutter, 0),
+            child: LayoutBuilder(
+              builder: (_, box) {
+                final w = (box.maxWidth - FsSpace.sm) / 2;
+                return Wrap(
+                  spacing: FsSpace.sm,
+                  runSpacing: FsSpace.sm,
+                  children: [for (final c in cards) SizedBox(width: w, child: c)],
+                );
+              },
+            ),
           ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(FsSpace.gutter, FsSpace.xxl, FsSpace.gutter, 0),
           child: FsSegmented<_Metric>(
             value: _metric,
             onChanged: (m) => setState(() {
               _metric = m;
               _selected = null;
             }),
-            segments: const {
-              _Metric.rain: S.rainfall,
-              _Metric.temp: S.temperature,
-            },
+            segments: const {_Metric.rain: S.rain, _Metric.heat: S.heat},
           ),
         ),
         FsGroupedSection(
@@ -113,50 +145,34 @@ class _ClimateTabState extends State<ClimateTab> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    small.toUpperCase(),
-                    style: t.caption.copyWith(
-                      letterSpacing: 0.4,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    (sel == null ? (rain ? S.rainEachMonth : S.heatEachMonth) : _month(sel, long: true))
+                        .toUpperCase(),
+                    style: t.caption.copyWith(letterSpacing: 0.4, fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(height: FsSpace.xxs),
-                  Text(big, style: t.title1),
+                  Text(
+                    sel == null
+                        ? ' '
+                        : (v == null ? S.noData : (rain ? '${v.round()} mm' : '${v.toStringAsFixed(1)} °C')),
+                    style: t.title1,
+                  ),
                 ],
               ),
             ),
-            const SizedBox(height: FsSpace.lg),
+            const SizedBox(height: FsSpace.md),
             SizedBox(
               height: 210,
               child: months.isEmpty
                   ? Center(child: Text(S.noData, style: t.footnote))
-                  : (rain
-                        ? _rainChart(months, color)
-                        : _tempChart(months, color)),
+                  : (rain ? _rainChart(months, p.rain) : _heatChart(months, p.heat)),
             ),
           ],
         ),
         if (ref != null)
           FsGroupedSection(
-            header: S.evidence,
+            header: S.whereFrom,
             separatorIndent: FsSpace.lg + 22 + FsSpace.md,
             children: [FsEvidenceRow(ref)],
-          ),
-        if (c.limitations.isNotEmpty)
-          FsGroupedSection(
-            header: S.limitations,
-            separatorIndent: FsSpace.lg + 22 + FsSpace.md,
-            children: [
-              for (final l in c.limitations)
-                FsListRow(
-                  leading: Icon(
-                    CupertinoIcons.info_circle,
-                    color: p.secondaryLabel,
-                    size: 22,
-                  ),
-                  title: l,
-                  titleStyle: t.callout,
-                ),
-            ],
           ),
       ],
     );
@@ -171,13 +187,9 @@ class _ClimateTabState extends State<ClimateTab> {
 
   Widget _monthTitle(List<MonthlyClimate> months, double v, TitleMeta meta) {
     final i = v.round();
-    if (i < 0 || i >= months.length || (v - i).abs() > 0.01) {
-      return const SizedBox.shrink();
-    }
+    if (i < 0 || i >= months.length || (v - i).abs() > 0.01) return const SizedBox.shrink();
     final m = months[i];
-    final label = months.length > 6
-        ? monthShort[m.month - 1][0]
-        : monthShort[m.month - 1];
+    final label = months.length > 6 ? monthShort[m.month - 1][0] : monthShort[m.month - 1];
     return SideTitleWidget(
       meta: meta,
       child: Text(
@@ -198,37 +210,38 @@ class _ClimateTabState extends State<ClimateTab> {
     ),
   );
 
-  FlTitlesData _titles(List<MonthlyClimate> months, double step) =>
-      FlTitlesData(
-        topTitles: const AxisTitles(),
-        leftTitles: const AxisTitles(),
-        rightTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            reservedSize: 36,
-            interval: step,
-            getTitlesWidget: _rightAxis,
-          ),
-        ),
-        bottomTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            reservedSize: 26,
-            interval: 1,
-            getTitlesWidget: (v, m) => _monthTitle(months, v, m),
-          ),
-        ),
-      );
+  FlTitlesData _titles(List<MonthlyClimate> months, double step) => FlTitlesData(
+    topTitles: const AxisTitles(),
+    leftTitles: const AxisTitles(),
+    rightTitles: AxisTitles(
+      sideTitles: SideTitles(
+        showTitles: true,
+        reservedSize: 36,
+        interval: step,
+        getTitlesWidget: _rightAxis,
+      ),
+    ),
+    bottomTitles: AxisTitles(
+      sideTitles: SideTitles(
+        showTitles: true,
+        reservedSize: 26,
+        interval: 1,
+        getTitlesWidget: (v, m) => _monthTitle(months, v, m),
+      ),
+    ),
+  );
 
   FlGridData _grid(double step) => FlGridData(
     drawVerticalLine: false,
     horizontalInterval: step,
-    getDrawingHorizontalLine: (_) => FlLine(
-      color: context.fs.separator,
-      strokeWidth: 0.5,
-      dashArray: const [3, 3],
-    ),
+    getDrawingHorizontalLine: (_) =>
+        FlLine(color: context.fs.separator, strokeWidth: 0.5, dashArray: const [3, 3]),
   );
+
+  void _tap(FlTouchEvent e, int? i) {
+    if (i == null) return;
+    if (e is FlTapUpEvent || e is FlPanUpdateEvent) setState(() => _selected = i);
+  }
 
   Widget _rainChart(List<MonthlyClimate> months, Color color) {
     final values = [for (final m in months) ?m.rainMm];
@@ -236,7 +249,7 @@ class _ClimateTabState extends State<ClimateTab> {
     final width = months.length > 6 ? 14.0 : 30.0;
     return Semantics(
       label:
-          'Rain by month. ${[for (final m in months) '${_monthLabel(m, long: true)}: ${m.rainMm == null ? S.noData : '${m.rainMm!.round()} millimetres'}'].join(', ')}',
+          '${S.rainEachMonth}. ${[for (final m in months) '${_month(m, long: true)}: ${m.rainMm == null ? S.noData : '${m.rainMm!.round()} millimetres'}'].join(', ')}',
       child: BarChart(
         BarChartData(
           maxY: axis.max,
@@ -246,18 +259,7 @@ class _ClimateTabState extends State<ClimateTab> {
           barTouchData: BarTouchData(
             enabled: true,
             handleBuiltInTouches: false,
-            touchCallback: (e, r) {
-              if (e is FlTapUpEvent || e is FlPanUpdateEvent) {
-                final i = r?.spot?.touchedBarGroupIndex;
-                if (i != null) {
-                  setState(
-                    () => _selected = _selected == i && e is FlTapUpEvent
-                        ? null
-                        : i,
-                  );
-                }
-              }
-            },
+            touchCallback: (e, r) => _tap(e, r?.spot?.touchedBarGroupIndex),
           ),
           barGroups: [
             for (final (i, m) in months.indexed)
@@ -265,14 +267,12 @@ class _ClimateTabState extends State<ClimateTab> {
                 x: i,
                 barRods: [
                   BarChartRodData(
-                    // Missing month: faint stub so the gap is visible and tappable, never "zero rain".
+                    // Missing month: faint stub, never "zero rain".
                     toY: m.rainMm ?? axis.max * 0.015,
                     width: width,
                     color: m.rainMm == null
                         ? context.fs.fillStrong
-                        : (_selected == null || _selected == i
-                              ? color
-                              : color.withValues(alpha: 0.3)),
+                        : (_selected == null || _selected == i ? color : color.withValues(alpha: 0.3)),
                     borderRadius: BorderRadius.circular(width / 2.6),
                   ),
                 ],
@@ -284,34 +284,27 @@ class _ClimateTabState extends State<ClimateTab> {
     );
   }
 
-  Widget _tempChart(List<MonthlyClimate> months, Color color) {
+  Widget _heatChart(List<MonthlyClimate> months, Color color) {
     final values = [for (final m in months) ?m.tempMeanC];
     final lo = values.isEmpty ? 0.0 : values.reduce(math.min);
     final hi = values.isEmpty ? 1.0 : values.reduce(math.max);
     final step = (hi - lo) > 12 ? 5.0 : ((hi - lo) > 5 ? 2.0 : 1.0);
-    final minY = (lo / step).floor() * step - step;
-    final maxY = (hi / step).ceil() * step + step;
     return Semantics(
       label:
-          'Temperature by month. ${[for (final m in months) '${_monthLabel(m, long: true)}: ${m.tempMeanC == null ? S.noData : '${m.tempMeanC!.toStringAsFixed(1)} degrees'}'].join(', ')}',
+          '${S.heatEachMonth}. ${[for (final m in months) '${_month(m, long: true)}: ${m.tempMeanC == null ? S.noData : '${m.tempMeanC!.toStringAsFixed(1)} degrees'}'].join(', ')}',
       child: LineChart(
         LineChartData(
           minX: 0,
           maxX: math.max(1, months.length - 1).toDouble(),
-          minY: minY,
-          maxY: maxY,
+          minY: (lo / step).floor() * step - step,
+          maxY: (hi / step).ceil() * step + step,
           gridData: _grid(step),
           borderData: FlBorderData(show: false),
           titlesData: _titles(months, step),
           lineTouchData: LineTouchData(
             enabled: true,
             handleBuiltInTouches: false,
-            touchCallback: (e, r) {
-              if (e is FlTapUpEvent || e is FlPanUpdateEvent) {
-                final x = r?.lineBarSpots?.firstOrNull?.x;
-                if (x != null) setState(() => _selected = x.round());
-              }
-            },
+            touchCallback: (e, r) => _tap(e, r?.lineBarSpots?.firstOrNull?.x.round()),
           ),
           lineBarsData: [
             LineChartBarData(
@@ -322,14 +315,9 @@ class _ClimateTabState extends State<ClimateTab> {
               barWidth: 3,
               spots: [
                 for (final (i, m) in months.indexed)
-                  m.tempMeanC == null
-                      ? FlSpot.nullSpot
-                      : FlSpot(i.toDouble(), m.tempMeanC!),
+                  m.tempMeanC == null ? FlSpot.nullSpot : FlSpot(i.toDouble(), m.tempMeanC!),
               ],
-              belowBarData: BarAreaData(
-                show: true,
-                color: color.withValues(alpha: 0.08),
-              ),
+              belowBarData: BarAreaData(show: true, color: color.withValues(alpha: 0.08)),
               dotData: FlDotData(
                 show: true,
                 getDotPainter: (spot, _, _, i) => FlDotCirclePainter(

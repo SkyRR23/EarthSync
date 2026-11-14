@@ -19,7 +19,7 @@ abstract final class Crops {
     'sesame': 'Sesame',
     'maize': 'Maize',
     'vegetables': 'Vegetables',
-    'fallow': 'Nothing (fallow)',
+    'fallow': 'Nothing (rest)',
   };
 
   static String label(String id) => options[id] ?? id;

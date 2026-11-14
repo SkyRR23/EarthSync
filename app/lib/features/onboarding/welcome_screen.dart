@@ -10,7 +10,7 @@ import '../../design/components/page.dart';
 import '../../design/tokens.dart';
 import '../../state/providers.dart';
 
-/// "What's new"-style welcome: app mark, promise, three steps, one action.
+/// First-run welcome: promise, three steps, one button.
 class WelcomeScreen extends ConsumerWidget {
   const WelcomeScreen({super.key});
 
@@ -32,23 +32,8 @@ class WelcomeScreen extends ConsumerWidget {
                 FsSpace.xxl,
               ),
               children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    width: 64,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      color: p.tint,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Icon(
-                      CupertinoIcons.globe,
-                      color: p.onTint,
-                      size: 34,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: FsSpace.xxl),
+                const Text('🌾', style: TextStyle(fontSize: 56)),
+                const SizedBox(height: FsSpace.lg),
                 Text(S.appName, style: t.headline.copyWith(color: p.tint)),
                 const SizedBox(height: FsSpace.xs),
                 Semantics(
@@ -56,21 +41,9 @@ class WelcomeScreen extends ConsumerWidget {
                   child: Text(S.welcomeTitle, style: t.largeTitle),
                 ),
                 const SizedBox(height: FsSpace.xxxl),
-                const _Feature(
-                  icon: CupertinoIcons.location_solid,
-                  title: S.how1Title,
-                  body: S.how1Body,
-                ),
-                const _Feature(
-                  icon: CupertinoIcons.list_bullet,
-                  title: S.how2Title,
-                  body: S.how2Body,
-                ),
-                const _Feature(
-                  icon: CupertinoIcons.arrow_right_arrow_left,
-                  title: S.how3Title,
-                  body: S.how3Body,
-                ),
+                const _Step(n: 1, icon: CupertinoIcons.location_solid, text: S.how1),
+                const _Step(n: 2, icon: CupertinoIcons.hand_point_right_fill, text: S.how2),
+                const _Step(n: 3, icon: CupertinoIcons.checkmark_seal_fill, text: S.how3),
               ],
             ),
           ),
@@ -80,11 +53,7 @@ class WelcomeScreen extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              S.welcomeDisclaimer,
-              textAlign: TextAlign.center,
-              style: t.footnote,
-            ),
+            Text(S.welcomeDisclaimer, textAlign: TextAlign.center, style: t.footnote),
             const SizedBox(height: FsSpace.md),
             FsButton(S.getStarted, onPressed: () => context.push('/location')),
             if (kDebugMode)
@@ -105,33 +74,31 @@ class WelcomeScreen extends ConsumerWidget {
   }
 }
 
-class _Feature extends StatelessWidget {
-  const _Feature({required this.icon, required this.title, required this.body});
+class _Step extends StatelessWidget {
+  const _Step({required this.n, required this.icon, required this.text});
+  final int n;
   final IconData icon;
-  final String title;
-  final String body;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
     final p = context.fs;
     return Padding(
-      padding: const EdgeInsets.only(bottom: FsSpace.xxl),
+      padding: const EdgeInsets.only(bottom: FsSpace.xl),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(width: 40, child: Icon(icon, color: p.tint, size: 28)),
+          Container(
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(color: p.tintSoft, shape: BoxShape.circle),
+            child: Icon(icon, color: p.tint, size: 22),
+          ),
           const SizedBox(width: FsSpace.lg),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title, style: context.type.headline),
-                const SizedBox(height: FsSpace.xxs),
-                Text(
-                  body,
-                  style: context.type.callout.copyWith(color: p.secondaryLabel),
-                ),
-              ],
+            child: Text(
+              text,
+              style: context.type.title3,
+              semanticsLabel: 'Step $n: $text',
             ),
           ),
         ],

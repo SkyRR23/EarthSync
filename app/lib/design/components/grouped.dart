@@ -112,6 +112,7 @@ class FsListRow extends StatelessWidget {
     this.chevron,
     this.titleStyle,
     this.semanticLabel,
+    this.titleMaxLines,
   });
 
   final String title;
@@ -134,6 +135,7 @@ class FsListRow extends StatelessWidget {
   final bool? chevron;
   final TextStyle? titleStyle;
   final String? semanticLabel;
+  final int? titleMaxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +166,12 @@ class FsListRow extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: FsSpace.xxs),
                       child: Text(overline!, style: t.footnote),
                     ),
-                  Text(title, style: titleStyle ?? t.body),
+                  Text(
+                    title,
+                    style: titleStyle ?? t.body,
+                    maxLines: titleMaxLines,
+                    overflow: titleMaxLines != null ? TextOverflow.ellipsis : null,
+                  ),
                   if (subtitle != null)
                     Padding(
                       padding: const EdgeInsets.only(top: FsSpace.xxs),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:earthsync/app/strings.dart';
 import 'package:earthsync/data/engine/mock_engine.dart';
 import 'package:earthsync/data/models/farmer_input.dart';
 import 'package:earthsync/data/models/field_analysis.dart';
@@ -43,7 +44,7 @@ void main() {
 
   testWidgets('welcome screen shows start button', (tester) async {
     await tester.pumpWidget(const ProviderScope(child: FieldShiftApp()));
-    expect(find.text('Get started'), findsOneWidget);
+    expect(find.text('Start'), findsOneWidget);
   });
 
   testWidgets('scenario row and detail show status and no percentages', (
@@ -58,7 +59,7 @@ void main() {
           body: SingleChildScrollView(
             child: Column(
               children: [
-                FsScenarioRow(scenario: s, label: 'Option 1', onTap: () {}),
+                FsPlanRow(scenario: s, label: 'Option 1', onTap: () {}),
                 ScenarioDetailBody(scenario: s, label: 'Option 1', analysis: a),
               ],
             ),
@@ -66,8 +67,8 @@ void main() {
         ),
       ),
     );
-    expect(find.text(s.title), findsNWidgets(2));
-    expect(find.text('Partly limited'), findsWidgets);
+    expect(find.text(cropSequence(s)), findsNWidgets(2));
+    expect(find.text(S.constrained), findsWidgets);
     expect(find.textContaining('%'), findsNothing);
   });
 }

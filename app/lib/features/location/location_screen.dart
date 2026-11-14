@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -19,7 +20,7 @@ bool _inMyanmar(LatLng p) =>
     p.longitude >= 92.1 &&
     p.longitude <= 101.2;
 
-/// Full-bleed map with a floating title and a bottom action panel.
+/// Mark the field: stand in it and use GPS, tap the map, or use a sample.
 class LocationScreen extends ConsumerStatefulWidget {
   const LocationScreen({super.key, this.editing = false});
   final bool editing;
@@ -30,10 +31,57 @@ class LocationScreen extends ConsumerStatefulWidget {
 
 class _LocationScreenState extends ConsumerState<LocationScreen> {
   final _map = MapController();
+  bool _locating = false;
+  String? _gpsMessage;
 
-  void _useSample() {
-    ref.read(farmerDraftProvider.notifier).setLocation(kSampleLat, kSampleLon);
-    _map.move(const LatLng(kSampleLat, kSampleLon), 10);
+  void _set(LatLng pt, {double zoom = 12}) {
+    ref.read(farmerDraftProvider.notifier).setLocation(pt.latitude, pt.longitude);
+    _map.move(pt, zoom);
+  }
+
+  /// "I'm at my field": one GPS reading, with plain messages when it fails.
+  Future<void> _useGps() async {
+    setState(() {
+      _locating = true;
+      _gpsMessage = null;
+    });
+    try {
+      if (!await Geolocator.isLocationServiceEnabled()) {
+        setState(() => _gpsMessage = S.gpsOff);
+        return;
+      }
+      var perm = await Geolocator.checkPermission();
+      if (perm == LocationPermission.denied) {
+        perm = await Geolocator.requestPermission();
+      }
+      if (perm == LocationPermission.denied ||
+          perm == LocationPermission.deniedForever) {
+        setState(() => _gpsMessage = S.gpsDenied);
+        return;
+      }
+      final pos = await Geolocator.getCurrentPosition(
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.high,
+          timeLimit: Duration(seconds: 20),
+        ),
+      );
+      if (mounted) _set(LatLng(pos.latitude, pos.longitude), zoom: 14);
+    } catch (_) {
+      if (mounted) setState(() => _gpsMessage = S.gpsFailed);
+    } finally {
+      if (mounted) setState(() => _locating = false);
+    }
+  }
+
+  void _continue() {
+    if (widget.editing) {
+      ref
+          .read(analysisProvider.notifier)
+          .run(ref.read(farmerDraftProvider).toInput());
+      context.pop();
+    } else {
+      context.push('/question/1');
+    }
   }
 
   @override
@@ -60,7 +108,7 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
             mapController: _map,
             options: MapOptions(
               initialCenter: picked ?? const LatLng(kSampleLat, kSampleLon),
-              initialZoom: 9,
+              initialZoom: picked == null ? 9 : 12,
               onTap: (_, pt) => ref
                   .read(farmerDraftProvider.notifier)
                   .setLocation(pt.latitude, pt.longitude),
@@ -70,19 +118,12 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
               if (picked != null)
                 MarkerLayer(
                   markers: [
-                    Marker(
-                      point: picked,
-                      width: 44,
-                      height: 44,
-                      child: fieldMarker(context),
-                    ),
+                    Marker(point: picked, width: 44, height: 44, child: fieldMarker(context)),
                   ],
                 ),
               const RichAttributionWidget(
                 alignment: AttributionAlignment.bottomLeft,
-                attributions: [
-                  TextSourceAttribution('OpenStreetMap contributors'),
-                ],
+                attributions: [TextSourceAttribution('OpenStreetMap contributors')],
               ),
             ],
           ),
@@ -111,11 +152,7 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(
-                        CupertinoIcons.map_pin_ellipse,
-                        size: 18,
-                        color: p.tint,
-                      ),
+                      Icon(CupertinoIcons.map_pin_ellipse, size: 18, color: p.tint),
                       const SizedBox(width: FsSpace.sm),
                       Text(S.locationHint, style: t.subhead),
                     ],
@@ -130,66 +167,62 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            AnimatedSwitcher(
-              duration: FsMotion.of(context, FsMotion.normal),
-              child: picked == null
-                  ? const SizedBox(key: ValueKey('none'), height: 0)
-                  : Padding(
-                      key: const ValueKey('picked'),
-                      padding: const EdgeInsets.only(bottom: FsSpace.md),
-                      child: Row(
+            if (_gpsMessage != null)
+              Padding(
+                padding: const EdgeInsets.only(bottom: FsSpace.md),
+                child: Text(
+                  _gpsMessage!,
+                  style: t.footnote.copyWith(color: p.cautionText),
+                ),
+              )
+            else if (picked != null)
+              Padding(
+                padding: const EdgeInsets.only(bottom: FsSpace.md),
+                child: Row(
+                  children: [
+                    Icon(CupertinoIcons.checkmark_circle_fill, color: p.tint, size: 22),
+                    const SizedBox(width: FsSpace.sm),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Icon(
-                            CupertinoIcons.checkmark_circle_fill,
-                            color: p.tint,
-                            size: 22,
-                          ),
-                          const SizedBox(width: FsSpace.sm),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(S.fieldMarked, style: t.headline),
-                                Text(
-                                  '${picked.latitude.toStringAsFixed(4)}, '
-                                  '${picked.longitude.toStringAsFixed(4)}',
-                                  style: t.footnote,
-                                ),
-                                if (!_inMyanmar(picked))
-                                  Text(
-                                    S.outsideMyanmar,
-                                    style: t.footnote.copyWith(
-                                      color: p.cautionText,
-                                    ),
-                                  ),
-                              ],
+                          Text(S.fieldMarked, style: t.headline),
+                          if (!_inMyanmar(picked))
+                            Text(
+                              S.outsideMyanmar,
+                              style: t.footnote.copyWith(color: p.cautionText),
                             ),
-                          ),
                         ],
                       ),
                     ),
-            ),
+                  ],
+                ),
+              ),
             Row(
               children: [
                 Expanded(
                   child: FsButton(
-                    S.useSampleField,
+                    _locating ? S.findingYou : S.useMyLocation,
                     kind: FsButtonKind.tinted,
-                    onPressed: _useSample,
+                    icon: CupertinoIcons.location_fill,
+                    loading: _locating,
+                    onPressed: _useGps,
                   ),
                 ),
                 const SizedBox(width: FsSpace.sm),
                 Expanded(
                   child: FsButton(
-                    widget.editing ? S.done : S.continueLabel,
-                    onPressed: picked == null
-                        ? null
-                        : () => widget.editing
-                              ? context.pop()
-                              : context.push('/question/1'),
+                    S.useSampleField,
+                    kind: FsButtonKind.tinted,
+                    onPressed: () => _set(const LatLng(kSampleLat, kSampleLon), zoom: 10),
                   ),
                 ),
               ],
+            ),
+            const SizedBox(height: FsSpace.sm),
+            FsButton(
+              widget.editing ? S.done : S.continueLabel,
+              onPressed: picked == null ? null : _continue,
             ),
           ],
         ),

@@ -23,4 +23,9 @@ No NASA logos or mission insignia were generated.
 | Inter font (400/500/600/700, latin subset) | Fontsource `@fontsource/inter` 5.2.5 via cdn.jsdelivr.net; bundled in `app/assets/fonts/` | SIL Open Font License 1.1 (Rasmus Andersson). Bundled unmodified; include OFL text in release notices. |
 | OpenStreetMap tiles | `tile.openstreetmap.org`, loaded at runtime (not bundled) | ODbL data; attribution "© OpenStreetMap contributors" shown in app. Light demo use only per OSM tile usage policy; switch provider for wider release. |
 | NASA GIBS imagery | `MODIS_Terra_CorrectedReflectance_TrueColor`, GoogleMapsCompatible_Level9, loaded at runtime (not bundled) | NASA open data; source, layer and date shown in app. Provisional layer until P2 confirms. |
+| NASA GIBS layer `MODIS_Terra_NDVI_8Day` | GoogleMapsCompatible_Level9, loaded at runtime (not bundled) | NASA open data, attribution "NASA EOSDIS GIBS" shown in app. |
+| OpenFarm | superzero11/OpenFarm, commit `884a61567dd0d149214090baf9edebc533a2a0df` | BSD-3-Clause; design reference only, no code copied. |
+| `shared_preferences` | 2.5.6 (https://pub.dev/packages/shared_preferences) | BSD-3-Clause (Flutter Authors) |
+| `geolocator` | 14.1.2 (https://pub.dev/packages/geolocator) | MIT (Baseflow) |
+| `share_plus` | 13.3.1 (https://pub.dev/packages/share_plus) | BSD-3-Clause (Flutter Community) |
 | Flutter packages | Exact versions in `app/pubspec.lock`: flutter_riverpod, go_router, flutter_map, latlong2, fl_chart, intl, flutter_rust_bridge 2.13.0, cupertino_icons | Permissive (MIT / BSD-3-Clause / Apache-2.0); verify transitive notices before binary release. |

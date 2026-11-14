@@ -9,143 +9,100 @@ import '../../design/components/feedback.dart';
 import '../../design/components/grouped.dart';
 import '../../design/tokens.dart';
 import '../../state/providers.dart';
-import 'climate_tab.dart';
-import 'compare_tab.dart';
-import 'map_tab.dart';
-import 'overview_tab.dart';
+import 'crops_tab.dart';
+import 'home_tab.dart';
+import 'notes_tab.dart';
+import 'weather_tab.dart';
 
-/// Analysis state machine: preparing -> results (tabs / sidebar) | error.
-class ResultsScreen extends ConsumerStatefulWidget {
-  const ResultsScreen({super.key});
+/// The app after setup: 4 tabs — Home, Crops, Weather, Notes.
+/// Phones get a bottom tab bar; tablets a sidebar.
+class HomeShell extends ConsumerStatefulWidget {
+  const HomeShell({super.key, this.initialTab = 0});
+  final int initialTab;
 
   @override
-  ConsumerState<ResultsScreen> createState() => _ResultsScreenState();
+  ConsumerState<HomeShell> createState() => _HomeShellState();
 }
 
-class _ResultsScreenState extends ConsumerState<ResultsScreen> {
-  int _tab = 0;
-  int _compareIndex = 0;
+class _HomeShellState extends ConsumerState<HomeShell> {
+  late int _tab = widget.initialTab.clamp(0, 3);
+  int _plan = 0;
 
   static const _tabs = [
-    (
-      S.tabOverview,
-      CupertinoIcons.square_grid_2x2,
-      CupertinoIcons.square_grid_2x2_fill,
-    ),
-    (S.tabMap, CupertinoIcons.map, CupertinoIcons.map_fill),
-    (
-      S.tabClimate,
-      CupertinoIcons.cloud_sun_rain,
-      CupertinoIcons.cloud_sun_rain_fill,
-    ),
-    (
-      S.tabCompare,
-      CupertinoIcons.arrow_right_arrow_left,
-      CupertinoIcons.arrow_right_arrow_left,
-    ),
+    (S.tabHome, CupertinoIcons.house, CupertinoIcons.house_fill),
+    (S.tabCrops, Icons.grass_outlined, Icons.grass),
+    (S.tabWeather, CupertinoIcons.cloud_sun_rain, CupertinoIcons.cloud_sun_rain_fill),
+    (S.tabNotes, CupertinoIcons.book, CupertinoIcons.book_fill),
   ];
 
-  void _openCompare([int index = 0]) => setState(() {
-    _compareIndex = index;
-    _tab = 3;
+  @override
+  void initState() {
+    super.initState();
+    // App reopened with a saved field: check it again.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(analysisProvider.notifier).ensureFor(ref.read(farmerDraftProvider));
+    });
+  }
+
+  void _openPlan(int i) => setState(() {
+    _plan = i;
+    _tab = 1;
   });
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(analysisProvider);
-    return switch (state) {
-      AnalysisIdle() || AnalysisRunning() => const _Preparing(),
-      AnalysisFailed(:final error, :final lastGood) => _Failed(
-        error: error,
-        hasLast: lastGood != null,
-      ),
-      AnalysisReady(:final analysis, :final fromCache) => _ready(
-        analysis,
-        fromCache,
-      ),
-    };
-  }
-
-  Widget _ready(FieldAnalysis a, bool fromCache) {
-    final pages = [
-      OverviewTab(analysis: a, fromCache: fromCache, onCompare: _openCompare),
-      MapTab(analysis: a),
-      ClimateTab(analysis: a),
-      CompareTab(
-        analysis: a,
-        index: _compareIndex,
-        onIndexChanged: (i) => setState(() => _compareIndex = i),
-      ),
-    ];
     final p = context.fs;
+    final pages = [
+      AnalysisGate(builder: (a, cached) => HomeTab(analysis: a, fromCache: cached, onOpenPlan: _openPlan)),
+      AnalysisGate(
+        builder: (a, _) => CropsTab(
+          analysis: a,
+          index: _plan,
+          onIndexChanged: (i) => setState(() => _plan = i),
+        ),
+      ),
+      AnalysisGate(builder: (a, _) => WeatherTab(analysis: a)),
+      const NotesTab(),
+    ];
+    final body = IndexedStack(index: _tab, children: pages);
 
     return LayoutBuilder(
       builder: (context, c) {
-        final body = IndexedStack(index: _tab, children: pages);
-
-        // Tablets / desktop: sidebar instead of a stretched tab bar.
         if (c.maxWidth >= FsSpace.wideBreakpoint) {
           return Scaffold(
             backgroundColor: p.background,
             body: Row(
               children: [
                 SizedBox(
-                  width: 280,
+                  width: 260,
                   child: SafeArea(
                     right: false,
                     child: ListView(
-                      padding: const EdgeInsets.only(top: FsSpace.lg),
+                      padding: const EdgeInsets.only(top: FsSpace.xl),
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                            FsSpace.xl,
-                            FsSpace.lg,
-                            FsSpace.lg,
-                            0,
-                          ),
-                          child: Row(
-                            children: [
-                              CupertinoButton(
-                                padding: EdgeInsets.zero,
-                                minimumSize: const Size.square(
-                                  FsSpace.minTouch,
-                                ),
-                                onPressed: () =>
-                                    Navigator.of(context).maybePop(),
-                                child: Icon(
-                                  CupertinoIcons.chevron_back,
-                                  color: p.tint,
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  S.appName,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: context.type.title2,
-                                ),
-                              ),
-                            ],
+                          padding: const EdgeInsets.fromLTRB(FsSpace.xxl, 0, FsSpace.lg, 0),
+                          child: Text(
+                            S.appName,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: context.type.title2,
                           ),
                         ),
                         FsGroupedSection(
                           separatorIndent: FsSpace.lg + 30 + FsSpace.md,
                           children: [
-                            for (final (i, (label, icon, _)) in _tabs.indexed)
+                            for (final (i, (label, icon, active)) in _tabs.indexed)
                               Container(
                                 color: i == _tab ? p.tintSoft : null,
                                 child: FsListRow(
                                   leading: FsIconBadge(
-                                    icon,
-                                    color: i == _tab
-                                        ? p.tint
-                                        : p.secondaryLabel,
+                                    i == _tab ? active : icon,
+                                    color: i == _tab ? p.tint : p.secondaryLabel,
                                   ),
                                   title: label,
                                   titleStyle: i == _tab
-                                      ? context.type.headline.copyWith(
-                                          color: p.tint,
-                                        )
+                                      ? context.type.headline.copyWith(color: p.tint)
                                       : null,
                                   chevron: false,
                                   onTap: () => setState(() => _tab = i),
@@ -163,7 +120,6 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
             ),
           );
         }
-
         return Scaffold(
           backgroundColor: p.background,
           body: body,
@@ -174,7 +130,8 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
             inactiveColor: p.secondaryLabel,
             backgroundColor: p.barBackground,
             border: Border(top: BorderSide(color: p.separator, width: 0.5)),
-            height: 54,
+            height: 58,
+            iconSize: 28,
             items: [
               for (final (label, icon, active) in _tabs)
                 BottomNavigationBarItem(
@@ -187,6 +144,22 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
         );
       },
     );
+  }
+}
+
+/// Shows "checking…" / error / content depending on the analysis state.
+class AnalysisGate extends ConsumerWidget {
+  const AnalysisGate({super.key, required this.builder});
+  final Widget Function(FieldAnalysis analysis, bool fromCache) builder;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(analysisProvider);
+    return switch (state) {
+      AnalysisReady(:final analysis, :final fromCache) => builder(analysis, fromCache),
+      AnalysisFailed(:final error, :final lastGood) => _Failed(error: error, hasLast: lastGood != null),
+      _ => const _Preparing(),
+    };
   }
 }
 
@@ -206,7 +179,7 @@ class _Preparing extends StatelessWidget {
               shrinkWrap: true,
               padding: const EdgeInsets.all(FsSpace.xxl),
               children: [
-                Text(S.analyzingTitle, style: context.type.title1),
+                Text(S.preparing, style: context.type.title1),
                 const SizedBox(height: FsSpace.lg),
                 const FsProgressSteps(steps: [S.step1, S.step2, S.step3]),
                 const SizedBox(height: FsSpace.xxxl),
@@ -225,7 +198,7 @@ class _Preparing extends StatelessWidget {
                         SizedBox(height: FsSpace.sm),
                         FsSkeleton(width: 200, height: 18),
                         SizedBox(height: FsSpace.sm),
-                        FsSkeleton(width: 130, height: 22, radius: 11),
+                        FsSkeleton(width: 110, height: 24, radius: 12),
                       ],
                     ),
                   ),
@@ -245,39 +218,25 @@ class _Failed extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final p = context.fs;
     final n = ref.read(analysisProvider.notifier);
     return Scaffold(
-      backgroundColor: p.background,
-      appBar: CupertinoNavigationBar(
-        previousPageTitle: S.back,
-        backgroundColor: p.barBackground,
-        border: null,
-        transitionBetweenRoutes: false,
-      ),
-      body: FsMessageView(
-        icon: CupertinoIcons.exclamationmark_triangle_fill,
-        tone: FsTone.caution,
-        title: S.errorTitle,
-        message: error.message,
-        actions: [
-          if (error.retryable)
+      backgroundColor: context.fs.background,
+      body: SafeArea(
+        child: FsMessageView(
+          icon: CupertinoIcons.exclamationmark_triangle_fill,
+          tone: FsTone.caution,
+          title: S.errorTitle,
+          message: error.message,
+          actions: [
             FsButton(
               S.retry,
               onPressed: () => n.run(ref.read(farmerDraftProvider).toInput()),
             ),
-          FsButton(
-            S.useDemo,
-            kind: error.retryable ? FsButtonKind.tinted : FsButtonKind.filled,
-            onPressed: n.runDemo,
-          ),
-          if (hasLast)
-            FsButton(
-              S.showLast,
-              kind: FsButtonKind.plain,
-              onPressed: n.showLastGood,
-            ),
-        ],
+            FsButton(S.useDemo, kind: FsButtonKind.tinted, onPressed: n.runDemo),
+            if (hasLast)
+              FsButton(S.showLast, kind: FsButtonKind.plain, onPressed: n.showLastGood),
+          ],
+        ),
       ),
     );
   }
