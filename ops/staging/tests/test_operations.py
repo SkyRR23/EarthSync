@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -169,4 +170,13 @@ def test_complete_recovery_rehearsal_uses_current_migration_set(tmp_path):
 
     report = Report()
     exercise(report, tmp_path)
-    assert report.write(tmp_path / "recovery-report.json") == 0
+    result = report.write(tmp_path / "recovery-report.json")
+    if os.name == "nt":
+        # chmod cannot establish Windows ACLs. Preserve this explicit manual
+        # gate while asserting that every portable recovery check passed.
+        assert result == 2
+        blocked = [check for check in report.checks if check["status"] == "BLOCKED"]
+        assert len(blocked) == 1 and blocked[0]["name"] == "private permissions"
+        assert all(check["status"] in ("PASS", "BLOCKED") for check in report.checks)
+    else:
+        assert result == 0

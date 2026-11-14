@@ -13,6 +13,9 @@ permissions:
   contents: read
 jobs:
   offline:
+    defaults:
+      run:
+        shell: bash
     strategy:
       fail-fast: false
       matrix:
