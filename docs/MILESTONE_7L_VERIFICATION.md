@@ -84,7 +84,7 @@ uninterrupted browser run. Responsive widget tests cover all stated widths.
 
 ## Raw receipts
 
-Saved terminal output is in [`verification/7l/`](verification/7l/), including the
+Saved terminal output (with trailing terminal padding removed) is in [`verification/7l/`](verification/7l/), including the
 full Flutter suite, final analyzer, backend suite, explicit live native/web/daily
 checks, focused UI/photo/planning checks, final web build and final Android build.
 The final photo check also opens the full-screen `InteractiveViewer` and closes it
