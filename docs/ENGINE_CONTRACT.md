@@ -109,3 +109,13 @@ its unweighted annual temperature summary. See [seasonal formulas, data contract
 and integration questions](SEASONAL_CLIMATE.md) before using the new API.
 Seasonal data include explicit units, inclusive year/month periods, declared
 completeness, source labels and data kind. No new agricultural decisions are made.
+
+## Milestone 3A: separate crop/rotation foundation (provisional)
+
+`decision::compare_rotations(&DecisionRequest)` and
+`decision::compare_rotations_json(&str)` introduce typed, source-linked categorical
+checks without changing existing field or seasonal APIs. Step support means only
+support for implemented supplied constraints; whole rotations remain insufficient
+without transition rules unless a supplied constraint conflicts. See
+[CROP_ROTATION_FOUNDATION.md](CROP_ROTATION_FOUNDATION.md) and the proposed PR #2
+[contract review](TEAM_CONTRACT_REVIEW.md). No scientific crop values are built in.
