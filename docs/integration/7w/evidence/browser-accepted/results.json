@@ -1,0 +1,7 @@
+{
+  "passed": [
+    "User confirms global point, farm and rainfed system; explicit database link",
+    "Real NASA inputs validated, actual Rust ET0 and rainfall persist and render exactly"
+  ],
+  "browser_errors": []
+}

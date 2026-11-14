@@ -1,0 +1,114 @@
+{
+  "branch": "feat/earthsync-crop-water-advisor-v1",
+  "exact_worktree_base": "940a8aad62da8b188cdd3af4d200f353d907997a",
+  "frozen_7n": "a6dd13213d629e6714575425169530c617cbffad",
+  "stacked_base_branch": "data/earthsync-crop-evidence-v1",
+  "7p_pr": "https://github.com/SkyRR23/EarthSync/pull/25",
+  "source_pull_requests": {
+    "15": {
+      "baseRefName": "feat/web-demo",
+      "headRefName": "data/global-crop-knowledge",
+      "headRefOid": "c4112d2d2b69590b8a1e4b8118567635f08a866f",
+      "number": 15,
+      "title": "data: add global pilot crop knowledge and source evidence",
+      "url": "https://github.com/SkyRR23/EarthSync/pull/15"
+    },
+    "18": {
+      "baseRefName": "feat/web-demo",
+      "headRefName": "feat/agronomic-engine-v03",
+      "headRefOid": "6f7f81077bbc3709c6206b0a77cf1ff4db15a982",
+      "number": 18,
+      "title": "feat(engine): implement agricultural evidence engine v0.3",
+      "url": "https://github.com/SkyRR23/EarthSync/pull/18"
+    },
+    "19": {
+      "baseRefName": "feat/web-demo",
+      "headRefName": "feat/backend-evidence-platform-v1",
+      "headRefOid": "b578a6df2764479ff9c9df006cc00e5ddb3ccfa3",
+      "number": 19,
+      "title": "Milestone 7I: backend evidence platform, live daily climate and Rust v0.3 orchestration",
+      "url": "https://github.com/SkyRR23/EarthSync/pull/19"
+    },
+    "20": {
+      "baseRefName": "feat/web-demo",
+      "headRefName": "integration/earthsync-milestone-7h",
+      "headRefOid": "a7c33cc6b58703501bbba0ceba1bad1d6d42004b",
+      "number": 20,
+      "title": "Milestone 7H: integrate the EarthSync application and evidence services",
+      "url": "https://github.com/SkyRR23/EarthSync/pull/20"
+    },
+    "21": {
+      "baseRefName": "integration/earthsync-milestone-7h",
+      "headRefName": "feat/flutter-complete-ui-v1",
+      "headRefOid": "bd8d245b0eae92aab353d852baf05adba5527384",
+      "number": 21,
+      "title": "[7L] Complete responsive Flutter UI and evidence-safe workflows",
+      "url": "https://github.com/SkyRR23/EarthSync/pull/21"
+    },
+    "22": {
+      "baseRefName": "integration/earthsync-milestone-7h",
+      "headRefName": "fix/earthsync-science-audit-v1",
+      "headRefOid": "7b27699f13c94461a9d3d6596c47debfcfb9fed6",
+      "number": 22,
+      "title": "[7J] Historical science audit, NASA provenance fixes and crop quarantine",
+      "url": "https://github.com/SkyRR23/EarthSync/pull/22"
+    },
+    "23": {
+      "baseRefName": "integration/earthsync-milestone-7h",
+      "headRefName": "ops/earthsync-staging-v1",
+      "headRefOid": "ef9a67ced98c9af98d677a679c9ab1761dc8904a",
+      "number": 23,
+      "title": "7Q: prepare restricted staging, database recovery and release operations",
+      "url": "https://github.com/SkyRR23/EarthSync/pull/23"
+    },
+    "24": {
+      "baseRefName": "integration/earthsync-milestone-7h",
+      "headRefName": "integration/earthsync-final-stack-v1",
+      "headRefOid": "a6dd13213d629e6714575425169530c617cbffad",
+      "number": 24,
+      "title": "[7N] Final UI, scientific corrections and private evidence staging",
+      "url": "https://github.com/SkyRR23/EarthSync/pull/24"
+    }
+  },
+  "7n_components": {
+    "7H": {
+      "pr": 20,
+      "branch": "integration/earthsync-milestone-7h",
+      "sha": "a7c33cc6b58703501bbba0ceba1bad1d6d42004b"
+    },
+    "7I": {
+      "pr": 19,
+      "branch": "feat/backend-evidence-platform-v1",
+      "sha": "b578a6df2764479ff9c9df006cc00e5ddb3ccfa3"
+    },
+    "7L": {
+      "pr": 21,
+      "branch": "feat/flutter-complete-ui-v1",
+      "sha": "bd8d245b0eae92aab353d852baf05adba5527384"
+    },
+    "7J": {
+      "pr": 22,
+      "branch": "fix/earthsync-science-audit-v1",
+      "sha": "7b27699f13c94461a9d3d6596c47debfcfb9fed6",
+      "initial_science_fix_sha": "d7e43399c9fd296032e64b1c1b5623dbeb70cca6"
+    },
+    "7Q": {
+      "pr": 23,
+      "branch": "ops/earthsync-staging-v1",
+      "sha": "ef9a67ced98c9af98d677a679c9ab1761dc8904a"
+    }
+  },
+  "additional_inherited_pins": {
+    "assistant_14": "db42b9620932ed49b71a159e0eb9a61375fa3eec",
+    "photos_16": "d5e24f3a6120e745a63394a6ca1e0b28c75794c1"
+  },
+  "v1_loader": "unchanged; never redirected",
+  "v2_gate": "reference_only; candidate/recommendation false; rules empty",
+  "public_deployment": false,
+  "merge_authorized": false,
+  "7v_scientific_review": {
+    "pr": 26,
+    "sha": "5ffe71e45f0f141d0e383cd437ab35c843960dc6",
+    "disposition": "Read-only blocked-review derivative; full 7V package remains a separately reviewed 7X dependency"
+  }
+}

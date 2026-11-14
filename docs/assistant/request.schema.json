@@ -79,6 +79,14 @@
           "maxItems": 30,
           "title": "Limitations",
           "type": "array"
+        },
+        "reference_facts": {
+          "items": {
+            "$ref": "#/$defs/ReferenceFact"
+          },
+          "maxItems": 20,
+          "title": "Reference Facts",
+          "type": "array"
         }
       },
       "required": [
@@ -146,6 +154,19 @@
           "default": false,
           "title": "Synthetic",
           "type": "boolean"
+        },
+        "explanation": {
+          "anyOf": [
+            {
+              "maxLength": 1000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Explanation"
         }
       },
       "required": [
@@ -370,6 +391,56 @@
         "longitude"
       ],
       "title": "Point",
+      "type": "object"
+    },
+    "ReferenceFact": {
+      "additionalProperties": false,
+      "properties": {
+        "profile_id": {
+          "maxLength": 150,
+          "minLength": 1,
+          "title": "Profile Id",
+          "type": "string"
+        },
+        "parameter": {
+          "const": "growing_duration",
+          "title": "Parameter",
+          "type": "string"
+        },
+        "value_text": {
+          "maxLength": 200,
+          "title": "Value Text",
+          "type": "string"
+        },
+        "unit": {
+          "maxLength": 80,
+          "title": "Unit",
+          "type": "string"
+        },
+        "scope": {
+          "maxLength": 500,
+          "title": "Scope",
+          "type": "string"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Source Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "profile_id",
+        "parameter",
+        "value_text",
+        "unit",
+        "scope",
+        "source_ids"
+      ],
+      "title": "ReferenceFact",
       "type": "object"
     },
     "Selection": {

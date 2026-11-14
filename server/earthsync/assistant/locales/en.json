@@ -1,12 +1,15 @@
 {
   "suggestions": [
     "What is happening in my area?",
-    "What does the rainfall graph mean?",
+    "How much rainfall did this area receive?",
     "Why is soil information unavailable?",
     "What crops could I investigate?",
     "What are the limitations of this recommendation?",
     "What does this satellite observation mean?",
-    "What information should I provide next?"
+    "What information should I provide next?",
+    "What does the ET0 value mean?",
+    "What would I need to estimate irrigation requirement?",
+    "Why is this rotation in conflict?"
   ],
   "scope_none": "No farm or area is selected. I can explain general information; I cannot describe your field.",
   "scope_approximate": "Only an approximate user location is available. It does not identify a farm; select an area or confirm your farm.",
@@ -15,7 +18,7 @@
   "rainfall": "A rainfall graph shows water depth over the labeled period, usually in millimeters. A missing point means unknown, not no rain. Historical rain is not a forecast or the water available to crop roots.",
   "soil": "Soil information may be absent because no test or supported source was supplied, or coverage or quality checks failed. Missing soil data do not mean healthy soil. A field soil test can help; regional soil maps cannot replace it.",
   "satellite": "Satellite observations describe what a sensor can detect over its pixels and dates. Vegetation signals, radar and field photos are different evidence. Clouds, timing and pixel coverage can limit interpretation. They cannot diagnose disease or establish root-zone moisture on their own.",
-  "crops": "I can explain supplied Rust findings as options to investigate. They are not ranked planting advice. Crop variety, local requirements, soil, water and planting dates still need review with a local adviser.",
+  "crops": "I can explain supplied Rust findings as options to investigate. They are not ranked planting advice. Crop variety, local requirements, soil, water and planting dates still need review with a local adviser. Source-reviewed crop reference facts remain reference-only; exact facts, source sidecars and blocked conversions are in the saved assessment. A schedule conflict checks the declared order and dates, not crop suitability.",
   "limitations": "A result applies only to the supplied evidence, dates and spatial coverage. Missing or conflicting information stays unresolved. Historical climate does not establish a safe forecast, yield or crop suitability.",
   "next": "Next, confirm the farm point or boundary, crop and variety, planting dates, water availability and drainage. Add dated soil tests or field observations where possible. A field photo can help describe a concern; its location metadata are optional and do not confirm the farm.",
   "area": "I can summarize the evidence supplied for the selected area or farm. I cannot check current conditions without dated sources; historical records and forecasts remain separate.",
@@ -44,7 +47,11 @@
     "organic_carbon": "Soil organic carbon",
     "moisture": "Soil moisture",
     "ndvi": "Vegetation index (NDVI)",
-    "backscatter": "Radar backscatter"
+    "backscatter": "Radar backscatter",
+    "et0_total": "Reference-grass ET0 total"
   },
-  "decision_unverified": "The supplied finding lacks complete source provenance or linked evidence. Its agricultural applicability remains unresolved."
+  "decision_unverified": "The supplied finding lacks complete source provenance or linked evidence. Its agricultural applicability remains unresolved.",
+  "water": "ET0 is calculated atmospheric demand for reference grass under standard conditions. It is not crop ETc or irrigation requirement. ETc needs independently accepted crop stage coefficients and actual stage dates. Irrigation needs effective rainfall, root-zone storage/depletion, drainage/capillary rise and delivery efficiency. Paddy additionally needs preparation, seepage and standing-water targets. Missing dependencies remain unknown.",
+  "reference_duration": "Source-reviewed reference growing period for {profile}: {value} {unit}. Scope: {scope}. This is an advisory reference, not your cultivar maturity prediction or an independently accepted crop rule.",
+  "persisted_explanation": "Persisted Rust explanation: {text}"
 }

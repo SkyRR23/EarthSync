@@ -3,11 +3,6 @@
     "PlanSelection": {
       "additionalProperties": false,
       "properties": {
-        "end": {
-          "format": "date",
-          "title": "End",
-          "type": "string"
-        },
         "profile_id": {
           "maxLength": 150,
           "minLength": 1,
@@ -17,6 +12,11 @@
         "start": {
           "format": "date",
           "title": "Start",
+          "type": "string"
+        },
+        "end": {
+          "format": "date",
+          "title": "End",
           "type": "string"
         }
       },
@@ -31,9 +31,18 @@
   },
   "additionalProperties": false,
   "properties": {
-    "end": {
-      "format": "date",
-      "title": "End",
+    "catalog_version": {
+      "default": "v1",
+      "enum": [
+        "v1",
+        "v2"
+      ],
+      "title": "Catalog Version",
+      "type": "string"
+    },
+    "farm_id": {
+      "format": "uuid",
+      "title": "Farm Id",
       "type": "string"
     },
     "evidence_ids": {
@@ -44,10 +53,26 @@
       "title": "Evidence Ids",
       "type": "array"
     },
-    "farm_id": {
-      "format": "uuid",
-      "title": "Farm Id",
-      "type": "string"
+    "profile_ids": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "title": "Profile Ids",
+      "type": "array"
+    },
+    "plans": {
+      "items": {
+        "$ref": "#/$defs/PlanSelection"
+      },
+      "maxItems": 20,
+      "title": "Plans",
+      "type": "array"
+    },
+    "sequential_field": {
+      "default": false,
+      "title": "Sequential Field",
+      "type": "boolean"
     },
     "pilot_id": {
       "anyOf": [
@@ -62,30 +87,14 @@
       "default": null,
       "title": "Pilot Id"
     },
-    "plans": {
-      "items": {
-        "$ref": "#/$defs/PlanSelection"
-      },
-      "maxItems": 20,
-      "title": "Plans",
-      "type": "array"
-    },
-    "profile_ids": {
-      "items": {
-        "type": "string"
-      },
-      "maxItems": 20,
-      "title": "Profile Ids",
-      "type": "array"
-    },
-    "sequential_field": {
-      "default": false,
-      "title": "Sequential Field",
-      "type": "boolean"
-    },
     "start": {
       "format": "date",
       "title": "Start",
+      "type": "string"
+    },
+    "end": {
+      "format": "date",
+      "title": "End",
       "type": "string"
     }
   },

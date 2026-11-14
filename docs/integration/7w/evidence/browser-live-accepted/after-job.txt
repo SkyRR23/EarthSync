@@ -1,0 +1,16 @@
+- heading "Persisted farm evidence" [level=2]
+- group:
+  - heading "Local farm evidence Private single-user service on this device. Historical records do not establish a crop recommendation." [level=2]
+  - 'group "Database farm: a092800e-0258-4c9b-bd2b-243c37b32caf Confirmed point: 42.0308, -93.6319 Declared system: rainfed"':
+    - button "Refresh saved records"
+    - button "Retrieve daily climate for this farm"
+    - button "Ask about saved evidence"
+    - button "Private workspace photos"
+    - text: Photo ownership Existing photos remain in the authorized 7H workspace. Linking this farm does not transfer or expose them. Farm-owned 7I objects remain separate; migration requires a verified workspace token, explicit selection and sanitizer checks. No automatic migration is enabled.
+    - group:
+      - textbox "Water / first crop start (YYYY-MM-DD)": 2024-07-03
+      - textbox "Water / first crop end (YYYY-MM-DD)": 2024-07-07
+      - button "Retrieve NASA inputs & calculate ET0"
+      - text: "Water job: succeeded · Reference ET0 total: 23.193683430451973 mm · 5/5 usable days Rainfall total: 28.68 mm · 5/5 usable days"
+      - button "FAO-56 intermediates, exact inputs, original hashes and provenance"
+      - button "Use this saved calculation and source snapshots"

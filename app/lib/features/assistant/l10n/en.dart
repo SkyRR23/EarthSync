@@ -25,7 +25,10 @@ const assistantEnglish = <String, String>{
 };
 const assistantEnglishQuestions = <String>[
   'What is happening in my area?',
-  'What does the rainfall graph mean?',
+  'How much rainfall did this area receive?',
+  'What does the ET0 value mean?',
+  'What would I need to estimate irrigation requirement?',
+  'Why is this rotation in conflict?',
   'Why is soil information unavailable?',
   'What crops could I investigate?',
   'What are the limitations of this recommendation?',

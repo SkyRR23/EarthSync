@@ -22,4 +22,4 @@ testpaths = ["tests"]
 [tool.setuptools.package-data]
 "earthsync.assistant" = ["locales/*.json"]
 
-"earthsync.platform_v1" = ["migrations/*.sql"]
+"earthsync.platform_v1" = ["migrations/*.sql", "rule_review.json"]

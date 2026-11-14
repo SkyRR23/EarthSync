@@ -9,6 +9,7 @@ from .models import ChatRequest, ChatResponse, Claim
 
 # Agricultural content and translations live in locales; these are routing terms.
 INTENTS = (
+    ("water", r"\bet0\b|evapotranspiration|irrigation|water demand|water requirement"),
     ("limitations", r"limit|uncertain|reliab|confiden|segur"),
     ("soil", r"soil|suelo|\bph\b|salinity"),
     (
@@ -16,7 +17,10 @@ INTENTS = (
         r"satellite|satelital|vegetation|vegetaci|radar|ndvi|photo|foto|disease|enfermedad",
     ),
     ("rainfall", r"rain|lluvia|precip|graph|gr[aá]fico"),
-    ("crops", r"crop|cultiv|recommend|recomend|planting advice"),
+    (
+        "crops",
+        r"crop|cultiv|recommend|recomend|planting advice|rotation|growing period|requirements",
+    ),
     ("next", r"next|provide|aportar|informaci[oó]n.*debo|siguiente"),
     (
         "area",
@@ -24,6 +28,7 @@ INTENTS = (
     ),
 )
 TOPICS = {
+    "water": {"climate"},
     "soil": {"soil"},
     "satellite": {"vegetation", "radar", "photo"},
     "rainfall": {"rainfall"},
@@ -35,6 +40,7 @@ TOPICS = {
 }
 # An unrecognized metric or free text is never promoted into a scientific claim.
 METRICS = {
+    ("climate", "et0_total", "mm"),
     ("rainfall", "rainfall_total", "mm"),
     ("temperature", "mean_temperature", "deg_c"),
     ("soil", "ph", "pH"),
@@ -149,6 +155,26 @@ def explain(request: ChatRequest) -> ChatResponse:
     claims = [Claim(category="general_knowledge", text=words[f"scope_{scope}"])]
     claims.append(Claim(category="general_knowledge", text=words[intent]))
     sources = {source.id: source for source in context.sources}
+    if intent == "crops":
+        for fact in context.reference_facts[: 5 if request.expanded else 2]:
+            refs = [
+                s
+                for s in fact.source_ids
+                if s in sources and sources[s].url is not None
+            ]
+            if len(refs) == len(fact.source_ids):
+                claims.append(
+                    Claim(
+                        category="retrieved_fact",
+                        text=words["reference_duration"].format(
+                            profile=fact.profile_id,
+                            value=fact.value_text,
+                            unit=fact.unit,
+                            scope=fact.scope,
+                        ),
+                        source_ids=refs,
+                    )
+                )
     wanted = TOPICS[intent]
     if intent == "limitations":
         wanted = set().union(*TOPICS.values())
@@ -237,6 +263,17 @@ def explain(request: ChatRequest) -> ChatResponse:
             claims.append(
                 Claim(
                     category="unavailable_evidence", text=words["decision_unverified"]
+                )
+            )
+        if decision.explanation:
+            claims.append(
+                Claim(
+                    category="deterministic_calculation",
+                    text=words["persisted_explanation"].format(
+                        text=decision.explanation
+                    ),
+                    source_ids=refs,
+                    evidence_ids=decision.evidence_ids,
                 )
             )
     if intent == "crops" and not decisions:

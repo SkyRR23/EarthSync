@@ -1,0 +1,128 @@
+{
+  "schema_version": "assistant.v1-proposal",
+  "context_id": "selection-89728829",
+  "language": "en",
+  "intent": "water",
+  "claims": [
+    {
+      "category": "general_knowledge",
+      "text": "A farm location is confirmed. Each source still has its own coverage; regional data remain regional.",
+      "evidence_ids": [],
+      "source_ids": []
+    },
+    {
+      "category": "general_knowledge",
+      "text": "ET0 is calculated atmospheric demand for reference grass under standard conditions. It is not crop ETc or irrigation requirement. ETc needs independently accepted crop stage coefficients and actual stage dates. Irrigation needs effective rainfall, root-zone storage/depletion, drainage/capillary rise and delivery efficiency. Paddy additionally needs preparation, seepage and standing-water targets. Missing dependencies remain unknown.",
+      "evidence_ids": [],
+      "source_ids": []
+    },
+    {
+      "category": "unavailable_evidence",
+      "text": "Evidence \u201cenvironment-weather\u201d remains unknown or needs review: missing, partial, stale, conflicting or unverified quality.",
+      "evidence_ids": [
+        "environment-weather"
+      ],
+      "source_ids": [
+        "environment-weather"
+      ]
+    },
+    {
+      "category": "deterministic_calculation",
+      "text": "Reference-grass ET0 total: 23.1937 mm (modeled, 2024-07-03 to 2024-07-07, regional). Quality: available.",
+      "evidence_ids": [
+        "ev_f051e20c072297ea4052620217eac23ed6fe43e4e955482089bb5fcd21306c7f:et0"
+      ],
+      "source_ids": [
+        "ev_f051e20c072297ea4052620217eac23ed6fe43e4e955482089bb5fcd21306c7f"
+      ]
+    }
+  ],
+  "citations": [
+    {
+      "id": "environment-weather",
+      "provider": "Open-Meteo / NOAA",
+      "title": "Open-Meteo current conditions and daily forecast",
+      "url": "https://open-meteo.com/en/docs"
+    },
+    {
+      "id": "ev_f051e20c072297ea4052620217eac23ed6fe43e4e955482089bb5fcd21306c7f",
+      "provider": "EarthSync Rust / NASA POWER",
+      "title": "Calculated FAO-56 reference-grass ET0",
+      "url": "https://www.fao.org/4/X0490E/x0490e08.htm"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "environment-weather",
+      "topic": "climate",
+      "metric": "weather",
+      "kind": "unavailable",
+      "quality": "unavailable",
+      "value": null,
+      "unit": null,
+      "start_date": null,
+      "end_date": null,
+      "retrieved_at": null,
+      "spatial_support": null,
+      "scope": "regional",
+      "location_id": "farm-1794673093170000",
+      "source_ids": [
+        "environment-weather"
+      ],
+      "limitations": [
+        "LIVE_SOURCE_UNVERIFIED",
+        "Reference/probe values are not usable for analysis."
+      ],
+      "calculation": "none"
+    },
+    {
+      "id": "ev_f051e20c072297ea4052620217eac23ed6fe43e4e955482089bb5fcd21306c7f:et0",
+      "topic": "climate",
+      "metric": "et0_total",
+      "kind": "modeled",
+      "quality": "available",
+      "value": 23.193683430451973,
+      "unit": "mm",
+      "start_date": "2024-07-03",
+      "end_date": "2024-07-07",
+      "retrieved_at": "2026-11-14T16:18:18.069734Z",
+      "spatial_support": "MERRA-2 0.5\u00b0 \u00d7 0.625\u00b0 meteorology and SYN1deg 1\u00b0 radiation at query point; not field measurements",
+      "scope": "regional",
+      "location_id": "farm-1794673093170000",
+      "source_ids": [
+        "ev_f051e20c072297ea4052620217eac23ed6fe43e4e955482089bb5fcd21306c7f"
+      ],
+      "limitations": [
+        "Calculated historical reference-grass ET0 from regional modeled/satellite-derived inputs, not a field observation or forecast.",
+        "MERRA-2 meteorology (0.5 by 0.625 degrees) and SYN1deg radiation (1 degree) are distinct spatial supports, aligned only by requested point and NASA LST date.",
+        "NASA LST is a 15-degree solar-time swath, not the farmer's civil calendar. Provider elevation is model terrain, not surveyed field elevation.",
+        "Daily dewpoint is used in FAO-56 Eq.14; vapour pressure from mean dewpoint approximates mean daily vapour pressure. Below-freezing Dew/Frost Point phase conversion is unvalidated and withheld. No field accuracy or calibrated uncertainty interval is established.",
+        "FAO-56 daily reference grass: albedo 0.23, G=0; clear-sky Rs/Rso capped at 1. Polar night, negative cloud factor, negative ET0 and incompatible inputs are withheld.",
+        "ET0 is not ETc, effective rain, root-zone depletion, irrigation requirement, water stress or proof of water availability."
+      ],
+      "calculation": "rust"
+    }
+  ],
+  "decisions": [],
+  "limitations": [
+    "No independently verified crop recommendation is available. Historical climate is not current weather.",
+    "All global catalog profiles are reference-only and recommendation_eligible=false. Daily climate, soil depth, cultivar duration and Kc gaps remain.",
+    "No reviewed positive crop recommendations. Full evidence and Rust decision details are available separately.",
+    "Only source records are projected; reference-only inputs must not be promoted. Boundaries exceeding assistant v1 limits are omitted; full farm geometry remains in farm context."
+  ],
+  "warnings": [
+    "environment-weather:quality"
+  ],
+  "suggested_questions": [
+    "What is happening in my area?",
+    "How much rainfall did this area receive?",
+    "Why is soil information unavailable?",
+    "What crops could I investigate?",
+    "What are the limitations of this recommendation?",
+    "What does this satellite observation mean?",
+    "What information should I provide next?",
+    "What does the ET0 value mean?",
+    "What would I need to estimate irrigation requirement?",
+    "Why is this rotation in conflict?"
+  ]
+}

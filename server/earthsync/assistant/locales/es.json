@@ -44,7 +44,11 @@
     "organic_carbon": "Carbono orgánico del suelo",
     "moisture": "Humedad del suelo",
     "ndvi": "Índice de vegetación (NDVI)",
-    "backscatter": "Retrodispersión de radar"
+    "backscatter": "Retrodispersión de radar",
+    "et0_total": "ET0 de referencia total"
   },
-  "decision_unverified": "El resultado aportado carece de procedencia completa o evidencia vinculada. Su aplicabilidad agrícola sigue sin resolverse."
+  "decision_unverified": "El resultado aportado carece de procedencia completa o evidencia vinculada. Su aplicabilidad agrícola sigue sin resolverse.",
+  "water": "ET0 es la demanda atmosférica de un pasto de referencia. No es ETc ni una necesidad de riego. Se requieren etapas y coeficientes aceptados, lluvia efectiva y balance de agua del suelo. Los datos faltantes siguen siendo desconocidos.",
+  "reference_duration": "Duración de referencia de {profile}: {value} {unit}. Ámbito: {scope}. No es una predicción para su parcela ni una regla agronómica aceptada.",
+  "persisted_explanation": "Explicación guardada de Rust: {text}"
 }

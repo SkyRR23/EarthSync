@@ -1,0 +1,74 @@
+[
+  {
+    "id": "nasa-parameters",
+    "url": "https://power.larc.nasa.gov/api/system/manager/parameters?community=AG&temporal=daily",
+    "resolved_url": "https://power.larc.nasa.gov/api/system/manager/parameters?community=AG&temporal=daily",
+    "status": 200,
+    "retrieved_at": "2026-11-14T15:51:42.806417+00:00",
+    "sha256": "f4928676bfd19982eea63dcbc93c5652dac333dc450ea51c0372310606c28bab",
+    "bytes": 46344
+  },
+  {
+    "id": "nasa-meteorology",
+    "url": "https://power.larc.nasa.gov/docs/methodology/data/sources_meteorology/",
+    "resolved_url": "https://power.larc.nasa.gov/docs/methodology/data/sources_meteorology/",
+    "status": 200,
+    "retrieved_at": "2026-11-14T15:51:44.142144+00:00",
+    "sha256": "b2a8dcb492a3c43d39d940d231b72ad2580dd601e54d709655cf3bcf5c053f97",
+    "bytes": 126846
+  },
+  {
+    "id": "nasa-fluxes",
+    "url": "https://power.larc.nasa.gov/docs/methodology/data/sources_fluxes/",
+    "resolved_url": "https://power.larc.nasa.gov/docs/methodology/data/sources_fluxes/",
+    "status": 200,
+    "retrieved_at": "2026-11-14T15:51:45.299528+00:00",
+    "sha256": "dbdad91d645a2141b0258614b803884cdbe69e2722377c04174844731dcadb91",
+    "bytes": 70491
+  },
+  {
+    "id": "nasa-daily",
+    "url": "https://power.larc.nasa.gov/docs/services/api/temporal/daily/",
+    "resolved_url": "https://power.larc.nasa.gov/docs/services/api/temporal/daily/",
+    "status": 200,
+    "retrieved_at": "2026-11-14T15:51:46.353291+00:00",
+    "sha256": "d624945397c5fa517d5d8d63c3c802550869271d545c93f31c0e7e419cf4a9f6",
+    "bytes": 36966
+  },
+  {
+    "id": "soilgrids-webdav-vrt",
+    "url": "https://files.isric.org/soilgrids/latest/data/phh2o/phh2o_0-5cm_mean.vrt",
+    "resolved_url": "https://files.isric.org/soilgrids/latest/data/phh2o/phh2o_0-5cm_mean.vrt",
+    "status": 200,
+    "retrieved_at": "2026-11-14T15:51:53.405592+00:00",
+    "sha256": "28bf9ceef0ee29a2d29926929b1760eddb6749b4f31ed212e8d536a226892f0d",
+    "bytes": 3524139
+  },
+  {
+    "id": "soilgrids-faq",
+    "url": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_04.html",
+    "resolved_url": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_04.html",
+    "status": 200,
+    "retrieved_at": "2026-11-14T15:51:54.494891+00:00",
+    "sha256": "fb410ef0ae2f5cce8dd5ae77595c586d216052fc861aa14f168adf6cb6a8e184",
+    "bytes": 36952
+  },
+  {
+    "id": "fao-56-ch3",
+    "url": "https://www.fao.org/4/X0490E/x0490e07.htm",
+    "resolved_url": "https://www.fao.org/4/X0490E/x0490e07.htm",
+    "status": 200,
+    "retrieved_at": "2026-11-14T15:51:54.694362+00:00",
+    "sha256": "63d52d7c2858df69e6423312e17a631b8c6495575f8a2598915bcdf597a35cbe",
+    "bytes": 138060
+  },
+  {
+    "id": "fao-56-ch4",
+    "url": "https://www.fao.org/4/X0490E/x0490e08.htm",
+    "resolved_url": "https://www.fao.org/4/X0490E/x0490e08.htm",
+    "status": 200,
+    "retrieved_at": "2026-11-14T15:51:54.850613+00:00",
+    "sha256": "0090a52ad4a16e639b2376d71e623f1636ed8b439dd2ea5ec91d89191f376828",
+    "bytes": 177475
+  }
+]

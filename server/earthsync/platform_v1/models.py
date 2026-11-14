@@ -222,6 +222,7 @@ class PlanSelection(Contract):
 
 
 class AssessmentInput(Contract):
+    catalog_version: Literal["v1", "v2"] = "v1"
     farm_id: UUID
     evidence_ids: list[str] = Field(default_factory=list, max_length=50)
     profile_ids: list[str] = Field(default_factory=list, max_length=20)

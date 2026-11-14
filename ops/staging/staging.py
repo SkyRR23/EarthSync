@@ -254,6 +254,13 @@ def build(args, source, state):
                 )
         manifest["runtime"] = str(runtime)
         files += sorted(runtime.rglob("*"))
+        reference = source / "data/crop-knowledge/v2"
+        if reference.is_dir():
+            target = state / "data/crop-knowledge/v2"
+            shutil.copytree(
+                reference, target, ignore=shutil.ignore_patterns("__pycache__", "*.pyc")
+            )
+            files += sorted(target.rglob("*"))
         if compat:
             files.append(compat / "pins.json")
     files.append(Path(manifest["engine"]))

@@ -1,0 +1,19 @@
+- heading "Persisted farm evidence" [level=2]
+- group:
+  - heading "Local farm evidence Private single-user service on this device. Historical records do not establish a crop recommendation." [level=2]
+  - 'group "Database farm: 8320f2db-5d8d-4473-b753-6ddc0ea71122 Confirmed point: 42.0308, -93.6319 Declared system: rainfed"':
+    - button "Refresh saved records"
+    - button "Retrieve daily climate for this farm"
+    - button "Ask about saved evidence"
+    - button "Private workspace photos"
+    - text: Photo ownership Existing photos remain in the authorized 7H workspace. Linking this farm does not transfer or expose them. Farm-owned 7I objects remain separate; migration requires a verified workspace token, explicit selection and sanitizer checks. No automatic migration is enabled.
+    - group:
+      - textbox "Water / first crop start (YYYY-MM-DD)"
+      - textbox "Water / first crop end (YYYY-MM-DD)"
+      - button "Retrieve NASA inputs & calculate ET0"
+- tablist:
+  - tab "Home"
+  - tab "My Farm" [selected]
+  - tab "Explore"
+  - tab "Assistant"
+  - tab "Settings"

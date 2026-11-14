@@ -9,7 +9,7 @@ from pathlib import Path
 from uuid import UUID
 
 import httpx
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, Query, Request, Response
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -40,6 +40,8 @@ from .providers.power_daily import POLICY, PowerDaily
 from .providers.soil_wcs import SoilQuery, SoilWcs
 from .providers.transport import Transport
 from .store import Store, cache_key
+from .reference_v2 import ReferenceCatalog, ROOT as REFERENCE_ROOT
+from .water import WaterPipeline, POLICY as WATER_POLICY
 
 PREFIX = "/api/platform/v1"
 OWNER = "local-single-user"
@@ -67,6 +69,7 @@ def create_app(
     store=None,
     engine=None,
     catalog=None,
+    reference_catalog=None,
     transport=None,
     objects=None,
     local_enabled=False,
@@ -112,7 +115,11 @@ def create_app(
     )
     health = SourceHealth()
     objects = objects or LocalObjects(store)
-    orchestrator = Orchestrator(store, engine, catalog)
+    reference_catalog = reference_catalog or (
+        ReferenceCatalog() if REFERENCE_ROOT.is_dir() else None
+    )
+    orchestrator = Orchestrator(store, engine, catalog, reference_catalog)
+    water = WaterPipeline(transport, engine)
 
     def association(farm_id, point):
         if farm_id and store.farm(OWNER, farm_id).confirmed_point != point:
@@ -140,6 +147,31 @@ def create_app(
         if not result["gaps"]:
             health.record("NASA POWER", "OK")
         return {**result, "cache_hit": hit}
+
+    async def water_handler(owner, raw):
+        value = ClimateInput.model_validate(raw)
+        association(value.farm_id, value.query.point)
+        key = cache_key(
+            "NASA POWER",
+            "water-inputs",
+            WATER_POLICY,
+            value.query.model_dump(mode="json"),
+        )
+        result = store.cache_get(key)
+        hit = result is not None
+        if result is None:
+            result = await water.retrieve(value.query)
+            if result["records"] and not result["gaps"]:
+                store.cache_put(key, result)
+        calculated = await water.calculate(result["records"], value.query)
+        records = [*result["records"], calculated.model_dump(mode="json")]
+        for item in records:
+            store.save_evidence(owner, Evidence.model_validate(item), value.farm_id)
+        for gap in result["gaps"]:
+            health.record(
+                "NASA POWER:" + gap["parameter"], gap["code"], gap["retryable"]
+            )
+        return {**result, "records": records, "cache_hit": hit}
 
     async def soil_handler(owner, raw):
         value = SoilInput.model_validate(raw)
@@ -175,6 +207,7 @@ def create_app(
         store,
         {
             "climate": climate_handler,
+            "water": water_handler,
             "soil": soil_handler,
             "optical_discovery": optical_handler,
         },
@@ -337,6 +370,7 @@ def create_app(
             "rust_v03_configured": engine.ready,
             "rust_v03_startup_probe_passed": engine_checked,
             "catalog_installed": catalog.data is not None,
+            "crop_reference_v2_installed": reference_catalog is not None,
             "hosted_private_api_enabled": False,
             "limitation": "Storage integrity and actual Rust startup execution; external provider availability is separate.",
         }
@@ -403,6 +437,27 @@ def create_app(
         return await jobs.submit(
             OWNER, "soil", cache_key("ISRIC", "WCS-pH", "probe.v1", raw), raw
         )
+
+    @app.post(PREFIX + "/water/jobs", status_code=202)
+    async def water_job(value: ClimateInput):
+        association(value.farm_id, value.query.point)
+        if value.query.start.year < 2001:
+            raise PlatformError("UNSUPPORTED_WATER_PRODUCT_PERIOD", 422)
+        raw = value.model_dump(mode="json")
+        return await jobs.submit(
+            OWNER, "water", cache_key("POWER", "water-job", WATER_POLICY, raw), raw
+        )
+
+    @app.get(PREFIX + "/crop-references")
+    def references(
+        q: str = Query(default="rice", min_length=1, max_length=150),
+        region: str | None = Query(default=None, max_length=150),
+        system: str | None = Query(default=None, max_length=150),
+        cultivar: str | None = Query(default=None, max_length=150),
+    ):
+        if reference_catalog is None:
+            raise PlatformError("CATALOG_NOT_INSTALLED", 503)
+        return reference_catalog.lookup(q, region, system, cultivar)
 
     @app.post(PREFIX + "/optical/jobs", status_code=202)
     async def optical_job(value: OpticalInput):
