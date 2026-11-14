@@ -175,7 +175,7 @@ abstract final class S {
   static const cropsUnknownBody =
       'Your weather is real NASA data. Crop facts for your area are not added yet, so we will not guess which crop fits.';
   static const weatherMonths = 'Weather months';
-  static const last12 = 'Use the last 12 months';
+  static const last12 = 'Use last year (Jan–Dec)';
   static const traceBackend = 'Exact backend response and provenance';
   static const traceFarmer = 'Retained farmer answers (not all used by Rust)';
 

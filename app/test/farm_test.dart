@@ -108,21 +108,18 @@ void main() {
   });
 
   group('Weather window', () {
-    test('default is the last 12 completed months', () {
-      final w = lastTwelveMonths(DateTime.utc(2026, 11, 14));
+    test('default is last full calendar year', () {
+      final w = lastFullYear(DateTime.utc(2026, 11, 14));
       expect(
         [w.startYear, w.startMonth, w.endYear, w.endMonth],
-        [2025, 11, 2026, 10],
+        [2025, 1, 2025, 12],
       );
       w.validate(); // passes the team's own window rules
     });
 
-    test('works across January', () {
-      final w = lastTwelveMonths(DateTime.utc(2027, 1, 3));
-      expect(
-        [w.startYear, w.startMonth, w.endYear, w.endMonth],
-        [2026, 1, 2026, 12],
-      );
+    test('early in the year it steps back one more year', () {
+      final w = lastFullYear(DateTime.utc(2027, 2, 3));
+      expect([w.startYear, w.endYear], [2025, 2025]);
     });
   });
 

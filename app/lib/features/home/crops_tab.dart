@@ -25,7 +25,7 @@ class CropsTab extends StatelessWidget {
     return FsPage(
       title: S.nextSeason,
       showBack: false,
-      subtitle: S.bestFirst,
+      subtitle: items.isEmpty ? null : S.bestFirst,
       children: [
         if (a.dataQuality.isDemo) ...[
           const SizedBox(height: FsSpace.md),

@@ -197,7 +197,7 @@ class _FieldTabState extends ConsumerState<FieldTab> {
               onPressed: () {
                 ref
                     .read(historicalWindowProvider.notifier)
-                    .setWindow(lastTwelveMonths());
+                    .setWindow(lastFullYear());
                 Navigator.of(ctx).pop();
               },
             ),
