@@ -1,0 +1,27 @@
+{
+  "scope": "Managed Linux workspace only; no external server accessed or deployed",
+  "source_sha": "b578a6df2764479ff9c9df006cc00e5ddb3ccfa3",
+  "python": "3.12.14",
+  "rust": "rustc 1.99.0 (b940084d7 2026-09-28)",
+  "engine_sha256": "8bed92a2b6ec78bf820d2422c86aed25c0f02b36099f4ad07ce129bf40121783",
+  "catalog_sha256": "2926584bce3693dff7433afe9c05c535a6d5d1e609fb502d4e2f6017f398fb0e",
+  "requirements_lock_sha256": "eb8be87c9308762ce61da2545f262387e052a931bb367ed6fd3761091c6e36bb",
+  "migration_checksums": {
+    "001_initial.sql": "692a4b1bb0fc49525c06ecfbf674fccb3e78b60228e8288e1f5778804fab9b93"
+  },
+  "live_response_hashes": [
+    "2a4a91c3c2eaede5eea0378d55a489634f31532a252a13133eb618dc347f45c9",
+    "5f99b3da32912e39262eb6c28b99ab47cc2d0e01547d65092dd908395f14c4e6",
+    "a9d7dcc0459d663a6e8790b9ab42ffd16751ca193cdb3f46100648dc5fa4ab3b"
+  ],
+  "private_data": "Database, photo, token, farm/job IDs, full receipt and raw logs excluded",
+  "pending": [
+    "7N final RC SHA",
+    "Flutter SDK/build/browser acceptance in this workspace",
+    "Windows execution/ACL validation",
+    "personal-server verification",
+    "Android device test",
+    "team-server approval/deployment",
+    "Docker rebuild and container backup/restore drill"
+  ]
+}
