@@ -23,6 +23,7 @@ PINS = {
 
 
 def main():
+    repository = Path(__file__).resolve().parents[3]
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("destination", type=Path)
     parser.add_argument(
@@ -32,7 +33,7 @@ def main():
     args = parser.parse_args()
     revision = (
         subprocess.check_output(
-            ["git", "rev-parse", args.revision + "^{commit}"], text=True
+            ["git", "rev-parse", args.revision + "^{commit}"], text=True, cwd=repository
         ).strip()
         if args.revision
         else None
@@ -42,12 +43,13 @@ def main():
     destination.mkdir(mode=0o700, parents=False, exist_ok=False)
     for number, (revision, path) in pins.items():
         actual = subprocess.check_output(
-            ["git", "rev-parse", revision + "^{commit}"], text=True
+            ["git", "rev-parse", revision + "^{commit}"], text=True, cwd=repository
         ).strip()
         if actual != revision:
             raise ValueError("Compatibility source revision mismatch")
         raw = subprocess.check_output(
-            ["git", "archive", revision, *([path] if isinstance(path, str) else path)]
+            ["git", "archive", revision, *([path] if isinstance(path, str) else path)],
+            cwd=repository,
         )
         root = destination / number
         root.mkdir(mode=0o700)

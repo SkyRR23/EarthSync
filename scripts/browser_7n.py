@@ -88,7 +88,7 @@ with sync_playwright() as p:
         ).to_be_visible()
         shot("onboarding")
         page.get_by_role("button", name="Skip for Now", exact=True).click()
-        expect(page.get_by_text("Explore the world", exact=True)).to_be_visible()
+        visible("Explore the world")
         record("Onboarding and useful global home without location permission")
 
         go("location")
@@ -108,14 +108,10 @@ with sync_playwright() as p:
             "checkbox", name="I confirm this point marks my field.", exact=True
         ).click()
         page.get_by_role("button", name="Save Confirmed Farm", exact=True).click()
-        expect(
-            page.get_by_text("7N software test farm (no ground truth)", exact=True)
-        ).to_be_visible()
+        visible("7N software test farm (no ground truth)")
         page.reload(wait_until="domcontentloaded")
         enable()
-        expect(
-            page.get_by_text("7N software test farm (no ground truth)", exact=True)
-        ).to_be_visible()
+        visible("7N software test farm (no ground truth)")
         record("Confirmed local farm restores after browser refresh")
 
         go("farm-evidence")
@@ -155,9 +151,14 @@ with sync_playwright() as p:
         jobs.append(initial["status"])
         assert initial["status"] in ("queued", "running")
         receipt("daily-submission", initial)
-        expect(page.get_by_text(re.compile("Job: succeeded"))).to_be_visible(
-            timeout=100000
-        )
+        for _ in range(50):
+            if "Job: succeeded" in page.locator("body").aria_snapshot():
+                break
+            page.wait_for_timeout(2000)
+        else:
+            raise AssertionError(
+                "Daily processing did not succeed within its bounded wait"
+            )
         # Read the actual completed job over the same admitted loopback boundary.
         completed = context.request.get(
             "http://127.0.0.1:8021/api/platform/v1/jobs/" + initial["id"]

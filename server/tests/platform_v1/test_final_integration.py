@@ -206,3 +206,27 @@ def test_evidence_key_order_is_not_mutation(store, farm_input, records):
     changed.source_metadata["tampering"] = True
     with pytest.raises(PlatformError, match="IMMUTABLE_EVIDENCE_CONFLICT"):
         store.save_evidence("alice", changed, farm.id)
+
+
+def test_integrated_compat_export_from_server_working_directory(tmp_path):
+    import subprocess
+    import sys
+
+    root = Path(__file__).resolve().parents[3]
+    destination = tmp_path / "export"
+    subprocess.run(
+        [
+            sys.executable,
+            str(root / "server/platform-v1/tools/prepare_compat.py"),
+            str(destination),
+            "--revision",
+            "HEAD",
+        ],
+        cwd=root / "server",
+        check=True,
+        capture_output=True,
+    )
+    assert (destination / "14/server/earthsync/assistant/service.py").read_bytes() == (
+        root / "server/earthsync/assistant/service.py"
+    ).read_bytes()
+    assert (destination / "18/engine/Cargo.toml").is_file()
