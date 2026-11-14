@@ -49,7 +49,9 @@ METRICS = {
 @lru_cache(maxsize=2)
 def catalog(language):
     return json.loads(
-        files(__package__).joinpath(f"locales/{language}.json").read_text()
+        files(__package__)
+        .joinpath(f"locales/{language}.json")
+        .read_text(encoding="utf-8")
     )
 
 

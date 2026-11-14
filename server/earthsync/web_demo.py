@@ -253,18 +253,24 @@ def create_demo_app(
 
     @app.get("/api/demo/captured-climate")
     async def captured_climate():
-        return json.loads((ROOT / "server/examples/nasa_power_real.json").read_text())
+        return json.loads(
+            (ROOT / "server/examples/nasa_power_real.json").read_text(encoding="utf-8")
+        )
 
     @app.get("/api/demo/synthetic-v02")
     async def synthetic_v02():
         return json.loads(
-            (ROOT / "engine/tests/fixtures/synthetic_v02_request.json").read_text()
+            (ROOT / "engine/tests/fixtures/synthetic_v02_request.json").read_text(
+                encoding="utf-8"
+            )
         )
 
     @app.get("/api/demo/synthetic-v03")
     async def synthetic_v03():
         return json.loads(
-            (ROOT / "engine/tests/fixtures/v03/synthetic_request.json").read_text()
+            (ROOT / "engine/tests/fixtures/v03/synthetic_request.json").read_text(
+                encoding="utf-8"
+            )
         )
 
     @app.post(

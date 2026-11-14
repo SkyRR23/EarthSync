@@ -59,6 +59,27 @@ def narrative(result):
     return "\n".join(claim.text for claim in result.claims)
 
 
+@pytest.mark.parametrize("language", ["en", "es"])
+def test_locales_are_utf8_even_with_windows_default_encoding(monkeypatch, language):
+    original = Path.read_text
+
+    def windows_read_text(path, encoding=None, errors=None):
+        return original(path, encoding=encoding or "cp1252", errors=errors)
+
+    catalog.cache_clear()
+    try:
+        # Reproduce the Windows default without changing process-wide locale or
+        # hiding decoding failures behind PYTHONUTF8 in the CI environment.
+        monkeypatch.setattr(Path, "read_text", windows_read_text)
+        words = catalog(language)
+        if language == "en":
+            assert "“{scenario}”" in words["decision"]
+        else:
+            assert words["suggestions"][0] == "¿Qué pasa en mi zona?"
+    finally:
+        catalog.cache_clear()
+
+
 def test_zero_and_citation_mapping_are_preserved():
     result = answer()
     calculated = [c for c in result.claims if c.category == "deterministic_calculation"]
