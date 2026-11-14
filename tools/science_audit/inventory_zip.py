@@ -57,6 +57,8 @@ def inventory(path, previous=None):
             category = "binary_or_generated_asset"
             if entry.is_dir():
                 category = "directory"
+            elif "target" in parts:
+                category = "generated_build_artifact_rejected"
             elif suffix in (".zip", ".gz", ".tar", ".7z"):
                 category = "nested_archive_requires_separate_inspection"
             elif raw.startswith((b"\x7fELF", b"MZ")) or suffix in (

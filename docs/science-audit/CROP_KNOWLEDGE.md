@@ -36,15 +36,59 @@ links were also validated with its 39 tests (32 additional subtests).
 | [FAO-56 chapter 5, 1998](https://www.fao.org/4/X0490E/x0490e0a.htm) | Standard-condition ETc = Kc × ET0; crop stage and reference surface matter | Method reference only. No local stage Kc, effective rain, irrigation efficiency, storage trajectory or water balance accepted. |
 | ITIS reports for [corn](https://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=42269), [soybean](https://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=26716), [wheat](https://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=42237), [sorghum](https://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=42108), [rice](https://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=41976) | Species identities checked; Poaceae/Fabaceae identity is taxonomy | Taxonomic facts do not establish rotation order, pest suppression, N contribution, water needs or suitability. Live taxonomic report publication date remains unknown. |
 
-## New contributed Myanmar profiles
+## Contributed Myanmar profiles: completed bounded source review
 
-**Pending integrity verification and full archive access.** No profile count,
-source validity, local calendar, cultivar, duration, temperature/rainfall requirement,
-soil rule, market value or review status can yet be certified. The older PR #11
-archive contains no crop catalog and cannot substitute for those profiles.
+All 12 profiles were inventoried, source/CSV/JSON fields compared, and quarantined.
+The authoring CSV and data-pack Myanmar snapshot are byte-identical (SHA-256
+`65064a00430aecce5d63312775f3b4699b89bebc58a326d980a1a73372229a0c`).
+Eleven original ECOCROP datasheets were readable; sunflower's direct request
+returned a service error, while its indexed original-source page provides matching
+reference numbers. That distinction is retained as cached-only source evidence.
+No datum is called a field measurement and no unavailable source is silently filled.
 
-Acceptance must distinguish monsoon/dry-season, rainfed upland/lowland, irrigated
-and flooded systems; establish actual local region and cultivar applicability;
-retain original statistic and units; separate institution publication date from
-retrieval time; and record uncertainty and unavailable properties explicitly.
-Do not use global pilots to fill missing Myanmar facts.
+| Crop | ECOCROP ID / original datasheet | Desk-review result |
+| --- | --- | --- |
+| Paddy rice | [1574](https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1574) | Temperature, annual-rain, cycle and pH reference values match; wet-rice context does not approve a Myanmar field rule. |
+| Black gram | [2149](https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2149) | Numeric reference matches; team 60–90-day duration and seasonal water not established by those global descriptors. |
+| Mung bean | [2150](https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2150) | Numeric reference matches; page lists a broad life-history context, not the local cultivar/system. |
+| Groundnut | [2199](https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2199) | Numeric reference matches; team seasonal-water/N values require separate evidence. |
+| Sesame | [1937](https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1937) | Numeric reference matches; species cycle envelope differs from selected Myanmar duration. |
+| Maize | [2175](https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2175) | Numeric reference matches; 65–365-day global envelope does not prove why 365 is present or validate the team's 95–120 days. |
+| Chickpea | [2479](https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2479) | Numeric reference matches; local stage/temperature/water applicability remains unknown. |
+| Pigeon pea | [576](https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=576) | Numeric reference matches; perennial species context does not validate local annual duration. |
+| Sunflower | [1191](https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1191) | Direct service error; indexed original source matches numbers. Cached reference only, not fresh availability. |
+| Cotton | [1160](https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1160) | Numeric reference matches; annual/perennial types and management differ. |
+| Sunn hemp | [801](https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=801) | Numeric reference matches; a qualitative nitrogen-fixation use is not a 40–80 kg/ha credit available to a following crop. |
+| Mustard | [548](https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=548) | Numeric reference matches; no sourced soil-fungal break benefit or local catch-crop calendar established. |
+
+These are source-reviewed ecological descriptors, not independently applicable
+executable rules. ECOCROP's rainfall is explicitly annual. Its temperature ranges
+lack the daily extreme, stage, cultivar and regional semantics needed by v0.3.
+The contributor itself calls duration/seasonal water team estimates; no stage
+lengths, daily reference ET0, Kc curve or calculation supports its FAO-56-derived
+ETc wording. Filled numbers and medium confidence cannot remove those unknowns.
+
+The linked [World Bank Rice and Pulses report](https://documents1.worldbank.org/curated/en/623701579900727742/pdf/Myanmar-Rice-and-Pulses-Farm-Production-Economics-and-Value-Chain-Dynamics.pdf)
+is dated **June 2019** on its cover, rather than the archive's 2020 attribution.
+Its page 14 / PDF page 26, Figure 24 and adjacent text distinguish central from
+lower Myanmar, seasons, and pulse systems. These support bounded calendar
+context, not a single universal crop-month list. Historical economic tables also
+show why market-use counts cannot establish farm income. Neither old currency
+amounts nor calendar examples were imported as current farm rules.
+
+The cited [FAO 2022 groundnut/sesame handbook](https://openknowledge.fao.org/server/api/core/bitstreams/a825f44a-0409-466a-94b4-135e4bc9fd27/content)
+returned 403 through the web tool; the official alternate `cc0246en` PDF route was
+also inaccessible. Its existence/title is corroborated, but full-text calendar,
+water, pest and N applicability were **not** accepted. No source was reconstructed
+from the contributor's notes or a third-party synopsis.
+
+Publication dates of ECOCROP entries remain unknown. The CSV's 2026-11-14 date
+is a contributed source/extraction date, not independently verified publication
+or retrieval time. Myanmar cultivar, production system, soil method/depth, crop
+stage, actual field conditions and quantitative uncertainty remain unresolved.
+
+The separate research fixture preserves all original assertions, classifies the
+bounded reference evidence, and keeps all 12 profiles `recommendation_eligible=false`,
+`approved_for_candidates=false`, `executable_rules=[]`. The live global catalog
+is unchanged. No N/pest benefit, irrigation credit, ranking or financial model is
+accepted. Independent agronomist/field acceptance remains outstanding.

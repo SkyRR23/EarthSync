@@ -66,5 +66,6 @@ POWER lineage only. Preserve those gates. Do not represent generic Rust forecast
 arithmetic as source-verified live forecast acceptance. A future verified forecast
 interface needs explicit model/run/version/time identity and a reviewed adapter.
 
-The new archive may contain additional defects. None is claimed confirmed until
-its original bytes pass the user's checksum gate and are reviewed.
+The new archive has passed its complete checksum gate and full inventory.
+Its separately confirmed historical defects and negative regressions are in
+[ARCHIVE_FINDINGS](ARCHIVE_FINDINGS.md); they were not presumed to persist in v0.3.

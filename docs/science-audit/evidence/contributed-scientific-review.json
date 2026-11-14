@@ -1,0 +1,3295 @@
+{
+  "archive_sha256": "241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788",
+  "integrity_verified": true,
+  "file_count": 600,
+  "directory_count": 143,
+  "generated_build_files_rejected": 487,
+  "pr11_identical_file_count": 60,
+  "nonbuild_json_records_parsed": 14,
+  "raw_provider_records": [
+    {
+      "member": "nasa_space_challenges/contracts/raw/power/hlegu_baseline.json",
+      "header": {
+        "title": "NASA/POWER Source Native Resolution Monthly and Annual",
+        "api": {
+          "version": "v2.10.0",
+          "name": "POWER Monthly and Annual API"
+        },
+        "sources": [
+          "MERRA2",
+          "POWER"
+        ],
+        "fill_value": -999.0,
+        "time_standard": "LST",
+        "start": "19910101",
+        "end": "20201231"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.2,
+          16.87,
+          10.91
+        ]
+      },
+      "parameters": {
+        "EVPTRNS": {
+          "units": "MJ/m^2/day",
+          "longname": "Evapotranspiration Energy Flux"
+        },
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "RH2M": {
+          "units": "%",
+          "longname": "Relative Humidity at 2 Meters"
+        },
+        "T2M": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "messages": [],
+      "request_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,T2M,T2M_MAX,T2M_MIN,RH2M,EVPTRNS&community=AG&latitude=16.87&longitude=96.20&start=1991&end=2020&format=JSON",
+      "retrieved_at": null,
+      "original_fetch_receipt_available": false,
+      "classification": "model_derived_environmental_estimate",
+      "missingness": {
+        "EVPTRNS": 0,
+        "PRECTOTCORR": 0,
+        "RH2M": 0,
+        "T2M": 0,
+        "T2M_MAX": 0,
+        "T2M_MIN": 0
+      }
+    },
+    {
+      "member": "nasa_space_challenges/contracts/raw/power/hlegu_recent.json",
+      "header": {
+        "title": "NASA/POWER Source Native Resolution Monthly and Annual",
+        "api": {
+          "version": "v2.10.0",
+          "name": "POWER Monthly and Annual API"
+        },
+        "sources": [
+          "MERRA2",
+          "POWER"
+        ],
+        "fill_value": -999.0,
+        "time_standard": "LST",
+        "start": "20160101",
+        "end": "20251231"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.2,
+          16.87,
+          10.91
+        ]
+      },
+      "parameters": {
+        "EVPTRNS": {
+          "units": "MJ/m^2/day",
+          "longname": "Evapotranspiration Energy Flux"
+        },
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "RH2M": {
+          "units": "%",
+          "longname": "Relative Humidity at 2 Meters"
+        },
+        "T2M": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "messages": [],
+      "request_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,T2M,T2M_MAX,T2M_MIN,RH2M,EVPTRNS&community=AG&latitude=16.87&longitude=96.20&start=2016&end=2025&format=JSON",
+      "retrieved_at": null,
+      "original_fetch_receipt_available": false,
+      "classification": "model_derived_environmental_estimate",
+      "missingness": {
+        "EVPTRNS": 0,
+        "PRECTOTCORR": 0,
+        "RH2M": 0,
+        "T2M": 0,
+        "T2M_MAX": 0,
+        "T2M_MIN": 0
+      }
+    },
+    {
+      "member": "nasa_space_challenges/contracts/raw/power/bago_baseline.json",
+      "header": {
+        "title": "NASA/POWER Source Native Resolution Monthly and Annual",
+        "api": {
+          "version": "v2.10.0",
+          "name": "POWER Monthly and Annual API"
+        },
+        "sources": [
+          "MERRA2",
+          "POWER"
+        ],
+        "fill_value": -999.0,
+        "time_standard": "LST",
+        "start": "19910101",
+        "end": "20201231"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.48,
+          17.33,
+          52.99
+        ]
+      },
+      "parameters": {
+        "EVPTRNS": {
+          "units": "MJ/m^2/day",
+          "longname": "Evapotranspiration Energy Flux"
+        },
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "RH2M": {
+          "units": "%",
+          "longname": "Relative Humidity at 2 Meters"
+        },
+        "T2M": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "messages": [],
+      "request_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,T2M,T2M_MAX,T2M_MIN,RH2M,EVPTRNS&community=AG&latitude=17.33&longitude=96.48&start=1991&end=2020&format=JSON",
+      "retrieved_at": null,
+      "original_fetch_receipt_available": false,
+      "classification": "model_derived_environmental_estimate",
+      "missingness": {
+        "EVPTRNS": 0,
+        "PRECTOTCORR": 0,
+        "RH2M": 0,
+        "T2M": 0,
+        "T2M_MAX": 0,
+        "T2M_MIN": 0
+      }
+    },
+    {
+      "member": "nasa_space_challenges/contracts/raw/power/bago_recent.json",
+      "header": {
+        "title": "NASA/POWER Source Native Resolution Monthly and Annual",
+        "api": {
+          "version": "v2.10.0",
+          "name": "POWER Monthly and Annual API"
+        },
+        "sources": [
+          "MERRA2",
+          "POWER"
+        ],
+        "fill_value": -999.0,
+        "time_standard": "LST",
+        "start": "20160101",
+        "end": "20251231"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.48,
+          17.33,
+          52.99
+        ]
+      },
+      "parameters": {
+        "EVPTRNS": {
+          "units": "MJ/m^2/day",
+          "longname": "Evapotranspiration Energy Flux"
+        },
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "RH2M": {
+          "units": "%",
+          "longname": "Relative Humidity at 2 Meters"
+        },
+        "T2M": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "messages": [],
+      "request_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,T2M,T2M_MAX,T2M_MIN,RH2M,EVPTRNS&community=AG&latitude=17.33&longitude=96.48&start=2016&end=2025&format=JSON",
+      "retrieved_at": null,
+      "original_fetch_receipt_available": false,
+      "classification": "model_derived_environmental_estimate",
+      "missingness": {
+        "EVPTRNS": 0,
+        "PRECTOTCORR": 0,
+        "RH2M": 0,
+        "T2M": 0,
+        "T2M_MAX": 0,
+        "T2M_MIN": 0
+      }
+    },
+    {
+      "member": "nasa_space_challenges/contracts/raw/power/magway_baseline.json",
+      "header": {
+        "title": "NASA/POWER Source Native Resolution Monthly and Annual",
+        "api": {
+          "version": "v2.10.0",
+          "name": "POWER Monthly and Annual API"
+        },
+        "sources": [
+          "MERRA2",
+          "POWER"
+        ],
+        "fill_value": -999.0,
+        "time_standard": "LST",
+        "start": "19910101",
+        "end": "20201231"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          94.93,
+          20.15,
+          166.35
+        ]
+      },
+      "parameters": {
+        "EVPTRNS": {
+          "units": "MJ/m^2/day",
+          "longname": "Evapotranspiration Energy Flux"
+        },
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "RH2M": {
+          "units": "%",
+          "longname": "Relative Humidity at 2 Meters"
+        },
+        "T2M": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "messages": [],
+      "request_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,T2M,T2M_MAX,T2M_MIN,RH2M,EVPTRNS&community=AG&latitude=20.15&longitude=94.93&start=1991&end=2020&format=JSON",
+      "retrieved_at": null,
+      "original_fetch_receipt_available": false,
+      "classification": "model_derived_environmental_estimate",
+      "missingness": {
+        "EVPTRNS": 0,
+        "PRECTOTCORR": 0,
+        "RH2M": 0,
+        "T2M": 0,
+        "T2M_MAX": 0,
+        "T2M_MIN": 0
+      }
+    },
+    {
+      "member": "nasa_space_challenges/contracts/raw/power/magway_recent.json",
+      "header": {
+        "title": "NASA/POWER Source Native Resolution Monthly and Annual",
+        "api": {
+          "version": "v2.10.0",
+          "name": "POWER Monthly and Annual API"
+        },
+        "sources": [
+          "MERRA2",
+          "POWER"
+        ],
+        "fill_value": -999.0,
+        "time_standard": "LST",
+        "start": "20160101",
+        "end": "20251231"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          94.93,
+          20.15,
+          166.35
+        ]
+      },
+      "parameters": {
+        "EVPTRNS": {
+          "units": "MJ/m^2/day",
+          "longname": "Evapotranspiration Energy Flux"
+        },
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "RH2M": {
+          "units": "%",
+          "longname": "Relative Humidity at 2 Meters"
+        },
+        "T2M": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "messages": [],
+      "request_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,T2M,T2M_MAX,T2M_MIN,RH2M,EVPTRNS&community=AG&latitude=20.15&longitude=94.93&start=2016&end=2025&format=JSON",
+      "retrieved_at": null,
+      "original_fetch_receipt_available": false,
+      "classification": "model_derived_environmental_estimate",
+      "missingness": {
+        "EVPTRNS": 0,
+        "PRECTOTCORR": 0,
+        "RH2M": 0,
+        "T2M": 0,
+        "T2M_MAX": 0,
+        "T2M_MIN": 0
+      }
+    }
+  ],
+  "climatology_month_label_errors": [
+    {
+      "location": "hlegu",
+      "row": 2,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 3,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 4,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 5,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 6,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 7,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 8,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 9,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 10,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 11,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 12,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 13,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 14,
+      "parameter": "GWETROOT",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 15,
+      "parameter": "GWETROOT",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 16,
+      "parameter": "GWETROOT",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 17,
+      "parameter": "GWETROOT",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 18,
+      "parameter": "GWETROOT",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 19,
+      "parameter": "GWETROOT",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 20,
+      "parameter": "GWETROOT",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 21,
+      "parameter": "GWETROOT",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 22,
+      "parameter": "GWETROOT",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 23,
+      "parameter": "GWETROOT",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 24,
+      "parameter": "GWETROOT",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 25,
+      "parameter": "GWETROOT",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 26,
+      "parameter": "GWETTOP",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 27,
+      "parameter": "GWETTOP",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 28,
+      "parameter": "GWETTOP",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 29,
+      "parameter": "GWETTOP",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 30,
+      "parameter": "GWETTOP",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 31,
+      "parameter": "GWETTOP",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 32,
+      "parameter": "GWETTOP",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 33,
+      "parameter": "GWETTOP",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 34,
+      "parameter": "GWETTOP",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 35,
+      "parameter": "GWETTOP",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 36,
+      "parameter": "GWETTOP",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 37,
+      "parameter": "GWETTOP",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 38,
+      "parameter": "PRECTOTCORR",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 39,
+      "parameter": "PRECTOTCORR",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 40,
+      "parameter": "PRECTOTCORR",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 41,
+      "parameter": "PRECTOTCORR",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 42,
+      "parameter": "PRECTOTCORR",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 43,
+      "parameter": "PRECTOTCORR",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 44,
+      "parameter": "PRECTOTCORR",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 45,
+      "parameter": "PRECTOTCORR",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 46,
+      "parameter": "PRECTOTCORR",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 47,
+      "parameter": "PRECTOTCORR",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 48,
+      "parameter": "PRECTOTCORR",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 49,
+      "parameter": "PRECTOTCORR",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 50,
+      "parameter": "RH2M",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 51,
+      "parameter": "RH2M",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 52,
+      "parameter": "RH2M",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 53,
+      "parameter": "RH2M",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 54,
+      "parameter": "RH2M",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 55,
+      "parameter": "RH2M",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 56,
+      "parameter": "RH2M",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 57,
+      "parameter": "RH2M",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 58,
+      "parameter": "RH2M",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 59,
+      "parameter": "RH2M",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 60,
+      "parameter": "RH2M",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 61,
+      "parameter": "RH2M",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 62,
+      "parameter": "T2M",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 63,
+      "parameter": "T2M",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 64,
+      "parameter": "T2M",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 65,
+      "parameter": "T2M",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 66,
+      "parameter": "T2M",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 67,
+      "parameter": "T2M",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 68,
+      "parameter": "T2M",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 69,
+      "parameter": "T2M",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 70,
+      "parameter": "T2M",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 71,
+      "parameter": "T2M",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 72,
+      "parameter": "T2M",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 73,
+      "parameter": "T2M",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 74,
+      "parameter": "T2M_MAX",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 75,
+      "parameter": "T2M_MAX",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 76,
+      "parameter": "T2M_MAX",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 77,
+      "parameter": "T2M_MAX",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 78,
+      "parameter": "T2M_MAX",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 79,
+      "parameter": "T2M_MAX",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 80,
+      "parameter": "T2M_MAX",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 81,
+      "parameter": "T2M_MAX",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 82,
+      "parameter": "T2M_MAX",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 83,
+      "parameter": "T2M_MAX",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 84,
+      "parameter": "T2M_MAX",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 85,
+      "parameter": "T2M_MAX",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 86,
+      "parameter": "T2M_MIN",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 87,
+      "parameter": "T2M_MIN",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 88,
+      "parameter": "T2M_MIN",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 89,
+      "parameter": "T2M_MIN",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 90,
+      "parameter": "T2M_MIN",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 91,
+      "parameter": "T2M_MIN",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 92,
+      "parameter": "T2M_MIN",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 93,
+      "parameter": "T2M_MIN",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 94,
+      "parameter": "T2M_MIN",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 95,
+      "parameter": "T2M_MIN",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 96,
+      "parameter": "T2M_MIN",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 97,
+      "parameter": "T2M_MIN",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 98,
+      "parameter": "WD2M",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 99,
+      "parameter": "WD2M",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 100,
+      "parameter": "WD2M",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 101,
+      "parameter": "WD2M",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 102,
+      "parameter": "WD2M",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 103,
+      "parameter": "WD2M",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 104,
+      "parameter": "WD2M",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 105,
+      "parameter": "WD2M",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 106,
+      "parameter": "WD2M",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 107,
+      "parameter": "WD2M",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 108,
+      "parameter": "WD2M",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 109,
+      "parameter": "WD2M",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 110,
+      "parameter": "WS2M",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 111,
+      "parameter": "WS2M",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 112,
+      "parameter": "WS2M",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 113,
+      "parameter": "WS2M",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 114,
+      "parameter": "WS2M",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 115,
+      "parameter": "WS2M",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 116,
+      "parameter": "WS2M",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 117,
+      "parameter": "WS2M",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 118,
+      "parameter": "WS2M",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 119,
+      "parameter": "WS2M",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 120,
+      "parameter": "WS2M",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "hlegu",
+      "row": 121,
+      "parameter": "WS2M",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 2,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 3,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 4,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 5,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 6,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 7,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 8,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 9,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 10,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 11,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 12,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 13,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 14,
+      "parameter": "GWETROOT",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 15,
+      "parameter": "GWETROOT",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 16,
+      "parameter": "GWETROOT",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 17,
+      "parameter": "GWETROOT",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 18,
+      "parameter": "GWETROOT",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 19,
+      "parameter": "GWETROOT",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 20,
+      "parameter": "GWETROOT",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 21,
+      "parameter": "GWETROOT",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 22,
+      "parameter": "GWETROOT",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 23,
+      "parameter": "GWETROOT",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 24,
+      "parameter": "GWETROOT",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 25,
+      "parameter": "GWETROOT",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 26,
+      "parameter": "GWETTOP",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 27,
+      "parameter": "GWETTOP",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 28,
+      "parameter": "GWETTOP",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 29,
+      "parameter": "GWETTOP",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 30,
+      "parameter": "GWETTOP",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 31,
+      "parameter": "GWETTOP",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 32,
+      "parameter": "GWETTOP",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 33,
+      "parameter": "GWETTOP",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 34,
+      "parameter": "GWETTOP",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 35,
+      "parameter": "GWETTOP",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 36,
+      "parameter": "GWETTOP",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 37,
+      "parameter": "GWETTOP",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 38,
+      "parameter": "PRECTOTCORR",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 39,
+      "parameter": "PRECTOTCORR",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 40,
+      "parameter": "PRECTOTCORR",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 41,
+      "parameter": "PRECTOTCORR",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 42,
+      "parameter": "PRECTOTCORR",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 43,
+      "parameter": "PRECTOTCORR",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 44,
+      "parameter": "PRECTOTCORR",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 45,
+      "parameter": "PRECTOTCORR",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 46,
+      "parameter": "PRECTOTCORR",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 47,
+      "parameter": "PRECTOTCORR",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 48,
+      "parameter": "PRECTOTCORR",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 49,
+      "parameter": "PRECTOTCORR",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 50,
+      "parameter": "RH2M",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 51,
+      "parameter": "RH2M",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 52,
+      "parameter": "RH2M",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 53,
+      "parameter": "RH2M",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 54,
+      "parameter": "RH2M",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 55,
+      "parameter": "RH2M",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 56,
+      "parameter": "RH2M",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 57,
+      "parameter": "RH2M",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 58,
+      "parameter": "RH2M",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 59,
+      "parameter": "RH2M",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 60,
+      "parameter": "RH2M",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 61,
+      "parameter": "RH2M",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 62,
+      "parameter": "T2M",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 63,
+      "parameter": "T2M",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 64,
+      "parameter": "T2M",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 65,
+      "parameter": "T2M",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 66,
+      "parameter": "T2M",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 67,
+      "parameter": "T2M",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 68,
+      "parameter": "T2M",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 69,
+      "parameter": "T2M",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 70,
+      "parameter": "T2M",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 71,
+      "parameter": "T2M",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 72,
+      "parameter": "T2M",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 73,
+      "parameter": "T2M",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 74,
+      "parameter": "T2M_MAX",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 75,
+      "parameter": "T2M_MAX",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 76,
+      "parameter": "T2M_MAX",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 77,
+      "parameter": "T2M_MAX",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 78,
+      "parameter": "T2M_MAX",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 79,
+      "parameter": "T2M_MAX",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 80,
+      "parameter": "T2M_MAX",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 81,
+      "parameter": "T2M_MAX",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 82,
+      "parameter": "T2M_MAX",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 83,
+      "parameter": "T2M_MAX",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 84,
+      "parameter": "T2M_MAX",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 85,
+      "parameter": "T2M_MAX",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 86,
+      "parameter": "T2M_MIN",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 87,
+      "parameter": "T2M_MIN",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 88,
+      "parameter": "T2M_MIN",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 89,
+      "parameter": "T2M_MIN",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 90,
+      "parameter": "T2M_MIN",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 91,
+      "parameter": "T2M_MIN",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 92,
+      "parameter": "T2M_MIN",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 93,
+      "parameter": "T2M_MIN",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 94,
+      "parameter": "T2M_MIN",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 95,
+      "parameter": "T2M_MIN",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 96,
+      "parameter": "T2M_MIN",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 97,
+      "parameter": "T2M_MIN",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 98,
+      "parameter": "WD2M",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 99,
+      "parameter": "WD2M",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 100,
+      "parameter": "WD2M",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 101,
+      "parameter": "WD2M",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 102,
+      "parameter": "WD2M",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 103,
+      "parameter": "WD2M",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 104,
+      "parameter": "WD2M",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 105,
+      "parameter": "WD2M",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 106,
+      "parameter": "WD2M",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 107,
+      "parameter": "WD2M",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 108,
+      "parameter": "WD2M",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 109,
+      "parameter": "WD2M",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 110,
+      "parameter": "WS2M",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 111,
+      "parameter": "WS2M",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 112,
+      "parameter": "WS2M",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 113,
+      "parameter": "WS2M",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 114,
+      "parameter": "WS2M",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 115,
+      "parameter": "WS2M",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 116,
+      "parameter": "WS2M",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 117,
+      "parameter": "WS2M",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 118,
+      "parameter": "WS2M",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 119,
+      "parameter": "WS2M",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 120,
+      "parameter": "WS2M",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "bago",
+      "row": 121,
+      "parameter": "WS2M",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 2,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 3,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 4,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 5,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 6,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 7,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 8,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 9,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 10,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 11,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 12,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 13,
+      "parameter": "ALLSKY_SFC_SW_DWN",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 14,
+      "parameter": "GWETROOT",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 15,
+      "parameter": "GWETROOT",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 16,
+      "parameter": "GWETROOT",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 17,
+      "parameter": "GWETROOT",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 18,
+      "parameter": "GWETROOT",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 19,
+      "parameter": "GWETROOT",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 20,
+      "parameter": "GWETROOT",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 21,
+      "parameter": "GWETROOT",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 22,
+      "parameter": "GWETROOT",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 23,
+      "parameter": "GWETROOT",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 24,
+      "parameter": "GWETROOT",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 25,
+      "parameter": "GWETROOT",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 26,
+      "parameter": "GWETTOP",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 27,
+      "parameter": "GWETTOP",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 28,
+      "parameter": "GWETTOP",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 29,
+      "parameter": "GWETTOP",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 30,
+      "parameter": "GWETTOP",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 31,
+      "parameter": "GWETTOP",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 32,
+      "parameter": "GWETTOP",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 33,
+      "parameter": "GWETTOP",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 34,
+      "parameter": "GWETTOP",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 35,
+      "parameter": "GWETTOP",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 36,
+      "parameter": "GWETTOP",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 37,
+      "parameter": "GWETTOP",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 38,
+      "parameter": "PRECTOTCORR",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 39,
+      "parameter": "PRECTOTCORR",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 40,
+      "parameter": "PRECTOTCORR",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 41,
+      "parameter": "PRECTOTCORR",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 42,
+      "parameter": "PRECTOTCORR",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 43,
+      "parameter": "PRECTOTCORR",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 44,
+      "parameter": "PRECTOTCORR",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 45,
+      "parameter": "PRECTOTCORR",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 46,
+      "parameter": "PRECTOTCORR",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 47,
+      "parameter": "PRECTOTCORR",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 48,
+      "parameter": "PRECTOTCORR",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 49,
+      "parameter": "PRECTOTCORR",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 50,
+      "parameter": "RH2M",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 51,
+      "parameter": "RH2M",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 52,
+      "parameter": "RH2M",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 53,
+      "parameter": "RH2M",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 54,
+      "parameter": "RH2M",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 55,
+      "parameter": "RH2M",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 56,
+      "parameter": "RH2M",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 57,
+      "parameter": "RH2M",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 58,
+      "parameter": "RH2M",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 59,
+      "parameter": "RH2M",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 60,
+      "parameter": "RH2M",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 61,
+      "parameter": "RH2M",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 62,
+      "parameter": "T2M",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 63,
+      "parameter": "T2M",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 64,
+      "parameter": "T2M",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 65,
+      "parameter": "T2M",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 66,
+      "parameter": "T2M",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 67,
+      "parameter": "T2M",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 68,
+      "parameter": "T2M",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 69,
+      "parameter": "T2M",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 70,
+      "parameter": "T2M",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 71,
+      "parameter": "T2M",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 72,
+      "parameter": "T2M",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 73,
+      "parameter": "T2M",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 74,
+      "parameter": "T2M_MAX",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 75,
+      "parameter": "T2M_MAX",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 76,
+      "parameter": "T2M_MAX",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 77,
+      "parameter": "T2M_MAX",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 78,
+      "parameter": "T2M_MAX",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 79,
+      "parameter": "T2M_MAX",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 80,
+      "parameter": "T2M_MAX",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 81,
+      "parameter": "T2M_MAX",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 82,
+      "parameter": "T2M_MAX",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 83,
+      "parameter": "T2M_MAX",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 84,
+      "parameter": "T2M_MAX",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 85,
+      "parameter": "T2M_MAX",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 86,
+      "parameter": "T2M_MIN",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 87,
+      "parameter": "T2M_MIN",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 88,
+      "parameter": "T2M_MIN",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 89,
+      "parameter": "T2M_MIN",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 90,
+      "parameter": "T2M_MIN",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 91,
+      "parameter": "T2M_MIN",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 92,
+      "parameter": "T2M_MIN",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 93,
+      "parameter": "T2M_MIN",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 94,
+      "parameter": "T2M_MIN",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 95,
+      "parameter": "T2M_MIN",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 96,
+      "parameter": "T2M_MIN",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 97,
+      "parameter": "T2M_MIN",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 98,
+      "parameter": "WD2M",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 99,
+      "parameter": "WD2M",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 100,
+      "parameter": "WD2M",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 101,
+      "parameter": "WD2M",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 102,
+      "parameter": "WD2M",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 103,
+      "parameter": "WD2M",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 104,
+      "parameter": "WD2M",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 105,
+      "parameter": "WD2M",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 106,
+      "parameter": "WD2M",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 107,
+      "parameter": "WD2M",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 108,
+      "parameter": "WD2M",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 109,
+      "parameter": "WD2M",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 110,
+      "parameter": "WS2M",
+      "month": "1",
+      "month_name": "FEB",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 111,
+      "parameter": "WS2M",
+      "month": "2",
+      "month_name": "MAR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 112,
+      "parameter": "WS2M",
+      "month": "3",
+      "month_name": "APR",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 113,
+      "parameter": "WS2M",
+      "month": "4",
+      "month_name": "MAY",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 114,
+      "parameter": "WS2M",
+      "month": "5",
+      "month_name": "JUN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 115,
+      "parameter": "WS2M",
+      "month": "6",
+      "month_name": "JUL",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 116,
+      "parameter": "WS2M",
+      "month": "7",
+      "month_name": "AUG",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 117,
+      "parameter": "WS2M",
+      "month": "8",
+      "month_name": "SEP",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 118,
+      "parameter": "WS2M",
+      "month": "9",
+      "month_name": "OCT",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 119,
+      "parameter": "WS2M",
+      "month": "10",
+      "month_name": "NOV",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 120,
+      "parameter": "WS2M",
+      "month": "11",
+      "month_name": "DEC",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    },
+    {
+      "location": "magway",
+      "row": 121,
+      "parameter": "WS2M",
+      "month": "12",
+      "month_name": "ANN",
+      "reason": "Month ordinal/name mismatch or annual slot"
+    }
+  ],
+  "crop_count": 12,
+  "source_reviewed_numeric_reference_count": 11,
+  "cached_original_source_reference_count": 1,
+  "independently_applicable_executable_rules": 0,
+  "recommendation_eligible": false,
+  "originals_modified": false,
+  "precompiled_artifacts_executed": false,
+  "limitations": [
+    "All ZIP members hashed and CRC checked. Source/code/documents reviewed separately; generated build artifacts rejected as a class.",
+    "ECOCROP source availability and bounded numeric desk review were recorded by the auditor; this script does not independently fetch or approve sources.",
+    "Provider-shaped original responses retain metadata but lack original retrieval receipts. Matching a current provider series is not field validation."
+  ]
+}
