@@ -193,40 +193,80 @@ void main() {
     },
   );
 
-  test('captured climate adapter retains original links and rejects stale provenance', () {
-    final capture = jsonDecode(File('assets/fixtures/nasa_power_real.json').readAsStringSync()) as Map<String, dynamic>;
-    final root = jsonDecode(File('test/fixtures/engine_success_envelope.json').readAsStringSync()) as Map<String, dynamic>;
-    final data = root['data'] as Map<String, dynamic>;
-    // Software adapter fixture only: no live NASA request or Rust call is made.
-    data['environment'] = capture['environment'];
-    data['field']['latitude'] = capture['environment']['latitude'];
-    data['field']['longitude'] = capture['environment']['longitude'];
-    data['climate']['window'] = capture['environment']['seasonal']['window'];
-    data['climate']['rainfall_total_mm'] = 0.04;
-    data['climate']['calendar_day_weighted_mean_temperature_c'] = 28.03655172413793;
-    final raw = jsonEncode(root);
-    IntegrationTrace trace() => IntegrationTrace(backendResponseJson: jsonEncode(capture),
-      farmerInputJson: '{}', rustRequestJson: '{}', rustResultJson: raw,
-      retrievalMode: 'captured_real_response');
-    final selection = AssistantSelection(id: 'region', point: const AssistantPoint(16.85, 96.15));
-    final context = assistantContextFromAnalysis(contextId: 'capture', selectedArea: selection,
-      analysis: fieldAnalysisFromEnvelope(raw, trace: trace()));
-    final rain = context.evidence.first;
-    expect(rain.kind, AssistantKind.modeled);
-    expect(rain.scope, AssistantScope.regional);
-    expect(rain.startDate, '2024-02-01');
-    expect(rain.endDate, '2024-02-29');
-    final source = context.sources.firstWhere((s) => s.id == rain.sourceIds.single);
-    expect(Uri.parse(source.url!).queryParameters['latitude'], '16.85');
-    expect(Uri.parse(source.url!).host, 'power.larc.nasa.gov');
-    capture['provenance']['query_coordinates']['latitude'] = 0.0;
-    expect(() => assistantContextFromAnalysis(contextId: 'stale', selectedArea: selection,
-      analysis: fieldAnalysisFromEnvelope(raw, trace: trace())), throwsFormatException);
-  });
+  test(
+    'captured climate adapter retains original links and rejects stale provenance',
+    () {
+      final capture =
+          jsonDecode(
+                File('assets/fixtures/nasa_power_real.json').readAsStringSync(),
+              )
+              as Map<String, dynamic>;
+      final root =
+          jsonDecode(
+                File(
+                  'test/fixtures/engine_success_envelope.json',
+                ).readAsStringSync(),
+              )
+              as Map<String, dynamic>;
+      final data = root['data'] as Map<String, dynamic>;
+      // Software adapter fixture only: no live NASA request or Rust call is made.
+      data['environment'] = capture['environment'];
+      data['field']['latitude'] = capture['environment']['latitude'];
+      data['field']['longitude'] = capture['environment']['longitude'];
+      data['climate']['window'] = capture['environment']['seasonal']['window'];
+      data['climate']['rainfall_total_mm'] = 0.04;
+      data['climate']['calendar_day_weighted_mean_temperature_c'] =
+          28.03655172413793;
+      final raw = jsonEncode(root);
+      IntegrationTrace trace() => IntegrationTrace(
+        backendResponseJson: jsonEncode(capture),
+        farmerInputJson: '{}',
+        rustRequestJson: '{}',
+        rustResultJson: raw,
+        retrievalMode: 'captured_real_response',
+      );
+      final selection = AssistantSelection(
+        id: 'region',
+        point: const AssistantPoint(16.85, 96.15),
+      );
+      final context = assistantContextFromAnalysis(
+        contextId: 'capture',
+        selectedArea: selection,
+        analysis: fieldAnalysisFromEnvelope(raw, trace: trace()),
+      );
+      final rain = context.evidence.first;
+      expect(rain.kind, AssistantKind.modeled);
+      expect(rain.scope, AssistantScope.regional);
+      expect(rain.startDate, '2024-02-01');
+      expect(rain.endDate, '2024-02-29');
+      final source = context.sources.firstWhere(
+        (s) => s.id == rain.sourceIds.single,
+      );
+      expect(Uri.parse(source.url!).queryParameters['latitude'], '16.85');
+      expect(Uri.parse(source.url!).host, 'power.larc.nasa.gov');
+      capture['provenance']['query_coordinates']['latitude'] = 0.0;
+      expect(
+        () => assistantContextFromAnalysis(
+          contextId: 'stale',
+          selectedArea: selection,
+          analysis: fieldAnalysisFromEnvelope(raw, trace: trace()),
+        ),
+        throwsFormatException,
+      );
+    },
+  );
 
   test('Rust findings cannot be relabeled as a different selected point', () {
-    final raw = File('test/fixtures/engine_success_envelope.json').readAsStringSync();
-    expect(() => assistantFindingsFromRust(raw, expectedPoint: const AssistantPoint(0, 0)), throwsFormatException);
+    final raw = File(
+      'test/fixtures/engine_success_envelope.json',
+    ).readAsStringSync();
+    expect(
+      () => assistantFindingsFromRust(
+        raw,
+        expectedPoint: const AssistantPoint(0, 0),
+      ),
+      throwsFormatException,
+    );
   });
 
   test(
@@ -241,9 +281,11 @@ void main() {
         expect(body['context'], context.toJson());
         expect(body['expanded'], isTrue);
         expect(body['language'], 'en');
-        return http.Response(jsonEncode(fixture('response')), 200, headers: const {
-          'content-type': 'application/json; charset=utf-8',
-        });
+        return http.Response(
+          jsonEncode(fixture('response')),
+          200,
+          headers: const {'content-type': 'application/json; charset=utf-8'},
+        );
       });
       final service = HttpAssistantService(
         endpoint: Uri.parse('https://example.org/api/assistant/v1/chat'),
@@ -277,9 +319,13 @@ void main() {
             case 'malformed':
               return http.Response('invalid JSON', 200);
             default:
-              return http.Response(jsonEncode(fixture('response')), 200, headers: const {
-          'content-type': 'application/json; charset=utf-8',
-        });
+              return http.Response(
+                jsonEncode(fixture('response')),
+                200,
+                headers: const {
+                  'content-type': 'application/json; charset=utf-8',
+                },
+              );
           }
         });
         final service = HttpAssistantService(

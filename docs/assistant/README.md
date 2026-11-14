@@ -1,7 +1,7 @@
 # Farmer assistant (7F)
 
 Opt-in implementation based on `origin/feat/web-demo` at
-`e0cdaaf875efb376e3081a66826b4b5e21601c67` (verify the full SHA with `git rev-parse e0cdaaf`).
+`e0cdaaf875efb376e3081a66826b4b5e21601c67`.
 The assistant explains supplied evidence with deterministic intent routing and
 curated English/Spanish catalogs. No LLM, downloads, keys, GPU, external fetches,
 autonomous actions, diagnosis, new crop requirements, rankings, or yield estimates.
@@ -174,7 +174,7 @@ python -m ruff check server/earthsync/assistant server/tests/assistant
 python -m ruff format --check server/earthsync/assistant server/tests/assistant
 cd app
 flutter pub get
-dart format lib/features/assistant lib/assistant_demo.dart test/assistant
+dart format --output=none --set-exit-if-changed lib/features/assistant lib/assistant_demo.dart test/assistant
 flutter analyze --no-fatal-infos lib/features/assistant lib/assistant_demo.dart test/assistant
 flutter test test/assistant --reporter expanded
 flutter build web --target lib/assistant_demo.dart --no-wasm-dry-run
@@ -187,3 +187,25 @@ location changes, global example coordinates, citations, old replies, raw v0.2
 statuses, optional photo location and English/Spanish routing. The implementation
 session's actual results and tooling limitations are recorded in the draft PR;
 a test's presence is not a claim that it ran successfully.
+
+Actual implementation-session verification:
+
+- Local complete backend suite: **91 passed**, including **43 assistant tests**;
+  the existing Rust web executable was built with the locked Cargo manifest.
+- Local real HTTP request to the standalone assistant on `127.0.0.1:8017` matched
+  `response.v1.json` exactly, preserving null rainfall. Port 8001 was already in
+  use, so the session used a separate port without disturbing the other process.
+- [Assistant CI](https://github.com/SkyRR23/EarthSync/actions/runs/43581179581):
+  backend checks, Flutter analysis, **18 Flutter tests** and standalone web build
+  passed on Flutter 3.50.0. Analysis retains the baseline's Material import
+  deprecation infos for compatibility.
+- [Existing Flutter integration CI](https://github.com/SkyRR23/EarthSync/actions/runs/43581179584):
+  compiled native Rust bridge, full Flutter tests/analysis and default web build
+  passed. Live NASA smoke was skipped.
+- [Existing Python CI](https://github.com/SkyRR23/EarthSync/actions/runs/43581179557)
+  stops at a pre-existing formatting failure in `server/tests/test_web_demo.py`.
+  That file is byte-for-byte unchanged from the integration baseline. New assistant
+  Ruff checks pass; no unrelated owner files were reformatted.
+- No interactive browser, Android, live API or scientific validation was performed.
+  Local Flutter tooling was unavailable because the SDK host was denied by this
+  environment's network policy; Flutter verification above ran in GitHub Actions.

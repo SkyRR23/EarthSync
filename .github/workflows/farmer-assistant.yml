@@ -42,11 +42,8 @@ jobs:
           cache: true
       - run: flutter pub get
         working-directory: app
-      - name: Format assistant Dart files
-        run: |
-          dart format app/lib/features/assistant app/lib/assistant_demo.dart app/test/assistant
-          git diff --binary > assistant-format.patch
-          python -c "import base64; print('ASSISTANT_FORMAT_PATCH=' + base64.b64encode(open('assistant-format.patch', 'rb').read()).decode())"
+      - name: Check assistant formatting
+        run: dart format --output=none --set-exit-if-changed app/lib/features/assistant app/lib/assistant_demo.dart app/test/assistant
       - name: Analyze assistant
         run: flutter analyze --no-fatal-infos lib/features/assistant lib/assistant_demo.dart test/assistant
         working-directory: app
@@ -54,8 +51,3 @@ jobs:
         working-directory: app
       - run: flutter build web --target lib/assistant_demo.dart --no-wasm-dry-run
         working-directory: app
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: assistant-format
-          path: assistant-format.patch

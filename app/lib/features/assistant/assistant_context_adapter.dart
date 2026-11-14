@@ -32,7 +32,9 @@ AssistantContext assistantContextFromAnalysis({
     final provenance = analysis.trace?.provenance;
     if (provenance != null) {
       final point = provenance['query_coordinates'] as Map<String, dynamic>?;
-      final backend = jsonDecode(analysis.trace!.backendResponseJson) as Map<String, dynamic>;
+      final backend =
+          jsonDecode(analysis.trace!.backendResponseJson)
+              as Map<String, dynamic>;
       final environment = backend['environment'] as Map<String, dynamic>;
       if (point?['latitude'] != selection.point.latitude ||
           point?['longitude'] != selection.point.longitude ||
@@ -184,7 +186,10 @@ AssistantContext assistantContextFromAnalysis({
     // Preserve raw Rust status, including v0.2 distinctions. Never derive it from
     // the presentation enum, which collapses several engine states.
     if (analysis.trace != null) {
-      final result = assistantFindingsFromRust(analysis.trace!.rustResultJson, expectedPoint: selection.point);
+      final result = assistantFindingsFromRust(
+        analysis.trace!.rustResultJson,
+        expectedPoint: selection.point,
+      );
       decisions = result.decisions;
       sources.addAll(
         result.sources.where(
@@ -252,7 +257,10 @@ class AssistantRustFindings {
 }
 
 /// Read-only consumer of existing integration/v0.2 envelopes, no schema changes.
-AssistantRustFindings assistantFindingsFromRust(String envelope, {AssistantPoint? expectedPoint}) {
+AssistantRustFindings assistantFindingsFromRust(
+  String envelope, {
+  AssistantPoint? expectedPoint,
+}) {
   final root = jsonDecode(envelope) as Map<String, dynamic>;
   if (root['status'] != 'success') {
     throw const FormatException('Rust findings unavailable');
@@ -270,7 +278,9 @@ AssistantRustFindings assistantFindingsFromRust(String envelope, {AssistantPoint
         environment['longitude'] != expectedPoint.longitude ||
         field['latitude'] != expectedPoint.latitude ||
         field['longitude'] != expectedPoint.longitude) {
-      throw const FormatException('Rust findings do not match the selected point');
+      throw const FormatException(
+        'Rust findings do not match the selected point',
+      );
     }
   }
   final rotations = integration['rotations'] as Map<String, dynamic>;
