@@ -4,13 +4,17 @@ import httpx
 import pytest
 from pydantic import ValidationError
 
-from earthsync.evidence.app import PREFIX, create_app
-from earthsync.evidence.images import sanitize_image
-from earthsync.evidence.models import PhotoInput, SatelliteRecord, TimelineQuery
-from earthsync.evidence.satellite import HlsAdapter, ProviderResult, RtcS1Adapter
-from earthsync.evidence.timeline import build_timeline
+pytest.importorskip(
+    "PIL", reason="Install requirements-evidence.lock for evidence tests"
+)
 
-from test_photos import META, TOKEN, png
+from earthsync.evidence.app import PREFIX, create_app  # noqa: E402
+from earthsync.evidence.images import sanitize_image  # noqa: E402
+from earthsync.evidence.models import PhotoInput, SatelliteRecord, TimelineQuery  # noqa: E402
+from earthsync.evidence.satellite import HlsAdapter, ProviderResult, RtcS1Adapter  # noqa: E402
+from earthsync.evidence.timeline import build_timeline  # noqa: E402
+
+from test_photos import META, TOKEN, png  # noqa: E402
 
 FIELD = {
     "farm_id": "synthetic-confirmed-farm",

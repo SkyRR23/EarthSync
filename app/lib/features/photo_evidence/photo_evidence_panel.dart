@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -91,7 +89,9 @@ class _PhotoEvidencePanelState extends State<PhotoEvidencePanel> {
             ? error.message : 'Could not process photo evidence. Try again.');
       }
     } finally {
-      if (mounted && generation == _generation) setState(() => _busy = false);
+      if (mounted && generation == _generation) {
+        setState(() => _busy = false);
+      }
     }
   }
 
@@ -268,8 +268,12 @@ class _PhotoEvidencePanelState extends State<PhotoEvidencePanel> {
             FutureBuilder<Uint8List>(
               future: _images.putIfAbsent(photo.id, () => widget.repository.image(photo.id)),
               builder: (context, snapshot) {
-                if (snapshot.hasError) return const Text('Photo preview unavailable. Refresh to retry.');
-                if (!snapshot.hasData) return const SizedBox(height: 100, child: Center(child: CircularProgressIndicator()));
+                if (snapshot.hasError) {
+                  return const Text('Photo preview unavailable. Refresh to retry.');
+                }
+                if (!snapshot.hasData) {
+                  return const SizedBox(height: 100, child: Center(child: CircularProgressIndicator()));
+                }
                 return Image.memory(snapshot.data!, height: 200, fit: BoxFit.contain,
                   semanticLabel: photo.caption.isEmpty ? 'Uploaded field photo' : photo.caption,
                   errorBuilder: (_, _, _) => const Text('Photo preview unavailable'),

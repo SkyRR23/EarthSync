@@ -4,12 +4,21 @@ import sqlite3
 
 import httpx
 import pytest
-from PIL import Image, PngImagePlugin
 
-from earthsync.evidence.app import PREFIX, create_app
-from earthsync.evidence.images import MAX_UPLOAD_BYTES, InvalidImage, sanitize_image
-from earthsync.evidence.models import PhotoInput
-from earthsync.evidence.store import PhotoStore
+pytest.importorskip(
+    "PIL", reason="Install requirements-evidence.lock for evidence tests"
+)
+
+from PIL import Image, PngImagePlugin  # noqa: E402
+
+from earthsync.evidence.app import PREFIX, create_app  # noqa: E402
+from earthsync.evidence.images import (  # noqa: E402
+    MAX_UPLOAD_BYTES,
+    InvalidImage,
+    sanitize_image,
+)
+from earthsync.evidence.models import PhotoInput  # noqa: E402
+from earthsync.evidence.store import PhotoStore  # noqa: E402
 
 TOKEN = "test-private-workspace-token-123456789"
 META = {"source": "gallery", "category": "crop"}

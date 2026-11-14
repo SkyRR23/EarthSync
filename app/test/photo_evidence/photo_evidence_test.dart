@@ -47,7 +47,9 @@ class FakeRepository implements PhotoEvidenceRepository {
   int imageCalls = 0;
   @override
   Future<List<StoredPhoto>> list() async {
-    if (fail) throw const PhotoEvidenceException('Evidence service unavailable.');
+    if (fail) {
+      throw const PhotoEvidenceException('Evidence service unavailable.');
+    }
     return photos.toList();
   }
   @override
@@ -136,8 +138,12 @@ void main() {
         requests.add(request);
         expect(request.headers['authorization'], 'Bearer $token');
         if (request.method == 'DELETE') return http.Response('', 204);
-        if (request.url.path.endsWith('/image')) return http.Response.bytes(fixture(), 200, headers: {'content-type': 'image/png'});
-        if (request.method == 'GET') return http.Response(jsonEncode([storedJson()]), 200);
+        if (request.url.path.endsWith('/image')) {
+          return http.Response.bytes(fixture(), 200, headers: {'content-type': 'image/png'});
+        }
+        if (request.method == 'GET') {
+          return http.Response(jsonEncode([storedJson()]), 200);
+        }
         return http.Response(jsonEncode(storedJson()), request.method == 'POST' ? 201 : 200);
       }));
     final draft = PhotoDraft(photo: PreparedPhoto(png: fixture(), origin: PhotoOrigin.gallery, width: 12, height: 8),

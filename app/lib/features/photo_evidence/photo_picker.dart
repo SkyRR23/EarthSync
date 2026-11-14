@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:exif/exif.dart';
@@ -54,9 +53,13 @@ Future<PhotoGps?> readConsentedGps(Uint8List bytes) async {
       if (values == null || values.length != 3) return null;
       final parts = values.map((value) => value is Ratio ? value.toDouble() : double.nan).toList();
       if (parts.any((part) => !part.isFinite || part < 0) ||
-          parts[1] >= 60 || parts[2] >= 60) return null;
+          parts[1] >= 60 || parts[2] >= 60) {
+        return null;
+      }
       final latitude = name == 'GPSLatitude';
-      if (!(latitude ? ['N', 'S'] : ['E', 'W']).contains(reference)) return null;
+      if (!(latitude ? ['N', 'S'] : ['E', 'W']).contains(reference)) {
+        return null;
+      }
       var result = parts[0] + parts[1] / 60 + parts[2] / 3600;
       if (result > limit) return null;
       if (reference == 'S' || reference == 'W') result = -result;
