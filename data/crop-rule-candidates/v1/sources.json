@@ -1,0 +1,93 @@
+[
+  {
+    "id": "fao56_ch5",
+    "upstream_source_id": "fao56_method",
+    "title": "Introduction to crop evapotranspiration, chapter 5 equation 56",
+    "publisher": "FAO",
+    "url": "https://www.fao.org/4/X0490E/x0490e0a.htm",
+    "publication_date": "1998",
+    "publication_date_precision": "year",
+    "version": "FAO Irrigation and Drainage Paper 56 (1998)",
+    "rights": "Rights not established for full-text redistribution; selected attributed factual references only",
+    "redistribution": "Selected factual extracts and short quotations only; no full text, figures or images redistributed. Calendar bulk rights unresolved.",
+    "receipt_id": "fao56_ch5"
+  },
+  {
+    "id": "fao56_ch6",
+    "upstream_source_id": "fao56_kc",
+    "title": "ETc single crop coefficient, chapter 6 Table 12 and footnotes",
+    "publisher": "FAO",
+    "url": "https://www.fao.org/4/X0490E/x0490e0b.htm",
+    "publication_date": "1998",
+    "publication_date_precision": "year",
+    "version": "FAO Irrigation and Drainage Paper 56 (1998)",
+    "rights": "Rights not established for full-text redistribution; selected attributed factual references only",
+    "redistribution": "Selected factual extracts and short quotations only; no full text, figures or images redistributed. Calendar bulk rights unresolved.",
+    "receipt_id": "fao56_ch6"
+  },
+  {
+    "id": "water_stress",
+    "upstream_source_id": "fao_water_stress",
+    "title": "Influence of water shortages on yields, chapter 2 Tables 1 and 2",
+    "publisher": "FAO",
+    "url": "https://www.fao.org/4/t7202e/t7202e05.htm",
+    "publication_date": null,
+    "publication_date_precision": "unknown",
+    "version": "Irrigation Water Management training manual: Irrigation scheduling; chapter 2",
+    "rights": "Rights not established for full-text redistribution; selected attributed factual references only",
+    "redistribution": "Selected factual extracts and short quotations only; no full text, figures or images redistributed. Calendar bulk rights unresolved.",
+    "receipt_id": "water_stress"
+  },
+  {
+    "id": "handbook",
+    "upstream_source_id": "fao_myanmar_handbook_2022",
+    "title": "Handbook on the integrated crop management of groundnut and sesame for farmer field schools in central dry zone of Myanmar",
+    "publisher": "FAO",
+    "url": "https://openknowledge.fao.org/server/api/core/bitstreams/a825f44a-0409-466a-94b4-135e4bc9fd27/content",
+    "publication_date": "2022",
+    "publication_date_precision": "year",
+    "version": "2022; ISBN 978-92-5-136276-1; cc0246en",
+    "rights": "CC-BY-NC-SA-3.0-IGO; third-party material excluded",
+    "redistribution": "Selected factual extracts and short quotations only; no full text, figures or images redistributed. Calendar bulk rights unresolved.",
+    "receipt_id": "handbook"
+  },
+  {
+    "id": "calendar",
+    "upstream_source_id": "fao_calendar_mm",
+    "title": "FAO Crop Calendar Myanmar sessions",
+    "publisher": "FAO",
+    "url": "https://api-cropcalendar.apps.fao.org/api/v1/countries/MM/cropCalendar?language=en",
+    "publication_date": null,
+    "publication_date_precision": "unknown",
+    "version": "API v1 snapshot 2026-11-14; Myanmar records lastUpdated 2021-02-26",
+    "rights": "No dataset-specific license established; selected numerical facts only",
+    "redistribution": "Selected factual extracts and short quotations only; no full text, figures or images redistributed. Calendar bulk rights unresolved.",
+    "receipt_id": "calendar"
+  },
+  {
+    "id": "calendar_mm_crops",
+    "upstream_source_id": "fao_calendar_mm_crops",
+    "title": "FAO Crop Calendar Myanmar crop identities",
+    "publisher": "FAO",
+    "url": "https://api-cropcalendar.apps.fao.org/api/v1/countries/MM/crops?language=en",
+    "publication_date": null,
+    "publication_date_precision": "unknown",
+    "version": "API v1 snapshot 2026-11-14; Myanmar records lastUpdated 2021-02-26",
+    "rights": "No dataset-specific license established; selected facts only",
+    "redistribution": "Selected factual extracts and short quotations only; no full text, figures or images redistributed. Calendar bulk rights unresolved.",
+    "receipt_id": "calendar_mm_crops"
+  },
+  {
+    "id": "calendar_crops",
+    "upstream_source_id": "fao_calendar_crops",
+    "title": "FAO Crop Calendar global crop list",
+    "publisher": "FAO",
+    "url": "https://api-cropcalendar.apps.fao.org/api/v1/crops?language=en",
+    "publication_date": null,
+    "publication_date_precision": "unknown",
+    "version": "API v1 snapshot 2026-11-14; Myanmar records lastUpdated 2021-02-26",
+    "rights": "No dataset-specific license established; no full response redistribution",
+    "redistribution": "Selected factual extracts and short quotations only; no full text, figures or images redistributed. Calendar bulk rights unresolved.",
+    "receipt_id": "calendar_crops"
+  }
+]
