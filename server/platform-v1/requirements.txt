@@ -1,0 +1,2 @@
+# Independent platform environment; shared 7H locks remain unchanged.
+-r requirements.lock

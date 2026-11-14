@@ -1,0 +1,102 @@
+[
+  {
+    "provider": "power_daily",
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN,T2M_MAX,PRECTOTCORR",
+      "community": "AG",
+      "latitude": 42.03,
+      "longitude": -93.62,
+      "start": "20240201",
+      "end": "20240229",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "status": 200,
+    "bytes": 2065,
+    "sha256": "28a594bc55f10ffe65e189c8848a2f97090766229b958ce6b1b1e9068acb82a1",
+    "content_type": "application/json",
+    "request_started_at": "2026-11-14T10:51:20.684989+00:00",
+    "response_saved_at": "2026-11-14T10:51:22.442164+00:00"
+  },
+  {
+    "provider": "soilgrids",
+    "url": "https://rest.isric.org/soilgrids/v2.0/properties/query",
+    "params": {
+      "lon": -93.62,
+      "lat": 42.03,
+      "property": "phh2o",
+      "depth": "0-5cm",
+      "value": "mean"
+    },
+    "error_type": "ProxyError",
+    "error": "403 Forbidden",
+    "request_started_at": "2026-11-14T10:51:20.708186+00:00"
+  },
+  {
+    "provider": "usda",
+    "url": "https://sdmdataaccess.sc.egov.usda.gov/Tabular/post.rest",
+    "params": null,
+    "error_type": "ProxyError",
+    "error": "403 Forbidden",
+    "request_started_at": "2026-11-14T10:51:20.708701+00:00"
+  },
+  {
+    "provider": "cmr",
+    "url": "https://cmr.earthdata.nasa.gov/search/granules.json",
+    "params": {
+      "short_name": "HLSS30",
+      "version": "2.0",
+      "point": "-93.62,42.03",
+      "temporal": "2024-07-01T00:00:00Z,2024-07-10T23:59:59Z",
+      "page_size": 2
+    },
+    "error_type": "ProxyError",
+    "error": "403 Forbidden",
+    "request_started_at": "2026-11-14T10:51:20.709060+00:00"
+  },
+  {
+    "provider": "weather",
+    "url": "https://api.open-meteo.com/v1/gfs",
+    "params": {
+      "latitude": 42.03,
+      "longitude": -93.62,
+      "hourly": "temperature_2m",
+      "forecast_days": 1
+    },
+    "error_type": "ProxyError",
+    "error": "403 Forbidden",
+    "request_started_at": "2026-11-14T10:51:20.709418+00:00"
+  },
+  {
+    "provider": "australia",
+    "url": "https://www.asris.csiro.au/arcgis/rest/services/TERN/SLGA/MapServer",
+    "params": {
+      "f": "json"
+    },
+    "error_type": "ProxyError",
+    "error": "403 Forbidden",
+    "request_started_at": "2026-11-14T10:51:20.709670+00:00"
+  },
+  {
+    "provider": "SoilGrids WCS",
+    "url": "https://maps.isric.org/mapserv",
+    "checked_on": "2026-11-14",
+    "result": "OUTBOUND_PROXY_BLOCKED",
+    "test": "test_live_soil_wcs",
+    "validation": "FAILED, not an available source"
+  },
+  {
+    "provider": "NASA HLS CMR UMM",
+    "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json",
+    "checked_on": "2026-11-14",
+    "result": "OUTBOUND_PROXY_BLOCKED",
+    "test": "test_live_hls_discovery",
+    "validation": "FAILED; no imagery or pixels retrieved"
+  },
+  {
+    "provider": "OPERA RTC-S1",
+    "result": "UNVERIFIED_ACCESS",
+    "basis": "PR #16 provider access blocked; no new OPERA acquisition or pixel retrieval succeeded in 7I"
+  }
+]

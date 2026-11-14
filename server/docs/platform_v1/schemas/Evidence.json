@@ -1,0 +1,522 @@
+{
+  "$defs": {
+    "Depth": {
+      "additionalProperties": false,
+      "properties": {
+        "bottom_cm": {
+          "exclusiveMinimum": 0,
+          "title": "Bottom Cm",
+          "type": "number"
+        },
+        "top_cm": {
+          "minimum": 0,
+          "title": "Top Cm",
+          "type": "number"
+        }
+      },
+      "required": [
+        "top_cm",
+        "bottom_cm"
+      ],
+      "title": "Depth",
+      "type": "object"
+    },
+    "Measurement": {
+      "additionalProperties": false,
+      "properties": {
+        "conversion": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Conversion",
+          "type": "string"
+        },
+        "date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Date"
+        },
+        "depth": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Depth"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "missing_reason": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing Reason"
+        },
+        "original_unit": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Original Unit",
+          "type": "string"
+        },
+        "original_value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Original Value"
+        },
+        "quality": {
+          "enum": [
+            "usable",
+            "missing",
+            "suspect",
+            "unavailable"
+          ],
+          "title": "Quality",
+          "type": "string"
+        },
+        "statistic": {
+          "default": "daily",
+          "maxLength": 80,
+          "title": "Statistic",
+          "type": "string"
+        },
+        "unit": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Unit",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "variable": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Variable",
+          "type": "string"
+        }
+      },
+      "required": [
+        "variable",
+        "original_value",
+        "original_unit",
+        "value",
+        "unit",
+        "conversion",
+        "quality"
+      ],
+      "title": "Measurement",
+      "type": "object"
+    },
+    "Point": {
+      "additionalProperties": false,
+      "properties": {
+        "latitude": {
+          "maximum": 90,
+          "minimum": -90,
+          "title": "Latitude",
+          "type": "number"
+        },
+        "longitude": {
+          "maximum": 180,
+          "minimum": -180,
+          "title": "Longitude",
+          "type": "number"
+        }
+      },
+      "required": [
+        "latitude",
+        "longitude"
+      ],
+      "title": "Point",
+      "type": "object"
+    },
+    "Spatial": {
+      "additionalProperties": false,
+      "properties": {
+        "crs": {
+          "const": "EPSG:4326",
+          "default": "EPSG:4326",
+          "title": "Crs",
+          "type": "string"
+        },
+        "farm_id": {
+          "anyOf": [
+            {
+              "format": "uuid",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Farm Id"
+        },
+        "original_crs": {
+          "default": "EPSG:4326",
+          "maxLength": 3000,
+          "title": "Original Crs",
+          "type": "string"
+        },
+        "original_geometry": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Original Geometry"
+        },
+        "query_point": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Point"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "resolution_degrees": {
+          "anyOf": [
+            {
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Resolution Degrees"
+        },
+        "resolution_m": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Resolution M"
+        },
+        "role": {
+          "enum": [
+            "approximate_area",
+            "confirmed_farm_point",
+            "confirmed_farm_polygon",
+            "farm_photo",
+            "satellite_acquisition",
+            "regional_context"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "support": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Support",
+          "type": "string"
+        }
+      },
+      "required": [
+        "role",
+        "support"
+      ],
+      "title": "Spatial",
+      "type": "object"
+    },
+    "Temporal": {
+      "additionalProperties": false,
+      "properties": {
+        "acquired_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Acquired At"
+        },
+        "day_basis": {
+          "anyOf": [
+            {
+              "maxLength": 100,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Day Basis"
+        },
+        "end": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End"
+        },
+        "issued_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Issued At"
+        },
+        "observed_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observed At"
+        },
+        "retrieved_at": {
+          "format": "date-time",
+          "title": "Retrieved At",
+          "type": "string"
+        },
+        "start": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start"
+        },
+        "unknown_reason": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unknown Reason"
+        }
+      },
+      "required": [
+        "retrieved_at"
+      ],
+      "title": "Temporal",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "data_type": {
+      "enum": [
+        "observed",
+        "modeled",
+        "forecast",
+        "farmer_reported",
+        "reference",
+        "synthetic"
+      ],
+      "title": "Data Type",
+      "type": "string"
+    },
+    "dataset": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Dataset",
+      "type": "string"
+    },
+    "dataset_version": {
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Dataset Version",
+      "type": "string"
+    },
+    "id": {
+      "pattern": "^ev_[a-f0-9]{64}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 100,
+      "minItems": 1,
+      "title": "Limitations",
+      "type": "array"
+    },
+    "measurements": {
+      "items": {
+        "$ref": "#/$defs/Measurement"
+      },
+      "maxItems": 5000,
+      "title": "Measurements",
+      "type": "array"
+    },
+    "missing_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 100,
+      "title": "Missing Reasons",
+      "type": "array"
+    },
+    "provider": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Provider",
+      "type": "string"
+    },
+    "quality_flags": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 100,
+      "title": "Quality Flags",
+      "type": "array"
+    },
+    "response_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Response Sha256",
+      "type": "string"
+    },
+    "review": {
+      "enum": [
+        "unreviewed",
+        "reference_only",
+        "reviewed",
+        "synthetic"
+      ],
+      "title": "Review",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "earthsync.evidence.v1.0",
+      "default": "earthsync.evidence.v1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_identifier": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Source Identifier",
+      "type": "string"
+    },
+    "source_metadata": {
+      "additionalProperties": true,
+      "title": "Source Metadata",
+      "type": "object"
+    },
+    "source_url": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Source Url",
+      "type": "string"
+    },
+    "spatial": {
+      "$ref": "#/$defs/Spatial"
+    },
+    "temporal": {
+      "$ref": "#/$defs/Temporal"
+    },
+    "usable_for_assessment": {
+      "default": false,
+      "title": "Usable For Assessment",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "id",
+    "provider",
+    "dataset",
+    "dataset_version",
+    "source_url",
+    "source_identifier",
+    "data_type",
+    "spatial",
+    "temporal",
+    "measurements",
+    "quality_flags",
+    "missing_reasons",
+    "limitations",
+    "review",
+    "response_sha256",
+    "source_metadata"
+  ],
+  "title": "Evidence",
+  "type": "object"
+}
