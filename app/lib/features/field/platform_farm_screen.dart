@@ -11,6 +11,7 @@ import '../../state/platform_provider.dart';
 import 'assessment_screen.dart';
 import 'evidence_panels.dart';
 import 'agricultural_intelligence_panel.dart';
+import 'decision_comparison.dart';
 
 class PlatformFarmScreen extends ConsumerWidget {
   const PlatformFarmScreen({super.key});
@@ -375,6 +376,7 @@ class _FarmRecordsState extends ConsumerState<_FarmRecords> {
         ),
         if (decisions.hasError)
           Text('Decision history unavailable: ${decisions.error}'),
+        DecisionComparison(decisions: decisions.value ?? []),
         for (final decision in decisions.value ?? <Map<String, dynamic>>[])
           SectionCard(
             title: 'Saved decision ${decision['id']}',

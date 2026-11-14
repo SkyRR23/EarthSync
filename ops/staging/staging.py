@@ -170,8 +170,13 @@ def build(args, source, state):
         "web_origin": args.web_origin,
     }
     if args.profile == "web":
+        # Resolve PATHEXT on Windows: CreateProcess cannot resolve bare flutter
+        # to flutter.bat. Keep an argument list; do not enable shell execution.
+        flutter_executable = shutil.which("flutter")
+        if flutter_executable is None:
+            raise ValueError("Flutter executable not found on PATH")
         flutter = subprocess.check_output(
-            ["flutter", "--version", "--machine"], text=True
+            [flutter_executable, "--version", "--machine"], text=True
         )
         if json.loads(flutter)["frameworkVersion"] != args.flutter_version:
             raise ValueError(
@@ -189,10 +194,12 @@ def build(args, source, state):
                 "web_engine",
             ]
         )
-        run(["flutter", "pub", "get", "--enforce-lockfile"], cwd=source / "app")
+        run(
+            [flutter_executable, "pub", "get", "--enforce-lockfile"], cwd=source / "app"
+        )
         run(
             [
-                "flutter",
+                flutter_executable,
                 "build",
                 "web",
                 "--no-web-resources-cdn",

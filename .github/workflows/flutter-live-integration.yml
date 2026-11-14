@@ -16,6 +16,33 @@ permissions:
   contents: read
 
 jobs:
+  windows-staging:
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: dtolnay/rust-toolchain@1.99.0
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.0'
+          channel: stable
+          cache: true
+      - name: Build actual Windows 7Q runtimes with private ACLs
+        shell: pwsh
+        run: |
+          $private = Join-Path $env:RUNNER_TEMP 'earthsync-7x-private'
+          New-Item -ItemType Directory -Path $private | Out-Null
+          & ./ops/staging/staging.ps1 -State (Join-Path $private 'platform') build --profile platform --source $env:GITHUB_WORKSPACE --sha $env:GITHUB_SHA
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          & ./ops/staging/staging.ps1 -State (Join-Path $private 'web') build --profile web --source $env:GITHUB_WORKSPACE --sha $env:GITHUB_SHA --flutter-version 3.44.0
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python scripts/ci_staging_startup.py --source $env:GITHUB_WORKSPACE --private $private
+          exit $LASTEXITCODE
   verify-flutter-bridge:
     runs-on: ubuntu-latest
     timeout-minutes: 25

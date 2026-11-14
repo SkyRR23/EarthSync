@@ -2,7 +2,7 @@ name: Python backend CI
 
 on:
   pull_request:
-    paths: ["server/**", "engine/**", ".github/workflows/python-backend.yml"]
+    paths: ["server/**", "engine/**", "data/crop-knowledge/v2/**", "data/crop-rule-candidates/v1/**", ".github/workflows/python-backend.yml"]
   push:
     branches: [main, feat/nasa-power-backend]
     paths: ["server/**", "engine/**", ".github/workflows/python-backend.yml"]

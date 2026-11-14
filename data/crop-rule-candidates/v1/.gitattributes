@@ -1,0 +1,4 @@
+# Immutable 7V manifest inputs must survive Windows core.autocrlf unchanged.
+*.json -text
+*.jsonl -text
+EVIDENCE_MATRIX.md -text

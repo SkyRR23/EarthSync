@@ -33,6 +33,41 @@ class _IntelligenceState extends State<AgriculturalIntelligencePanel> {
   List<String> _evidenceIds = [];
   final _profiles = <String, Map<String, dynamic>>{};
   bool _busy = false;
+
+  Widget _dateField(TextEditingController controller, String label) =>
+      TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: label,
+          suffixIcon: IconButton(
+            tooltip: 'Choose $label',
+            onPressed: _busy
+                ? null
+                : () async {
+                    final parsed = DateTime.tryParse(controller.text);
+                    final first = DateTime(1900), last = DateTime(2200);
+                    final selected = await showDatePicker(
+                      context: context,
+                      initialDate:
+                          parsed != null &&
+                              !parsed.isBefore(first) &&
+                              !parsed.isAfter(last)
+                          ? parsed
+                          : DateTime.now(),
+                      firstDate: first,
+                      lastDate: last,
+                    );
+                    if (mounted && selected != null) {
+                      controller.text = selected.toIso8601String().substring(
+                        0,
+                        10,
+                      );
+                    }
+                  },
+            icon: const Icon(Icons.calendar_month),
+          ),
+        ),
+      );
   @override
   void dispose() {
     for (final c in [_query, _start, _end, _nextStart, _nextEnd]) {
@@ -128,18 +163,8 @@ class _IntelligenceState extends State<AgriculturalIntelligencePanel> {
           const Text(
             'Historical regional evidence · English · global location support. ET0 describes reference-grass atmospheric water demand; it does not prescribe irrigation.',
           ),
-          TextField(
-            controller: _start,
-            decoration: const InputDecoration(
-              labelText: 'Water / first crop start (YYYY-MM-DD)',
-            ),
-          ),
-          TextField(
-            controller: _end,
-            decoration: const InputDecoration(
-              labelText: 'Water / first crop end (YYYY-MM-DD)',
-            ),
-          ),
+          _dateField(_start, 'Water / first crop start (YYYY-MM-DD)'),
+          _dateField(_end, 'Water / first crop end (YYYY-MM-DD)'),
           FilledButton(
             onPressed: _busy ? null : () => _act(_retrieve),
             child: const Text('Retrieve NASA inputs & calculate ET0'),
@@ -194,6 +219,22 @@ class _IntelligenceState extends State<AgriculturalIntelligencePanel> {
             decoration: const InputDecoration(
               labelText: 'Exact crop name or identity (7P v2)',
             ),
+          ),
+          Wrap(
+            spacing: 8,
+            children: [
+              for (final crop in [
+                'rice',
+                'maize',
+                'mung bean',
+                'sesame',
+                'groundnut',
+              ])
+                ActionChip(
+                  label: Text(crop),
+                  onPressed: _busy ? null : () => _query.text = crop,
+                ),
+            ],
           ),
           OutlinedButton(
             onPressed: _busy
@@ -306,18 +347,8 @@ class _IntelligenceState extends State<AgriculturalIntelligencePanel> {
               ),
             ],
             if (_second != null) ...[
-              TextField(
-                controller: _nextStart,
-                decoration: const InputDecoration(
-                  labelText: 'Second declared planting (YYYY-MM-DD)',
-                ),
-              ),
-              TextField(
-                controller: _nextEnd,
-                decoration: const InputDecoration(
-                  labelText: 'Second declared harvest (YYYY-MM-DD)',
-                ),
-              ),
+              _dateField(_nextStart, 'Second declared planting (YYYY-MM-DD)'),
+              _dateField(_nextEnd, 'Second declared harvest (YYYY-MM-DD)'),
               const Text(
                 'Sequence order asserts successive use of this one field. Overlapping inclusive dates conflict. Dates are farmer proposals, not source-recommended dates.',
               ),
