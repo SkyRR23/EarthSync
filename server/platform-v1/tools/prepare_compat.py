@@ -4,10 +4,10 @@ Usage: python server/platform-v1/tools/prepare_compat.py /tmp/earthsync-compat
 Requires fetched objects for PRs #14, #15, #16, #18; never fetches automatically.
 """
 
+import argparse
 import io
 import json
 import subprocess
-import sys
 import tarfile
 from pathlib import Path
 
@@ -23,9 +23,24 @@ PINS = {
 
 
 def main():
-    destination = Path(sys.argv[1]).absolute()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("destination", type=Path)
+    parser.add_argument(
+        "--revision",
+        help="Explicit integrated Git revision; default retains original source pins",
+    )
+    args = parser.parse_args()
+    revision = (
+        subprocess.check_output(
+            ["git", "rev-parse", args.revision + "^{commit}"], text=True
+        ).strip()
+        if args.revision
+        else None
+    )
+    pins = {number: (revision or pin, path) for number, (pin, path) in PINS.items()}
+    destination = args.destination.absolute()
     destination.mkdir(mode=0o700, parents=False, exist_ok=False)
-    for number, (revision, path) in PINS.items():
+    for number, (revision, path) in pins.items():
         actual = subprocess.check_output(
             ["git", "rev-parse", revision + "^{commit}"], text=True
         ).strip()
@@ -38,7 +53,7 @@ def main():
         root.mkdir(mode=0o700)
         with tarfile.open(fileobj=io.BytesIO(raw)) as archive:
             archive.extractall(root, filter="data")
-    (destination / "pins.json").write_text(json.dumps(PINS, indent=2) + "\n")
+    (destination / "pins.json").write_text(json.dumps(pins, indent=2) + "\n")
     print(destination)
 
 

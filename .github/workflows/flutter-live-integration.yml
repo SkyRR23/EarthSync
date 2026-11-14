@@ -28,7 +28,7 @@ jobs:
           toolchain: "1.99.0"
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.50.0"
+          flutter-version: "3.44.0"
           channel: stable
           cache: true
       - name: Inspect Flutter toolchain
@@ -43,9 +43,7 @@ jobs:
         run: dart format --output=none --set-exit-if-changed lib test integration_test test_support example
       - name: Analyze Flutter
         working-directory: app
-        # Flutter 3.50 deprecates the existing Material import shim. Keep these
-        # informational migration notices visible without changing the app UI stack.
-        run: flutter analyze --no-fatal-infos
+        run: flutter analyze
       - name: Flutter widget, adapter and real native bridge tests (offline)
         working-directory: app
         timeout-minutes: 4

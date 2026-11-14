@@ -36,10 +36,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.50.0'
+          flutter-version: '3.44.0'
           channel: stable
           cache: true
-      - run: flutter pub get
+      - run: flutter pub get --enforce-lockfile
         working-directory: app
       - run: dart format --output=none --set-exit-if-changed lib/features/photo_evidence test/photo_evidence example/photo_evidence_main.dart
         working-directory: app

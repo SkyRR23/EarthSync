@@ -29,6 +29,7 @@ from .models import (
     Evidence,
     Farm,
     FarmInput,
+    FarmLinkInput,
     Point,
     HistoryInput,
 )
@@ -295,7 +296,13 @@ def create_app(
     @app.exception_handler(PlatformError)
     async def platform_error(request, exc):
         return JSONResponse(
-            {"error": {"code": exc.code, "retryable": exc.retryable}},
+            {
+                "error": {
+                    "code": exc.code,
+                    "retryable": exc.retryable,
+                    **({"validation": exc.validation} if exc.validation else {}),
+                }
+            },
             status_code=exc.status,
         )
 
@@ -345,6 +352,14 @@ def create_app(
     @app.get(PREFIX + "/farms", response_model=list[Farm])
     def farms():
         return store.farms(OWNER)
+
+    @app.post(PREFIX + "/farm-links", status_code=201)
+    def link_farm(value: FarmLinkInput):
+        return store.link_farm(OWNER, value)
+
+    @app.get(PREFIX + "/farm-links/{local_profile_id}")
+    def farm_link(local_profile_id: str, revision: AwareDatetime):
+        return store.farm_link(OWNER, local_profile_id, revision)
 
     @app.get(PREFIX + "/farms/{farm_id}", response_model=Farm)
     def farm(farm_id: UUID):

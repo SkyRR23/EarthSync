@@ -1,16 +1,9 @@
-import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/home_profile.dart';
+import '../platform_transport.dart';
+export '../platform_transport.dart' show PlatformFailure;
 
 const platformUrl = String.fromEnvironment('PLATFORM_URL');
-
-class PlatformFailure implements Exception {
-  const PlatformFailure(this.code, {this.retryable = false});
-  final String code;
-  final bool retryable;
-  @override
-  String toString() => code;
-}
 
 enum ClimateJobStatus { queued, running, succeeded, failed, cancelled }
 
@@ -90,6 +83,7 @@ class PlatformClimateClient {
     required GeoPoint point,
     required DateTime start,
     required DateTime end,
+    String? farmId,
   }) async {
     final first = DateTime.utc(start.year, start.month, start.day),
         last = DateTime.utc(end.year, end.month, end.day);
@@ -106,7 +100,9 @@ class PlatformClimateClient {
       await _request(
         'POST',
         '/api/platform/v1/climate/jobs',
+        expectedStatus: 202,
         body: {
+          'farm_id': ?farmId,
           'query': {
             'point': point.toJson(),
             'start': first.toIso8601String().substring(0, 10),
@@ -128,33 +124,35 @@ class PlatformClimateClient {
       '/api/platform/v1/jobs/${Uri.encodeComponent(id)}',
     ),
   );
+  Future<ClimateJob> poll(
+    ClimateJob job, {
+    int maxAttempts = 40,
+    Duration interval = const Duration(seconds: 2),
+    bool Function()? isCurrent,
+    void Function(ClimateJob)? onUpdate,
+  }) async {
+    var current = job;
+    for (var i = 0; i < maxAttempts && current.pending; i++) {
+      await Future<void>.delayed(interval);
+      if (isCurrent != null && !isCurrent()) return current;
+      current = await refresh(current.id);
+      if (isCurrent != null && !isCurrent()) return current;
+      onUpdate?.call(current);
+    }
+    // A bounded wait ending does not mean that processing completed.
+    return current;
+  }
+
   Future<Map<String, dynamic>> _request(
     String method,
     String path, {
+    int expectedStatus = 200,
     Map<String, dynamic>? body,
-  }) async {
-    try {
-      final request = http.Request(method, baseUri.resolve(path));
-      request.headers['Content-Type'] = 'application/json';
-      if (body != null) request.body = jsonEncode(body);
-      final response = await http.Response.fromStream(
-        await client.send(request),
-      ).timeout(const Duration(seconds: 30));
-      final json =
-          jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
-      if (response.statusCode != 200 && response.statusCode != 202) {
-        throw PlatformFailure(
-          json['error']?['code'] as String? ?? 'PLATFORM_UNAVAILABLE',
-          retryable: json['error']?['retryable'] == true,
-        );
-      }
-      return json;
-    } on PlatformFailure {
-      rethrow;
-    } on FormatException {
-      rethrow;
-    } catch (_) {
-      throw const PlatformFailure('NETWORK_UNAVAILABLE', retryable: true);
-    }
-  }
+  }) async => Map<String, dynamic>.from(
+    await PlatformTransport(
+          client,
+          baseUri: baseUri,
+        ).request(method, path, expectedStatus: expectedStatus, body: body)
+        as Map,
+  );
 }

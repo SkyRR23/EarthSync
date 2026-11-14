@@ -15,7 +15,7 @@ def test_migration_idempotent_and_foreign_keys(store, farm_input, records):
     store.save_evidence("alice", records[0], farm.id)
     assert store.ready()
     with store.connection() as db:
-        assert db.execute("SELECT COUNT(*) FROM schema_migrations").fetchone()[0] == 1
+        assert db.execute("SELECT COUNT(*) FROM schema_migrations").fetchone()[0] == 2
         with pytest.raises(sqlite3.IntegrityError):
             db.execute(
                 "INSERT INTO farm_evidence VALUES (?,?,?)",

@@ -1,3 +1,4 @@
+import '../../state/platform_provider.dart';
 import '../../app/ui_labels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,7 +9,8 @@ import '../../state/home_provider.dart';
 import '../../state/integration_provider.dart';
 
 class DailyClimateScreen extends ConsumerStatefulWidget {
-  const DailyClimateScreen({super.key});
+  const DailyClimateScreen({super.key, this.farmMode = false});
+  final bool farmMode;
   @override
   ConsumerState<DailyClimateScreen> createState() => _DailyClimateScreenState();
 }
@@ -32,9 +34,25 @@ class _DailyClimateScreenState extends ConsumerState<DailyClimateScreen> {
       _error = null;
     });
     try {
-      final job = await action();
+      final submitted = await action();
+      if (mounted && generation == _generation) {
+        setState(() => _job = submitted);
+      }
+      final client = PlatformClimateClient(
+        ref.read(integrationHttpProvider),
+        baseUri: Uri.parse(platformUrl),
+      );
+      final job = await client.poll(
+        submitted,
+        isCurrent: () => mounted && generation == _generation,
+        onUpdate: (job) => setState(() => _job = job),
+      );
       if (mounted && generation == _generation) {
         setState(() => _job = job);
+        if (job.status == ClimateJobStatus.succeeded) {
+          ref.invalidate(platformContextProvider);
+          ref.invalidate(platformAssistantProvider);
+        }
       }
     } catch (error) {
       if (mounted && generation == _generation) {
@@ -51,11 +69,21 @@ class _DailyClimateScreenState extends ConsumerState<DailyClimateScreen> {
   Widget build(BuildContext context) {
     final profile = ref.watch(homeProfileProvider).value;
     final area = profile?.userLocation;
-    final point = area is ApproximateArea ? area.point : profile?.farm?.point;
+    final linkedState = widget.farmMode
+        ? ref.watch(platformFarmProvider)
+        : null;
+    final linkedFarm = linkedState?.isLoading == false
+        ? linkedState?.value
+        : null;
+    final point = widget.farmMode
+        ? linkedFarm?.point
+        : area is ApproximateArea
+        ? area.point
+        : profile?.farm?.point;
     // Selection changes clear all old job results and in-flight callbacks.
     final selection = point == null
         ? null
-        : '${point.latitude}|${point.longitude}';
+        : '${widget.farmMode}:${linkedFarm?.id}:${profile?.farm?.confirmedAt}:${point.latitude}|${point.longitude}';
     if (_selection != selection) {
       _selection = selection;
       ++_generation;
@@ -89,9 +117,13 @@ class _DailyClimateScreenState extends ConsumerState<DailyClimateScreen> {
                 subtitle: UiLabels.nasaPOWERMERRA2LSTExplicitLocalOnly7I,
               ),
               Text(
-                'Regional query point: ${point?.label ?? 'Choose an area first'}',
+                '${widget.farmMode ? 'Linked farm query' : 'Regional query'}: ${point?.label ?? 'Choose an area or link a confirmed farm first'}',
               ),
-              const Text(UiLabels.thisQueryIsRegionalAndDoesNotUpload),
+              Text(
+                widget.farmMode
+                    ? 'Daily regional model records will be associated with this explicitly linked farm. No device coordinates or photos are sent.'
+                    : UiLabels.thisQueryIsRegionalAndDoesNotUpload,
+              ),
               const SizedBox(height: 16),
               OutlinedButton.icon(
                 icon: const Icon(Icons.date_range),
@@ -134,6 +166,7 @@ class _DailyClimateScreenState extends ConsumerState<DailyClimateScreen> {
                           point: point,
                           start: _range!.start,
                           end: _range!.end,
+                          farmId: linkedFarm?.id,
                         ),
                       ),
                 child: const Text(UiLabels.requestDailyClimate),
@@ -172,11 +205,8 @@ class _DailyClimateScreenState extends ConsumerState<DailyClimateScreen> {
                               child: const Text(UiLabels.refreshJobStatus),
                             ),
                             TextButton(
-                              onPressed: _busy
-                                  ? null
-                                  : () => _run(
-                                      () => configuredClient!.cancel(job.id),
-                                    ),
+                              onPressed: () =>
+                                  _run(() => configuredClient!.cancel(job.id)),
                               child: const Text(UiLabels.cancelJob),
                             ),
                           ],
@@ -195,7 +225,8 @@ class _DailyClimateScreenState extends ConsumerState<DailyClimateScreen> {
                   ),
                 for (final evidence in job.records)
                   SectionCard(
-                    title: '${evidence.provider} · ${evidence.dataset}',
+                    title:
+                        '${evidence.provider} · ${evidence.dataset} · ${evidence.raw['source_metadata']['parameter']}',
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -207,6 +238,9 @@ class _DailyClimateScreenState extends ConsumerState<DailyClimateScreen> {
                         ),
                         Text(
                           'Period: ${evidence.raw['temporal']['start']} – ${evidence.raw['temporal']['end']} · retrieved: ${evidence.raw['temporal']['retrieved_at']}',
+                        ),
+                        Text(
+                          'Review scope: ${evidence.raw['source_metadata']['review_scope']}',
                         ),
                         SelectableText(evidence.sourceUrl),
                         for (final limit in evidence.raw['limitations'] as List)

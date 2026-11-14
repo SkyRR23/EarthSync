@@ -9,3 +9,5 @@
 !server/platform-v1/container_start.py
 **/__pycache__
 **/*.pyc
+
+!server/requirements.lock

@@ -1,3 +1,4 @@
+import '../../data/environment/platform_climate.dart';
 import '../../app/ui_labels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,6 +42,11 @@ class FieldScreen extends ConsumerWidget {
           child: ListView(
             padding: const EdgeInsets.all(24),
             children: [
+              if (platformUrl.isNotEmpty)
+                OutlinedButton(
+                  onPressed: () => context.push('/farm-evidence'),
+                  child: const Text('Persisted farm evidence'),
+                ),
               PageHeader(
                 eyebrow: tr('point'),
                 title: farm.name ?? tr('farm'),

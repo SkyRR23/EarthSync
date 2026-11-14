@@ -13,9 +13,10 @@ FROM python:3.12-slim-bookworm@sha256:935c3c5b12357a7e10caa9c1e6ca5692344d97cf22
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PYTHONPATH=/app/server
 WORKDIR /app
 RUN apt-get update && apt-get install --no-install-recommends -y libexpat1 && rm -rf /var/lib/apt/lists/*
-COPY server/platform-v1/requirements.lock /tmp/platform.lock
+COPY server/requirements.lock /tmp/server/requirements.lock
+COPY server/platform-v1/requirements.lock /tmp/server/platform-v1/requirements.lock
 COPY --from=compat_source /wheels /tmp/wheels
-RUN pip install --no-index --find-links=/tmp/wheels --no-cache-dir -r /tmp/platform.lock \
+RUN pip install --no-index --find-links=/tmp/wheels --no-cache-dir -r /tmp/server/platform-v1/requirements.lock \
     && rm -rf /tmp/wheels \
     && groupadd --gid 10001 earthsync \
     && useradd --uid 10001 --gid 10001 --no-create-home earthsync \

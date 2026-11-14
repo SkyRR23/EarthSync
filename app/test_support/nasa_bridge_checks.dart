@@ -139,25 +139,30 @@ void registerNasaBridgeChecks() {
     },
   );
 
-  testWidgets('live Python -> NASA -> actual FRB -> Rust -> Flutter', (
-    tester,
-  ) async {
-    final a = liveResult!;
-    expect(a.trace!.retrievalMode, 'live_http');
-    expect(a.climateSummary.dataKind, 'modeled');
-    expect(a.climateSummary.totalRainMm, closeTo(0.04, 1e-9));
-    expect(a.climateSummary.meanTempC, closeTo(28.03655172413793, 1e-9));
-    expect(a.scenarios, isEmpty);
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Scaffold(body: ClimateTab(analysis: a)),
-      ),
-    );
-    await tester.pumpAndSettle();
-    expect(find.text('Real NASA POWER climate · modeled data'), findsOneWidget);
-    expect(find.textContaining('28.0366'), findsOneWidget);
-    expect(tester.takeException(), isNull);
-  }, skip: !const bool.fromEnvironment('RUN_LIVE_NASA'));
+  testWidgets(
+    'live Python -> NASA -> actual FRB -> Rust -> Flutter',
+    (tester) async {
+      final a = liveResult!;
+      expect(a.trace!.retrievalMode, 'live_http');
+      expect(a.climateSummary.dataKind, 'modeled');
+      expect(a.climateSummary.totalRainMm, closeTo(0.04, 1e-9));
+      expect(a.climateSummary.meanTempC, closeTo(28.03655172413793, 1e-9));
+      expect(a.scenarios, isEmpty);
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(body: ClimateTab(analysis: a)),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(
+        find.text('Real NASA POWER climate · modeled data'),
+        findsOneWidget,
+      );
+      expect(find.textContaining('28.0366'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+    skip: !const bool.fromEnvironment('RUN_LIVE_NASA'),
+  );
 
   testWidgets('synthetic crop warning stays visible with modeled climate', (
     tester,

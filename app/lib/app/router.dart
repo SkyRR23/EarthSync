@@ -1,3 +1,4 @@
+import '../features/field/platform_farm_screen.dart';
 import '../features/dashboard/daily_climate_screen.dart';
 import '../design/app_shell.dart';
 import '../features/explore/explore_screen.dart';
@@ -26,7 +27,13 @@ GoRouter buildRouter() => GoRouter(
       routes: [
         GoRoute(
           path: '/daily-climate',
-          builder: (_, _) => const DailyClimateScreen(),
+          builder: (_, s) => DailyClimateScreen(
+            farmMode: s.uri.queryParameters['farm'] == '1',
+          ),
+        ),
+        GoRoute(
+          path: '/farm-evidence',
+          builder: (_, _) => const FarmRequired(child: PlatformFarmScreen()),
         ),
         GoRoute(path: '/explore', builder: (_, _) => const ExploreScreen()),
         GoRoute(path: '/settings', builder: (_, _) => const SettingsScreen()),

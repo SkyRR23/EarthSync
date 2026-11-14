@@ -37,10 +37,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.50.0'
+          flutter-version: '3.44.0'
           channel: stable
           cache: true
-      - run: flutter pub get
+      - run: flutter pub get --enforce-lockfile
         working-directory: app
       - name: Check assistant formatting
         run: dart format --output=none --set-exit-if-changed app/lib/features/assistant app/lib/assistant_demo.dart app/test/assistant

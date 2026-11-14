@@ -1,3 +1,4 @@
+import '../../data/environment/platform_climate.dart';
 import '../../app/ui_copy.dart';
 import '../../design/components/product.dart';
 import '../planning/planning_panel.dart';
@@ -44,6 +45,11 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
           child: ListView(
             padding: const EdgeInsets.all(20),
             children: [
+              if (platformUrl.isNotEmpty)
+                OutlinedButton(
+                  onPressed: () => context.push('/farm-evidence'),
+                  child: const Text('Persisted farm evidence'),
+                ),
               PageHeader(
                 title: UiCopy.text(context, 'assessment'),
                 subtitle: UiCopy.text(context, 'planningBody'),

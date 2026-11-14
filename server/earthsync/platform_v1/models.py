@@ -63,6 +63,14 @@ class Farm(FarmInput):
     id: UUID
 
 
+class FarmLinkInput(Contract):
+    local_profile_id: str = Field(
+        min_length=1, max_length=100, pattern=r"^[A-Za-z0-9_-]+$"
+    )
+    revision: AwareDatetime
+    farm: FarmInput
+
+
 class Spatial(Contract):
     crs: Literal["EPSG:4326"] = "EPSG:4326"
     original_crs: str = Field(default="EPSG:4326", max_length=3000)

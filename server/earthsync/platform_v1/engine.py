@@ -102,7 +102,17 @@ class RustEngine:
             ):
                 raise PlatformError("RUST_SCHEMA_MISMATCH", 502)
             if data["status"] == "error":
-                raise PlatformError("SCIENTIFIC_QUALITY_REJECTION", 422)
+                error = data.get("error", {})
+                if (
+                    data.get("schema_version") != ENGINE_VERSION
+                    or error.get("status") != "input_or_source_validation_failure"
+                    or not isinstance(error.get("path"), str)
+                    or not isinstance(error.get("message"), str)
+                ):
+                    raise PlatformError("RUST_SCHEMA_MISMATCH", 502)
+                raise PlatformError(
+                    "SCIENTIFIC_QUALITY_REJECTION", 422, validation=data
+                )
             value = data.get("data")
             if (
                 not isinstance(value, dict)

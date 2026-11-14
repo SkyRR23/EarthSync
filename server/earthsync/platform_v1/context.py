@@ -10,9 +10,9 @@ def assistant_context(store, owner, farm_id):
     # Keep within PR #14's 120-record context limit. Do not invent aggregates or
     # mark raw daily values as Rust calculations. A deterministic latest-day
     # projection is explicit; full time series remains in the evidence endpoint.
-    sources, evidence = [], []
-    for record in records[:100]:
-        if record.data_type == "reference":
+    sources, evidence, decisions = [], [], []
+    for record in records[:40]:
+        if record.data_type in ("reference", "synthetic"):
             continue
         sources.append(
             {
@@ -55,6 +55,44 @@ def assistant_context(store, owner, farm_id):
                     "calculation": "none",
                 }
             )
+    # Preserve persisted engine states and original citation IDs. No request,
+    # photo bytes, coordinates from photos, tokens or private object paths.
+    for decision in store.decisions(owner, farm_id)[:3]:
+        result = decision["assessment"]["result"].get("data", {})
+        retained = {s["id"] for s in sources}
+        for source in result.get("context", {}).get("sources", [])[:10]:
+            if source["id"] not in retained and len(sources) < 70:
+                sources.append(
+                    {
+                        "id": source["id"],
+                        "provider": "Persisted Rust source",
+                        "title": source["title"],
+                        "url": source.get("url"),
+                    }
+                )
+                retained.add(source["id"])
+        for index, summary in enumerate(result.get("summaries", [])[:5]):
+            ids = list(
+                dict.fromkeys(
+                    s
+                    for f in result.get("findings", [])
+                    if f["scenario_id"] == summary["scenario_id"]
+                    for s in f["source_ids"]
+                )
+            )
+            decisions.append(
+                {
+                    "id": f"{decision['id']}:{index}",
+                    "scenario_id": summary["scenario_id"],
+                    "status": summary["status"],
+                    "synthetic": False,
+                    "source_ids": [s for s in ids if s in retained][:20],
+                    "evidence_ids": [],
+                    "limitations": [
+                        "Persisted reference assessment; no crop recommendation."
+                    ],
+                }
+            )
     value = {
         "schema_version": "assistant.v1-proposal",
         "context_id": "pending",
@@ -73,7 +111,7 @@ def assistant_context(store, owner, farm_id):
         },
         "sources": sources,
         "evidence": evidence,
-        "decisions": [],
+        "decisions": decisions,
         "limitations": [
             "No reviewed positive crop recommendations. Full evidence and Rust decision details are available separately.",
             "Only source records are projected; reference-only inputs must not be promoted. Boundaries exceeding assistant v1 limits are omitted; full farm geometry remains in farm context.",

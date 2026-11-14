@@ -127,6 +127,55 @@ class Store:
             raise PlatformError("NOT_FOUND", 404)
         return Farm.model_validate_json(row[0])
 
+    def farm_link(self, owner, local_id, revision, db=None):
+        if db is None:
+            with self.connection() as db:
+                return self.farm_link(owner, local_id, revision, db)
+        row = db.execute(
+            "SELECT farm_id FROM farm_links WHERE owner=? AND local_profile_id=? AND revision=?",
+            (owner, local_id, revision.isoformat()),
+        ).fetchone()
+        if row is None:
+            raise PlatformError("NOT_FOUND", 404)
+        return {
+            "local_profile_id": local_id,
+            "revision": revision.isoformat(),
+            "farm": self.farm(owner, row[0], db),
+        }
+
+    def link_farm(self, owner, value):
+        # An explicit unique key makes manual retries after a lost 201 safe.
+        with self.connection() as db:
+            db.execute("BEGIN IMMEDIATE")
+            try:
+                linked = self.farm_link(
+                    owner, value.local_profile_id, value.revision, db
+                )
+            except PlatformError as exc:
+                if exc.code != "NOT_FOUND":
+                    raise
+            else:
+                if FarmInput(**linked["farm"].model_dump(exclude={"id"})) != value.farm:
+                    raise PlatformError("FARM_LINK_CONFLICT", 409)
+                return linked
+            farm = Farm(id=uuid4(), **value.farm.model_dump())
+            self._quota(db, "farms")
+            db.execute(
+                "INSERT INTO farms VALUES (?,?,?,?)",
+                (str(farm.id), owner, farm.model_dump_json(), time.time()),
+            )
+            db.execute(
+                "INSERT INTO farm_links VALUES (?,?,?,?)",
+                (
+                    owner,
+                    value.local_profile_id,
+                    value.revision.isoformat(),
+                    str(farm.id),
+                ),
+            )
+            self._audit(db, owner, str(farm.id), "farm.explicitly_linked")
+            return self.farm_link(owner, value.local_profile_id, value.revision, db)
+
     def farms(self, owner):
         with self.connection() as db:
             return [
@@ -138,7 +187,8 @@ class Store:
             ]
 
     def save_evidence(self, owner, record: Evidence, farm_id=None):
-        document = record.model_dump_json()
+        value = record.model_dump(mode="json")
+        document = encoded(value)
         if len(document.encode()) > 2_000_000:
             raise PlatformError("EVIDENCE_TOO_LARGE", 413)
         with self.connection() as db:
@@ -151,7 +201,10 @@ class Store:
                 "SELECT document FROM evidence WHERE id=? AND owner=?",
                 (record.id, owner),
             ).fetchone()
-            if old and old[0] != document:
+            # Cache JSON is canonicalized and may reorder nested metadata keys.
+            # Older databases retain the original serialization. Immutability
+            # compares values in either representation, never incidental order.
+            if old and json.loads(old[0]) != value:
                 raise PlatformError("IMMUTABLE_EVIDENCE_CONFLICT", 409)
             if not old:
                 self._quota(db, "evidence")
