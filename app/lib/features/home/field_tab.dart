@@ -18,6 +18,7 @@ import '../../design/components/scenario.dart';
 import '../../design/components/sheet.dart';
 import '../../design/components/status.dart';
 import '../../design/tokens.dart';
+import '../../state/account.dart';
 import '../../state/providers.dart';
 import '../../data/environment/nasa_power_client.dart';
 import '../map/gibs_layer.dart';
@@ -261,6 +262,7 @@ class _FieldTabState extends ConsumerState<FieldTab> {
     final d = ref.watch(farmerDraftProvider);
     final state = ref.watch(analysisProvider);
     final a = state is AnalysisReady ? state.analysis : null;
+    final user = ref.watch(userProvider).value;
     final p = context.fs;
     const iconIndent = FsSpace.lg + 30 + FsSpace.md;
 
@@ -393,6 +395,48 @@ class _FieldTabState extends ConsumerState<FieldTab> {
               ),
           ],
         ),
+        if (ref.watch(authProvider) != null)
+          FsGroupedSection(
+            separatorIndent: iconIndent,
+            footer: user == null ? S.signInBody : null,
+            children: [
+              if (user == null)
+                FsListRow(
+                  leading: FsIconBadge(
+                    CupertinoIcons.cloud_upload_fill,
+                    color: p.tint,
+                  ),
+                  title: S.saveOnline,
+                  onTap: () async {
+                    final error = await signInAndSync(ref);
+                    if (error != null && context.mounted) {
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text(error)));
+                    }
+                  },
+                )
+              else ...[
+                FsListRow(
+                  leading: FsIconBadge(
+                    CupertinoIcons.checkmark_seal_fill,
+                    color: p.positiveText,
+                  ),
+                  title: S.savedOnline,
+                  value: user.email ?? user.displayName ?? S.account,
+                  chevron: false,
+                ),
+                FsListRow(
+                  leading: FsIconBadge(
+                    CupertinoIcons.square_arrow_right,
+                    color: p.secondaryLabel,
+                  ),
+                  title: S.signOut,
+                  onTap: () => signOut(ref),
+                ),
+              ],
+            ],
+          ),
         FsGroupedSection(
           children: [
             FsListRow(

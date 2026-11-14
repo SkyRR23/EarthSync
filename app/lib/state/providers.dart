@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../data/cloud/cloud_sync.dart';
 import '../data/environment/nasa_power_client.dart';
 import '../data/engine/engine_gateway.dart';
 import '../data/engine/mock_engine.dart';
@@ -37,6 +38,12 @@ final engineProvider = Provider<EngineGateway>(
 /// Device storage. Overridden in main(); null in tests = memory only.
 /// Farmer answers and notes never leave the phone (master plan §13).
 final prefsProvider = Provider<SharedPreferences?>((ref) => null);
+
+/// Firebase cloud copy. Null when Firebase did not start (tests, no config)
+/// — the app then works fully offline. Overridden in main().
+/// Team decision (Nov 2026): signed-in farmers' farm, answers, notes and
+/// check results upload automatically to their own Google account space.
+final cloudSyncProvider = Provider<CloudSync?>((ref) => null);
 
 class HistoricalWindowNotifier extends Notifier<HistoricalWindow> {
   @override
@@ -188,6 +195,53 @@ class FarmerDraftNotifier extends Notifier<FarmerDraft> {
   void _set(FarmerDraft d) {
     state = d;
     ref.read(prefsProvider)?.setString(_draftKey, jsonEncode(d.toJson()));
+    pushToCloud();
+  }
+
+  /// Uploads the farm and answers (no-op when signed out / offline build).
+  void pushToCloud() {
+    final d = state;
+    ref
+        .read(cloudSyncProvider)
+        ?.saveFarm(
+          pinLat: d.latitude,
+          pinLon: d.longitude,
+          farm: d.farm,
+          currentCrop: d.currentCrop,
+          irrigation: d.irrigation?.name,
+          drainage: d.drainage?.name,
+        );
+  }
+
+  /// New phone: take the saved farm from the cloud if this phone has none.
+  void restoreFromCloud(Map<String, dynamic> farm) {
+    if (state.isComplete) return;
+    final pin = farm['pin'];
+    final answers = (farm['answers'] as Map?) ?? const {};
+    final corners = farm['corners'] as List? ?? const [];
+    T? e<T extends Enum>(List<T> values, Object? raw) =>
+        values.where((v) => v.name == raw).firstOrNull;
+    final boundary = corners.length == FarmBoundary.cornerCount
+        ? FarmBoundary([
+            for (final c in corners)
+              LatLng(
+                ((c as Map)['lat'] as num).toDouble(),
+                (c['lon'] as num).toDouble(),
+              ),
+          ])
+        : null;
+    final restored = FarmerDraft(
+      latitude: (pin is Map) ? (pin['lat'] as num?)?.toDouble() : null,
+      longitude: (pin is Map) ? (pin['lon'] as num?)?.toDouble() : null,
+      currentCrop: answers['current_crop'] as String?,
+      irrigation: e(Irrigation.values, answers['irrigation']),
+      drainage: e(Drainage.values, answers['drainage']),
+      farm: boundary,
+    );
+    state = restored;
+    ref
+        .read(prefsProvider)
+        ?.setString(_draftKey, jsonEncode(restored.toJson()));
   }
 
   /// Moving the setup pin far away means a different farm: forget the old shape.
@@ -215,7 +269,11 @@ class FarmerDraftNotifier extends Notifier<FarmerDraft> {
     );
   }
 
-  void setFarm(FarmBoundary farm) => _set(state.copyWith(farm: farm));
+  void setFarm(FarmBoundary farm) {
+    _set(state.copyWith(farm: farm));
+    ref.read(cloudSyncProvider)?.logEvent('farm_marked');
+  }
+
   void clearFarm() => _set(
     FarmerDraft(
       latitude: state.latitude,
@@ -290,27 +348,51 @@ class NotesNotifier extends Notifier<List<FieldNote>> {
 
   void add(NoteKind kind, String text) {
     final now = DateTime.now();
-    _save([
-      FieldNote(
-        id: now.microsecondsSinceEpoch.toString(),
-        createdAt: now,
-        kind: kind,
-        text: text.trim(),
-      ),
-      ...state,
-    ]);
+    final note = FieldNote(
+      id: now.microsecondsSinceEpoch.toString(),
+      createdAt: now,
+      kind: kind,
+      text: text.trim(),
+    );
+    _save([note, ...state]);
+    ref.read(cloudSyncProvider)
+      ?..saveNote(note)
+      ..logEvent('note_added');
   }
 
-  void remove(String id) => _save([
-    for (final n in state)
-      if (n.id != id) n,
-  ]);
+  void remove(String id) {
+    _save([
+      for (final n in state)
+        if (n.id != id) n,
+    ]);
+    ref.read(cloudSyncProvider)?.deleteNote(id);
+  }
+
+  /// Adds cloud notes this phone does not have yet (new phone / reinstall),
+  /// and uploads notes written here before signing in.
+  void mergeCloud(List<FieldNote> cloud) {
+    final have = {for (final n in state) n.id};
+    final cloudIds = {for (final n in cloud) n.id};
+    final sync = ref.read(cloudSyncProvider);
+    for (final n in state) {
+      if (!cloudIds.contains(n.id)) sync?.saveNote(n);
+    }
+    final extra = [
+      for (final n in cloud)
+        if (!have.contains(n.id)) n,
+    ];
+    if (extra.isEmpty) return;
+    _save(
+      [...state, ...extra]..sort((a, b) => b.createdAt.compareTo(a.createdAt)),
+    );
+  }
 
   /// Undo for a just-removed note.
   void restore(FieldNote note) {
     final next = [...state, note]
       ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
     _save(next);
+    ref.read(cloudSyncProvider)?.saveNote(note);
   }
 }
 
@@ -361,6 +443,9 @@ class AnalysisNotifier extends Notifier<AnalysisState> {
       if (generation != _generation) return;
       _lastGood = result;
       state = AnalysisReady(result);
+      ref.read(cloudSyncProvider)
+        ?..saveCheck(result)
+        ..logEvent('check_run');
     } on EngineError catch (e) {
       if (generation != _generation) return;
       state = AnalysisFailed(e, lastGood: _lastGood);

@@ -8,6 +8,7 @@ import '../../app/strings.dart';
 import '../../design/components/buttons.dart';
 import '../../design/components/page.dart';
 import '../../design/tokens.dart';
+import '../../state/account.dart';
 import '../../state/providers.dart';
 
 /// First-run welcome: promise, three steps, one button.
@@ -71,7 +72,15 @@ class WelcomeScreen extends ConsumerWidget {
               style: t.footnote,
             ),
             const SizedBox(height: FsSpace.md),
-            FsButton(S.getStarted, onPressed: () => context.push('/location')),
+            FsButton(
+              S.getStarted,
+              onPressed: () => context.push(
+                ref.read(authProvider) != null &&
+                        ref.read(authProvider)!.currentUser == null
+                    ? '/signin'
+                    : '/location',
+              ),
+            ),
             if (kDebugMode)
               FutureBuilder<String>(
                 future: ref.read(engineProvider).engineVersion(),

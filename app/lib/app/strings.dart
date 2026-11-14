@@ -177,6 +177,21 @@ abstract final class S {
   static const traceBackend = 'Exact backend response and provenance';
   static const traceFarmer = 'Retained farmer answers (not all used by Rust)';
 
+  // Google account (Firebase)
+  static const signInTitle = 'Keep your farm safe';
+  static const signInBody =
+      'Sign in with Google. Your farm, answers, notes and results are saved to your account, so you can open them on a new phone.';
+  static const signInGoogle = 'Continue with Google';
+  static const notNow = 'Not now';
+  static const signInFailed =
+      "Couldn't sign in. Check the internet and try again.";
+  static const cloudUnavailable =
+      'Online saving is not set up in this version.';
+  static const account = 'Google account';
+  static const saveOnline = 'Save to Google account';
+  static const savedOnline = 'Saved online';
+  static const signOut = 'Sign out';
+
   // Sources
   static const sourcesIntro =
       'Every result comes from one of these sources. Satellite numbers describe your area, not your exact farm.';

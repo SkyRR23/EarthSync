@@ -4,6 +4,7 @@ import '../features/farm/mark_farm_screen.dart';
 import '../features/home/home_shell.dart';
 import '../features/location/location_screen.dart';
 import '../features/map/map_screen.dart';
+import '../features/onboarding/sign_in_screen.dart';
 import '../features/onboarding/welcome_screen.dart';
 import '../features/questionnaire/question_screen.dart';
 import '../features/results/scenario_detail_screen.dart';
@@ -16,6 +17,7 @@ GoRouter buildRouter({bool setupDone = false}) => GoRouter(
   initialLocation: setupDone ? '/home' : '/',
   routes: [
     GoRoute(path: '/', builder: (_, _) => const WelcomeScreen()),
+    GoRoute(path: '/signin', builder: (_, _) => const SignInScreen()),
     GoRoute(
       path: '/location',
       builder: (_, s) =>
