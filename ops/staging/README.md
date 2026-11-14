@@ -83,7 +83,7 @@ Do not point these commands at another developer's active worktree.
 ```bash
 # Fetch reviewed objects and create ONE clean immutable combined checkout.
 git fetch origin '+refs/heads/*:refs/remotes/origin/*'
-RC_SHA=530c1e1d06c9202dfc1f5d06c659399409b7270f
+RC_SHA=ab745a027b7b66a6c63fb033b024b19053b12c55
 git worktree add --detach ../earthsync-rc "$RC_SHA"
 rustup toolchain install 1.99.0 --profile minimal
 export RUSTUP_TOOLCHAIN=1.99.0
@@ -106,6 +106,13 @@ python3.12 "$OPS/ops/staging/staging.py" build --profile web --source "$WEB" \
 python3.12 "$OPS/ops/staging/staging.py" run --source "$PLATFORM" --state "$PRIVATE/platform-release"
 python3.12 "$OPS/ops/staging/staging.py" run --source "$WEB" --state "$PRIVATE/web-release"
 ```
+
+The commands pin the CI-verified source including the fail-closed Windows/test
+corrections. Recorded runtime artifacts were built from `530c1e1d06c9202dfc1f5d06c659399409b7270f`;
+the application, provider, engine, database and operations runtime files are
+identical at `ab745a027b7b66a6c63fb033b024b19053b12c55`. Later PR delivery commits
+add reports and reproduction support. Use the full reviewed PR SHA supplied at
+acceptance if rebuilding that complete checkout; never guess or shorten a pin.
 
 The standalone platform build copies its package to `state/runtime` and supplies
 the exact exported sanitizer/assistant packages when absent, as 7I's native
@@ -142,7 +149,7 @@ state operation; Python's chmod does not establish Windows privacy ACLs.
 $Ops = 'C:\src\earthsync-rc'
 $Web = $Ops
 $Platform = $Ops
-$RcSha = '530c1e1d06c9202dfc1f5d06c659399409b7270f'
+$RcSha = 'ab745a027b7b66a6c63fb033b024b19053b12c55'
 $Private = 'C:\EarthSyncPrivate'
 $env:RUSTUP_TOOLCHAIN = '1.99.0'
 # First create/restrict $Private in Explorer Security to your account and SYSTEM.
