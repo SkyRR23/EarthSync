@@ -12,6 +12,7 @@ on:
       - "engine/tests/science_audit.rs"
       - "server/earthsync/platform_v1/providers/power_daily.py"
       - "server/tests/platform_v1/test_science_coordinate_precision.py"
+      - "data/research/science-audit-v1/**"
       - ".github/workflows/science-audit.yml"
   workflow_dispatch:
 

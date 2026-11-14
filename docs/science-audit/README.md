@@ -1,38 +1,51 @@
 # Milestone 7J: historical and scientific audit
 
-Status: **repository repairs verified; contributed archive audit BLOCKED**.
-This is an independent draft on `fix/earthsync-science-audit-v1`, based on final
-7H `a7c33cc6b58703501bbba0ceba1bad1d6d42004b`. No merge into 7N is authorized.
+The independent software/data audit is complete for the supplied archive and
+pinned milestones. Scientific acceptance of farming advice is **not** complete
+or claimed. Keep the PR draft; 7N owns integration and merge decisions.
 
-The attachment `nasa_space_challenges.zip` could not be transferred: the downloader
-rejects attachments above 32 MiB. The subsequently supplied release URL was the
-literal placeholder `[PASTE ACTUAL GITHUB ASSET URL]`; the EarthSync releases API
-returned an empty list. Six of seven subsequently supplied split wrappers and
-their chunks match the supplied manifest. Part 03 still fails transfer with the
-32 MiB error, although the manifest expects an 8,388,772-byte wrapper. The six
-verified wrappers are preserved read-only under
-`/workspace/shared/downloads/nasa_space_challenges_parts/`.
-The user-supplied **expected**, not verified, original SHA-256 is
-`241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788`.
-The split manifest/helper source were read and the available chunks hashed;
-the original archive's content has not been opened, executed, accepted or imported.
-Its Myanmar profiles, Rust/Python code, binaries, raw provider bodies and assets
-remain unreviewed. Do not confuse the older PR #11 inventory with this archive.
-Per the user's integrity gate, full archive audit resumes only after SHA-256
-verification succeeds. A mismatch must stop archive processing.
+Branch `fix/earthsync-science-audit-v1` starts at final 7H
+`a7c33cc6b58703501bbba0ceba1bad1d6d42004b`. Other milestone pins are in
+[the source manifest](evidence/source-manifest.json). No main FastAPI app,
+Flutter router, central database integration or 7N branch was overwritten.
 
-The available PR #11 archive was independently inventoried before that gate was
-supplied. All 62 original file members were read and hashed without extraction
-or execution; see [inventory](evidence/pr11-inventory.json). This establishes
-byte identity with PR #11, not identity with the new archive or scientific truth.
+## Verified original archive
 
-- [Confirmed current defects and reproduction](DEFECTS.md)
-- [Historical versus current issue matrix](ISSUE_MATRIX.md)
-- [Crop knowledge quality and original-source checks](CROP_KNOWLEDGE.md)
-- [Inventory and reuse/rejection decisions](SOURCES.md)
-- [Verification and limitations](VERIFICATION.md)
+The supplied restore helpers were fully read before authorized execution. All
+nine retry segment wrapper/payload hashes, restored part 03, all seven original
+wrapper/payload pairs, and the complete original ZIP were verified.
+
+Original size: **55,057,221 bytes**. Verified SHA-256:
+
+`241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788`
+
+Original: `/workspace/shared/downloads/nasa_space_challenges.zip`, read-only.
+Extracted originals: `/workspace/shared/earthsync-science-original/`, read-only.
+[Integrity receipt](evidence/reassembly-verified.json). The earlier failure record
+in `split-transfer.json` is superseded by this successful receipt.
+
+All **743 members / 600 files** were read, CRC checked and SHA-256 inventoried.
+The **487 generated build files** were rejected as a class and never executed.
+All 113 non-build original files remain byte-identical. Fourteen Rust files,
+two Python scripts, contract JSON/CSV data, metadata/logs, methods, citations,
+tests and asset roles were inspected. Sixty environmental files match PR #11;
+its README/API notes differ. New crop/raw/source artifacts were audited separately.
+
+- [Current defects and fixes](DEFECTS.md)
+- [Contributed historical findings and reproductions](ARCHIVE_FINDINGS.md)
+- [All 20 requested historical/current decisions](ISSUE_MATRIX.md)
+- [Crop source quality and acceptance limits](CROP_KNOWLEDGE.md)
+- [Inventory and reuse/rejection matrix](SOURCES.md)
+- [Tests, provider checks and limitations](VERIFICATION.md)
 - [Precise 7N handoff](HANDOFF_7N.md)
 
-No recommendation eligibility flag, production crop threshold, score, financial
-estimate, irrigation credit or nitrogen/pest benefit was introduced. Passing
-software tests does not independently validate farming advice.
+The modern path has five focused repairs and one isolated 7I handoff patch.
+The archived engine's original 13 tests pass, but 12 new desired-property
+regressions fail against it. No old weighted engine was imported. All 12 Myanmar
+profiles stay in research quarantine, with zero executable rules and
+`recommendation_eligible=false`. Tests do not independently validate farming advice.
+
+Current 7N PR #24 at `530c1e1d` already includes all six modern corrections,
+confirmed by a targeted read-only source comparison. No duplicate application
+is needed. See the handoff and `evidence/7n-release-check.json`. Expanded crop
+research belongs to 7P.

@@ -5,6 +5,18 @@ targets exact final 7H for an independent draft review. It does not merge 7H,
 7I or 7L, and does not edit another worktree, FastAPI application entrypoint,
 Flutter router, central database code or the 7N branch.
 
+## Current 7N release snapshot
+
+A targeted read-only comparison against PR #24 at
+`530c1e1d06c9202dfc1f5d06c659399409b7270f` confirms **all six J01–J06
+corrections already present**. Four scoped files match reviewed audit code exactly;
+7I retains the reviewed coordinate fix and additionally validates returned
+coordinate domains. [Exact hashes and scope](evidence/7n-release-check.json).
+
+These are resolved in this snapshot, not outstanding release bugs. Do not
+cherry-pick or apply patches twice. This is not a full independent 7N runtime
+audit or scientific acceptance. Expanded crop-profile research belongs to 7P.
+
 ## Concrete patch boundaries
 
 1. `server/earthsync/source_validation.py`, `server/earthsync/power.py`,
@@ -19,15 +31,16 @@ Flutter router, central database code or the 7N branch.
    and fallow history to confirmed field for succession independently of the
    rule's `field_only` flag. No ABI/schema changes; preserve existing contracts.
 3. `tools/science_audit/` and `docs/science-audit/`: independent research tooling,
-   source inventory and results. New attached archive acceptance remains blocked.
+   source inventory and results. The original archive is now fully inventoried after checksum verification; scientific acceptance remains separate.
 
 Do not apply the 7H monthly provider changes to 7I's independent daily parser:
-its geometry/calendar/duplicate/hash protections already exist. If 7N retains
-the default 7H monthly history path, that path still needs these fixes.
+its geometry/calendar/duplicate/hash protections already exist. Older unpatched
+7H monthly history deployments need J01–J04; the pinned current 7N path already
+contains them.
 
-**7I does need J06:** apply
-`docs/science-audit/patches/7i-power-coordinate-precision.patch` after the 7I
-provider files exist in the integration tree. It modifies only that provider and
+For an older, unpatched standalone 7I checkout, J06 is supplied as
+`docs/science-audit/patches/7i-power-coordinate-precision.patch`; current 7N
+already includes it. Apply only if absent and after the 7I provider files exist. It modifies only that provider and
 adds `test_science_coordinate_precision.py`. `git apply --check` and `git apply`
 were exercised on a separate exact 7I export; all 85 platform tests then passed
 with the three explicitly opt-in live tests skipped. Unpatched 7I fails its new
@@ -57,18 +70,37 @@ approvals false and executable rule lists empty. Preserve full source sidecars a
 missingness when linking 7I to the final application. No weighted suitability
 engine, market-count finance proxy or automatic nitrogen/pest credit is accepted.
 
-## Outstanding handoff
+## Completed archive handoff
 
-The initial release asset URL was missing. Six subsequently supplied split
-wrappers and their contained chunks now match the manifest, but part 03 still
-fails transfer. The expected original checksum alone is not evidence of integrity.
-Do not integrate any new Myanmar crop profile, Rust implementation, calculation,
-provider CSV or generated asset from it until the complete archive audit is done.
-Do not claim 7J complete or independently verified farming advice from the test
-results in this draft.
+Original archive reconstruction and full SHA-256 verification succeeded. All 600
+files were inventoried; 487 generated build files were rejected and never run.
+All 113 extracted source/data originals remain unchanged. Sixty environmental
+files match PR #11; 12 Myanmar crop assertions, six raw POWER responses, source,
+methods and tests were independently reviewed.
 
-Forecast live acceptance remains a separate source-contract task. Generic v0.3
-issue-date provenance cannot represent verified run identity and subdaily run
-freshness. Keep current adapter rejection/unavailability behavior until an exact
-model/run identity interface and scientific acceptance are agreed. No change to
-the main app or central integration is included here.
+Do not integrate contributed contexts, raw CSVs, old engine or crop rules into
+live workflows. The old engine passes its 13 provided tests but fails all 12 new
+scientific acceptance probes. Its five-year comparison, baseline planting month,
+rotation deduplication, unverified support, irrigation, N and income behavior are
+reproduced in `ARCHIVE_FINDINGS.md` and `evidence/historical-regressions.txt`.
+
+`data/research/science-audit-v1/myanmar-reference-only.json` is deliberately
+outside the live catalog and uses a distinct research schema. All 12 profiles
+are recommendation/candidate-ineligible, with zero executable rules. Preserve
+these guards, original citations, cached/unavailable source states and missingness.
+The independent research validators reject shifted/annual month labels, conflicting
+months, unit/statistic drift and incomplete year-month coverage. Do not use
+calendar-normal arithmetic as a farm measurement or crop water sufficiency claim.
+
+Forecast acceptance remains a separate source-contract task. Generic v0.3 issue
+**date** cannot represent verified run identity and subdaily freshness. Preserve
+current adapter rejection/unavailability until an exact model/run interface and
+scientific applicability are accepted. Stage Kc, independent reference ET0,
+root-zone storage, effective rainfall and delivered irrigation are still required
+for a real irrigation assessment. No main app or central integration change is
+included in this audit.
+
+Source-review limits are explicit: 11 directly readable ECOCROP sheets and one
+cached-only sunflower reference; World Bank original report cover dated June 2019;
+FAO handbook full-text access unavailable. No missing or unavailable source was
+promoted, and no independently verified farming advice is claimed.

@@ -1,5 +1,17 @@
 # Confirmed defects
 
+## Current 7N release snapshot
+
+A targeted read-only comparison against PR #24 at
+`530c1e1d06c9202dfc1f5d06c659399409b7270f` confirms **all six J01–J06
+corrections already present**. Four scoped files match reviewed audit code exactly;
+7I retains the reviewed coordinate fix and additionally validates returned
+coordinate domains. [Exact hashes and scope](evidence/7n-release-check.json).
+
+These are resolved in this snapshot, not outstanding release bugs. Do not
+cherry-pick or apply patches twice. This is not a full independent 7N runtime
+audit or scientific acceptance. Expanded crop-profile research belongs to 7P.
+
 Severity describes potential scientific impact, not a security rating. Reproduction
 inputs are explicitly fictional NASA-shaped responses or synthetic Rust fixtures.
 They establish software behavior, not field accuracy. No archive-derived live
@@ -66,5 +78,6 @@ POWER lineage only. Preserve those gates. Do not represent generic Rust forecast
 arithmetic as source-verified live forecast acceptance. A future verified forecast
 interface needs explicit model/run/version/time identity and a reviewed adapter.
 
-The new archive may contain additional defects. None is claimed confirmed until
-its original bytes pass the user's checksum gate and are reviewed.
+The new archive has passed its complete checksum gate and full inventory.
+Its separately confirmed historical defects and negative regressions are in
+[ARCHIVE_FINDINGS](ARCHIVE_FINDINGS.md); they were not presumed to persist in v0.3.
