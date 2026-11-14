@@ -35,3 +35,11 @@ The public JSON tests load `tests/fixtures/synthetic_field.json`: all observatio
 and rotation sequences there are explicitly synthetic, not recommendations.
 See [inspection and next steps](../docs/ENGINE_KICKOFF.md) and
 [OpenFarm research](../docs/OPENFARM_RESEARCH.md).
+
+## Seasonal statistics (Milestone 2)
+
+The separate `seasonal` module supports inclusive full-month windows across years,
+independent missingness and calendar-day weighting of declared complete monthly
+means. It does not change the existing field-analysis JSON. See
+[the seasonal contract](../docs/SEASONAL_CLIMATE.md) and the explicitly hypothetical
+`tests/fixtures/synthetic_season.json`. No network or extra dependencies required.
