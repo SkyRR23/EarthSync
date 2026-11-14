@@ -301,3 +301,13 @@ def test_wire_contract_fixture_roundtrips_and_retrieves_original_citation():
     assert response.model_dump(mode="json") == json.loads(
         path.with_name("response.v1.json").read_text()
     )
+
+
+def test_json_schemas_match_the_proposed_models():
+    from earthsync.assistant.models import ChatResponse
+
+    directory = Path(__file__).parents[3] / "docs/assistant"
+    for model, name in [(ChatRequest, "request"), (ChatResponse, "response")]:
+        assert model.model_json_schema() == json.loads(
+            (directory / f"{name}.schema.json").read_text()
+        )
