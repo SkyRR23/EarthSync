@@ -150,3 +150,23 @@ enter your own exact growing dates. The adapter preserves source desk-review
 status and missing inputs; Rust reports insufficient information. No regional
 suitability, yield, planting-date recommendation, diagnosis or ranked rotation is
 established by this software demonstration.
+
+## Re-run interactive browser acceptance
+
+Start the main unified app first, using a dedicated private test workspace. The
+runner creates a labeled test farm/photo and deletes its uploaded photo after
+the CRUD checks. Install the separate browser-test dependency (not required to
+run the backend), then point it at an installed Chromium/Chrome executable:
+
+```sh
+python -m pip install playwright==1.65.2
+python -u scripts/browser_7h.py --base-url http://127.0.0.1:8080 --token-file /absolute/private/workspace-token.txt --chromium /absolute/path/to/chromium
+```
+
+The executable defaults to `/usr/bin/chromium` on Linux. On Windows, use your
+Chrome/Chromium `.exe` path and a private token-file path. Keep credentials out
+of command arguments: the argument is the token **file path**, never its value.
+The runner explicitly aborts one climate request to check outage/recovery; all
+other app responses come from the running services and real compiled Rust.
+Provider availability can make this live acceptance run fail. Read the failure
+and report it; do not substitute a captured response to make the run pass.

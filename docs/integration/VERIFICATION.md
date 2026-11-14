@@ -8,8 +8,10 @@ on the isolated integration branch; no source PR or `main` is modified.
 
 | Check | Observed result |
 | --- | --- |
-| Combined Python unit/API/compiled-Rust contracts | 266 passed, 2 opt-in live checks skipped; one existing Starlette/AnyIO deprecation warning |
-| Fresh Python environment from `server/requirements.lock` | 30 pinned packages installed, dependency compatibility passed, same 266 passed / 2 skipped |
+| Combined Python unit/API/compiled-Rust contracts | 270 passed, none skipped, with Rust activated; one existing Starlette/AnyIO deprecation warning |
+| Fresh Python environment from `server/requirements.lock` | 30 pinned packages installed, dependency compatibility passed, same 270 passed / none skipped |
+| Remote backend matrix | Windows and Ubuntu, Python 3.12 and 3.13: all four jobs passed, 270 tests each |
+| Remote component/application CI | All six workflows passed for the tested code commit; [receipt](evidence/ci-final.json) |
 | Rust engine, including legacy/integration/v0.2/v0.3 | 111 passed |
 | Native bridge Rust tests | 6 passed, including real v0.3 through stable FRB ABI |
 | Crop catalog validation | 39 passed; 8 profiles / 13 sources; eligibility false |
@@ -115,7 +117,7 @@ missed:
   unsent text for evidence-only changes while invalidating old-context answers.
 
 One browser failure dump initially included the generated local test token.
-That token was rotated, the diagnostic removed, and the runner now redacts its
+That token was rotated, failure artifacts removed, and the runner now redacts its
 workspace token from failure text. No production/user credential was used. Tokens
 are absent from committed logs, application assets and evidence artifacts.
 
@@ -147,9 +149,30 @@ Remote CI exposed a test-reporting defect: the over-limit photo fixture became a
 including 10 MB single lines. Explicit descriptive parameter IDs retain the exact
 large payload and assertions while bounding the reports. The local reproduction
 and the complete suite pass with short IDs. A 120-second traceback watchdog keeps
-future stalls diagnostic rather than silently skipping tests. Remote matrix
-results are still being checked; passing local Linux tests do not establish a
-Windows result.
+future stalls diagnostic rather than silently skipping tests. The rerun made
+the actual Windows failures accessible: all 33
+failures were CP1252 decoding errors in the assistant's UTF-8 locale resources.
+The loader now specifies UTF-8; English and Spanish regression tests simulate the
+Windows default without changing the process locale or setting `PYTHONUTF8` to
+hide the problem. The JSON fixture endpoints and smoke report also explicitly
+use UTF-8. The next run isolated one remaining wire-fixture read with the same
+implicit encoding; all assistant wire/schema fixture reads now also specify
+UTF-8. [Failed-run receipts](evidence/ci-regressions.json) preserve both observed
+results and fixes instead of relabeling them as passes.
+
+The corrected [backend matrix run](https://github.com/SkyRR23/EarthSync/actions/runs/43594600243)
+for commit `27f67cb43694c09d40d31a488f2d8d3e89ebd64f` passed on **Windows and
+Ubuntu with Python 3.12 and 3.13**. Each job reports **270 passed**, with no test
+skips. This verifies the Windows backend tests and compiled Rust contracts; it
+does not verify an interactive Windows launcher, ACL configuration or browser.
+
+The environment reports the saved unrestricted network policy as enforced and
+current; no pending restart was indicated. The expected GitHub Actions job-log
+endpoint was checked directly and returned HTTPS redirects to Azure result
+storage (including `productionresultssa16.blob.core.windows.net`). Direct blob
+downloads still received proxy 403s. Once the bounded run completed, both the
+GitHub integration log tool and the workflow archive successfully returned its
+Windows diagnostics. No TLS verification or security setting was weakened.
 
 ## Scientific and security limitations
 
@@ -202,6 +225,7 @@ cargo build --release --locked --manifest-path app/rust/Cargo.toml
 (cd app && flutter build web --no-web-resources-cdn --pwa-strategy=none --no-wasm-dry-run)
 # Unified service running at the requested URL:
 (cd app && flutter test test/web_engine_test.dart --dart-define=RUN_WEB_DEMO=true --dart-define=WEB_DEMO_URL=http://127.0.0.1:8080/ --reporter expanded)
+(cd app && flutter test test/native_bridge_test.dart test/web_engine_test.dart --dart-define=RUN_LIVE_NASA=true --dart-define=RUN_WEB_DEMO=true --dart-define=BACKEND_URL=http://127.0.0.1:8080 --dart-define=WEB_DEMO_URL=http://127.0.0.1:8080/ --reporter expanded)
 python -u scripts/browser_7h.py --base-url http://127.0.0.1:8080 --token-file /absolute/private/workspace-token.txt
 (cd app && flutter build apk --debug --dart-define=BACKEND_URL=http://127.0.0.1:8080)
 git diff --check
@@ -211,5 +235,8 @@ Local executions used `/workspace/.earthsync-python/bin/python`, a separate clea
 venv at `/tmp/earthsync-7h-clean-python`, and service ports **8097/8099** to avoid
 unrelated running tasks. Flutter/Rust caches lived under `/workspace` because the
 home directory is read-only. Tool-specific analytics/cache environment settings
-were used without changing HOME. Test skip counts refer to opt-in network checks;
-actual live verification was run separately as described above.
+were used without changing HOME. Flutter skip counts refer to opt-in network checks;
+actual live verification was run separately as described above. Final Python runs
+activate Cargo and include both external-consumer Rust compilation checks with no
+skips. Earlier Python runs without Cargo on PATH skipped those two checks; they
+were not live-provider tests.
