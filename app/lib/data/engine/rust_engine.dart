@@ -12,11 +12,15 @@ import 'engine_gateway.dart';
 /// Fetches climate from Python, then calls the existing on-device JSON bridge.
 /// Synthetic mode is an explicit developer choice, never an outage fallback.
 class RustEngine implements EngineGateway {
-  RustEngine({NasaPowerClient? climateClient, this.window = const HistoricalWindow()})
-      : _climateClient = climateClient ?? NasaPowerClient();
+  RustEngine({
+    NasaPowerClient? climateClient,
+    this.window = const HistoricalWindow(),
+  }) : _climateClient = climateClient ?? NasaPowerClient();
   final NasaPowerClient _climateClient;
   final HistoricalWindow window;
-  static const syntheticDemo = String.fromEnvironment('CLIMATE_MODE', defaultValue: 'live') == 'synthetic_demo';
+  static const syntheticDemo =
+      String.fromEnvironment('CLIMATE_MODE', defaultValue: 'live') ==
+      'synthetic_demo';
   static bool _ready = false;
 
   /// Call once before runApp when ENGINE=rust.
@@ -36,9 +40,14 @@ class RustEngine implements EngineGateway {
     }
     if (!syntheticDemo) {
       final evidence = await _climateClient.fetch(input, window);
-      return analyzeNasaEvidence(input: input, window: window, evidence: evidence,
-        analyzeIntegration: (request) => rust.analyzeIntegrationJson(requestJson: request),
-        retrievalMode: 'live_http');
+      return analyzeNasaEvidence(
+        input: input,
+        window: window,
+        evidence: evidence,
+        analyzeIntegration: (request) =>
+            rust.analyzeIntegrationJson(requestJson: request),
+        retrievalMode: 'live_http',
+      );
     }
     final farmer = jsonEncode({
       'current_crop': input.currentCrop,

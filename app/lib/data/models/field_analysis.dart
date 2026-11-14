@@ -309,7 +309,12 @@ class Reference {
 }
 
 class DataQuality {
-  const DataQuality({this.isDemo = false, this.fetchedAt, this.stale = false, this.syntheticCropReferences = false});
+  const DataQuality({
+    this.isDemo = false,
+    this.fetchedAt,
+    this.stale = false,
+    this.syntheticCropReferences = false,
+  });
   final bool isDemo;
   final bool syntheticCropReferences;
   final DateTime? fetchedAt;

@@ -22,7 +22,8 @@ abstract final class Crops {
     'fallow': 'Nothing (fallow)',
   };
 
-  static String label(String? id) => id == null || id.trim().isEmpty ? 'Unknown crop' : options[id] ?? id;
+  static String label(String? id) =>
+      id == null || id.trim().isEmpty ? 'Unknown crop' : options[id] ?? id;
 }
 
 class FarmerInput {

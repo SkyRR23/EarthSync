@@ -62,6 +62,8 @@ mock mode remains demo-only. No caching or automatic synthetic fallback was adde
   Synthetic crop profiles retain a separate visible warning even with modeled
   climate. Demo climate is always labeled; live errors offer only an explicit
   user-selected demo action or clearly labeled last successful session result.
+  Superseded in-flight results cannot overwrite a newer field analysis. Requests
+  are bounded by a 90-second client timeout; no request-abort UI is added.
 
 ## Necessary compatibility extension and remaining review
 

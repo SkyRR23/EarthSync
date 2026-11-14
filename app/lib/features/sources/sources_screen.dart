@@ -32,10 +32,16 @@ class SourcesScreen extends ConsumerWidget {
                 ),
                 ClimateProvenance(analysis: a),
                 if (a.trace != null) ...[
-                  ExpansionTile(title: const Text('Exact backend response and provenance'),
-                    children: [SelectableText(a.trace!.backendResponseJson)]),
-                  ExpansionTile(title: const Text('Retained farmer answers (not all used by Rust)'),
-                    children: [SelectableText(a.trace!.farmerInputJson)]),
+                  ExpansionTile(
+                    title: const Text('Exact backend response and provenance'),
+                    children: [SelectableText(a.trace!.backendResponseJson)],
+                  ),
+                  ExpansionTile(
+                    title: const Text(
+                      'Retained farmer answers (not all used by Rust)',
+                    ),
+                    children: [SelectableText(a.trace!.farmerInputJson)],
+                  ),
                 ],
                 const FsSectionTitle('Evidence types'),
                 for (final type in EvidenceType.values)

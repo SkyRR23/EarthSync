@@ -77,7 +77,10 @@ class ReviewScreen extends ConsumerWidget {
       child: Card(
         child: Column(
           children: [
-            const Padding(padding: EdgeInsets.all(FsSpace.md), child: HistoricalWindowSelector()),
+            const Padding(
+              padding: EdgeInsets.all(FsSpace.md),
+              child: HistoricalWindowSelector(),
+            ),
             for (final (label, value, route) in rows)
               ListTile(
                 minTileHeight: FsSpace.minTouch + 8,

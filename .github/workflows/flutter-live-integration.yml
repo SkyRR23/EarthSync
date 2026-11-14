@@ -3,8 +3,6 @@ name: Flutter live integration
 on:
   push:
     branches: [feat/flutter-live-nasa-integration]
-  pull_request:
-    paths: ["app/**", "engine/**", ".github/workflows/flutter-live-integration.yml"]
   workflow_dispatch:
 
 permissions:
@@ -47,7 +45,8 @@ jobs:
         run: flutter analyze --no-fatal-infos
       - name: Flutter widget, adapter and real native bridge tests (offline)
         working-directory: app
-        run: flutter test
+        timeout-minutes: 4
+        run: flutter test --reporter expanded
       - uses: actions/setup-python@v5
         if: github.event_name == 'push'
         with:

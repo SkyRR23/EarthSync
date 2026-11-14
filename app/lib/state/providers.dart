@@ -12,10 +12,14 @@ const _engineDefine = String.fromEnvironment('ENGINE');
 
 /// `rust` (team engine via bridge) on phones by default; `mock` on web,
 /// where the Rust bridge is not built. Override with --dart-define=ENGINE=...
-final kEngine = _engineDefine.isNotEmpty ? _engineDefine : (kIsWeb ? 'mock' : 'rust');
+final kEngine = _engineDefine.isNotEmpty
+    ? _engineDefine
+    : (kIsWeb ? 'mock' : 'rust');
 
 final engineProvider = Provider<EngineGateway>(
-  (ref) => kEngine == 'rust' ? RustEngine(window: ref.watch(historicalWindowProvider)) : MockEngine(),
+  (ref) => kEngine == 'rust'
+      ? RustEngine(window: ref.watch(historicalWindowProvider))
+      : MockEngine(),
 );
 
 class HistoricalWindowNotifier extends Notifier<HistoricalWindow> {
@@ -23,7 +27,11 @@ class HistoricalWindowNotifier extends Notifier<HistoricalWindow> {
   HistoricalWindow build() => const HistoricalWindow();
   void setWindow(HistoricalWindow window) => state = window;
 }
-final historicalWindowProvider = NotifierProvider<HistoricalWindowNotifier, HistoricalWindow>(HistoricalWindowNotifier.new);
+
+final historicalWindowProvider =
+    NotifierProvider<HistoricalWindowNotifier, HistoricalWindow>(
+      HistoricalWindowNotifier.new,
+    );
 
 // ---------------------------------------------------------------------------
 // Questionnaire draft
@@ -179,13 +187,14 @@ class AnalysisNotifier extends Notifier<AnalysisState> {
 
   /// Fallback for outages: the bundled demo fixture (master plan §12, H28).
   Future<void> runDemo() async {
-    ++_generation;
+    final generation = ++_generation;
     state = const AnalysisRunning();
     try {
-      state = AnalysisReady(
-        await MockEngine(delay: Duration.zero).analyzeField(_demoInput),
-      );
+      final result = await MockEngine(delay: Duration.zero).analyzeField(_demoInput);
+      if (generation != _generation) return;
+      state = AnalysisReady(result);
     } on EngineError catch (e) {
+      if (generation != _generation) return;
       state = AnalysisFailed(e);
     }
   }

@@ -9,7 +9,10 @@ import '../models/integration_trace.dart';
 /// agricultural rules are added here.
 ///
 /// Throws [EngineError] for `status: "error"` or unreadable output.
-FieldAnalysis fieldAnalysisFromEnvelope(String envelopeJson, {IntegrationTrace? trace}) {
+FieldAnalysis fieldAnalysisFromEnvelope(
+  String envelopeJson, {
+  IntegrationTrace? trace,
+}) {
   final Map<String, dynamic> env;
   try {
     env = jsonDecode(envelopeJson) as Map<String, dynamic>;
@@ -112,19 +115,33 @@ FieldAnalysis _fromData(Map<String, dynamic> d, IntegrationTrace? trace) {
   // Present every selected month, including entirely absent observations.
   // Values are still supplied/calculated by the backend and Rust, never filled.
   final observations = _list(seasonal['observations']);
-  final byPeriod = {for (final o in observations)
-    '${o['period']['year']}-${o['period']['month']}': o};
+  final byPeriod = {
+    for (final o in observations)
+      '${o['period']['year']}-${o['period']['month']}': o,
+  };
   final start = window!['start'] as Map<String, dynamic>;
   final end = window['end'] as Map<String, dynamic>;
   final months = <MonthlyClimate>[];
-  for (var index = (start['year'] as int) * 12 + (start['month'] as int) - 1;
-      index <= (end['year'] as int) * 12 + (end['month'] as int) - 1; index++) {
+  for (
+    var index = (start['year'] as int) * 12 + (start['month'] as int) - 1;
+    index <= (end['year'] as int) * 12 + (end['month'] as int) - 1;
+    index++
+  ) {
     final year = index ~/ 12;
     final month = index % 12 + 1;
     final o = byPeriod['$year-$month'];
-    months.add(MonthlyClimate(month: month, year: year,
-      rainMm: o?['rainfall_complete'] == true ? (o?['rainfall_mm'] as num?)?.toDouble() : null,
-      tempMeanC: o?['temperature_complete'] == true ? (o?['mean_temperature_c'] as num?)?.toDouble() : null));
+    months.add(
+      MonthlyClimate(
+        month: month,
+        year: year,
+        rainMm: o?['rainfall_complete'] == true
+            ? (o?['rainfall_mm'] as num?)?.toDouble()
+            : null,
+        tempMeanC: o?['temperature_complete'] == true
+            ? (o?['mean_temperature_c'] as num?)?.toDouble()
+            : null,
+      ),
+    );
   }
 
   final dataGaps = <DataGap>[
@@ -204,9 +221,11 @@ FieldAnalysis _fromData(Map<String, dynamic> d, IntegrationTrace? trace) {
   // Preserve Rust scenario order, including a baseline that is not first.
 
   final provenance = trace?.provenance;
-  final retrievals = provenance?['source_requests'] as List<dynamic>? ?? const [];
-  final retrievedAt = retrievals.isEmpty ? null :
-      DateTime.tryParse(retrievals.first['retrieved_at'] as String? ?? '');
+  final retrievals =
+      provenance?['source_requests'] as List<dynamic>? ?? const [];
+  final retrievedAt = retrievals.isEmpty
+      ? null
+      : DateTime.tryParse(retrievals.first['retrieved_at'] as String? ?? '');
   final references = <Reference>[
     Reference(
       id: _envRefId,
@@ -217,7 +236,8 @@ FieldAnalysis _fromData(Map<String, dynamic> d, IntegrationTrace? trace) {
       note: [
         if (meta['dataset'] != null) 'Dataset: ${meta['dataset']}',
         if (meta['data_kind'] != null) 'Kind: ${meta['data_kind']}',
-        if (retrievedAt != null) 'Retrieved: ${retrievedAt.toUtc().toIso8601String()}',
+        if (retrievedAt != null)
+          'Retrieved: ${retrievedAt.toUtc().toIso8601String()}',
       ].join(' · '),
     ),
     for (final s in _list(rotations['sources']))
@@ -239,7 +259,9 @@ FieldAnalysis _fromData(Map<String, dynamic> d, IntegrationTrace? trace) {
     location: FieldLocation(
       latitude: (envr['latitude'] as num).toDouble(),
       longitude: (envr['longitude'] as num).toDouble(),
-      name: meta['data_kind'] == 'hypothetical' ? 'Synthetic demo field' : field['field_id'] as String?,
+      name: meta['data_kind'] == 'hypothetical'
+          ? 'Synthetic demo field'
+          : field['field_id'] as String?,
     ),
     climateSummary: ClimateSummary(
       months: months,
@@ -263,11 +285,17 @@ FieldAnalysis _fromData(Map<String, dynamic> d, IntegrationTrace? trace) {
     ],
     dataGaps: dataGaps,
     references: references,
-    dataQuality: DataQuality(isDemo: synthetic, fetchedAt: retrievedAt,
-      syntheticCropReferences: rotations['contains_synthetic_references'] == true),
+    dataQuality: DataQuality(
+      isDemo: synthetic,
+      fetchedAt: retrievedAt,
+      syntheticCropReferences:
+          rotations['contains_synthetic_references'] == true,
+    ),
     notices: [
-      if (trace != null) 'Previous crops, planting month and priorities are retained as farmer answers; Rust climate calculations do not use them.',
-      if (trace != null) 'Crop suitability is unknown. No source-backed crop constraints or candidate rotations were supplied.',
+      if (trace != null)
+        'Previous crops, planting month and priorities are retained as farmer answers; Rust climate calculations do not use them.',
+      if (trace != null)
+        'Crop suitability is unknown. No source-backed crop constraints or candidate rotations were supplied.',
       for (final n in _list(d['notices'])) n['message'] as String? ?? '',
     ],
   );
