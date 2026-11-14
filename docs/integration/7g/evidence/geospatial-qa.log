@@ -1,0 +1,36 @@
+.......................                                                  [100%]
+=============================== warnings summary ===============================
+tests/platform_v1/test_geospatial_7g.py::test_new_api_jobs_outage_and_ownership_boundary
+  /workspace/.earthsync-7g-private/venv/lib/python3.12/site-packages/starlette/testclient.py:45: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+tests/platform_v1/test_satellite_soil.py: 13 warnings
+  /workspace/.earthsync-7g-private/venv/lib/python3.12/site-packages/rasterio/transform.py:178: PendingDeprecationWarning: Use `@` matmul instead of `*` mul operator for matrix multiplication
+    return Affine.translation(west, north) * Affine.scale(xsize, -ysize)
+
+tests/platform_v1/test_satellite_soil.py: 12 warnings
+  /workspace/EarthSync-7G/server/tests/platform_v1/test_satellite_soil.py:50: PendingDeprecationWarning: Use `@` matmul instead of `*` mul operator for matrix multiplication
+    x, y = transform * (1.5, 1.5)
+
+tests/platform_v1/test_satellite_soil.py::test_tiny_polygon_not_field_average
+  /workspace/EarthSync-7G/server/tests/platform_v1/test_satellite_soil.py:98: PendingDeprecationWarning: Use `@` matmul instead of `*` mul operator for matrix multiplication
+    x, y = tf * (1.5, 1.5)
+
+tests/platform_v1/test_satellite_soil.py::test_tiny_polygon_not_field_average
+tests/platform_v1/test_satellite_soil.py::test_tiny_polygon_not_field_average
+tests/platform_v1/test_satellite_soil.py::test_tiny_polygon_not_field_average
+tests/platform_v1/test_satellite_soil.py::test_tiny_polygon_not_field_average
+tests/platform_v1/test_satellite_soil.py::test_tiny_polygon_not_field_average
+  /workspace/.earthsync-7g-private/venv/lib/python3.12/site-packages/rasterio/features.py:430: PendingDeprecationWarning: Use `@` matmul instead of `*` mul operator for matrix multiplication
+    return _bounds(geom, north_up=north_up, transform=transform)
+
+tests/platform_v1/test_satellite_soil.py::test_tiny_polygon_not_field_average
+  /workspace/.earthsync-7g-private/venv/lib/python3.12/site-packages/rasterio/windows.py:360: PendingDeprecationWarning: Use `@` matmul instead of `*` mul operator for matrix multiplication
+    x, y = transform * (window.col_off or 0.0, window.row_off or 0.0)
+
+tests/platform_v1/test_satellite_soil.py::test_tiny_polygon_not_field_average
+  /workspace/.earthsync-7g-private/venv/lib/python3.12/site-packages/rasterio/windows.py:361: PendingDeprecationWarning: Use `@` matmul instead of `*` mul operator for matrix multiplication
+    return Affine.translation(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+23 passed, 34 warnings in 0.96s

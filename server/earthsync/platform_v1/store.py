@@ -90,6 +90,7 @@ class Store:
             "decisions",
             "history",
             "artifacts",
+            "observations",
             "audit",
         }:
             raise ValueError("Unknown repository table")
@@ -342,3 +343,48 @@ class Store:
                     (owner, str(farm_id)),
                 )
             ]
+
+    def intelligence(self, owner, farm_id):
+        """Bounded saved source jobs; original retrieval times survive restart."""
+        self.farm(owner, farm_id)
+        with self.connection() as db:
+            rows = db.execute(
+                "SELECT id,kind,status,result,error,updated FROM jobs WHERE owner=? "
+                "AND kind IN ('soil_map','optical_discovery','forecast') "
+                "AND json_extract(request,'$.farm_id')=? ORDER BY created DESC LIMIT 30",
+                (owner, str(farm_id)),
+            ).fetchall()
+        return [
+            {
+                **dict(row),
+                "result": json.loads(row["result"]) if row["result"] else None,
+            }
+            for row in rows
+        ]
+
+    def observations(self, owner, farm_id):
+        with self.connection() as db:
+            self.farm(owner, farm_id, db)
+            rows = db.execute(
+                "SELECT id,document FROM observations WHERE farm_id=? AND owner=? ORDER BY created DESC LIMIT 100",
+                (str(farm_id), owner),
+            ).fetchall()
+        return [{"id": row[0], **json.loads(row[1])} for row in rows]
+
+    def save_observation(self, owner, farm_id, value):
+        ident = str(uuid4())
+        document = {
+            **value.model_dump(mode="json"),
+            "data_type": "farmer_reported",
+            "independently_verified": False,
+        }
+        with self.connection() as db:
+            db.execute("BEGIN IMMEDIATE")
+            self.farm(owner, farm_id, db)
+            self._quota(db, "observations")
+            db.execute(
+                "INSERT INTO observations VALUES (?,?,?,?,?)",
+                (ident, str(farm_id), owner, encoded(document), time.time()),
+            )
+            self._audit(db, owner, ident, "observation.reported")
+        return {"id": ident, **document}

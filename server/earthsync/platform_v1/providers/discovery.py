@@ -11,6 +11,17 @@ from ..errors import PlatformError
 from ..models import Contract, FarmInput
 
 ENDPOINT = "https://cmr.earthdata.nasa.gov/search/granules.umm_json"
+# Verified from CMR collections.json, receipt in docs/integration/7g/evidence.
+COLLECTIONS = {
+    "HLSS30": (
+        "C2021957295-LPCLOUD",
+        "HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30m v2.0",
+    ),
+    "HLSL30": (
+        "C2021957657-LPCLOUD",
+        "HLS Landsat Operational Land Imager Surface Reflectance and TOA Brightness Daily Global 30m v2.0",
+    ),
+}
 
 
 class DiscoveryQuery(Contract):
@@ -42,7 +53,20 @@ def read_candidates(capture, query):
         for item in items:
             value = item["umm"]
             ref = value["CollectionReference"]
-            if ref["ShortName"] != query.product or ref["Version"] != "2.0":
+            concept, title = COLLECTIONS[query.product]
+            actual_concept = item.get("meta", {}).get("collection-concept-id")
+            if actual_concept is not None and actual_concept != concept:
+                raise PlatformError("UNSUPPORTED_PRODUCT", 502)
+            if "ShortName" in ref or "Version" in ref:
+                accepted = (
+                    ref.get("ShortName") == query.product
+                    and ref.get("Version") == "2.0"
+                )
+            else:
+                # Real UMM granules currently return only EntryTitle; require
+                # the exact independently verified concept identity as well.
+                accepted = actual_concept == concept and ref.get("EntryTitle") == title
+            if not accepted:
                 raise PlatformError("UNSUPPORTED_PRODUCT", 502)
             temporal = value["TemporalExtent"]
             date_string = (

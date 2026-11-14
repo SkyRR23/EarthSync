@@ -266,3 +266,40 @@ class HistoryInput(Contract):
         if self.fallow and self.crop_id is not None:
             raise ValueError("Fallow is distinct from a crop")
         return self
+
+
+class ObservationInput(Contract):
+    """Farmer reports; never independently verified crop or soil evidence."""
+
+    observed_on: CalendarDate
+    crop_name: str | None = Field(default=None, min_length=1, max_length=150)
+    planting_on: CalendarDate | None = None
+    growth_stage: Literal[
+        "unknown",
+        "establishment",
+        "vegetative",
+        "flowering",
+        "fruiting",
+        "maturing",
+        "harvested",
+    ] = "unknown"
+    irrigation: Literal["unknown", "none", "rain_only", "supplemental", "regular"] = (
+        "unknown"
+    )
+    drainage: Literal[
+        "unknown",
+        "standing_water_reported",
+        "drains_freely_reported",
+        "poor_drainage_reported",
+    ] = "unknown"
+    notes: str = Field(min_length=1, max_length=2000)
+
+    @model_validator(mode="after")
+    def dates(self):
+        if self.observed_on > CalendarDate.today() or (
+            self.planting_on and self.planting_on > self.observed_on
+        ):
+            raise ValueError(
+                "Report dates must be historical; planting cannot follow observation"
+            )
+        return self

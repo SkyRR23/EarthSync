@@ -1,0 +1,102 @@
+{
+  "passed": [
+    "Draw four real map vertices",
+    "Undo last vertex",
+    "Enter an explicit boundary corner through accessible coordinate fields",
+    "Validate boundary and calculate approximate area",
+    "Save, reopen and cancel editing without losing boundary",
+    "Select and move a vertex; undo and cancel",
+    "Switch to dated NASA true-color satellite mode",
+    "Withhold hybrid labels after verified provider failures",
+    "Persist exact confirmed polygon in private SQLite",
+    "Retrieve real SoilGrids pH and render native cells with legend",
+    "Retrieve real NOAA forecast with model and valid timestamps",
+    "Persist a dated farmer report with unknown context",
+    "Reload saved source snapshots without new provider calls",
+    "Render farm intelligence at mobile width"
+  ],
+  "browser_errors": [],
+  "tile_responses": [
+    {
+      "status": 200,
+      "url": "https://tile.openstreetmap.org/15/7863/12158.png"
+    },
+    {
+      "status": 200,
+      "url": "https://tile.openstreetmap.org/15/7863/12160.png"
+    },
+    {
+      "status": 200,
+      "url": "https://tile.openstreetmap.org/15/7859/12160.png"
+    },
+    {
+      "status": 200,
+      "url": "https://tile.openstreetmap.org/15/7862/12161.png"
+    },
+    {
+      "status": 200,
+      "url": "https://tile.openstreetmap.org/15/7859/12158.png"
+    },
+    {
+      "status": 200,
+      "url": "https://tile.openstreetmap.org/15/7862/12158.png"
+    },
+    {
+      "status": 200,
+      "url": "https://tile.openstreetmap.org/15/7862/12159.png"
+    },
+    {
+      "status": 200,
+      "url": "https://tile.openstreetmap.org/15/7859/12161.png"
+    },
+    {
+      "status": 200,
+      "url": "https://tile.openstreetmap.org/15/7862/12160.png"
+    },
+    {
+      "status": 200,
+      "url": "https://tile.openstreetmap.org/15/7863/12161.png"
+    },
+    {
+      "status": 200,
+      "url": "https://tile.openstreetmap.org/15/7863/12159.png"
+    },
+    {
+      "status": 200,
+      "url": "https://tile.openstreetmap.org/15/7861/12159.png"
+    },
+    {
+      "status": 200,
+      "url": "https://tile.openstreetmap.org/15/7861/12160.png"
+    },
+    {
+      "status": 200,
+      "url": "https://tile.openstreetmap.org/15/7861/12158.png"
+    },
+    {
+      "status": 200,
+      "url": "https://tile.openstreetmap.org/15/7860/12161.png"
+    },
+    {
+      "status": 200,
+      "url": "https://tile.openstreetmap.org/15/7861/12161.png"
+    },
+    {
+      "status": 200,
+      "url": "https://tile.openstreetmap.org/15/7860/12158.png"
+    },
+    {
+      "status": 200,
+      "url": "https://tile.openstreetmap.org/15/7860/12160.png"
+    },
+    {
+      "status": 200,
+      "url": "https://tile.openstreetmap.org/15/7860/12159.png"
+    },
+    {
+      "status": 200,
+      "url": "https://tile.openstreetmap.org/15/7859/12159.png"
+    }
+  ],
+  "test_scoped_ignore_https_errors": true
+}
