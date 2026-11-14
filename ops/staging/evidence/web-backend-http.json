@@ -1,0 +1,11 @@
+{
+  "scope": "Existing 7H backend HTTP only; no Flutter build or rendered UI claim",
+  "health": "PASS",
+  "photo_no_token_denied": "PASS",
+  "photo_private_token_accepted": "PASS",
+  "assistant_with_real_persisted_NASA_context": "PASS",
+  "assistant_claim_count": 3,
+  "source_count": 3,
+  "unknown_api_not_static_html": "PASS",
+  "frontend_browser": "BLOCKED: Flutter SDK unavailable"
+}
