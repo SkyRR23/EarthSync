@@ -1,0 +1,15 @@
+MAP {'x': 1044, 'y': 386, 'width': 48, 'height': 48} 752 566
+PASS Draw four real map vertices
+PASS Undo last vertex
+PASS Enter an explicit boundary corner through accessible coordinate fields
+PASS Validate boundary and calculate approximate area
+PASS Save, reopen and cancel editing without losing boundary
+PASS Select and move a vertex; undo and cancel
+PASS Switch to dated NASA true-color satellite mode
+PASS Withhold hybrid labels after verified provider failures
+PASS Persist exact confirmed polygon in private SQLite
+PASS Retrieve real SoilGrids pH and render native cells with legend
+PASS Retrieve real NOAA forecast with model and valid timestamps
+PASS Persist a dated farmer report with unknown context
+PASS Reload saved source snapshots without new provider calls
+PASS Render farm intelligence at mobile width

@@ -1,0 +1,23 @@
+# 7G capability matrix
+
+This is an additive local Web milestone above exact 7W
+`edefc0c4dedf232e7ddb9704f6f2180a4936fcc3`. Operational means the named pathway
+has working code and evidence; it does not mean independent agronomic acceptance.
+
+| Capability | State | Actual scope / evidence / limits |
+|---|---|---|
+| Interactive farm map | Operational | Existing Flutter `flutter_map`, pan/zoom/recenter, explicit point selection, OSM street map, NASA MODIS true color and explicit provider attribution. Network tiles load only when opened. Satellite imagery is coarse dated visual context. |
+| Polygon workflow | Operational | Explicit exterior ring, tap drawing, vertex selection/move/delete, coordinate corner entry for keyboard users, undo, cancel, confirm, approximate spherical area, save/reopen/edit. Device persistence and owned SQLite immutable farm revisions. No boundary inferred from a point. |
+| Geometry exclusions | Explicitly unavailable | Holes, multipart boundaries and antimeridian-crossing polygons. Invalid/degenerate/self-intersecting rings and points outside boundaries are rejected. Point-only farms remain supported. |
+| Hybrid labels / terrain | Unavailable | NASA reference labels repeatedly returned HTTP 500 at field zooms (one low-zoom PNG succeeded). No reliably accepted hybrid or terrain option is advertised. |
+| NASA NDVI | Unavailable | HLS CMR discovery works; authorized raster access ends at Earthdata HTTP 401. ORNL MOD13Q1 band/date discovery returned 503. No accepted live raster, overlay, observation selector or NDVI history. Existing local HLS numerical/QA reader remains tested, but is not a live pipeline. |
+| NASA satellite metadata | Operational | Bounded 30-day farmer-selected window; persisted date-indexed HLS acquisition candidates, exact collection concept identity, footprint, source hash and retrieval time. Metadata is explicitly not NDVI. |
+| Soil pH map | Operational, reference context | Actual ISRIC WebDAV RUN05 0–5 cm mean pH. Exact VRT hash, explicit native TIFF nodata, CRS/ellipsoid/registration and /10 scaling. Up to 25 native 250 m cells, legend, opacity, raw values, original CRS/transform/hashes and saved history. No field mean or crop suitability. |
+| Soil uncertainty/depths | Partial | Modeled-estimate labeling; numerical uncertainty, quantiles and training/sampling dates are unknown. Only 0–5 cm mean pH is integrated. Other properties/depths and farmer lab reports are not implemented. Existing WCS gate is unchanged. |
+| Current observed weather | Unavailable | No station observations. GFS f000 is labeled model analysis at initialization, never a current observation. Existing Open-Meteo gate remains closed. |
+| NOAA temperature forecasts | Partial | Actual official GFS 0.25° global subsets at f000/f006/f012/f024 with verified GRIB reference/valid times and Kelvin→Celsius conversion. UTC, source URLs/hashes, original grid, history and outage states. Initialization is known; publication/issuance time is unknown, so the slice is not claimed complete. No precipitation, daily extrema or continuous forecast series. |
+| Risk awareness | Partial | A transparent derived indication of sampled future model temperatures ≤0 °C (physical reference, not crop injury threshold). False means absent at sampled times only. Missing values remain unavailable. Official warnings, storm/flood, heavy rain, dry spell and pest predictions are unavailable. |
+| Field companion | Partial | Dated farmer reports, current crop/name search against unchanged 7P identities, reported planting date/stage/water supply/drainage, unknown choices and calendar pickers. Private SQLite timeline includes reports and source requests; existing crop history and dated private photos remain available separately. No photo/report migration or complete integrated crop/evidence/photo timeline. |
+| Localization | Foundation | New map strings use existing English resource keys; English remains the fallback. Existing Burmese navigation preview remains explicitly unreviewed. Full translation of new evidence/forms is not complete. See LOCALIZATION.md. |
+| Offline | Foundation | Confirmed geometry survives device refresh; accepted source jobs/cache persist in private SQLite and can be viewed while remote providers are offline, if the local service is running. In-memory views retain old snapshots on request failure. Full app reload without local services, offline basemap packs and a service worker are not implemented. No tile prefetch. |
+| Assessment/recommendations | Unchanged | Rust v0.3 authority, historical NASA POWER/ET0, all original source restrictions, unchanged 7P data and all 60 blocked 7V candidates. New soil/forecast/report outputs are not passed into crop assessment. |

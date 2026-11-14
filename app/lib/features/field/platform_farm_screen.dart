@@ -11,6 +11,8 @@ import '../../state/platform_provider.dart';
 import 'assessment_screen.dart';
 import 'evidence_panels.dart';
 import 'agricultural_intelligence_panel.dart';
+import 'geospatial_intelligence_panel.dart';
+import 'field_timeline_panel.dart';
 
 class PlatformFarmScreen extends ConsumerWidget {
   const PlatformFarmScreen({super.key});
@@ -96,7 +98,7 @@ class _FarmConnectionState extends ConsumerState<_FarmConnection> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const Text(
-                    'This copies the confirmed farm name, point and confirmation date after your action below. Area and device location stay separate. Existing workspace photos and planning notes are not copied. Editing the confirmed farm creates a separate revision; prior records remain in the local archive.',
+                    'This copies the confirmed farm name, point, optional confirmed boundary and confirmation date after your action below. Area and device location stay separate. Existing workspace photos and planning notes are not copied. Editing the confirmed farm creates a separate revision; prior records remain in the local archive.',
                   ),
                   DropdownButtonFormField<String>(
                     isExpanded: true,
@@ -249,6 +251,15 @@ class _FarmRecordsState extends ConsumerState<_FarmRecords> {
           client: client,
           records: records,
           onSaved: _refresh,
+        ),
+        GeospatialIntelligencePanel(
+          key: ValueKey('geo:${farm.id}'),
+          farm: farm,
+        ),
+        FieldTimelinePanel(
+          key: ValueKey('timeline:${farm.id}'),
+          farm: farm,
+          client: client,
         ),
         for (final r in records) ...[
           CheckboxListTile(

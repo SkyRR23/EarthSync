@@ -1,0 +1,16 @@
+{
+  "url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSS30.020/HLS.S30.T15TVG.2024186T165849.v2.0/HLS.S30.T15TVG.2024186T165849.v2.0.B04.tif",
+  "status": 401,
+  "final_host": "urs.earthdata.nasa.gov",
+  "content_range": null,
+  "content_length": "27",
+  "retrieved_at": "2026-11-14T17:47:43.813081+00:00",
+  "bytes_read": 27,
+  "numeric_pixels_accepted": false,
+  "redirects": [
+    {
+      "status": 302,
+      "host": "data.lpdaac.earthdatacloud.nasa.gov"
+    }
+  ]
+}

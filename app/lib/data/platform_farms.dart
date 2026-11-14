@@ -1,4 +1,6 @@
 import 'models/home_profile.dart';
+import 'package:flutter/foundation.dart' show listEquals;
+import 'models/farm_boundary.dart';
 import 'platform_transport.dart';
 
 String farmRevision(ConfirmedFarm farm) =>
@@ -69,6 +71,13 @@ class PlatformFarmClient {
       final farm = PlatformFarm.fromJson(
         Map<String, dynamic>.from(json['farm'] as Map),
       );
+      final polygon = (json['farm'] as Map)['confirmed_polygon'];
+      final remoteBoundary = polygon == null
+          ? null
+          : FarmBoundary.fromJson(Map<String, dynamic>.from(polygon as Map));
+      if (!listEquals(remoteBoundary?.vertices, local.boundary?.vertices)) {
+        throw const FormatException('Farm boundary mismatch');
+      }
       if (farm.point != local.point) {
         throw const FormatException('Farm point mismatch');
       }
@@ -90,11 +99,84 @@ class PlatformFarmClient {
         'farm': {
           'name': local.name ?? 'My Farm',
           'confirmed_point': local.point.toJson(),
+          if (local.boundary != null)
+            'confirmed_polygon': local.boundary!.toJson(),
           'confirmed_on': farmRevision(local).substring(0, 10),
           'production_system': system,
         },
       },
     );
+  }
+
+  Future<Map<String, dynamic>> retrieveIntelligence(
+    String kind,
+    PlatformFarm farm,
+  ) async => Map<String, dynamic>.from(
+    await transport.request(
+          'POST',
+          '$prefix/$kind/jobs',
+          expectedStatus: 202,
+          body: {'farm_id': farm.id, 'point': farm.point.toJson()},
+        )
+        as Map,
+  );
+  Future<List<Map<String, dynamic>>> intelligence(String id) async =>
+      List<Map<String, dynamic>>.from(
+        await transport.request(
+              'GET',
+              '$prefix/farms/$id/intelligence',
+              expectedStatus: 200,
+            )
+            as List,
+      );
+  Future<Map<String, dynamic>> discoverOptical(String id, DateTime end) async =>
+      Map<String, dynamic>.from(
+        await transport.request(
+              'POST',
+              '$prefix/optical/jobs',
+              expectedStatus: 202,
+              body: {
+                'farm_id': id,
+                'start': end
+                    .subtract(const Duration(days: 30))
+                    .toUtc()
+                    .toIso8601String(),
+                'end': end.toUtc().toIso8601String(),
+                'product': 'HLSS30',
+              },
+            )
+            as Map,
+      );
+
+  Future<List<Map<String, dynamic>>> observations(String id) async =>
+      List<Map<String, dynamic>>.from(
+        await transport.request(
+              'GET',
+              '$prefix/farms/$id/observations',
+              expectedStatus: 200,
+            )
+            as List,
+      );
+  Future<void> reportObservation(String id, Map<String, dynamic> body) async {
+    await transport.request(
+      'POST',
+      '$prefix/farms/$id/observations',
+      expectedStatus: 201,
+      body: body,
+    );
+  }
+
+  Future<List<String>> cropNames(String query) async {
+    final result =
+        await transport.request(
+              'GET',
+              '$prefix/crop-identities?${Uri(queryParameters: {'q': query}).query}',
+              expectedStatus: 200,
+            )
+            as Map;
+    return [
+      for (final c in result['records'] as List) c['scientific_name'] as String,
+    ];
   }
 
   Future<Map<String, dynamic>> context(String id) async =>
