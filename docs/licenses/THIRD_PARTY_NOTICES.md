@@ -28,6 +28,7 @@ No NASA logos or mission insignia were generated.
 | `shared_preferences` | 2.5.6 (https://pub.dev/packages/shared_preferences) | BSD-3-Clause (Flutter Authors) |
 | `geolocator` | 14.1.2 (https://pub.dev/packages/geolocator) | MIT (Baseflow) |
 | `share_plus` | 13.3.1 (https://pub.dev/packages/share_plus) | BSD-3-Clause (Flutter Community) |
+| `firebase_core`, `firebase_auth`, `cloud_firestore` | 5.1.0 / 7.0.1 / 7.1.0 (pub.dev, FlutterFire) | BSD-3-Clause (Google). Runtime service: Firebase project `fieldshift-yangon-2026`; Google sign-in; Firestore in asia-southeast1. |
 | Flutter packages | Exact versions in `app/pubspec.lock`: flutter_riverpod, go_router, flutter_map, latlong2, fl_chart, intl, flutter_rust_bridge 2.13.0, cupertino_icons | Permissive (MIT / BSD-3-Clause / Apache-2.0); verify transitive notices before binary release. |
 
 v0.2 P0 fixture register: `engine/tests/fixtures/synthetic_v02_request.json` and
