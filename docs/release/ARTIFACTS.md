@@ -6,11 +6,12 @@ on the final PR. Each contains a zip, its SHA-256 sidecar and a runtime smoke
 receipt. Artifacts expire after 14 days; reproduce them from a clean reviewed
 checkout rather than relying on permanent GitHub artifact storage.
 
-The zip includes this commit's tracked runtime sources, scientific catalogs,
+The zip includes this commit's complete tracked source snapshot, scientific catalogs,
 migrations, bundled rights notices, public Web build and both host-native Rust
 executables. It contains no `.git`, private archive history, databases, tokens,
-runtime photos, virtualenv or device/browser state. Existing labeled source/test
-fixtures remain fixtures, never live observations. Python 3.12 and its locked
+runtime photos, virtualenv or device/browser state. Previously published historical
+review documents and labeled source/test fixtures remain part of the scientific
+source snapshot, never new live observations. Python 3.12 and its locked
 dependencies are still required. Rust/Flutter SDKs are not needed merely to run
 the prebuilt artifact. Native system/architecture must match the artifact.
 
@@ -94,7 +95,8 @@ python3.12 -m zipfile -e /absolute/artifacts/earthsync-linux.zip /absolute/artif
 python3.12 -B scripts/package_release.py verify --directory /absolute/artifacts/unpacked --expected-sha "$(git rev-parse HEAD)"
 # Dependencies must already be installed from server/requirements.lock.
 # This creates fresh disposable private state, starts both loopback services,
-# runs native missing-data and HTTP/access checks, and stops the services.
+# verifies original scientific input pins, runs native missing-data and
+# HTTP/access checks, and stops the services.
 python3.12 -B scripts/ci_package_startup.py --package /absolute/artifacts/unpacked --expected-sha "$(git rev-parse HEAD)" --private /absolute/private/package-smoke
 ```
 

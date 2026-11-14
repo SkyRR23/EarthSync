@@ -188,3 +188,14 @@ def test_packager_rejects_a_web_build_for_another_backend(release):
     offline.finalize(web)
     with pytest.raises(ValueError, match="PLATFORM_URL"):
         build(release)
+
+
+def test_runtime_snapshot_includes_every_7v_pinned_scientific_input():
+    pins = json.loads(
+        (ROOT / "data/crop-rule-candidates/v1/input-pins.json").read_text()
+    )["files"]
+    selected = set(
+        package.git(ROOT, "ls-files", "--", *package.SOURCE_PATHS).decode().splitlines()
+    )
+    assert set(pins) <= selected
+    assert "docs/integration/7p/HANDOFF_7J.md" in selected

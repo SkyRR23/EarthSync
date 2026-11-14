@@ -55,6 +55,13 @@ def main():
         EARTHSYNC_EVIDENCE_ORIGINS=manifest["web_origin"],
     )
     subprocess.run(
+        [sys.executable, "-B", str(source / "scripts/verify_7x_integrity.py")],
+        env=env,
+        cwd=source,
+        check=True,
+        stdout=subprocess.DEVNULL,
+    )
+    subprocess.run(
         [sys.executable, "-m", "earthsync.demo_workspace", str(private / "workspace")],
         env=env,
         cwd=source,
@@ -145,6 +152,7 @@ def main():
                         "scope": "REAL packaged native/process/HTTP smoke; SYNTHETIC native missing-data fixture; no live provider/browser acceptance",
                         "private_api_public": False,
                         "executable_crop_rules": 0,
+                        "science_package_pins_verified": True,
                     }
                 )
             )

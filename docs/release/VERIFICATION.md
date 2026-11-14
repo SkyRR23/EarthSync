@@ -41,16 +41,22 @@ are retained as failures, not silently relabeled; their Docker-context and Windo
 catalog-byte causes are separately corrected/tested in the combined candidate.
 See `evidence/integration-refresh.json`.
 
-The new release packager has **15 synthetic packaging regression tests**, plus
-four publication-privacy regressions. It includes tracked snapshot source, public
+The new release packager has **15 synthetic packaging regression tests**, one
+real-source pinned-document coverage regression and four publication-privacy
+regressions. It includes the complete tracked snapshot source, public
 Web resources and both native executables; validates the selected local backend,
 host, exact files/hashes and immutable source identity; rejects changed/unlisted
 files and symlinks; and excludes Git history and private runtime state. New CI
-steps unpack each Windows/Linux package, execute the actual packaged Rust engine
+steps unpack each Windows/Linux package, verify all original 7V scientific input
+pins, execute the actual packaged Rust engine
 and start both real HTTP services with fresh disposable state before upload.
 Final exact-head workflow/artifact results are recorded on PR #29. Neither
 packaging unit fixtures nor native/process smoke constitute a live satellite
 observation or interactive Windows acceptance.
+An additional local artifact audit caught the initially omitted pinned 7P handoff;
+the package now retains the full tracked documentation and its CI startup fails
+if original science-package verification fails. The incomplete earlier local zip
+is preserved as a diagnostic, not the final release artifact.
 
 Actual Cloudflare identity/account reads succeeded, but Pages/Workers/Tunnel/
 Access/billing scope and enablement checks blocked safe deployment. No resource
