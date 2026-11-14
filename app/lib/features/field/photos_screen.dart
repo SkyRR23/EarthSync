@@ -90,12 +90,13 @@ class _PhotosScreenState extends ConsumerState<PhotosScreen> {
                   key: ValueKey('${farm?.id}:${farm?.point.label}'),
                   onChanged: () {
                     ref.invalidate(workspacePhotosProvider);
-                    if (farm != null)
+                    if (farm != null) {
                       ref.invalidate(
                         satelliteProvider(
                           environmentalKey(farm.point, farmId: farm.id),
                         ),
                       );
+                    }
                   },
                 ),
               ],

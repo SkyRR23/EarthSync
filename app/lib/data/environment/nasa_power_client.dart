@@ -203,7 +203,8 @@ class NasaPowerClient {
           final error = (jsonDecode(response.body) as Map)['error'];
           if (error is Map && error['code'] is String) {
             providerCode = error['code'] as String;
-            if (error['retryable'] is bool) providerRetryable = error['retryable'] as bool;
+            if (error['retryable'] is bool)
+              providerRetryable = error['retryable'] as bool;
           }
         } catch (_) {}
         final reason = switch (providerCode) {

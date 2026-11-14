@@ -64,8 +64,9 @@ class _FarmerAssistantState extends State<FarmerAssistant> {
       _failedQuestion = null;
       // A provider finishing in the background changes evidence, not the
       // farmer's draft question. Selection/language changes still clear it.
-      if (selectionChanged || oldWidget.language != widget.language)
+      if (selectionChanged || oldWidget.language != widget.language) {
         _input.clear();
+      }
     }
   }
 

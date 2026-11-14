@@ -1,5 +1,6 @@
 import io
 import json
+import os
 import sqlite3
 from pathlib import Path
 
@@ -262,8 +263,11 @@ async def test_quota_failure_does_not_replace_old_photo(client, store):
 
 
 def test_storage_permissions_and_no_user_paths(store, tmp_path):
-    assert store.path.stat().st_mode & 0o777 == 0o600
-    assert store.path.parent.stat().st_mode & 0o777 == 0o700
+    # POSIX mode bits do not describe Windows ACLs. The normal Windows launcher
+    # explicitly sets the dedicated directory/file ACLs before retaining photos.
+    if os.name != "nt":
+        assert store.path.stat().st_mode & 0o777 == 0o600
+        assert store.path.parent.stat().st_mode & 0o777 == 0o700
     with pytest.raises(ValueError):
         PhotoStore(tmp_path / ".." / "escape")
     link = tmp_path / "symlink"

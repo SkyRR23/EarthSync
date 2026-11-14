@@ -27,9 +27,13 @@ $tokenAcl.SetAccessRuleProtection($true, $false)
 foreach ($account in @($identity, 'NT AUTHORITY\SYSTEM')) {
     $tokenAcl.AddAccessRule((New-Object System.Security.AccessControl.FileSystemAccessRule($account, 'FullControl', 'Allow')))
 }
-Set-Acl -LiteralPath $tokenPath -AclObject $tokenAcl
+foreach ($file in (Get-ChildItem -LiteralPath $EvidenceDirectory -File -Force)) {
+    if ($file.Attributes -band [IO.FileAttributes]::ReparsePoint) { throw 'Private workspace files must not be symlinks or reparse points.' }
+    Set-Acl -LiteralPath $file.FullName -AclObject $tokenAcl
+}
 $env:EARTHSYNC_EVIDENCE_DIR = $EvidenceDirectory
 $env:EARTHSYNC_EVIDENCE_TOKEN_FILE = $tokenPath
+$env:EARTHSYNC_EVIDENCE_TOKEN = $null
 if (-not $SkipBuild) {
     $env:CARGO_BUILD_JOBS = '1'
     cargo build --locked --manifest-path engine/Cargo.toml --example web_engine

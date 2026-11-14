@@ -47,6 +47,6 @@ jobs:
           python -m ruff check earthsync tests
           python -m ruff format --check earthsync tests
       - name: Offline backend and Rust JSON compatibility tests
-        run: python -m pytest -q
+        run: python -m pytest -vv --durations=10
       - name: Patch integrity
         run: git diff --check
