@@ -162,7 +162,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text('Explore the world'), findsOneWidget);
-    await tester.tap(find.text('Ask the EarthSync assistant'));
+    await tester.tap(find.text('Assistant'));
     await tester.pumpAndSettle();
     expect(find.text('EarthSync assistant'), findsOneWidget);
     expect(find.textContaining('No confirmed farm'), findsOneWidget);

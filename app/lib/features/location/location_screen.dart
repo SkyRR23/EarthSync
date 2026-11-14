@@ -108,6 +108,28 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
     }
   }
 
+  Future<void> _suggestLocation() async {
+    setState(() {
+      _saving = true;
+      _error = null;
+    });
+    try {
+      final point = await ref.read(deviceLocationProvider).locate();
+      if (mounted) {
+        _pick(point.latitude, point.longitude, source: AreaSource.device);
+      }
+    } catch (_) {
+      if (mounted) {
+        setState(
+          () => _error =
+              'Device location is unavailable or permission was denied. Enter coordinates or choose a point on the map.',
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _saving = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final profile = ref.watch(homeProfileProvider).value;
@@ -159,6 +181,12 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
                   widget.areaOnly
                       ? 'Choose a point for climate context. This will not change your farm.'
                       : 'Check that this point is on your field. Your device location may be somewhere else. No field boundary is created.',
+                ),
+                const SizedBox(height: 16),
+                OutlinedButton.icon(
+                  onPressed: _saving ? null : _suggestLocation,
+                  icon: const Icon(Icons.my_location),
+                  label: const Text('Suggest a point with GPS (optional)'),
                 ),
                 const SizedBox(height: 16),
                 TextFormField(

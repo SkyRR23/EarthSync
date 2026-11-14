@@ -304,16 +304,42 @@ class IntegratedAssistantScreen extends ConsumerWidget {
   const IntegratedAssistantScreen({super.key, this.areaOnly = false});
   final bool areaOnly;
   @override
-  Widget build(BuildContext context, WidgetRef ref) => Scaffold(
-    appBar: AppBar(title: const Text('EarthSync assistant')),
-    body: Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 840),
-        child: FarmerAssistant(
-          context: ref.watch(integratedAssistantContextProvider(areaOnly)),
-          service: ref.watch(assistantServiceProvider),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final profile = ref.watch(homeProfileProvider).value;
+    final farm = areaOnly ? null : profile?.farm;
+    final area = profile?.userLocation;
+    final label = farm != null
+        ? 'Confirmed farm · ${farm.name ?? 'My Farm'} · ${farm.point.label}'
+        : area is ApproximateArea
+        ? 'Selected area · ${area.label} · ${area.point.label}'
+        : 'No selected area or confirmed farm · general explanations only';
+    return Scaffold(
+      appBar: AppBar(title: const Text('EarthSync assistant')),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 840),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                child: Text(
+                  label,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
+              Expanded(
+                child: FarmerAssistant(
+                  context: ref.watch(
+                    integratedAssistantContextProvider(areaOnly),
+                  ),
+                  service: ref.watch(assistantServiceProvider),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }

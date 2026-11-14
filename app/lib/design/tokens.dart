@@ -4,35 +4,35 @@ import 'package:flutter/material.dart';
 /// Widgets must use these instead of hardcoded colours or sizes.
 abstract final class FsColors {
   // Brand
-  static const primary = Color(0xFF2E7D32);
+  static const primary = Color(0xFF286B52);
   static const onPrimary = Color(0xFFFFFFFF);
-  static const primaryContainer = Color(0xFFC8E6C9);
-  static const earth = Color(0xFF6D4C41);
-  static const sky = Color(0xFF1565C0);
+  static const primaryContainer = Color(0xFFE2EDE3);
+  static const earth = Color(0xFF7D664A);
+  static const sky = Color(0xFF4385A4);
 
   // Neutral
-  static const bg = Color(0xFFFAFAF7);
+  static const bg = Color(0xFFF7F5EF);
   static const surface = Color(0xFFFFFFFF);
-  static const border = Color(0xFFD6D6CF);
-  static const textPrimary = Color(0xFF1B1B18);
-  static const textSecondary = Color(0xFF4A4A44);
+  static const border = Color(0xFFDFE5DC);
+  static const textPrimary = Color(0xFF1B2924);
+  static const textSecondary = Color(0xFF53665B);
 
   // Feasibility
-  static const supported = Color(0xFF2E7D32);
+  static const supported = Color(0xFF286B52);
   static const constrained = Color(0xFFB26A00);
   static const unknown = Color(0xFF5F6368);
 
   // Risk
-  static const riskHigh = Color(0xFFC62828);
+  static const riskHigh = Color(0xFFB64040);
   static const riskMedium = Color(0xFFB26A00);
-  static const riskLow = Color(0xFF2E7D32);
+  static const riskLow = Color(0xFF286B52);
   static const riskUnknown = Color(0xFF5F6368);
 
   // Evidence types
-  static const evidenceObservation = Color(0xFF1565C0);
+  static const evidenceObservation = Color(0xFF4385A4);
   static const evidenceModel = Color(0xFF6A1B9A);
   static const evidenceImagery = Color(0xFF00838F);
-  static const evidenceReference = Color(0xFF6D4C41);
+  static const evidenceReference = Color(0xFF7D664A);
   static const evidenceUnverified = Color(0xFF5F6368);
 }
 

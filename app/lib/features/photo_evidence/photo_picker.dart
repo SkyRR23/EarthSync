@@ -98,14 +98,16 @@ typedef GpsReader = Future<PhotoGps?> Function(Uint8List bytes);
     final length = data.getUint16(offset);
     if (length < 2 || offset + length > bytes.length) break;
     if (starts.contains(marker)) {
-      if (length < 8 || dimensions != null)
+      if (length < 8 || dimensions != null) {
         throw const PhotoEvidenceException('Ambiguous JPEG image-size header.');
+      }
       dimensions = (data.getUint16(offset + 5), data.getUint16(offset + 3));
     }
     offset += length;
   }
-  if (dimensions == null)
+  if (dimensions == null) {
     throw const PhotoEvidenceException('JPEG has no valid image-size header.');
+  }
   return dimensions;
 }
 

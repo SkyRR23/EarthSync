@@ -1,108 +1,126 @@
 import 'package:flutter/material.dart';
-
 import 'tokens.dart';
 
-ThemeData fsTheme() {
-  const scheme = ColorScheme.light(
-    primary: FsColors.primary,
-    onPrimary: FsColors.onPrimary,
-    primaryContainer: FsColors.primaryContainer,
-    secondary: FsColors.earth,
-    surface: FsColors.surface,
-    onSurface: FsColors.textPrimary,
-    onSurfaceVariant: FsColors.textSecondary,
-    outline: FsColors.border,
-    error: FsColors.riskHigh,
+ThemeData fsTheme({Brightness brightness = Brightness.light}) {
+  final dark = brightness == Brightness.dark;
+  final scheme = ColorScheme.fromSeed(
+    seedColor: FsColors.primary,
+    brightness: brightness,
+    primary: dark ? const Color(0xFFA4D5B8) : FsColors.primary,
+    surface: dark ? const Color(0xFF192A23) : FsColors.surface,
+    error: dark ? const Color(0xFFFFB4AB) : FsColors.riskHigh,
   );
-
-  const text = TextTheme(
-    headlineMedium: TextStyle(
-      fontSize: 28,
-      fontWeight: FontWeight.w700,
-      height: 1.4,
-    ),
-    titleLarge: TextStyle(
-      fontSize: 22,
-      fontWeight: FontWeight.w600,
-      height: 1.5,
-    ),
-    titleMedium: TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-      height: 1.5,
-    ),
-    bodyLarge: TextStyle(fontSize: 18, height: 1.6),
-    bodyMedium: TextStyle(fontSize: 16, height: 1.6),
-    labelLarge: TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w600,
-      height: 1.5,
-    ),
-    bodySmall: TextStyle(
-      fontSize: 14,
-      height: 1.5,
-      color: FsColors.textSecondary,
-    ),
-  );
-
-  const buttonShape = RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(FsRadius.md),
-  );
-
-  return ThemeData(
-    fontFamily: 'EarthSyncSans',
+  final base = ThemeData(
     useMaterial3: true,
     colorScheme: scheme,
-    scaffoldBackgroundColor: FsColors.bg,
-    textTheme: text.apply(
-      bodyColor: FsColors.textPrimary,
-      displayColor: FsColors.textPrimary,
-    ),
-    appBarTheme: const AppBarTheme(
-      backgroundColor: FsColors.bg,
-      foregroundColor: FsColors.textPrimary,
+    fontFamily: 'EarthSyncSans',
+    fontFamilyFallback: const ['NotoSansMyanmar'],
+  );
+  final text = base.textTheme
+      .copyWith(
+        headlineLarge: const TextStyle(
+          fontSize: 36,
+          fontWeight: FontWeight.w700,
+          height: 1.15,
+          letterSpacing: -1.1,
+        ),
+        headlineMedium: const TextStyle(
+          fontSize: 28,
+          fontWeight: FontWeight.w700,
+          height: 1.2,
+          letterSpacing: -.6,
+        ),
+        titleLarge: const TextStyle(
+          fontSize: 21,
+          fontWeight: FontWeight.w700,
+          height: 1.3,
+        ),
+        titleMedium: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+          height: 1.4,
+        ),
+        bodyLarge: const TextStyle(fontSize: 16, height: 1.55),
+        bodyMedium: const TextStyle(fontSize: 14, height: 1.5),
+        bodySmall: TextStyle(
+          fontSize: 12,
+          height: 1.5,
+          color: scheme.onSurfaceVariant,
+        ),
+        labelLarge: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+      )
+      .apply(
+        fontFamily: 'EarthSyncSans',
+        fontFamilyFallback: const ['NotoSansMyanmar'],
+        bodyColor: scheme.onSurface,
+        displayColor: scheme.onSurface,
+      );
+  final shape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(14));
+  return base.copyWith(
+    textTheme: text,
+    scaffoldBackgroundColor: dark ? const Color(0xFF101E18) : FsColors.bg,
+    appBarTheme: AppBarTheme(
+      backgroundColor: dark ? const Color(0xFF101E18) : FsColors.bg,
+      foregroundColor: scheme.onSurface,
       elevation: 0,
       scrolledUnderElevation: 0,
       centerTitle: false,
+      titleTextStyle: text.titleMedium,
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
-        minimumSize: const Size.fromHeight(FsSpace.minTouch),
-        shape: buttonShape,
-        textStyle: text.labelLarge,
+        minimumSize: const Size(48, 52),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        shape: shape,
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        minimumSize: const Size.fromHeight(FsSpace.minTouch),
-        shape: buttonShape,
-        side: const BorderSide(color: FsColors.primary),
-        textStyle: text.labelLarge,
+        minimumSize: const Size(48, 52),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        side: BorderSide(color: scheme.outlineVariant),
+        shape: shape,
       ),
     ),
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(
-        minimumSize: const Size(FsSpace.minTouch, FsSpace.minTouch),
-        textStyle: text.labelLarge,
-      ),
+      style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
     ),
-    cardTheme: const CardThemeData(
+    iconButtonTheme: IconButtonThemeData(
+      style: IconButton.styleFrom(minimumSize: const Size(48, 48)),
+    ),
+    cardTheme: CardThemeData(
       elevation: 0,
-      margin: EdgeInsets.zero,
-      color: FsColors.surface,
+      margin: const EdgeInsets.only(bottom: 12),
+      color: scheme.surface,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(FsRadius.lg),
-        side: BorderSide(color: FsColors.border),
+        borderRadius: BorderRadius.circular(20),
+        side: BorderSide(color: scheme.outlineVariant.withValues(alpha: .6)),
       ),
     ),
-    progressIndicatorTheme: const ProgressIndicatorThemeData(
-      color: FsColors.primary,
-      linearTrackColor: FsColors.border,
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: scheme.surface,
+      contentPadding: const EdgeInsets.all(16),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(14),
+        borderSide: BorderSide(color: scheme.outlineVariant),
+      ),
     ),
-    navigationBarTheme: const NavigationBarThemeData(
-      backgroundColor: FsColors.surface,
-      indicatorColor: FsColors.primaryContainer,
-      height: 72,
+    chipTheme: base.chipTheme.copyWith(
+      padding: const EdgeInsets.all(8),
+      side: BorderSide(color: scheme.outlineVariant),
+    ),
+    navigationBarTheme: NavigationBarThemeData(
+      backgroundColor: scheme.surface,
+      indicatorColor: scheme.primaryContainer,
+      height: 76,
+      labelTextStyle: WidgetStatePropertyAll(text.labelSmall),
+    ),
+    dividerTheme: DividerThemeData(color: scheme.outlineVariant, space: 24),
+    expansionTileTheme: const ExpansionTileThemeData(
+      shape: Border(),
+      collapsedShape: Border(),
     ),
   );
 }

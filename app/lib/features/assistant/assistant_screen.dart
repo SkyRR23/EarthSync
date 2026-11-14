@@ -64,8 +64,9 @@ class _FarmerAssistantState extends State<FarmerAssistant> {
       _failedQuestion = null;
       // A provider finishing in the background changes evidence, not the
       // farmer's draft question. Selection/language changes still clear it.
-      if (selectionChanged || oldWidget.language != widget.language)
+      if (selectionChanged || oldWidget.language != widget.language) {
         _input.clear();
+      }
     }
   }
 
@@ -136,7 +137,24 @@ class _FarmerAssistantState extends State<FarmerAssistant> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(words('intro')),
+              Row(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Theme.of(
+                      context,
+                    ).colorScheme.primaryContainer,
+                    child: const Icon(Icons.eco_outlined),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      words('intro'),
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
               Text(
                 words(widget.context.confirmedFarm == null ? 'noFarm' : 'farm'),
                 style: Theme.of(context).textTheme.bodySmall,
@@ -165,6 +183,7 @@ class _FarmerAssistantState extends State<FarmerAssistant> {
                 Align(
                   alignment: AlignmentDirectional.centerEnd,
                   child: Card(
+                    color: Theme.of(context).colorScheme.primaryContainer,
                     child: Padding(
                       padding: const EdgeInsets.all(12),
                       child: Text(turn.question),
@@ -233,7 +252,7 @@ class _FarmerAssistantState extends State<FarmerAssistant> {
                   ),
                 ),
                 const SizedBox(width: 8),
-                IconButton(
+                IconButton.filled(
                   tooltip: words('send'),
                   onPressed: _loading ? null : () => _ask(_input.text),
                   icon: const Icon(Icons.send),

@@ -1,0 +1,4 @@
+00:00 +0: loading /workspace/EarthSync-ui/app/test/ui/planning_preferences_test.dart
+00:00 +0: appearance and language restore in a fresh provider container
+00:00 +1: crop history saves for the confirmed farm without engine promotion
+00:01 +2: All tests passed!
