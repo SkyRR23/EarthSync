@@ -200,7 +200,9 @@ void main() {
         File('test/fixtures/engine_success_envelope.json').readAsStringSync(),
       );
       final scenarios = output['data']['rotations']['scenarios'] as List;
-      final baseline = scenarios.firstWhere((s) => s['scenario']['is_baseline'] == true);
+      final baseline = scenarios.firstWhere(
+        (s) => s['scenario']['is_baseline'] == true,
+      );
       scenarios.remove(baseline);
       scenarios.add(baseline);
       scenarios[0]['scenario']['steps'][0]['crop_id'] = null;

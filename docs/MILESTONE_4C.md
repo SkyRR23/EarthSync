@@ -77,7 +77,9 @@ function when scenarios, source references and crop profiles are all empty. It
 uses the same field/point/climate validation and seasonal function, and returns
 empty rotations with an explicit unknown-suitability limitation. For the legacy
 string field, unreported crop is encoded as `""`; it is not a crop identifier and
-is never scored. Known farmer crop is preserved. Existing nonempty crop workflows
+is never scored. Known farmer crop is preserved. The explicit synthetic Rust
+demo also gates scenarios when farmer crop is unknown, rather than inheriting
+the test fixture's crop. Partial irrigation stays unknown for prerequisites. Existing nonempty crop workflows
 still use the existing decision validator unchanged. FRB API signatures and all
 generated bindings are unchanged. Rust v0.2 remains optional and unmerged.
 
@@ -144,10 +146,43 @@ labels. Missing daily/month data are tested offline without NASA outage dependen
 
 ## Verification record
 
-See the PR validation record for final exact outcomes and unresolved limitations.
+Actual results on 14 November 2026:
+
+| Check | Outcome |
+| --- | --- |
+| Backend at `4befe7d`, Python 3.12 | 42 passed; one third-party Starlette/AnyIO deprecation warning |
+| Rust engine 1.99.0 | 60 passed (56 existing + four climate-only tests); fmt and all-target Clippy passed |
+| Rust bridge 2.13.0 | Five tests passed, including unknown-crop demo gating; release native library built |
+| CI official Flutter 3.50.0 / Dart 3.14.0 | SDK installed; `flutter doctor -v` and `flutter pub get` executed |
+| Flutter analysis | No errors or warnings; 22 informational Material-import deprecation notices. Plain `flutter analyze` exits 1 for these infos; `flutter analyze --no-fatal-infos` passes and keeps the notices visible. Material migration is outside this milestone. |
+| Offline `flutter test` | 27 passed; one intentionally skipped opt-in live test |
+| Explicit live native bridge suite | Five passed, including actual Python -> NASA -> Dart/FRB -> Rust -> Flutter widget display |
+| Physical Android / Windows execution | Not run in this cloud environment |
+
+The complete live host run is recorded in [GitHub Actions run 43569908878](https://github.com/SkyRR23/EarthSync/actions/runs/43569908878),
+with the exact reviewed Python backend checked out separately. The live test
+asserted the known historical climate values, modeled classification, empty crop
+scenarios and Flutter labels. The first ordinary test attempt exposed two old
+baseline-first expectations and a widget-clock/asset-I/O test harness hang; these
+were fixed before the passing run. No failing tests are counted as passes.
+
+Flutter SDK installation **in this running cloud task** is still blocked: the
+running environment reports revision 1 without `storage.googleapis.com` and
+returns HTTP 403 for its official SDK manifest. The separately published network
+update needs to be applied to this chat or the task restarted/resumed using that
+updated environment. CI's official SDK installation and execution are independent
+of that local blocker; no local Flutter success is claimed.
+
+CI `flutter doctor` found Android SDK 37.0.0 with some unaccepted Android licenses,
+and missing GTK development libraries for Linux desktop builds. Only Linux and
+Chrome targets were listed, no Android phone. Those limitations do not prevent
+headless widget/native-FFI tests, but they do not establish APK or physical-device
+success. The previous Windows chat's local Gradle/Cargokit fixes and USB install
+restriction need independent reconciliation/testing; they were not merged here.
+
 The normal Flutter suite includes offline actual-native-FRB tests; build
 `app/rust` in release mode first. To opt into real backend retrieval on a host,
-start the backend as above then run:
+start the backend as above then run (CI also offers opt-in `live_nasa` on manual dispatch):
 
 ```sh
 cd app

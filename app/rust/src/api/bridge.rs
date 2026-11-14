@@ -22,7 +22,10 @@ pub fn init_app() {
 /// Bridge smoke test (H2 gate).
 #[flutter_rust_bridge::frb(sync)]
 pub fn engine_version() -> String {
-    format!("field_shift_bridge {} → field_shift_engine", env!("CARGO_PKG_VERSION"))
+    format!(
+        "field_shift_bridge {} → field_shift_engine",
+        env!("CARGO_PKG_VERSION")
+    )
 }
 
 /// Full contract path: a complete `IntegrationRequest` JSON (built from
@@ -62,15 +65,25 @@ fn build_demo_request(farmer_json: &str) -> Result<String, String> {
     let mut request: Value = serde_json::from_str(SYNTHETIC_REQUEST)
         .map_err(|_| "Built-in demo request is invalid.".to_string())?;
 
-    if let Some(crop) = farmer.get("current_crop").and_then(Value::as_str) {
+    if let Some(crop) = farmer
+        .get("current_crop")
+        .and_then(Value::as_str)
+        .filter(|crop| !crop.trim().is_empty())
+    {
         request["field"]["current_crop"] = json!(crop);
+    } else {
+        // Unknown farmer crop must not inherit the fixture's crop identity.
+        request["field"]["current_crop"] = json!("");
+        request["crop_references"] = json!({"sources": [], "profiles": []});
+        request["scenarios"] = json!([]);
     }
 
-    request["field"]["irrigation_available"] = match farmer.get("irrigation").and_then(Value::as_str) {
-        Some("full") | Some("partial") => json!(true),
-        Some("none") => json!(false),
-        _ => Value::Null,
-    };
+    request["field"]["irrigation_available"] =
+        match farmer.get("irrigation").and_then(Value::as_str) {
+            Some("full") => json!(true),
+            Some("none") => json!(false),
+            _ => Value::Null,
+        };
 
     request["soil"]["drainage"] = match farmer.get("drainage").and_then(Value::as_str) {
         Some("poor") => json!("poor"),
@@ -100,7 +113,10 @@ mod tests {
 
     #[test]
     fn demo_with_unknown_answers_succeeds() {
-        assert_eq!(status(&analyze_synthetic_demo_json("{}".into())), "success");
+        let out: Value = serde_json::from_str(&analyze_synthetic_demo_json("{}".into())).unwrap();
+        assert_eq!(out["status"], "success");
+        assert_eq!(out["data"]["field"]["current_crop"], "");
+        assert_eq!(out["data"]["rotations"]["scenarios"], json!([]));
     }
 
     #[test]
@@ -114,11 +130,17 @@ mod tests {
 
     #[test]
     fn bad_farmer_json_is_error_envelope() {
-        assert_eq!(status(&analyze_synthetic_demo_json("not json".into())), "error");
+        assert_eq!(
+            status(&analyze_synthetic_demo_json("not json".into())),
+            "error"
+        );
     }
 
     #[test]
     fn passthrough_uses_engine_envelope() {
-        assert_eq!(status(&analyze_integration_json(SYNTHETIC_REQUEST.into())), "success");
+        assert_eq!(
+            status(&analyze_integration_json(SYNTHETIC_REQUEST.into())),
+            "success"
+        );
     }
 }

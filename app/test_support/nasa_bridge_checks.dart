@@ -31,7 +31,6 @@ void registerNasaBridgeChecks() {
   late FieldAnalysis capturedResult, missingResult;
   FieldAnalysis? liveResult;
 
-
   Future<FieldAnalysis> captured({bool missing = false}) async {
     var raw = await rootBundle.loadString(
       'assets/fixtures/nasa_power_real.json',
@@ -54,13 +53,21 @@ void registerNasaBridgeChecks() {
   setUpAll(() async {
     debugPrint('Initializing the actual native Rust bridge.');
     await RustEngine.init().timeout(const Duration(seconds: 30));
-    debugPrint('Native bridge initialized; analyzing the captured NASA response.');
-    originalCapture = await rootBundle.loadString('assets/fixtures/nasa_power_real.json');
+    debugPrint(
+      'Native bridge initialized; analyzing the captured NASA response.',
+    );
+    originalCapture = await rootBundle.loadString(
+      'assets/fixtures/nasa_power_real.json',
+    );
     capturedResult = await captured().timeout(const Duration(seconds: 30));
-    missingResult = await captured(missing: true).timeout(const Duration(seconds: 30));
+    missingResult = await captured(
+      missing: true,
+    ).timeout(const Duration(seconds: 30));
     if (const bool.fromEnvironment('RUN_LIVE_NASA')) {
       liveResult = await HttpOverrides.runWithHttpOverrides(
-          () => RustEngine().analyzeField(_point), _LiveHttp());
+        () => RustEngine().analyzeField(_point),
+        _LiveHttp(),
+      );
     }
   });
 
@@ -75,10 +82,7 @@ void registerNasaBridgeChecks() {
       expect(a.scenarios, isEmpty);
       expect(a.dataQuality.isDemo, false);
       final trace = a.trace!;
-      expect(
-        trace.backendResponseJson,
-        originalCapture,
-      );
+      expect(trace.backendResponseJson, originalCapture);
       expect(jsonDecode(trace.farmerInputJson)['recent_rotation'], ['rice']);
       expect(jsonDecode(trace.farmerInputJson)['planting_month'], 6);
       expect(jsonDecode(trace.farmerInputJson)['priorities'], ['less_water']);

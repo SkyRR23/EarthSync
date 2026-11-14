@@ -192,7 +192,9 @@ class AnalysisNotifier extends Notifier<AnalysisState> {
     final generation = ++_generation;
     state = const AnalysisRunning();
     try {
-      final result = await MockEngine(delay: Duration.zero).analyzeField(_demoInput);
+      final result = await MockEngine(
+        delay: Duration.zero,
+      ).analyzeField(_demoInput);
       if (generation != _generation) return;
       state = AnalysisReady(result);
     } on EngineError catch (e) {

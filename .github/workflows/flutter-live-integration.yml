@@ -4,6 +4,11 @@ on:
   push:
     branches: [feat/flutter-live-nasa-integration]
   workflow_dispatch:
+    inputs:
+      live_nasa:
+        description: Run the optional live NASA smoke test (requires upstream availability)
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -48,17 +53,17 @@ jobs:
         timeout-minutes: 4
         run: flutter test --reporter expanded
       - uses: actions/setup-python@v5
-        if: github.event_name == 'push'
+        if: github.event_name == 'workflow_dispatch' && inputs.live_nasa
         with:
           python-version: '3.12'
       - name: Check out reviewed Python backend separately
-        if: github.event_name == 'push'
+        if: github.event_name == 'workflow_dispatch' && inputs.live_nasa
         uses: actions/checkout@v4
         with:
           ref: 4befe7d1e204c875436ab486c231edcbb944f317
           path: backend-review
       - name: Live NASA -> Python -> Flutter -> Rust -> Flutter smoke
-        if: github.event_name == 'push'
+        if: github.event_name == 'workflow_dispatch' && inputs.live_nasa
         run: |
           python -m pip install -r backend-review/server/requirements.lock
           PYTHONPATH="$PWD/backend-review/server" python -m uvicorn earthsync.api:app --host 127.0.0.1 --port 8000 > "$RUNNER_TEMP/earthsync-backend.log" 2>&1 &
