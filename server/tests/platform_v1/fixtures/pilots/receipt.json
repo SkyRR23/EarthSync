@@ -1,0 +1,214 @@
+[
+  {
+    "pilot": "us_ia_story",
+    "query_point": {
+      "latitude": 42.03,
+      "longitude": -93.62
+    },
+    "parameter": "T2M_MIN",
+    "file": "us_ia_story_T2M_MIN.real.json",
+    "retrieved_at": "2026-11-14T11:17:20.525902+00:00",
+    "response_sha256": "93188415e5ab5859a6bc92859f4a875b558c3863aa0dff55d7ad4ad29904a8b4",
+    "sources": [
+      "MERRA2",
+      "POWER"
+    ],
+    "days": 29,
+    "missing_days": 0,
+    "support": "regional model at approximate public locality example, not a confirmed farm"
+  },
+  {
+    "pilot": "us_ia_story",
+    "query_point": {
+      "latitude": 42.03,
+      "longitude": -93.62
+    },
+    "parameter": "T2M_MAX",
+    "file": "us_ia_story_T2M_MAX.real.json",
+    "retrieved_at": "2026-11-14T11:17:22.022668+00:00",
+    "response_sha256": "fc6fbe621c0fa35f3f4d121b46e9a1bec72c59a2f84ba0b4c060232acec0363f",
+    "sources": [
+      "MERRA2",
+      "POWER"
+    ],
+    "days": 29,
+    "missing_days": 0,
+    "support": "regional model at approximate public locality example, not a confirmed farm"
+  },
+  {
+    "pilot": "us_ia_story",
+    "query_point": {
+      "latitude": 42.03,
+      "longitude": -93.62
+    },
+    "parameter": "PRECTOTCORR",
+    "file": "us_ia_story_PRECTOTCORR.real.json",
+    "retrieved_at": "2026-11-14T11:17:23.472825+00:00",
+    "response_sha256": "65220b9ab44f7f0186450d6c1b4af890c45ece53a78200a9e40297e9d449e324",
+    "sources": [
+      "MERRA2"
+    ],
+    "days": 29,
+    "missing_days": 0,
+    "support": "regional model at approximate public locality example, not a confirmed farm"
+  },
+  {
+    "pilot": "us_ks_tribune",
+    "query_point": {
+      "latitude": 38.47,
+      "longitude": -101.75
+    },
+    "parameter": "T2M_MIN",
+    "file": "us_ks_tribune_T2M_MIN.real.json",
+    "retrieved_at": "2026-11-14T11:17:24.376275+00:00",
+    "response_sha256": "e0297e8df82fcfc60ed0a7b992cf9cdf7eaacc26f89bc48d69b69552b4e00d5c",
+    "sources": [
+      "MERRA2",
+      "POWER"
+    ],
+    "days": 29,
+    "missing_days": 0,
+    "support": "regional model at approximate public locality example, not a confirmed farm"
+  },
+  {
+    "pilot": "us_ks_tribune",
+    "query_point": {
+      "latitude": 38.47,
+      "longitude": -101.75
+    },
+    "parameter": "T2M_MAX",
+    "file": "us_ks_tribune_T2M_MAX.real.json",
+    "retrieved_at": "2026-11-14T11:17:25.882645+00:00",
+    "response_sha256": "3b9ecf5256af63fd6e77655fa7330066110798bd6ce31ccfecec05242947dd52",
+    "sources": [
+      "MERRA2",
+      "POWER"
+    ],
+    "days": 29,
+    "missing_days": 0,
+    "support": "regional model at approximate public locality example, not a confirmed farm"
+  },
+  {
+    "pilot": "us_ks_tribune",
+    "query_point": {
+      "latitude": 38.47,
+      "longitude": -101.75
+    },
+    "parameter": "PRECTOTCORR",
+    "file": "us_ks_tribune_PRECTOTCORR.real.json",
+    "retrieved_at": "2026-11-14T11:17:27.364042+00:00",
+    "response_sha256": "ea71a8d0500065b8135467016152f6758cebcc7821ac449b1f2cc6a3d8da3f7f",
+    "sources": [
+      "MERRA2"
+    ],
+    "days": 29,
+    "missing_days": 0,
+    "support": "regional model at approximate public locality example, not a confirmed farm"
+  },
+  {
+    "pilot": "us_ar_stuttgart",
+    "query_point": {
+      "latitude": 34.5,
+      "longitude": -91.55
+    },
+    "parameter": "T2M_MIN",
+    "file": "us_ar_stuttgart_T2M_MIN.real.json",
+    "retrieved_at": "2026-11-14T11:17:27.927398+00:00",
+    "response_sha256": "a317ee3d350225c33b18d3fbcd05fa1f925275628083264db5290e2b1139663b",
+    "sources": [
+      "MERRA2",
+      "POWER"
+    ],
+    "days": 29,
+    "missing_days": 0,
+    "support": "regional model at approximate public locality example, not a confirmed farm"
+  },
+  {
+    "pilot": "us_ar_stuttgart",
+    "query_point": {
+      "latitude": 34.5,
+      "longitude": -91.55
+    },
+    "parameter": "T2M_MAX",
+    "file": "us_ar_stuttgart_T2M_MAX.real.json",
+    "retrieved_at": "2026-11-14T11:17:29.340826+00:00",
+    "response_sha256": "9ac0e4f1759c7f010a37ac615ae53d8481d281d64cfe8712933bca564a5c3ccb",
+    "sources": [
+      "MERRA2",
+      "POWER"
+    ],
+    "days": 29,
+    "missing_days": 0,
+    "support": "regional model at approximate public locality example, not a confirmed farm"
+  },
+  {
+    "pilot": "us_ar_stuttgart",
+    "query_point": {
+      "latitude": 34.5,
+      "longitude": -91.55
+    },
+    "parameter": "PRECTOTCORR",
+    "file": "us_ar_stuttgart_PRECTOTCORR.real.json",
+    "retrieved_at": "2026-11-14T11:17:30.776823+00:00",
+    "response_sha256": "e330831e1da5d8fe9b2e3960967cd39d8205dd2678db8e5670f4ae85e1022710",
+    "sources": [
+      "MERRA2"
+    ],
+    "days": 29,
+    "missing_days": 0,
+    "support": "regional model at approximate public locality example, not a confirmed farm"
+  },
+  {
+    "pilot": "au_nsw_riverina",
+    "query_point": {
+      "latitude": -34.29,
+      "longitude": 146.05
+    },
+    "parameter": "T2M_MIN",
+    "file": "au_nsw_riverina_T2M_MIN.real.json",
+    "retrieved_at": "2026-11-14T11:17:31.344898+00:00",
+    "response_sha256": "b2b93bb341dad8d94e2f956af66ea373ab12765912cb8fcb0e91e71b7c2b0545",
+    "sources": [
+      "MERRA2",
+      "POWER"
+    ],
+    "days": 29,
+    "missing_days": 0,
+    "support": "regional model at approximate public locality example, not a confirmed farm"
+  },
+  {
+    "pilot": "au_nsw_riverina",
+    "query_point": {
+      "latitude": -34.29,
+      "longitude": 146.05
+    },
+    "parameter": "T2M_MAX",
+    "file": "au_nsw_riverina_T2M_MAX.real.json",
+    "retrieved_at": "2026-11-14T11:17:31.899649+00:00",
+    "response_sha256": "d1b937f629425dfdba9155733c7c885729e0e95cd32917ecb3aa30bba133b26f",
+    "sources": [
+      "MERRA2",
+      "POWER"
+    ],
+    "days": 29,
+    "missing_days": 0,
+    "support": "regional model at approximate public locality example, not a confirmed farm"
+  },
+  {
+    "pilot": "au_nsw_riverina",
+    "query_point": {
+      "latitude": -34.29,
+      "longitude": 146.05
+    },
+    "parameter": "PRECTOTCORR",
+    "file": "au_nsw_riverina_PRECTOTCORR.real.json",
+    "retrieved_at": "2026-11-14T11:17:32.755458+00:00",
+    "response_sha256": "cc8f172f0f85b6bf8a62b66b0ccdb8229785b6698215493c1d7fa5029851809a",
+    "sources": [
+      "MERRA2"
+    ],
+    "days": 29,
+    "missing_days": 0,
+    "support": "regional model at approximate public locality example, not a confirmed farm"
+  }
+]
