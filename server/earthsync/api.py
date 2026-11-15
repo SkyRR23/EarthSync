@@ -12,6 +12,7 @@ from pydantic import ValidationError
 
 from .models import SeasonQuery, SeasonResponse
 from .power import PowerProvider, ProviderError
+from .soil import router as soil_router
 
 
 class SeasonCache:
@@ -46,7 +47,7 @@ class SeasonCache:
             return value
 
 
-def create_app(provider=None, cache=None):
+def create_app(provider=None, cache=None, soil_estimator=None):
     @asynccontextmanager
     async def lifespan(app):
         async with httpx.AsyncClient(
@@ -87,6 +88,10 @@ def create_app(provider=None, cache=None):
                 },
             },
         )
+
+    # Field Shift photo soil check (see soil.py); injectable for tests.
+    app.state.soil_estimator = soil_estimator
+    app.include_router(soil_router)
 
     @app.get("/api/v1/health")
     async def health():

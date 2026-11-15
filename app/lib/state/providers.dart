@@ -16,6 +16,7 @@ import '../data/engine/web_engine.dart';
 import '../data/models/farmer_input.dart';
 import '../data/models/soil_texture.dart';
 import '../data/photos/photo_store.dart';
+import '../data/soil/soil_ai_client.dart';
 import '../data/models/field_analysis.dart';
 import '../data/models/field_note.dart';
 
@@ -50,6 +51,9 @@ final cloudSyncProvider = Provider<CloudSync?>((ref) => null);
 
 /// The app's photo folder. Null on web and in tests (no photos there).
 final photoStoreProvider = Provider<PhotoStore?>((ref) => null);
+
+/// Photo soil check (backend + Claude). Overridden in tests.
+final soilAiProvider = Provider<SoilAiClient>((ref) => SoilAiClient());
 
 /// Last full calendar year (Jan–Dec). NASA POWER's newest months arrive
 /// late and the backend refuses incomplete ones, so in Jan–Feb we step back
@@ -99,6 +103,9 @@ class FarmerDraft {
     this.farm,
     this.soilTexture,
     this.soilCheckedOn,
+    this.soilSource,
+    this.soilConfidence,
+    this.soilSigns = const [],
   });
 
   /// The pin from setup (one tap or GPS).
@@ -117,6 +124,15 @@ class FarmerDraft {
   /// Farmer's soil feel test (engine name, e.g. `clay_loam`); kUnknown = not sure.
   final String? soilTexture;
   final DateTime? soilCheckedOn;
+
+  /// `hand_test` or `ai_estimate` (never a lab value).
+  final String? soilSource;
+
+  /// `low` / `medium` / `high` for an AI estimate.
+  final String? soilConfidence;
+
+  /// Visible soil signs (wire names: `white_crust`, `grey_spots`, ...).
+  final List<String> soilSigns;
 
   bool get hasLocation => latitude != null && longitude != null;
   bool get hasFarm => farm?.isComplete ?? false;
@@ -145,6 +161,9 @@ class FarmerDraft {
     FarmBoundary? farm,
     String? soilTexture,
     DateTime? soilCheckedOn,
+    String? soilSource,
+    String? soilConfidence,
+    List<String>? soilSigns,
   }) => FarmerDraft(
     latitude: latitude ?? this.latitude,
     longitude: longitude ?? this.longitude,
@@ -157,6 +176,9 @@ class FarmerDraft {
     farm: farm ?? this.farm,
     soilTexture: soilTexture ?? this.soilTexture,
     soilCheckedOn: soilCheckedOn ?? this.soilCheckedOn,
+    soilSource: soilSource ?? this.soilSource,
+    soilConfidence: soilConfidence ?? this.soilConfidence,
+    soilSigns: soilSigns ?? this.soilSigns,
   );
 
   FarmerInput toInput() {
@@ -165,9 +187,9 @@ class FarmerDraft {
       latitude: fieldLatitude!,
       longitude: fieldLongitude!,
       boundary: farm?.toJson() ?? const [],
-      soilTexture: (soilTexture == null || soilTexture == kUnknown)
-          ? null
-          : soilTexture,
+      // 12 soil types -> the 6 today's engine (v0.2) understands.
+      soilTexture: engineSoilName(soilTexture),
+      soilClass: soilClassFromName(soilTexture)?.wireName,
       currentCrop: crop(currentCrop),
       recentRotation: [if (crop(previousCrop) != null) previousCrop!],
       plantingMonth: (plantingMonth == null || plantingMonth == 0)
@@ -191,6 +213,9 @@ class FarmerDraft {
     'farm': farm?.toJson(),
     'soil_texture': soilTexture,
     'soil_checked_on': soilCheckedOn?.toIso8601String(),
+    'soil_source': soilSource,
+    'soil_confidence': soilConfidence,
+    'soil_signs': soilSigns,
   };
 
   factory FarmerDraft.fromJson(Map<String, dynamic> j) {
@@ -211,6 +236,11 @@ class FarmerDraft {
       farm: FarmBoundary.fromJson(j['farm']),
       soilTexture: j['soil_texture'] as String?,
       soilCheckedOn: DateTime.tryParse(j['soil_checked_on'] as String? ?? ''),
+      soilSource: j['soil_source'] as String?,
+      soilConfidence: j['soil_confidence'] as String?,
+      soilSigns: [
+        for (final x in (j['soil_signs'] as List? ?? const [])) x as String,
+      ],
     );
   }
 }
@@ -250,6 +280,9 @@ class FarmerDraftNotifier extends Notifier<FarmerDraft> {
           irrigation: d.irrigation?.name,
           drainage: d.drainage?.name,
           soilTexture: d.soilTexture,
+          soilSource: d.soilSource,
+          soilConfidence: d.soilConfidence,
+          soilSigns: d.soilSigns,
         );
   }
 
@@ -278,6 +311,12 @@ class FarmerDraftNotifier extends Notifier<FarmerDraft> {
       drainage: e(Drainage.values, answers['drainage']),
       farm: boundary,
       soilTexture: answers['soil_texture'] as String?,
+      soilSource: answers['soil_source'] as String?,
+      soilConfidence: answers['soil_confidence'] as String?,
+      soilSigns: [
+        for (final x in (answers['soil_signs'] as List? ?? const []))
+          x as String,
+      ],
     );
     state = restored;
     ref
@@ -317,15 +356,27 @@ class FarmerDraftNotifier extends Notifier<FarmerDraft> {
         // Soil belongs to the place: keep it only for a nearby pin.
         soilTexture: keepSoil ? state.soilTexture : null,
         soilCheckedOn: keepSoil ? state.soilCheckedOn : null,
+        soilSource: keepSoil ? state.soilSource : null,
+        soilConfidence: keepSoil ? state.soilConfidence : null,
+        soilSigns: keepSoil ? state.soilSigns : const [],
       ),
     );
   }
 
   /// Result of the soil feel test (null = farmer not sure).
-  void setSoil(SoilTexture? t) => _set(
+  /// Result of the soil check (null class = farmer or AI not sure).
+  void setSoilResult({
+    required SoilClass? soilClass,
+    required String source,
+    String? confidence,
+    List<SoilSign> signs = const [],
+  }) => _set(
     state.copyWith(
-      soilTexture: t?.engineName ?? kUnknown,
+      soilTexture: soilClass?.wireName ?? kUnknown,
       soilCheckedOn: DateTime.now(),
+      soilSource: source,
+      soilConfidence: confidence,
+      soilSigns: [for (final x in signs) x.wire],
     ),
   );
 
@@ -346,6 +397,9 @@ class FarmerDraftNotifier extends Notifier<FarmerDraft> {
       priorities: state.priorities,
       soilTexture: state.soilTexture,
       soilCheckedOn: state.soilCheckedOn,
+      soilSource: state.soilSource,
+      soilConfidence: state.soilConfidence,
+      soilSigns: state.soilSigns,
     ),
   );
   void setCurrentCrop(String v) => _set(state.copyWith(currentCrop: v));
@@ -368,6 +422,9 @@ class FarmerDraftNotifier extends Notifier<FarmerDraft> {
       farm: state.farm,
       soilTexture: state.soilTexture,
       soilCheckedOn: state.soilCheckedOn,
+      soilSource: state.soilSource,
+      soilConfidence: state.soilConfidence,
+      soilSigns: state.soilSigns,
     ),
   );
 

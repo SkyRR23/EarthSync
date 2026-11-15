@@ -62,6 +62,9 @@ class CloudSync {
     required String? irrigation,
     required String? drainage,
     String? soilTexture,
+    String? soilSource,
+    String? soilConfidence,
+    List<String> soilSigns = const [],
   }) {
     final id = uid;
     if (id == null || pinLat == null || pinLon == null) return;
@@ -86,6 +89,9 @@ class CloudSync {
           'irrigation': irrigation,
           'drainage': drainage,
           'soil_texture': soilTexture,
+          'soil_source': soilSource,
+          'soil_confidence': soilConfidence,
+          'soil_signs': soilSigns,
         },
         'updated_at': FieldValue.serverTimestamp(),
       }),

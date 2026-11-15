@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../app/strings.dart';
 import '../../data/models/field_analysis.dart';
@@ -161,6 +162,15 @@ class AnalysisGate extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(analysisProvider);
+    final draft = ref.watch(farmerDraftProvider);
+    if (state is AnalysisIdle) {
+      // Nothing to check without a farm pin: say so instead of spinning.
+      if (!draft.hasLocation) return const _NoFarm();
+      // A farm but no check yet (e.g. after Start over): start one.
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => ref.read(analysisProvider.notifier).ensureFor(draft),
+      );
+    }
     return switch (state) {
       AnalysisReady(:final analysis, :final fromCache) => builder(
         analysis,
@@ -260,4 +270,23 @@ class _Failed extends ConsumerWidget {
       ),
     );
   }
+}
+
+class _NoFarm extends StatelessWidget {
+  const _NoFarm();
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    backgroundColor: context.fs.background,
+    body: SafeArea(
+      child: FsMessageView(
+        icon: CupertinoIcons.map_pin_ellipse,
+        title: S.noFarmTitle,
+        message: S.noFarmBody,
+        actions: [
+          FsButton(S.pinMyFarm, onPressed: () => context.push('/location')),
+        ],
+      ),
+    ),
+  );
 }

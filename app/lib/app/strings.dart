@@ -65,6 +65,10 @@ abstract final class S {
   static const noInternet = "No internet right now. Tap to try again.";
   static const notFound = "This crop plan isn't available any more.";
   static const demoData = 'Practice data — not your real farm yet';
+  static const noFarmTitle = 'Pin your farm first';
+  static const noFarmBody =
+      'We need to know where your farm is before we can check crops and weather.';
+  static const pinMyFarm = 'Pin my farm';
 
   // Crops tab
   static const nextSeason = 'Next season';
@@ -181,9 +185,9 @@ abstract final class S {
   static const removePhoto = 'Remove photo';
   static const photoInCloud = 'Photo saved online';
 
-  // Soil feel test (farmer-reported texture, FAO "texture by feel")
+  // Soil check: 2 photos + hand test, checked by AI on the backend
   static const soilTitle = 'Check your soil';
-  static const soilCard = 'Feel your soil with your hands. 1 minute.';
+  static const soilCard = 'Take 2 photos and feel your soil. About 1 minute.';
   static const soil = 'Soil';
   static const soilNotChecked = 'Not checked';
   static const soilIntroTitle = 'Get your soil ready';
@@ -191,28 +195,56 @@ abstract final class S {
   static const soilIntro2 = 'Remove stones and roots.';
   static const soilIntro3 =
       'Add water little by little until it feels like soft putty.';
-  static const soilPhotoHint =
-      'You can take a photo of your soil. It is saved in your notes.';
   static const start = 'Start';
-  static const qBall = 'Squeeze it in your hand. Does it make a ball?';
-  static const ballYes = 'Makes a ball';
-  static const ballNo = 'Falls apart';
-  static const qRibbon =
-      'Push it out between thumb and finger. How long is the ribbon before it breaks?';
-  static const ribbonNone = 'No ribbon';
+  static const photoGroundTitle = 'Photo 1: your soil';
+  static const photoGroundHint =
+      'Take a photo of the soil on the ground, in daylight, close up.';
+  static const photoSqueezeTitle = 'Photo 2: squeeze it';
+  static const photoSqueezeHint =
+      'Squeeze the wet soil in your hand, open your hand, and take a photo.';
+  static const skipPhoto = 'Skip photo';
+  static const retakePhoto = 'Take again';
+  static const qRibbon = 'Push it out between thumb and finger. What happens?';
+  static const ribbonFallsApart = 'Falls apart';
+  static const ribbonNone = 'Ball, no ribbon';
   static const ribbonShort = 'Short (under 2.5 cm)';
   static const ribbonMedium = 'Medium (2.5–5 cm)';
   static const ribbonLong = 'Long (over 5 cm)';
   static const qFeel = 'Rub a little wet soil. How does it feel?';
   static const feelGritty = 'Gritty';
   static const feelSmooth = 'Smooth like flour';
-  static const feelNeither = 'Neither';
+  static const feelSticky = 'Sticky';
+  static const qSigns = 'What do you see in your field?';
+  static const signsHint = 'Tap all that you see, then Next.';
+  static const signCracks = 'Cracks when dry';
+  static const signWhiteCrust = 'White crust';
+  static const signGreySpots = 'Grey or blue spots';
+  static const signStones = 'Many stones';
+  static const signDarkTopsoil = 'Dark top soil';
+  static const signWaterlogged = 'Water stays on top';
+  static const signRootsOrWorms = 'Roots or worms';
+  static const checkingSoil = 'Checking your soil…';
   static const soilResult = 'Your soil';
+  static const soilFromAi =
+      'AI estimate from your photos and answers. Not a lab test.';
   static const soilFromHands = 'From your hand test. Not a lab test.';
+  static const soilAiFailed =
+      "The photo check didn't work right now, so this is from your hand test.";
+  static const soilAiUnsure =
+      'The photos were not clear enough, so this is from your hand test.';
   static const soilUnsure =
-      "That's OK. We will use satellite soil data when it is ready.";
+      "We can't tell yet. Try again with a clearer photo, or ask a helper.";
+  static String confidenceLabel(String c) => switch (c) {
+    'high' => 'High confidence',
+    'medium' => 'Medium confidence',
+    _ => 'Low confidence',
+  };
+  static String handTestSaid(String label) => 'Your hand test said: $label';
+  static const signsSeen = 'Signs';
+  static const aiShort = 'AI';
   static const saveSoil = 'Save';
-  static String soilNote(String label) => 'Soil test: $label';
+  static String soilNote(String label) => 'Soil check: $label';
+  static const squeezedSoilNote = 'Squeezed soil';
 
   // Live NASA data (team integration)
   static const provenanceHeader = 'Where the weather comes from';

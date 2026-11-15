@@ -38,6 +38,7 @@ class FarmerInput {
     this.priorities = const [],
     this.boundary = const [],
     this.soilTexture,
+    this.soilClass,
   });
 
   /// Field location used for every calculation: the farm centre once the
@@ -49,8 +50,11 @@ class FarmerInput {
   /// server request; the on-device engine uses [latitude]/[longitude].
   final List<List<double>> boundary;
 
-  /// Farmer's soil feel test, engine name (`clay_loam`…); null = not checked.
+  /// Soil for today's engine: one of its 6 names (`clay_loam`…); null = not known.
   final String? soilTexture;
+
+  /// The full 12-type soil name (`silty_clay_loam`…), for the backend/v0.3.
+  final String? soilClass;
 
   /// null = farmer does not know / did not say.
   final String? currentCrop;
@@ -73,6 +77,7 @@ class FarmerInput {
     'priorities': priorities.map(_priorityToJson).toList(),
     'field_boundary': boundary,
     'soil_texture': soilTexture,
+    'soil_class': soilClass,
   };
 
   static String _priorityToJson(Priority p) => switch (p) {

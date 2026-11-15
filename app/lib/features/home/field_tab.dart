@@ -146,10 +146,12 @@ String answerDrain(Drainage? d) => switch (d) {
   _ => S.dontKnow,
 };
 
-String answerSoil(String? texture) {
+String answerSoil(FarmerDraft d) {
+  final texture = d.soilTexture;
   if (texture == null) return S.soilNotChecked;
-  final t = soilTextureFromName(texture);
-  return t == null ? S.dontKnow : '${t.emoji} ${t.label}';
+  final c = soilClassFromName(texture);
+  if (c == null) return S.dontKnow;
+  return '${c.emoji} ${c.label}${d.soilSource == 'ai_estimate' ? ' · ${S.aiShort}' : ''}';
 }
 
 /// "2025" for a whole year, "Mar – Sep 2025", or "Nov 2024 – Feb 2025".
@@ -176,7 +178,7 @@ String shareSummary(FarmerDraft d, FieldAnalysis a) {
     ..writeln('${S.growNow}: ${answerCrop(d.currentCrop)}')
     ..writeln('${S.water}: ${answerWater(d.irrigation)}')
     ..writeln('${S.drainage}: ${answerDrain(d.drainage)}')
-    ..writeln('${S.soil}: ${answerSoil(d.soilTexture)}')
+    ..writeln('${S.soil}: ${answerSoil(d)}')
     ..writeln();
   for (final (s, label, _) in sortedByFit(a.scenarios)) {
     final (fit, _, _) = feasibilityStyle(s.eligibility);
@@ -382,7 +384,7 @@ class _FieldTabState extends ConsumerState<FieldTab> {
                 color: p.crop2,
               ),
               title: S.soil,
-              value: answerSoil(d.soilTexture),
+              value: answerSoil(d),
               onTap: () => context.push('/soil-test'),
             ),
           ],
