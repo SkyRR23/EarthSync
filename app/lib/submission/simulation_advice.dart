@@ -54,7 +54,7 @@ class SimulationAdvicePanel extends ConsumerWidget {
             TextButton(onPressed:()=>ref.read(taskMarksProvider.notifier).mark('water_ok',dayKey(date)),child:const Text('I checked: soil is wet')),
           ]),
           if(task['id']=='record' || task['id']=='pests') TextButton(onPressed:(){ final tabs = HomeTabs.of(context); if(tabs != null) { tabs.go(3); } else { context.go('/home?tab=3'); } },child:const Text('Open farm records')),
-        ]))))]),
+        ])))]),
       ),
     ]);
   }
