@@ -23,10 +23,20 @@ Future<String> analyzeIntegrationJson({required String requestJson}) => RustLib
 /// then runs the real engine. Location and climate stay synthetic and are
 /// labelled `synthetic_demo` by the engine.
 ///
-/// `farmer_json` keys (all optional): `current_crop` (string),
+/// `farmer_json` keys (all optional): `latitude`/`longitude` (the farm centre,
+/// applied to both `field` and `environment` so the engine checks this farm),
+/// `current_crop` (string),
 /// `irrigation` ("full" | "partial" | "none" | "unknown"),
 /// `drainage` ("poor" | "moderate" | "good" | "unknown").
 Future<String> analyzeSyntheticDemoJson({required String farmerJson}) => RustLib
     .instance
     .api
     .crateApiBridgeAnalyzeSyntheticDemoJson(farmerJson: farmerJson);
+
+/// FAO-56 daily grass reference ET0 from NASA POWER days, computed by the
+/// team engine (`v03::water`). Returns the engine's JSON unchanged. It is a
+/// reference value for short grass: no crop rule and no irrigation advice.
+Future<String> referenceEt0Json({required String requestJson}) => RustLib
+    .instance
+    .api
+    .crateApiBridgeReferenceEt0Json(requestJson: requestJson);

@@ -22,30 +22,20 @@ class RustEngine implements EngineGateway {
       String.fromEnvironment('CLIMATE_MODE', defaultValue: 'live') ==
       'synthetic_demo';
   static bool _ready = false;
-  static Future<void>? _initializing;
 
-  /// Load on demand so browsing climate never depends on native engine startup.
+  /// Call once before runApp when ENGINE=rust.
   static Future<void> init() async {
     if (_ready) return;
-    try {
-      await (_initializing ??= RustLib.init());
-      _ready = true;
-    } catch (_) {
-      _initializing = null;
-      rethrow;
-    }
+    await RustLib.init();
+    _ready = true;
   }
 
   @override
   Future<FieldAnalysis> analyzeField(FarmerInput input) async {
-    try {
-      await init();
-    } catch (_) {
+    if (!_ready) {
       throw const EngineError(
         code: 'bridge_not_ready',
-        message:
-            'The analysis engine did not start. You can still explore climate on the dashboard.',
-        retryable: true,
+        message: 'The analysis engine did not start.',
       );
     }
     if (!syntheticDemo) {
@@ -60,9 +50,13 @@ class RustEngine implements EngineGateway {
       );
     }
     final farmer = jsonEncode({
+      // The farm centre (or setup pin): the engine checks this spot.
+      'latitude': input.latitude,
+      'longitude': input.longitude,
       'current_crop': input.currentCrop,
       'irrigation': input.irrigation.name,
       'drainage': input.drainage.name,
+      'soil_texture': input.soilTexture,
     });
     final envelope = await rust.analyzeSyntheticDemoJson(farmerJson: farmer);
     return fieldAnalysisFromEnvelope(envelope);

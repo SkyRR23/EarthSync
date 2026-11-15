@@ -48,3 +48,6 @@ app.*.map.json
 
 # Rust
 rust/target/
+
+# Firebase CLI deploy cache
+.firebase/

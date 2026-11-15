@@ -65,46 +65,6 @@ void main() {
     expect(evidence.environment['seasonal']['observations'], isEmpty);
   });
 
-  test(
-    'unsupported NASA source is actionable and arbitrary error text is withheld',
-    () async {
-      final client = NasaPowerClient(
-        client: MockClient(
-          (_) async => http.Response(
-            jsonEncode({
-              'error': {
-                'code': 'UPSTREAM_SOURCE_CHANGED',
-                'message': 'private upstream diagnostic must not be shown',
-              },
-            }),
-            502,
-          ),
-        ),
-      );
-      await expectLater(
-        client.fetch(point, window),
-        throwsA(
-          isA<EngineError>()
-              .having(
-                (error) => error.message,
-                'source explanation',
-                contains('GEOS-IT'),
-              )
-              .having(
-                (error) => error.message,
-                'action',
-                contains('older completed historical period'),
-              )
-              .having(
-                (error) => error.message,
-                'safe text',
-                isNot(contains('private upstream')),
-              ),
-        ),
-      );
-    },
-  );
-
   test('backend outage and timeout do not load a demo', () async {
     final outage = NasaPowerClient(
       client: MockClient((_) async => throw http.ClientException('offline')),

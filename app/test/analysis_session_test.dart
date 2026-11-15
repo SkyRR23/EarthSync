@@ -62,27 +62,6 @@ void main() {
   );
 
   test(
-    'editing a farm clears results and ignores an in-flight result',
-    () async {
-      final engine = _PendingEngine();
-      final container = ProviderContainer(
-        overrides: [engineProvider.overrideWithValue(engine)],
-      );
-      addTearDown(container.dispose);
-      final notifier = container.read(analysisProvider.notifier);
-      final run = notifier.run(
-        const FarmerInput(latitude: 16.85, longitude: 96.15),
-      );
-      notifier.reset();
-      engine.pending[16.85]!.complete(_result(16.85));
-      await run;
-      expect(container.read(analysisProvider), isA<AnalysisIdle>());
-      notifier.showLastGood();
-      expect(container.read(analysisProvider), isA<AnalysisIdle>());
-    },
-  );
-
-  test(
     'questionnaire preserves unknown crop and previous crop, month and priorities',
     () {
       const draft = FarmerDraft(

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:earthsync/app/strings.dart';
 import 'package:earthsync/data/engine/mock_engine.dart';
 import 'package:earthsync/data/models/farmer_input.dart';
 import 'package:earthsync/data/models/field_analysis.dart';
@@ -10,7 +11,6 @@ import 'package:earthsync/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 FieldAnalysis _fixture() => FieldAnalysis.fromJson(
   jsonDecode(
@@ -42,30 +42,35 @@ void main() {
     expect(a.scenarios, isNotEmpty);
   });
 
-  testWidgets('welcome screen offers optional location', (tester) async {
-    SharedPreferences.setMockInitialValues({});
+  testWidgets('welcome screen shows the team design start', (tester) async {
     await tester.pumpWidget(const ProviderScope(child: FieldShiftApp()));
-    await tester.pumpAndSettle();
-    expect(find.text('Use My Location'), findsOneWidget);
-    expect(find.text('Skip for Now'), findsOneWidget);
+    await tester.pump();
+    expect(find.text(S.setupTitle), findsOneWidget);
+    expect(find.text(S.getStartedSetup), findsOneWidget);
   });
 
-  testWidgets('scenario card shows title, status and no percentages', (
+  testWidgets('crop card and detail show fit word and no percentages', (
     tester,
   ) async {
-    final s = _fixture().scenarios[1];
+    final a = _fixture();
+    final s = a.scenarios[1];
     await tester.pumpWidget(
       MaterialApp(
         theme: fsTheme(),
         home: Scaffold(
           body: SingleChildScrollView(
-            child: FsScenarioCard(scenario: s, optionNumber: 1),
+            child: Column(
+              children: [
+                FsCropCard(scenario: s, onTap: () {}),
+                ScenarioDetailBody(scenario: s, label: 'Option 1', analysis: a),
+              ],
+            ),
           ),
         ),
       ),
     );
-    expect(find.text(s.title), findsOneWidget);
-    expect(find.text('Partly limited'), findsOneWidget);
+    expect(find.text(cropNames(s)), findsNWidgets(2));
+    expect(find.text(S.constrained), findsWidgets);
     expect(find.textContaining('%'), findsNothing);
   });
 }

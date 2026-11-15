@@ -1,0 +1,53 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "fieldshift-yangon-2026",
+          "appId": "1:1000987910079:android:a302effd5bcf7689840b0a",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "fieldshift-yangon-2026",
+          "appId": "1:1000987910079:ios:3c06cecb9c3761e2840b0a",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "fieldshift-yangon-2026",
+          "configurations": {
+            "android": "1:1000987910079:android:a302effd5bcf7689840b0a",
+            "ios": "1:1000987910079:ios:3c06cecb9c3761e2840b0a",
+            "web": "1:1000987910079:web:b14365243626f6a0840b0a"
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "hosting": {
+    "public": "hosting",
+    "ignore": [
+      "firebase.json",
+      "**/.*"
+    ],
+    "rewrites": [
+      {
+        "source": "/api/**",
+        "run": {
+          "serviceId": "fieldshift-backend",
+          "region": "asia-southeast1"
+        }
+      }
+    ]
+  },
+  "storage": {
+    "rules": "storage.rules"
+  }
+}

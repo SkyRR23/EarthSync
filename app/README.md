@@ -7,6 +7,7 @@ NASA Space Apps 2026 · farmer crop-rotation explorer. Design: [docs/flutter-des
 ```bash
 flutter run                              # native Rust engine, live backend required
 flutter run --dart-define=ENGINE=rust    # on-device Rust engine via flutter_rust_bridge
+flutter run --dart-define-from-file=config/cloud.json  # Rust + hosted NASA backend (Firebase Hosting -> Cloud Run, Singapore)
 flutter run --dart-define=ENGINE=mock --dart-define=MOCK_FAIL=true # test the error screen
 ```
 
@@ -98,9 +99,3 @@ See [the web demo runbook](../docs/WEB_DEMO.md). Run `../Run-WebDemo.ps1` from
 PowerShell (or `./Run-WebDemo.ps1` from the repository root). Browser analysis
 calls the actual compiled engine through a separate local Python service;
 Android continues to use the on-device FRB bridge.
-
-## Global onboarding and dashboard (7A)
-
-Start with an optional user area or skip to global exploration. Add and explicitly
-confirm a farm separately before opening the agricultural questionnaire. See
-[Milestone 7A architecture, privacy and Windows/Android commands](../docs/MILESTONE_7A.md).

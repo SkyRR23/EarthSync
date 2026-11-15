@@ -1,0 +1,47 @@
+name: Submission APK
+on:
+  push:
+    branches: [integration/earthsync-submission-timeline]
+    paths: ['app/**', 'engine/**', '.github/workflows/submission-android.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: dtolnay/rust-toolchain@1.99.0
+        with:
+          targets: aarch64-linux-android,armv7-linux-androideabi,x86_64-linux-android
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.0'
+          channel: stable
+          cache: true
+      - name: Install Android toolchain
+        run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0' 'ndk;28.2.13676358'
+      - name: Resolve locked dependencies
+        working-directory: app
+        run: flutter pub get --enforce-lockfile
+      - name: Build sideload submission APK
+        working-directory: app
+        run: flutter build apk --release --dart-define-from-file=config/cloud.json
+      - name: Record source and checksum
+        run: |
+          mkdir -p submission
+          cp app/build/app/outputs/flutter-apk/app-release.apk submission/EarthSync-submission.apk
+          printf '%s\n' "$GITHUB_SHA" > submission/SOURCE_COMMIT.txt
+          cd submission
+          sha256sum EarthSync-submission.apk > EarthSync-submission.apk.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: earthsync-submission-apk
+          path: submission/
+          retention-days: 30
+          if-no-files-found: error

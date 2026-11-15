@@ -2,12 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Take photos of your soil and field for your notes.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Choose photos of your soil and field for your notes.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>EarthSync uses your location once to mark your field on the map. It is not shared.</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Earthsync</string>
+	<string>EarthSync</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -26,10 +32,6 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>Select a field photo as farmer-supplied evidence.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Choose a field photo. Location metadata is read only with your consent.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

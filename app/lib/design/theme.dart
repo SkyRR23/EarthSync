@@ -1,126 +1,153 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'tokens.dart';
 
-ThemeData fsTheme({Brightness brightness = Brightness.light}) {
-  final dark = brightness == Brightness.dark;
-  final scheme = ColorScheme.fromSeed(
-    seedColor: FsColors.primary,
-    brightness: brightness,
-    primary: dark ? FsColors.darkPrimary : FsColors.primary,
-    surface: dark ? FsColors.darkSurface : FsColors.surface,
-    error: dark ? const Color(0xFFFFB4AB) : FsColors.riskHigh,
+const _font = 'Inter';
+
+TextTheme _textTheme(FsPalette p) {
+  TextStyle s(
+    double size,
+    FontWeight w,
+    double height, {
+    double tracking = 0,
+  }) => TextStyle(
+    fontFamily: _font,
+    fontSize: size,
+    fontWeight: w,
+    height: height,
+    letterSpacing: tracking,
+    color: p.label,
   );
-  final base = ThemeData(
+  return TextTheme(
+    displaySmall: s(
+      32,
+      FontWeight.w700,
+      1.18,
+      tracking: -0.8,
+    ).copyWith(color: p.heading), // large title
+    headlineMedium: s(
+      28,
+      FontWeight.w700,
+      1.22,
+      tracking: -0.6,
+    ).copyWith(color: p.heading), // title 1
+    headlineSmall: s(22, FontWeight.w700, 1.27, tracking: -0.4), // title 2
+    titleLarge: s(20, FontWeight.w600, 1.3, tracking: -0.3), // title 3
+    titleMedium: s(17, FontWeight.w600, 1.35, tracking: -0.2), // headline
+    bodyLarge: s(17, FontWeight.w400, 1.4, tracking: -0.2), // body
+    bodyMedium: s(16, FontWeight.w400, 1.4, tracking: -0.15), // callout
+    labelLarge: s(17, FontWeight.w600, 1.2, tracking: -0.2), // buttons
+    labelMedium: s(15, FontWeight.w400, 1.35, tracking: -0.1), // subhead
+    bodySmall: s(
+      13,
+      FontWeight.w400,
+      1.38,
+    ).copyWith(color: p.secondaryLabel), // footnote
+    labelSmall: s(
+      12,
+      FontWeight.w400,
+      1.33,
+    ).copyWith(color: p.secondaryLabel), // caption
+  );
+}
+
+ThemeData _build(FsPalette p, Brightness b) {
+  final text = _textTheme(p);
+  final scheme = ColorScheme(
+    brightness: b,
+    primary: p.tint,
+    onPrimary: p.onTint,
+    primaryContainer: p.tintSoft,
+    onPrimaryContainer: p.positiveText,
+    secondary: p.secondaryLabel,
+    onSecondary: p.surface,
+    surface: p.surface,
+    onSurface: p.label,
+    onSurfaceVariant: p.secondaryLabel,
+    surfaceContainerHighest: p.fill,
+    outline: p.fillStrong,
+    outlineVariant: p.separator,
+    error: p.negativeText,
+    onError: p.surface,
+  );
+
+  return ThemeData(
     useMaterial3: true,
+    brightness: b,
     colorScheme: scheme,
-    fontFamily: 'EarthSyncSans',
-    fontFamilyFallback: const ['NotoSansMyanmar'],
-  );
-  final text = base.textTheme
-      .copyWith(
-        headlineLarge: const TextStyle(
-          fontSize: 36,
-          fontWeight: FontWeight.w700,
-          height: 1.15,
-          letterSpacing: -1.1,
-        ),
-        headlineMedium: const TextStyle(
-          fontSize: 28,
-          fontWeight: FontWeight.w700,
-          height: 1.2,
-          letterSpacing: -.6,
-        ),
-        titleLarge: const TextStyle(
-          fontSize: 21,
-          fontWeight: FontWeight.w700,
-          height: 1.3,
-        ),
-        titleMedium: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w700,
-          height: 1.4,
-        ),
-        bodyLarge: const TextStyle(fontSize: 16, height: 1.55),
-        bodyMedium: const TextStyle(fontSize: 14, height: 1.5),
-        bodySmall: TextStyle(
-          fontSize: 12,
-          height: 1.5,
-          color: scheme.onSurfaceVariant,
-        ),
-        labelLarge: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-      )
-      .apply(
-        fontFamily: 'EarthSyncSans',
-        fontFamilyFallback: const ['NotoSansMyanmar'],
-        bodyColor: scheme.onSurface,
-        displayColor: scheme.onSurface,
-      );
-  final shape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(14));
-  return base.copyWith(
+    fontFamily: _font,
     textTheme: text,
-    scaffoldBackgroundColor: dark ? FsColors.darkBackground : FsColors.bg,
-    appBarTheme: AppBarTheme(
-      backgroundColor: dark ? FsColors.darkBackground : FsColors.bg,
-      foregroundColor: scheme.onSurface,
-      elevation: 0,
-      scrolledUnderElevation: 0,
-      centerTitle: false,
-      titleTextStyle: text.titleMedium,
+    scaffoldBackgroundColor: p.background,
+    canvasColor: p.background,
+    extensions: [p],
+    // Apple-style feedback: no ripples; rows highlight, buttons scale.
+    splashFactory: NoSplash.splashFactory,
+    highlightColor: p.fill,
+    hoverColor: p.fill.withValues(alpha: 0.5),
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.windows: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.linux: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.fuchsia: CupertinoPageTransitionsBuilder(),
+      },
     ),
-    filledButtonTheme: FilledButtonThemeData(
-      style: FilledButton.styleFrom(
-        minimumSize: const Size(48, 52),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-        shape: shape,
+    cupertinoOverrideTheme: CupertinoThemeData(
+      brightness: b,
+      primaryColor: p.tint,
+      barBackgroundColor: p.barBackground,
+      scaffoldBackgroundColor: p.background,
+      textTheme: CupertinoTextThemeData(
+        primaryColor: p.tint,
+        textStyle: text.body,
+        navTitleTextStyle: text.headline,
+        navLargeTitleTextStyle: text.largeTitle,
+        navActionTextStyle: text.body.copyWith(color: p.tint),
+        actionTextStyle: text.body.copyWith(color: p.tint),
+        tabLabelTextStyle: text.caption.copyWith(
+          fontSize: 11,
+          letterSpacing: 0.1,
+        ),
       ),
     ),
-    outlinedButtonTheme: OutlinedButtonThemeData(
-      style: OutlinedButton.styleFrom(
-        minimumSize: const Size(48, 52),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-        side: BorderSide(color: scheme.outlineVariant),
-        shape: shape,
+    dividerTheme: DividerThemeData(
+      color: p.separator,
+      thickness: 0.5,
+      space: 0.5,
+    ),
+    iconTheme: IconThemeData(color: p.tint, size: 22),
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      color: p.tint,
+      linearTrackColor: p.fill,
+      circularTrackColor: p.fill,
+    ),
+    bottomSheetTheme: BottomSheetThemeData(
+      backgroundColor: p.surfaceRaised,
+      modalBackgroundColor: p.surfaceRaised,
+      showDragHandle: true,
+      dragHandleColor: p.fillStrong,
+      dragHandleSize: const Size(36, 5),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(FsRadius.sheet),
+        ),
       ),
     ),
-    textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
-    ),
-    iconButtonTheme: IconButtonThemeData(
-      style: IconButton.styleFrom(minimumSize: const Size(48, 48)),
-    ),
-    cardTheme: CardThemeData(
-      elevation: 0,
-      margin: const EdgeInsets.only(bottom: 12),
-      color: scheme.surface,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-        side: BorderSide(color: scheme.outlineVariant.withValues(alpha: .6)),
+    tooltipTheme: TooltipThemeData(
+      decoration: BoxDecoration(
+        color: p.label.withValues(alpha: 0.9),
+        borderRadius: BorderRadius.circular(FsRadius.sm),
       ),
-    ),
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: scheme.surface,
-      contentPadding: const EdgeInsets.all(16),
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(14),
-        borderSide: BorderSide(color: scheme.outlineVariant),
-      ),
-    ),
-    chipTheme: base.chipTheme.copyWith(
-      padding: const EdgeInsets.all(8),
-      side: BorderSide(color: scheme.outlineVariant),
-    ),
-    navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: scheme.surface,
-      indicatorColor: scheme.primaryContainer,
-      height: 76,
-      labelTextStyle: WidgetStatePropertyAll(text.labelSmall),
-    ),
-    dividerTheme: DividerThemeData(color: scheme.outlineVariant, space: 24),
-    expansionTileTheme: const ExpansionTileThemeData(
-      shape: Border(),
-      collapsedShape: Border(),
+      textStyle: text.footnote.copyWith(color: p.surface),
     ),
   );
 }
+
+ThemeData fsLightTheme() => _build(FsPalette.light, Brightness.light);
+ThemeData fsDarkTheme() => _build(FsPalette.dark, Brightness.dark);
+
+/// Back-compat for tests and older call sites.
+ThemeData fsTheme() => fsLightTheme();

@@ -31,16 +31,6 @@ pub fn engine_version() -> String {
 /// Full contract path: a complete `IntegrationRequest` JSON (built from
 /// farmer input + P2 server data) in, response envelope JSON out.
 pub fn analyze_integration_json(request_json: String) -> String {
-    // Additive version negotiation through the existing string-in/string-out
-    // FRB ABI. Generated bindings and legacy request/response shapes stay stable.
-    // v0.3 still deserializes and validates the entire request in its own engine.
-    if serde_json::from_str::<Value>(&request_json)
-        .ok()
-        .and_then(|v| v.get("schema_version").cloned())
-        .is_some_and(|version| version == "earthsync.engine.v0.3.0")
-    {
-        return field_shift_engine::v03::analyze_v03_json(&request_json);
-    }
     field_shift_engine::integration::analyze_integration_json(&request_json)
 }
 
@@ -49,7 +39,9 @@ pub fn analyze_integration_json(request_json: String) -> String {
 /// then runs the real engine. Location and climate stay synthetic and are
 /// labelled `synthetic_demo` by the engine.
 ///
-/// `farmer_json` keys (all optional): `current_crop` (string),
+/// `farmer_json` keys (all optional): `latitude`/`longitude` (the farm centre,
+/// applied to both `field` and `environment` so the engine checks this farm),
+/// `current_crop` (string),
 /// `irrigation` ("full" | "partial" | "none" | "unknown"),
 /// `drainage` ("poor" | "moderate" | "good" | "unknown").
 pub fn analyze_synthetic_demo_json(farmer_json: String) -> String {
@@ -75,6 +67,15 @@ fn build_demo_request(farmer_json: &str) -> Result<String, String> {
     let mut request: Value = serde_json::from_str(SYNTHETIC_REQUEST)
         .map_err(|_| "Built-in demo request is invalid.".to_string())?;
 
+    let lat = farmer.get("latitude").and_then(Value::as_f64);
+    let lon = farmer.get("longitude").and_then(Value::as_f64);
+    if let (Some(lat), Some(lon)) = (lat, lon) {
+        request["field"]["latitude"] = json!(lat);
+        request["field"]["longitude"] = json!(lon);
+        request["environment"]["latitude"] = json!(lat);
+        request["environment"]["longitude"] = json!(lon);
+    }
+
     if let Some(crop) = farmer
         .get("current_crop")
         .and_then(Value::as_str)
@@ -94,6 +95,12 @@ fn build_demo_request(farmer_json: &str) -> Result<String, String> {
             Some("none") => json!(false),
             _ => Value::Null,
         };
+
+    // Farmer's soil feel test; unknown values stay null (never guessed).
+    request["soil"]["texture"] = match farmer.get("soil_texture").and_then(Value::as_str) {
+        Some(t @ ("sand" | "sandy_loam" | "loam" | "silt" | "clay_loam" | "clay")) => json!(t),
+        _ => Value::Null,
+    };
 
     request["soil"]["drainage"] = match farmer.get("drainage").and_then(Value::as_str) {
         Some("poor") => json!("poor"),
@@ -139,6 +146,26 @@ mod tests {
     }
 
     #[test]
+    fn farm_centre_reaches_engine() {
+        let out = analyze_synthetic_demo_json(r#"{"latitude":17.1,"longitude":95.9}"#.into());
+        let v: Value = serde_json::from_str(&out).unwrap();
+        assert_eq!(v["status"], "success", "{out}");
+        assert_eq!(v["data"]["field"]["latitude"], 17.1);
+        assert_eq!(v["data"]["field"]["longitude"], 95.9);
+    }
+
+    #[test]
+    fn farmer_soil_texture_reaches_engine() {
+        let out = analyze_synthetic_demo_json(r#"{"soil_texture":"clay_loam"}"#.into());
+        let v: Value = serde_json::from_str(&out).unwrap();
+        assert_eq!(v["status"], "success", "{out}");
+        assert_eq!(v["data"]["soil"]["texture"], "clay_loam");
+        let unknown = analyze_synthetic_demo_json(r#"{"soil_texture":"mud"}"#.into());
+        let u: Value = serde_json::from_str(&unknown).unwrap();
+        assert!(u["data"]["soil"]["texture"].is_null());
+    }
+
+    #[test]
     fn bad_farmer_json_is_error_envelope() {
         assert_eq!(
             status(&analyze_synthetic_demo_json("not json".into())),
@@ -153,15 +180,11 @@ mod tests {
             "success"
         );
     }
+}
 
-    #[test]
-    fn versioned_v03_dispatch_uses_real_engine_through_stable_abi() {
-        let request = include_str!("../../../../engine/tests/fixtures/v03/synthetic_request.json");
-        let output: Value =
-            serde_json::from_str(&analyze_integration_json(request.into())).unwrap();
-        assert_eq!(output["status"], "success");
-        assert_eq!(output["data"]["schema_version"], "earthsync.engine.v0.3.0");
-        assert_eq!(output["data"]["software_test_only"], true);
-        assert!(!output["data"]["findings"].as_array().unwrap().is_empty());
-    }
+/// FAO-56 daily grass reference ET0 from NASA POWER days, computed by the
+/// team engine (`v03::water`). Returns the engine's JSON unchanged. It is a
+/// reference value for short grass: no crop rule and no irrigation advice.
+pub fn reference_et0_json(request_json: String) -> String {
+    field_shift_engine::v03::water::calculate_json(&request_json)
 }
