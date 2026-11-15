@@ -9,6 +9,7 @@ import 'package:earthsync/features/historical/historical_results.dart';
 import 'package:earthsync/features/historical/historical_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -152,6 +153,9 @@ void main() {
     late String translated, fallback;
     await tester.pumpWidget(
       MaterialApp(
+        locale: const Locale('my'),
+        supportedLocales: const [Locale('en'), Locale('my')],
+        localizationsDelegates: GlobalMaterialLocalizations.delegates,
         home: Builder(
           builder: (context) {
             translated = historicalText(context, 'Historical replay');
@@ -161,7 +165,7 @@ void main() {
         ),
       ),
     );
-    expect(translated, 'Historical replay');
+    expect(translated, 'အတိတ်ကာလ ပြန်လည်ကြည့်ရှုရန်');
     expect(fallback, 'NASA POWER');
   });
 }

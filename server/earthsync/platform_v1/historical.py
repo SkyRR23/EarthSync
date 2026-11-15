@@ -140,6 +140,8 @@ class SimulationInput(Contract):
 
 def summary(records, start, end, *, as_of=None):
     """An accepted-day subtotal is distinct from a complete period total."""
+    if as_of is not None:
+        as_of = as_of.astimezone(timezone.utc)
     count = (end - start).days + 1
     days = {str(start + timedelta(days=i)): {} for i in range(count)}
     exclusions = []
@@ -685,6 +687,8 @@ class Historical:
     def _project(self, owner, farm_id, records, period, as_of):
         """Reuse Evidence sidecars without splicing incompatible source versions."""
         result = []
+        if as_of is not None:
+            as_of = as_of.astimezone(timezone.utc)
         for variable in ("rainfall", "tmin", "tmax", "et0"):
             selected = [
                 r

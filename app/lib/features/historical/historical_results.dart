@@ -198,6 +198,7 @@ class HistoricalResult extends StatelessWidget {
           SelectableText(
             'Reproducible calculation SHA-256: ${result['calculation_sha256']}',
           ),
+          HistoricalSeasonComparison(periods: periods),
           const Text(
             'Scenario inputs are hypothetical. Environmental inputs retain their original real/cached-real classification. No recommendation is authorized.',
           ),
@@ -285,6 +286,103 @@ class HistoricalResult extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Matching month offsets, distinct line patterns and a readable value table.
+class HistoricalSeasonComparison extends StatelessWidget {
+  const HistoricalSeasonComparison({super.key, required this.periods});
+  final List<Map<String, dynamic>> periods;
+  @override
+  Widget build(BuildContext context) {
+    final displayed = periods.take(2).toList();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text('Season comparison · original coverage retained'),
+        Wrap(
+          spacing: 12,
+          runSpacing: 8,
+          children: [
+            for (final p in displayed)
+              SizedBox(
+                width: 330,
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${p['start']} to ${p['end']}',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        for (final variable in [
+                          'rainfall',
+                          'temperature',
+                          'et0',
+                        ])
+                          Text(
+                            '$variable: ${p['metrics'][variable]['value'] is num ? (p['metrics'][variable]['value'] as num).toStringAsFixed(2) : 'Unavailable'} ${p['metrics'][variable]['unit']} · ${p['metrics'][variable]['valid_days']}/${p['metrics'][variable]['expected_days']} days · ${p['metrics'][variable]['status']}',
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+        if (displayed.length == 2) ...[
+          for (final variable in ['rainfall', 'temperature', 'et0'])
+            Text(
+              displayed[0]['metrics'][variable]['complete_value'] is num &&
+                      displayed[1]['metrics'][variable]['complete_value'] is num
+                  ? '$variable difference (second minus first): ${((displayed[1]['metrics'][variable]['complete_value'] as num) - (displayed[0]['metrics'][variable]['complete_value'] as num)).toStringAsFixed(2)} ${displayed[0]['metrics'][variable]['unit']}; direct difference without period-length adjustment.'
+                  : '$variable complete-period difference unavailable: at least one season is incomplete.',
+            ),
+          const Text(
+            'Charts align monthly position within each requested season. Compare the actual dates in the tables, especially for custom or unequal seasons. Blue solid line = first season; orange dashed line = second season.',
+          ),
+          for (final variable in ['rainfall', 'temperature', 'et0']) ...[
+            Text(
+              '$variable · ${variable == 'temperature' ? '°C' : 'mm'} · NASA POWER LST${variable == 'et0' ? ' / Rust FAO-56' : ''}',
+            ),
+            SizedBox(
+              height: 180,
+              child: ExcludeSemantics(
+                child: LineChart(
+                  LineChartData(
+                    titlesData: const FlTitlesData(show: false),
+                    borderData: FlBorderData(show: false),
+                    lineBarsData: [
+                      for (final (i, p) in displayed.indexed)
+                        LineChartBarData(
+                          color: i == 0 ? Colors.blue : Colors.deepOrange,
+                          dashArray: i == 0 ? null : [7, 4],
+                          barWidth: i == 0 ? 3 : 2,
+                          isCurved: false,
+                          dotData: const FlDotData(show: true),
+                          spots: [
+                            for (final (month, row)
+                                in (p['monthly'] as List).indexed)
+                              row['metrics'][variable]['value'] is num
+                                  ? FlSpot(
+                                      month.toDouble(),
+                                      (row['metrics'][variable]['value'] as num)
+                                          .toDouble(),
+                                    )
+                                  : FlSpot.nullSpot,
+                          ],
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ],
+      ],
     );
   }
 }

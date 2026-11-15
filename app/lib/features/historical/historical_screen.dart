@@ -1,18 +1,16 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:latlong2/latlong.dart';
 import '../../data/farm_journal.dart';
 import '../../data/models/home_profile.dart';
 import '../../data/platform_farms.dart';
 import '../../design/components/product.dart';
 import '../../state/home_provider.dart';
 import '../../state/platform_provider.dart';
-import '../map/gibs_layer.dart';
 import 'historical_client.dart';
 import 'historical_results.dart';
+import 'historical_map.dart';
 
 String historicalText(BuildContext context, String english) {
   const my = {
@@ -107,7 +105,7 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
   final _name = TextEditingController(text: 'My historical what-if');
   final _search = TextEditingController(text: 'rice');
   List<Map<String, dynamic>> _profiles = [];
-  Map<String, dynamic>? _replay, _result, _imagery;
+  Map<String, dynamic>? _replay, _result, _imagery, _pinnedImage;
   final _strategies = [
     for (final id in ['baseline', 'alternative_a', 'alternative_b'])
       _StrategyDraft(id),
@@ -504,6 +502,7 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
         _result = value;
         _autoRun = true;
         _parent = value['id'] as String;
+        _pendingId = journalId();
         _snapshot = HistoricalSnapshot({
           ..._snapshot!.data,
           'simulations': [
@@ -636,6 +635,16 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
       _start = DateTime.parse(raw['periods'][0]['start'] as String);
       _end = DateTime.parse(raw['periods'][0]['end'] as String);
       _mode = raw['mode'] as String;
+      _date = DateTime.parse(
+        raw['replay_day'] as String? ?? raw['periods'][0]['start'] as String,
+      );
+      _step = raw['replay_step'] as String? ?? 'day';
+      _speed = (raw['replay_speed'] as num? ?? 1).toDouble();
+      if ((raw['periods'] as List).length == 2) {
+        _secondStart = DateTime.parse(raw['periods'][1]['start'] as String);
+        _secondEnd = DateTime.parse(raw['periods'][1]['end'] as String);
+        _compareYear = _secondStart.year;
+      }
       _comparison = (raw['periods'] as List).length > 2
           ? 'context'
           : (raw['periods'] as List).length == 2
@@ -857,10 +866,17 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
                 message:
                     'Original source timestamps are retained. Kept on device: ${_snapshot!.data['kept_at']}. Reconnect and refresh before calculating or saving; no writes will be submitted automatically.',
               ),
-            const EvidenceNotice(
-              title: 'Historical source mode',
-              message:
-                  'Current conditions are separate. If current weather is unavailable, these accepted historical records remain useful context. They do not describe current field health or future weather.',
+            EvidenceNotice(
+              title: offline
+                  ? 'Mode C · Cached historical records'
+                  : windows.isEmpty
+                  ? 'Mode D · Historical evidence unavailable'
+                  : 'Mode B · Historical online context',
+              message: offline
+                  ? 'Only the explicitly saved device copy is available, read only. Original timestamps and cache age are retained.'
+                  : windows.isEmpty
+                  ? 'No accepted historical evidence is saved for this farm revision. Retrieve a supported period or retry when the service is reachable.'
+                  : 'Current observed weather is unavailable. You can still explore historical rainfall, temperature and reference ET0. Current forecast snapshots, when present, retain their separate valid times and limits in the farm environment panel. Historical records are never current field health or a forecast.',
             ),
             if (_error != null)
               Semantics(
@@ -1436,83 +1452,59 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
             semanticFormatterCallback: (v) =>
                 '${(v * 100).round()} percent opacity',
           ),
-          SizedBox(
-            height: 320,
-            child: FlutterMap(
-              key: ValueKey('historical-map:${widget.farm.id}'),
-              options: MapOptions(
-                initialCenter: LatLng(
-                  widget.farm.point.latitude,
-                  widget.farm.point.longitude,
-                ),
-                initialZoom: 10,
+          Wrap(
+            spacing: 8,
+            children: [
+              TextButton(
+                onPressed: _imagery?['tile_url'] == null
+                    ? null
+                    : () => setState(
+                        () =>
+                            _pinnedImage = Map<String, dynamic>.from(_imagery!),
+                      ),
+                child: const Text('Pin imagery for date comparison'),
               ),
-              children: [
-                if (!offline) ...baseMapLayers(),
-                if (!offline &&
-                    _imagery?['requested_date'] == historicalDay(_date) &&
-                    _imagery?['tile_url'] != null)
-                  Opacity(
-                    opacity: _opacity,
-                    child: TileLayer(
-                      key: ValueKey('imagery:${historicalDay(_date)}'),
-                      urlTemplate: _imagery!['tile_url'] as String,
-                      maxNativeZoom: 9,
-                      userAgentPackageName: 'org.fieldshift.app',
-                    ),
-                  ),
-                if (soil != null)
-                  PolygonLayer(
-                    polygons: [
-                      for (final c in soil['cells'] as List)
-                        if (c['value'] != null)
-                          Polygon(
-                            points: [
-                              for (final p
-                                  in c['geometry']['coordinates'][0] as List)
-                                LatLng(
-                                  (p[1] as num).toDouble(),
-                                  (p[0] as num).toDouble(),
-                                ),
-                            ],
-                            color: Colors.purple.withValues(
-                              alpha: _opacity * .4,
-                            ),
-                            borderColor: Colors.purple,
-                            borderStrokeWidth: .3,
-                          ),
-                    ],
-                  ),
-                if (widget.farm.boundary != null)
-                  PolygonLayer(
-                    polygons: [
-                      Polygon(
-                        points: [
-                          for (final p in widget.farm.boundary!.vertices)
-                            LatLng(p.latitude, p.longitude),
-                        ],
-                        color: Colors.transparent,
-                        borderColor: Colors.orange,
-                        borderStrokeWidth: 3,
-                      ),
-                    ],
-                  ),
-                MarkerLayer(
-                  markers: [
-                    Marker(
-                      point: LatLng(
-                        widget.farm.point.latitude,
-                        widget.farm.point.longitude,
-                      ),
-                      child: const Icon(
-                        Icons.location_on,
-                        color: Colors.orange,
-                      ),
-                    ),
-                  ],
+              if (_pinnedImage != null)
+                TextButton(
+                  onPressed: () => setState(() => _pinnedImage = null),
+                  child: const Text('Clear pinned imagery'),
                 ),
-              ],
-            ),
+            ],
+          ),
+          LayoutBuilder(
+            builder: (context, box) {
+              final current = HistoricalFarmMap(
+                key: ValueKey('current-map:${widget.farm.id}'),
+                farm: widget.farm,
+                offline: offline,
+                opacity: _opacity,
+                imagery: _imagery?['requested_date'] == historicalDay(_date)
+                    ? _imagery
+                    : null,
+                soil: soil,
+              );
+              if (_pinnedImage == null) return current;
+              final pinned = HistoricalFarmMap(
+                key: ValueKey('pinned-map:${_pinnedImage!['requested_date']}'),
+                farm: widget.farm,
+                offline: offline,
+                opacity: _opacity,
+                imagery: _pinnedImage,
+                soil: soil,
+              );
+              return box.maxWidth > 760
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(child: current),
+                        const SizedBox(width: 12),
+                        Expanded(child: pinned),
+                      ],
+                    )
+                  : Column(
+                      children: [current, const SizedBox(height: 12), pinned],
+                    );
+            },
           ),
           const Text(
             'NASA GIBS MODIS true colour · © OpenStreetMap contributors. Clouds and missing tiles do not establish field conditions. Numerical NDVI remains unavailable; RGB imagery is never converted to NDVI.',
@@ -1535,7 +1527,7 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
             for (final c in soil['cells'] as List)
               if (c['at_query_point'] == true)
                 Text(
-                  'Native cell at confirmed point: ${c['value'] ?? 'Unavailable'} pH · raw ${c['raw_value']} · ${c['quality']}',
+                  'Native cell at confirmed point: ${c['value'] ?? 'Unavailable'} pH · raw ${c['raw']} ${soil['raw_unit']} · scale ${soil['scale']} · offset ${soil['offset']} · ${c['quality']}',
                 ),
             const Text(
               'Modeled soil property, not a farmer laboratory measurement. Missing cells and uncertainty remain unresolved.',
