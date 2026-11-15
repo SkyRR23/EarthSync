@@ -36,6 +36,7 @@ class PlatformTransport {
     Map<String, dynamic>? body,
     List<int>? bytes,
     String contentType = 'application/json',
+    Duration timeout = const Duration(seconds: 30),
   }) async {
     try {
       final request = http.Request(method, baseUri.resolve(path));
@@ -47,7 +48,7 @@ class PlatformTransport {
       // Include both send and body consumption in the same timeout.
       final response = await (() async => http.Response.fromStream(
         await client.send(request),
-      ))().timeout(const Duration(seconds: 30));
+      ))().timeout(timeout);
       Object? data;
       // Upload request bytes and response metadata can have different formats.
       // Retain the declared-format fallback for transports without MIME headers.

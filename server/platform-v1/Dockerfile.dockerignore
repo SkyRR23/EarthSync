@@ -21,6 +21,7 @@ server/earthsync/realtime/**
 server/earthsync/research/**
 !server/earthsync/research/*.py
 !server/earthsync/research/additional_evidence.json
+!server/earthsync/research/plant_health.json
 !data/
 data/**
 !data/crop-knowledge/

@@ -17,7 +17,9 @@ from starlette.concurrency import run_in_threadpool
 from earthsync.evidence.images import MAX_UPLOAD_BYTES, sanitize_image
 
 from .retrieval import EvidenceIndex, EvidenceQuery
-from .soil import LabConfirmation, LocalOCR, StrictModel, analyze_photo, soil_context
+from .soil import LabConfirmation, LocalOCR, StrictModel, soil_context
+from .multimodal import image_analysis, extract_report
+from .vision import ImageRequest, LabAssistRequest, configured_vision
 from .storage import ResearchError, ResearchStore
 
 PREFIX = "/api/research/v1"
@@ -163,12 +165,11 @@ class Compare(StrictModel):
     system: str | None = Field(default=None, max_length=150)
 
 
-class PhotoAction(StrictModel):
+class PhotoAction(ImageRequest):
     farm_id: UUID
-    external_image_consent: bool = False
 
 
-class Extract(StrictModel):
+class Extract(LabAssistRequest):
     farm_id: UUID
     photo_id: UUID
 
@@ -372,8 +373,12 @@ def create_app(
     def analyze(photo_id: UUID, value: PhotoAction, request: Request):
         principal = permit(request, "photo:analyze")
         _, pixels = store.photo(principal, value.farm_id, photo_id)
-        result = analyze_photo(
-            photo_id, pixels, provider=vision, consent=value.external_image_consent
+        result = image_analysis(
+            photo_id,
+            pixels,
+            value=ImageRequest.model_validate(value.model_dump(exclude={"farm_id"})),
+            index=index,
+            provider=vision,
         )
         store.audit(principal["id"], "photo.analyzed", str(photo_id))
         return result
@@ -383,7 +388,10 @@ def create_app(
         principal = permit(request, "lab:extract")
         _, pixels = store.photo(principal, value.farm_id, value.photo_id)
         return store.save_report(
-            principal, value.farm_id, value.photo_id, ocr.extract(pixels)
+            principal,
+            value.farm_id,
+            value.photo_id,
+            extract_report(pixels, ocr=ocr, value=value, provider=vision),
         )
 
     @app.get(PREFIX + "/lab-reports/{report_id}")
@@ -426,6 +434,7 @@ def app_factory():
     local = os.getenv("EARTHSYNC_RESEARCH_LOCAL") == "1"
     return create_app(
         store=ResearchStore(Path(os.environ["EARTHSYNC_RESEARCH_DIR"])),
+        vision=configured_vision(),
         allowed_hosts=tuple(
             filter(
                 None,
