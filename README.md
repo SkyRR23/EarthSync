@@ -55,6 +55,127 @@ Think of it as **a field notebook with a window into Earth observations**: it sh
 
 Each product has its own scale and update schedule. A regional soil estimate or model forecast is **not** the same as an on-farm measurement. See [source provenance](docs/release/PROVENANCE.md) and [capability coverage](docs/release/COVERAGE.md).
 
+## 🧮 How our calculations work
+
+**Simple explanation:** EarthSync is like a **field notebook connected to a scientific calculator**. Data comes from dated NASA/weather/soil products; Python checks and organizes it; Rust performs deterministic calculations; Flutter helps the farmer explore the evidence. **These are codebase methods, not proof that the simulated-data APK performs live calculations.**
+
+### Methods at a glance
+
+| Method | Equation or operation | Purpose | Current boundary |
+| --- | --- | --- | --- |
+| **Monthly rainfall** | Sum daily precipitation rate × 1 day | Convert NASA POWER PRECTOTCORR from mm/day to a monthly accumulation in mm | Requires every day of the month |
+| **Monthly mean air temperature** | Sum daily T2M readings / number of days | Describe average daily-mean temperature, in °C | No incomplete-month substitution |
+| **Seasonal rainfall** | Sum monthly rainfall accumulations | Summarize precipitation over selected *full* calendar months | Missing month → unknown total |
+| **Seasonal mean temperature** | Sum(days in month × monthly mean) / total days | Properly weight months of different lengths | Missing month → unknown mean |
+| **NDVI** | (NIR − Red) / (NIR + Red) | Describe vegetation greenness, using red and near-infrared satellite reflectance | Quality-accepted pixels only; not a health percentage |
+| **FAO-56 reference ET₀** | Penman–Monteith equation below | Estimate reference-grass atmospheric water demand in mm/day | Not irrigation advice |
+| **Growing degree days (GDD)** | Sum max(0, (Tmin + Tmax)/2 − crop base temperature) | Calculate accumulated temperature above an explicitly supplied base | Conditional v0.3 rule check; not approved crop suitability |
+| **Growing-period rainfall** | Sum daily rain over the inclusive crop period | Compare a declared growing period against eligible source-backed criteria | No invented rainfall for missing days |
+| **Crop ETc** | ETc = Kc × ET₀ | Calculate standard-condition crop evapotranspiration with documented stage coefficients | Conditional v0.3 calculation; not actual irrigation need |
+| **Crop duration and rotation timing** | Inclusive days = harvest date − planting date + 1 | Check explicit schedules, planting windows, succession and recorded fallow periods | Evidence checks, not automated “best crop” rankings |
+
+### 1. NASA POWER: rainfall and temperature
+
+The [Python NASA POWER adapter](server/earthsync/power.py) reads daily T2M (°C) and PRECTOTCORR (mm/day) for a specified point and period. It checks source lineage, units, dates and the local solar time convention before aggregation.
+
+For a month of **n** observed days:
+
+$
+P_{\mathrm{month}}=\sum_{d=1}^{n}(r_d\times1\ \mathrm{day})
+$
+
+$
+T_{\mathrm{month}}=\frac{1}{n}\sum_{d=1}^{n}T_d
+$
+
+Here **r** is the daily precipitation rate in mm/day, so multiplying by one day produces millimetres; **T** is daily mean temperature in °C.
+
+The [Rust seasonal module](engine/src/seasonal.rs) combines complete months:
+
+$
+P_{\mathrm{season}}=\sum_m P_m,\qquad
+\overline{T}_{\mathrm{season}}=\frac{\sum_m d_m T_m}{\sum_m d_m}
+$
+
+The weight **d** is the actual number of days in each month. For example, months with **30 mm** and **45 mm** of rain total **75 mm**, provided **both months are complete**. If one is missing, EarthSync reports the total as unknown, rather than assuming the missing month had no rain.
+
+**Implementation nuance:** The older [12-month field-summary code](engine/src/climate.rs) uses an *unweighted* mean of twelve complete monthly temperatures; it is distinct from this day-weighted seasonal method. Neither is a crop-yield prediction.
+
+### 2. NDVI: satellite vegetation greenness
+
+Plants absorb red light and reflect much near-infrared (**NIR**) light. The Normalized Difference Vegetation Index (NDVI) compares them:
+
+$
+\mathrm{NDVI}=\frac{\mathrm{NIR}-\mathrm{Red}}{\mathrm{NIR}+\mathrm{Red}}
+$
+
+Example: NIR = 0.60 and Red = 0.20 gives **NDVI = 0.50**. This **does not mean a plant is 50% healthy**.
+
+The [HLS farm-greenness module](server/earthsync/greenness.py) scales reflectance, rejects invalid/fill values and cloud, shadow, snow and water flags, and can calculate a mean/median from the valid pixels inside a supplied field polygon. The [local HLS-VI workflow](docs/release/FINAL_LOCAL.md) handles precomputed NASA vegetation rasters with the documented 0.0001 scaling, native 30 m grid, QA masks, acquisition dates and bounded map extraction. Availability depends on authorized and accepted imagery.
+
+**NDVI does not measure soil nitrogen, phosphorus, potassium, pH, or crop yield.** A missing or cloudy satellite pixel stays missing.
+
+### 3. FAO-56 Penman–Monteith: reference evapotranspiration (ET₀)
+
+The [Rust FAO-56 engine](engine/src/v03/water.rs) implements the **daily reference-grass Penman–Monteith method**:
+
+$
+\mathrm{ET}_0 =
+\frac{0.408\Delta(R_n-G)+\gamma\frac{900}{T+273}u_2(e_s-e_a)}
+{\Delta+\gamma(1+0.34u_2)}
+$
+
+| Symbol | Meaning |
+| --- | --- |
+| **ET₀** | Reference evapotranspiration, mm/day |
+| **Δ** | Slope of saturation vapour-pressure curve, kPa/°C |
+| **Rn** | Net radiation, MJ/m²/day |
+| **G** | Soil heat flux (the daily reference calculation uses G = 0) |
+| **γ** | Psychrometric constant, kPa/°C |
+| **T** | Daily mean temperature, °C |
+| **u₂** | Wind speed at 2 m, m/s |
+| **es − ea** | Saturation minus actual vapour pressure, kPa |
+
+The code also derives vapor pressure, vapour-pressure-curve slope, solar/radiation factors, and the psychrometric constant using the supplied weather, latitude, elevation and day of year. It validates required daily minimum/maximum temperature, dew point, wind, pressure, solar energy and location inputs; invalid or incomplete days do **not** become zero.
+
+**Metaphor:** ET₀ describes how strongly the atmosphere is **asking for water** from standard grass. It is **not** measured soil water, crop-specific water need, or how much a farmer must irrigate.
+
+For a specific crop, an additional *conditional* [v0.3 engine check](engine/src/v03/assess.rs) implements:
+
+$
+\mathrm{ETc}_d=K_{c,d}\times\mathrm{ET0}_d
+$
+
+The crop coefficient (**Kc**) needs source-backed, reviewed growth-stage values for every relevant day. ETc is standard-condition crop evapotranspiration, **not** a complete water balance or an irrigation prescription.
+
+### 4. Growing degree days (GDD) and crop-period checks
+
+The opt-in [v0.3 assessment engine](engine/src/v03/assess.rs) can compute:
+
+$
+\mathrm{GDD}=\sum_d\max\left(0,\frac{T_{\min,d}+T_{\max,d}}{2}-T_{\mathrm{base}}\right)
+$
+
+This totals temperature above a **crop-specific, supplied base**. GDD is like a **heat counter** for a growing period—not a predicted harvest date, plant-health score, or yield forecast. The engine does not assume a universal 10 °C base.
+
+Other deterministic checks compare inclusive planting/harvest durations, planting-window dates, growing-period rainfall, crop succession, explicit fallow days and compatible sourced soil observations. They preserve scope, source IDs and uncertainty rather than picking a crop automatically.
+
+**Critical:** All **60 crop-suitability candidate rules are blocked** pending independent review. There are **zero approved executable crop recommendations**. The arithmetic and synthetic software tests do not authorize suitability rankings or claims that a particular rotation improves yields. See [engine contract](docs/ENGINE_CONTRACT_v0.3.md) and [scientific limits](docs/realtime/SCIENTIFIC_LIMITATIONS.md).
+
+### 5. Soil evidence, data quality and missing values
+
+[ISRIC SoilGrids](https://www.isric.org/explore/soilgrids) provides **modeled soil properties**; the project has documented a modeled **0–5 cm pH reference layer** at nominal **250 m** support. It is **not a field laboratory test** or a soil nutrient measurement extracted from a photo. The application does not turn such a regional estimate into a universal “soil quality score.”
+
+Before using a number, the processing pipeline checks:
+
+1. **Provenance:** Which source produced it? Was it observed, modeled, forecast, farmer-reported or synthetic? What date does it describe?
+2. **Units and scope:** mm versus mm/day; °C versus other units; soil depth; calendar convention; model-grid cell versus confirmed field.
+3. **Completeness and quality:** Missing dates are unknown, not zero; incompatible inputs are rejected; satellite clouds/fill are masked.
+4. **Scientific eligibility:** Crop requirements must be approved and applicable to the production system, location and evidence. Conflicting records trigger review instead of being averaged into a false certainty.
+
+**Bottom line:** NASA and other sources provide environmental evidence, EarthSync performs transparent calculations where inputs are valid, and the farmer sees understandable context and its limitations. **The Android APK still demonstrates the interface with simulated data; the full local implementation is separate and real-time-ready, subject to configuration and verification.**
+
+
 ## 🛠️ Technology
 
 | Component | Technology |
