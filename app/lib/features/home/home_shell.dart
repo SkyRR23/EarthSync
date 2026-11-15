@@ -13,9 +13,10 @@ import '../../state/providers.dart';
 import 'crops_tab.dart';
 import 'field_tab.dart';
 import 'notes_tab.dart';
+import 'today_tab.dart';
 import 'weather_tab.dart';
 
-/// The app after setup: 4 tabs — Crops, Weather, Field, Notes.
+/// The app after setup: 5 tabs — Today, Crops, Weather, Field, Notes.
 /// Phones get a bottom tab bar; tablets a sidebar.
 class HomeShell extends ConsumerStatefulWidget {
   const HomeShell({super.key, this.initialTab = 0});
@@ -26,9 +27,14 @@ class HomeShell extends ConsumerStatefulWidget {
 }
 
 class _HomeShellState extends ConsumerState<HomeShell> {
-  late int _tab = widget.initialTab.clamp(0, 3);
+  late int _tab = widget.initialTab.clamp(0, 4);
 
   static const _tabs = [
+    (
+      S.tabToday,
+      CupertinoIcons.checkmark_square,
+      CupertinoIcons.checkmark_square_fill,
+    ),
     (S.tabCrops, Icons.grass_outlined, Icons.grass),
     (
       S.tabWeather,
@@ -54,6 +60,7 @@ class _HomeShellState extends ConsumerState<HomeShell> {
   Widget build(BuildContext context) {
     final p = context.fs;
     final pages = [
+      const TodayTab(),
       AnalysisGate(
         builder: (a, cached) => CropsTab(analysis: a, fromCache: cached),
       ),
@@ -165,7 +172,7 @@ class AnalysisGate extends ConsumerWidget {
     final draft = ref.watch(farmerDraftProvider);
     if (state is AnalysisIdle) {
       // Nothing to check without a farm pin: say so instead of spinning.
-      if (!draft.hasLocation) return const _NoFarm();
+      if (!draft.hasLocation) return const NoFarmView();
       // A farm but no check yet (e.g. after Start over): start one.
       WidgetsBinding.instance.addPostFrameCallback(
         (_) => ref.read(analysisProvider.notifier).ensureFor(draft),
@@ -272,8 +279,8 @@ class _Failed extends ConsumerWidget {
   }
 }
 
-class _NoFarm extends StatelessWidget {
-  const _NoFarm();
+class NoFarmView extends StatelessWidget {
+  const NoFarmView({super.key});
 
   @override
   Widget build(BuildContext context) => Scaffold(

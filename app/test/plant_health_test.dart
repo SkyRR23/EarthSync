@@ -52,7 +52,7 @@ Future<Widget> _shell({required bool withFarm}) async {
     ],
     child: MaterialApp(
       theme: fsLightTheme(),
-      home: const HomeShell(initialTab: 2),
+      home: const HomeShell(initialTab: 3),
     ),
   );
 }

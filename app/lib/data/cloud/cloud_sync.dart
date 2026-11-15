@@ -182,6 +182,24 @@ class CloudSync {
     );
   }
 
+  /// A day the farmer said "I watered today" (the date only).
+  void logWatering(String day) {
+    final id = uid;
+    if (id == null) return;
+    _fire(
+      _user(id).collection('waterings').doc(day).set({
+        'date': day,
+        'logged_at': FieldValue.serverTimestamp(),
+      }),
+    );
+  }
+
+  void deleteWatering(String day) {
+    final id = uid;
+    if (id == null) return;
+    _fire(_user(id).collection('waterings').doc(day).delete());
+  }
+
   /// Anonymous usage count: no user id, no location, no text.
   void logEvent(String event) {
     if (uid == null) return;
@@ -194,7 +212,8 @@ class CloudSync {
     );
   }
 
-  /// "Delete my data": removes the farm, notes, check history and photos
+  /// "Delete my data": removes the farm, notes, check history, watering log
+  /// and photos
   /// stored for this user. Throws if something could not be deleted, so the
   /// app can tell the farmer instead of pretending. Anonymous usage counts
   /// carry no user id and cannot be linked back, so they are not touched.
@@ -202,7 +221,7 @@ class CloudSync {
     final id = uid;
     if (id == null) return;
     final user = _user(id);
-    for (final sub in ['farm', 'notes', 'checks']) {
+    for (final sub in ['farm', 'notes', 'checks', 'waterings']) {
       final snap = await user.collection(sub).get();
       for (var i = 0; i < snap.docs.length; i += 400) {
         final batch = _db.batch();

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/strings.dart';
 import '../data/cloud/cloud_sync.dart';
 import 'providers.dart';
+import 'today.dart';
 
 /// Firebase Auth, or null when Firebase did not start (tests / no config).
 final authProvider = Provider<FirebaseAuth?>((ref) => null);
@@ -78,6 +79,9 @@ Future<String?> deleteMyData(WidgetRef ref) async {
   }
   await ref.read(photoStoreProvider)?.deleteAll();
   ref.read(notesProvider.notifier).clearAll();
+  ref.read(waterLogProvider.notifier).clearAll();
+  ref.read(taskMarksProvider.notifier).clearAll();
+  await ref.read(recentProvider.notifier).forget();
   ref.read(farmerDraftProvider.notifier).reset();
   ref.read(analysisProvider.notifier).forget();
   await auth?.signOut();

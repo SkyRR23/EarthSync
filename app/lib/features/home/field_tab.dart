@@ -22,6 +22,7 @@ import '../../design/components/status.dart';
 import '../../design/tokens.dart';
 import '../../state/account.dart';
 import '../../state/providers.dart';
+import '../../state/today.dart';
 import '../map/gibs_layer.dart';
 import 'weather_months_picker.dart';
 
@@ -261,6 +262,8 @@ class _FieldTabState extends ConsumerState<FieldTab> {
     if (ok == true && mounted) {
       ref.read(farmerDraftProvider.notifier).reset();
       ref.read(analysisProvider.notifier).forget();
+      ref.read(waterLogProvider.notifier).clearAll();
+      ref.read(taskMarksProvider.notifier).clearAll();
       context.go('/');
     }
   }

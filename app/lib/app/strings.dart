@@ -46,6 +46,7 @@ abstract final class S {
   static const seeResults = 'See my crops';
 
   // Tabs
+  static const tabToday = 'Today';
   static const tabCrops = 'Crops';
   static const tabWeather = 'Weather';
   static const tabField = 'Field';
@@ -311,4 +312,72 @@ abstract final class S {
   static const evidenceTypes = 'Kinds of source';
   static const sourcesUsed = 'Sources used';
   static const evidence = 'Source';
+  // Today tab (tasks)
+  static const today = 'today';
+  static const yesterday = 'yesterday';
+  static String daysAgo(int n) => '$n days ago';
+  static const todayEmpty = 'Nothing to do right now.';
+  static const doneHeader = 'Done';
+  static const todayFooter =
+      'Advice uses NASA data for about 50 km around your farm and your own answers. It is a guide: your eyes and hands decide.';
+  static const recentLoading = 'Getting the latest NASA data…';
+  static String recentOld(String date) =>
+      'No connection. Showing NASA data saved on $date.';
+  static const recentFailed =
+      'Could not get NASA data right now. The tasks use your own records.';
+  static String nasaRecentSource(String date) =>
+      'NASA POWER, modeled, up to $date (NASA is a few days behind).';
+  // Water
+  static const waterMayNeed = 'Your field may need water';
+  static const waterCheck = 'Check if your field needs water';
+  static const waterCanWait = 'Water: you can likely wait';
+  static const waterNoData = 'We can’t see recent rain right now.';
+  static const rainWeekUnknown = 'Rain in the last 7 days: not known.';
+  static String rainWeek(int mm, String? compared) =>
+      '$mm mm of rain in the last 7 days${compared == null ? '' : ', $compared'}.';
+  static const lessThanUsual = 'less than usual here for this time of year';
+  static const moreThanUsual = 'more than usual here for this time of year';
+  static const aboutUsual = 'about usual here for this time of year';
+  static const wetnessDrier =
+      'Soil deep down is drier than usual for this time of year.';
+  static const wetnessWetter =
+      'Soil deep down is wetter than usual for this time of year.';
+  static const wetnessUsual =
+      'Soil deep down is about as wet as usual for this time of year.';
+  static const sandyDries = 'Your sandy soil dries out fast.';
+  static const clayHolds = 'Your clay soil holds water longer.';
+  static const noWateringYet = 'No watering saved yet.';
+  static String lastWatered(String ago) => 'Last watered: $ago.';
+  static const feelFirst =
+      'Feel the soil a finger deep. Water only if it is dry.';
+  static const iWatered = 'I watered today';
+  static const stillWet = 'Soil is still wet';
+  static const wateredToday = 'Watered today';
+  static const soilStillWetToday = 'Soil still wet today: no water needed';
+  // Heavy rain
+  static const heavyTitle = 'Check for standing water';
+  static const heavyChecked = 'Checked for standing water';
+  static String heavyFact(String date, int mm, int percent) =>
+      'Heavy rain on $date: $mm mm, heavier than $percent% of days here at this time of year.';
+  static const heavyYouSaid = 'You said water stays on your field after rain.';
+  static const heavyLowParts = 'Water can stay on low parts of a field.';
+  static const heavyWalk =
+      'Walk the field and look for water standing around the plants.';
+  static const checked = 'Checked';
+  // Soil
+  static const soilTaskNew =
+      'Not checked yet. It makes the water advice better.';
+  static const soilAgainTitle = 'Check your soil again';
+  static String soilTaskOld(String date) =>
+      'Last checked on $date. Soil changes with the seasons.';
+  static const soilChecked = 'Soil checked';
+  static String soilCheckedOn(String date) => 'Soil checked on $date';
+  static const startSoilCheck = 'Start soil check';
+  // Photo
+  static const photoTitle = 'Crop photo this week';
+  static const photoNone = 'No crop photos yet. Photos show change over time.';
+  static String photoOld(int days) =>
+      'Last photo $days days ago. Photos show change over time.';
+  static String photoDone(String ago) => 'Crop photo taken $ago';
+  static const cropPhotoNote = 'Crop photo';
 }

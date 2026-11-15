@@ -61,7 +61,13 @@ Finder _navTitle(String text) => find.descendant(
 );
 
 Future<void> _visitTabs(WidgetTester tester) async {
-  for (final tab in [S.tabWeather, S.tabField, S.tabNotes, S.tabCrops]) {
+  for (final tab in [
+    S.tabCrops,
+    S.tabWeather,
+    S.tabField,
+    S.tabNotes,
+    S.tabToday,
+  ]) {
     await tester.tap(find.text(tab).last);
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull, reason: 'visiting tab $tab');
@@ -78,31 +84,41 @@ void main() {
     analysis = _loadAnalysis();
   });
 
-  testWidgets('4 tabs: Crops, Weather, Field, Notes — each shows its page', (
-    tester,
-  ) async {
-    await tester.pumpWidget(
-      _buildShell(analysis: analysis, prefs: prefs, theme: fsLightTheme()),
-    );
-    await tester.pumpAndSettle();
+  testWidgets(
+    '5 tabs: Today, Crops, Weather, Field, Notes — each shows its page',
+    (tester) async {
+      await tester.pumpWidget(
+        _buildShell(analysis: analysis, prefs: prefs, theme: fsLightTheme()),
+      );
+      await tester.pumpAndSettle();
 
-    for (final tab in [S.tabCrops, S.tabWeather, S.tabField, S.tabNotes]) {
-      expect(find.text(tab), findsWidgets);
-    }
-    expect(_navTitle(S.nextSeason), findsOneWidget);
+      for (final tab in [
+        S.tabToday,
+        S.tabCrops,
+        S.tabWeather,
+        S.tabField,
+        S.tabNotes,
+      ]) {
+        expect(find.text(tab), findsWidgets);
+      }
 
-    await tester.tap(find.text(S.tabWeather).last);
-    await tester.pumpAndSettle();
-    expect(_navTitle(S.tabWeather), findsOneWidget);
+      await tester.tap(find.text(S.tabCrops).last);
+      await tester.pumpAndSettle();
+      expect(_navTitle(S.nextSeason), findsOneWidget);
 
-    await tester.tap(find.text(S.tabField).last);
-    await tester.pumpAndSettle();
-    expect(_navTitle(S.myFarm), findsOneWidget);
+      await tester.tap(find.text(S.tabWeather).last);
+      await tester.pumpAndSettle();
+      expect(_navTitle(S.tabWeather), findsOneWidget);
 
-    await tester.tap(find.text(S.tabNotes).last);
-    await tester.pumpAndSettle();
-    expect(_navTitle(S.notesTitle), findsOneWidget);
-  });
+      await tester.tap(find.text(S.tabField).last);
+      await tester.pumpAndSettle();
+      expect(_navTitle(S.myFarm), findsOneWidget);
+
+      await tester.tap(find.text(S.tabNotes).last);
+      await tester.pumpAndSettle();
+      expect(_navTitle(S.notesTitle), findsOneWidget);
+    },
+  );
 
   testWidgets(
     'Crops: one card per plan, best fit first, tap opens "why" sheet',
@@ -114,6 +130,8 @@ void main() {
       await tester.pumpWidget(
         _buildShell(analysis: analysis, prefs: prefs, theme: fsLightTheme()),
       );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(S.tabCrops).last);
       await tester.pumpAndSettle();
 
       final cards = find.byType(FsCropCard);
