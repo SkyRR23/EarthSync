@@ -19,3 +19,6 @@ Thumbs.db
 
 # Python bytecode is generated, never release source.
 **/__pycache__/
+/.venv/
+/.earthsync-runtime/
+/.pytest_cache/

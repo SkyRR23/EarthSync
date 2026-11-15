@@ -31,6 +31,13 @@ SOURCE_PATHS = [
     "Run-WebDemo.ps1",
     ".gitattributes",
     ".gitignore",
+    "start-earthsync.ps1",
+    "start-earthsync.cmd",
+    "start-earthsync.sh",
+    "stop-earthsync.ps1",
+    "stop-earthsync.sh",
+    "test-earthsync.ps1",
+    "test-earthsync.sh",
 ]
 EXTRA_WEB = {"offline-assets.json", "earthsync-offline.js", "flutter_service_worker.js"}
 
