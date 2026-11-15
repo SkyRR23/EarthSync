@@ -97,6 +97,11 @@ same bounds. Extraction is limited to 131,072 native cells and 512 cells per
 axis, with 16 MiB per-raster and 64 MiB session byte budgets. Wider views prompt
 the user to zoom in. “Show saved reference area” restores the original cached
 demo footprint. Confirmed farm layers remain clipped to the saved field outline.
+The public map defaults to “Prefer clearer image”: one acquisition with at least
+90% accepted coverage is preferred, otherwise the best coverage examined within
+the existing byte/time bounds is used. “Prefer newest image” keeps the newest
+acquisition with an accepted cell. Dates, coverage and selection policy are
+retained; pixels from different acquisitions are never combined.
 
 1. Dashboard: Ames public reference; distinguish stations, forecasts and alerts.
 2. Satellite NDVI map: acquisition age, QA, coverage and a native pixel, or the

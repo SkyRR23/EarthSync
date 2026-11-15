@@ -14,7 +14,12 @@ from rasterio.warp import transform
 from earthsync.platform_v1.api import create_app, PREFIX
 from earthsync.platform_v1.store import Store
 from earthsync.realtime.http import SourceError
-from earthsync.realtime.ndvi import geometry, hls_window, inspect_pixel, viewport_bbox
+from earthsync.realtime.ndvi import (
+    geometry,
+    hls_window,
+    inspect_pixel,
+    viewport_bbox,
+)
 
 DATE = "2026-10-22T16:45:00+00:00"
 LOCATION = {"lat": 42.0308, "lon": -93.6319}
@@ -224,7 +229,7 @@ def test_viewport_api_uses_its_own_cached_geometry_and_original_pixel(
     app = create_app(store=Store(tmp_path), local_enabled=True)
     bbox = "-93.65,42.02,-93.61,42.04"
     location, geom = viewport_bbox(bbox)
-    key, _ = app.state.ndvi.key(location, geom)
+    key, _ = app.state.ndvi.key(location, geom, "clearest")
     app.state.realtime.repository.put(key, extract())
     route = PREFIX + "/realtime/ames/ndvi-overlay"
     with TestClient(

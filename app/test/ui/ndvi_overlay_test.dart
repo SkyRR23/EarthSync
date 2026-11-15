@@ -35,10 +35,12 @@ void main() {
                   isTrue,
                 );
                 requestedBounds = request.url.queryParameters['bbox'];
+                expect(request.url.queryParameters['preference'], 'clearest');
                 return http.Response('{}', 202);
               }
               if (request.url.queryParameters.containsKey('lat')) {
                 expect(request.url.queryParameters['bbox'], requestedBounds);
+                expect(request.url.queryParameters['preference'], 'clearest');
                 inspections++;
                 return http.Response(
                   jsonEncode({

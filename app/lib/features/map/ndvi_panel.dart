@@ -55,6 +55,7 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
   double _opacity = .75;
   int _revision = 0;
   String _selectionQuery = '';
+  String _preference = 'clearest';
   bool _viewChanged = false, _fitNext = false;
 
   String get _basePath =>
@@ -92,7 +93,7 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
       return;
     }
     final query =
-        '?${Uri(queryParameters: {'bbox': values.map((v) => v.toStringAsFixed(6)).join(',')}).query}';
+        '?${Uri(queryParameters: {'bbox': values.map((v) => v.toStringAsFixed(6)).join(','), 'preference': _preference}).query}';
     _selectArea(query);
   }
 
@@ -334,6 +335,37 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
                       },
               ),
             const SizedBox(height: 12),
+            if (widget.farmId == null) ...[
+              DropdownButtonFormField<String>(
+                initialValue: _preference,
+                isExpanded: true,
+                decoration: const InputDecoration(
+                  labelText: 'Satellite image preference',
+                ),
+                items: const [
+                  DropdownMenuItem(
+                    value: 'clearest',
+                    child: Text('Prefer clearer image'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'latest',
+                    child: Text('Prefer newest image'),
+                  ),
+                ],
+                onChanged: _busy || _snapshot?['status'] == 'loading'
+                    ? null
+                    : (value) {
+                        if (value == null) return;
+                        setState(() => _preference = value);
+                        _loadView();
+                      },
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'A clearer image may be older. Each layer uses one acquisition date; cloudy and missing cells stay transparent.',
+              ),
+              const SizedBox(height: 12),
+            ],
             Wrap(
               spacing: 12,
               runSpacing: 8,
@@ -464,7 +496,7 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
                 title: const Text('Source and quality policy'),
                 children: [
                   SelectableText(
-                    '${data['granule_id']}\n${data['qa_policy']}\n${data['coverage_definition']}\n${data['display_resampling']}',
+                    '${data['granule_id']}\n${data['qa_policy']}\n${data['coverage_definition']}\n${data['display_resampling']}\n${data['selection_policy'] ?? ''}\n${data['selection_note'] ?? ''}',
                   ),
                 ],
               ),
