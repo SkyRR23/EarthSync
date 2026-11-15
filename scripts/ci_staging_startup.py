@@ -59,6 +59,14 @@ def main():
             reference = json.load(response)
         assert reference["status"] == "reference_only"
         assert reference["rule_review"]["executable_rule_count"] == 0
+        request = urllib.request.Request(
+            "http://127.0.0.1:8021/api/platform/v1/crop-intelligence",
+            data=json.dumps({"crop": "rice", "question": "soil pH"}).encode(),
+            headers={"Content-Type": "application/json"},
+        )
+        with opener.open(request, timeout=15) as response:
+            packet = json.load(response)
+        assert packet["citations"] and packet["recommendation_eligible"] is False
         with opener.open("http://127.0.0.1:8080/") as response:
             assert b"flutter_bootstrap.js" in response.read()
         print(

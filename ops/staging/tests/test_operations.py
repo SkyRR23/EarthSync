@@ -10,6 +10,7 @@ import pytest
 sys.path.insert(0, str(Path(__file__).parents[1]))
 from report import Report
 from staging import (
+    copy_research_references,
     digest,
     exclusive,
     private_path,
@@ -18,6 +19,33 @@ from staging import (
     environment,
 )
 from smoke import local_url
+
+
+def test_research_sidecars_survive_staged_runtime(tmp_path, monkeypatch):
+    from earthsync.research import retrieval
+
+    source = Path(__file__).resolve().parents[3]
+    staged = tmp_path / "state"
+    staged.mkdir()
+    files = copy_research_references(source, staged)
+    assert {p.name for p in files} == {
+        "integrity.json",
+        "facts.json",
+        "sources.json",
+        "source-receipts.json",
+    }
+    for path in files:
+        assert digest(path) == digest(
+            source / "data/crop-rule-candidates/v1" / path.name
+        )
+    monkeypatch.setattr(
+        retrieval, "REVIEW_ROOT", staged / "data/crop-rule-candidates/v1"
+    )
+    packet = retrieval.EvidenceIndex().retrieve(
+        retrieval.EvidenceQuery(crop="rice", question="soil pH")
+    )
+    assert packet["citations"] and packet["recommendation_eligible"] is False
+    assert copy_research_references(tmp_path / "old-source", tmp_path / "unused") == []
 
 
 @pytest.mark.parametrize(

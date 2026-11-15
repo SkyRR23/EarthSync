@@ -26,6 +26,7 @@ artifact in Git; raw runtime state and temporary credentials stay outside Git.
 | Docker build / runtime smoke | Existing GitHub platform CI container job passed at implementation commit `90652b2b8d709679fa14db55d427e077f5dab83c`; extended smoke checks cited retrieval |
 | Windows/Linux research CI | 62 passed, 1 optional local-Tesseract skip on each OS at implementation commit; no interactive Windows destination/ACL acceptance claimed |
 | Exported container runtime closure | Fresh temporary copy of runtime modules/catalog and the four allowlisted 7V JSON files imported successfully and returned hash-checked cited evidence |
+| Copied 7Q runtime closure | Focused test preserves exact four review sidecars and retrieves cited evidence from the copied files; Windows startup probe now calls the new endpoint |
 
 Optional/live provider and environment-specific skips are explicit; local offline
 tests do not establish NASA/soil live provider health. Existing dependency

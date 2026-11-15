@@ -49,3 +49,9 @@ Research operations are synchronous and bounded. There is no pretend job service
 `/jobs/{id}` was a proposed endpoint, and is intentionally not implemented.
 The documented test deployment uses one worker. Public deployment and production
 account management require separate review.
+
+Both the Docker runtime allowlist and the copied 7Q platform runtime carry the
+four exact public 7V sidecars used by retrieval. The staging startup probe calls
+the new crop-intelligence endpoint, so a health-only check cannot hide a missing
+review-evidence file. Full source/release bundles retain the original complete
+scientific review package.
