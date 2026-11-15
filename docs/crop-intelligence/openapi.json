@@ -1411,6 +1411,16 @@
       },
       "Extract": {
         "properties": {
+          "request_ai_assistance": {
+            "type": "boolean",
+            "title": "Request Ai Assistance",
+            "default": false
+          },
+          "external_image_consent": {
+            "type": "boolean",
+            "title": "External Image Consent",
+            "default": false
+          },
           "farm_id": {
             "type": "string",
             "format": "uuid",
@@ -1590,15 +1600,73 @@
       },
       "PhotoAction": {
         "properties": {
-          "farm_id": {
+          "image_kind": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "crop",
+                  "soil"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image Kind"
+          },
+          "crop": {
             "type": "string",
-            "format": "uuid",
-            "title": "Farm Id"
+            "maxLength": 150,
+            "title": "Crop",
+            "default": ""
+          },
+          "question": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Question",
+            "default": ""
+          },
+          "region": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 150,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Region"
+          },
+          "growth_stage": {
+            "type": "string",
+            "maxLength": 150,
+            "title": "Growth Stage",
+            "default": ""
+          },
+          "weather_context": {
+            "type": "string",
+            "maxLength": 500,
+            "title": "Weather Context",
+            "default": ""
+          },
+          "farmer_symptoms": {
+            "type": "string",
+            "maxLength": 500,
+            "title": "Farmer Symptoms",
+            "default": ""
           },
           "external_image_consent": {
             "type": "boolean",
             "title": "External Image Consent",
             "default": false
+          },
+          "farm_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Farm Id"
           }
         },
         "additionalProperties": false,

@@ -81,6 +81,7 @@ def create_app(
     local_enabled=False,
     allowed_origins=(),
     rate_limit=120,
+    vision=None,
 ):
     # This is intentionally not a custom authentication protocol. No hosted
     # private API is enabled until an identity provider integration is reviewed.
@@ -653,7 +654,9 @@ def create_app(
 
     from earthsync.research.local import local_router
 
-    app.include_router(local_router(store, objects, reference_catalog, OWNER))
+    app.include_router(
+        local_router(store, objects, reference_catalog, OWNER, vision=vision)
+    )
     return app
 
 

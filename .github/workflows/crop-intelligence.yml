@@ -9,6 +9,7 @@ on:
       - 'app/lib/data/platform_transport.dart'
       - 'app/test/ui/crop_intelligence_test.dart'
       - 'docs/crop-intelligence/**'
+      - 'docs/multimodal/**'
       - '.github/workflows/crop-intelligence.yml'
   workflow_dispatch:
 permissions:
@@ -43,7 +44,9 @@ jobs:
       - working-directory: app
         run: flutter pub get --enforce-lockfile
       - working-directory: app
-        run: dart format --output=none --set-exit-if-changed lib test integration_test test_support example
+        run: |
+          dart format lib test integration_test test_support example
+          git diff --exit-code
       - working-directory: app
         run: flutter analyze
       - working-directory: app
