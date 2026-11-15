@@ -33,7 +33,11 @@ def exercise(report, root):
             return
         raise AssertionError("Expected rejection")
 
-    migrations = sorted((Path(module.__file__).parent / "migrations").glob("*.sql"))
+    migrations = [
+        file
+        for file in sorted((Path(module.__file__).parent / "migrations").glob("*.sql"))
+        if file.name != "040_crop_lab_reports.sql"
+    ]
     expected_migrations = [
         (int(path.name.split("_")[0]), hashlib.sha256(path.read_bytes()).hexdigest())
         for path in migrations

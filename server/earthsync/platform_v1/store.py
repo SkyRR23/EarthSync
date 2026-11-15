@@ -16,6 +16,17 @@ def encoded(value):
     return json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False)
 
 
+def migration_hashes(file):
+    raw = file.read_bytes()
+    unix = raw.replace(b"\r\n", b"\n")
+    # Published Windows checkouts used CRLF; archives used LF. Recognize only
+    # those exact byte variants and retain the database's original digest.
+    return {
+        hashlib.sha256(value).hexdigest()
+        for value in (raw, unix, unix.replace(b"\n", b"\r\n"))
+    }
+
+
 def cache_key(provider, product, version, request):
     return hashlib.sha256(
         encoded(
@@ -64,14 +75,27 @@ class Store:
             db.execute(
                 "CREATE TABLE IF NOT EXISTS schema_migrations (version INTEGER PRIMARY KEY, sha256 TEXT NOT NULL)"
             )
-            for file in sorted((Path(__file__).parent / "migrations").glob("*.sql")):
+            files = sorted((Path(__file__).parent / "migrations").glob("*.sql"))
+            legacy_040 = {
+                digest
+                for file in files
+                if file.name in {"040_realtime.sql", "040_crop_lab_reports.sql"}
+                for digest in migration_hashes(file)
+            }
+            for file in files:
+                # Both published branches used 040. Keep their bytes and applied
+                # digest intact; 041 adds whichever table that database lacks.
+                if file.name == "040_crop_lab_reports.sql":
+                    continue
                 version = int(file.name.split("_")[0])
                 digest = hashlib.sha256(file.read_bytes()).hexdigest()
                 old = db.execute(
                     "SELECT sha256 FROM schema_migrations WHERE version=?", (version,)
                 ).fetchone()
                 if old:
-                    if old[0] != digest:
+                    if old[0] not in migration_hashes(file) and not (
+                        version == 40 and old[0] in legacy_040
+                    ):
                         raise RuntimeError("Applied migration checksum changed")
                     continue
                 for statement in file.read_text().split(";"):
