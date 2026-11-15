@@ -11,10 +11,10 @@ See [machine-readable results](evidence/verification-summary.json),
 
 | Check | Result | Scope |
 |---|---|---|
-| Python/backend/operations | **503 passed, 7 explicit skips** | Actual native Rust executable and combined compatibility exports enabled; optional live opt-ins kept separate |
-| New real-time tests | **37 passed** within the backend run | Source parsing, QC, depths/units, timezones, cache/ETag, backoff/restart, 401/403/429/500/503, DNS/TLS/timeout fixtures, expiry, byte limits, corrupt data, privacy and recovery |
+| Python/backend/operations | **504 passed, 7 explicit skips** | Actual native Rust executable and combined compatibility exports enabled; optional live opt-ins kept separate |
+| New real-time tests | **38 passed** within the backend run | Source parsing, QC, depths/units, timezones, cache/ETag, backoff/restart, 401/403/429/500/503, DNS/TLS/timeout fixtures, expiry, official geographic coverage before empty alerts, byte limits, corrupt data, privacy and recovery |
 | Rust engine | **124 passed** | Original engine source unchanged; 6 bridge tests also passed |
-| Flutter | **137 passed, 3 explicit live opt-in skips** | Full suite, including meaningful timeout retry-gap and accessibility regressions; clean analyzer and release Web build |
+| Flutter | **138 passed, 3 explicit live opt-in skips** | Full suite, including meaningful timeout retry-gap and accessibility regressions; clean analyzer and release Web build |
 | Actual Chromium map/environment | **14 stages**, no page errors | Polygon draw/edit/undo/save/reopen, actual SoilGrids/GFS, dated modes, reports and phone layout; no TLS exception |
 | Actual Chromium farmer workflow | **19 stages**, no page errors | Actual NASA/Rust, three saved strategies, chronology conflict, history/photo/report ownership, reassessment, deterministic citations, Burmese and named injected offline tests |
 | Actual Chromium monitoring | **7 stages**, no page errors | Real public station values, newer automatic timestamp without restart/manual refresh, measured cache latency, explicit local transport outage/recovery, phone and actual Burmese settings |

@@ -373,6 +373,18 @@ class NwsAlerts:
     async def fetch(self, location, old, now):
         if location.get("country") != "US":
             raise SourceError("GEOGRAPHIC_NON_COVERAGE")
+        # A field's geographic hint is not authoritative warning coverage.
+        # Verify the official mapping before an empty alert feed can be trusted.
+        try:
+            mapping, _ = await self.http.json(
+                f"{NWS}/points/{location['lat']:.4f},{location['lon']:.4f}", ttl=86400
+            )
+        except SourceError as exc:
+            if exc.code == "UNSUPPORTED_ENDPOINT":
+                raise SourceError("GEOGRAPHIC_NON_COVERAGE") from exc
+            raise
+        if not mapping.get("properties", {}).get("forecastOffice"):
+            raise SourceError("GEOGRAPHIC_NON_COVERAGE")
         data, receipt = await self.http.json(
             f"{NWS}/alerts/active?point={location['lat']:.4f},{location['lon']:.4f}",
             ttl=60,

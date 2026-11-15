@@ -2,8 +2,9 @@
   "classification": "ACTUAL_RUNTIME_AND_LIVE_PROVIDERS; numerical/farmer fault fixtures separately labeled",
   "baseline_sha": "660b479c3ffb714cd1d489e1241c026ceae6ed67",
   "python": {
-    "passed": 503,
-    "skipped": 7
+    "passed": 504,
+    "skipped": 7,
+    "new_realtime_contracts": 38
   },
   "flutter": {
     "passed": 137,
@@ -31,7 +32,7 @@
       },
       {
         "step": "Injected LOCAL cache transport failure shows unverified alert status",
-        "status": "PASS · INJECTED LOCAL OUTAGE"
+        "status": "PASS \u00b7 INJECTED LOCAL OUTAGE"
       },
       {
         "step": "Recover current cached data after the injected local outage",

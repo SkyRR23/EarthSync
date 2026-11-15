@@ -268,6 +268,8 @@ async def test_nws_mapping_units_and_expired_filter(repository):
 @pytest.mark.asyncio
 async def test_alert_expiry_cancellation_and_identity(repository):
     def handle(request):
+        if "/points/" in str(request.url):
+            return fixture_response(request)
         return httpx.Response(
             200,
             json={
@@ -333,6 +335,21 @@ async def test_open_meteo_units_missingness_and_model_identity(repository):
         ).fetch(REFERENCES[3], None, NOW)
         assert data["hourly"][0]["soil_moisture_0_to_1cm"] == 0.3
         assert data["model_initialization_at"] is None
+
+
+@pytest.mark.asyncio
+async def test_empty_alert_feed_never_verifies_an_unmapped_field(repository):
+    requests = []
+
+    def handle(request):
+        requests.append(str(request.url))
+        return httpx.Response(404)
+
+    async with httpx.AsyncClient(transport=httpx.MockTransport(handle)) as client:
+        adapter = NwsAlerts(CachedHttp(client, repository, lambda: NOW.timestamp()))
+        with pytest.raises(SourceError, match="GEOGRAPHIC_NON_COVERAGE"):
+            await adapter.fetch(REFERENCES[0], None, NOW)
+    assert len(requests) == 1 and "/points/" in requests[0]
 
 
 @pytest.mark.asyncio
