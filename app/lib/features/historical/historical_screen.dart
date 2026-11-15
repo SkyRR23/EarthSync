@@ -629,7 +629,8 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
             last.month,
             last.day,
           );
-          if (mappedStart.month != first.month || mappedEnd.month != last.month) {
+          if (mappedStart.month != first.month ||
+              mappedEnd.month != last.month) {
             throw const FormatException('Leap-day mapping needs review.');
           }
           drafts.add(
