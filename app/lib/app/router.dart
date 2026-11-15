@@ -1,4 +1,6 @@
 import 'package:go_router/go_router.dart';
+import 'package:flutter/foundation.dart';
+import '../features/home/farmer_start.dart';
 import '../evidence/app/router.dart';
 import '../submission/science_hub.dart';
 import '../submission/soil_map_page.dart';
@@ -26,9 +28,10 @@ import '../features/sources/sources_screen.dart';
 /// /crops = "Check my crops"; /field-details = answers and settings;
 /// /climate = NASA months of the past year.
 /// /farm marks the whole farm with 4 corner pins (from the Field tab).
-GoRouter buildRouter({bool setupDone = false}) => GoRouter(
-  initialLocation: setupDone ? '/home' : '/',
+GoRouter buildRouter({bool setupDone = false, bool introductionDone = true}) => GoRouter(
+  initialLocation: !kIsWeb && !introductionDone ? '/intro' : setupDone ? '/home' : '/',
   routes: [
+    GoRoute(path: '/intro', builder: (_, _) => const FarmerIntroduction()),
     ...buildEvidenceRoutes(),
     GoRoute(path: '/science', builder: (_, _) => const ScienceHub()),
     GoRoute(path: '/soil-map', builder: (_, _) => const SoilMapPage()),

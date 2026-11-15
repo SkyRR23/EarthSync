@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -87,7 +88,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                               S.chatTitle,
                               style: t.title1.copyWith(fontSize: 24),
                             ),
-                            Text(S.chatSubtitle, style: t.footnote),
+                            Text(kIsWeb ? S.chatSubtitle : 'Crop questions and help with your field', style: t.footnote),
                           ],
                         ),
                       ),
@@ -139,7 +140,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                                 ),
                                 const SizedBox(width: FsSpace.md),
                                 Expanded(
-                                  child: Text(S.chatHello, style: t.callout),
+                                  child: Text(kIsWeb ? S.chatHello : 'What would you like to know? Ask about growing a crop, or about your own field. You do not need a saved field for general questions.', style: t.callout),
                                 ),
                               ],
                             ),
@@ -148,7 +149,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                         const SizedBox(height: FsSpace.lg),
                         Text(S.chatTry, style: t.headline),
                         const SizedBox(height: FsSpace.sm),
-                        for (final (i, q) in S.chatSuggestions.indexed)
+                        for (final (i, q) in (kIsWeb ? S.chatSuggestions : const ['How do I grow rice?', 'What should I check before planting mung beans?', 'What does my soil type mean?', 'What do you know about my field?']).indexed)
                           FsEntrance(
                             index: i + 1,
                             child: Padding(
@@ -169,6 +170,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                           padding: const EdgeInsets.only(top: FsSpace.sm),
                           child: FsStatusPill(s.error!, tone: FsPillTone.look),
                         ),
+                      if (!kIsWeb && s.error != null)
+                        TextButton.icon(onPressed: s.sending ? null : () => ref.read(chatProvider.notifier).retry(farmFacts(ref, widget.now ?? DateTime.now())), icon: const Icon(Icons.refresh), label: const Text('Try my question again')),
                     ],
                   ),
                 ),

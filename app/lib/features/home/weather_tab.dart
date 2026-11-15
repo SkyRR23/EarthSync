@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'farmer_start.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -265,6 +267,8 @@ class _WeatherTabState extends ConsumerState<WeatherTab> {
                       ),
                     ),
                   ),
+                  if (!kIsWeb && f != null)
+                    Padding(padding: const EdgeInsets.symmetric(horizontal: FsSpace.gutter), child: ForecastRainChart(days: f.days, saved: fc.failed, fetchedAt: f.fetchedAt)),
                   const FsSectionTitle(S.nasaLast7),
                   FsEntrance(index: 5, child: _NasaRecentCard(recent: recent)),
                   const FsSectionTitle(S.nasaPastYear),

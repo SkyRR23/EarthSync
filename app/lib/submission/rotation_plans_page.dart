@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../data/models/farmer_input.dart';
@@ -132,6 +133,16 @@ class _RotationPlansState extends ConsumerState<RotationPlansPage> {
                 'Enter your existing sequence and alternatives, review the available field evidence, then save your own choice. Empty seasons stay unknown.',
               ),
               const SizedBox(height: FsSpace.md),
+              if (!kIsWeb) ...[
+                Text('Your seasons at a glance', style: context.type.headline),
+                const Text('Read each row from top to bottom. These are your proposed crops, not predicted results.'),
+                for (var i = 0; i < 3; i++)
+                  Card(child: Padding(padding: const EdgeInsets.all(12), child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                    Text('${_names[i]}${_chosen == i ? ' · Your choice' : ''}', style: context.type.headline),
+                    for (var j = 0; j < 3; j++)
+                      ListTile(dense: true, leading: CircleAvatar(child: Text('${j + 1}')), title: Text(_sequences[i][j] == null ? 'Not decided' : Crops.label(_sequences[i][j])), subtitle: j < 2 ? const Text('↓ Next season') : const Text('Third season')),
+                  ]))),
+              ],
               for (var i = 0; i < 3; i++)
                 Card(
                   child: Padding(

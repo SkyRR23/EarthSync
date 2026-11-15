@@ -1,7 +1,7 @@
 name: Submission APK
 on:
   push:
-    branches: [integration/earthsync-submission-timeline]
+    branches: [integration/earthsync-submission-timeline, feat/farmer-first-android, main]
     paths: ['app/**', 'engine/**', '.github/workflows/submission-android.yml']
   workflow_dispatch:
 permissions:

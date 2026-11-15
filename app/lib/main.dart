@@ -20,6 +20,8 @@ import 'src/rust/api/bridge.dart' as rust;
 import 'submission/farm_bridge.dart';
 import 'evidence/state/local_farm_provider.dart';
 import 'package:timezone/data/latest.dart' as timezone_data;
+import 'features/home/farmer_start.dart';
+import 'evidence/data/local/reminder_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -62,14 +64,15 @@ Future<void> main() async {
             (json) => rust.referenceEt0Json(requestJson: json),
           ),
       ],
-      child: FieldShiftApp(setupDone: setupDone),
+      child: FieldShiftApp(setupDone: setupDone, introductionDone: prefs?.getBool(farmerIntroKey) ?? false),
     ),
   );
 }
 
 class FieldShiftApp extends ConsumerStatefulWidget {
-  const FieldShiftApp({super.key, this.setupDone = false});
+  const FieldShiftApp({super.key, this.setupDone = false, this.introductionDone = true});
   final bool setupDone;
+  final bool introductionDone;
 
   @override
   ConsumerState<FieldShiftApp> createState() => _FieldShiftAppState();
@@ -77,13 +80,15 @@ class FieldShiftApp extends ConsumerStatefulWidget {
 
 class _FieldShiftAppState extends ConsumerState<FieldShiftApp>
     with WidgetsBindingObserver {
-  late final _router = buildRouter(setupDone: widget.setupDone);
+  late final _router = buildRouter(setupDone: widget.setupDone, introductionDone: widget.introductionDone);
+  late final DeviceReminders _deviceReminders;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    ref.read(deviceRemindersProvider).onOpen = (path) {
+    _deviceReminders = ref.read(deviceRemindersProvider);
+    _deviceReminders.onOpen = (path) {
       if (mounted && (path.startsWith('/tasks') || path == '/notifications')) {
         _router.go(path);
       }
@@ -100,7 +105,7 @@ class _FieldShiftAppState extends ConsumerState<FieldShiftApp>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    ref.read(deviceRemindersProvider).onOpen = null;
+    _deviceReminders.onOpen = null;
     _router.dispose();
     super.dispose();
   }

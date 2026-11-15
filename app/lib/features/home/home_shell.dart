@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'farmer_start.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -62,6 +64,7 @@ class _HomeShellState extends ConsumerState<HomeShell>
     super.initState();
     // App reopened with a saved field: check it again.
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
       ref
           .read(analysisProvider.notifier)
           .ensureFor(ref.read(farmerDraftProvider));
@@ -72,7 +75,7 @@ class _HomeShellState extends ConsumerState<HomeShell>
   Widget build(BuildContext context) {
     final p = context.fs;
     const pages = [
-      HomeTab(),
+      kIsWeb ? HomeTab() : FarmerStart(),
       WeatherTab(),
       FieldTab(),
       NotesTab(),
@@ -172,7 +175,13 @@ class _HomeShellState extends ConsumerState<HomeShell>
           backgroundColor: p.background,
           body: body,
           bottomNavigationBar: _EarthTabBar(
-            tabs: _tabs,
+            tabs: kIsWeb ? _tabs : const [
+              ('Home', Icons.home_outlined, Icons.home),
+              (S.tabWeather, CupertinoIcons.cloud_sun, CupertinoIcons.cloud_sun_fill),
+              (S.tabField, CupertinoIcons.map, CupertinoIcons.map_fill),
+              ('Records', CupertinoIcons.doc_text, CupertinoIcons.doc_text_fill),
+              ('Tasks', Icons.checklist_outlined, Icons.checklist),
+            ],
             current: _tab,
             onTap: _go,
           ),

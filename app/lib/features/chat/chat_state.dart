@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
@@ -58,6 +59,7 @@ class ChatClient {
             body: jsonEncode({
               'messages': [for (final m in messages) m.toJson()],
               'farm': farm,
+              if (!kIsWeb) 'response_mode': 'farmer_first',
             }),
           )
           .timeout(timeout);
@@ -218,7 +220,8 @@ class ChatNotifier extends Notifier<ChatState> {
   Future<void> send(String text, Map<String, String> farm) async {
     final q = text.trim();
     if (q.isEmpty || state.sending) return;
-    final msgs = [...state.messages, ChatMessage(fromUser: true, text: q)];
+    final previous = state.messages;
+    final msgs = [...previous.skip(previous.length > 28 ? previous.length - 28 : 0), ChatMessage(fromUser: true, text: q)];
     state = ChatState(messages: msgs, sending: true);
     _save();
     try {
@@ -244,6 +247,14 @@ class ChatNotifier extends Notifier<ChatState> {
         },
       );
     }
+  }
+
+  Future<void> retry(Map<String, String> farm) async {
+    if (state.sending || state.error == null || state.messages.isEmpty) return;
+    final last = state.messages.last;
+    if (!last.fromUser) return;
+    state = ChatState(messages: state.messages.take(state.messages.length - 1).toList());
+    await send(last.text, farm);
   }
 
   void clear() {
