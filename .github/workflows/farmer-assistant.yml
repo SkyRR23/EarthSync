@@ -3,9 +3,9 @@ name: Farmer assistant contract and UI
 on:
   pull_request:
     paths:
-      - 'app/lib/features/assistant/**'
-      - 'app/lib/assistant_demo.dart'
-      - 'app/test/assistant/**'
+      - 'app/lib/evidence/features/assistant/**'
+      - 'app/lib/evidence/assistant_demo.dart'
+      - 'app/test/evidence/assistant/**'
       - 'server/earthsync/assistant/**'
       - 'server/tests/assistant/**'
       - 'docs/assistant/**'
@@ -43,11 +43,11 @@ jobs:
       - run: flutter pub get --enforce-lockfile
         working-directory: app
       - name: Check assistant formatting
-        run: dart format --output=none --set-exit-if-changed app/lib/features/assistant app/lib/assistant_demo.dart app/test/assistant
+        run: dart format --output=none --set-exit-if-changed app/lib/evidence/features/assistant app/lib/evidence/assistant_demo.dart app/test/evidence/assistant
       - name: Analyze assistant
-        run: flutter analyze --no-fatal-infos lib/features/assistant lib/assistant_demo.dart test/assistant
+        run: flutter analyze --no-fatal-infos lib/evidence/features/assistant lib/evidence/assistant_demo.dart test/evidence/assistant
         working-directory: app
-      - run: flutter test test/assistant --reporter expanded
+      - run: flutter test test/evidence/assistant --reporter expanded
         working-directory: app
-      - run: flutter build web --target lib/assistant_demo.dart --no-wasm-dry-run
+      - run: flutter build web --target lib/evidence/assistant_demo.dart --no-wasm-dry-run
         working-directory: app

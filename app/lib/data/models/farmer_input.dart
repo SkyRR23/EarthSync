@@ -19,7 +19,8 @@ abstract final class Crops {
     'sesame': 'Sesame',
     'maize': 'Maize',
     'vegetables': 'Vegetables',
-    'fallow': 'Nothing (fallow)',
+    'fruits': 'Fruits',
+    'fallow': 'Nothing (rest)',
   };
 
   static String label(String? id) =>
@@ -36,10 +37,25 @@ class FarmerInput {
     this.irrigation = Irrigation.unknown,
     this.drainage = Drainage.unknown,
     this.priorities = const [],
+    this.boundary = const [],
+    this.soilTexture,
+    this.soilClass,
   });
 
+  /// Field location used for every calculation: the farm centre once the
+  /// farm is marked, otherwise the setup pin.
   final double latitude;
   final double longitude;
+
+  /// Farm corners as [lat, lon] pairs (empty = only a pin). Kept for P2's
+  /// server request; the on-device engine uses [latitude]/[longitude].
+  final List<List<double>> boundary;
+
+  /// Soil for today's engine: one of its 6 names (`clay_loam`…); null = not known.
+  final String? soilTexture;
+
+  /// The full 12-type soil name (`silty_clay_loam`…), for the backend/v0.3.
+  final String? soilClass;
 
   /// null = farmer does not know / did not say.
   final String? currentCrop;
@@ -60,6 +76,9 @@ class FarmerInput {
     'irrigation': irrigation.name,
     'drainage': drainage.name,
     'priorities': priorities.map(_priorityToJson).toList(),
+    'field_boundary': boundary,
+    'soil_texture': soilTexture,
+    'soil_class': soilClass,
   };
 
   static String _priorityToJson(Priority p) => switch (p) {

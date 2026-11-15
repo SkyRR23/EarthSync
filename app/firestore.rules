@@ -1,0 +1,21 @@
+rules_version = '2';
+
+// Field Shift: each signed-in farmer can read and write only their own data.
+// Usage events are write-only counts with no user id, place or text.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+      match /{document=**} {
+        allow read, write: if request.auth != null && request.auth.uid == uid;
+      }
+    }
+    match /usage_events/{eventId} {
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasOnly(['event', 'at', 'platform'])
+        && request.resource.data.event is string
+        && request.resource.data.event.size() < 40;
+      allow read, update, delete: if false;
+    }
+  }
+}

@@ -163,7 +163,7 @@ jobs:
             sleep 1
           done
           cd app
-          flutter test test/native_bridge_test.dart test/web_engine_test.dart --dart-define=RUN_LIVE_NASA=true --dart-define=RUN_WEB_DEMO=true --dart-define=BACKEND_URL=http://127.0.0.1:8000 --dart-define=WEB_DEMO_URL=http://127.0.0.1:8000/ --reporter expanded
+          flutter test test/native_bridge_test.dart test/evidence/web_engine_test.dart --dart-define=RUN_LIVE_NASA=true --dart-define=RUN_WEB_DEMO=true --dart-define=BACKEND_URL=http://127.0.0.1:8000 --dart-define=WEB_DEMO_URL=http://127.0.0.1:8000/ --reporter expanded
       - name: Preserve tested Flutter dependency lock
         if: always()
         uses: actions/upload-artifact@v4

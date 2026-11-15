@@ -1,152 +1,126 @@
 import 'dart:math' as math;
-import 'home_profile.dart';
 
-/// EPSG:4326 exterior ring, stored unclosed; GeoJSON closes it.
+import 'package:latlong2/latlong.dart';
+
+/// The farmer's whole farm, marked with 4 corner pins (OpenFarm-style field
+/// boundary, rebuilt natively). Only plain geometry lives here: the farm's
+/// centre and size. All climate and crop analysis stays in the Rust engine,
+/// which receives the farm centre as the field location.
 class FarmBoundary {
-  FarmBoundary(List<GeoPoint> vertices)
-    : vertices = List.unmodifiable(vertices) {
-    if (vertices.length < 3 || vertices.length > 999) {
-      throw const FormatException('Use 3–999 boundary vertices.');
-    }
-    final xs = vertices.map((p) => p.longitude);
-    if (xs.reduce(math.max) - xs.reduce(math.min) > 180) {
-      throw const FormatException(
-        'Antimeridian-crossing boundaries are not supported. Save a point instead.',
-      );
-    }
-    for (var i = 0; i < vertices.length; i++) {
-      final a = vertices[i], b = vertices[(i + 1) % vertices.length];
-      if (a == b) {
-        throw const FormatException('Remove repeated adjacent vertices.');
-      }
-      for (var j = i + 1; j < vertices.length; j++) {
-        if (j == i + 1 || (i == 0 && j == vertices.length - 1)) continue;
-        if (_intersects(
-          a,
-          b,
-          vertices[j],
-          vertices[(j + 1) % vertices.length],
-        )) {
-          throw const FormatException(
-            'Boundary edges must not cross or touch.',
-          );
-        }
-      }
-    }
-    var twicePlanarArea = 0.0;
-    for (var i = 0; i < vertices.length; i++) {
-      final a = vertices[i], b = vertices[(i + 1) % vertices.length];
-      twicePlanarArea +=
-          (a.longitude - vertices.first.longitude) *
-              (b.latitude - vertices.first.latitude) -
-          (b.longitude - vertices.first.longitude) *
-              (a.latitude - vertices.first.latitude);
-    }
-    if (twicePlanarArea.abs() < 1e-16) {
-      throw const FormatException('Boundary vertices must enclose an area.');
-    }
-    if (areaSquareMetres < 0.01) {
-      throw const FormatException('Boundary has no usable area.');
-    }
-  }
-  final List<GeoPoint> vertices;
-  static double _cross(GeoPoint a, GeoPoint b, GeoPoint c) =>
-      (b.longitude - a.longitude) * (c.latitude - a.latitude) -
-      (b.latitude - a.latitude) * (c.longitude - a.longitude);
-  static bool _on(GeoPoint a, GeoPoint b, GeoPoint p) =>
-      _cross(a, b, p).abs() < 1e-12 &&
-      p.longitude >= math.min(a.longitude, b.longitude) &&
-      p.longitude <= math.max(a.longitude, b.longitude) &&
-      p.latitude >= math.min(a.latitude, b.latitude) &&
-      p.latitude <= math.max(a.latitude, b.latitude);
-  static bool _intersects(GeoPoint a, GeoPoint b, GeoPoint c, GeoPoint d) =>
-      (_cross(a, b, c) * _cross(a, b, d) < 0 &&
-          _cross(c, d, a) * _cross(c, d, b) < 0) ||
-      _on(a, b, c) ||
-      _on(a, b, d) ||
-      _on(c, d, a) ||
-      _on(c, d, b);
-  bool covers(GeoPoint p) {
-    var inside = false;
-    for (var i = 0, j = vertices.length - 1; i < vertices.length; j = i++) {
-      final a = vertices[j], b = vertices[i];
-      if (_on(a, b, p)) return true;
-      if ((a.latitude > p.latitude) != (b.latitude > p.latitude) &&
-          p.longitude <
-              (b.longitude - a.longitude) *
-                      (p.latitude - a.latitude) /
-                      (b.latitude - a.latitude) +
-                  a.longitude) {
-        inside = !inside;
-      }
-    }
-    return inside;
+  FarmBoundary(List<LatLng> corners) : corners = orderCorners(corners);
+
+  static const cornerCount = 4;
+  static const _earthRadiusM = 6371008.8;
+  static const _m2PerAcre = 4046.8564224;
+
+  /// Corners in drawing order (sorted around the middle, so the shape never
+  /// crosses itself even if the farmer tapped the corners out of order).
+  final List<LatLng> corners;
+
+  bool get isComplete => corners.length == cornerCount;
+
+  /// Puts points in order around their middle point.
+  static List<LatLng> orderCorners(List<LatLng> pts) {
+    if (pts.length < 3) return List.unmodifiable(pts);
+    final lat0 =
+        pts.map((p) => p.latitude).reduce((a, b) => a + b) / pts.length;
+    final lon0 =
+        pts.map((p) => p.longitude).reduce((a, b) => a + b) / pts.length;
+    final k = math.cos(lat0 * math.pi / 180);
+    final sorted = [...pts]
+      ..sort((a, b) {
+        final ta = math.atan2(a.latitude - lat0, (a.longitude - lon0) * k);
+        final tb = math.atan2(b.latitude - lat0, (b.longitude - lon0) * k);
+        return ta.compareTo(tb);
+      });
+    return List.unmodifiable(sorted);
   }
 
-  /// A draft pin inside the outline; the farmer must still confirm its location.
-  GeoPoint get interiorPoint {
-    final ys = vertices.map((p) => p.latitude).toSet().toList()..sort();
-    for (var row = 0; row < ys.length - 1; row++) {
-      final y = (ys[row] + ys[row + 1]) / 2;
-      final crossings = <double>[];
-      for (var i = 0; i < vertices.length; i++) {
-        final a = vertices[i], b = vertices[(i + 1) % vertices.length];
-        if ((a.latitude > y) != (b.latitude > y)) {
-          crossings.add(
-            a.longitude +
-                (y - a.latitude) *
-                    (b.longitude - a.longitude) /
-                    (b.latitude - a.latitude),
-          );
-        }
-      }
-      crossings.sort();
-      for (var i = 0; i + 1 < crossings.length; i += 2) {
-        final point = GeoPoint(y, (crossings[i] + crossings[i + 1]) / 2);
-        if (covers(point)) return point;
-      }
-    }
-    throw const FormatException('Unable to place a pin inside this outline.');
+  /// Local flat projection around the corners' mean (metres). Accurate
+  /// enough for a farm a few hundred metres wide.
+  ({LatLng origin, List<math.Point<double>> xy}) _project() {
+    final lat0 =
+        corners.map((p) => p.latitude).reduce((a, b) => a + b) / corners.length;
+    final lon0 =
+        corners.map((p) => p.longitude).reduce((a, b) => a + b) /
+        corners.length;
+    final mPerDeg = _earthRadiusM * math.pi / 180;
+    final k = math.cos(lat0 * math.pi / 180);
+    return (
+      origin: LatLng(lat0, lon0),
+      xy: [
+        for (final p in corners)
+          math.Point(
+            (p.longitude - lon0) * k * mPerDeg,
+            (p.latitude - lat0) * mPerDeg,
+          ),
+      ],
+    );
   }
 
-  /// Spherical trapezoid integral, mean Earth radius 6371008.8 m.
-  /// Approximate area, not a survey (ellipsoid difference about 1% or less).
-  double get areaSquareMetres {
-    const rad = math.pi / 180;
-    var integral = 0.0;
-    for (var i = 0; i < vertices.length; i++) {
-      final a = vertices[i], b = vertices[(i + 1) % vertices.length];
-      integral +=
-          (b.longitude - a.longitude) *
-          rad *
-          (math.sin(a.latitude * rad) + math.sin(b.latitude * rad));
+  double _signedArea(List<math.Point<double>> xy) {
+    var s = 0.0;
+    for (var i = 0; i < xy.length; i++) {
+      final a = xy[i];
+      final b = xy[(i + 1) % xy.length];
+      s += a.x * b.y - b.x * a.y;
     }
-    return (integral * 6371008.8 * 6371008.8 / 2).abs();
+    return s / 2;
   }
 
-  Map<String, dynamic> toJson() => {
-    'type': 'Polygon',
-    'coordinates': [
-      [
-        ...vertices,
-        vertices.first,
-      ].map((p) => [p.longitude, p.latitude]).toList(),
-    ],
-  };
-  factory FarmBoundary.fromJson(Map<String, dynamic> json) {
-    if (json['type'] != 'Polygon' ||
-        (json['coordinates'] as List).length != 1) {
-      throw const FormatException('Expected one exterior polygon ring.');
-    }
-    final ring = (json['coordinates'] as List).single as List;
-    final points = ring
-        .map(
-          (v) => GeoPoint((v[1] as num).toDouble(), (v[0] as num).toDouble()),
-        )
-        .toList();
-    if (points.length < 4 || points.first != points.last) {
-      throw const FormatException('Boundary ring must be closed.');
-    }
-    return FarmBoundary(points.sublist(0, points.length - 1));
+  /// Farm size in square metres (0 until there are 3+ corners).
+  double get areaM2 {
+    if (corners.length < 3) return 0;
+    return _signedArea(_project().xy).abs();
   }
+
+  double get areaAcres => areaM2 / _m2PerAcre;
+  double get areaHectares => areaM2 / 10000;
+
+  /// Centre of the farm shape. This is the location the engine uses.
+  LatLng get center {
+    if (corners.isEmpty) throw StateError('No corners');
+    final (:origin, :xy) = _project();
+    final a = _signedArea(xy);
+    if (corners.length < 3 || a.abs() < 1e-6) return origin;
+    var cx = 0.0, cy = 0.0;
+    for (var i = 0; i < xy.length; i++) {
+      final p = xy[i];
+      final q = xy[(i + 1) % xy.length];
+      final f = p.x * q.y - q.x * p.y;
+      cx += (p.x + q.x) * f;
+      cy += (p.y + q.y) * f;
+    }
+    cx /= 6 * a;
+    cy /= 6 * a;
+    final mPerDeg = _earthRadiusM * math.pi / 180;
+    final k = math.cos(origin.latitude * math.pi / 180);
+    return LatLng(
+      origin.latitude + cy / mPerDeg,
+      origin.longitude + cx / (k * mPerDeg),
+    );
+  }
+
+  List<List<double>> toJson() => [
+    for (final c in corners) [c.latitude, c.longitude],
+  ];
+
+  static FarmBoundary? fromJson(Object? raw) {
+    if (raw is! List || raw.length != cornerCount) return null;
+    try {
+      return FarmBoundary([
+        for (final c in raw)
+          LatLng(((c as List)[0] as num).toDouble(), (c[1] as num).toDouble()),
+      ]);
+    } catch (_) {
+      return null;
+    }
+  }
+}
+
+/// "About 2.4 acres" — farmers in Myanmar talk in acres.
+String farmSizeLabel(FarmBoundary b) {
+  final acres = b.areaAcres;
+  final v = acres < 10 ? acres.toStringAsFixed(1) : acres.round().toString();
+  return 'About $v acres';
 }

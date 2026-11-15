@@ -1,5 +1,11 @@
 # Third-party source register — foundation increment
 
+The EarthSync shield/leaf logo in `app/assets/branding/earthsync-logo.png`, the
+Android launcher resources and Web icon was supplied by the project owner on
+2026-11-15. The supplied image used JPEG encoding despite its `.png` filename;
+it was encoded as PNG for Android compatibility and scaled for launcher
+densities. Its artwork is unchanged; no stock-art license is asserted.
+
 No final project license has been selected. Team confirmation is required.
 This is an initial register, not a complete distribution license bundle.
 
@@ -15,6 +21,21 @@ Before release, add all shipped code/data/text/image assets, exact versions and
 URLs, transformations, required attribution text and redistribution decisions.
 OpenFarm's root license does not license upstream datasets or dependencies.
 No NASA logos or mission insignia were generated.
+
+## Flutter app (`app/`, P4) — shipped assets and packages
+
+| Component | Source / version | License / disposition |
+| --- | --- | --- |
+| Inter font (400/500/600/700, latin subset) | Fontsource `@fontsource/inter` 5.2.5 via cdn.jsdelivr.net; bundled in `app/assets/fonts/` | SIL Open Font License 1.1 (Rasmus Andersson). Bundled unmodified; include OFL text in release notices. |
+| OpenStreetMap tiles | `tile.openstreetmap.org`, loaded at runtime (not bundled) | ODbL data; attribution "© OpenStreetMap contributors" shown in app. Light demo use only per OSM tile usage policy; switch provider for wider release. |
+| NASA GIBS imagery | `MODIS_Terra_CorrectedReflectance_TrueColor`, GoogleMapsCompatible_Level9, loaded at runtime (not bundled) | NASA open data; source, layer and date shown in app. Provisional layer until P2 confirms. |
+| NASA GIBS layer `MODIS_Terra_NDVI_8Day` | GoogleMapsCompatible_Level9, loaded at runtime (not bundled) | NASA open data, attribution "NASA EOSDIS GIBS" shown in app. |
+| OpenFarm | superzero11/OpenFarm, commit `884a61567dd0d149214090baf9edebc533a2a0df` | BSD-3-Clause; design reference only, no code copied. |
+| `shared_preferences` | 2.5.6 (https://pub.dev/packages/shared_preferences) | BSD-3-Clause (Flutter Authors) |
+| `geolocator` | 14.1.2 (https://pub.dev/packages/geolocator) | MIT (Baseflow) |
+| `share_plus` | 13.3.1 (https://pub.dev/packages/share_plus) | BSD-3-Clause (Flutter Community) |
+| `firebase_core`, `firebase_auth`, `cloud_firestore` | 5.1.0 / 7.0.1 / 7.1.0 (pub.dev, FlutterFire) | BSD-3-Clause (Google). Runtime service: Firebase project `fieldshift-yangon-2026`; Google sign-in; Firestore in asia-southeast1. |
+| Flutter packages | Exact versions in `app/pubspec.lock`: flutter_riverpod, go_router, flutter_map, latlong2, fl_chart, intl, flutter_rust_bridge 2.13.0, cupertino_icons | Permissive (MIT / BSD-3-Clause / Apache-2.0); verify transitive notices before binary release. |
 
 v0.2 P0 fixture register: `engine/tests/fixtures/synthetic_v02_request.json` and
 `synthetic_v02_response.json` contain AI-assisted fictional observations, family

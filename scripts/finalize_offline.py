@@ -17,6 +17,8 @@ SHELL = {
     "manifest.json",
     "version.json",
     "favicon.png",
+    "sqlite3.wasm",
+    "sqflite_sw.js",
 }
 
 

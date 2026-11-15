@@ -33,8 +33,6 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  flutter_localizations:
-    sdk: flutter
   cupertino_icons: ^1.0.8
   flutter_riverpod: ^3.4.3
   go_router: ^17.5.0
@@ -43,15 +41,31 @@ dependencies:
   fl_chart: ^1.3.1
   intl: ^0.20.2
   http: ^1.6.0
-  url_launcher: 6.3.3
-  geolocator: ^14.1.2
-  shared_preferences: ^2.5.6
-  image_picker: ^1.2.4
-  exif: ^3.3.0
   field_shift_bridge:
     path: rust_builder
   flutter_rust_bridge: 2.13.0
+  shared_preferences: ^2.5.6
+  geolocator: ^14.1.2
+  share_plus: ^13.3.1
+  firebase_core: ^5.1.0
+  firebase_auth: ^7.0.1
+  cloud_firestore: ^7.1.0
+  image_picker: ^1.2.4
+  path_provider: ^2.1.6
+  firebase_storage: ^14.0.1
+  exif: ^3.3.0
+  sqflite_common: ^2.5.13
+  sqflite_common_ffi: ^2.4.7
+  sqflite_common_ffi_web: ^1.2.2
+  path: ^1.9.1
+  flutter_local_notifications: 21.0.0
+  timezone: ^0.11.2
+  flutter_timezone: ^5.1.1
+  web: ^1.1.1
+  url_launcher: 6.3.3
 dev_dependencies:
+  flutter_localizations:
+    sdk: flutter
   flutter_test:
     sdk: flutter
 
@@ -75,19 +89,31 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  assets:
+    - assets/branding/
+    - assets/fixtures/
+    - assets/onboarding/
+
+  # Inter (SIL Open Font License 1.1), latin subset via Fontsource.
   fonts:
     - family: EarthSyncSans
       fonts:
         - asset: assets/fonts/Roboto-Regular.ttf
         - asset: assets/fonts/Roboto-Bold.ttf
           weight: 700
-
     - family: NotoSansMyanmar
       fonts:
         - asset: assets/fonts/NotoSansMyanmar.ttf
-
-  assets:
-    - assets/fixtures/
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-400.ttf
+          weight: 400
+        - asset: assets/fonts/Inter-500.ttf
+          weight: 500
+        - asset: assets/fonts/Inter-600.ttf
+          weight: 600
+        - asset: assets/fonts/Inter-700.ttf
+          weight: 700
 
   # To add assets to your application, add an assets section, like this:
   # assets:

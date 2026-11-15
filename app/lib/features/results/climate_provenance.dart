@@ -1,77 +1,98 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
+import '../../app/strings.dart';
 import '../../data/models/field_analysis.dart';
 import '../../design/components/feedback.dart';
+import '../../design/components/grouped.dart';
+import '../../design/tokens.dart';
 
-/// Climate and crop evidence have separate labels even in mixed test payloads.
+/// Where the weather numbers come from (live NASA POWER, captured replay, or
+/// demo). Climate and crop evidence keep separate labels. Exact wording of the
+/// headline rows is checked by the team's NASA bridge tests.
 class ClimateProvenance extends StatelessWidget {
-  const ClimateProvenance({
-    super.key,
-    required this.analysis,
-    this.compact = false,
-  });
+  const ClimateProvenance({super.key, required this.analysis});
   final FieldAnalysis analysis;
-  final bool compact;
 
   @override
   Widget build(BuildContext context) {
     final a = analysis;
     final c = a.climateSummary;
     final p = a.trace?.provenance;
-    if (compact && p != null) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            a.trace!.retrievalMode == 'live_http'
-                ? 'Live NASA POWER · modeled historical data'
-                : 'Captured NASA POWER · offline replay',
-          ),
-          ExpansionTile(
-            title: const Text('Source, retrieval date and limitations'),
-            children: [ClimateProvenance(analysis: a)],
-          ),
-        ],
-      );
-    }
+    final t = context.type;
+    final small = t.footnote;
+
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          p == null
-              ? 'Climate: ${c.dataKind ?? "unverified demo"}'
-              : a.trace!.retrievalMode == 'live_http'
-              ? 'Real NASA POWER climate · modeled data'
-              : 'Captured real NASA POWER climate · offline replay',
+        FsGroupedSection(
+          header: S.provenanceHeader,
+          padded: true,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      CupertinoIcons.globe,
+                      color: context.fs.tint,
+                      size: 22,
+                    ),
+                    const SizedBox(width: FsSpace.sm),
+                    Expanded(
+                      child: Text(
+                        p == null
+                            ? 'Climate: ${c.dataKind ?? "unverified demo"}'
+                            : a.trace!.retrievalMode == 'live_http'
+                            ? 'Real NASA POWER climate · modeled data'
+                            : 'Captured real NASA POWER climate · offline replay',
+                        style: t.headline,
+                      ),
+                    ),
+                  ],
+                ),
+                if (p != null) ...[
+                  const SizedBox(height: FsSpace.sm),
+                  Text('Dataset: ${p['product']}', style: small),
+                  Text(
+                    'Historical window: ${c.period} · ${p['time_standard']}',
+                    style: small,
+                  ),
+                  Text(
+                    'Requested point: ${a.location.latitude}, ${a.location.longitude}',
+                    style: small,
+                  ),
+                  Text(
+                    'Retrieved: ${a.dataQuality.fetchedAt?.toUtc().toIso8601String() ?? "unknown"}',
+                    style: small,
+                  ),
+                  Text(
+                    'Precipitation: ${c.totalRainMm?.toStringAsFixed(2) ?? "unknown"} mm · '
+                    'Mean temperature: ${c.meanTempC?.toStringAsFixed(4) ?? "unknown"} °C',
+                    style: small,
+                  ),
+                  if (p['spatial_support'] is String)
+                    Text(p['spatial_support'] as String, style: small),
+                  const SizedBox(height: FsSpace.xs),
+                  Text(
+                    'Completeness describes daily coverage, not scientific accuracy. Missing values remain unknown.',
+                    style: small,
+                  ),
+                  Text(
+                    'Crop suitability: unknown — no source-backed crop constraints supplied.',
+                    style: small,
+                  ),
+                ],
+              ],
+            ),
+          ],
         ),
-        if (p != null) ...[
-          Text('Dataset: ${p['product']}'),
-          Text('Historical window: ${c.period} · ${p['time_standard']}'),
-          Text(
-            'Requested point: ${a.location.latitude}, ${a.location.longitude}',
-          ),
-          Text(
-            'Retrieved: ${a.dataQuality.fetchedAt?.toUtc().toIso8601String() ?? "unknown"}',
-          ),
-          Text(
-            'Precipitation: ${c.totalRainMm?.toStringAsFixed(2) ?? "unknown"} mm · '
-            'Mean temperature: ${c.meanTempC?.toStringAsFixed(4) ?? "unknown"} °C',
-          ),
-          Text(p['spatial_support'] as String),
-          const Text(
-            'Completeness describes daily coverage, not scientific accuracy. Missing values remain unknown.',
-          ),
-          Text(
-            a.scenarios.isEmpty
-                ? 'Crop suitability: unknown — no reviewed crop constraints supplied.'
-                : 'Crop suitability: unknown — reference-only profiles, not verified for this field.',
-          ),
-        ],
         if (a.dataQuality.syntheticCropReferences)
-          const FsDataQualityBanner(
+          const FsBanner(
             message:
                 'Synthetic crop profiles — test scenarios, not verified crop advice.',
-            kind: FsBannerKind.warning,
+            tone: FsTone.caution,
+            icon: CupertinoIcons.exclamationmark_circle_fill,
           ),
       ],
     );

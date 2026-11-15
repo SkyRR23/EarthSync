@@ -7,6 +7,7 @@ import time
 from contextlib import asynccontextmanager
 from pathlib import Path
 from uuid import UUID
+from typing import Literal
 
 import httpx
 from fastapi import FastAPI, Query, Request, Response
@@ -16,6 +17,10 @@ from fastapi.responses import JSONResponse
 from pydantic import AwareDatetime, Field
 from starlette.concurrency import run_in_threadpool
 
+from datetime import date
+
+from .historical_imagery import imagery
+from .historical import ArchiveInput, Historical, SimulationInput
 from .journal import Journal, JournalInput
 from .farmer_timeline import timeline
 from .comparisons import Comparisons, ComparisonInput
@@ -136,10 +141,11 @@ def create_app(
     realtime = Realtime(
         store, client=realtime_client, enabled=realtime_enabled, gfs=forecast_source
     )
-    from earthsync.realtime.ndvi import NdviOverlays, inspect_pixel
+    from earthsync.realtime.ndvi import NdviOverlays, inspect_pixel, viewport_bbox
     from earthsync.realtime.http import SourceError
 
     ndvi = NdviOverlays(realtime)
+    historical = Historical(store, transport, engine, orchestrator)
 
     def association(farm_id, point):
         if farm_id and store.farm(OWNER, farm_id).confirmed_point != point:
@@ -236,6 +242,8 @@ def create_app(
     jobs = Jobs(
         store,
         {
+            "historical": historical.retrieve,
+            "simulation": historical.simulate,
             "climate": climate_handler,
             "water": water_handler,
             "soil": soil_handler,
@@ -275,6 +283,22 @@ def create_app(
     app.state.jobs, app.state.store = jobs, store
     app.state.realtime = realtime
     app.state.ndvi = ndvi
+    from .datasets import DatasetRegistry
+
+    datasets = DatasetRegistry(
+        store, os.getenv("EARTHSYNC_DATASET_ROOT", str(store.path.parent / "datasets"))
+    )
+    datasets.bootstrap()
+
+    @app.get(PREFIX + "/datasets")
+    def dataset_registry():
+        return {
+            "schema_version": "earthsync.dataset-registry.v1",
+            "datasets": datasets.records(),
+            "blocked_crop_rule_count": 60,
+            "approved_executable_crop_rules": 0,
+        }
+
     if allowed_origins:
         app.add_middleware(
             CORSMiddleware,
@@ -495,6 +519,47 @@ def create_app(
     def confirm_journal_history(farm_id: UUID, entry_id: UUID):
         return Journal(store).confirm_history(OWNER, farm_id, entry_id)
 
+    @app.get(PREFIX + "/historical/imagery")
+    async def historical_imagery(day: date):
+        if day >= date.today():
+            raise PlatformError("HISTORICAL_DATE_REQUIRED", 422)
+        return await imagery(store, transport, day)
+
+    @app.post(PREFIX + "/historical/jobs", status_code=202)
+    async def historical_job(value: ArchiveInput):
+        historical.revision(OWNER, value.farm_id, value.revision)
+        raw = value.model_dump(mode="json")
+        return await jobs.submit(
+            OWNER, "historical", cache_key("POWER", "historical", "v1", raw), raw
+        )
+
+    @app.get(PREFIX + "/farms/{farm_id}/historical")
+    def historical_windows(farm_id: UUID):
+        return historical.list(OWNER, farm_id, "historical_windows")
+
+    @app.get(PREFIX + "/farms/{farm_id}/historical/{archive_id}")
+    def historical_replay(farm_id: UUID, archive_id: UUID):
+        return historical.replay(OWNER, farm_id, archive_id)
+
+    @app.post(PREFIX + "/simulations/jobs", status_code=202)
+    async def simulation_job(value: SimulationInput):
+        historical.revision(OWNER, value.farm_id, value.revision)
+        raw = value.model_dump(mode="json")
+        return await jobs.submit(
+            OWNER,
+            "simulation",
+            cache_key("Rust", "historical-simulation", "v1", raw),
+            raw,
+        )
+
+    @app.get(PREFIX + "/farms/{farm_id}/simulations")
+    def simulations(farm_id: UUID):
+        return historical.list(OWNER, farm_id, "historical_simulations")
+
+    @app.get(PREFIX + "/farms/{farm_id}/simulations/{simulation_id}")
+    def simulation(farm_id: UUID, simulation_id: UUID):
+        return historical.get(OWNER, farm_id, simulation_id, "historical_simulations")
+
     @app.post(PREFIX + "/climate/jobs", status_code=202)
     async def climate(value: ClimateInput):
         association(value.farm_id, value.query.point)
@@ -634,6 +699,10 @@ def create_app(
     async def assess(value: AssessmentInput):
         return await orchestrator.assess(OWNER, value)
 
+    @app.get(PREFIX + "/farms/{farm_id}/decisions/{decision_id}")
+    def decision(farm_id: UUID, decision_id: UUID):
+        return store.decision(OWNER, farm_id, decision_id)
+
     @app.get(PREFIX + "/farms/{farm_id}/decisions")
     def decisions(farm_id: UUID):
         return store.decisions(OWNER, farm_id)
@@ -696,7 +765,9 @@ def create_app(
         location_id = realtime.farm_location(farm)
         return realtime.snapshot(location_id)
 
-    def overlay_target(location_id=None, farm_id=None):
+    def overlay_target(
+        location_id=None, farm_id=None, bbox=None, preference="clearest"
+    ):
         if farm_id is not None:
             farm = store.farm(OWNER, farm_id)
             location = {
@@ -712,6 +783,9 @@ def create_app(
         location = next((r for r in REFERENCES if r["id"] == location_id), None)
         if location is None:
             raise PlatformError("NOT_FOUND", 404)
+        if bbox is not None:
+            point, polygon = viewport_bbox(bbox)
+            return {**location, **point}, polygon, preference
         return location, None
 
     def overlay_snapshot(target, lat, lon):
@@ -732,14 +806,27 @@ def create_app(
 
     @app.get(PREFIX + "/realtime/{location_id}/ndvi-overlay")
     def public_ndvi(
-        location_id: str, lat: float | None = None, lon: float | None = None
+        location_id: str,
+        lat: float | None = None,
+        lon: float | None = None,
+        bbox: str | None = Query(default=None, max_length=120),
+        preference: Literal["latest", "clearest"] = "clearest",
     ):
-        return overlay_snapshot(overlay_target(location_id), lat, lon)
+        try:
+            return overlay_snapshot(
+                overlay_target(location_id, bbox=bbox, preference=preference), lat, lon
+            )
+        except SourceError as exc:
+            raise PlatformError(exc.code, 422) from None
 
     @app.post(PREFIX + "/realtime/{location_id}/ndvi-overlay/refresh", status_code=202)
-    async def public_ndvi_refresh(location_id: str):
+    async def public_ndvi_refresh(
+        location_id: str,
+        bbox: str | None = Query(default=None, max_length=120),
+        preference: Literal["latest", "clearest"] = "clearest",
+    ):
         try:
-            ndvi.request(*overlay_target(location_id))
+            ndvi.request(*overlay_target(location_id, bbox=bbox, preference=preference))
             return {"scheduled": True}
         except SourceError as exc:
             raise PlatformError(exc.code, 422) from None

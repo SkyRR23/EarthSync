@@ -1,0 +1,15 @@
+{
+  "hosting": {
+    "public": "hosting-test",
+    "ignore": ["firebase.json", "firebase.test.json", "**/.*"],
+    "rewrites": [
+      {
+        "source": "/api/**",
+        "run": {
+          "serviceId": "fieldshift-backend-test",
+          "region": "asia-southeast1"
+        }
+      }
+    ]
+  }
+}

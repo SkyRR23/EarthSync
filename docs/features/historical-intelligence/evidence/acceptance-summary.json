@@ -1,0 +1,143 @@
+{
+  "classification": "Compiled Flutter Web / real FastAPI, SQLite and unchanged native Rust; farm records and hypothetical inputs are synthetic software fixtures",
+  "core_browser": {
+    "passed_stages": [
+      {
+        "step": "Open confirmed farm and accepted 2024 archive with Rust ET0",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "Historical playback advances local time and pauses",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "Inspect dated GIBS and fixed-version SoilGrids; NDVI stays unavailable",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "Replay changes actual tile dates and retains a separately dated pinned comparison",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "Run baseline and two alternatives using real archived conditions",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "Planting-date edit changes saved period outputs and preserves original",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "Water assumption changes comparison constraints; irrigation quantity withheld",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "Compare actual 2024 and 2025 under the same hypothetical decisions",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "2015\u20132025 contextual comparison exposes complete-season sample counts",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "Explicitly save selected historical replay and simulation for offline viewing",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "Cold offline reopen uses original device snapshot read only",
+        "classification": "injected network outage / cached-real records"
+      },
+      {
+        "step": "As-of-date mode withholds future-known environmental archives",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "Duplicate inputs reproduce the same calculation digest and source lineage",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "Import an existing baseline/A/B and save new historical reassessments without overwriting it",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "Reported crops, explicit bare field and unknown gaps remain distinct",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "Compiled mobile layout retains accessible result and section controls",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "No unhandled page errors",
+        "classification": "actual browser / cached-real environmental evidence"
+      }
+    ],
+    "unhandled_page_errors": []
+  },
+  "final_saved_and_outage_browser": {
+    "passed_stages": [
+      {
+        "step": "Reopen saved simulation with original source lineage",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "As-of-date mode withholds future-known environmental archives",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "Duplicate inputs reproduce the same calculation digest and source lineage",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "Import an existing baseline/A/B and save new historical reassessments without overwriting it",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "Reported crops, explicit bare field and unknown gaps remain distinct",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "Compiled mobile layout retains accessible result and section controls",
+        "classification": "actual browser / cached-real environmental evidence"
+      },
+      {
+        "step": "Injected current-provider failure preserves accepted historical online fallback",
+        "classification": "injected forecast failure / real saved NASA archive"
+      },
+      {
+        "step": "No unhandled page errors",
+        "classification": "actual browser / cached-real environmental evidence"
+      }
+    ],
+    "unhandled_page_errors": [],
+    "flutter_render_errors": []
+  },
+  "empty_cache_browser": {
+    "online_no_evidence": "passed",
+    "offline_no_cache": "passed",
+    "fabricated_values": false,
+    "page_errors": [],
+    "farm_inputs": "synthetic software test"
+  },
+  "lifecycle": {
+    "isolated_api_restart": "exact saved SQLite document hashes preserved",
+    "sqlite_backup_restore": "integrity and saved simulation counts passed",
+    "assistant_http_context": "cited 2024 rainfall 1100.48 mm and 2025 rainfall 984.25 mm; original period lengths explicit"
+  },
+  "regression": {
+    "python_passed": 480,
+    "python_explicit_skips": 7,
+    "flutter_passed": 137,
+    "flutter_explicit_live_skips": 3,
+    "rust": "existing suite passed; engine source tree unchanged from base",
+    "scientific_rules": {
+      "blocked_candidates": 60,
+      "executable_rules": 0,
+      "catalog_hashed_files": 49,
+      "source_review_hashed_files": 11,
+      "pinned_scientific_inputs": 35
+    }
+  },
+  "receipt_scope": "Core journey and final saved-state/outage follow-up are separate real browser runs; not summed as one uninterrupted acceptance run",
+  "tls": "Verification enabled. Existing environment CA trust was used after checking its fingerprint; no additional trust entry was created and no certificate-error bypass was enabled.",
+  "excluded": "Raw provider bodies, field IDs/geometry, journal IDs, browser state, database and raw logs are private outside Git"
+}

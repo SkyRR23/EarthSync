@@ -3,7 +3,7 @@
 // origin. The private workspace token is entered at runtime, never compiled in.
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:earthsync/features/photo_evidence/photo_evidence.dart';
+import 'package:earthsync/evidence/features/photo_evidence/photo_evidence.dart';
 
 void main() => runApp(const MaterialApp(home: EvidenceExample()));
 

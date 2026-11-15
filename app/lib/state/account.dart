@@ -1,0 +1,92 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../app/strings.dart';
+import '../data/cloud/cloud_sync.dart';
+import 'providers.dart';
+import 'today.dart';
+import '../submission/farm_bridge.dart';
+
+/// Firebase Auth, or null when Firebase did not start (tests / no config).
+final authProvider = Provider<FirebaseAuth?>((ref) => null);
+
+/// The signed-in Google user (null = signed out or no Firebase).
+final userProvider = StreamProvider<User?>((ref) {
+  final auth = ref.watch(authProvider);
+  return auth == null ? Stream.value(null) : auth.authStateChanges();
+});
+
+/// Google sign-in, then sync both ways: restore a saved farm and notes on a
+/// new phone, and upload what this phone already has. Returns an error
+/// message for the farmer, or null on success.
+Future<String?> signInAndSync(WidgetRef ref) async {
+  final auth = ref.read(authProvider);
+  final sync = ref.read(cloudSyncProvider);
+  if (auth == null || sync == null) return S.cloudUnavailable;
+  try {
+    final user = await signInWithGoogle(auth);
+    if (user == null) return S.signInFailed;
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'canceled' || e.code == 'web-context-canceled') return null;
+    debugPrint('Google sign-in failed: ${e.code} ${e.message}');
+    return S.signInFailed;
+  } catch (e) {
+    debugPrint('Google sign-in failed: $e');
+    return S.signInFailed;
+  }
+  sync.touchUser();
+  try {
+    final saved = await sync.load();
+    final draft = ref.read(farmerDraftProvider.notifier);
+    if (saved.farm != null) draft.restoreFromCloud(saved.farm!);
+    draft.pushToCloud();
+    ref.read(notesProvider.notifier).mergeCloud(saved.notes);
+  } catch (_) {
+    // Offline: uploads are queued by Firestore; restore can happen later.
+  }
+  return null;
+}
+
+Future<void> signOut(WidgetRef ref) async => ref.read(authProvider)?.signOut();
+
+/// "Delete my data". Online first (needs the account), then the Google
+/// account link itself, then everything on this phone. Returns a message for
+/// the farmer when the online part fails; the phone copy is then kept so
+/// nothing is half-deleted silently.
+Future<String?> deleteMyData(WidgetRef ref) async {
+  final auth = ref.read(authProvider);
+  final user = auth?.currentUser;
+  if (auth != null && user != null) {
+    try {
+      await ref.read(cloudSyncProvider)?.deleteAllUserData();
+      try {
+        await user.delete();
+      } on FirebaseAuthException catch (e) {
+        if (e.code != 'requires-recent-login') rethrow;
+        // Google asks to confirm who you are before deleting an account.
+        final provider = GoogleAuthProvider();
+        if (kIsWeb) {
+          await user.reauthenticateWithPopup(provider);
+        } else {
+          await user.reauthenticateWithProvider(provider);
+        }
+        await user.delete();
+      }
+    } catch (e) {
+      debugPrint('delete my data failed: $e');
+      return S.deleteFailed;
+    }
+  }
+  await ref.read(photoStoreProvider)?.deleteAll();
+  ref.read(notesProvider.notifier).clearAll();
+  ref.read(waterLogProvider.notifier).clearAll();
+  ref.read(taskMarksProvider.notifier).clearAll();
+  await ref.read(recentProvider.notifier).forget();
+  await ref.read(forecastProvider.notifier).forget();
+  ref.read(farmerDraftProvider.notifier).reset();
+  if (ref.read(prefsProvider) != null) await deleteSubmissionData(ref);
+  ref.read(analysisProvider.notifier).forget();
+  await auth?.signOut();
+  return null;
+}

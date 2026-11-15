@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1000987910079",
+    "project_id": "fieldshift-yangon-2026",
+    "storage_bucket": "fieldshift-yangon-2026.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1000987910079:android:a302effd5bcf7689840b0a",
+        "android_client_info": {
+          "package_name": "Earthsync.example.earthsync"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB29GlcfiyMLksy_SazqBMNkANxbEghpdE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

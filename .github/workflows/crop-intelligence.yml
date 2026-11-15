@@ -5,9 +5,9 @@ on:
       - 'server/earthsync/research/**'
       - 'server/earthsync/platform_v1/**'
       - 'server/tests/research/**'
-      - 'app/lib/features/companion/**'
-      - 'app/lib/data/platform_transport.dart'
-      - 'app/test/ui/crop_intelligence_test.dart'
+      - 'app/lib/evidence/features/companion/**'
+      - 'app/lib/evidence/data/platform_transport.dart'
+      - 'app/test/evidence/ui/crop_intelligence_test.dart'
       - 'docs/crop-intelligence/**'
       - 'docs/multimodal/**'
       - '.github/workflows/crop-intelligence.yml'
@@ -50,4 +50,4 @@ jobs:
       - working-directory: app
         run: flutter analyze
       - working-directory: app
-        run: flutter test test/ui/crop_intelligence_test.dart test/ui/companion_test.dart
+        run: flutter test test/evidence/ui/crop_intelligence_test.dart test/evidence/ui/companion_test.dart

@@ -7,48 +7,29 @@ import '../models/farmer_input.dart';
 import '../models/field_analysis.dart';
 import 'engine_gateway.dart';
 import 'live_integration.dart';
-import 'web_reference_candidates.dart';
-import '../service_client.dart';
 
 /// The web demo runs the shared Rust engine on the local demo host.
 class WebEngine implements EngineGateway {
-  WebEngine({required this.window, Uri? baseUri, this.client})
-    : baseUri =
-          baseUri ??
-          (const String.fromEnvironment('BACKEND_URL').isEmpty
-              ? Uri.base
-              : serviceBaseUri());
+  WebEngine({required this.window});
   final HistoricalWindow window;
-  final Uri baseUri;
-  final http.Client? client;
 
   @override
   Future<FieldAnalysis> analyzeField(FarmerInput input) async {
-    // A configured service origin must not discard the user's explicit replay
-    // choice from the application URL. Failures still never select this mode.
-    final captured =
-        baseUri.queryParameters['climate'] == 'captured' ||
-        Uri.base.queryParameters['climate'] == 'captured';
-    final requestClient = client ?? http.Client();
+    final captured = Uri.base.queryParameters['climate'] == 'captured';
     try {
       final evidence = captured
-          ? NasaPowerEvidence.parse(
-              await _getCaptured(requestClient),
-              input,
-              window,
-            )
+          ? NasaPowerEvidence.parse(await _getCaptured(), input, window)
           : await NasaPowerClient(
-              baseUrl: baseUri.origin,
-              client: requestClient,
+              baseUrl: Uri.base.origin,
             ).fetch(input, window);
       return await analyzeNasaEvidence(
         input: input,
         window: window,
         evidence: evidence,
         analyzeIntegration: (request) async {
-          final response = await requestClient
+          final response = await http
               .post(
-                baseUri.resolve('/api/engine/integration'),
+                Uri.base.resolve('/api/engine/integration'),
                 headers: {'Content-Type': 'application/json'},
                 body: request,
               )
@@ -64,7 +45,6 @@ class WebEngine implements EngineGateway {
           return response.body;
         },
         retrievalMode: captured ? 'captured_real_response' : 'live_http',
-        buildRequest: buildWebIntegrationRequest,
       );
     } on EngineError {
       rethrow;
@@ -80,14 +60,12 @@ class WebEngine implements EngineGateway {
         message: 'Could not reach the local demo service.',
         retryable: true,
       );
-    } finally {
-      if (client == null) requestClient.close();
     }
   }
 
-  Future<String> _getCaptured(http.Client requestClient) async {
-    final response = await requestClient
-        .get(baseUri.resolve('/api/demo/captured-climate'))
+  Future<String> _getCaptured() async {
+    final response = await http
+        .get(Uri.base.resolve('/api/demo/captured-climate'))
         .timeout(const Duration(seconds: 15));
     if (response.statusCode != 200) {
       throw const EngineError(

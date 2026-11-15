@@ -7,6 +7,8 @@ dependencies = ["fastapi==0.121.3", "httpx==0.28.1", "uvicorn==0.38.0", "jsonsch
 [project.optional-dependencies]
 evidence = ["pillow==12.2.0"]
 test = ["pytest==9.0.1", "pytest-asyncio==1.3.0", "ruff==0.14.5"]
+# Optional soil-photo AI provider (not chosen yet).
+claude = ["anthropic==2.8.0"]
 
 [build-system]
 requires = ["setuptools>=75"]
