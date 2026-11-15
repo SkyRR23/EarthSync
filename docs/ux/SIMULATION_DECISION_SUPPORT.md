@@ -80,3 +80,19 @@ The teammate must deploy the updated Python server for this to run on the hosted
 service. The APK cannot configure Groq keys or deploy Cloud Run. See the hosted
 backend handoff. No automated or interactive tests are run at the owner's request;
 compiler/build results are separate from owner phone acceptance.
+
+## Backend-independent help
+
+Android defaults to an explicitly labelled Offline guide. It provides authored
+general checklists and retrieves a bounded subset of the existing attributed
+reference corpus, packaged by `scripts/build_offline_help.py` (about 30 KB).
+Checklist advice is labelled separately from the matched source passages; no
+offline response is presented as Groq, a diagnosis or a verified AI conclusion.
+Notes use this same route for next checks. Unsupported questions explain the
+guide's limits rather than fabricating an answer. Online Groq remains optional;
+an unavailable online request falls back to the offline guide after a bounded
+20-second client timeout. The existing web chat path is unchanged.
+
+The historical demo does not require HLS availability. The map uses a neutral
+field boundary and does not turn a boundary green as a plant-health result.
+No satellite health result is manufactured when dated imagery is unavailable.

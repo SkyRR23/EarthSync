@@ -1,5 +1,6 @@
 import '../../submission/historical_reference.dart';
 import '../../submission/simulation_clock.dart';
+import '../../submission/offline_farm_help.dart';
 import '../../data/backend_response.dart';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
@@ -43,7 +44,7 @@ class ChatClient {
       defaultValue: 'http://127.0.0.1:8000',
     ),
     this.client,
-    this.timeout = const Duration(seconds: 70),
+    this.timeout = const Duration(seconds: kIsWeb ? 70 : 20),
   });
   final String baseUrl;
   final http.Client? client;
@@ -84,6 +85,16 @@ class ChatClient {
 }
 
 final chatClientProvider = Provider<ChatClient>((ref) => ChatClient());
+
+class OnlineChatChoice extends Notifier<bool> {
+  @override
+  bool build() => ref.read(prefsProvider)?.getBool('simulation.online_chat') ?? false;
+  void select(bool value) {
+    state = value;
+    ref.read(prefsProvider)?.setBool('simulation.online_chat', value);
+  }
+}
+final onlineChatChoiceProvider = NotifierProvider<OnlineChatChoice, bool>(OnlineChatChoice.new);
 
 String _plain(String s) =>
     s.replaceAll(RegExp(r'[^\x20-\x7E–’°]'), '').trim(); // drop emoji
@@ -249,7 +260,17 @@ class ChatNotifier extends Notifier<ChatState> {
     state = ChatState(messages: msgs, sending: true);
     _save();
     try {
-      final answer = await ref.read(chatClientProvider).ask(msgs, farm);
+      String answer;
+      if (!kIsWeb && !ref.read(onlineChatChoiceProvider)) {
+        answer = await offlineFarmReply(q, farm);
+      } else {
+        try {
+          answer = await ref.read(chatClientProvider).ask(msgs, farm);
+        } on ChatException {
+          if (kIsWeb) rethrow;
+          answer = 'Online AI could not answer. Here is the offline guide instead.\n\n${await offlineFarmReply(q, farm)}';
+        }
+      }
       if (!ref.mounted) return;
       state = ChatState(
         messages: [
@@ -271,6 +292,9 @@ class ChatNotifier extends Notifier<ChatState> {
           _ => S.chatFailed,
         },
       );
+    } catch (_) {
+      if (!ref.mounted) return;
+      state = ChatState(messages: msgs, error: 'The answer could not open. Your question is saved; please try again.');
     }
   }
 

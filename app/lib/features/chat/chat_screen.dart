@@ -59,7 +59,10 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   Future<void> _send(String text) async {
     if (text.trim().isEmpty) return;
     _input.clear();
-    if (!kIsWeb && ref.read(referenceChoiceProvider)) { await ref.read(historicalReferenceProvider.future); if (!mounted) return; }
+    if (!kIsWeb && ref.read(referenceChoiceProvider)) {
+      try { await ref.read(historicalReferenceProvider.future); } catch (_) { /* Missing reference remains unknown in farm facts. */ }
+      if (!mounted) return;
+    }
     final facts = _facts();
     final f = ref.read(chatProvider.notifier).send(text, facts);
     _toEnd();
@@ -151,7 +154,17 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     ),
                   ),
                 if (!kIsWeb)
-                  const Text('Switching topics starts a new conversation.', style: TextStyle(fontSize: 12)),
+                  SwitchListTile(
+                    title: const Text('Use online AI (Groq)'),
+                    subtitle: Text(ref.watch(onlineChatChoiceProvider)
+                        ? 'Online answers use retrieved sources. If unavailable, the offline guide will answer.'
+                        : 'Offline guide: saved references and checklists. Works without the server.'),
+                    value: ref.watch(onlineChatChoiceProvider),
+                    onChanged: s.sending ? null : (value) {
+                      ref.read(onlineChatChoiceProvider.notifier).select(value);
+                      ref.read(chatProvider.notifier).clear();
+                    },
+                  ),
                 Expanded(
                   child: ListView(
                     controller: _scroll,
