@@ -115,6 +115,7 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
       _end = DateTime.utc(2024, 12, 31),
       _date = DateTime.utc(2024);
   DateTime _decision = DateTime.utc(2024);
+  String _section = 'replay';
   String _mode = 'retrospective',
       _step = 'day',
       _layer = 'rainfall',
@@ -163,6 +164,7 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
         if (snapshot?.cached == true) {
           _replay = snapshot!.data['saved_replay'] as Map<String, dynamic>?;
           _result = snapshot.data['saved_result'] as Map<String, dynamic>?;
+          _section = _result == null ? 'replay' : 'results';
           final selected = snapshot.data['selected_date'] as String?;
           if (selected != null) _date = DateTime.parse(selected);
         }
@@ -189,7 +191,10 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
       _error = null;
     });
     if (_autoRun && !offline) {
-      _debounce = Timer(const Duration(milliseconds: 700), _simulate);
+      _debounce = Timer(
+        const Duration(milliseconds: 700),
+        () => _simulate(automatic: true),
+      );
     }
   }
 
@@ -373,7 +378,7 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
     }
   }
 
-  Future<void> _simulate() async {
+  Future<void> _simulate({bool automatic = false}) async {
     if (_snapshot == null || offline) return;
     _debounce?.cancel();
     final epoch = ++_epoch;
@@ -500,6 +505,7 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
       if (!mounted || epoch != _epoch || value == null) return;
       setState(() {
         _result = value;
+        if (!automatic) _section = 'results';
         _autoRun = true;
         _parent = value['id'] as String;
         _pendingId = journalId();
@@ -551,6 +557,7 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
         _result = value;
         _autoRun = false;
         _parent = value['id'] as String;
+        _section = 'results';
         _notice =
             'Saved result opened with its original inputs and source lineage. Duplicate it to edit.';
       });
@@ -569,59 +576,93 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
       _changed();
       return;
     }
+    _client.cancel();
+    final epoch = ++_epoch;
+    setState(() {
+      _busy = true;
+      _error = null;
+    });
     try {
-      final groups = _snapshot!.rows('comparisons');
-      final group = groups.firstWhere((g) => g['id'] == id);
-      final decisions = await widget.platform.decisions(_snapshot!.farmId);
-      if (!mounted) return;
+      final group = _snapshot!
+          .rows('comparisons')
+          .firstWhere((g) => g['id'] == id);
       final ids = [
         group['baseline_decision_id'],
         ...(group['alternative_decision_ids'] as List).take(2),
       ];
-      for (var i = 0; i < 3; i++) {
-        final saved =
-            decisions.firstWhere((d) => d['id'] == ids[i])['assessment'] as Map;
+      final decisions = await Future.wait([
+        for (final decisionId in ids)
+          widget.platform.transport.request(
+            'GET',
+            '$historicalPrefix/farms/${_snapshot!.farmId}/decisions/$decisionId',
+            expectedStatus: 200,
+          ),
+      ]);
+      if (!mounted || epoch != _epoch) return;
+      final imported = <List<_PlanDraft>>[];
+      final references = <Map<String, dynamic>>[];
+      DateTime day(Map d) =>
+          DateTime.utc(d['year'] as int, d['month'] as int, d['day'] as int);
+      for (final decision in decisions) {
+        final saved = (decision as Map)['assessment'] as Map;
         final plans =
             saved['result']['data']['context']['scenarios'][0]['plans'] as List;
-        DateTime day(Map d) =>
-            DateTime.utc(d['year'] as int, d['month'] as int, d['day'] as int);
-        final yearShift =
+        final shift =
             _start.year - day(plans[0]['period']['start'] as Map).year;
-        final references = saved['catalog_projection'] as List;
-        _strategies[i].plans.clear();
+        final drafts = <_PlanDraft>[];
         for (final p in plans) {
           final first = day(p['period']['start'] as Map),
               last = day(p['period']['end'] as Map);
           final r =
-              references.firstWhere(
+              (saved['catalog_projection'] as List).firstWhere(
                     (r) => r['profile']['id'] == p['profile_id'],
                   )['profile']
                   as Map;
-          _strategies[i].plans.add(
-            _PlanDraft(
-                DateTime.utc(first.year + yearShift, first.month, first.day),
-                DateTime.utc(last.year + yearShift, last.month, last.day),
-              )
+          references.add(Map<String, dynamic>.from(r));
+          final mappedStart = DateTime.utc(
+            first.year + shift,
+            first.month,
+            first.day,
+          );
+          final mappedEnd = DateTime.utc(
+            last.year + shift,
+            last.month,
+            last.day,
+          );
+          if (mappedStart.month != first.month || mappedEnd.month != last.month) {
+            throw const FormatException('Leap-day mapping needs review.');
+          }
+          drafts.add(
+            _PlanDraft(mappedStart, mappedEnd)
               ..profile = p['profile_id'] as String
               ..region = r['region_id'] as String?,
           );
-          if (!_profiles.any((v) => v['id'] == r['id'])) {
-            _profiles.add(Map<String, dynamic>.from(r));
-          }
         }
+        imported.add(drafts);
       }
-      setState(() => _comparisonId = id);
+      setState(() {
+        for (var i = 0; i < 3; i++) {
+          _strategies[i].plans
+            ..clear()
+            ..addAll(imported[i]);
+        }
+        for (final r in references) {
+          if (!_profiles.any((v) => v['id'] == r['id'])) _profiles.add(r);
+        }
+        _comparisonId = id;
+      });
       _changed();
       setState(
         () => _notice =
             'Imported the saved baseline and A/B as hypothetical sequences in ${_start.year}. Review dates and assumptions before running. A new comparison will be saved; the original is preserved.',
       );
     } catch (_) {
-      if (mounted) {
-        setState(
-          () =>
-              _error = 'Could not import this comparison. Reconnect and retry.',
-        );
+      if (mounted && epoch == _epoch) {
+        setState(() {
+          _busy = false;
+          _error =
+              'Could not import this comparison. Reconnect, check calendar mapping and retry.';
+        });
       }
     }
   }
@@ -630,6 +671,7 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
     if (_result == null || offline) return;
     final raw = _result!['request'] as Map;
     setState(() {
+      _section = 'editor';
       _name.text = '${raw['name']} copy';
       _parent = _result!['id'] as String;
       _start = DateTime.parse(raw['periods'][0]['start'] as String);
@@ -831,475 +873,554 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 1360),
-        child: ListView(
-          padding: const EdgeInsets.all(20),
+        child: Column(
           children: [
-            const PageHeader(
-              title: 'Historical Agricultural Scenario Simulation Lab',
-              subtitle:
-                  'Real past environmental conditions + hypothetical farming decisions. Retrospective analysis is not a forecast. No crop yield, suitability score or irrigation prescription is inferred.',
-            ),
             Wrap(
               spacing: 8,
               children: [
                 for (final entry in {
-                  '/field': 'Farm map',
-                  '/season': 'Farmer history',
-                  '/rotations': 'Rotation comparisons',
-                  '/assistant': 'Ask about saved evidence',
+                  'replay': 'Replay & map',
+                  'editor': 'Scenario editor',
+                  'results': 'Simulation results',
+                  'history': 'Reported history',
                 }.entries)
                   TextButton(
-                    onPressed: () => context.push(entry.key),
-                    child: Text(entry.value),
+                    onPressed: () {
+                      _play?.cancel();
+                      _play = null;
+                      setState(() => _section = entry.key);
+                    },
+                    child: Text(
+                      entry.value,
+                      style: TextStyle(
+                        fontWeight: _section == entry.key
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
                   ),
               ],
             ),
-            if (_loading || _busy) const LinearProgressIndicator(),
-            if (_snapshot == null && !_loading)
-              TextButton(
-                onPressed: () => context.push('/farm-evidence'),
-                child: const Text('Connect this confirmed farm revision'),
-              ),
-            if (offline)
-              EvidenceNotice(
-                title: 'Offline · cached historical records · read only',
-                message:
-                    'Original source timestamps are retained. Kept on device: ${_snapshot!.data['kept_at']}. Reconnect and refresh before calculating or saving; no writes will be submitted automatically.',
-              ),
-            EvidenceNotice(
-              title: offline
-                  ? 'Mode C · Cached historical records'
-                  : windows.isEmpty
-                  ? 'Mode D · Historical evidence unavailable'
-                  : 'Mode B · Historical online context',
-              message: offline
-                  ? 'Only the explicitly saved device copy is available, read only. Original timestamps and cache age are retained.'
-                  : windows.isEmpty
-                  ? 'No accepted historical evidence is saved for this farm revision. Retrieve a supported period or retry when the service is reachable.'
-                  : 'Current observed weather is unavailable. You can still explore historical rainfall, temperature and reference ET0. Current forecast snapshots, when present, retain their separate valid times and limits in the farm environment panel. Historical records are never current field health or a forecast.',
-            ),
-            if (_error != null)
-              Semantics(
-                liveRegion: true,
-                child: Text(
-                  _error!,
-                  style: TextStyle(color: Theme.of(context).colorScheme.error),
-                ),
-              ),
-            if (_notice != null)
-              Semantics(liveRegion: true, child: Text(_notice!)),
-            Wrap(
-              spacing: 8,
-              children: [
-                TextButton(
-                  onPressed: _busy ? null : _load,
-                  child: const Text('Refresh saved records'),
-                ),
-                TextButton(
-                  onPressed: _snapshot == null || offline ? null : _keep,
-                  child: Text(tr('Keep for offline viewing')),
-                ),
-              ],
-            ),
-            SectionCard(
-              title: tr('Historical replay'),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+            Expanded(
+              child: ListView(
+                key: ValueKey('historical-section:$_section'),
+                padding: const EdgeInsets.all(20),
                 children: [
+                  const PageHeader(
+                    title: 'Historical Agricultural Scenario Simulation Lab',
+                    subtitle:
+                        'Real past environmental conditions + hypothetical farming decisions. Retrospective analysis is not a forecast. No crop yield, suitability score or irrigation prescription is inferred.',
+                  ),
                   Wrap(
                     spacing: 8,
                     children: [
-                      for (final y in [2024, 2025])
-                        OutlinedButton(
-                          onPressed: () => _setPeriod(
-                            DateTime.utc(y),
-                            DateTime.utc(y, 12, 31),
-                          ),
-                          child: Text('Detailed $y'),
+                      for (final entry in {
+                        '/field': 'Farm map',
+                        '/season': 'Farmer history',
+                        '/rotations': 'Rotation comparisons',
+                        '/assistant': 'Ask about saved evidence',
+                      }.entries)
+                        TextButton(
+                          onPressed: () => context.push(entry.key),
+                          child: Text(entry.value),
                         ),
-                      OutlinedButton(
-                        onPressed: _range,
-                        child: Text(
-                          'Custom: ${historicalDay(_start)} to ${historicalDay(_end)}',
-                        ),
-                      ),
                     ],
                   ),
-                  _choice(
-                    'Historical year',
-                    '${_start.year}',
-                    [for (var y = 2001; y < DateTime.now().year; y++) '$y'],
-                    (v) => _setPeriod(
-                      DateTime.utc(int.parse(v)),
-                      DateTime.utc(int.parse(v), 12, 31),
-                    ),
-                  ),
-                  FilledButton(
-                    onPressed: _busy || offline || _snapshot == null
-                        ? null
-                        : () => _retrieve(),
-                    child: Text(tr('Retrieve selected NASA period')),
-                  ),
-                  TextButton(
-                    onPressed: _busy || offline || _snapshot == null
-                        ? null
-                        : () => _retrieve(contextYears: true),
-                    child: const Text(
-                      'Retrieve 2015–2025 context · 11 bounded annual jobs',
-                    ),
-                  ),
-                  for (final archive in windows)
-                    ListTile(
-                      title: Text(
-                        '${archive['start']} to ${archive['end']} · ${archive['source_mode']}',
-                      ),
-                      subtitle: Text(
-                        'NASA POWER LST · saved ${archive['created_at']}',
-                      ),
-                      trailing: TextButton(
-                        onPressed: _busy ? null : () => _openArchive(archive),
-                        child: const Text('Open replay'),
-                      ),
-                    ),
-                  if (_replay != null) ...[
-                    HistoricalReplayControls(
-                      start: DateTime.parse(_replay!['start'] as String),
-                      end: DateTime.parse(_replay!['end'] as String),
-                      selected: _date,
-                      onChanged: _selectDate,
-                    ),
-                    Wrap(
-                      spacing: 8,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        IconButton(
-                          tooltip: 'Previous period',
-                          onPressed: () => _move(-1),
-                          icon: const Icon(Icons.skip_previous),
-                        ),
-                        FilledButton(
-                          onPressed: _togglePlay,
-                          child: Text(tr(_play == null ? 'Play' : 'Pause')),
-                        ),
-                        IconButton(
-                          tooltip: 'Next period',
-                          onPressed: () => _move(1),
-                          icon: const Icon(Icons.skip_next),
-                        ),
-                        SizedBox(
-                          width: 140,
-                          child: _choice('Time step', _step, [
-                            'day',
-                            'week',
-                            'month',
-                          ], (v) => setState(() => _step = v)),
-                        ),
-                        SizedBox(
-                          width: 130,
-                          child: _choice(
-                            'Replay speed',
-                            '$_speed',
-                            ['0.5', '1.0', '2.0', '4.0'],
-                            (v) {
-                              final playing = _play != null;
-                              _play?.cancel();
-                              _play = null;
-                              setState(() => _speed = double.parse(v));
-                              if (playing) _togglePlay();
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Text(
-                      'Playback advances historical dates locally; it is not a live feed.',
-                    ),
-                    _choice(
-                      'Dataset / chart layer',
-                      _layer,
-                      ['rainfall', 'temperature', 'tmin', 'tmax', 'et0'],
-                      (v) => setState(() => _layer = v),
-                    ),
-                    for (final r in _replay!['records'] as List)
-                      for (final m in r['measurements'] as List)
-                        if (m['date'] == historicalDay(_date) &&
-                            m['variable'] == _layer)
-                          Text(
-                            '${historicalDay(_date)} · ${m['value'] ?? 'Unavailable'} ${m['unit']} · ${m['quality']} ${m['missing_reason'] ?? ''}',
-                          ),
-                    HistoricalMetrics(
-                      summary: Map<String, dynamic>.from(
-                        _replay!['summary'] as Map,
-                      ),
-                    ),
-                    HistoricalChart(
-                      periods: [
-                        Map<String, dynamic>.from(_replay!['summary'] as Map),
-                      ],
-                      monthly: List<Map<String, dynamic>>.from(
-                        _replay!['monthly'] as List,
-                      ),
-                      variable: _layer,
-                    ),
-                    ExpansionTile(
-                      title: const Text(
-                        'Original sources, units & missing data',
-                      ),
-                      children: [
-                        for (final r in _replay!['records'] as List)
-                          ListTile(
-                            title: Text(
-                              '${r['provider']} · ${r['source_metadata']['parameter']} · ${r['dataset_version']}',
-                            ),
-                            subtitle: Text(
-                              '${r['temporal']['start']} to ${r['temporal']['end']} · ${r['temporal']['day_basis']}\nRetrieved ${r['temporal']['retrieved_at']}\n${r['spatial']['support']}\nSource SHA-256 ${r['response_sha256']}\n${(r['limitations'] as List).join('\n')}',
-                            ),
-                          ),
-                      ],
-                    ),
-                  ],
-                ],
-              ),
-            ),
-            _mapPanel(),
-            SectionCard(
-              title: 'Hypothetical farming scenarios',
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _choice(
-                    'Scientific mode',
-                    _mode,
-                    ['retrospective', 'as_of_date'],
-                    (v) {
-                      setState(() => _mode = v);
-                      _changed();
-                    },
-                    enabled: !offline,
-                  ),
-                  Text(
-                    tr(
-                      _mode == 'retrospective'
-                          ? 'Retrospective simulation'
-                          : 'As-of-date decision simulation',
-                    ),
-                  ),
-                  if (_mode == 'as_of_date') ...[
+                  if (_loading || _busy) const LinearProgressIndicator(),
+                  if (_snapshot == null && !_loading)
                     TextButton(
-                      onPressed: offline
-                          ? null
-                          : () async {
-                              final d = await showDatePicker(
-                                context: context,
-                                initialDate: _decision,
-                                firstDate: DateTime(2001),
-                                lastDate: DateTime.now().subtract(
-                                  const Duration(days: 1),
-                                ),
-                              );
-                              if (d != null) {
-                                setState(
-                                  () => _decision = DateTime.utc(
-                                    d.year,
-                                    d.month,
-                                    d.day,
-                                  ),
-                                );
-                                _changed();
-                              }
-                            },
+                      onPressed: () => context.push('/farm-evidence'),
+                      child: const Text('Connect this confirmed farm revision'),
+                    ),
+                  if (offline)
+                    EvidenceNotice(
+                      title: 'Offline · cached historical records · read only',
+                      message:
+                          'Original source timestamps are retained. Kept on device: ${_snapshot!.data['kept_at']}. Reconnect and refresh before calculating or saving; no writes will be submitted automatically.',
+                    ),
+                  EvidenceNotice(
+                    title: offline
+                        ? 'Mode C · Cached historical records'
+                        : windows.isEmpty
+                        ? 'Mode D · Historical evidence unavailable'
+                        : 'Mode B · Historical online context',
+                    message: offline
+                        ? 'Only the explicitly saved device copy is available, read only. Original timestamps and cache age are retained.'
+                        : windows.isEmpty
+                        ? 'No accepted historical evidence is saved for this farm revision. Retrieve a supported period or retry when the service is reachable.'
+                        : 'Current observed weather is unavailable. You can still explore historical rainfall, temperature and reference ET0. Current forecast snapshots, when present, retain their separate valid times and limits in the farm environment panel. Historical records are never current field health or a forecast.',
+                  ),
+                  if (_error != null)
+                    Semantics(
+                      liveRegion: true,
                       child: Text(
-                        'Decision date: ${historicalDay(_decision)} · 00:00 UTC',
+                        _error!,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
                       ),
                     ),
-                    const Text(
-                      'Unknown historic publication times are withheld. Current archives do not prove what was available then. Decision-day daily data are withheld.',
-                    ),
-                  ],
-                  TextField(
-                    controller: _name,
-                    enabled: !offline,
-                    decoration: const InputDecoration(
-                      labelText: 'Simulation name',
-                    ),
-                    onChanged: (_) => _changed(),
-                  ),
-                  _choice(
-                    'Environmental comparison',
-                    _comparison,
-                    ['selected', 'two_years', 'custom_seasons', 'context'],
-                    (v) {
-                      setState(() => _comparison = v);
-                      _changed();
-                    },
-                    enabled: !offline,
-                  ),
-                  if (_comparison == 'two_years')
-                    _choice(
-                      'Comparison year',
-                      '$_compareYear',
-                      [for (var y = 2001; y < DateTime.now().year; y++) '$y'],
-                      (v) {
-                        setState(() => _compareYear = int.parse(v));
-                        _changed();
-                      },
-                      enabled: !offline,
-                    ),
-                  if (_comparison == 'custom_seasons')
-                    TextButton(
-                      onPressed: offline
-                          ? null
-                          : () async {
-                              final range = await showDateRangePicker(
-                                context: context,
-                                firstDate: DateTime(2001),
-                                lastDate: DateTime.now().subtract(
-                                  const Duration(days: 1),
-                                ),
-                                initialDateRange: DateTimeRange(
-                                  start: _secondStart,
-                                  end: _secondEnd,
-                                ),
-                              );
-                              if (range != null) {
-                                setState(() {
-                                  _secondStart = range.start;
-                                  _secondEnd = range.end;
-                                });
-                                _changed();
-                              }
-                            },
-                      child: Text(
-                        'Second growing season: ${historicalDay(_secondStart)} to ${historicalDay(_secondEnd)}',
-                      ),
-                    ),
-                  const Text(
-                    'Compare selected years or two calendar seasons. Context uses the same season in 2015–2025. Unequal coverage stays explicit. Fetch adjacent annual archives for cross-year seasons; leap-day mapping requires review.',
-                  ),
-                  TextField(
-                    controller: _search,
-                    enabled: !offline,
-                    decoration: const InputDecoration(
-                      labelText:
-                          'Search crop references (previous / current crops)',
-                    ),
-                    onSubmitted: (_) => _lookup(),
-                  ),
-                  TextButton(
-                    onPressed: offline ? null : _lookup,
-                    child: const Text('Find source-backed crop identities'),
-                  ),
-                  for (final s in _strategies) _strategyEditor(s),
+                  if (_notice != null)
+                    Semantics(liveRegion: true, child: Text(_notice!)),
                   Wrap(
-                    spacing: 6,
+                    spacing: 8,
                     children: [
-                      for (final p in farmerPriorityLabels.entries)
-                        FilterChip(
-                          label: Text(p.value),
-                          selected: _priorities.contains(p.key),
-                          onSelected: offline
-                              ? null
-                              : (v) {
-                                  setState(() {
-                                    if (v) {
-                                      _priorities.add(p.key);
-                                    } else {
-                                      _priorities.remove(p.key);
-                                    }
-                                  });
-                                  _changed();
-                                },
-                        ),
+                      TextButton(
+                        onPressed: _busy ? null : _load,
+                        child: const Text('Refresh saved records'),
+                      ),
+                      TextButton(
+                        onPressed: _snapshot == null || offline ? null : _keep,
+                        child: Text(tr('Keep for offline viewing')),
+                      ),
                     ],
                   ),
-                  DropdownButtonFormField<String>(
-                    key: ValueKey('attach:$_comparisonId'),
-                    initialValue: _comparisonId,
-                    isExpanded: true,
-                    decoration: const InputDecoration(
-                      labelText:
-                          'Attach to an existing three-strategy comparison (optional)',
-                    ),
-                    items: [
-                      const DropdownMenuItem(
-                        value: null,
-                        child: Text('Independent hypothetical scenarios'),
+                  if (_section == 'replay')
+                    SectionCard(
+                      title: tr('Historical replay'),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Wrap(
+                            spacing: 8,
+                            children: [
+                              for (final y in [2024, 2025])
+                                OutlinedButton(
+                                  onPressed: () => _setPeriod(
+                                    DateTime.utc(y),
+                                    DateTime.utc(y, 12, 31),
+                                  ),
+                                  child: Text('Detailed $y'),
+                                ),
+                              OutlinedButton(
+                                onPressed: _range,
+                                child: Text(
+                                  'Custom: ${historicalDay(_start)} to ${historicalDay(_end)}',
+                                ),
+                              ),
+                            ],
+                          ),
+                          _choice(
+                            'Requested retrieval / scenario year',
+                            '${_start.year}',
+                            [
+                              for (var y = 2001; y <= DateTime.now().year; y++)
+                                '$y',
+                            ],
+                            (v) => _setPeriod(
+                              DateTime.utc(int.parse(v)),
+                              int.parse(v) == DateTime.now().year
+                                  ? DateTime.now().toUtc().subtract(
+                                      const Duration(days: 1),
+                                    )
+                                  : DateTime.utc(int.parse(v), 12, 31),
+                            ),
+                          ),
+                          FilledButton(
+                            onPressed: _busy || offline || _snapshot == null
+                                ? null
+                                : () => _retrieve(),
+                            child: Text(tr('Retrieve selected NASA period')),
+                          ),
+                          TextButton(
+                            onPressed: _busy || offline || _snapshot == null
+                                ? null
+                                : () => _retrieve(contextYears: true),
+                            child: const Text(
+                              'Retrieve 2015–2025 context · 11 bounded annual jobs',
+                            ),
+                          ),
+                          for (final archive in windows)
+                            ListTile(
+                              title: Text(
+                                '${archive['start']} to ${archive['end']} · ${archive['source_mode']}',
+                              ),
+                              subtitle: Text(
+                                'NASA POWER LST · saved ${archive['created_at']}',
+                              ),
+                              trailing: TextButton(
+                                onPressed: _busy
+                                    ? null
+                                    : () => _openArchive(archive),
+                                child: const Text('Open replay'),
+                              ),
+                            ),
+                          if (_replay != null) ...[
+                            Text(
+                              'Opened archive: ${_replay!["start"]} to ${_replay!["end"]}. These source dates apply to the readings below.',
+                            ),
+                            HistoricalReplayControls(
+                              start: DateTime.parse(
+                                _replay!['start'] as String,
+                              ),
+                              end: DateTime.parse(_replay!['end'] as String),
+                              selected: _date,
+                              onChanged: _selectDate,
+                            ),
+                            Wrap(
+                              spacing: 8,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: [
+                                IconButton(
+                                  tooltip: 'Previous period',
+                                  onPressed: () => _move(-1),
+                                  icon: const Icon(Icons.skip_previous),
+                                ),
+                                FilledButton(
+                                  onPressed: _togglePlay,
+                                  child: Text(
+                                    tr(_play == null ? 'Play' : 'Pause'),
+                                  ),
+                                ),
+                                IconButton(
+                                  tooltip: 'Next period',
+                                  onPressed: () => _move(1),
+                                  icon: const Icon(Icons.skip_next),
+                                ),
+                                SizedBox(
+                                  width: 140,
+                                  child: _choice(
+                                    'Time step',
+                                    _step,
+                                    ['day', 'week', 'month'],
+                                    (v) => setState(() => _step = v),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 130,
+                                  child: _choice(
+                                    'Replay speed',
+                                    '$_speed',
+                                    ['0.5', '1.0', '2.0', '4.0'],
+                                    (v) {
+                                      final playing = _play != null;
+                                      _play?.cancel();
+                                      _play = null;
+                                      setState(() => _speed = double.parse(v));
+                                      if (playing) _togglePlay();
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Text(
+                              'Playback advances historical dates locally; it is not a live feed.',
+                            ),
+                            _choice(
+                              'Dataset / chart layer',
+                              _layer,
+                              [
+                                'rainfall',
+                                'temperature',
+                                'tmin',
+                                'tmax',
+                                'et0',
+                              ],
+                              (v) => setState(() => _layer = v),
+                            ),
+                            for (final r in _replay!['records'] as List)
+                              for (final m in r['measurements'] as List)
+                                if (m['date'] == historicalDay(_date) &&
+                                    m['variable'] == _layer)
+                                  Text(
+                                    '${historicalDay(_date)} · ${m['value'] ?? 'Unavailable'} ${m['unit']} · ${m['quality']} ${m['missing_reason'] ?? ''}',
+                                  ),
+                            HistoricalMetrics(
+                              summary: Map<String, dynamic>.from(
+                                _replay!['summary'] as Map,
+                              ),
+                            ),
+                            HistoricalChart(
+                              periods: [
+                                Map<String, dynamic>.from(
+                                  _replay!['summary'] as Map,
+                                ),
+                              ],
+                              monthly: List<Map<String, dynamic>>.from(
+                                _replay!['monthly'] as List,
+                              ),
+                              variable: _layer,
+                            ),
+                            ExpansionTile(
+                              title: const Text(
+                                'Original sources, units & missing data',
+                              ),
+                              children: [
+                                for (final r in _replay!['records'] as List)
+                                  ListTile(
+                                    title: Text(
+                                      '${r['provider']} · ${r['source_metadata']['parameter']} · ${r['dataset_version']}',
+                                    ),
+                                    subtitle: Text(
+                                      '${r['temporal']['start']} to ${r['temporal']['end']} · ${r['temporal']['day_basis']}\nRetrieved ${r['temporal']['retrieved_at']}\n${r['spatial']['support']}\nSource SHA-256 ${r['response_sha256']}\n${(r['limitations'] as List).join('\n')}',
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ],
+                        ],
                       ),
-                      for (final c
-                          in _snapshot?.rows('comparisons') ??
-                              <Map<String, dynamic>>[])
-                        DropdownMenuItem(
-                          value: c['id'] as String,
-                          child: Text(c['name'] as String),
-                        ),
-                    ],
-                    onChanged: offline ? null : _importComparison,
-                  ),
-                  FilledButton(
-                    onPressed: _busy || offline || _snapshot == null
-                        ? null
-                        : _simulate,
-                    child: Text(tr('Run & save simulation')),
-                  ),
-                  const Text(
-                    'Changing dates changes period summaries and Rust chronology. Water assumptions change declared constraints; ETc, irrigation volumes, yields and suitability remain unavailable without accepted models. After the first run, edits trigger a new saved calculation.',
-                  ),
-                ],
-              ),
-            ),
-            if (_result != null) ...[
-              HistoricalResult(result: _result!),
-              TextButton(
-                onPressed: offline ? null : _duplicate,
-                child: const Text('Duplicate saved simulation & edit'),
-              ),
-            ],
-            SectionCard(
-              title: 'Saved simulations',
-              child: Column(
-                children: [
-                  for (final s in simulations)
-                    ListTile(
-                      title: Text(
-                        '${s['request']?['name'] ?? s['name']} · ${s['created_at']}',
+                    ),
+                  if (_section == 'replay') _mapPanel(),
+                  if (_section == 'editor')
+                    SectionCard(
+                      title: 'Hypothetical farming scenarios',
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _choice(
+                            'Scientific mode',
+                            _mode,
+                            ['retrospective', 'as_of_date'],
+                            (v) {
+                              setState(() => _mode = v);
+                              _changed();
+                            },
+                            enabled: !offline,
+                          ),
+                          Text(
+                            tr(
+                              _mode == 'retrospective'
+                                  ? 'Retrospective simulation'
+                                  : 'As-of-date decision simulation',
+                            ),
+                          ),
+                          if (_mode == 'as_of_date') ...[
+                            TextButton(
+                              onPressed: offline
+                                  ? null
+                                  : () async {
+                                      final d = await showDatePicker(
+                                        context: context,
+                                        initialDate: _decision,
+                                        firstDate: DateTime(2001),
+                                        lastDate: DateTime.now().subtract(
+                                          const Duration(days: 1),
+                                        ),
+                                      );
+                                      if (d != null) {
+                                        setState(
+                                          () => _decision = DateTime.utc(
+                                            d.year,
+                                            d.month,
+                                            d.day,
+                                          ),
+                                        );
+                                        _changed();
+                                      }
+                                    },
+                              child: Text(
+                                'Decision date: ${historicalDay(_decision)} · 00:00 UTC',
+                              ),
+                            ),
+                            const Text(
+                              'Unknown historic publication times are withheld. Current archives do not prove what was available then. Decision-day daily data are withheld.',
+                            ),
+                          ],
+                          TextField(
+                            controller: _name,
+                            enabled: !offline,
+                            decoration: const InputDecoration(
+                              labelText: 'Simulation name',
+                            ),
+                            onChanged: (_) => _changed(),
+                          ),
+                          _choice(
+                            'Environmental comparison',
+                            _comparison,
+                            [
+                              'selected',
+                              'two_years',
+                              'custom_seasons',
+                              'context',
+                            ],
+                            (v) {
+                              setState(() => _comparison = v);
+                              _changed();
+                            },
+                            enabled: !offline,
+                          ),
+                          if (_comparison == 'two_years')
+                            _choice(
+                              'Comparison year',
+                              '$_compareYear',
+                              [
+                                for (var y = 2001; y < DateTime.now().year; y++)
+                                  '$y',
+                              ],
+                              (v) {
+                                setState(() => _compareYear = int.parse(v));
+                                _changed();
+                              },
+                              enabled: !offline,
+                            ),
+                          if (_comparison == 'custom_seasons')
+                            TextButton(
+                              onPressed: offline
+                                  ? null
+                                  : () async {
+                                      final range = await showDateRangePicker(
+                                        context: context,
+                                        firstDate: DateTime(2001),
+                                        lastDate: DateTime.now().subtract(
+                                          const Duration(days: 1),
+                                        ),
+                                        initialDateRange: DateTimeRange(
+                                          start: _secondStart,
+                                          end: _secondEnd,
+                                        ),
+                                      );
+                                      if (range != null) {
+                                        setState(() {
+                                          _secondStart = range.start;
+                                          _secondEnd = range.end;
+                                        });
+                                        _changed();
+                                      }
+                                    },
+                              child: Text(
+                                'Second growing season: ${historicalDay(_secondStart)} to ${historicalDay(_secondEnd)}',
+                              ),
+                            ),
+                          const Text(
+                            'Compare selected years or two calendar seasons. Context uses the same season in 2015–2025. Unequal coverage stays explicit. Fetch adjacent annual archives for cross-year seasons; leap-day mapping requires review.',
+                          ),
+                          TextField(
+                            controller: _search,
+                            enabled: !offline,
+                            decoration: const InputDecoration(
+                              labelText:
+                                  'Search crop references (previous / current crops)',
+                            ),
+                            onSubmitted: (_) => _lookup(),
+                          ),
+                          TextButton(
+                            onPressed: offline ? null : _lookup,
+                            child: const Text(
+                              'Find source-backed crop identities',
+                            ),
+                          ),
+                          for (final s in _strategies) _strategyEditor(s),
+                          Wrap(
+                            spacing: 6,
+                            children: [
+                              for (final p in farmerPriorityLabels.entries)
+                                FilterChip(
+                                  label: Text(p.value),
+                                  selected: _priorities.contains(p.key),
+                                  onSelected: offline
+                                      ? null
+                                      : (v) {
+                                          setState(() {
+                                            if (v) {
+                                              _priorities.add(p.key);
+                                            } else {
+                                              _priorities.remove(p.key);
+                                            }
+                                          });
+                                          _changed();
+                                        },
+                                ),
+                            ],
+                          ),
+                          DropdownButtonFormField<String>(
+                            key: ValueKey('attach:$_comparisonId'),
+                            initialValue: _comparisonId,
+                            isExpanded: true,
+                            decoration: const InputDecoration(
+                              labelText:
+                                  'Attach to an existing three-strategy comparison (optional)',
+                            ),
+                            items: [
+                              const DropdownMenuItem(
+                                value: null,
+                                child: Text(
+                                  'Independent hypothetical scenarios',
+                                ),
+                              ),
+                              for (final c
+                                  in _snapshot?.rows('comparisons') ??
+                                      <Map<String, dynamic>>[])
+                                DropdownMenuItem(
+                                  value: c['id'] as String,
+                                  child: Text(c['name'] as String),
+                                ),
+                            ],
+                            onChanged: offline ? null : _importComparison,
+                          ),
+                          FilledButton(
+                            onPressed: _busy || offline || _snapshot == null
+                                ? null
+                                : _simulate,
+                            child: Text(tr('Run & save simulation')),
+                          ),
+                          const Text(
+                            'Changing dates changes period summaries and Rust chronology. Water assumptions change declared constraints; ETc, irrigation volumes, yields and suitability remain unavailable without accepted models. After the first run, edits trigger a new saved calculation.',
+                          ),
+                        ],
                       ),
-                      subtitle: Text(
-                        'Simulated · original inputs and source lineage preserved',
+                    ),
+                  if (_section == 'results' && _result != null) ...[
+                    HistoricalResult(result: _result!),
+                    TextButton(
+                      onPressed: offline ? null : _duplicate,
+                      child: const Text('Duplicate saved simulation & edit'),
+                    ),
+                  ],
+                  if (_section == 'results')
+                    SectionCard(
+                      title: 'Saved simulations',
+                      child: Column(
+                        children: [
+                          for (final s in simulations)
+                            ListTile(
+                              title: Text(
+                                '${s['request']?['name'] ?? s['name']} · ${s['created_at']}',
+                              ),
+                              subtitle: Text(
+                                'Simulated · original inputs and source lineage preserved',
+                              ),
+                              trailing: TextButton(
+                                onPressed: () => _openSimulation(s),
+                                child: const Text('Reopen simulation'),
+                              ),
+                            ),
+                          if (simulations.isEmpty)
+                            const Text(
+                              'No saved simulations for this farm revision.',
+                            ),
+                        ],
                       ),
-                      trailing: TextButton(
-                        onPressed: () => _openSimulation(s),
-                        child: const Text('Reopen simulation'),
+                    ),
+                  if (_section == 'history')
+                    SectionCard(
+                      title: 'Actual farmer-reported crop history',
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const Text(
+                            'Actual reports, declared plans and hypothetical scenarios are separate. A gap is unknown, never proof of bare ground.',
+                          ),
+                          for (final p in timeline?['periods'] as List? ?? [])
+                            Text(
+                              '${p['start']} to ${p['end'] ?? 'ongoing'} · ${p['label']} · farmer reported',
+                            ),
+                          for (final p
+                              in timeline?['unknown_gaps'] as List? ?? [])
+                            Text('${p['start']} to ${p['end']} · Unknown gap'),
+                          for (final p in timeline?['overlaps'] as List? ?? [])
+                            Text(
+                              '${p['start']} to ${p['end']} · Chronology conflict requiring review',
+                            ),
+                          TextButton(
+                            onPressed: () => context.push('/season'),
+                            child: const Text(
+                              'Open dated farmer journal & declared bare/fallow periods',
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  if (simulations.isEmpty)
-                    const Text('No saved simulations for this farm revision.'),
-                ],
-              ),
-            ),
-            SectionCard(
-              title: 'Actual farmer-reported crop history',
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const Text(
-                    'Actual reports, declared plans and hypothetical scenarios are separate. A gap is unknown, never proof of bare ground.',
-                  ),
-                  for (final p in timeline?['periods'] as List? ?? [])
-                    Text(
-                      '${p['start']} to ${p['end'] ?? 'ongoing'} · ${p['label']} · farmer reported',
-                    ),
-                  for (final p in timeline?['unknown_gaps'] as List? ?? [])
-                    Text('${p['start']} to ${p['end']} · Unknown gap'),
-                  for (final p in timeline?['overlaps'] as List? ?? [])
-                    Text(
-                      '${p['start']} to ${p['end']} · Chronology conflict requiring review',
-                    ),
-                  TextButton(
-                    onPressed: () => context.push('/season'),
-                    child: const Text(
-                      'Open dated farmer journal & declared bare/fallow periods',
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -1311,7 +1432,7 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
 
   Widget _strategyEditor(_StrategyDraft s) => ExpansionTile(
     key: ValueKey('strategy:${s.id}'),
-    initiallyExpanded: true,
+    initiallyExpanded: s.id == 'baseline',
     title: Text(
       s.id == 'baseline'
           ? 'Baseline · hypothetical existing plan'

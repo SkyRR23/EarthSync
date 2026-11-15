@@ -663,6 +663,10 @@ def create_app(
     async def assess(value: AssessmentInput):
         return await orchestrator.assess(OWNER, value)
 
+    @app.get(PREFIX + "/farms/{farm_id}/decisions/{decision_id}")
+    def decision(farm_id: UUID, decision_id: UUID):
+        return store.decision(OWNER, farm_id, decision_id)
+
     @app.get(PREFIX + "/farms/{farm_id}/decisions")
     def decisions(farm_id: UUID):
         return store.decisions(OWNER, farm_id)

@@ -419,7 +419,12 @@ class Historical:
     def replay(self, owner, farm_id, ident):
         archive = self.get(owner, farm_id, ident)
         records = self.records(owner, farm_id, archive)
-        return {**archive, "records": [r.model_dump(mode="json") for r in records]}
+        return {
+            **archive,
+            "source_mode": "cached_real",
+            "original_source_mode": archive["source_mode"],
+            "records": [r.model_dump(mode="json") for r in records],
+        }
 
     async def simulate(self, owner, raw):
         q = SimulationInput.model_validate(raw)

@@ -355,3 +355,64 @@ async def test_as_of_observation_day_and_retrieval_timezone_are_conservative(
     assert result["metrics"]["rainfall"]["valid_days"] == 1
     assert result["metrics"]["rainfall"]["missing_days"] == 6
     assert not result["excluded_evidence"]
+
+
+async def test_existing_three_strategy_group_gets_new_historical_reassessment(
+    lab, store
+):
+    from earthsync.platform_v1.comparisons import Comparisons, ComparisonInput
+
+    farm = link(store)
+    archive = await lab.retrieve("alice", archive_request(farm))
+    first = await lab.simulate("alice", scenario(farm, archive))
+    strategies = first["periods"][0]["strategies"]
+    original = Comparisons(store).save(
+        "alice",
+        farm.id,
+        ComparisonInput(
+            id=uuid4(),
+            name="Synthetic declared baseline/A/B",
+            baseline_decision_id=strategies[0]["decision_id"],
+            alternative_decision_ids=[s["decision_id"] for s in strategies[1:]],
+            baseline_declared_existing_plan=True,
+            exploration_reason="Synthetic test of importing an existing comparison",
+        ),
+    )
+    raw = scenario(farm, archive)
+    raw.update(comparison_id=original["id"], parent_id=first["id"])
+    reassessed = await lab.simulate("alice", raw)
+    assert len(reassessed["saved_comparison_ids"]) == 1
+    groups = Comparisons(store).list("alice", farm.id)
+    assert next(g for g in groups if g["id"] == original["id"]) == original
+    saved = next(g for g in groups if g["id"] == reassessed["saved_comparison_ids"][0])
+    assert (
+        saved["baseline_decision_id"]
+        == reassessed["periods"][0]["strategies"][0]["decision_id"]
+    )
+    assert not saved["recommendation_eligible"]
+
+
+async def test_missing_comparison_year_cannot_reuse_previous_year_values(lab, store):
+    farm = link(store)
+    archive = await lab.retrieve("alice", archive_request(farm))
+    raw = scenario(farm, archive)
+    raw["periods"].append({"start": "2025-07-01", "end": "2025-07-07"})
+    result = await lab.simulate("alice", raw)
+    assert result["periods"][0]["metrics"]["rainfall"]["value"] == pytest.approx(59.97)
+    assert result["periods"][1]["metrics"]["rainfall"]["value"] is None
+    assert result["periods"][1]["metrics"]["rainfall"]["missing_days"] == 7
+    assert result["periods"][1]["strategies"][0]["plans"][0]["start"] == "2025-07-01"
+
+
+async def test_direct_decision_lookup_is_farm_owned_not_recent_list_dependent(
+    lab, store
+):
+    farm = link(store)
+    archive = await lab.retrieve("alice", archive_request(farm))
+    result = await lab.simulate("alice", scenario(farm, archive))
+    ident = result["periods"][0]["strategies"][0]["decision_id"]
+    assert store.decision("alice", farm.id, ident)["id"] == ident
+    with pytest.raises(PlatformError, match="NOT_FOUND"):
+        store.decision("bob", farm.id, ident)
+    with pytest.raises(PlatformError, match="NOT_FOUND"):
+        store.decision("alice", farm.id, uuid4())

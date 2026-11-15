@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../design/components/product.dart';
 import 'historical_client.dart';
+import '../field/decision_comparison.dart' show referenceValue;
+import '../../data/farm_journal.dart' show farmerPriorityLabels;
 
 class HistoricalReplayControls extends StatelessWidget {
   const HistoricalReplayControls({
@@ -234,6 +236,19 @@ class HistoricalResult extends StatelessWidget {
                         'Declared irrigation: ${s['assumptions']['irrigation']} · drainage: ${s['assumptions']['drainage']}',
                       ),
                       Text('${s['assumption_review']['explanation']}'),
+                      for (final key in [
+                        'water_management',
+                        'labor',
+                        'equipment',
+                        'resources',
+                      ])
+                        Text(
+                          'Farmer-declared ${key.replaceAll('_', ' ')}: ${(s['assumptions'][key] as String? ?? '').isEmpty ? 'Unknown' : s['assumptions'][key]}',
+                        ),
+                      for (final priority in s['priority_alignment'] as List)
+                        Text(
+                          '${farmerPriorityLabels[priority['priority']] ?? priority['priority']}: applicable crop and field evidence still required; no numerical alignment score.',
+                        ),
                       for (final f in s['rust_findings'] as List)
                         Text('Rust: ${f['explanation']}'),
                       for (final gap in s['calendar']['unknown_gaps'] as List)
@@ -241,14 +256,52 @@ class HistoricalResult extends StatelessWidget {
                       for (final conflict in s['calendar']['overlaps'] as List)
                         Text('Chronology conflict: ${conflict['explanation']}'),
                       for (final c in s['crop_references'] as List)
-                        ListTile(
+                        ExpansionTile(
                           title: Text(
                             'Reference: ${c['profile']['id']} · ${c['profile']['region_id']}',
                           ),
-                          subtitle: Text(
-                            'Reference traits require local review. ${(c['sources'] as List? ?? []).map((v) => '${v['title']} · ${v['url']}').join('\n')}',
-                          ),
+                          children: [
+                            const Text(
+                              'Reference characteristics only. Applicability, crop benefits and suitability require independent review.',
+                            ),
+                            if (c['qualitative_identity']?['crop'] != null)
+                              Text(
+                                'Scientific identity: ${c['qualitative_identity']['crop']['scientific_name']} · family ${c['qualitative_identity']['crop']['family']}',
+                              ),
+                            for (final parameter
+                                in (c['profile']['parameters'] as Map).entries)
+                              if (parameter.value['state'] == 'available')
+                                ListTile(
+                                  title: Text(
+                                    '${parameter.key}: ${referenceValue(parameter.value['value'])} ${parameter.value['unit'] ?? ''}',
+                                  ),
+                                  subtitle: Text(
+                                    '${parameter.value['statistic']} · scope: ${parameter.value['spatial_support']} · claims: ${referenceValue(parameter.value['claim_ids'])}',
+                                  ),
+                                ),
+                            for (final source in c['sources'] as List? ?? [])
+                              Text(
+                                '${source['publisher']} · ${source['title']} · ${source['url']} · version ${source['version']}',
+                              ),
+                          ],
                         ),
+                      ExpansionTile(
+                        title: const Text(
+                          'Unknown water quantities & required evidence',
+                        ),
+                        children: [
+                          for (final quantity
+                              in (s['water_quantities'] as Map).entries)
+                            ListTile(
+                              title: Text(
+                                '${quantity.key.toString().replaceAll('_', ' ')}: unavailable',
+                              ),
+                              subtitle: Text(
+                                referenceValue(quantity.value['required']),
+                              ),
+                            ),
+                        ],
+                      ),
                       const Text(
                         'ETc, effective rainfall, water stress, irrigation volume and crop yield cannot yet be calculated.',
                       ),

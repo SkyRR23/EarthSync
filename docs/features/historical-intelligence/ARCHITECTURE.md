@@ -14,7 +14,7 @@ catalogs, journal chronology, saved decisions and rotation comparisons.
   deterministic assistant. No new model or service.
 * `032_historical_simulations.sql`: additive checksum-tracked migration. Two
   tables hold archive pointers and scenario results; no duplicate farmer journal.
-* Flutter `/historical`: farm selector, local replay, calendar controls, crop
+* Flutter `/historical`: persistent Replay/Scenario/Results/Reported-history sections, farm selector, local replay, calendar controls, crop
   references, baseline/A/B assumptions, comparisons, lineage and device snapshots.
 
 All new APIs are under `/api/platform/v1`:
@@ -28,6 +28,7 @@ All new APIs are under `/api/platform/v1`:
 | POST | `/simulations/jobs` | Three hypothetical strategies over at most eleven seasons |
 | GET | `/farms/{farm}/simulations` | Lightweight bounded index |
 | GET | `/farms/{farm}/simulations/{id}` | Exact immutable saved result |
+| GET | `/farms/{farm}/decisions/{id}` | Exact owned strategy lookup for imports, independent of recent-list truncation |
 
 Existing job status/cancellation endpoints apply. No writes retry automatically.
 Pending identical jobs deduplicate. Complete source responses use the existing

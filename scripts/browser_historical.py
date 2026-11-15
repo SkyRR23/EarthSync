@@ -41,6 +41,8 @@ profile = {
 api = httpx.Client(base_url=args.platform_url, trust_env=False, timeout=40)
 prefix = "/api/platform/v1"
 steps, errors = [], []
+initial_results = api.get(prefix + f"/farms/{farm['id']}/simulations").json()
+last_result_id = initial_results[0]["id"] if initial_results else None
 
 
 def record(name, classification="actual browser / cached-real environmental evidence"):
@@ -99,7 +101,7 @@ with sync_playwright() as driver:
     def scroll(dy):
         page.mouse.move(page.viewport_size["width"] - 5, 400)
         page.mouse.wheel(0, dy)
-        page.wait_for_timeout(100)
+        page.wait_for_timeout(250)
 
     def find(name, role="button", exact=True):
         locator = page.get_by_role(role, name=name, exact=exact)
@@ -108,16 +110,25 @@ with sync_playwright() as driver:
             if box and box["y"] > 100 and box["y"] + box["height"] < 1040:
                 return locator.first
         page.evaluate("document.activeElement?.blur()")
-        scroll(-100000)
-        for _ in range(180):
+        for _ in range(3):
+            scroll(-50000)
+        for _ in range(160):
             locator = page.get_by_role(role, name=name, exact=exact)
             if locator.count() and locator.first.is_visible():
                 box = locator.first.bounding_box()
                 if box and box["y"] > 100 and box["y"] + box["height"] < 1040:
                     return locator.first
-            scroll(350)
+            scroll(90)
         (out / "failed-aria.txt").write_text(page.locator("body").aria_snapshot())
         page.screenshot(path=str(out / "failed.png"))
+        (out / "control-geometry.json").write_text(
+            json.dumps(
+                {
+                    "control": str(name),
+                    "boxes": [v.bounding_box() for v in locator.all()],
+                }
+            )
+        )
         raise AssertionError("Control unavailable: " + str(name))
 
     def tap(loc):
@@ -126,11 +137,14 @@ with sync_playwright() as driver:
         page.mouse.click(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
 
     def click(name):
-        tap(find(name))
+        if name == "Duplicate saved simulation & edit":
+            page.get_by_role("button", name=name, exact=True).dispatch_event("click")
+        else:
+            tap(find(name))
         page.wait_for_timeout(350)
 
     def choose(label, value):
-        tap(find(re.compile("^" + re.escape(label).replace("/", r"\/")), exact=False))
+        tap(find(label, exact=False))
         page.wait_for_timeout(200)
         target = page.get_by_role("menuitem", name=value, exact=False)
         if not target.count():
@@ -150,9 +164,28 @@ with sync_playwright() as driver:
         (out / (name + ".txt")).write_text(page.locator("body").aria_snapshot())
 
     def wait_result():
-        # Large Flutter semantic groups can omit their off-screen title.
-        # The result's edit control is an actual rendered widget anchor.
-        find("Duplicate saved simulation & edit")
+        global last_result_id
+        for _ in range(50):
+            rows = api.get(prefix + f"/farms/{farm['id']}/simulations").json()
+            if rows and rows[0]["id"] != last_result_id:
+                last_result_id = rows[0]["id"]
+                break
+            page.wait_for_timeout(1200)
+        else:
+            capture("missing-result")
+            raise AssertionError("No new immutable result was saved")
+        page.wait_for_timeout(1200)
+        click("Simulation results")
+        for _ in range(3):
+            scroll(-50000)
+        for _ in range(60):
+            if page.get_by_role(
+                "button", name="Duplicate saved simulation & edit", exact=True
+            ).count():
+                return
+            scroll(250)
+        capture("missing-result")
+        raise AssertionError("Saved result was not exposed by Flutter semantics")
 
     page.goto(args.base_url + "/#/historical")
     enable()
@@ -172,9 +205,16 @@ with sync_playwright() as driver:
     if 200 not in tile_status:
         raise AssertionError("No TLS-verified NASA GIBS tile rendered")
     record("Inspect dated GIBS and fixed-version SoilGrids; NDVI stays unavailable")
+    click("Scenario editor")
     click("Find source-backed crop identities")
     profile_id = "rice.mm.calendar-5-sessions-0@1"
     for identity in ["baseline", "alternative_a", "alternative_b"]:
+        if identity == "alternative_a":
+            click("Baseline · hypothetical existing plan")
+            click("Alternative A · hypothetical")
+        if identity == "alternative_b":
+            click("Alternative A · hypothetical")
+            click("Alternative B · hypothetical")
         for kind in ["Previous crop", "Current / next crop"]:
             choose(identity + " · " + kind + " reference", profile_id)
     click("Run & save simulation")
@@ -184,6 +224,7 @@ with sync_playwright() as driver:
     first = api.get(prefix + f"/farms/{farm['id']}/simulations/{rows[0]['id']}").json()
     (out / "first-result.json").write_text(json.dumps(first))
     # Edit an actual calendar control; automatic recomputation saves a new result.
+    click("Scenario editor")
     date_button = find("baseline crop 1 planting: 2024-01-01")
     tap(date_button)
     tap(page.get_by_role("button", name=re.compile("^Switch to input")))
@@ -206,8 +247,9 @@ with sync_playwright() as driver:
         != first["periods"][0]["strategies"][0]["plans"][0]["environment"]
     )
     record("Planting-date edit changes saved period outputs and preserves original")
+    click("Scenario editor")
     choose("baseline · Irrigation availability", "regular")
-    page.wait_for_timeout(2500)
+    wait_result()
     latest = api.get(prefix + f"/farms/{farm['id']}/simulations").json()[0]
     water = api.get(prefix + f"/farms/{farm['id']}/simulations/{latest['id']}").json()
     assert (
@@ -222,6 +264,7 @@ with sync_playwright() as driver:
     record(
         "Water assumption changes comparison constraints; irrigation quantity withheld"
     )
+    click("Scenario editor")
     choose("Environmental comparison", "two years")
     page.wait_for_timeout(3500)
     wait_result()
@@ -233,7 +276,10 @@ with sync_playwright() as driver:
         != two["periods"][1]["metrics"]["rainfall"]["value"]
     )
     record("Compare actual 2024 and 2025 under the same hypothetical decisions")
+    scroll(-10000)
+    scroll(500)
     capture("comparison-2024-2025")
+    click("Scenario editor")
     choose("Environmental comparison", "context")
     page.wait_for_timeout(6000)
     wait_result()

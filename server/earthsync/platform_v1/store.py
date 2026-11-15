@@ -256,6 +256,17 @@ class Store:
             self._audit(db, owner, ident, "decision.saved", document["engine_version"])
         return ident
 
+    def decision(self, owner, farm_id, decision_id):
+        with self.connection() as db:
+            self.farm(owner, farm_id, db)
+            row = db.execute(
+                "SELECT document FROM decisions WHERE id=? AND farm_id=? AND owner=?",
+                (str(decision_id), str(farm_id), owner),
+            ).fetchone()
+        if row is None:
+            raise PlatformError("NOT_FOUND", 404)
+        return {"id": str(decision_id), "assessment": json.loads(row[0])}
+
     def decisions(self, owner, farm_id):
         with self.connection() as db:
             self.farm(owner, farm_id, db)

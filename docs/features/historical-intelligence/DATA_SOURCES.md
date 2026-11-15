@@ -31,3 +31,12 @@ truth. Exact private raw captures stay outside Git. Tests cover full calendar
 years 2015–2025 using the source versions above. A regional source-consistency
 test does not establish station-level accuracy. PR #31's independent validation
 was consulted for context, not merged or claimed as new verification here.
+
+## Numerical vegetation recheck (2026-11-15)
+
+The previously captured HLS red-band asset returned a 303 redirect and a successful
+HEAD at the object host, but the actual bounded GET (Range 0–4095) returned HTTP
+401 with an HTML body, not TIFF pixels. A MOD13Q1 numerical-date discovery check
+at the Myanmar test region timed out. Neither proves a QA-valid numerical HLS or
+MODIS pipeline. Red/NIR alignment, masks and polygon statistics remain unaccepted;
+NDVI is still unavailable. Tile imagery is not a substitute.
