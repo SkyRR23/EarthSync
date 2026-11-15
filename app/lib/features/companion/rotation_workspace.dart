@@ -37,6 +37,11 @@ class _RotationWorkspaceState extends ConsumerState<RotationWorkspace> {
           child: ListView(
             padding: const EdgeInsets.all(20),
             children: [
+              TextButton.icon(
+                onPressed: () => context.push('/historical'),
+                icon: const Icon(Icons.history),
+                label: const Text('Historical Simulation Lab'),
+              ),
               const PageHeader(
                 title: 'Rotation strategies',
                 subtitle:

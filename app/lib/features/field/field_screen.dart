@@ -51,6 +51,11 @@ class FieldScreen extends ConsumerWidget {
                 key: ValueKey('soil-first:${farm.id}:${farm.confirmedAt}'),
                 farm: farm,
               ),
+              TextButton.icon(
+                onPressed: () => context.push('/historical'),
+                icon: const Icon(Icons.history),
+                label: const Text('Historical Simulation Lab'),
+              ),
               if (platformUrl.isNotEmpty)
                 OutlinedButton(
                   onPressed: () => context.push('/farm-evidence'),

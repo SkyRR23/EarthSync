@@ -50,6 +50,7 @@ void main() {
           '/local-data',
           '/explore',
           '/assessment',
+          '/historical',
           '/photos',
           '/assistant',
           '/sources',

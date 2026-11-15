@@ -1,3 +1,4 @@
+import '../features/historical/historical_screen.dart';
 import '../features/companion/rotation_workspace.dart';
 import '../features/tasks/tasks_screen.dart';
 import '../features/tasks/notifications_screen.dart';
@@ -83,6 +84,10 @@ GoRouter buildRouter() => GoRouter(
           builder: (_, s) => RealtimeScreen(
             initialField: s.uri.queryParameters['field'] == '1',
           ),
+        ),
+        GoRoute(
+          path: '/historical',
+          builder: (_, _) => const FarmRequired(child: HistoricalScreen()),
         ),
         GoRoute(
           path: '/daily-climate',

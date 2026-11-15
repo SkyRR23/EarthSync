@@ -16,6 +16,10 @@ from fastapi.responses import JSONResponse
 from pydantic import AwareDatetime, Field
 from starlette.concurrency import run_in_threadpool
 
+from datetime import date
+
+from .historical_imagery import imagery
+from .historical import ArchiveInput, Historical, SimulationInput
 from .journal import Journal, JournalInput
 from .farmer_timeline import timeline
 from .comparisons import Comparisons, ComparisonInput
@@ -140,6 +144,7 @@ def create_app(
     from earthsync.realtime.http import SourceError
 
     ndvi = NdviOverlays(realtime)
+    historical = Historical(store, transport, engine, orchestrator)
 
     def association(farm_id, point):
         if farm_id and store.farm(OWNER, farm_id).confirmed_point != point:
@@ -236,6 +241,8 @@ def create_app(
     jobs = Jobs(
         store,
         {
+            "historical": historical.retrieve,
+            "simulation": historical.simulate,
             "climate": climate_handler,
             "water": water_handler,
             "soil": soil_handler,
@@ -504,6 +511,47 @@ def create_app(
     def confirm_journal_history(farm_id: UUID, entry_id: UUID):
         return Journal(store).confirm_history(OWNER, farm_id, entry_id)
 
+    @app.get(PREFIX + "/historical/imagery")
+    async def historical_imagery(day: date):
+        if day >= date.today():
+            raise PlatformError("HISTORICAL_DATE_REQUIRED", 422)
+        return await imagery(store, transport, day)
+
+    @app.post(PREFIX + "/historical/jobs", status_code=202)
+    async def historical_job(value: ArchiveInput):
+        historical.revision(OWNER, value.farm_id, value.revision)
+        raw = value.model_dump(mode="json")
+        return await jobs.submit(
+            OWNER, "historical", cache_key("POWER", "historical", "v1", raw), raw
+        )
+
+    @app.get(PREFIX + "/farms/{farm_id}/historical")
+    def historical_windows(farm_id: UUID):
+        return historical.list(OWNER, farm_id, "historical_windows")
+
+    @app.get(PREFIX + "/farms/{farm_id}/historical/{archive_id}")
+    def historical_replay(farm_id: UUID, archive_id: UUID):
+        return historical.replay(OWNER, farm_id, archive_id)
+
+    @app.post(PREFIX + "/simulations/jobs", status_code=202)
+    async def simulation_job(value: SimulationInput):
+        historical.revision(OWNER, value.farm_id, value.revision)
+        raw = value.model_dump(mode="json")
+        return await jobs.submit(
+            OWNER,
+            "simulation",
+            cache_key("Rust", "historical-simulation", "v1", raw),
+            raw,
+        )
+
+    @app.get(PREFIX + "/farms/{farm_id}/simulations")
+    def simulations(farm_id: UUID):
+        return historical.list(OWNER, farm_id, "historical_simulations")
+
+    @app.get(PREFIX + "/farms/{farm_id}/simulations/{simulation_id}")
+    def simulation(farm_id: UUID, simulation_id: UUID):
+        return historical.get(OWNER, farm_id, simulation_id, "historical_simulations")
+
     @app.post(PREFIX + "/climate/jobs", status_code=202)
     async def climate(value: ClimateInput):
         association(value.farm_id, value.query.point)
@@ -642,6 +690,10 @@ def create_app(
     @app.post(PREFIX + "/assessments")
     async def assess(value: AssessmentInput):
         return await orchestrator.assess(OWNER, value)
+
+    @app.get(PREFIX + "/farms/{farm_id}/decisions/{decision_id}")
+    def decision(farm_id: UUID, decision_id: UUID):
+        return store.decision(OWNER, farm_id, decision_id)
 
     @app.get(PREFIX + "/farms/{farm_id}/decisions")
     def decisions(farm_id: UUID):

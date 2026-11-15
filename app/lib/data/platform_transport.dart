@@ -37,9 +37,16 @@ class PlatformTransport {
     List<int>? bytes,
     String contentType = 'application/json',
     Duration timeout = const Duration(seconds: 30),
+    Future<void>? abortTrigger,
   }) async {
     try {
-      final request = http.Request(method, baseUri.resolve(path));
+      final request = abortTrigger == null
+          ? http.Request(method, baseUri.resolve(path))
+          : http.AbortableRequest(
+              method,
+              baseUri.resolve(path),
+              abortTrigger: abortTrigger,
+            );
       if (body != null || bytes != null) {
         request.headers['Content-Type'] = contentType;
       }
