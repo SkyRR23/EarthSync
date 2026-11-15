@@ -17,11 +17,13 @@ class Orchestrator:
         self.store, self.engine, self.catalog = store, engine, catalog
         self.reference_catalog = reference_catalog
 
-    async def assess(self, owner, query):
+    async def assess(self, owner, query, *, as_of=None):
         farm = self.store.farm(owner, query.farm_id)
         records = [
             self.store.evidence(owner, ident, farm.id) for ident in query.evidence_ids
         ]
+        if as_of is not None:
+            records = [r for r in records if r.temporal.retrieved_at <= as_of]
         request = {
             "schema_version": ENGINE_VERSION,
             "mode": "evidence_assessment",
@@ -177,6 +179,11 @@ class Orchestrator:
         for variable in sorted({"tmin", "tmax", "rainfall", "et0"} - seen_variables):
             gaps.append({"variable": variable, "code": "MISSING_EVIDENCE"})
         for cycle in self.store.history(owner, farm.id):
+            if as_of is not None and (
+                datetime.fromtimestamp(cycle["reported_at"], timezone.utc) > as_of
+                or date.fromisoformat(cycle["end"]) >= as_of.date()
+            ):
+                continue
             source_id = "farmer-history:" + cycle["id"]
             request["sources"].append(
                 {
@@ -304,6 +311,7 @@ class Orchestrator:
                 r.source_metadata["calculation"]
                 for r in records
                 if r.source_metadata.get("policy") == "fao56-daily-pm.v1"
+                and "calculation" in r.source_metadata
             ],
             "evidence": [r.model_dump(mode="json") for r in records],
             "limitations": [

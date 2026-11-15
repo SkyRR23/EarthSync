@@ -56,6 +56,11 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               key: const PageStorageKey('home-dashboard'),
               padding: const EdgeInsets.all(24),
               children: [
+                TextButton.icon(
+                  onPressed: () => context.push('/historical'),
+                  icon: const Icon(Icons.history),
+                  label: const Text('Historical Simulation Lab'),
+                ),
                 if (profile.storageNotice != null) Text(profile.storageNotice!),
                 PageHeader(
                   eyebrow: UiLabels.nasaSpaceAppsFieldShift,

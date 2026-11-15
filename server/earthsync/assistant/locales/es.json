@@ -53,5 +53,6 @@
   "persisted_explanation": "Explicación guardada de Rust: {text}",
   "history": "Los registros describen lo informado por el agricultor. Los planes no son operaciones completadas y los días no establecen la etapa biológica.",
   "farmer_report": "Registro del agricultor del {date} (sin verificación independiente): {text}",
-  "reference_snapshot": "Referencia proporcionada (no aceptada como medición del campo): {text}"
+  "reference_snapshot": "Referencia proporcionada (no aceptada como medición del campo): {text}",
+  "historical": "Historical comparisons use saved accepted periods and show their actual coverage. Retrospective archives are not forecasts or proof of what was known at the time. Open the Historical Simulation Lab for hypothetical baseline/A/B periods, original sources and unavailable quantities."
 }

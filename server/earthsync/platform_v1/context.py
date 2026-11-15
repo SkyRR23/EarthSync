@@ -3,6 +3,7 @@
 import hashlib
 import json
 
+from .historical_explanations import historical_references
 from .journal import Journal
 from .comparisons import Comparisons
 from .environmental_explanations import assistant_references
@@ -26,7 +27,10 @@ def assistant_context(store, owner, farm_id):
                 "url": record.source_url,
             }
         )
-        if record.source_metadata.get("policy") == "fao56-daily-pm.v1":
+        if (
+            record.source_metadata.get("policy") == "fao56-daily-pm.v1"
+            and "calculation" in record.source_metadata
+        ):
             calculation = record.source_metadata["calculation"]
             for metric, topic, key in [
                 ("et0_total", "climate", "et0_total_mm"),
@@ -298,6 +302,9 @@ def assistant_context(store, owner, farm_id):
     source_views, reference_views = assistant_references(store, owner, farm_id)
     sources.extend(source_views)
     evidence.extend(reference_views)
+    historical_sources, historical_views = historical_references(store, owner, farm_id)
+    sources.extend(historical_sources)
+    evidence = historical_views + evidence
     value = {
         "schema_version": "assistant.v1-proposal",
         "context_id": "pending",

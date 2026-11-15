@@ -54,6 +54,7 @@ class CompanionScreen extends ConsumerWidget {
                   for (final route in const {
                     '/field': 'Map & environment',
                     '/rotations': 'Reassess with selected evidence',
+                    '/historical': 'Historical Simulation Lab',
                     '/crops': 'Crop references',
                     '/farm-photos': 'Photos',
                     '/assistant': 'Assistant',

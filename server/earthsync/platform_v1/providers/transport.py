@@ -12,6 +12,7 @@ import httpx
 from ..errors import PlatformError
 
 ALLOWED = {
+    "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/1.0.0/WMTSCapabilities.xml",
     "https://power.larc.nasa.gov/api/temporal/daily/point",
     "https://cmr.earthdata.nasa.gov/search/granules.umm_json",
     "https://maps.isric.org/mapserv",
@@ -83,7 +84,14 @@ class Transport:
                             )
                         data = bytearray()
                         async for part in response.aiter_bytes():
-                            if len(data) + len(part) > self.max_bytes:
+                            # GIBS advertises thousands of layers in one bounded XML
+                            # document (~5.9 MB observed); data products keep 4 MB.
+                            limit = (
+                                8_000_000
+                                if url.endswith("WMTSCapabilities.xml")
+                                else self.max_bytes
+                            )
+                            if len(data) + len(part) > limit:
                                 raise PlatformError("PROVIDER_RESPONSE_TOO_LARGE", 502)
                             data.extend(part)
                         return Capture(

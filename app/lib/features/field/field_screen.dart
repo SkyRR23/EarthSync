@@ -46,6 +46,11 @@ class FieldScreen extends ConsumerWidget {
           child: ListView(
             padding: const EdgeInsets.all(24),
             children: [
+              TextButton.icon(
+                onPressed: () => context.push('/historical'),
+                icon: const Icon(Icons.history),
+                label: const Text('Historical Simulation Lab'),
+              ),
               if (platformUrl.isNotEmpty)
                 OutlinedButton(
                   onPressed: () => context.push('/farm-evidence'),

@@ -9,6 +9,7 @@ from .models import ChatRequest, ChatResponse, Claim
 
 # Agricultural content and translations live in locales; these are routing terms.
 INTENTS = (
+    ("historical", r"historical|2024.*2025|2025.*2024|rainy season"),
     (
         "history",
         r"\bhistory\b|\btimeline\b|\bstage\b|\bmanagement\b|priorit|field observation|planted|harvest|မှတ်တမ်း|အဆင့်",
@@ -32,6 +33,7 @@ INTENTS = (
     ),
 )
 TOPICS = {
+    "historical": {"climate", "rainfall", "temperature"},
     "history": {"farmer_input"},
     "water": {"climate"},
     "soil": {"soil"},
@@ -220,8 +222,14 @@ def explain(request: ChatRequest) -> ChatResponse:
             )
             continue
         if (
-            record.metric in {"soil_reference_summary", "forecast_reference_summary"}
-            and record.topic in {"soil", "climate"}
+            record.metric
+            in {
+                "soil_reference_summary",
+                "forecast_reference_summary",
+                "historical_period_summary",
+                "historical_comparison",
+            }
+            and record.topic in {"soil", "climate", "rainfall", "temperature"}
             and record.kind in {"modeled", "forecast"}
             and record.quality in {"unverified", "stale"}
             and isinstance(record.value, str)

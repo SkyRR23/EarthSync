@@ -1,3 +1,4 @@
+import '../features/historical/historical_screen.dart';
 import '../features/companion/rotation_workspace.dart';
 import '../features/companion/companion_screen.dart';
 import '../features/companion/crop_explorer.dart';
@@ -29,6 +30,10 @@ GoRouter buildRouter() => GoRouter(
       builder: (_, state, child) =>
           AppShell(path: state.uri.path, child: child),
       routes: [
+        GoRoute(
+          path: '/historical',
+          builder: (_, _) => const FarmRequired(child: HistoricalScreen()),
+        ),
         GoRoute(
           path: '/daily-climate',
           builder: (_, s) => DailyClimateScreen(
