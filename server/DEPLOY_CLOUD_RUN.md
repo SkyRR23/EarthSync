@@ -30,3 +30,29 @@ Notes
 - Request logs contain the queried latitude/longitude. Agree a log retention
   and privacy policy before a public pilot (README "public deployment" notes).
 - No credentials are needed: NASA POWER is open.
+
+## Test host (separate from live)
+
+For team testing, a second service `fieldshift-backend-test` runs the same
+code with the same limits, and a Firebase Hosting preview channel `test`
+forwards its `/api/**` to it. The live service and `web.app` address the
+phones use are not touched.
+
+```sh
+# test backend (newest code on the branch)
+gcloud run deploy fieldshift-backend-test --source server \
+  --project fieldshift-yangon-2026 --region asia-southeast1 \
+  --allow-unauthenticated --min-instances 0 --max-instances 2 \
+  --concurrency 20 --cpu 1 --memory 512Mi --timeout 120 --labels env=test
+
+# test address, expires after 7 days (run from app/; re-run to renew)
+firebase --config firebase.test.json hosting:channel:deploy test \
+  --expires 7d --project fieldshift-yangon-2026
+```
+
+The channel prints its address
+(`https://fieldshift-yangon-2026--test-<id>.web.app`). Like live, it has no
+key and no CORS: phones, scripts and servers can call it; web pages on other
+addresses cannot. When the channel expires its address stops working; the
+test service stays (scales to zero) until deleted with
+`gcloud run services delete fieldshift-backend-test --region asia-southeast1`.
