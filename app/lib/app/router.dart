@@ -8,6 +8,7 @@ import '../features/onboarding/sign_in_screen.dart';
 import '../features/onboarding/welcome_screen.dart';
 import '../features/questionnaire/question_screen.dart';
 import '../features/results/scenario_detail_screen.dart';
+import '../features/privacy/your_data_screen.dart';
 import '../features/soil/soil_test_screen.dart';
 import '../features/sources/sources_screen.dart';
 
@@ -50,6 +51,7 @@ GoRouter buildRouter({bool setupDone = false}) => GoRouter(
     ),
     GoRoute(path: '/farm', builder: (_, _) => const MarkFarmScreen()),
     GoRoute(path: '/soil-test', builder: (_, _) => const SoilTestScreen()),
+    GoRoute(path: '/your-data', builder: (_, _) => const YourDataScreen()),
     GoRoute(
       path: '/scenario/:id',
       builder: (_, s) =>

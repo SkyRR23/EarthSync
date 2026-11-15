@@ -235,6 +235,35 @@ abstract final class S {
   static const savedOnline = 'Saved online';
   static const signOut = 'Sign out';
 
+  // Your data (privacy + delete)
+  static const yourData = 'Your data';
+  static const dataPhoneTitle = 'Kept on this phone';
+  static const dataPhoneBody =
+      'Your farm pin and shape, your answers, your notes and photos, and your last result.';
+  static const dataOnlineTitle = 'Saved online when you sign in';
+  static const dataOnlineBody =
+      'The same farm, answers, notes, photos and every check result, in Google Firebase (Singapore). Only you can open them.';
+  static const dataCountsTitle = 'Counts with no name';
+  static const dataCountsBody =
+      'Simple counts like "a check was run", with no name, place or notes.';
+  static const dataWeatherTitle = 'Weather server';
+  static const dataWeatherBody =
+      "To get NASA weather, the app sends your farm's location to our server. Its short technical logs are not linked to your account.";
+  static const dataNeverTitle = 'Never';
+  static const dataNeverBody =
+      'No ads and no selling of data. The app never measures anything from your photos.';
+  static const deleteAll = 'Delete all my data';
+  static const deleteFooter =
+      'Deletes everything on this phone and, if you signed in, everything online and your Field Shift account. It cannot be undone.';
+  static const deleteConfirmTitle = 'Delete everything?';
+  static String deleteConfirmBody({required bool signedIn}) => signedIn
+      ? 'Your farm, answers, notes, photos and results will be deleted from this phone and from your online space, and your Field Shift account will be closed. This cannot be undone.'
+      : 'Your farm, answers, notes, photos and results will be deleted from this phone. This cannot be undone.';
+  static const deleteWord = 'Delete';
+  static const allDeleted = 'All your data was deleted.';
+  static const deleteFailed =
+      "Couldn't finish deleting your online data. Check the internet and try again. Your phone copy was kept.";
+
   // Sources
   static const sourcesIntro =
       'Every result comes from one of these sources. Satellite numbers describe your area, not your exact farm.';

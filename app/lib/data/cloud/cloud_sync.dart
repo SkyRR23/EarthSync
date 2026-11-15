@@ -188,6 +188,34 @@ class CloudSync {
     );
   }
 
+  /// "Delete my data": removes the farm, notes, check history and photos
+  /// stored for this user. Throws if something could not be deleted, so the
+  /// app can tell the farmer instead of pretending. Anonymous usage counts
+  /// carry no user id and cannot be linked back, so they are not touched.
+  Future<void> deleteAllUserData() async {
+    final id = uid;
+    if (id == null) return;
+    final user = _user(id);
+    for (final sub in ['farm', 'notes', 'checks']) {
+      final snap = await user.collection(sub).get();
+      for (var i = 0; i < snap.docs.length; i += 400) {
+        final batch = _db.batch();
+        for (final d in snap.docs.skip(i).take(400)) {
+          batch.delete(d.reference);
+        }
+        await batch.commit();
+      }
+    }
+    await user.delete();
+    final storage = this.storage;
+    if (storage != null) {
+      final list = await storage.ref('users/$id/photos').listAll();
+      for (final item in list.items) {
+        await item.delete();
+      }
+    }
+  }
+
   /// Saved farm (raw map) and notes, used to restore on a new phone.
   Future<({Map<String, dynamic>? farm, List<FieldNote> notes})> load() async {
     final id = uid;

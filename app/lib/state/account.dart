@@ -47,3 +47,39 @@ Future<String?> signInAndSync(WidgetRef ref) async {
 }
 
 Future<void> signOut(WidgetRef ref) async => ref.read(authProvider)?.signOut();
+
+/// "Delete my data". Online first (needs the account), then the Google
+/// account link itself, then everything on this phone. Returns a message for
+/// the farmer when the online part fails; the phone copy is then kept so
+/// nothing is half-deleted silently.
+Future<String?> deleteMyData(WidgetRef ref) async {
+  final auth = ref.read(authProvider);
+  final user = auth?.currentUser;
+  if (auth != null && user != null) {
+    try {
+      await ref.read(cloudSyncProvider)?.deleteAllUserData();
+      try {
+        await user.delete();
+      } on FirebaseAuthException catch (e) {
+        if (e.code != 'requires-recent-login') rethrow;
+        // Google asks to confirm who you are before deleting an account.
+        final provider = GoogleAuthProvider();
+        if (kIsWeb) {
+          await user.reauthenticateWithPopup(provider);
+        } else {
+          await user.reauthenticateWithProvider(provider);
+        }
+        await user.delete();
+      }
+    } catch (e) {
+      debugPrint('delete my data failed: $e');
+      return S.deleteFailed;
+    }
+  }
+  await ref.read(photoStoreProvider)?.deleteAll();
+  ref.read(notesProvider.notifier).clearAll();
+  ref.read(farmerDraftProvider.notifier).reset();
+  ref.read(analysisProvider.notifier).forget();
+  await auth?.signOut();
+  return null;
+}

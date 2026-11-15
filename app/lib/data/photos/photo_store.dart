@@ -31,6 +31,12 @@ class PhotoStore {
     return name;
   }
 
+  /// Removes every photo the app saved on this phone.
+  Future<void> deleteAll() async {
+    if (await dir.exists()) await dir.delete(recursive: true);
+    await dir.create(recursive: true);
+  }
+
   Future<void> delete(String? name) async {
     if (name == null) return;
     final f = file(name);

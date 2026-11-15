@@ -403,6 +403,12 @@ class NotesNotifier extends Notifier<List<FieldNote>> {
     }
   }
 
+  /// "Delete my data": forget every note on this phone (no cloud calls).
+  void clearAll() {
+    state = const [];
+    ref.read(prefsProvider)?.remove(_notesKey);
+  }
+
   void _save(List<FieldNote> notes) {
     state = notes;
     ref

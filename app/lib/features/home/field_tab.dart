@@ -448,6 +448,18 @@ class _FieldTabState extends ConsumerState<FieldTab> {
         FsGroupedSection(
           children: [
             FsListRow(
+              leading: FsIconBadge(
+                CupertinoIcons.lock_shield_fill,
+                color: p.secondaryLabel,
+              ),
+              title: S.yourData,
+              onTap: () => context.push('/your-data'),
+            ),
+          ],
+        ),
+        FsGroupedSection(
+          children: [
+            FsListRow(
               title: S.startOver,
               titleStyle: context.type.body.copyWith(color: p.negativeText),
               chevron: false,
