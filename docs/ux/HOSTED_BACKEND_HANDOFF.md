@@ -24,6 +24,15 @@ model/key rejection and missing NASA credentials. Do not log uploaded photos,
 credentials or private farm payloads. Real provider outages remain unavailable;
 no fixture data should be enabled to conceal them.
 
+For the new note-advice implementation, open
+`/api/v1/chat/capabilities`. The expected version is
+`simulation-note-rag-v1`, with `reference_retrieval: true` and
+`groq_key_configured: true`. This is deployment metadata, not proof that an
+actual provider request succeeds. A previous connectivity fix does not establish
+that this newer implementation was deployed. Package `chat_references.json`
+alongside `chat_retrieval.py`; `server/pyproject.toml` includes the JSON in the
+installed package.
+
 The app now distinguishes HTML/invalid responses, missing routes, denied access,
 server errors and transport failures. A generic phone error is not proof of a
 Wi-Fi problem. This environment's outbound request to the Firebase hostname was
