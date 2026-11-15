@@ -46,7 +46,7 @@ profile = {
 }
 api = httpx.Client(base_url=args.platform_url, trust_env=False, timeout=40)
 prefix = "/api/platform/v1"
-steps, errors = [], []
+steps, errors, render_errors = [], [], []
 initial_results = api.get(prefix + f"/farms/{farm['id']}/simulations").json()
 last_result_id = initial_results[0]["id"] if initial_results else None
 
@@ -58,6 +58,7 @@ def record(name, classification="actual browser / cached-real environmental evid
             {
                 "steps": steps,
                 "page_errors": errors,
+                "flutter_render_errors": render_errors,
                 "farm_inputs": "SYNTHETIC software fixture, not field ground truth",
             },
             indent=2,
@@ -82,6 +83,20 @@ with sync_playwright() as driver:
     page = context.new_page()
     page.set_default_timeout(30000)
     page.on("pageerror", lambda e: errors.append(str(e)))
+    page.on(
+        "console",
+        lambda message: render_errors.append(message.text)
+        if message.type == "error"
+        and any(
+            term in message.text
+            for term in [
+                "RenderFlex",
+                "EXCEPTION CAUGHT",
+                "Another exception was thrown",
+            ]
+        )
+        else None,
+    )
     tile_status, tile_failures, tile_dates = [], [], []
     page.on(
         "response",
@@ -234,6 +249,7 @@ with sync_playwright() as driver:
         else:
             capture("missing-next-image")
             raise AssertionError("Replay did not retrieve the next dated image")
+        scroll(500)
         capture("two-date-imagery")
         record(
             "Replay changes actual tile dates and retains a separately dated pinned comparison"
@@ -346,6 +362,10 @@ with sync_playwright() as driver:
             "injected network outage / cached-real records",
         )
         capture("offline")
+        page.screenshot(
+            path=str(out / "offline-summary.png"),
+            clip={"x": 0, "y": 0, "width": 1440, "height": 610},
+        )
         context.set_offline(False)
         click("Refresh saved records")
     else:
@@ -420,7 +440,37 @@ with sync_playwright() as driver:
     page.wait_for_timeout(500)
     capture("mobile-results")
     record("Compiled mobile layout retains accessible result and section controls")
+    page.set_viewport_size({"width": 1440, "height": 1050})
+
+    def current_outage(route):
+        response = route.fetch()
+        jobs = response.json()
+        jobs.insert(
+            0,
+            {
+                "kind": "forecast",
+                "status": "failed",
+                "result": None,
+                "error": "PROVIDER_UNAVAILABLE",
+                "updated": 0,
+            },
+        )
+        route.fulfill(response=response, json=jobs)
+
+    context.route("**/farms/*/intelligence", current_outage)
+    click("Refresh saved records")
+    click("Replay & map")
+    click("Retrieve selected NASA period")
+    find("Play")
+    scroll(-50000)
+    assert "Historical online context" in page.locator("body").aria_snapshot()
+    record(
+        "Injected current-provider failure preserves accepted historical online fallback",
+        "injected forecast failure / real saved NASA archive",
+    )
+    context.unroute("**/farms/*/intelligence", current_outage)
     assert not errors, errors
+    assert not render_errors, render_errors
     record("No unhandled page errors")
     browser.close()
 api.close()

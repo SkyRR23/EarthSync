@@ -83,6 +83,52 @@ void main() {
     tester.view.resetPhysicalSize();
     tester.view.resetDevicePixelRatio();
   });
+  testWidgets('comparison charts keep entirely missing seasons unavailable', (
+    tester,
+  ) async {
+    Map<String, dynamic> period(String year) {
+      final metrics = {
+        for (final variable in ['rainfall', 'temperature', 'et0'])
+          variable: {
+            'value': null,
+            'complete_value': null,
+            'valid_days': 0,
+            'expected_days': 31,
+            'missing_days': 31,
+            'status': 'unavailable',
+            'unit': variable == 'temperature' ? 'celsius' : 'mm',
+          },
+      };
+      return {
+        'start': '$year-01-01',
+        'end': '$year-01-31',
+        'metrics': metrics,
+        'monthly': [
+          {'start': '$year-01-01', 'end': '$year-01-31', 'metrics': metrics},
+        ],
+      };
+    }
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: SingleChildScrollView(
+            child: HistoricalSeasonComparison(
+              periods: [period('2024'), period('2025')],
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(
+      find.textContaining('complete-period difference unavailable'),
+      findsNWidgets(3),
+    );
+    expect(find.textContaining('Unavailable mm'), findsWidgets);
+    expect(tester.takeException(), isNull);
+  });
+
   test('changing selection cancels a pending result and server job', () async {
     final submitted = Completer<http.Response>();
     final paths = <String>[];

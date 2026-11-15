@@ -38,3 +38,42 @@ Build Flutter 3.44.0 Web with `--dart-define=PLATFORM_URL=http://127.0.0.1:<port
 
 Synthetic test farms and hypothetical plans must never be presented as real
 farmer observations. See VERIFICATION.md for exact runs, failures and limitations.
+
+## Browser reproduction
+
+Prepare an isolated synthetic linked-farm fixture in a private directory and
+retrieve its accepted annual NASA windows through the app/API. The fixture JSON
+contains `link` (the existing farm-links request) and `farm` (its confirmed server
+response). It must never be committed or described as a real farmer observation.
+
+Run the browser drivers with the project's Python environment plus Playwright
+and installed Chromium:
+
+```sh
+python scripts/browser_historical.py --fixture /absolute/private/farm.json --output /absolute/private/browser
+python scripts/browser_historical_empty.py --fixture /absolute/private/farm.json --output /absolute/private/empty-browser
+```
+
+Use `--resume-saved /absolute/private/browser/browser-state.json` for a separate
+saved-state/as-of/import/fallback follow-up. This is explicitly a resumed test,
+not an uninterrupted original journey. Output directories are required to stay
+outside the checkout by the existing privacy helper. Keep normal TLS enabled;
+use the environment's configured trusted CA rather than bypassing verification.
+
+The final package/source SHA, Windows/Linux download links and integration choices
+are in draft PR #33. Continue existing PR #29 Windows acceptance independently;
+review this isolated feature against the final-product branch before any explicit
+approval to include it in a final main release.
+
+## Reviewed actual-browser frames
+
+Every farm/history/plan in these frames is an explicitly synthetic software-test
+fixture. Weather and map/soil source values are real or cached-real source data.
+The cropped offline frame was captured directly by the browser to exclude runtime
+result identifiers; no values or UI pixels were fabricated.
+
+* [Editable hypothetical baseline/A/B workspace](evidence/scenario-editor.png)
+* [Actual 2024/2025 source and Rust comparison](evidence/comparison-2024-2025.png)
+* [Two requested image dates with fixed soil context](evidence/dated-imagery-and-static-soil.png)
+* [Explicit cached read-only mode](evidence/offline-summary.png)
+* [No-cache unavailable state](evidence/no-cache-unavailable.png)
