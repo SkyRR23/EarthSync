@@ -6,12 +6,16 @@ import 'package:earthsync/data/engine/rust_engine.dart';
 import 'package:earthsync/data/environment/nasa_power_client.dart';
 import 'package:earthsync/data/models/farmer_input.dart';
 import 'package:earthsync/data/models/field_analysis.dart';
+import 'package:earthsync/design/theme.dart';
 import 'package:earthsync/features/home/weather_tab.dart';
 import 'package:earthsync/features/results/climate_provenance.dart';
 import 'package:earthsync/src/rust/api/bridge.dart' as rust;
+import 'package:earthsync/state/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const _point = FarmerInput(
   latitude: 16.85,
@@ -25,6 +29,26 @@ const _window = HistoricalWindow();
 
 // Only explicit opt-in network tests use real HTTP; keep normal tests offline.
 class _LiveHttp extends HttpOverrides {}
+
+/// The app's Weather tab as the farmer sees it, with the phone storage the
+/// app always has (the tab's saved-result banner reads it). Host tests
+/// install mock storage first; device tests use the real one.
+Future<void> _pumpWeather(WidgetTester tester, FieldAnalysis a) async {
+  final prefs = await SharedPreferences.getInstance();
+  tester.view.physicalSize = const Size(1200, 4000);
+  tester.view.devicePixelRatio = 1;
+  addTearDown(tester.view.reset);
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: [prefsProvider.overrideWithValue(prefs)],
+      child: MaterialApp(
+        theme: fsLightTheme(),
+        home: Scaffold(body: WeatherTab(analysis: a)),
+      ),
+    ),
+  );
+  await tester.pumpAndSettle();
+}
 
 void registerNasaBridgeChecks() {
   late String originalCapture;
@@ -88,12 +112,7 @@ void registerNasaBridgeChecks() {
       expect(jsonDecode(trace.farmerInputJson)['priorities'], ['less_water']);
       expect(jsonDecode(trace.rustRequestJson)['field']['current_crop'], '');
       expect(jsonDecode(trace.rustResultJson)['status'], 'success');
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(body: WeatherTab(analysis: a)),
-        ),
-      );
-      await tester.pumpAndSettle();
+      await _pumpWeather(tester, a);
       expect(find.textContaining('0.04 mm'), findsWidgets);
       expect(find.textContaining('28.0366'), findsOneWidget);
       expect(
@@ -114,12 +133,7 @@ void registerNasaBridgeChecks() {
       expect(a.climateSummary.months, hasLength(1));
       expect(a.climateSummary.months.single.rainMm, isNull);
       expect(a.dataGaps.any((g) => g.field.startsWith('rain_mm')), true);
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(body: WeatherTab(analysis: a)),
-        ),
-      );
-      await tester.pumpAndSettle();
+      await _pumpWeather(tester, a);
       expect(find.textContaining('Precipitation: unknown'), findsOneWidget);
       expect(tester.takeException(), isNull);
     },
@@ -148,12 +162,7 @@ void registerNasaBridgeChecks() {
       expect(a.climateSummary.totalRainMm, closeTo(0.04, 1e-9));
       expect(a.climateSummary.meanTempC, closeTo(28.03655172413793, 1e-9));
       expect(a.scenarios, isEmpty);
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(body: WeatherTab(analysis: a)),
-        ),
-      );
-      await tester.pumpAndSettle();
+      await _pumpWeather(tester, a);
       expect(
         find.text('Real NASA POWER climate · modeled data'),
         findsOneWidget,

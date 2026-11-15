@@ -23,7 +23,7 @@ import '../../design/tokens.dart';
 import '../../state/account.dart';
 import '../../state/providers.dart';
 import '../map/gibs_layer.dart';
-import '../questionnaire/historical_window_selector.dart';
+import 'weather_months_picker.dart';
 
 /// "rain_mm.Jul 2026" -> "Rain, Jul 2026"; "drainage" -> "After rain".
 String dataGapLabel(String field) {
@@ -224,10 +224,7 @@ class _FieldTabState extends ConsumerState<FieldTab> {
               },
             ),
             const SizedBox(height: FsSpace.lg),
-            const Material(
-              type: MaterialType.transparency,
-              child: HistoricalWindowSelector(),
-            ),
+            const WeatherMonthsPicker(),
             const SizedBox(height: FsSpace.lg),
             FsButton(S.done, onPressed: () => Navigator.of(ctx).pop()),
           ],

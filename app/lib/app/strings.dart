@@ -253,6 +253,11 @@ abstract final class S {
       'Your weather is real NASA data. Crop facts for your area are not added yet, so we will not guess which crop fits.';
   static const weatherMonths = 'Weather months';
   static const last12 = 'Use last year (Jan–Dec)';
+  static const weatherFrom = 'From';
+  static const weatherTo = 'To';
+  static const weatherMonthsHelp = 'Finished months only, up to 2 years.';
+  static const weatherMonthsBad =
+      '"To" must be after "From", and 24 months at most. Not changed yet.';
   static const traceBackend = 'Exact backend response and provenance';
   static const traceFarmer = 'Retained farmer answers (not all used by Rust)';
 

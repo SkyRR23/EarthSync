@@ -15,7 +15,6 @@ import json
 import os
 from typing import Literal, Optional, Protocol
 
-import anthropic
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, ValidationError, field_validator
@@ -170,7 +169,7 @@ class SoilEstimator(Protocol):
 
 
 class NotConfigured(Exception):
-    """No Anthropic credentials on this server."""
+    """No AI provider is set up on this server."""
 
 
 class EstimateFailed(Exception):
@@ -180,15 +179,24 @@ class EstimateFailed(Exception):
 
 
 class ClaudeSoilEstimator:
-    """Calls Claude with the photos and answers; returns a validated estimate."""
+    """Optional provider: calls Claude with the photos and answers.
 
-    def __init__(self, client: Optional[anthropic.AsyncAnthropic] = None):
+    The AI provider is not decided yet, so the ``anthropic`` package is an
+    optional extra (``pip install .[claude]``). Without the package or a key the
+    endpoint answers ``not_configured`` and the app uses the hand test.
+    """
+
+    def __init__(self, client=None):
         self._client = client
 
-    def _get_client(self) -> anthropic.AsyncAnthropic:
+    def _get_client(self):
         if self._client is None:
             if not os.environ.get("ANTHROPIC_API_KEY"):
                 raise NotConfigured()
+            try:
+                import anthropic
+            except ImportError as e:
+                raise NotConfigured() from e
             self._client = anthropic.AsyncAnthropic()
         return self._client
 
@@ -233,12 +241,8 @@ class ClaudeSoilEstimator:
                 },
                 messages=[{"role": "user", "content": content}],
             )
-        except anthropic.RateLimitError as e:
-            raise EstimateFailed("ai_busy", True) from e
-        except anthropic.APIConnectionError as e:
-            raise EstimateFailed("ai_unreachable", True) from e
-        except anthropic.APIStatusError as e:
-            raise EstimateFailed("ai_error", e.status_code >= 500) from e
+        except Exception as e:
+            raise _provider_error(e) from e
 
         if resp.stop_reason == "refusal":
             return SoilEstimate(
@@ -257,6 +261,21 @@ class ClaudeSoilEstimator:
             return SoilEstimate.model_validate(json.loads(text))
         except (json.JSONDecodeError, ValidationError) as e:
             raise EstimateFailed("ai_bad_answer", True) from e
+
+
+def _provider_error(e: Exception) -> Exception:
+    """Map the SDK's typed errors without importing it at module load."""
+    if type(e).__module__.split(".")[0] != "anthropic":
+        return e
+    import anthropic
+
+    if isinstance(e, anthropic.RateLimitError):
+        return EstimateFailed("ai_busy", True)
+    if isinstance(e, anthropic.APIConnectionError):
+        return EstimateFailed("ai_unreachable", True)
+    if isinstance(e, anthropic.APIStatusError):
+        return EstimateFailed("ai_error", e.status_code >= 500)
+    return e
 
 
 router = APIRouter()
@@ -278,10 +297,14 @@ async def soil_estimate(request: Request):
     try:
         body = SoilRequest.model_validate(await request.json())
     except (ValidationError, json.JSONDecodeError, ValueError):
-        return _error(400, "invalid_request", "Photos or answers could not be read.", False)
+        return _error(
+            400, "invalid_request", "Photos or answers could not be read.", False
+        )
 
     hand = hand_key(body.answers.ribbon, body.answers.feel)
-    estimator: SoilEstimator = getattr(request.app.state, "soil_estimator", None) or _default_estimator
+    estimator: SoilEstimator = (
+        getattr(request.app.state, "soil_estimator", None) or _default_estimator
+    )
     if not body.photos:
         # Nothing for the AI to look at: the hand test is the answer.
         return {
@@ -297,9 +320,16 @@ async def soil_estimate(request: Request):
     try:
         est = await estimator.estimate(body, hand)
     except NotConfigured:
-        return _error(503, "not_configured", "Photo soil check is not set up yet.", False)
+        return _error(
+            503, "not_configured", "Photo soil check is not set up yet.", False
+        )
     except EstimateFailed as e:
-        return _error(503 if e.retryable else 502, e.code, "Photo soil check failed. Try again.", e.retryable)
+        return _error(
+            503 if e.retryable else 502,
+            e.code,
+            "Photo soil check failed. Try again.",
+            e.retryable,
+        )
 
     return {
         "status": "success",
