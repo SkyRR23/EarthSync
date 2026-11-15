@@ -20,8 +20,10 @@ class RecentState {
     this.loading = false,
     this.failed = false,
     this.fromCache = false,
+    this.errorCode,
   });
   final RecentConditions? data;
+  final String? errorCode;
   final bool loading;
 
   /// The last fetch failed (no signal, or NASA/backend down).
@@ -105,12 +107,13 @@ class RecentNotifier extends Notifier<RecentState> {
               'data': raw,
             }),
           );
-    } catch (_) {
+    } catch (error) {
       if (!ref.mounted) return;
       state = RecentState(
         data: state.data,
         fromCache: state.data != null,
         failed: true,
+        errorCode: error is RecentException ? error.code : 'unreachable',
       );
     }
   }
@@ -210,9 +213,10 @@ final forecastClientProvider = Provider<ForecastClient>(
 );
 
 class ForecastState {
-  const ForecastState({this.data, this.loading = false, this.failed = false});
+  const ForecastState({this.data, this.loading = false, this.failed = false, this.errorCode});
   final Forecast? data;
   final bool loading, failed;
+  final String? errorCode;
 }
 
 /// 5-day forecast for the farm, with the last good copy kept for offline.
@@ -282,9 +286,9 @@ class ForecastNotifier extends Notifier<ForecastState> {
               'data': raw,
             }),
           );
-    } catch (_) {
+    } catch (error) {
       if (!ref.mounted) return;
-      state = ForecastState(data: state.data, failed: true);
+      state = ForecastState(data: state.data, failed: true, errorCode: error is ForecastException ? error.code : 'unreachable');
     }
   }
 

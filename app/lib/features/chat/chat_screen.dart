@@ -201,7 +201,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                       if (s.error != null)
                         Padding(
                           padding: const EdgeInsets.only(top: FsSpace.sm),
-                          child: FsStatusPill(s.error!, tone: FsPillTone.look),
+                          child: kIsWeb ? FsStatusPill(s.error!, tone: FsPillTone.look) : Card(child: Padding(padding: const EdgeInsets.all(16), child: Text(s.error!))),
                         ),
                       if (!kIsWeb && s.error != null)
                         TextButton.icon(onPressed: s.sending ? null : () => ref.read(chatProvider.notifier).retry(_facts()), icon: const Icon(Icons.refresh), label: const Text('Try my question again')),
@@ -216,7 +216,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     FsSpace.xs,
                   ),
                   child: Text(
-                    S.chatDisclaimer,
+                    kIsWeb ? S.chatDisclaimer : 'General answers explain farming practices. Field answers use your saved details. Check important decisions with a local agricultural adviser.',
                     textAlign: TextAlign.center,
                     style: t.caption,
                   ),
@@ -239,7 +239,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                           textInputAction: TextInputAction.send,
                           onSubmitted: s.sending ? null : _send,
                           decoration: InputDecoration(
-                            hintText: S.chatHint,
+                            hintText: kIsWeb ? S.chatHint : _aboutField ? 'Ask about my field…' : 'Ask about growing a crop…',
                             counterText: '',
                             filled: true,
                             fillColor: p.surface,

@@ -1,3 +1,6 @@
+import 'package:flutter/foundation.dart';
+import '../../state/today.dart';
+import '../home/field_overview.dart' show ndviColor;
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -49,6 +52,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     );
     final farm = d.hasFarm ? d.farm! : null;
     final cfg = configFor(_layer);
+    final scene = !kIsWeb && farm != null && _layer == MapLayerKind.plantHealth ? ref.watch(greennessProvider).value?.latest : null;
     final fit = farm == null
         ? null
         : CameraFit.coordinates(
@@ -72,10 +76,12 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             children: [
               // Street map underneath so a missing satellite tile is never a hole.
               streetTileLayer(),
-              if (cfg != null)
+              if (cfg != null && kIsWeb)
                 cfg.layerId == GibsLayerConfig.plantHealth.layerId
                     ? plantHealthLayer(farmCorners: farm?.corners)
                     : Opacity(opacity: 0.75, child: gibsTileLayer(cfg)),
+              if (!kIsWeb && scene != null && scene.cells.isNotEmpty)
+                PolygonLayer(polygons: [for (final cell in scene.cells) Polygon(points: cell.corners, color: ndviColor(cell.ndvi), borderStrokeWidth: 0)]),
               if (farm != null) farmOutlineLayer(context, farm),
               if (farm == null)
                 MarkerLayer(
@@ -121,7 +127,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                         onChanged: (v) => setState(() => _layer = v),
                         segments: const {
                           MapLayerKind.street: S.street,
-                          MapLayerKind.plantHealth: S.plantHealth,
+                          MapLayerKind.plantHealth: kIsWeb ? S.plantHealth : 'Vegetation history',
                         },
                       ),
                     ),
@@ -181,7 +187,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                             ),
                             if (_layer == MapLayerKind.plantHealth) ...[
                               const SizedBox(height: FsSpace.md),
-                              const PlantHealthLegend(),
+                              if (kIsWeb) const PlantHealthLegend() else Text(scene == null ? 'No accepted field vegetation image. No health colours are shown.' : 'Vegetation image: ${scene.date.toIso8601String().substring(0, 10)}. Not real time or a crop-health diagnosis. Trees and urban gardens also appear green.'),
                             ],
                           ],
                         ),

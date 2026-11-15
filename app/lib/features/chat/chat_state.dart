@@ -1,3 +1,4 @@
+import '../../data/backend_response.dart';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
@@ -63,12 +64,13 @@ class ChatClient {
             }),
           )
           .timeout(timeout);
-      final j = jsonDecode(r.body) as Map<String, dynamic>;
+      final j = backendJson(r);
+      if (j == null) throw ChatException(backendFailure(r));
       if (r.statusCode == 200 && j['status'] == 'success') {
         return j['reply'] as String;
       }
       final e = (j['error'] as Map?) ?? const {};
-      throw ChatException(e['code'] as String? ?? 'http_${r.statusCode}');
+      throw ChatException(e['code'] is String ? e['code'] as String : backendFailure(r));
     } on ChatException {
       rethrow;
     } catch (_) {
@@ -242,7 +244,8 @@ class ChatNotifier extends Notifier<ChatState> {
         error: switch (e.code) {
           'not_configured' => S.chatNotSetUp,
           'ai_busy' => S.chatBusy,
-          'unreachable' => S.chatOffline,
+          'unreachable' => backendMessage(e.code),
+          'backend_route_missing' || 'backend_access_denied' || 'backend_unavailable' || 'backend_invalid_response' || 'ai_key_rejected' => backendMessage(e.code),
           _ => S.chatFailed,
         },
       );

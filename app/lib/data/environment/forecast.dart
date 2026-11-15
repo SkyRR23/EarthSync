@@ -1,4 +1,4 @@
-import 'dart:convert';
+import '../backend_response.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -120,12 +120,13 @@ class ForecastClient {
     final c = client ?? http.Client();
     try {
       final r = await c.get(uri).timeout(timeout);
-      final j = jsonDecode(r.body) as Map<String, dynamic>;
+      final j = backendJson(r);
+      if (j == null) throw ForecastException(backendFailure(r));
       if (r.statusCode == 200 && j['status'] == 'success') {
         return (j, Forecast.fromJson(j, fetchedAt: DateTime.now()));
       }
       final e = (j['error'] as Map?) ?? const {};
-      throw ForecastException(e['code'] as String? ?? 'http_${r.statusCode}');
+      throw ForecastException(e['code'] is String ? e['code'] as String : backendFailure(r));
     } on ForecastException {
       rethrow;
     } catch (_) {

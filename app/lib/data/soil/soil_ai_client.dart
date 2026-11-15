@@ -1,3 +1,4 @@
+import '../backend_response.dart';
 import 'dart:convert';
 import 'dart:io';
 
@@ -97,13 +98,14 @@ class SoilAiClient {
             body: body,
           )
           .timeout(timeout);
-      final j = jsonDecode(r.body) as Map<String, dynamic>;
+      final j = backendJson(r);
+      if (j == null) throw SoilAiException(backendFailure(r));
       if (r.statusCode == 200 && j['status'] == 'success') {
         return SoilEstimate.fromJson(j);
       }
       final e = (j['error'] as Map?) ?? const {};
       throw SoilAiException(
-        e['code'] as String? ?? 'http_${r.statusCode}',
+        e['code'] is String ? e['code'] as String : backendFailure(r),
         retryable: e['retryable'] as bool? ?? true,
       );
     } on SoilAiException {

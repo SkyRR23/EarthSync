@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -76,7 +77,7 @@ class _FieldTabState extends ConsumerState<FieldTab> {
     final tasks = watchTasks(ref, widget.now ?? DateTime.now());
     final (statusText, tone) = fieldStatus(tasks);
     final look = tone == FsPillTone.look;
-    final line = look ? const Color(0xFFF2B233) : const Color(0xFF7EE07A);
+    final line = !kIsWeb ? const Color(0xFF90A4AE) : look ? const Color(0xFFF2B233) : const Color(0xFF7EE07A);
     final crop = cropName(d);
     final health = _plantHealth && farm != null;
     // NASA HLS (30 m) greenness inside the border; MODIS (250 m) when HLS
@@ -96,8 +97,8 @@ class _FieldTabState extends ConsumerState<FieldTab> {
         : green!.isLoading
         ? S.greenLoading
         : green.hasError
-        ? '${S.greenFailed} $modis'
-        : '${S.greenNone} $modis';
+        ? (kIsWeb ? '${S.greenFailed} $modis' : 'No accepted vegetation image is available. The outline only marks your field; it does not show crop health.')
+        : (kIsWeb ? '${S.greenNone} $modis' : 'No accepted vegetation image is available for this field.');
 
     return Scaffold(
       backgroundColor: p.background,
@@ -178,7 +179,7 @@ class _FieldTabState extends ConsumerState<FieldTab> {
                               ),
                               children: [
                                 satelliteTileLayer(),
-                                if (health)
+                                if (health && (kIsWeb || hls))
                                   hls
                                       ? PolygonLayer(
                                           polygons: [
@@ -202,7 +203,7 @@ class _FieldTabState extends ConsumerState<FieldTab> {
                                       Polygon(
                                         points: farm.corners,
                                         color: line.withValues(
-                                          alpha: health ? 0.0 : 0.28,
+                                          alpha: !kIsWeb ? 0.0 : health ? 0.0 : 0.28,
                                         ),
                                         borderColor: line,
                                         borderStrokeWidth: 3,
@@ -239,7 +240,7 @@ class _FieldTabState extends ConsumerState<FieldTab> {
                                     ),
                                     const SizedBox(width: FsSpace.xs + 2),
                                     Text(
-                                      S.plantHealthChip,
+                                      kIsWeb ? S.plantHealthChip : 'Vegetation history',
                                       style: t.subhead.copyWith(
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -293,7 +294,9 @@ class _FieldTabState extends ConsumerState<FieldTab> {
                               child: Align(
                                 alignment: Alignment.bottomLeft,
                                 child: _MapPill(
-                                  child: health
+                                  child: !kIsWeb && !hls
+                                      ? const Text('Field boundary · vegetation unknown', style: TextStyle(color: Colors.white))
+                                      : health
                                       ? (hls
                                             ? const _GreenLegend()
                                             : const PlantHealthLegend())
@@ -331,6 +334,8 @@ class _FieldTabState extends ConsumerState<FieldTab> {
                     ),
                   ),
                 ),
+                if (!kIsWeb)
+                  Padding(padding: const EdgeInsets.symmetric(horizontal: FsSpace.gutter), child: OutlinedButton.icon(onPressed: () => context.push('/soil-map'), icon: const Icon(Icons.layers_outlined), label: const Text('Explore soil reference layers'))),
                 if (caption != null)
                   Padding(
                     padding: const EdgeInsets.fromLTRB(
@@ -580,7 +585,7 @@ String greenCaption(FarmGreenness g) {
   final before = p?.ndviMean == null
       ? ''
       : ' · ${S.greenBefore(p!.ndviMean!.toStringAsFixed(2), shortDate(p.date))}';
-  return '$now$before. ${S.greenPixels(l.pixelsClear, l.pixelsInside, l.sensor)}. ${S.greenScale}.';
+  return '$now$before. ${S.greenPixels(l.pixelsClear, l.pixelsInside, l.sensor)}. ${S.greenScale}. Historical vegetation only: trees, parks and gardens can also be green. This does not identify crops or establish plant health.';
 }
 
 class _GreenLegend extends StatelessWidget {

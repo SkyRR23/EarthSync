@@ -1,3 +1,4 @@
+import '../../data/backend_response.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'farmer_start.dart';
@@ -21,8 +22,9 @@ const _weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 /// One factual line about today's rain from the forecast (no advice).
 String rainTip(ForecastDay? today) {
-  if (today == null) return S.forecastLoading;
+  if (today == null) return 'Rain forecast unavailable';
   final mm = today.rainMm, chance = today.rainChance;
+  if (mm == null && chance == null) return 'Rain forecast unknown';
   if ((mm ?? 0) >= 1) return S.rainToday(mm!.round());
   if (chance != null && chance >= 30) return S.rainChanceToday(chance);
   return S.noRainToday;
@@ -56,7 +58,8 @@ class _WeatherTabState extends ConsumerState<WeatherTab> {
     final t = context.type;
     final fc = ref.watch(forecastProvider);
     final f = fc.data;
-    final recent = ref.watch(recentProvider).data;
+    final recentState = ref.watch(recentProvider);
+    final recent = recentState.data;
     final tabs = HomeTabs.of(context);
     final today = f == null || f.days.isEmpty ? null : f.days.first;
     final tomorrow = f == null || f.days.length < 2 ? null : f.days[1];
@@ -111,7 +114,7 @@ class _WeatherTabState extends ConsumerState<WeatherTab> {
                     ),
                   ),
                   FsEntrance(
-                    child: _NowCard(forecast: f, tip: rainTip(today)),
+                    child: _NowCard(forecast: f, tip: fc.loading && f == null ? S.forecastLoading : rainTip(today), loading: fc.loading),
                   ),
                   if (fc.loading && f == null ||
                       fc.failed && f == null ||
@@ -128,7 +131,7 @@ class _WeatherTabState extends ConsumerState<WeatherTab> {
                             ? S.forecastLoading
                             : f != null
                             ? S.forecastOld(_hm(f.fetchedAt))
-                            : S.forecastFailed,
+                            : backendMessage(fc.errorCode ?? 'unreachable'),
                         style: t.subhead.copyWith(color: p.secondaryLabel),
                       ),
                     ),
@@ -154,7 +157,7 @@ class _WeatherTabState extends ConsumerState<WeatherTab> {
                       ),
                     )
                   else
-                    const _Placeholder(height: 120),
+                    fc.loading ? const _Placeholder(height: 120) : Padding(padding: const EdgeInsets.all(FsSpace.gutter), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text('No forecast has been loaded. No weather values are being substituted.'), TextButton(onPressed: () => ref.read(forecastProvider.notifier).refresh(), child: const Text('Retry forecast'))])),
                   if (ref.watch(alertPrefsProvider).weather &&
                       tomorrow != null &&
                       (tomorrow.rainMm ?? 0) >= 1)
@@ -270,6 +273,7 @@ class _WeatherTabState extends ConsumerState<WeatherTab> {
                   if (!kIsWeb && f != null)
                     Padding(padding: const EdgeInsets.symmetric(horizontal: FsSpace.gutter), child: ForecastRainChart(days: f.days, saved: fc.failed, fetchedAt: f.fetchedAt)),
                   const FsSectionTitle(S.nasaLast7),
+                  if (recentState.failed) Padding(padding: const EdgeInsets.all(FsSpace.gutter), child: Text(backendMessage(recentState.errorCode ?? 'unreachable'))),
                   FsEntrance(index: 5, child: _NasaRecentCard(recent: recent)),
                   const FsSectionTitle(S.nasaPastYear),
                   FsCard(
@@ -302,7 +306,8 @@ class _WeatherTabState extends ConsumerState<WeatherTab> {
 
 /// The sky card: picture, temperature, words, "feels like", and a tip strip.
 class _NowCard extends StatelessWidget {
-  const _NowCard({required this.forecast, required this.tip});
+  const _NowCard({required this.forecast, required this.tip, this.loading = false});
+  final bool loading;
   final Forecast? forecast;
   final String tip;
 
@@ -360,7 +365,7 @@ class _NowCard extends StatelessWidget {
                         ),
                         const SizedBox(height: FsSpace.xs),
                         Text(
-                          c == null ? S.forecastLoading : label,
+                          c == null ? (loading ? S.forecastLoading : 'Forecast unavailable') : label,
                           textAlign: TextAlign.end,
                           style: t.title2.copyWith(fontSize: 21),
                         ),

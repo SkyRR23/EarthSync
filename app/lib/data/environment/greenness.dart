@@ -1,4 +1,4 @@
-import 'dart:convert';
+import '../backend_response.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart' show LatLng;
@@ -36,12 +36,12 @@ class GreenScene {
       sensor: raw['sensor'] as String? ?? 'NASA HLS',
       pixelsInside: (raw['pixels_inside'] as num?)?.toInt() ?? 0,
       pixelsClear: (raw['pixels_clear'] as num?)?.toInt() ?? 0,
-      ndviMean: (raw['ndvi_mean'] as num?)?.toDouble(),
+      ndviMean: _ndvi(raw['ndvi_mean']),
       cells: [
         for (final c in (raw['cells'] as List? ?? const []))
           if (c is Map && c['corners'] is List)
             GreenCell(
-              ndvi: (c['ndvi'] as num?)?.toDouble(),
+              ndvi: _ndvi(c['ndvi']),
               corners: [
                 for (final p in c['corners'] as List)
                   LatLng(
@@ -97,7 +97,8 @@ class GreennessClient {
     final c = client ?? http.Client();
     try {
       final r = await c.get(uri).timeout(timeout);
-      final j = jsonDecode(r.body) as Map<String, dynamic>;
+      final j = backendJson(r);
+      if (j == null) throw GreennessException(backendFailure(r));
       if (r.statusCode == 200 && j['status'] == 'success') {
         return FarmGreenness(
           latest: GreenScene.fromJson(j['latest']),
@@ -105,7 +106,7 @@ class GreennessClient {
         );
       }
       final e = (j['error'] as Map?) ?? const {};
-      throw GreennessException(e['code'] as String? ?? 'http_${r.statusCode}');
+      throw GreennessException(e['code'] is String ? e['code'] as String : backendFailure(r));
     } on GreennessException {
       rethrow;
     } catch (_) {
@@ -115,3 +116,6 @@ class GreennessClient {
     }
   }
 }
+
+// Values outside the documented NDVI range remain missing.
+double? _ndvi(Object? raw) => raw is num && raw.isFinite && raw >= -1 && raw <= 1 ? raw.toDouble() : null;

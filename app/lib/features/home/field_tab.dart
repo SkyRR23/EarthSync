@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -595,8 +596,8 @@ Widget farmOutlineLayer(BuildContext context, FarmBoundary farm) {
     polygons: [
       Polygon(
         points: farm.corners,
-        color: p.tint.withValues(alpha: 0.18),
-        borderColor: p.tint,
+        color: kIsWeb ? p.tint.withValues(alpha: 0.18) : Colors.transparent,
+        borderColor: kIsWeb ? p.tint : Colors.blueGrey,
         borderStrokeWidth: 3,
       ),
     ],

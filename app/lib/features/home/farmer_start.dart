@@ -1,3 +1,4 @@
+import '../../data/backend_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -106,7 +107,7 @@ class FarmerStart extends ConsumerWidget {
         if (draft.hasLocation && forecast.data == null)
           Card(child: Padding(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             const Text('Weather for your field'),
-            Text(forecast.loading ? 'Getting the latest forecast…' : 'Weather is not available yet. Your saved records are still available.'),
+            Text(forecast.loading ? 'Getting the latest forecast…' : backendMessage(forecast.errorCode ?? 'unreachable')),
             TextButton(onPressed: () => ref.read(forecastProvider.notifier).refresh(), child: const Text('Load weather')),
           ]))),
         const SizedBox(height: 12),

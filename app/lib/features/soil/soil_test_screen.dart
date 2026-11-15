@@ -463,7 +463,7 @@ class _SoilTestScreenState extends ConsumerState<SoilTestScreen> {
               style: t.largeTitle,
               textAlign: TextAlign.center,
             ),
-            if (_confidence != null && _class != null) ...[
+            if (_confidence != null && _class != null && _source == 'ai_estimate') ...[
               const SizedBox(height: FsSpace.sm),
               Text(
                 S.confidenceLabel(_confidence!),
