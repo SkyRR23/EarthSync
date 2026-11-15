@@ -1,91 +1,149 @@
-# EarthSync — NASA Field Shift
+<div align="center">
 
-The final combined submission uses the team's PR #32 interface, with persistent
-local Tasks, crop rotation decisions, soil layers and historical evidence tools.
-Read the [submission handoff and timed judging demo](docs/ux/SUBMISSION_HANDOFF.md).
-Build and device limitations are stated there; the team requested deferring the
-combined acceptance tests to their own testing.
+<img src="app/assets/branding/earthsync-logo.png" alt="EarthSync leaf-and-orbit logo" width="170">
 
-This branch implements **Farmer Experience 2.0**: a cream/green responsive
-interface, soil-first field views, local SQLite tasks, notes and photos, an
-in-app notification center and optional Android local reminders. Daily farm
-management works without an account or a running backend. Fresh environmental
-retrieval still needs a connection, and saved evidence retains its original dates.
+# EarthSync · Field Shift
 
-Start with `./start-earthsync.ps1` in PowerShell. Read the
-[Farmer Experience guide](docs/ux/FARMER_EXPERIENCE_V2.md),
-[verification and device limitations](docs/ux/VERIFICATION.md) and
-[integration handoff](docs/ux/INTEGRATION_HANDOFF.md) before testing.
-Physical Android reminder delivery is unverified. Cloud task synchronization and
-FCM remain explicitly unconfigured. This isolated branch is for review and testing;
-it has not been merged into `main`.
+**Satellite data made understandable for everyday farming decisions**
 
-EarthSync is a Flutter Web agricultural companion backed by Python FastAPI,
-SQLite and the native Rust v0.3 evidence engine. A farmer confirms a field,
-inspects dated environmental evidence, explores crop references, compares an
-existing declared rotation with alternatives, and retains reports and decisions.
+A NASA Space Apps Challenge 2026 project by **Team Cosmic Chaos**
 
-The full-stack baseline is the local real-time integration, starting from PR #35 and
-combining the completed crop-intelligence PR #34 and multimodal RAG PR #36.
-The foundation is the combined [PR #29](https://github.com/SkyRR23/EarthSync/pull/29) release. It includes
-actual Iowa station observations, NWS forecasts/alerts, global model forecasts and
-authorized, quality-controlled NASA point/cell evidence with honest acquisition
-times and source delays, bounded QA-masked HLS-VI NDVI map overlays and private
-photo/report workflows. Historical Simulation PR #33 is excluded.
-There are **zero approved executable crop suitability rules**; all 60 candidates
-remain blocked. Exploration never ranks a “best crop”, predicts income or gives
-an irrigation prescription.
+[**Try the web app**](https://earth-sync-rose.vercel.app/) · [**Demo walkthrough**](docs/ux/SUBMISSION_HANDOFF.md) · [**Local setup**](docs/release/FINAL_LOCAL.md)
 
-Run `.\start-earthsync.ps1` from this source folder in PowerShell, or
-`./start-earthsync.sh` on Linux/macOS. The launcher builds missing components,
-starts all local services, checks readiness and opens the printed browser URL.
-Use `.\stop-earthsync.ps1` to stop and `.\test-earthsync.ps1` for actual HTTP smoke
-tests. [Final startup, migration and demo guide](docs/release/FINAL_LOCAL.md).
+</div>
 
-- [Real-time implementation, coverage and measured evidence](docs/realtime/README.md)
-- [Real-time verification and remaining gates](docs/realtime/VERIFICATION.md)
-- [Real-time Windows launch and retest](docs/realtime/WINDOWS_LOCAL_TESTING.md)
-- [Baseline implemented, partial and unavailable objectives](docs/release/COVERAGE.md)
-- [Baseline combined verification](docs/release/VERIFICATION.md)
-- [Baseline staging, private storage and rollback](docs/release/RUNBOOK.md)
-- [NASA demonstration script and screenshots](docs/release/DEMO.md)
-- [Source provenance, licenses and privacy](docs/release/PROVENANCE.md)
-- [Full-stack Windows/Linux packages](docs/release/ARTIFACTS.md)
-- [Verified hosting assessment and blockers](docs/release/HOSTING.md)
-- [Required local Windows acceptance](docs/release/WINDOWS_ACCEPTANCE.md)
+---
 
-Use a fresh checkout of the reviewed PR head with Python 3.12, Rust 1.99.0 and
-Flutter 3.44.0 / Dart 3.12.0. Keep private databases, tokens and photos outside
-Git and static assets. Follow the runbook to build both pinned runtime profiles
-and run them on loopback. No public deployment is claimed.
-The baseline release reports retain their original verification scope;
-the `docs/ux/` reports describe this farmer-experience branch.
+## 🌱 Welcome to EarthSync
 
-The application connects farm maps and modeled soil pH, sparse regional GFS
-forecasts, NASA POWER historical climate and Rust FAO-56 reference ET0 to saved
-rotation assessments. Three or more saved strategies retain their source scopes,
-dates, unknowns and farmer priorities. Records distinguish actual reported
-operations, plans, ground measurements supplied by a farmer, modeled products
-and scientific references. Soil and forecast snapshots are reference context;
-they do not become approved crop requirements.
+Farmers need to make decisions while weather, soil moisture, and seasonal conditions change. EarthSync brings together environmental observations, crop references, and farmer-entered field information in a simpler interface.
 
-The season view combines reported crop periods, explicitly declared bare/fallow
-periods, unknown gaps, chronology conflicts, photos, environmental snapshots and
-assessment history. New context offers explicit reassessment. Saved assessments
-remain immutable and reassessment is on demand. The real-time backend separately
-monitors environmental sources while running; browsers read its private cache.
-A stopped local PC does not keep monitoring or delivering warnings.
+Think of it as **a field notebook with a window into Earth observations**: it shows dated evidence, helps compare crop-rotation ideas, and lets farmers document decisions. It does **not** replace farmers, soil laboratories, or qualified agricultural advice.
 
-Core interface labels support English and Burmese. Untranslated scientific
-material remains English and requires local agricultural/language review.
-Existing evidence caches retain original retrieval times. New local tasks,
-notes, crop reports and photos support offline edits through SQLite. Optional
-cloud synchronization is not configured, and local changes are not uploaded
-automatically. Private API responses, map tiles and rasters are excluded from
-the public application-shell service worker.
+> ### ⚠️ APK demo vs. real-time implementation
+>
+> **The shared Android APK uses simulated/demo data. It is not a real-time data application.** Treat its screens and sample values as a demonstration of the user experience, not as current measurements, live warnings, or validated crop recommendations.
+>
+> **The repository also includes a real-time-ready implementation**—data-provider integrations, backend services, source timestamps, and local launch/test scripts. Live retrieval depends on running and configuring those services, third-party availability, permissions, and successful validation. **Real-time-ready does not mean the APK receives live data or that the hosted web app exposes the complete local backend.**
+>
+> The [local real-time guide](docs/realtime/README.md), [verification notes](docs/realtime/VERIFICATION.md), and [final local startup](docs/release/FINAL_LOCAL.md) explain the implementation and its limits.
 
-New runtime receipts are kept privately; public release evidence contains sanitized summaries, hashes and location-free screenshots.
+## ✨ What can you explore?
 
-Historical development evidence is retained under `docs/integration/`; it is not
-proof that a feature passed the final combined browser journey. Use the release
-report for the baseline and `docs/realtime/VERIFICATION.md` for this candidate.
+| Feature | Purpose |
+| --- | --- |
+| **Farm map & field context** | Choose a field and distinguish mapped/model data from information reported by a farmer. |
+| **Weather & climate evidence** | Inspect dated rainfall, temperature, forecast and other available environmental context. |
+| **Soil information** | View modeled soil properties with source and resolution caveats; these are not laboratory measurements. |
+| **Crop information & rotation comparison** | Explore source-backed crop references and compare a farmer-declared rotation with alternatives. |
+| **Vegetation (NDVI) views** | Examine satellite vegetation information where imagery access, quality checks and coverage allow it. |
+| **Farmer tools** | Keep tasks, notes, observations, photos and saved decisions in supported local workflows. |
+| **Accessible assistant** | Explore evidence using simpler language, citations and stated uncertainty; some scientific material remains in English. |
+
+**No guaranteed recommendations:** The project's 60 candidate crop-suitability rules remain blocked pending scientific review. EarthSync does not identify an approved “best crop,” predict farm income, or prescribe irrigation from satellite data alone.
+
+## 🛰️ Data and scientific context
+
+| Source / method | Used for |
+| --- | --- |
+| **NASA POWER** | Historical weather and climate inputs |
+| **NASA HLS vegetation products** | Quality-screened NDVI satellite imagery, when available |
+| **ISRIC SoilGrids** | Modeled soil-property context |
+| **Weather observations and forecast services** | Dated conditions, model projections and regional context |
+| **FAO-56 Penman–Monteith** | Reference evapotranspiration (ET₀), not crop irrigation demand |
+| **Crop references and farmer observations** | Crop facts, rotation histories, local priorities and reported field details |
+
+Each product has its own scale and update schedule. A regional soil estimate or model forecast is **not** the same as an on-farm measurement. See [source provenance](docs/release/PROVENANCE.md) and [capability coverage](docs/release/COVERAGE.md).
+
+## 🛠️ Technology
+
+| Component | Technology |
+| --- | --- |
+| User interface | Flutter / Dart |
+| API and integration | Python / FastAPI |
+| Scientific and evidence processing | Rust |
+| Local structured data | SQLite |
+| Farm maps | Map layers and OpenStreetMap-based context |
+
+Simplified flow:
+
+\`\`\`text
+NASA / weather / soil / crop sources + farmer input
+                       ↓
+           Backend and Rust processing
+                       ↓
+          Dated evidence + local records
+                       ↓
+             Flutter app interface
+                       ↓
+           Explore • Compare • Save
+\`\`\`
+
+Some workflows run locally without sign-in. Fresh external observations require connectivity and properly configured providers; cached evidence keeps its original dates.
+
+## 🚀 Run locally
+
+Use the local launcher to evaluate the **full-stack implementation**, not the simulated-data APK.
+
+**Requirements:** Python 3.12+, Rust/native toolchain (reviewed with Rust 1.99.0), Flutter 3.44.0 / Dart 3.12.0, and build tools for your platform. Some NASA services require optional Earthdata authorization.
+
+\`\`\`bash
+git clone https://github.com/SkyRR23/EarthSync.git
+cd EarthSync
+\`\`\`
+
+**Windows (PowerShell):**
+
+\`\`\`powershell
+.\start-earthsync.ps1
+\`\`\`
+
+**Linux / macOS:**
+
+\`\`\`bash
+./start-earthsync.sh
+\`\`\`
+
+Wait for the launcher's readiness checks and open **the browser URL printed by the launcher**. It may use a different local port on different machines.
+
+| Action | Windows | Linux / macOS |
+| --- | --- | --- |
+| Smoke test | \`.\test-earthsync.ps1\` | \`./test-earthsync.sh\` |
+| Stop services | \`.\stop-earthsync.ps1\` | \`./stop-earthsync.sh\` |
+
+The scripts build and run local services; they do not deploy the backend to the public website. Private databases, photos, credentials and local runtime state should not be committed.
+
+For prerequisites, logs, testing, missing-source behavior, and known limitations, see [FINAL_LOCAL.md](docs/release/FINAL_LOCAL.md).
+
+## 🎬 Demo and deployment notes
+
+- **Android APK:** simulated/demo data; **not** a live-data feed.
+- **Public web app:** [earth-sync-rose.vercel.app](https://earth-sync-rose.vercel.app/). Feature and backend availability at this public URL must be checked independently; the link alone is not proof of live NASA integration.
+- **Full local stack:** use the launcher above for the backend and available real-time provider integrations. Sources may be delayed, missing, unauthorized or unavailable.
+- **Satellite imagery and AI:** vegetation access is conditional; ordinary field photos do not automatically measure soil chemistry. Optional vision functionality requires separate configuration and consent.
+
+Use the [five-minute judging walkthrough](docs/ux/SUBMISSION_HANDOFF.md) to demonstrate the farmer journey. Be clear when a screenshot is illustrative rather than a real observation.
+
+## 📚 Documentation
+
+- [Final local setup and demonstration](docs/release/FINAL_LOCAL.md)
+- [Farmer experience and submission handoff](docs/ux/SUBMISSION_HANDOFF.md)
+- [Real-time integration and sources](docs/realtime/README.md)
+- [Real-time verification and unresolved gates](docs/realtime/VERIFICATION.md)
+- [Feature coverage and scientific limitations](docs/release/COVERAGE.md)
+- [Data provenance, privacy and licensing](docs/release/PROVENANCE.md)
+- [Release and hosting limitations](docs/release/HOSTING.md)
+
+## 🤝 Team
+
+**Cosmic Chaos** — Hein Lin, Yan Nan Aung, Htoo Htoo Aung and Amara Cho.
+
+Built for the NASA Space Apps Challenge 2026. Thanks to the public Earth-observation, agricultural and open-source communities whose datasets and tools help make this work possible.
+
+---
+
+<div align="center">
+
+**EarthSync — turning complex Earth data into understandable field context.**
+
+</div>
