@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../app/ui_copy.dart';
@@ -91,7 +92,16 @@ class AppShell extends ConsumerWidget {
                   ),
                 ),
           body: Row(
+            // The nested Navigator blocks semantics painted before it. Paint
+            // the rail after the route while keeping it on the left.
+            textDirection: TextDirection.rtl,
             children: [
+              Expanded(
+                child: Semantics(
+                  sortKey: const OrdinalSortKey(1),
+                  child: FocusTraversalGroup(child: child),
+                ),
+              ),
               if (wide)
                 Container(
                   width: 224,
@@ -103,92 +113,105 @@ class AppShell extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  child: Material(
-                    color: Theme.of(context).colorScheme.surface,
-                    child: SafeArea(
-                      child: ListView(
-                        padding: const EdgeInsets.symmetric(vertical: 24),
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.fromLTRB(20, 8, 20, 32),
-                            child: Row(
-                              children: [
-                                Icon(Icons.eco, size: 28),
-                                SizedBox(width: 10),
-                                Expanded(
-                                  child: Text(
-                                    'EarthSync',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700,
+                  child: Semantics(
+                    container: true,
+                    explicitChildNodes: true,
+                    sortKey: const OrdinalSortKey(0),
+                    child: Material(
+                      color: Theme.of(context).colorScheme.surface,
+                      child: SafeArea(
+                        child: ListView(
+                          padding: const EdgeInsets.symmetric(vertical: 24),
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.fromLTRB(20, 8, 20, 32),
+                              child: Row(
+                                children: [
+                                  Icon(Icons.eco, size: 28),
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    child: Text(
+                                      'EarthSync',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          for (final (i, d) in destinations.indexed)
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 4,
-                              ),
-                              child: ListTile(
-                                selected: selected == i,
-                                selectedTileColor: Theme.of(
-                                  context,
-                                ).colorScheme.primaryContainer,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(14),
-                                ),
-                                leading: Icon(d.$3),
-                                title: Text(UiCopy.text(context, d.$1)),
-                                onTap: () => context.go(d.$2),
+                                ],
                               ),
                             ),
-                          const Divider(),
-                          for (final feature in features)
-                            ListTile(
-                              dense: true,
-                              leading: Icon(feature.$3),
-                              title: Text(feature.$1),
-                              selected: path == feature.$2,
-                              onTap: () => context.go(feature.$2),
-                            ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 48, 20, 20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Icon(Icons.public, size: 24),
-                                const SizedBox(height: 12),
-                                Text(
-                                  UiCopy.text(context, 'evidenceFirst'),
-                                  style: Theme.of(context).textTheme.titleSmall,
+                            for (final (i, d) in destinations.indexed)
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 4,
                                 ),
-                                const SizedBox(height: 16),
-                                TextButton.icon(
-                                  onPressed: () => context.push('/realtime'),
-                                  icon: const Icon(Icons.update),
-                                  label: const Text('Real-time EarthSync'),
-                                ),
-                                TextButton.icon(
-                                  onPressed: () => context.push('/sources'),
-                                  icon: const Icon(
-                                    Icons.menu_book_outlined,
-                                    size: 18,
+                                child: ListTile(
+                                  selected: selected == i,
+                                  selectedTileColor: Theme.of(
+                                    context,
+                                  ).colorScheme.primaryContainer,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14),
                                   ),
-                                  label: Text(UiCopy.text(context, 'sources')),
+                                  leading: Icon(d.$3),
+                                  title: Text(UiCopy.text(context, d.$1)),
+                                  onTap: () => context.go(d.$2),
                                 ),
-                              ],
+                              ),
+                            const Divider(),
+                            for (final feature in features)
+                              ListTile(
+                                dense: true,
+                                leading: Icon(feature.$3),
+                                title: Text(feature.$1),
+                                selected: path == feature.$2,
+                                onTap: () => context.go(feature.$2),
+                              ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                20,
+                                48,
+                                20,
+                                20,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Icon(Icons.public, size: 24),
+                                  const SizedBox(height: 12),
+                                  Text(
+                                    UiCopy.text(context, 'evidenceFirst'),
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.titleSmall,
+                                  ),
+                                  const SizedBox(height: 16),
+                                  TextButton.icon(
+                                    onPressed: () => context.push('/realtime'),
+                                    icon: const Icon(Icons.update),
+                                    label: const Text('Real-time EarthSync'),
+                                  ),
+                                  TextButton.icon(
+                                    onPressed: () => context.push('/sources'),
+                                    icon: const Icon(
+                                      Icons.menu_book_outlined,
+                                      size: 18,
+                                    ),
+                                    label: Text(
+                                      UiCopy.text(context, 'sources'),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              Expanded(child: FocusTraversalGroup(child: child)),
             ],
           ),
           bottomNavigationBar: wide

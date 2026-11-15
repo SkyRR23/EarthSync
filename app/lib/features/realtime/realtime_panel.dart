@@ -548,7 +548,9 @@ class _RealtimePanelState extends ConsumerState<RealtimePanel> {
         subtitle: Text(
           first == null
               ? 'Last successful check: ${source['last_success_at'] ?? 'Unknown'}'
-              : '${first['station_id']} · ${first['value']} ${first['unit']} · ${first['observed_at']}',
+              : id == 'iowa_station'
+              ? '${first['station_id']} · ${first['value']} ${first['unit']} · ${first['observed_at']}'
+              : '${first['variable']} · ${first['value']} ${first['unit']} · acquired ${data?['acquired_start'] ?? 'Unknown'}',
         ),
         children: contents,
       );

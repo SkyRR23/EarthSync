@@ -699,8 +699,15 @@ def create_app(
     def overlay_target(location_id=None, farm_id=None):
         if farm_id is not None:
             farm = store.farm(OWNER, farm_id)
-            location = {"lat": farm.confirmed_point.latitude, "lon": farm.confirmed_point.longitude}
-            polygon = farm.confirmed_polygon.model_dump(mode="json") if farm.confirmed_polygon else None
+            location = {
+                "lat": farm.confirmed_point.latitude,
+                "lon": farm.confirmed_point.longitude,
+            }
+            polygon = (
+                farm.confirmed_polygon.model_dump(mode="json")
+                if farm.confirmed_polygon
+                else None
+            )
             return location, polygon
         location = next((r for r in REFERENCES if r["id"] == location_id), None)
         if location is None:
@@ -713,14 +720,20 @@ def create_app(
             if lat is not None or lon is not None:
                 if lat is None or lon is None:
                     raise SourceError("BOTH_COORDINATES_REQUIRED")
-                result["pixel"] = inspect_pixel(result["data"], lat, lon) if result["data"] else {"status": "unavailable", "value": None}
+                result["pixel"] = (
+                    inspect_pixel(result["data"], lat, lon)
+                    if result["data"]
+                    else {"status": "unavailable", "value": None}
+                )
                 result.pop("data", None)
             return result
         except SourceError as exc:
             raise PlatformError(exc.code, 422) from None
 
     @app.get(PREFIX + "/realtime/{location_id}/ndvi-overlay")
-    def public_ndvi(location_id: str, lat: float | None = None, lon: float | None = None):
+    def public_ndvi(
+        location_id: str, lat: float | None = None, lon: float | None = None
+    ):
         return overlay_snapshot(overlay_target(location_id), lat, lon)
 
     @app.post(PREFIX + "/realtime/{location_id}/ndvi-overlay/refresh", status_code=202)

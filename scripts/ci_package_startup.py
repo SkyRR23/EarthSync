@@ -15,6 +15,7 @@ import sys
 import time
 import urllib.error
 import urllib.request
+from urllib.parse import urlsplit
 
 from package_release import verify
 
@@ -34,7 +35,9 @@ def main():
         or (private == root or root in private.parents or private in root.parents)
     ):
         parser.error("Use a fresh private destination outside the package")
-    for port in [8021, 8091]:
+    platform_port = urlsplit(manifest["platform_url"]).port
+    web_port = urlsplit(manifest["web_origin"]).port
+    for port in [platform_port, web_port]:
         with socket.socket() as probe:
             if probe.connect_ex(("127.0.0.1", port)) == 0:
                 parser.error(
@@ -94,6 +97,10 @@ def main():
                 str(source / "scripts/run_final_local.py"),
                 "--directory",
                 str(private / "platform"),
+                "--web-port",
+                str(web_port),
+                "--platform-port",
+                str(platform_port),
             ],
             env=env,
             cwd=source,

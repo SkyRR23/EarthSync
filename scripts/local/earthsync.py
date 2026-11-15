@@ -155,6 +155,18 @@ def runtime_source():
     )
 
 
+def web_source():
+    return source_hash(
+        [
+            *(ROOT / "app/lib").rglob("*.dart"),
+            *(ROOT / "app/web").rglob("*"),
+            *(ROOT / "app/assets").rglob("*"),
+            ROOT / "app/pubspec.yaml",
+            ROOT / "app/pubspec.lock",
+        ]
+    )
+
+
 def setup(ports, rebuild=False):
     if sys.version_info < (3, 12):
         raise RuntimeError("Python 3.12+ is required")
@@ -187,15 +199,7 @@ def setup(ports, rebuild=False):
         write(installed, {"sha256": lock_hash})
     command(["cargo", "build", "--locked", "--examples"], cwd=ROOT / "engine")
     command(["cargo", "build", "--release", "--locked"], cwd=ROOT / "app/rust")
-    web_key = source_hash(
-        [
-            *(ROOT / "app/lib").rglob("*.dart"),
-            *(ROOT / "app/web").rglob("*"),
-            *(ROOT / "app/assets").rglob("*"),
-            ROOT / "app/pubspec.yaml",
-            ROOT / "app/pubspec.lock",
-        ]
-    )
+    web_key = web_source()
     build = {
         "source": web_key,
         "platform_port": ports["platform"],
@@ -205,7 +209,15 @@ def setup(ports, rebuild=False):
     if (
         rebuild
         or read(RUNTIME / "web-build.json", {}) != build
-        or not (ROOT / "app/build/web/index.html").is_file()
+        or any(
+            not (ROOT / "app/build/web" / asset).is_file()
+            for asset in (
+                "index.html",
+                "main.dart.js",
+                "flutter_bootstrap.js",
+                "offline-assets.json",
+            )
+        )
     ):
         command([flutter, "pub", "get", "--enforce-lockfile"], cwd=ROOT / "app")
         command(
@@ -223,6 +235,10 @@ def setup(ports, rebuild=False):
             cwd=ROOT / "app",
         )
         command([PYTHON, ROOT / "scripts/finalize_offline.py", ROOT / "app/build/web"])
+        if web_source() != web_key:
+            raise RuntimeError(
+                "Flutter sources changed during the build. Run start-earthsync again to build the current source."
+            )
         write(RUNTIME / "web-build.json", build)
     for asset in (
         "server/earthsync/research/plant_health.json",
@@ -381,7 +397,8 @@ def supervise(instance, ports):
                 child.wait(timeout=10)
         for log in logs:
             log.close()
-        write(RUN, {**record, "status": "stopped"})
+        if (read(RUN) or {}).get("instance") == instance:
+            write(RUN, {**record, "status": "stopped"})
         stop_file.unlink(missing_ok=True)
 
 
@@ -391,6 +408,7 @@ def start(no_browser=False, rebuild=False):
         not rebuild
         and healthy(previous)
         and previous.get("runtime_source") == runtime_source()
+        and read(RUNTIME / "web-build.json", {}).get("source") == web_source()
     ):
         endpoint = urls(previous["ports"])["web"]
         print(f"\nEARTHSYNC READY: {endpoint}\nLogs: {RUNTIME}")
@@ -611,6 +629,8 @@ def main():
     parser.add_argument("--role", choices=["web", "platform", "research"])
     args = parser.parse_args()
     RUNTIME.mkdir(exist_ok=True)
+    if args.action in {"start", "test"} and not PYTHON.is_file():
+        setup(config(), args.rebuild)
     # Re-execute into the isolated environment for runtime dependencies.
     if (
         args.action not in {"setup", "serve", "worker"}
@@ -639,6 +659,7 @@ def main():
                 env=environment(),
             )
             command(["cargo", "test", "--locked"], cwd=ROOT / "engine")
+            command(["cargo", "test", "--locked"], cwd=ROOT / "app/rust")
             flutter = flutter_sdk()
             command([flutter, "analyze"], cwd=ROOT / "app")
             command([flutter, "test"], cwd=ROOT / "app")
@@ -677,7 +698,10 @@ def main():
         destination = STATE.with_name(
             STATE.name + "-reset-" + datetime.now().strftime("%Y%m%d-%H%M%S")
         )
-        if destination.exists():
+        if (
+            destination.exists()
+            or destination.resolve().parent != STATE.resolve().parent
+        ):
             raise RuntimeError("Reset archive already exists")
         STATE.rename(destination)
         print(f"Demo reset. Previous data preserved at {destination}")

@@ -190,6 +190,38 @@ def test_packager_rejects_a_web_build_for_another_backend(release):
         build(release)
 
 
+def test_packager_preserves_selected_free_loopback_ports(release):
+    source, sha, output, native = release
+    web = source / "app/build/web"
+    (web / "main.dart.js").write_text("console.log('SYNTHETIC http://127.0.0.1:8022')")
+    offline.finalize(web)
+    manifest, _ = package.build(
+        source,
+        sha,
+        output,
+        native,
+        native,
+        platform_url="http://127.0.0.1:8022",
+        web_origin="http://127.0.0.1:8092",
+    )
+    assert package.verify(unpack(release), sha) == manifest
+    assert manifest["platform_url"].endswith(":8022")
+
+
+@pytest.mark.parametrize(
+    "origin",
+    [
+        "https://example.com",
+        "http://0.0.0.0:8091",
+        "http://127.0.0.1:80",
+        "http://127.0.0.1:8091/private",
+        "http://127.0.0.1:8091?token=x",
+    ],
+)
+def test_release_port_selection_cannot_broaden_loopback_boundary(origin):
+    assert package.local_origin(origin) is False
+
+
 def test_runtime_snapshot_includes_every_7v_pinned_scientific_input():
     pins = json.loads(
         (ROOT / "data/crop-rule-candidates/v1/input-pins.json").read_text()

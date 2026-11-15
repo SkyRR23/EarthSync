@@ -5,14 +5,22 @@ SQLite and the native Rust v0.3 evidence engine. A farmer confirms a field,
 inspects dated environmental evidence, explores crop references, compares an
 existing declared rotation with alternatives, and retains reports and decisions.
 
-This branch is the independent **real-time local candidate**, based on the
-combined [PR #29](https://github.com/SkyRR23/EarthSync/pull/29) release. It adds
+This is the **final local real-time integration**, starting from PR #35 and
+combining the completed crop-intelligence PR #34 and multimodal RAG PR #36.
+The foundation is the combined [PR #29](https://github.com/SkyRR23/EarthSync/pull/29) release. It includes
 actual Iowa station observations, NWS forecasts/alerts, global model forecasts and
 authorized, quality-controlled NASA point/cell evidence with honest acquisition
-times and source delays. Main is not updated while release gates remain unmet.
+times and source delays, bounded QA-masked HLS-VI NDVI map overlays and private
+photo/report workflows. Historical Simulation PR #33 is excluded.
 There are **zero approved executable crop suitability rules**; all 60 candidates
 remain blocked. Exploration never ranks a “best crop”, predicts income or gives
 an irrigation prescription.
+
+Run `.\start-earthsync.ps1` from this source folder in PowerShell, or
+`./start-earthsync.sh` on Linux/macOS. The launcher builds missing components,
+starts all local services, checks readiness and opens the printed browser URL.
+Use `.\stop-earthsync.ps1` to stop and `.\test-earthsync.ps1` for actual HTTP smoke
+tests. [Final startup, migration and demo guide](docs/release/FINAL_LOCAL.md).
 
 - [Real-time implementation, coverage and measured evidence](docs/realtime/README.md)
 - [Real-time verification and remaining gates](docs/realtime/VERIFICATION.md)
@@ -30,8 +38,9 @@ Use a fresh checkout of the reviewed PR head with Python 3.12, Rust 1.99.0 and
 Flutter 3.44.0 / Dart 3.12.0. Keep private databases, tokens and photos outside
 Git and static assets. Follow the runbook to build both pinned runtime profiles
 and run them on loopback. No public deployment is claimed.
-Main also requires final local Windows acceptance and explicit user approval;
-green cloud CI does not authorize a merge.
+The final integration is gated on combined automated, scientific and runtime
+checks. The current user request authorizes its merge once those checks pass;
+older workstream-specific manual-acceptance notes remain historical context.
 
 The application connects farm maps and modeled soil pH, sparse regional GFS
 forecasts, NASA POWER historical climate and Rust FAO-56 reference ET0 to saved

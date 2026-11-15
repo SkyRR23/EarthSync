@@ -234,6 +234,12 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
                   label: const Text('Check NASA acquisition'),
                 ),
                 if (bounds != null)
+                  OutlinedButton.icon(
+                    onPressed: () => _inspect(_map.camera.center),
+                    icon: const Icon(Icons.my_location),
+                    label: const Text('Inspect map centre'),
+                  ),
+                if (bounds != null)
                   TextButton(
                     onPressed: () => _map.fitCamera(
                       CameraFit.bounds(
@@ -386,9 +392,17 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
                           ),
                         ],
                       ),
-                    const SimpleAttributionWidget(
-                      source: Text(
-                        '© OpenStreetMap contributors · NASA HLS-VI',
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: ColoredBox(
+                        color: Theme.of(context).colorScheme.surface,
+                        child: Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: Text(
+                            '© OpenStreetMap contributors · NASA HLS-VI',
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                        ),
                       ),
                     ),
                   ],

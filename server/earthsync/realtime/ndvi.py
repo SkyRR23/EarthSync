@@ -205,6 +205,8 @@ def render(raw, valid, grid):
 
 
 def hls_window(product, polygon, session, *, reject_empty_qa=False):
+    receipt_start = len(getattr(session, "receipts", []))
+    downloaded_start = session.downloaded
     if (
         product.get("product") not in {"HLSL30_VI", "HLSS30_VI"}
         or product.get("version") != "2.0"
@@ -286,8 +288,8 @@ def hls_window(product, polygon, session, *, reject_empty_qa=False):
         "bounds": bounds,
         "display_crs": "EPSG:3857",
         "display_resampling": "nearest; no temporal mosaic or gap filling",
-        "bytes_downloaded": session.downloaded,
-        "source_range_receipts": list(getattr(session, "receipts", [])),
+        "bytes_downloaded": session.downloaded - downloaded_start,
+        "source_range_receipts": list(getattr(session, "receipts", []))[receipt_start:],
         "limitations": "NDVI numerical scale only; no crop suitability, diagnosis, yield estimate or field mean. One acquisition, no temporal composite.",
     }
 
@@ -417,17 +419,27 @@ class NdviOverlays:
     def _extract(self, products, geom):
         session = AssetSession(self.cancel)
         best = None
+        rejected = []
         try:
             for product in products:
                 try:
                     result = hls_window(product, geom, session, reject_empty_qa=True)
                 except SourceError as error:
                     if error.code == "SCIENTIFIC_QA_REJECTION":
+                        rejected.append(
+                            {
+                                "granule_id": product["granule_id"],
+                                "acquired_at": product["acquired_start"],
+                                "reason": error.code,
+                            }
+                        )
                         continue
                     raise
                 result["checked_candidate_ids"] = [
                     [p["granule_id"], p.get("catalog_revision_at")] for p in products
                 ]
+                result["rejected_candidates"] = list(rejected)
+                result["total_bytes_downloaded"] = session.downloaded
                 if best is None or result["valid_pixels"] > best["valid_pixels"]:
                     best = result
                 if result["valid_pixels"]:

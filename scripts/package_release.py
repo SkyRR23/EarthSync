@@ -117,7 +117,21 @@ def web_files(root):
     return files, manifest["build_sha256"]
 
 
-def build(source, sha, output, v03, web_engine):
+def local_origin(value):
+    match = re.fullmatch(r"http://127\.0\.0\.1:([0-9]{4,5})", value or "")
+    return bool(match and 1024 <= int(match[1]) <= 65535)
+
+
+def build(
+    source,
+    sha,
+    output,
+    v03,
+    web_engine,
+    *,
+    platform_url="http://127.0.0.1:8021",
+    web_origin="http://127.0.0.1:8091",
+):
     source = source.absolute()
     output = output.absolute()
     if (
@@ -137,11 +151,17 @@ def build(source, sha, output, v03, web_engine):
         raise ValueError("Source HEAD must equal the explicit reviewed SHA")
     if git(source, "status", "--porcelain", "--untracked-files=no"):
         raise ValueError("Tracked source must be clean")
-    public_web, shell_hash = web_files(source / "app/build/web")
-    if b"http://127.0.0.1:8021" not in public_web["main.dart.js"]:
+    if (
+        not local_origin(platform_url)
+        or not local_origin(web_origin)
+        or platform_url == web_origin
+    ):
         raise ValueError(
-            "Build this local artifact with PLATFORM_URL=http://127.0.0.1:8021"
+            "Unexpected release scope: require two distinct loopback origins"
         )
+    public_web, shell_hash = web_files(source / "app/build/web")
+    if platform_url.encode() not in public_web["main.dart.js"]:
+        raise ValueError("Build this local artifact with PLATFORM_URL=" + platform_url)
     files = {}
     # git archive includes only this tree, never private archive refs/untracked files.
     snapshot = git(source, "archive", "--format=tar", sha, "--", *SOURCE_PATHS)
@@ -170,8 +190,8 @@ def build(source, sha, output, v03, web_engine):
         "system": platform.system(),
         "machine": platform.machine(),
         "python": "3.12",
-        "platform_url": "http://127.0.0.1:8021",
-        "web_origin": "http://127.0.0.1:8091",
+        "platform_url": platform_url,
+        "web_origin": web_origin,
         "offline_shell_sha256": shell_hash,
         "private_state_included": False,
         "hosted_deployment": False,
@@ -187,7 +207,9 @@ def build(source, sha, output, v03, web_engine):
                 info = zipfile.ZipInfo(name, (2026, 1, 1, 0, 0, 0))
                 info.compress_type = zipfile.ZIP_DEFLATED
                 info.external_attr = (
-                    0o100755 if "/target/debug/examples/" in name else 0o100644
+                    0o100755
+                    if "/target/debug/examples/" in name or name.endswith(".sh")
+                    else 0o100644
                 ) << 16
                 archive.writestr(info, data)
             archive.writestr("release.json", json.dumps(manifest, indent=2) + "\n")
@@ -222,8 +244,9 @@ def verify(directory, expected_sha):
     if (
         manifest.get("private_state_included") is not False
         or manifest.get("hosted_deployment") is not False
-        or manifest.get("platform_url") != "http://127.0.0.1:8021"
-        or manifest.get("web_origin") != "http://127.0.0.1:8091"
+        or not local_origin(manifest.get("platform_url"))
+        or not local_origin(manifest.get("web_origin"))
+        or manifest.get("platform_url") == manifest.get("web_origin")
     ):
         raise ValueError("Unexpected release scope")
     for name, recorded in manifest["files"].items():
@@ -254,13 +277,21 @@ def main():
     create.add_argument("--output", type=Path, required=True)
     create.add_argument("--v03", type=Path, required=True)
     create.add_argument("--web-engine", type=Path, required=True)
+    create.add_argument("--platform-url", default="http://127.0.0.1:8021")
+    create.add_argument("--web-origin", default="http://127.0.0.1:8091")
     check = sub.add_parser("verify")
     check.add_argument("--directory", type=Path, required=True)
     check.add_argument("--expected-sha", required=True)
     args = parser.parse_args()
     if args.command == "build":
         manifest, checksum = build(
-            args.source, args.sha, args.output, args.v03, args.web_engine
+            args.source,
+            args.sha,
+            args.output,
+            args.v03,
+            args.web_engine,
+            platform_url=args.platform_url,
+            web_origin=args.web_origin,
         )
         print(
             json.dumps(

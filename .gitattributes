@@ -17,3 +17,7 @@ docs/science-audit/VERIFICATION.md -text
 engine/src/v03/assess.rs -text
 engine/src/v03/types.rs -text
 engine/src/v03/validate.rs -text
+start-earthsync.sh text eol=lf
+stop-earthsync.sh text eol=lf
+test-earthsync.sh text eol=lf
+scripts/local/earthsync.sh text eol=lf
