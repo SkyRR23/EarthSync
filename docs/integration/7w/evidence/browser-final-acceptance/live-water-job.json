@@ -1,0 +1,1532 @@
+{
+  "id": "210a8493-036f-4833-b7a7-321837730c12",
+  "kind": "water",
+  "status": "succeeded",
+  "result": {
+    "cache_hit": true,
+    "contract_version": "power-fao56-inputs.v1",
+    "gaps": [],
+    "records": [
+      {
+        "data_type": "modeled",
+        "dataset": "POWER daily / MERRA2/POWER",
+        "dataset_version": "v2.10.3",
+        "id": "ev_cd8900975989d9c938e08ef647bb6ab41e42a248e75a04185ac1d3a01b638cfa",
+        "limitations": [
+          "Daily coverage is not proof of local scientific accuracy.",
+          "LST is solar-time swath, not civil farm calendar; no timezone conversion inferred.",
+          "No forecast, ET0, GDD or recommendation calculated by Python."
+        ],
+        "measurements": [
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-03",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 15.93,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 15.93,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-04",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 16.3,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 16.3,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-05",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 15.24,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 15.24,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-06",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 15.92,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 15.92,
+            "variable": "tmin"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-07",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 18.84,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 18.84,
+            "variable": "tmin"
+          }
+        ],
+        "missing_reasons": [],
+        "provider": "NASA POWER",
+        "quality_flags": [
+          "REGIONAL_MODEL_NOT_FIELD_OBSERVATION"
+        ],
+        "response_sha256": "c76b8b1592a7baad5af83638f7e6e0299d623fc387d05670fbbaa9c61289760c",
+        "review": "reviewed",
+        "schema_version": "earthsync.evidence.v1.0",
+        "source_identifier": "power-fao56-inputs.v1:T2M_MIN",
+        "source_metadata": {
+          "header": {
+            "api": {
+              "name": "POWER Daily API",
+              "version": "v2.10.3"
+            },
+            "end": "20240707",
+            "fill_value": -999.0,
+            "sources": [
+              "MERRA2",
+              "POWER"
+            ],
+            "start": "20240703",
+            "time_standard": "LST",
+            "title": "NASA/POWER Source Native Resolution Daily Data"
+          },
+          "http_headers": {
+            "content-type": "application/json"
+          },
+          "lineage": {
+            "attribution": "single-parameter header plus pinned NASA parameter catalog and methodology",
+            "provider_sources": [
+              "MERRA2",
+              "POWER"
+            ],
+            "source_review": "NASA-water-source-review.v1"
+          },
+          "messages": [],
+          "parameter": "T2M_MIN",
+          "parameters": {
+            "T2M_MIN": {
+              "longname": "Temperature at 2 Meters Minimum",
+              "units": "C"
+            }
+          },
+          "policy": "power-fao56-inputs.v1",
+          "review_scope": "Technical metadata and transport contract only; no agronomic applicability approval"
+        },
+        "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+        "spatial": {
+          "crs": "EPSG:4326",
+          "farm_id": null,
+          "original_crs": "EPSG:4326",
+          "original_geometry": {
+            "coordinates": [
+              -93.632,
+              42.031,
+              310.22
+            ],
+            "type": "Point"
+          },
+          "query_point": {
+            "latitude": 42.0308,
+            "longitude": -93.6319
+          },
+          "resolution_degrees": [
+            0.5,
+            0.625
+          ],
+          "resolution_m": null,
+          "role": "regional_context",
+          "support": "Native modeled grid context queried at point; not farm measurements or polygon average"
+        },
+        "temporal": {
+          "acquired_at": null,
+          "day_basis": "NASA_POWER_LST",
+          "end": "2024-07-07",
+          "issued_at": null,
+          "observed_at": null,
+          "retrieved_at": "2026-11-14T16:02:22.929641Z",
+          "start": "2024-07-03",
+          "unknown_reason": null
+        },
+        "usable_for_assessment": true
+      },
+      {
+        "data_type": "modeled",
+        "dataset": "POWER daily / MERRA2/POWER",
+        "dataset_version": "v2.10.3",
+        "id": "ev_5e4845b76fd616c1b449f4dd519cd0b81686d173ad9a3c95c1d1dad4019f643a",
+        "limitations": [
+          "Daily coverage is not proof of local scientific accuracy.",
+          "LST is solar-time swath, not civil farm calendar; no timezone conversion inferred.",
+          "No forecast, ET0, GDD or recommendation calculated by Python."
+        ],
+        "measurements": [
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-03",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 28.26,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 28.26,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-04",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 26.97,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 26.97,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-05",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 24.97,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 24.97,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-06",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 27.36,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 27.36,
+            "variable": "tmax"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-07",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 27.45,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 27.45,
+            "variable": "tmax"
+          }
+        ],
+        "missing_reasons": [],
+        "provider": "NASA POWER",
+        "quality_flags": [
+          "REGIONAL_MODEL_NOT_FIELD_OBSERVATION"
+        ],
+        "response_sha256": "3542479d0c60353853be54558c92be2b87e83db27a08200b39e8b4239a19ed87",
+        "review": "reviewed",
+        "schema_version": "earthsync.evidence.v1.0",
+        "source_identifier": "power-fao56-inputs.v1:T2M_MAX",
+        "source_metadata": {
+          "header": {
+            "api": {
+              "name": "POWER Daily API",
+              "version": "v2.10.3"
+            },
+            "end": "20240707",
+            "fill_value": -999.0,
+            "sources": [
+              "MERRA2",
+              "POWER"
+            ],
+            "start": "20240703",
+            "time_standard": "LST",
+            "title": "NASA/POWER Source Native Resolution Daily Data"
+          },
+          "http_headers": {
+            "content-type": "application/json"
+          },
+          "lineage": {
+            "attribution": "single-parameter header plus pinned NASA parameter catalog and methodology",
+            "provider_sources": [
+              "MERRA2",
+              "POWER"
+            ],
+            "source_review": "NASA-water-source-review.v1"
+          },
+          "messages": [],
+          "parameter": "T2M_MAX",
+          "parameters": {
+            "T2M_MAX": {
+              "longname": "Temperature at 2 Meters Maximum",
+              "units": "C"
+            }
+          },
+          "policy": "power-fao56-inputs.v1",
+          "review_scope": "Technical metadata and transport contract only; no agronomic applicability approval"
+        },
+        "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+        "spatial": {
+          "crs": "EPSG:4326",
+          "farm_id": null,
+          "original_crs": "EPSG:4326",
+          "original_geometry": {
+            "coordinates": [
+              -93.632,
+              42.031,
+              310.22
+            ],
+            "type": "Point"
+          },
+          "query_point": {
+            "latitude": 42.0308,
+            "longitude": -93.6319
+          },
+          "resolution_degrees": [
+            0.5,
+            0.625
+          ],
+          "resolution_m": null,
+          "role": "regional_context",
+          "support": "Native modeled grid context queried at point; not farm measurements or polygon average"
+        },
+        "temporal": {
+          "acquired_at": null,
+          "day_basis": "NASA_POWER_LST",
+          "end": "2024-07-07",
+          "issued_at": null,
+          "observed_at": null,
+          "retrieved_at": "2026-11-14T16:02:24.461287Z",
+          "start": "2024-07-03",
+          "unknown_reason": null
+        },
+        "usable_for_assessment": true
+      },
+      {
+        "data_type": "modeled",
+        "dataset": "POWER daily / MERRA2",
+        "dataset_version": "v2.10.3",
+        "id": "ev_40274550169a192e248f47c1409c07ee9eec45161a367bcedaa0738d872c660c",
+        "limitations": [
+          "Daily coverage is not proof of local scientific accuracy.",
+          "LST is solar-time swath, not civil farm calendar; no timezone conversion inferred.",
+          "No forecast, ET0, GDD or recommendation calculated by Python."
+        ],
+        "measurements": [
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-03",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.16,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.16,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-04",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 3.32,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 3.32,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-05",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.75,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.75,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-06",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 0.71,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 0.71,
+            "variable": "rainfall"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-07",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 23.74,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 23.74,
+            "variable": "rainfall"
+          }
+        ],
+        "missing_reasons": [],
+        "provider": "NASA POWER",
+        "quality_flags": [
+          "REGIONAL_MODEL_NOT_FIELD_OBSERVATION"
+        ],
+        "response_sha256": "8ad3acfe9a245742a7ea36fe30b0caa077c36a5eb11bb7a621a34f0679e5bec9",
+        "review": "reviewed",
+        "schema_version": "earthsync.evidence.v1.0",
+        "source_identifier": "power-fao56-inputs.v1:PRECTOTCORR",
+        "source_metadata": {
+          "header": {
+            "api": {
+              "name": "POWER Daily API",
+              "version": "v2.10.3"
+            },
+            "end": "20240707",
+            "fill_value": -999.0,
+            "sources": [
+              "MERRA2"
+            ],
+            "start": "20240703",
+            "time_standard": "LST",
+            "title": "NASA/POWER Source Native Resolution Daily Data"
+          },
+          "http_headers": {
+            "content-type": "application/json"
+          },
+          "lineage": {
+            "attribution": "single-parameter header plus pinned NASA parameter catalog and methodology",
+            "provider_sources": [
+              "MERRA2"
+            ],
+            "source_review": "NASA-water-source-review.v1"
+          },
+          "messages": [],
+          "parameter": "PRECTOTCORR",
+          "parameters": {
+            "PRECTOTCORR": {
+              "longname": "Precipitation Corrected",
+              "units": "mm/day"
+            }
+          },
+          "policy": "power-fao56-inputs.v1",
+          "review_scope": "Technical metadata and transport contract only; no agronomic applicability approval"
+        },
+        "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+        "spatial": {
+          "crs": "EPSG:4326",
+          "farm_id": null,
+          "original_crs": "EPSG:4326",
+          "original_geometry": {
+            "coordinates": [
+              -93.632,
+              42.031,
+              310.22
+            ],
+            "type": "Point"
+          },
+          "query_point": {
+            "latitude": 42.0308,
+            "longitude": -93.6319
+          },
+          "resolution_degrees": [
+            0.5,
+            0.625
+          ],
+          "resolution_m": null,
+          "role": "regional_context",
+          "support": "Native modeled grid context queried at point; not farm measurements or polygon average"
+        },
+        "temporal": {
+          "acquired_at": null,
+          "day_basis": "NASA_POWER_LST",
+          "end": "2024-07-07",
+          "issued_at": null,
+          "observed_at": null,
+          "retrieved_at": "2026-11-14T16:02:25.562711Z",
+          "start": "2024-07-03",
+          "unknown_reason": null
+        },
+        "usable_for_assessment": true
+      },
+      {
+        "data_type": "modeled",
+        "dataset": "POWER daily / MERRA2",
+        "dataset_version": "v2.10.3",
+        "id": "ev_5e2027a4bd96f74c5e54512adf64792b468cd7e2b4acec5039df70b7d4070dcf",
+        "limitations": [
+          "Daily coverage is not proof of local scientific accuracy.",
+          "LST is solar-time swath, not civil farm calendar; no timezone conversion inferred.",
+          "No forecast, ET0, GDD or recommendation calculated by Python."
+        ],
+        "measurements": [
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-03",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 17.14,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 17.14,
+            "variable": "dewpoint"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-04",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 17.77,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 17.77,
+            "variable": "dewpoint"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-05",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 15.76,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 15.76,
+            "variable": "dewpoint"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-06",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 17.21,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 17.21,
+            "variable": "dewpoint"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-07",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "C",
+            "original_value": 19.6,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "celsius",
+            "value": 19.6,
+            "variable": "dewpoint"
+          }
+        ],
+        "missing_reasons": [],
+        "provider": "NASA POWER",
+        "quality_flags": [
+          "REGIONAL_MODEL_NOT_FIELD_OBSERVATION"
+        ],
+        "response_sha256": "913e5177ed54c5b8132b7e3966cbe328785c2e8eb5db4611bb33e5a5f7fcd4d6",
+        "review": "reviewed",
+        "schema_version": "earthsync.evidence.v1.0",
+        "source_identifier": "power-fao56-inputs.v1:T2MDEW",
+        "source_metadata": {
+          "header": {
+            "api": {
+              "name": "POWER Daily API",
+              "version": "v2.10.3"
+            },
+            "end": "20240707",
+            "fill_value": -999.0,
+            "sources": [
+              "MERRA2"
+            ],
+            "start": "20240703",
+            "time_standard": "LST",
+            "title": "NASA/POWER Source Native Resolution Daily Data"
+          },
+          "http_headers": {
+            "content-type": "application/json"
+          },
+          "lineage": {
+            "attribution": "single-parameter header plus pinned NASA parameter catalog and methodology",
+            "provider_sources": [
+              "MERRA2"
+            ],
+            "source_review": "NASA-water-source-review.v1"
+          },
+          "messages": [],
+          "parameter": "T2MDEW",
+          "parameters": {
+            "T2MDEW": {
+              "longname": "Dew/Frost Point at 2 Meters",
+              "units": "C"
+            }
+          },
+          "policy": "power-fao56-inputs.v1",
+          "review_scope": "Technical metadata and transport contract only; no agronomic applicability approval"
+        },
+        "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+        "spatial": {
+          "crs": "EPSG:4326",
+          "farm_id": null,
+          "original_crs": "EPSG:4326",
+          "original_geometry": {
+            "coordinates": [
+              -93.632,
+              42.031,
+              310.22
+            ],
+            "type": "Point"
+          },
+          "query_point": {
+            "latitude": 42.0308,
+            "longitude": -93.6319
+          },
+          "resolution_degrees": [
+            0.5,
+            0.625
+          ],
+          "resolution_m": null,
+          "role": "regional_context",
+          "support": "Native modeled grid context queried at point; not farm measurements or polygon average"
+        },
+        "temporal": {
+          "acquired_at": null,
+          "day_basis": "NASA_POWER_LST",
+          "end": "2024-07-07",
+          "issued_at": null,
+          "observed_at": null,
+          "retrieved_at": "2026-11-14T16:02:26.597205Z",
+          "start": "2024-07-03",
+          "unknown_reason": null
+        },
+        "usable_for_assessment": true
+      },
+      {
+        "data_type": "modeled",
+        "dataset": "POWER daily / MERRA2/POWER",
+        "dataset_version": "v2.10.3",
+        "id": "ev_8fa93a2ac2b21cf72573aeec0188d6c38307b4c6e1e930ff34a0f3ee18777700",
+        "limitations": [
+          "Daily coverage is not proof of local scientific accuracy.",
+          "LST is solar-time swath, not civil farm calendar; no timezone conversion inferred.",
+          "No forecast, ET0, GDD or recommendation calculated by Python."
+        ],
+        "measurements": [
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-03",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "m/s",
+            "original_value": 2.0,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "m_per_s",
+            "value": 2.0,
+            "variable": "wind_2m"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-04",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "m/s",
+            "original_value": 2.2,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "m_per_s",
+            "value": 2.2,
+            "variable": "wind_2m"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-05",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "m/s",
+            "original_value": 3.41,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "m_per_s",
+            "value": 3.41,
+            "variable": "wind_2m"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-06",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "m/s",
+            "original_value": 1.23,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "m_per_s",
+            "value": 1.23,
+            "variable": "wind_2m"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-07",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "m/s",
+            "original_value": 1.73,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "m_per_s",
+            "value": 1.73,
+            "variable": "wind_2m"
+          }
+        ],
+        "missing_reasons": [],
+        "provider": "NASA POWER",
+        "quality_flags": [
+          "REGIONAL_MODEL_NOT_FIELD_OBSERVATION"
+        ],
+        "response_sha256": "82786bd450705ae9d4683e754afeed250afe022dc1b6c3420ef42567366475aa",
+        "review": "reviewed",
+        "schema_version": "earthsync.evidence.v1.0",
+        "source_identifier": "power-fao56-inputs.v1:WS2M",
+        "source_metadata": {
+          "header": {
+            "api": {
+              "name": "POWER Daily API",
+              "version": "v2.10.3"
+            },
+            "end": "20240707",
+            "fill_value": -999.0,
+            "sources": [
+              "MERRA2",
+              "POWER"
+            ],
+            "start": "20240703",
+            "time_standard": "LST",
+            "title": "NASA/POWER Source Native Resolution Daily Data"
+          },
+          "http_headers": {
+            "content-type": "application/json"
+          },
+          "lineage": {
+            "attribution": "single-parameter header plus pinned NASA parameter catalog and methodology",
+            "provider_sources": [
+              "MERRA2",
+              "POWER"
+            ],
+            "source_review": "NASA-water-source-review.v1"
+          },
+          "messages": [],
+          "parameter": "WS2M",
+          "parameters": {
+            "WS2M": {
+              "longname": "Wind Speed at 2 Meters",
+              "units": "m/s"
+            }
+          },
+          "policy": "power-fao56-inputs.v1",
+          "review_scope": "Technical metadata and transport contract only; no agronomic applicability approval"
+        },
+        "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+        "spatial": {
+          "crs": "EPSG:4326",
+          "farm_id": null,
+          "original_crs": "EPSG:4326",
+          "original_geometry": {
+            "coordinates": [
+              -93.632,
+              42.031,
+              310.22
+            ],
+            "type": "Point"
+          },
+          "query_point": {
+            "latitude": 42.0308,
+            "longitude": -93.6319
+          },
+          "resolution_degrees": [
+            0.5,
+            0.625
+          ],
+          "resolution_m": null,
+          "role": "regional_context",
+          "support": "Native modeled grid context queried at point; not farm measurements or polygon average"
+        },
+        "temporal": {
+          "acquired_at": null,
+          "day_basis": "NASA_POWER_LST",
+          "end": "2024-07-07",
+          "issued_at": null,
+          "observed_at": null,
+          "retrieved_at": "2026-11-14T16:02:28.361355Z",
+          "start": "2024-07-03",
+          "unknown_reason": null
+        },
+        "usable_for_assessment": true
+      },
+      {
+        "data_type": "modeled",
+        "dataset": "POWER daily / MERRA2",
+        "dataset_version": "v2.10.3",
+        "id": "ev_a2d1bc8ec6943127b008751a76a906b430561da0a190890080a205484744b575",
+        "limitations": [
+          "Daily coverage is not proof of local scientific accuracy.",
+          "LST is solar-time swath, not civil farm calendar; no timezone conversion inferred.",
+          "No forecast, ET0, GDD or recommendation calculated by Python."
+        ],
+        "measurements": [
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-03",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "kPa",
+            "original_value": 97.73,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "kPa",
+            "value": 97.73,
+            "variable": "pressure"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-04",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "kPa",
+            "original_value": 97.57,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "kPa",
+            "value": 97.57,
+            "variable": "pressure"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-05",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "kPa",
+            "original_value": 97.62,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "kPa",
+            "value": 97.62,
+            "variable": "pressure"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-06",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "kPa",
+            "original_value": 97.8,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "kPa",
+            "value": 97.8,
+            "variable": "pressure"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-07",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "kPa",
+            "original_value": 97.64,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "kPa",
+            "value": 97.64,
+            "variable": "pressure"
+          }
+        ],
+        "missing_reasons": [],
+        "provider": "NASA POWER",
+        "quality_flags": [
+          "REGIONAL_MODEL_NOT_FIELD_OBSERVATION"
+        ],
+        "response_sha256": "5ae3d1f57e21b707a117d2668fa57ba7e8cb57fb911392672280121509af9379",
+        "review": "reviewed",
+        "schema_version": "earthsync.evidence.v1.0",
+        "source_identifier": "power-fao56-inputs.v1:PS",
+        "source_metadata": {
+          "header": {
+            "api": {
+              "name": "POWER Daily API",
+              "version": "v2.10.3"
+            },
+            "end": "20240707",
+            "fill_value": -999.0,
+            "sources": [
+              "MERRA2"
+            ],
+            "start": "20240703",
+            "time_standard": "LST",
+            "title": "NASA/POWER Source Native Resolution Daily Data"
+          },
+          "http_headers": {
+            "content-type": "application/json"
+          },
+          "lineage": {
+            "attribution": "single-parameter header plus pinned NASA parameter catalog and methodology",
+            "provider_sources": [
+              "MERRA2"
+            ],
+            "source_review": "NASA-water-source-review.v1"
+          },
+          "messages": [],
+          "parameter": "PS",
+          "parameters": {
+            "PS": {
+              "longname": "Surface Pressure",
+              "units": "kPa"
+            }
+          },
+          "policy": "power-fao56-inputs.v1",
+          "review_scope": "Technical metadata and transport contract only; no agronomic applicability approval"
+        },
+        "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+        "spatial": {
+          "crs": "EPSG:4326",
+          "farm_id": null,
+          "original_crs": "EPSG:4326",
+          "original_geometry": {
+            "coordinates": [
+              -93.632,
+              42.031,
+              310.22
+            ],
+            "type": "Point"
+          },
+          "query_point": {
+            "latitude": 42.0308,
+            "longitude": -93.6319
+          },
+          "resolution_degrees": [
+            0.5,
+            0.625
+          ],
+          "resolution_m": null,
+          "role": "regional_context",
+          "support": "Native modeled grid context queried at point; not farm measurements or polygon average"
+        },
+        "temporal": {
+          "acquired_at": null,
+          "day_basis": "NASA_POWER_LST",
+          "end": "2024-07-07",
+          "issued_at": null,
+          "observed_at": null,
+          "retrieved_at": "2026-11-14T16:02:29.384384Z",
+          "start": "2024-07-03",
+          "unknown_reason": null
+        },
+        "usable_for_assessment": true
+      },
+      {
+        "data_type": "modeled",
+        "dataset": "POWER daily / SYN1DEG",
+        "dataset_version": "v2.10.3",
+        "id": "ev_fb15dfbe1adfedd1d1af3782da0e2b34009245209234e53389f8c10083cd3961",
+        "limitations": [
+          "Daily coverage is not proof of local scientific accuracy.",
+          "LST is solar-time swath, not civil farm calendar; no timezone conversion inferred.",
+          "No forecast, ET0, GDD or recommendation calculated by Python."
+        ],
+        "measurements": [
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-03",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "MJ/m^2/day",
+            "original_value": 25.81,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "MJ_per_m2_day",
+            "value": 25.81,
+            "variable": "solar_radiation"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-04",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "MJ/m^2/day",
+            "original_value": 22.74,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "MJ_per_m2_day",
+            "value": 22.74,
+            "variable": "solar_radiation"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-05",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "MJ/m^2/day",
+            "original_value": 21.91,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "MJ_per_m2_day",
+            "value": 21.91,
+            "variable": "solar_radiation"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-06",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "MJ/m^2/day",
+            "original_value": 26.05,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "MJ_per_m2_day",
+            "value": 26.05,
+            "variable": "solar_radiation"
+          },
+          {
+            "conversion": "identity; daily rate retained, no monthly interpolation",
+            "date": "2024-07-07",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "MJ/m^2/day",
+            "original_value": 22.17,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "MJ_per_m2_day",
+            "value": 22.17,
+            "variable": "solar_radiation"
+          }
+        ],
+        "missing_reasons": [],
+        "provider": "NASA POWER",
+        "quality_flags": [
+          "REGIONAL_MODEL_NOT_FIELD_OBSERVATION"
+        ],
+        "response_sha256": "df853de0ec937add9b0ceda383945f4e57bb8f55fecd99f7b5d1e6a82a4daa24",
+        "review": "reviewed",
+        "schema_version": "earthsync.evidence.v1.0",
+        "source_identifier": "power-fao56-inputs.v1:ALLSKY_SFC_SW_DWN",
+        "source_metadata": {
+          "header": {
+            "api": {
+              "name": "POWER Daily API",
+              "version": "v2.10.3"
+            },
+            "end": "20240707",
+            "fill_value": -999.0,
+            "sources": [
+              "SYN1DEG"
+            ],
+            "start": "20240703",
+            "time_standard": "LST",
+            "title": "NASA/POWER Source Native Resolution Daily Data"
+          },
+          "http_headers": {
+            "content-type": "application/json"
+          },
+          "lineage": {
+            "attribution": "single-parameter header plus pinned NASA parameter catalog and methodology",
+            "provider_sources": [
+              "SYN1DEG"
+            ],
+            "source_review": "NASA-water-source-review.v1"
+          },
+          "messages": [],
+          "parameter": "ALLSKY_SFC_SW_DWN",
+          "parameters": {
+            "ALLSKY_SFC_SW_DWN": {
+              "longname": "All Sky Surface Shortwave Downward Irradiance",
+              "units": "MJ/m^2/day"
+            }
+          },
+          "policy": "power-fao56-inputs.v1",
+          "review_scope": "Technical metadata and transport contract only; no agronomic applicability approval"
+        },
+        "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+        "spatial": {
+          "crs": "EPSG:4326",
+          "farm_id": null,
+          "original_crs": "EPSG:4326",
+          "original_geometry": {
+            "coordinates": [
+              -93.632,
+              42.031,
+              310.22
+            ],
+            "type": "Point"
+          },
+          "query_point": {
+            "latitude": 42.0308,
+            "longitude": -93.6319
+          },
+          "resolution_degrees": [
+            1.0,
+            1.0
+          ],
+          "resolution_m": null,
+          "role": "regional_context",
+          "support": "Native modeled grid context queried at point; not farm measurements or polygon average"
+        },
+        "temporal": {
+          "acquired_at": null,
+          "day_basis": "NASA_POWER_LST",
+          "end": "2024-07-07",
+          "issued_at": null,
+          "observed_at": null,
+          "retrieved_at": "2026-11-14T16:02:30.361186Z",
+          "start": "2024-07-03",
+          "unknown_reason": null
+        },
+        "usable_for_assessment": true
+      },
+      {
+        "data_type": "modeled",
+        "dataset": "Calculated FAO-56 reference-grass ET0",
+        "dataset_version": "fao56-daily-pm.v1",
+        "id": "ev_9f3f9d5c452a8681f1c7b57b7734edd14cb90373613bb67afc83c1fca3b23624",
+        "limitations": [
+          "Calculated historical reference-grass ET0 from regional modeled/satellite-derived inputs, not a field observation or forecast.",
+          "MERRA-2 meteorology (0.5 by 0.625 degrees) and SYN1deg radiation (1 degree) are distinct spatial supports, aligned only by requested point and NASA LST date.",
+          "NASA LST is a 15-degree solar-time swath, not the farmer's civil calendar. Provider elevation is model terrain, not surveyed field elevation.",
+          "Daily dewpoint is used in FAO-56 Eq.14; vapour pressure from mean dewpoint approximates mean daily vapour pressure. Below-freezing Dew/Frost Point phase conversion is unvalidated and withheld. No field accuracy or calibrated uncertainty interval is established.",
+          "FAO-56 daily reference grass: albedo 0.23, G=0; clear-sky Rs/Rso capped at 1. Polar night, negative cloud factor, negative ET0 and incompatible inputs are withheld.",
+          "ET0 is not ETc, effective rain, root-zone depletion, irrigation requirement, water stress or proof of water availability."
+        ],
+        "measurements": [
+          {
+            "conversion": "FAO-56 daily Penman\u2013Monteith; calculated once in compiled Rust",
+            "date": "2024-07-03",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 5.1165884030451645,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 5.1165884030451645,
+            "variable": "et0"
+          },
+          {
+            "conversion": "FAO-56 daily Penman\u2013Monteith; calculated once in compiled Rust",
+            "date": "2024-07-04",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 4.461158810990774,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 4.461158810990774,
+            "variable": "et0"
+          },
+          {
+            "conversion": "FAO-56 daily Penman\u2013Monteith; calculated once in compiled Rust",
+            "date": "2024-07-05",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 4.383031480061403,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 4.383031480061403,
+            "variable": "et0"
+          },
+          {
+            "conversion": "FAO-56 daily Penman\u2013Monteith; calculated once in compiled Rust",
+            "date": "2024-07-06",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 4.846836409623925,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 4.846836409623925,
+            "variable": "et0"
+          },
+          {
+            "conversion": "FAO-56 daily Penman\u2013Monteith; calculated once in compiled Rust",
+            "date": "2024-07-07",
+            "depth": null,
+            "missing_reason": null,
+            "original_unit": "mm/day",
+            "original_value": 4.386068326730708,
+            "quality": "usable",
+            "statistic": "daily",
+            "unit": "mm_per_day",
+            "value": 4.386068326730708,
+            "variable": "et0"
+          }
+        ],
+        "missing_reasons": [],
+        "provider": "EarthSync Rust / NASA POWER",
+        "quality_flags": [
+          "DERIVED_REGIONAL_REFERENCE_ET0"
+        ],
+        "response_sha256": "0490f3b7395ca7d8b178375f2b3dd359174a1019416b4a266c68c39297115072",
+        "review": "reviewed",
+        "schema_version": "earthsync.evidence.v1.0",
+        "source_identifier": "fao56-daily-pm.v1",
+        "source_metadata": {
+          "calculation": {
+            "day_basis": "NASA_POWER_LST",
+            "days": [
+              {
+                "date": {
+                  "day": 3,
+                  "month": 7,
+                  "year": 2024
+                },
+                "et0_mm": 5.1165884030451645,
+                "intermediate": {
+                  "aerodynamic_term_mm": 1.2703089104430252,
+                  "day_of_year": 185.0,
+                  "declination_rad": 0.3987971126914351,
+                  "delta_kpa_c": 0.1619618466269262,
+                  "denominator": 0.2711458026269262,
+                  "ea_kpa": 1.9549879848189866,
+                  "es_kpa": 2.823852442636311,
+                  "g_mj_m2_day": 0.0,
+                  "gamma_kpa_c": 0.06499045,
+                  "inverse_distance": 0.9670305542016264,
+                  "ra_mj_m2_day": 41.539946602561685,
+                  "radiation_term_mm": 3.8462794926021395,
+                  "rn_mj_m2_day": 15.782319910960165,
+                  "rnl_mj_m2_day": 4.091380089039835,
+                  "rns_mj_m2_day": 19.8737,
+                  "rs_rso_raw": 0.8216424532288819,
+                  "rs_rso_used": 0.8216424532288819,
+                  "rso_mj_m2_day": 31.412690396622196,
+                  "sunset_angle_rad": 1.9603969941762847,
+                  "tmean_c": 22.095,
+                  "vpd_kpa": 0.8688644578173246
+                },
+                "rainfall_mm": 0.16
+              },
+              {
+                "date": {
+                  "day": 4,
+                  "month": 7,
+                  "year": 2024
+                },
+                "et0_mm": 4.461158810990774,
+                "intermediate": {
+                  "aerodynamic_term_mm": 1.079280349057392,
+                  "day_of_year": 186.0,
+                  "declination_rad": 0.3971753171117292,
+                  "delta_kpa_c": 0.15803929183523796,
+                  "denominator": 0.27145661123523795,
+                  "ea_kpa": 2.034328884901337,
+                  "es_kpa": 2.7062462857140104,
+                  "g_mj_m2_day": 0.0,
+                  "gamma_kpa_c": 0.06488405,
+                  "inverse_distance": 0.9670598773624287,
+                  "ra_mj_m2_day": 41.485618407743615,
+                  "radiation_term_mm": 3.381878461933382,
+                  "rn_mj_m2_day": 14.237481770234602,
+                  "rnl_mj_m2_day": 3.2723182297653963,
+                  "rns_mj_m2_day": 17.5098,
+                  "rs_rso_raw": 0.7248592611767941,
+                  "rs_rso_used": 0.7248592611767941,
+                  "rso_mj_m2_day": 31.371607176656717,
+                  "sunset_angle_rad": 1.958538106322409,
+                  "tmean_c": 21.634999999999998,
+                  "vpd_kpa": 0.6719174008126734
+                },
+                "rainfall_mm": 3.32
+              },
+              {
+                "date": {
+                  "day": 5,
+                  "month": 7,
+                  "year": 2024
+                },
+                "et0_mm": 4.383031480061403,
+                "intermediate": {
+                  "aerodynamic_term_mm": 1.5614204076064897,
+                  "day_of_year": 187.0,
+                  "declination_rad": 0.3954358299138177,
+                  "delta_kpa_c": 0.1455648182175625,
+                  "denominator": 0.2857472358375625,
+                  "ea_kpa": 1.79059959104506,
+                  "es_kpa": 2.446998392175014,
+                  "g_mj_m2_day": 0.0,
+                  "gamma_kpa_c": 0.0649173,
+                  "inverse_distance": 0.9670989613924745,
+                  "ra_mj_m2_day": 41.42763796227027,
+                  "radiation_term_mm": 2.8216110724549135,
+                  "rn_mj_m2_day": 13.575711602384315,
+                  "rnl_mj_m2_day": 3.2949883976156844,
+                  "rns_mj_m2_day": 16.8707,
+                  "rs_rso_raw": 0.6993796723811406,
+                  "rs_rso_used": 0.6993796723811406,
+                  "rso_mj_m2_day": 31.32776210867581,
+                  "sunset_angle_rad": 1.956548694015415,
+                  "tmean_c": 20.105,
+                  "vpd_kpa": 0.656398801129954
+                },
+                "rainfall_mm": 0.75
+              },
+              {
+                "date": {
+                  "day": 6,
+                  "month": 7,
+                  "year": 2024
+                },
+                "et0_mm": 4.846836409623925,
+                "intermediate": {
+                  "aerodynamic_term_mm": 0.7433633971561898,
+                  "day_of_year": 188.0,
+                  "declination_rad": 0.3935791665452986,
+                  "delta_kpa_c": 0.1580814927718008,
+                  "denominator": 0.2503169661718008,
+                  "ea_kpa": 1.9636676760301612,
+                  "es_kpa": 2.725176682678321,
+                  "g_mj_m2_day": 0.0,
+                  "gamma_kpa_c": 0.065037,
+                  "inverse_distance": 0.9671477947103223,
+                  "ra_mj_m2_day": 41.36601314115736,
+                  "radiation_term_mm": 4.1034730124677345,
+                  "rn_mj_m2_day": 15.925778701634938,
+                  "rnl_mj_m2_day": 4.132721298365064,
+                  "rns_mj_m2_day": 20.058500000000002,
+                  "rs_rso_raw": 0.8327695981909305,
+                  "rs_rso_used": 0.8327695981909305,
+                  "rso_mj_m2_day": 31.28116114780102,
+                  "sunset_angle_rad": 1.9544302222588137,
+                  "tmean_c": 21.64,
+                  "vpd_kpa": 0.7615090066481596
+                },
+                "rainfall_mm": 0.71
+              },
+              {
+                "date": {
+                  "day": 7,
+                  "month": 7,
+                  "year": 2024
+                },
+                "et0_mm": 4.386068326730708,
+                "intermediate": {
+                  "aerodynamic_term_mm": 0.792694593576231,
+                  "day_of_year": 189.0,
+                  "declination_rad": 0.391605877175598,
+                  "delta_kpa_c": 0.17122454880972565,
+                  "denominator": 0.27434732772972564,
+                  "ea_kpa": 2.281005772982453,
+                  "es_kpa": 2.9180550196254487,
+                  "g_mj_m2_day": 0.0,
+                  "gamma_kpa_c": 0.0649306,
+                  "inverse_distance": 0.9672063628456061,
+                  "ra_mj_m2_day": 41.30075218806453,
+                  "radiation_term_mm": 3.593373733154477,
+                  "rn_mj_m2_day": 14.111621833614493,
+                  "rnl_mj_m2_day": 2.9592781663855083,
+                  "rns_mj_m2_day": 17.0709,
+                  "rs_rso_raw": 0.7098531793466807,
+                  "rs_rso_used": 0.7098531793466807,
+                  "rso_mj_m2_day": 31.231810527924026,
+                  "sunset_angle_rad": 1.9521842355180328,
+                  "tmean_c": 23.145,
+                  "vpd_kpa": 0.6370492466429956
+                },
+                "rainfall_mm": 23.74
+              }
+            ],
+            "et0_partial_sum_mm": 23.193683430451973,
+            "et0_total_mm": 23.193683430451973,
+            "et0_usable_days": 5,
+            "expected_days": 5,
+            "input": {
+              "day_basis": "NASA_POWER_LST",
+              "days": [
+                {
+                  "date": {
+                    "day": 3,
+                    "month": 7,
+                    "year": 2024
+                  },
+                  "dewpoint_c": 17.14,
+                  "pressure_kpa": 97.73,
+                  "rainfall_mm": 0.16,
+                  "solar_mj_m2_day": 25.81,
+                  "tmax_c": 28.26,
+                  "tmin_c": 15.93,
+                  "wind_2m_m_s": 2.0
+                },
+                {
+                  "date": {
+                    "day": 4,
+                    "month": 7,
+                    "year": 2024
+                  },
+                  "dewpoint_c": 17.77,
+                  "pressure_kpa": 97.57,
+                  "rainfall_mm": 3.32,
+                  "solar_mj_m2_day": 22.74,
+                  "tmax_c": 26.97,
+                  "tmin_c": 16.3,
+                  "wind_2m_m_s": 2.2
+                },
+                {
+                  "date": {
+                    "day": 5,
+                    "month": 7,
+                    "year": 2024
+                  },
+                  "dewpoint_c": 15.76,
+                  "pressure_kpa": 97.62,
+                  "rainfall_mm": 0.75,
+                  "solar_mj_m2_day": 21.91,
+                  "tmax_c": 24.97,
+                  "tmin_c": 15.24,
+                  "wind_2m_m_s": 3.41
+                },
+                {
+                  "date": {
+                    "day": 6,
+                    "month": 7,
+                    "year": 2024
+                  },
+                  "dewpoint_c": 17.21,
+                  "pressure_kpa": 97.8,
+                  "rainfall_mm": 0.71,
+                  "solar_mj_m2_day": 26.05,
+                  "tmax_c": 27.36,
+                  "tmin_c": 15.92,
+                  "wind_2m_m_s": 1.23
+                },
+                {
+                  "date": {
+                    "day": 7,
+                    "month": 7,
+                    "year": 2024
+                  },
+                  "dewpoint_c": 19.6,
+                  "pressure_kpa": 97.64,
+                  "rainfall_mm": 23.74,
+                  "solar_mj_m2_day": 22.17,
+                  "tmax_c": 27.45,
+                  "tmin_c": 18.84,
+                  "wind_2m_m_s": 1.73
+                }
+              ],
+              "elevation_m": 310.22,
+              "latitude": 42.0308,
+              "method": "fao56-daily-pm.v1"
+            },
+            "method": "fao56-daily-pm.v1",
+            "rainfall_partial_sum_mm": 28.68,
+            "rainfall_total_mm": 28.68,
+            "rainfall_usable_days": 5
+          },
+          "engine_binary_sha256": "9706717bddb7f863220e8de475a76df87c433f3f63d26918628ecf9f55e6499b",
+          "hash_scope": "SHA-256 of canonical calculated result, not a provider HTTP response",
+          "parameter": "et0",
+          "parent_evidence_ids": [
+            "ev_cd8900975989d9c938e08ef647bb6ab41e42a248e75a04185ac1d3a01b638cfa",
+            "ev_5e4845b76fd616c1b449f4dd519cd0b81686d173ad9a3c95c1d1dad4019f643a",
+            "ev_40274550169a192e248f47c1409c07ee9eec45161a367bcedaa0738d872c660c",
+            "ev_5e2027a4bd96f74c5e54512adf64792b468cd7e2b4acec5039df70b7d4070dcf",
+            "ev_8fa93a2ac2b21cf72573aeec0188d6c38307b4c6e1e930ff34a0f3ee18777700",
+            "ev_a2d1bc8ec6943127b008751a76a906b430561da0a190890080a205484744b575",
+            "ev_fb15dfbe1adfedd1d1af3782da0e2b34009245209234e53389f8c10083cd3961"
+          ],
+          "parent_response_sha256": {
+            "ev_40274550169a192e248f47c1409c07ee9eec45161a367bcedaa0738d872c660c": "8ad3acfe9a245742a7ea36fe30b0caa077c36a5eb11bb7a621a34f0679e5bec9",
+            "ev_5e2027a4bd96f74c5e54512adf64792b468cd7e2b4acec5039df70b7d4070dcf": "913e5177ed54c5b8132b7e3966cbe328785c2e8eb5db4611bb33e5a5f7fcd4d6",
+            "ev_5e4845b76fd616c1b449f4dd519cd0b81686d173ad9a3c95c1d1dad4019f643a": "3542479d0c60353853be54558c92be2b87e83db27a08200b39e8b4239a19ed87",
+            "ev_8fa93a2ac2b21cf72573aeec0188d6c38307b4c6e1e930ff34a0f3ee18777700": "82786bd450705ae9d4683e754afeed250afe022dc1b6c3420ef42567366475aa",
+            "ev_a2d1bc8ec6943127b008751a76a906b430561da0a190890080a205484744b575": "5ae3d1f57e21b707a117d2668fa57ba7e8cb57fb911392672280121509af9379",
+            "ev_cd8900975989d9c938e08ef647bb6ab41e42a248e75a04185ac1d3a01b638cfa": "c76b8b1592a7baad5af83638f7e6e0299d623fc387d05670fbbaa9c61289760c",
+            "ev_fb15dfbe1adfedd1d1af3782da0e2b34009245209234e53389f8c10083cd3961": "df853de0ec937add9b0ceda383945f4e57bb8f55fecd99f7b5d1e6a82a4daa24"
+          },
+          "policy": "fao56-daily-pm.v1",
+          "review_scope": "Numerical method and provider semantics; no independent field/crop applicability approval"
+        },
+        "source_url": "https://www.fao.org/4/X0490E/x0490e08.htm",
+        "spatial": {
+          "crs": "EPSG:4326",
+          "farm_id": null,
+          "original_crs": "EPSG:4326",
+          "original_geometry": {
+            "coordinates": [
+              -93.632,
+              42.031,
+              310.22
+            ],
+            "type": "Point"
+          },
+          "query_point": {
+            "latitude": 42.0308,
+            "longitude": -93.6319
+          },
+          "resolution_degrees": null,
+          "resolution_m": null,
+          "role": "regional_context",
+          "support": "MERRA-2 0.5\u00b0 \u00d7 0.625\u00b0 meteorology and SYN1deg 1\u00b0 radiation at query point; not field measurements"
+        },
+        "temporal": {
+          "acquired_at": null,
+          "day_basis": "NASA_POWER_LST",
+          "end": "2024-07-07",
+          "issued_at": null,
+          "observed_at": null,
+          "retrieved_at": "2026-11-14T16:39:18.717678Z",
+          "start": "2024-07-03",
+          "unknown_reason": null
+        },
+        "usable_for_assessment": true
+      }
+    ]
+  },
+  "error": null,
+  "retryable": false
+}

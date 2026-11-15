@@ -1,0 +1,21 @@
+00:00 +0: loading /workspace/EarthSync-7w/app/test/native_bridge_test.dart
+00:00 +0: /workspace/EarthSync-7w/app/test/native_bridge_test.dart: (setUpAll)
+Initializing the actual native Rust bridge.
+Native bridge initialized; analyzing the captured NASA response.
+00:02 +0: /workspace/EarthSync-7w/app/test/native_bridge_test.dart: captured real NASA -> actual FRB -> Rust -> Flutter climate display
+00:03 +1: /workspace/EarthSync-7w/app/test/native_bridge_test.dart: missing historical months return unknown values and render safely
+00:03 +2: /workspace/EarthSync-7w/app/test/native_bridge_test.dart: Rust rejects mismatched field/environment coordinates through actual FRB
+00:03 +3: /workspace/EarthSync-7w/app/test/native_bridge_test.dart: live Python -> NASA -> actual FRB -> Rust -> Flutter
+00:03 +4: /workspace/EarthSync-7w/app/test/native_bridge_test.dart: synthetic crop warning stays visible with modeled climate
+00:04 +5: /workspace/EarthSync-7w/app/test/native_bridge_test.dart: (tearDownAll)
+00:04 +5: loading /workspace/EarthSync-7w/app/test/web_engine_test.dart
+00:08 +5: /workspace/EarthSync-7w/app/test/web_engine_test.dart: (setUpAll)
+00:10 +5: /workspace/EarthSync-7w/app/test/web_engine_test.dart: web reference options use actual Rust and cannot become verified advice
+00:10 +6: /workspace/EarthSync-7w/app/test/web_engine_test.dart: live failure never requests captured data or invokes Rust
+00:10 +7: /workspace/EarthSync-7w/app/test/web_engine_test.dart: phone results show Rust values, crop options and monthly coverage
+00:11 +8: /workspace/EarthSync-7w/app/test/web_engine_test.dart: no crop shows climate and an actionable empty recommendation state
+00:11 +9: /workspace/EarthSync-7w/app/test/web_engine_test.dart: live web HTTP to Python to Rust returns and displays twelve months
+00:12 +10: /workspace/EarthSync-7w/app/test/web_engine_test.dart: (tearDownAll)
+00:12 +10: loading /workspace/EarthSync-7w/app/test/ui/platform_live_test.dart
+00:13 +10: /workspace/EarthSync-7w/app/test/ui/platform_live_test.dart: actual local 7I job retains live daily evidence and quality
+00:19 +11: All tests passed!

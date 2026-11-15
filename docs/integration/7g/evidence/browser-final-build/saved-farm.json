@@ -1,0 +1,37 @@
+{
+  "name": "7G software-test farm; no ground truth",
+  "confirmed_point": {
+    "latitude": 42.0308,
+    "longitude": -93.6319
+  },
+  "confirmed_polygon": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -93.6370498413086,
+          42.03366885398904
+        ],
+        [
+          -93.62675015869141,
+          42.03366885398904
+        ],
+        [
+          -93.62675015869141,
+          42.02793101652557
+        ],
+        [
+          -93.63705,
+          42.027929
+        ],
+        [
+          -93.6370498413086,
+          42.03366885398904
+        ]
+      ]
+    ]
+  },
+  "confirmed_on": "2026-11-14",
+  "production_system": "rainfed",
+  "id": "aaa5b34e-35e0-4731-a107-23b13d05ba74"
+}

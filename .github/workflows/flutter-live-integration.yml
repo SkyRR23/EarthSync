@@ -2,7 +2,7 @@ name: Flutter live integration
 
 on:
   pull_request:
-    paths: ["app/**", "engine/**", ".github/workflows/flutter-live-integration.yml"]
+    paths: ["app/**", "engine/**", "ops/staging/**", "scripts/ci_staging_startup.py", "scripts/browser_crop_intelligence.py", "server/earthsync/research/**", ".github/workflows/flutter-live-integration.yml"]
   push:
     branches: [feat/flutter-live-nasa-integration, feat/web-demo]
   workflow_dispatch:
@@ -16,6 +16,55 @@ permissions:
   contents: read
 
 jobs:
+  windows-staging:
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: dtolnay/rust-toolchain@1.99.0
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.0'
+          channel: stable
+          cache: true
+      - name: Build actual Windows 7Q runtimes with private ACLs
+        shell: pwsh
+        run: |
+          $private = Join-Path $env:RUNNER_TEMP 'earthsync-7x-private'
+          New-Item -ItemType Directory -Path $private | Out-Null
+          & ./ops/staging/staging.ps1 -State (Join-Path $private 'platform') build --profile platform --source $env:GITHUB_WORKSPACE --sha $env:GITHUB_SHA
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          & ./ops/staging/staging.ps1 -State (Join-Path $private 'web') build --profile web --source $env:GITHUB_WORKSPACE --sha $env:GITHUB_SHA --flutter-version 3.44.0
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python scripts/ci_staging_startup.py --source $env:GITHUB_WORKSPACE --private $private
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Package and smoke the complete Windows artifact
+        shell: pwsh
+        run: |
+          $private = Join-Path $env:RUNNER_TEMP 'earthsync-7x-private'
+          $manifest = Get-Content (Join-Path $private 'platform/manifest.json') -Raw | ConvertFrom-Json
+          $out = Join-Path $env:RUNNER_TEMP 'earthsync-windows-release'
+          New-Item -ItemType Directory -Path $out | Out-Null
+          python -B scripts/package_release.py build --source $env:GITHUB_WORKSPACE --sha $env:GITHUB_SHA --output "$out/earthsync-windows.zip" --v03 $manifest.engine --web-engine "$env:GITHUB_WORKSPACE/engine/target/debug/examples/web_engine.exe"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Expand-Archive -LiteralPath "$out/earthsync-windows.zip" -DestinationPath "$out/unpacked"
+          & $manifest.python -B scripts/ci_package_startup.py --package "$out/unpacked" --expected-sha $env:GITHUB_SHA --private "$private/package-smoke" | Tee-Object -FilePath "$out/package-smoke.json"
+          exit $LASTEXITCODE
+      - name: Preserve verified Windows full-stack package
+        uses: actions/upload-artifact@v4
+        with:
+          name: earthsync-windows-full-stack-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/earthsync-windows-release/earthsync-windows.zip
+            ${{ runner.temp }}/earthsync-windows-release/earthsync-windows.zip.sha256
+            ${{ runner.temp }}/earthsync-windows-release/package-smoke.json
+          retention-days: 14
+          if-no-files-found: error
   verify-flutter-bridge:
     runs-on: ubuntu-latest
     timeout-minutes: 25
@@ -28,7 +77,7 @@ jobs:
           toolchain: "1.99.0"
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.50.0"
+          flutter-version: "3.44.0"
           channel: stable
           cache: true
       - name: Inspect Flutter toolchain
@@ -37,41 +86,76 @@ jobs:
         run: cargo build --release --locked --manifest-path app/rust/Cargo.toml
       - name: Resolve Flutter dependencies
         working-directory: app
-        run: flutter pub get
-      - name: Format changed Dart files
-        run: |
-          mapfile -t changed_dart < <(git diff --name-only origin/feature/flutter-app...HEAD -- '*.dart')
-          if [ "${#changed_dart[@]}" -gt 0 ]; then
-            dart format "${changed_dart[@]}"
-          fi
-          git diff --binary > flutter-tooling.patch
+        run: flutter pub get --enforce-lockfile
+      - name: Check repository Dart formatting without changing sources
+        working-directory: app
+        run: dart format --output=none --set-exit-if-changed lib test integration_test test_support example
       - name: Analyze Flutter
         working-directory: app
-        # Flutter 3.50 deprecates the existing Material import shim. Keep these
-        # informational migration notices visible without changing the app UI stack.
-        run: flutter analyze --no-fatal-infos
+        run: flutter analyze
       - name: Flutter widget, adapter and real native bridge tests (offline)
         working-directory: app
         timeout-minutes: 4
         run: flutter test --reporter expanded
       - name: Build browser demo
         working-directory: app
-        run: flutter build web --no-wasm-dry-run
+        run: flutter build web --no-web-resources-cdn --pwa-strategy=none --no-wasm-dry-run --dart-define=PLATFORM_URL=http://127.0.0.1:8021
+      - name: Prepare public offline shell
+        run: python scripts/finalize_offline.py app/build/web
+      - name: Preserve combined public Web artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: earthsync-local-web-${{ github.sha }}
+          path: |
+            app/build/web
+            app/pubspec.lock
+            docs/release/RUNBOOK.md
+            docs/release/PROVENANCE.md
+          if-no-files-found: error
       - uses: actions/setup-python@v5
-        if: github.event_name == 'workflow_dispatch' && inputs.live_nasa
         with:
           python-version: '3.12'
-      - name: Check out reviewed Python backend separately
-        if: github.event_name == 'workflow_dispatch' && inputs.live_nasa
-        uses: actions/checkout@v4
+      - name: Build and smoke the complete Linux artifact
+        run: |
+          python -m pip install -r server/requirements.lock
+          cargo build --locked --manifest-path engine/Cargo.toml --examples
+          mkdir "$RUNNER_TEMP/earthsync-linux-release"
+          python -B scripts/package_release.py build --source "$GITHUB_WORKSPACE" --sha "$GITHUB_SHA" --output "$RUNNER_TEMP/earthsync-linux-release/earthsync-linux.zip" --v03 engine/target/debug/examples/v03_demo --web-engine engine/target/debug/examples/web_engine
+          python -m zipfile -e "$RUNNER_TEMP/earthsync-linux-release/earthsync-linux.zip" "$RUNNER_TEMP/earthsync-linux-release/unpacked"
+          python -B scripts/ci_package_startup.py --package "$RUNNER_TEMP/earthsync-linux-release/unpacked" --expected-sha "$GITHUB_SHA" --private "$RUNNER_TEMP/earthsync-package-private" | tee "$RUNNER_TEMP/earthsync-linux-release/package-smoke.json"
+      - name: Preserve verified Linux full-stack package
+        uses: actions/upload-artifact@v4
         with:
-          ref: 4befe7d1e204c875436ab486c231edcbb944f317
-          path: backend-review
-      - name: Live NASA -> Python -> Flutter -> Rust -> Flutter smoke
+          name: earthsync-linux-full-stack-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/earthsync-linux-release/earthsync-linux.zip
+            ${{ runner.temp }}/earthsync-linux-release/earthsync-linux.zip.sha256
+            ${{ runner.temp }}/earthsync-linux-release/package-smoke.json
+          retention-days: 14
+          if-no-files-found: error
+      - name: Actual Chromium image evidence and local OCR workflow
+        env:
+          EARTHSYNC_VISION_ENABLED: '0'
+        run: |
+          python -m pip install playwright==1.58.0
+          python -m playwright install --with-deps chromium
+          sudo apt-get update
+          sudo apt-get install -y tesseract-ocr fonts-dejavu-core
+          python server/examples/make_synthetic_lab_report.py "$RUNNER_TEMP/multimodal-synthetic-report.png"
+          python scripts/run_final_local.py --directory "$RUNNER_TEMP/earthsync-multimodal-browser" > "$RUNNER_TEMP/multimodal-services.log" 2>&1 &
+          app_pid=$!
+          trap 'kill "$app_pid"' EXIT
+          for attempt in {1..40}; do
+            if curl -fsS http://127.0.0.1:8021/api/platform/v1/ready > /dev/null && curl -fsS http://127.0.0.1:8091/ > /dev/null; then break; fi
+            sleep 1
+          done
+          python scripts/browser_crop_intelligence.py --lab-image "$RUNNER_TEMP/multimodal-synthetic-report.png" --output "$RUNNER_TEMP/multimodal-browser-receipts"
+      - name: Live NASA through the unified backend and both Flutter execution paths
         if: github.event_name == 'workflow_dispatch' && inputs.live_nasa
         run: |
-          python -m pip install -r backend-review/server/requirements.lock
-          PYTHONPATH="$PWD/backend-review/server" python -m uvicorn earthsync.api:app --host 127.0.0.1 --port 8000 > "$RUNNER_TEMP/earthsync-backend.log" 2>&1 &
+          python -m pip install -r server/requirements.lock
+          cargo build --locked --manifest-path engine/Cargo.toml --example web_engine
+          PYTHONPATH="$PWD/server" python -m uvicorn earthsync.web_demo:app --host 127.0.0.1 --port 8000 --no-access-log > "$RUNNER_TEMP/earthsync-backend.log" 2>&1 &
           backend_pid=$!
           trap 'kill "$backend_pid"' EXIT
           for attempt in {1..20}; do
@@ -79,12 +163,10 @@ jobs:
             sleep 1
           done
           cd app
-          flutter test test/native_bridge_test.dart --dart-define=RUN_LIVE_NASA=true --dart-define=BACKEND_URL=http://127.0.0.1:8000
-      - name: Save Flutter tooling changes
+          flutter test test/native_bridge_test.dart test/web_engine_test.dart --dart-define=RUN_LIVE_NASA=true --dart-define=RUN_WEB_DEMO=true --dart-define=BACKEND_URL=http://127.0.0.1:8000 --dart-define=WEB_DEMO_URL=http://127.0.0.1:8000/ --reporter expanded
+      - name: Preserve tested Flutter dependency lock
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: flutter-tooling
-          path: |
-            flutter-tooling.patch
-            app/pubspec.lock
+          name: flutter-dependency-lock
+          path: app/pubspec.lock

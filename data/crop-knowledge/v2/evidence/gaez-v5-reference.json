@@ -1,0 +1,85 @@
+{
+  "provider": "FAO / IIASA",
+  "dataset": "GAEZ v5",
+  "package_id": "dc08a00f-db26-42bf-b59b-871a3bb69e36",
+  "metadata_modified": "2026-03-12T13:45:14.933169",
+  "license": "CC-BY-4.0",
+  "resources": [
+    {
+      "id": "d884210b-1c47-4ef8-8e17-6c486f38c833",
+      "name": "Land and Water Resources",
+      "format": "terriajs-group",
+      "url": ""
+    },
+    {
+      "id": "ec3c6d15-982b-4d93-b746-08b80ff7a3dd",
+      "name": "Agro-climatic Resources",
+      "format": "terriajs-group",
+      "url": ""
+    },
+    {
+      "id": "d15c9f34-1ae0-400e-835d-7a0134ed26db",
+      "name": "Agro-climatic Potential Yield",
+      "format": "terriajs-group",
+      "url": ""
+    },
+    {
+      "id": "31abf121-1644-4473-8c1b-bfec83112749",
+      "name": "Suitability and Attainable Yield",
+      "format": "terriajs-group",
+      "url": ""
+    },
+    {
+      "id": "3a3e4e60-5240-47c8-a770-f7d07d684f55",
+      "name": "Actual Yields and Production",
+      "format": "terriajs-group",
+      "url": ""
+    },
+    {
+      "id": "649e5e4a-bcb6-4171-9dec-9de90fd437f9",
+      "name": "Yield and Production Gaps",
+      "format": "terriajs-group",
+      "url": ""
+    },
+    {
+      "id": "02d847be-4c1e-48f5-b29e-e9d5c19e0c9a",
+      "name": "Crop Summary Data",
+      "format": "terriajs-group",
+      "url": ""
+    },
+    {
+      "id": "ef5765df-96aa-416d-bcd0-b9048463c077",
+      "name": "Tools",
+      "format": "terriajs-group",
+      "url": ""
+    },
+    {
+      "id": "fb303aa0-0466-40a7-bc1a-f38f00a380df",
+      "name": "Themes and Sub-themes table",
+      "format": "PNG",
+      "url": "https://data.apps.fao.org/catalog/dataset/dc08a00f-db26-42bf-b59b-871a3bb69e36/resource/fb303aa0-0466-40a7-bc1a-f38f00a380df/download/themes_table_gaez5.png"
+    },
+    {
+      "id": "ba954424-74ea-4358-8fbb-f1c1b25332c9",
+      "name": "Global Agro-Ecological Zones - GAEZ v5",
+      "format": "terriajs-group",
+      "url": ""
+    }
+  ],
+  "numerical_extract": null,
+  "review": "reference_only",
+  "usable_for_assessment": false,
+  "required_product_dimensions": [
+    "crop / land utilization type",
+    "water supply and input management",
+    "variable and original unit/scale",
+    "climate model and scenario",
+    "baseline/time period",
+    "native CRS, grid resolution and bounded geographic support",
+    "nodata and quality semantics"
+  ],
+  "limitations": [
+    "Master config is a reference-data discovery product; no numeric crop suitability or yield retrieved.",
+    "Future modeled suitability/yield extracts must retain all dimensions and cannot become local crop rules or farmer-yield predictions."
+  ]
+}

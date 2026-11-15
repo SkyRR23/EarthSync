@@ -1,0 +1,55 @@
+{
+  "sources": {
+    "7H": {
+      "pr": 20,
+      "branch": "integration/earthsync-milestone-7h",
+      "sha": "a7c33cc6b58703501bbba0ceba1bad1d6d42004b"
+    },
+    "7I": {
+      "pr": 19,
+      "branch": "feat/backend-evidence-platform-v1",
+      "sha": "b578a6df2764479ff9c9df006cc00e5ddb3ccfa3"
+    },
+    "7L": {
+      "pr": 21,
+      "branch": "feat/flutter-complete-ui-v1",
+      "sha": "bd8d245b0eae92aab353d852baf05adba5527384"
+    },
+    "7J": {
+      "pr": 22,
+      "branch": "fix/earthsync-science-audit-v1",
+      "sha": "7b27699f13c94461a9d3d6596c47debfcfb9fed6",
+      "initial_science_fix_sha": "d7e43399c9fd296032e64b1c1b5623dbeb70cca6"
+    },
+    "7Q": {
+      "pr": 23,
+      "branch": "ops/earthsync-staging-v1",
+      "sha": "ef9a67ced98c9af98d677a679c9ab1761dc8904a"
+    }
+  },
+  "7L_merge_base": "5addde741cb9a0efbea9492b2bf8f889d5862517",
+  "newer_7H_commits": [
+    "a7c33cc6b58703501bbba0ceba1bad1d6d42004b Record passing Windows matrix and final integration verification",
+    "27f67cb43694c09d40d31a488f2d8d3e89ebd64f Read assistant wire fixtures as UTF-8 in Windows tests",
+    "8eca7af24f8f1af5228734b9b08f508d6e0db94f Decode bundled assistant locales as UTF-8 on Windows",
+    "d051b36fdc02591e2c98ad3d18b55c2df0770b1d Verify complete browser and Android builds and bound CI fixture names",
+    "878d29baed922006778e39573c18233f6c513a12 Keep inactive device coordinates out of chat and bound CI test stalls",
+    "069c5b5bc2505128d4664b7234e144f57946f59e Apply API body limits with transparent ASGI middleware",
+    "8d88baab7669f4fa05c016148b8ff5ec6c185099 Pin Windows timezone data and preserve platform-specific privacy checks"
+  ],
+  "pubspec_lock_sha256": "b70d5c5d8201b2504cf59568e096bd9da24f1793980842fb26a997ef5c316d1f",
+  "flutter": "3.44.0",
+  "dart": "3.12.0",
+  "flutter_image_digest": "sha256:46691e311715845de03a3ba4753a475476936805b29431b1f00f1816981033f8",
+  "rust": "1.99.0",
+  "public_deployment": false,
+  "7I_scientific_precision_patch_sha256": "4e780d2b4f33fea4c5e66643d564bfa95042ff9ab27387aa8bc261b8d0576052",
+  "verified_application_and_operations_code_sha": "530c1e1d06c9202dfc1f5d06c659399409b7270f",
+  "ci_fail_closed_fix_sha": "ab745a027b7b66a6c63fb033b024b19053b12c55",
+  "draft_pr": "https://github.com/SkyRR23/EarthSync/pull/24",
+  "recommended_reproducible_source_sha": "31cb7fd159ebb62c818bc6eee07274e0dde86e9b",
+  "completed_archive_audit": {
+    "sha256": "241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788",
+    "disposition": "Verified 7J audit/inventory; research-only quarantine, never live rules"
+  }
+}

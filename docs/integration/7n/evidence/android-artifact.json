@@ -1,0 +1,20 @@
+{
+  "source_code_commit": "530c1e1d06c9202dfc1f5d06c659399409b7270f",
+  "application_trees_equal_to_apk_build_commit": "a53bad12ba5de22f213977a8d4f7b39f1492cf2d",
+  "apk_sha256": "5d88eceff46771565a635b73a410fc741e5f6ce1f570686ea834cf18b5128c11",
+  "size_bytes": 205311461,
+  "native_bridge_sha256": {
+    "lib/arm64-v8a/libfield_shift_bridge.so": "b330310a5210598a97a149bb79815327b242424b8001f6d64d1e000cc1228f9a",
+    "lib/armeabi-v7a/libfield_shift_bridge.so": "3d2a79b1d2d94a651ba18994fb71e35add493b7ca02bc72ba13f83a66522b11f",
+    "lib/x86_64/libfield_shift_bridge.so": "12dd94532ee0dfac25e43fd3de46e8bf6ea5378b15b01389bd4b98888648e7e5"
+  },
+  "flutter": "3.44.0",
+  "dart": "3.12.0",
+  "jdk": "21.0.9",
+  "gradle": "9.4.1",
+  "ndk": "28.2.13676358",
+  "backend_rust": "1.99.0",
+  "android_cargokit_stable_rust": "1.100.0",
+  "device_runtime_verified": false,
+  "android_build_passed": true
+}

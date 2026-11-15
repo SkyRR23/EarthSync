@@ -1,0 +1,10 @@
+{
+  "schema_version": "earthsync.public_verification_receipt.v1",
+  "raw_receipt_sha256": "5ae334461beb870c9a7e5b55ef5d05bc1054009c6df108cc78b3ed05c92a71e7",
+  "private_field_data_omitted": true,
+  "status": "PASS",
+  "classification": "SYNTHETIC records + CACHED REAL source lineage",
+  "originals_unchanged": true,
+  "restored_exact_rows_objects_and_separate_stores": true,
+  "private_rows_objects_tokens_and_identifiers_omitted": true
+}

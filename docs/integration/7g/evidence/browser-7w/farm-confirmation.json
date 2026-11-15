@@ -1,0 +1,15 @@
+{
+  "local_profile_id": "farm-1794679716290000",
+  "revision": "2026-11-14T18:08:36.290000+00:00",
+  "farm": {
+    "name": "7W software-test Iowa farm; no field ground truth",
+    "confirmed_point": {
+      "latitude": 42.0308,
+      "longitude": -93.6319
+    },
+    "confirmed_polygon": null,
+    "confirmed_on": "2026-11-14",
+    "production_system": "rainfed",
+    "id": "311b0217-8173-4464-9b77-5a787dbc857a"
+  }
+}

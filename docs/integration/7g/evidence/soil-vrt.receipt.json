@@ -1,0 +1,8 @@
+{
+  "url": "https://files.isric.org/soilgrids/latest/data/phh2o/phh2o_0-5cm_mean.vrt",
+  "status": 200,
+  "retrieved_at": "2026-11-14T17:31:38.678462+00:00",
+  "bytes": 3524139,
+  "sha256": "28bf9ceef0ee29a2d29926929b1760eddb6749b4f31ed212e8d536a226892f0d",
+  "content_type": "application/octet-stream"
+}

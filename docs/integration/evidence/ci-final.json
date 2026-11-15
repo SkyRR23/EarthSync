@@ -1,0 +1,86 @@
+{
+  "verified_at_utc": "2026-11-14T12:27:58.164190+00:00",
+  "tested_code_commit": "27f67cb43694c09d40d31a488f2d8d3e89ebd64f",
+  "backend_run_url": "https://github.com/SkyRR23/EarthSync/actions/runs/43594600243",
+  "backend_matrix": [
+    {
+      "name": "backend (ubuntu-latest, 3.12)",
+      "conclusion": "success",
+      "tests_passed": 270,
+      "tests_skipped": 0,
+      "job_url": "https://github.com/SkyRR23/EarthSync/actions/runs/43594600243/job/132446313548"
+    },
+    {
+      "name": "backend (windows-latest, 3.12)",
+      "conclusion": "success",
+      "tests_passed": 270,
+      "tests_skipped": 0,
+      "job_url": "https://github.com/SkyRR23/EarthSync/actions/runs/43594600243/job/132446313738"
+    },
+    {
+      "name": "backend (ubuntu-latest, 3.13)",
+      "conclusion": "success",
+      "tests_passed": 270,
+      "tests_skipped": 0,
+      "job_url": "https://github.com/SkyRR23/EarthSync/actions/runs/43594600243/job/132446313759"
+    },
+    {
+      "name": "backend (windows-latest, 3.13)",
+      "conclusion": "success",
+      "tests_passed": 270,
+      "tests_skipped": 0,
+      "job_url": "https://github.com/SkyRR23/EarthSync/actions/runs/43594600243/job/132446313786"
+    }
+  ],
+  "workflows": [
+    {
+      "conclusion": "success",
+      "databaseId": 43594600122,
+      "headSha": "27f67cb43694c09d40d31a488f2d8d3e89ebd64f",
+      "name": "Crop knowledge evidence",
+      "status": "completed",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43594600122"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 43594600072,
+      "headSha": "27f67cb43694c09d40d31a488f2d8d3e89ebd64f",
+      "name": "Rust engine CI",
+      "status": "completed",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43594600072"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 43594600148,
+      "headSha": "27f67cb43694c09d40d31a488f2d8d3e89ebd64f",
+      "name": "Photo evidence contracts",
+      "status": "completed",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43594600148"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 43594600075,
+      "headSha": "27f67cb43694c09d40d31a488f2d8d3e89ebd64f",
+      "name": "Farmer assistant contract and UI",
+      "status": "completed",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43594600075"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 43594600243,
+      "headSha": "27f67cb43694c09d40d31a488f2d8d3e89ebd64f",
+      "name": "Python backend CI",
+      "status": "completed",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43594600243"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 43594600070,
+      "headSha": "27f67cb43694c09d40d31a488f2d8d3e89ebd64f",
+      "name": "Flutter live integration",
+      "status": "completed",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43594600070"
+    }
+  ],
+  "live_provider_scope": "Remote default CI checks are offline; actual NASA and Chromium verification was run separately in the task environment."
+}

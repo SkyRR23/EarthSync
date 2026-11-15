@@ -1,6 +1,8 @@
 """NASA POWER daily point transport and conservative full-month normalization."""
 
 import asyncio
+import hashlib
+import json
 import math
 from calendar import monthrange
 from datetime import date, datetime, timezone
@@ -17,6 +19,7 @@ from .models import (
     Window,
     YearMonth,
 )
+from .source_validation import daily_keys, matches_point, unique_object
 
 ENDPOINT = "https://power.larc.nasa.gov/api/temporal/daily/point"
 DOCS = [
@@ -65,31 +68,47 @@ class PowerProvider:
                         content.extend(chunk)
                         if len(content) > 4_000_000:
                             raise ProviderError()
-                    import json
-
-                    payload = json.loads(content)
+                    payload = json.loads(content, object_pairs_hook=unique_object)
                     if not isinstance(payload, dict):
                         raise ProviderError()
-                    return payload, params, datetime.now(timezone.utc).isoformat()
-            except (httpx.TimeoutException, httpx.TransportError):
-                error = ProviderError("UPSTREAM_UNAVAILABLE", True)
+                    return (
+                        payload,
+                        params,
+                        datetime.now(timezone.utc).isoformat(),
+                        hashlib.sha256(content).hexdigest(),
+                    )
+            except httpx.TimeoutException:
+                error = ProviderError("UPSTREAM_TIMEOUT", True)
+            except httpx.TransportError:
+                error = ProviderError("UPSTREAM_NETWORK_UNAVAILABLE", True)
             except ProviderError as exc:
                 if not exc.retryable:
                     raise
                 error = exc
-            except (ValueError, UnicodeError) as exc:
+            except (ValueError, UnicodeError, RecursionError) as exc:
                 raise ProviderError() from exc
             if attempt == 2:
                 raise error
             await self.sleep(0.25 * 2**attempt)
 
     async def season(self, query):
+        # Bound the whole multi-year operation, including retries and body streaming.
+        # Individual HTTP timeouts alone reset for every read and annual request.
+        try:
+            async with asyncio.timeout(70):
+                return await self._season(query)
+        except TimeoutError:
+            raise ProviderError("UPSTREAM_TIMEOUT", True) from None
+
+    async def _season(self, query):
         daily = {"T2M": {}, "PRECTOTCORR": {}}
         sources = []
         for year in range(query.start_year, query.end_year + 1):
             start = max(query.start, date(year, 1, 1))
             end = min(query.end, date(year, 12, 31))
-            payload, params, retrieved = await self.fetch(query, start, end)
+            payload, params, retrieved, response_sha256 = await self.fetch(
+                query, start, end
+            )
             try:
                 units = {key: payload["parameters"][key]["units"] for key in daily}
                 # Fail closed rather than guessing a conversion after provider drift.
@@ -110,20 +129,26 @@ class PowerProvider:
                     or header.get("end") != params["end"]
                 ):
                     raise ProviderError("UPSTREAM_INTERVAL_CHANGED")
+                if not matches_point(
+                    payload.get("geometry"), query.latitude, query.longitude
+                ):
+                    raise ProviderError("UPSTREAM_GEOMETRY_CHANGED")
+                expected = daily_keys(start, end)
                 for key in daily:
                     values = payload["properties"]["parameter"][key]
                     if not isinstance(values, dict):
                         raise ProviderError()
+                    if set(values) - expected:
+                        raise ProviderError("UPSTREAM_INTERVAL_CHANGED")
                     # Retain invalid/missing daily values as unknown; never use fill as rain.
                     for day, value in values.items():
-                        if start.strftime("%Y%m%d") <= day <= end.strftime("%Y%m%d"):
-                            valid = (
-                                type(value) in (int, float)
-                                and math.isfinite(value)
-                                and value != fill
-                                and (key != "PRECTOTCORR" or value >= 0)
-                            )
-                            daily[key][day] = value if valid else None
+                        valid = (
+                            type(value) in (int, float)
+                            and math.isfinite(value)
+                            and value != fill
+                            and (key != "PRECTOTCORR" or value >= 0)
+                        )
+                        daily[key][day] = value if valid else None
                 sources.append(
                     {
                         "endpoint": ENDPOINT,
@@ -133,6 +158,7 @@ class PowerProvider:
                         "parameters": payload["parameters"],
                         "source_geometry": payload.get("geometry"),
                         "source_messages": payload.get("messages", []),
+                        "response_sha256": response_sha256,
                     }
                 )
             except (KeyError, TypeError, AttributeError) as exc:

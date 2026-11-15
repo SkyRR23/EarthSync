@@ -1,0 +1,19 @@
+test_calendar_identity_disagreements_are_retained_separately (test_scientific.ScientificSafeguards.test_calendar_identity_disagreements_are_retained_separately) ... ok
+test_calendar_profiles_do_not_inherit_ecological_requirements (test_scientific.ScientificSafeguards.test_calendar_profiles_do_not_inherit_ecological_requirements) ... ok
+test_ecocrop_life_history_not_myanmar_duration (test_scientific.ScientificSafeguards.test_ecocrop_life_history_not_myanmar_duration) ... ok
+test_erect_and_prostrate_groundnut_are_not_conflated (test_scientific.ScientificSafeguards.test_erect_and_prostrate_groundnut_are_not_conflated) ... ok
+test_irrigated_calendar_label_does_not_establish_flooded_management (test_scientific.ScientificSafeguards.test_irrigated_calendar_label_does_not_establish_flooded_management) ... ok
+test_kc_reference_has_no_executable_stage_offsets (test_scientific.ScientificSafeguards.test_kc_reference_has_no_executable_stage_offsets) ... ok
+test_no_independent_agronomic_acceptance_claimed (test_scientific.ScientificSafeguards.test_no_independent_agronomic_acceptance_claimed) ... ok
+test_original_annual_water_meaning_is_retained (test_scientific.ScientificSafeguards.test_original_annual_water_meaning_is_retained) ... ok
+test_rice_systems_are_distinct (test_scientific.ScientificSafeguards.test_rice_systems_are_distinct) ... ok
+test_rotation_dates_are_declared_software_examples (test_scientific.ScientificSafeguards.test_rotation_dates_are_declared_software_examples) ... ok
+test_soil_depth_is_not_sampling_depth (test_scientific.ScientificSafeguards.test_soil_depth_is_not_sampling_depth) ... ok
+test_taxonomy_never_creates_nitrogen_or_pest_credit (test_scientific.ScientificSafeguards.test_taxonomy_never_creates_nitrogen_or_pest_credit) ... ok
+test_temperature_keeps_average_statistic (test_scientific.ScientificSafeguards.test_temperature_keeps_average_statistic) ... ok
+test_unreviewed_global_species_have_no_requirements (test_scientific.ScientificSafeguards.test_unreviewed_global_species_have_no_requirements) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.371s
+
+OK

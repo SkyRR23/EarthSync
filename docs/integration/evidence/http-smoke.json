@@ -1,0 +1,108 @@
+{
+  "service": "real local unified uvicorn process on port 8099",
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "cache_control": "no-store"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/health",
+      "status": 200,
+      "content_type": "application/json",
+      "cache_control": "no-store"
+    },
+    {
+      "method": "GET",
+      "path": "/api/demo/capabilities",
+      "status": 200,
+      "content_type": "application/json",
+      "cache_control": "no-store"
+    },
+    {
+      "method": "GET",
+      "path": "/api/environmental/v1/health",
+      "status": 200,
+      "content_type": "application/json",
+      "cache_control": "no-store"
+    },
+    {
+      "method": "GET",
+      "path": "/api/catalog/v1/profiles",
+      "status": 200,
+      "content_type": "application/json",
+      "cache_control": "no-store"
+    },
+    {
+      "method": "GET",
+      "path": "/api/evidence/v1/photos",
+      "status": 401,
+      "content_type": "application/json",
+      "cache_control": "no-store"
+    },
+    {
+      "method": "GET",
+      "path": "/api/not-a-route",
+      "status": 404,
+      "content_type": "application/json",
+      "cache_control": "no-store"
+    },
+    {
+      "method": "POST",
+      "path": "/api/environmental/v1/context",
+      "status": 200,
+      "availability": [
+        "unavailable",
+        "unavailable",
+        "unavailable",
+        "unavailable",
+        "unavailable"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/satellite/v1/timeline",
+      "status": 200,
+      "providers": [
+        "unavailable",
+        "unavailable"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/assistant/v1/chat",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/engine/integration",
+      "status": 200,
+      "rust_status": "success",
+      "evidence": "explicit synthetic software test, not field advice"
+    },
+    {
+      "method": "POST",
+      "path": "/api/engine/v02",
+      "status": 200,
+      "rust_status": "success",
+      "evidence": "explicit synthetic software test, not field advice"
+    },
+    {
+      "method": "POST",
+      "path": "/api/engine/v03",
+      "status": 200,
+      "rust_status": "success",
+      "evidence": "explicit synthetic software test, not field advice"
+    },
+    {
+      "method": "GET",
+      "path": "/api/evidence/v1/photos",
+      "authorization": "private local workspace; token omitted",
+      "status": 200,
+      "photos_after_browser_cleanup": 0
+    }
+  ]
+}

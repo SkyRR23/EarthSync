@@ -1,0 +1,75 @@
+{
+  "sources": [
+    {
+      "id": "health.isu.yellow.2007",
+      "title": "Plant color differences based on management and weather",
+      "publisher": "Iowa State University Extension and Outreach",
+      "url": "https://crops.extension.iastate.edu/encyclopedia/plant-color-differences-based-management-and-weather",
+      "publication_date": "2007-06-11",
+      "retrieval_date": "2026-11-15",
+      "verification": "Official article checked with web retrieval; no archived article or image redistributed",
+      "rights_note": "Original factual paraphrase and attribution only; no license for photographs or full-text redistribution assumed."
+    },
+    {
+      "id": "health.isu.striping.2021",
+      "title": "What causes striped corn leaves?",
+      "publisher": "Iowa State University Extension and Outreach; Angie Rieck-Hinz and Antonio Mallarino",
+      "url": "https://crops.extension.iastate.edu/cropnews/2021/06/what-causes-striped-corn-leaves",
+      "publication_date": "2021-06-11",
+      "retrieval_date": "2026-11-15",
+      "verification": "Official article checked with web retrieval; no archived article or image redistributed",
+      "rights_note": "Original factual paraphrase and attribution only; no license for photographs or full-text redistribution assumed."
+    },
+    {
+      "id": "health.umn.compaction",
+      "title": "Soil compaction",
+      "publisher": "University of Minnesota Extension",
+      "url": "https://extension.umn.edu/natural-resources/conservation/agricultural-soil-and-water/soil-compaction",
+      "publication_date": null,
+      "retrieval_date": "2026-11-15",
+      "verification": "Official article checked with web retrieval; publication date not established",
+      "rights_note": "Original factual paraphrase and attribution only; no license for photographs or full-text redistribution assumed."
+    }
+  ],
+  "claims": [
+    {
+      "id": "health.maize.yellowing",
+      "source_id": "health.isu.yellow.2007",
+      "crop_id": "ecocrop.2175@1",
+      "image_kind": "crop",
+      "features": ["yellowing", "discoloration", "apparent_stress"],
+      "region": "US-IA",
+      "locator": "Discussion of cool wet weather, nutrient stress, herbicides and compaction",
+      "claim": "Maize leaf yellowing can accompany cool wet conditions, nutrient stress, herbicide injury or soil compaction; color alone does not distinguish these explanations.",
+      "possible_explanations": ["Cool or wet growing conditions", "Nutrient stress requiring testing", "Herbicide injury history", "Root restriction or compaction requiring field assessment"],
+      "follow_up": ["Compare affected and unaffected plants and older versus newer leaves.", "Record growth stage, recent weather and management history for a local extension specialist."],
+      "limitations": ["Iowa maize reference; applicability to another region or cultivar requires local review.", "No diagnosis, probability or treatment is established."]
+    },
+    {
+      "id": "health.maize.striping",
+      "source_id": "health.isu.striping.2021",
+      "crop_id": "ecocrop.2175@1",
+      "image_kind": "crop",
+      "features": ["yellowing", "discoloration"],
+      "region": "US-IA",
+      "locator": "Genetic Striping; Nutrient Deficiencies; concluding diagnostic caution",
+      "claim": "Maize striping has several potential explanations including hybrid traits and nutrient stress. Similar symptoms need field comparisons and soil or plant analysis to investigate.",
+      "possible_explanations": ["Hybrid-related striping, if stripes are actually present", "Nutrient stress requiring soil or plant analysis"],
+      "follow_up": ["Check whether the discoloration forms stripes and whether scattered or many plants are affected.", "Ask a local specialist about paired sampling of normal and abnormal areas."],
+      "limitations": ["The uploaded image has not established striping or a nutrient deficiency.", "Iowa maize reference, not a Myanmar diagnostic calibration."]
+    },
+    {
+      "id": "health.soil.surface",
+      "source_id": "health.umn.compaction",
+      "crop_id": null,
+      "image_kind": "soil",
+      "features": ["surface_cracking", "possible_crusting", "standing_water", "possible_compaction_surface_signs"],
+      "region": "US-MN",
+      "locator": "Natural causes of compaction; surface crusting; Effects on soil and crops",
+      "claim": "Surface crusts, cracks and water in wheel tracks are discussed as field clues in assessing soil physical conditions. Cracking and wetness have multiple causes and do not by themselves measure compaction.",
+      "possible_explanations": ["Surface crust formation", "Soil wetness and restricted infiltration requiring field assessment", "Shrinkage cracks during drying"],
+      "follow_up": ["Observe whether water persists after rain and compare wheel tracks with undisturbed areas.", "Record surface conditions and ask a local soil specialist to assess structure and infiltration."],
+      "limitations": ["Minnesota physical-soil reference; no local soil texture or chemistry is established.", "Photographs cannot measure compaction, infiltration rate or soil moisture percentage."]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "scope": "Reviewed source imported for pure offline reproductions only; main and network collector never run. Originals unchanged.",
+  "missing_january_2016": {
+    "normal_still_numeric": 9.7,
+    "fill_count": 0,
+    "expected_sample_count": 10,
+    "actual_samples": 9
+  },
+  "profiles_called_sourced_by_nonempty_numeric_test": [
+    "black_gram",
+    "mung_bean",
+    "groundnut",
+    "chickpea",
+    "pigeon_pea",
+    "green_manure_sunnhemp"
+  ],
+  "profiles_total": 12,
+  "note": "A filled numeric field is not accepted scientific provenance. No output written to original source directories."
+}

@@ -1,0 +1,111 @@
+{
+  "$defs": {
+    "Point": {
+      "additionalProperties": false,
+      "properties": {
+        "latitude": {
+          "maximum": 90,
+          "minimum": -90,
+          "title": "Latitude",
+          "type": "number"
+        },
+        "longitude": {
+          "maximum": 180,
+          "minimum": -180,
+          "title": "Longitude",
+          "type": "number"
+        }
+      },
+      "required": [
+        "latitude",
+        "longitude"
+      ],
+      "title": "Point",
+      "type": "object"
+    },
+    "Polygon": {
+      "additionalProperties": false,
+      "properties": {
+        "coordinates": {
+          "items": {
+            "items": {
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "array"
+          },
+          "maxItems": 1,
+          "minItems": 1,
+          "title": "Coordinates",
+          "type": "array"
+        },
+        "type": {
+          "const": "Polygon",
+          "default": "Polygon",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "coordinates"
+      ],
+      "title": "Polygon",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "confirmed_on": {
+      "format": "date",
+      "title": "Confirmed On",
+      "type": "string"
+    },
+    "confirmed_point": {
+      "$ref": "#/$defs/Point"
+    },
+    "confirmed_polygon": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Polygon"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "name": {
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "production_system": {
+      "enum": [
+        "dryland",
+        "rainfed",
+        "irrigated",
+        "flooded_lowland"
+      ],
+      "title": "Production System",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "confirmed_point",
+    "confirmed_on",
+    "production_system"
+  ],
+  "title": "FarmInput",
+  "type": "object"
+}

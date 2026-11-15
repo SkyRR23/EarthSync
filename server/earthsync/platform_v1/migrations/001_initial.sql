@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS schema_migrations (version INTEGER PRIMARY KEY, sha256 TEXT NOT NULL);
+CREATE TABLE farms (id TEXT PRIMARY KEY, owner TEXT NOT NULL, document TEXT NOT NULL, created REAL NOT NULL, UNIQUE(id,owner));
+CREATE TABLE evidence (id TEXT NOT NULL, owner TEXT NOT NULL, document TEXT NOT NULL, created REAL NOT NULL, PRIMARY KEY(id,owner));
+CREATE TABLE farm_evidence (farm_id TEXT NOT NULL, owner TEXT NOT NULL, evidence_id TEXT NOT NULL, PRIMARY KEY(farm_id,owner,evidence_id), FOREIGN KEY(farm_id,owner) REFERENCES farms(id,owner) ON DELETE CASCADE, FOREIGN KEY(evidence_id,owner) REFERENCES evidence(id,owner));
+CREATE TABLE decisions (id TEXT PRIMARY KEY, farm_id TEXT NOT NULL, owner TEXT NOT NULL, document TEXT NOT NULL, created REAL NOT NULL, FOREIGN KEY(farm_id,owner) REFERENCES farms(id,owner) ON DELETE CASCADE);
+CREATE TABLE history (id TEXT PRIMARY KEY, farm_id TEXT NOT NULL, owner TEXT NOT NULL, document TEXT NOT NULL, created REAL NOT NULL, FOREIGN KEY(farm_id,owner) REFERENCES farms(id,owner) ON DELETE CASCADE);
+CREATE TABLE artifacts (id TEXT PRIMARY KEY, farm_id TEXT NOT NULL, owner TEXT NOT NULL, kind TEXT NOT NULL, object_key TEXT NOT NULL, sha256 TEXT NOT NULL, metadata TEXT NOT NULL, FOREIGN KEY(farm_id,owner) REFERENCES farms(id,owner) ON DELETE CASCADE);
+CREATE TABLE jobs (id TEXT PRIMARY KEY, owner TEXT NOT NULL, cache_key TEXT NOT NULL, kind TEXT NOT NULL, status TEXT NOT NULL, request TEXT NOT NULL, result TEXT, error TEXT, retryable INTEGER NOT NULL DEFAULT 0, created REAL NOT NULL, updated REAL NOT NULL);
+CREATE INDEX jobs_owner_created ON jobs(owner,created);
+CREATE TABLE source_cache (cache_key TEXT PRIMARY KEY, document TEXT NOT NULL, expires REAL NOT NULL);
+CREATE TABLE audit (id TEXT PRIMARY KEY, owner TEXT NOT NULL, resource_id TEXT NOT NULL, event TEXT NOT NULL, version TEXT NOT NULL, created REAL NOT NULL);
+CREATE INDEX decisions_farm_owner ON decisions(farm_id,owner,created);

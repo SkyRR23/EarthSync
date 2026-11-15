@@ -1,0 +1,1 @@
+CREATE TABLE farm_links (owner TEXT NOT NULL, local_profile_id TEXT NOT NULL, revision TEXT NOT NULL, farm_id TEXT NOT NULL, PRIMARY KEY(owner,local_profile_id,revision), FOREIGN KEY(farm_id,owner) REFERENCES farms(id,owner));

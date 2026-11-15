@@ -1,0 +1,104 @@
+[
+  {
+    "profile_id": "maize.mm.calendar-0-sessions-0@1",
+    "source_locator": "/0/sessions/0",
+    "reason": "Maize vs sweet-corn labels conflict",
+    "disposition": "retain separately; independent identity review required; mapping blocked"
+  },
+  {
+    "profile_id": "maize.mm.calendar-1-sessions-0@1",
+    "source_locator": "/1/sessions/0",
+    "reason": "Maize vs sweet-corn labels conflict",
+    "disposition": "retain separately; independent identity review required; mapping blocked"
+  },
+  {
+    "profile_id": "maize.mm.calendar-1-sessions-1@1",
+    "source_locator": "/1/sessions/1",
+    "reason": "Maize vs sweet-corn labels conflict",
+    "disposition": "retain separately; independent identity review required; mapping blocked"
+  },
+  {
+    "profile_id": "maize.mm.calendar-2-sessions-0@1",
+    "source_locator": "/2/sessions/0",
+    "reason": "Maize vs sweet-corn labels conflict",
+    "disposition": "retain separately; independent identity review required; mapping blocked"
+  },
+  {
+    "profile_id": "maize.mm.calendar-3-sessions-0@1",
+    "source_locator": "/3/sessions/0",
+    "reason": "Maize vs sweet-corn labels conflict",
+    "disposition": "retain separately; independent identity review required; mapping blocked"
+  },
+  {
+    "profile_id": "maize.mm.calendar-4-sessions-0@1",
+    "source_locator": "/4/sessions/0",
+    "reason": "Maize vs sweet-corn labels conflict",
+    "disposition": "retain separately; independent identity review required; mapping blocked"
+  },
+  {
+    "profile_id": "mung_bean.mm.calendar-37-sessions-0@1",
+    "source_locator": "/37/sessions/0",
+    "reason": "0157 Green gram (Vigna aureus) and 0232 Mung bean/Penauk identity/duration conflicts; no automatic taxonomic merge",
+    "disposition": "retain separately; independent identity review required; mapping blocked"
+  },
+  {
+    "profile_id": "mung_bean.mm.calendar-38-sessions-0@1",
+    "source_locator": "/38/sessions/0",
+    "reason": "0157 Green gram (Vigna aureus) and 0232 Mung bean/Penauk identity/duration conflicts; no automatic taxonomic merge",
+    "disposition": "retain separately; independent identity review required; mapping blocked"
+  },
+  {
+    "profile_id": "mung_bean.mm.calendar-38-sessions-1@1",
+    "source_locator": "/38/sessions/1",
+    "reason": "0157 Green gram (Vigna aureus) and 0232 Mung bean/Penauk identity/duration conflicts; no automatic taxonomic merge",
+    "disposition": "retain separately; independent identity review required; mapping blocked"
+  },
+  {
+    "profile_id": "mung_bean.mm.calendar-38-sessions-2@1",
+    "source_locator": "/38/sessions/2",
+    "reason": "0157 Green gram (Vigna aureus) and 0232 Mung bean/Penauk identity/duration conflicts; no automatic taxonomic merge",
+    "disposition": "retain separately; independent identity review required; mapping blocked"
+  },
+  {
+    "profile_id": "mung_bean.mm.calendar-39-sessions-0@1",
+    "source_locator": "/39/sessions/0",
+    "reason": "0157 Green gram (Vigna aureus) and 0232 Mung bean/Penauk identity/duration conflicts; no automatic taxonomic merge",
+    "disposition": "retain separately; independent identity review required; mapping blocked"
+  },
+  {
+    "profile_id": "mung_bean.mm.calendar-40-sessions-0@1",
+    "source_locator": "/40/sessions/0",
+    "reason": "0157 Green gram (Vigna aureus) and 0232 Mung bean/Penauk identity/duration conflicts; no automatic taxonomic merge",
+    "disposition": "retain separately; independent identity review required; mapping blocked"
+  },
+  {
+    "profile_id": "mung_bean.mm.calendar-47-sessions-0@1",
+    "source_locator": "/47/sessions/0",
+    "reason": "0157 Green gram (Vigna aureus) and 0232 Mung bean/Penauk identity/duration conflicts; no automatic taxonomic merge",
+    "disposition": "retain separately; independent identity review required; mapping blocked"
+  },
+  {
+    "profile_id": "mung_bean.mm.calendar-48-sessions-0@1",
+    "source_locator": "/48/sessions/0",
+    "reason": "0157 Green gram (Vigna aureus) and 0232 Mung bean/Penauk identity/duration conflicts; no automatic taxonomic merge",
+    "disposition": "retain separately; independent identity review required; mapping blocked"
+  },
+  {
+    "profile_id": "mung_bean.mm.calendar-48-sessions-1@1",
+    "source_locator": "/48/sessions/1",
+    "reason": "0157 Green gram (Vigna aureus) and 0232 Mung bean/Penauk identity/duration conflicts; no automatic taxonomic merge",
+    "disposition": "retain separately; independent identity review required; mapping blocked"
+  },
+  {
+    "profile_id": "mung_bean.mm.calendar-49-sessions-0@1",
+    "source_locator": "/49/sessions/0",
+    "reason": "0157 Green gram (Vigna aureus) and 0232 Mung bean/Penauk identity/duration conflicts; no automatic taxonomic merge",
+    "disposition": "retain separately; independent identity review required; mapping blocked"
+  },
+  {
+    "profile_id": "mung_bean.mm.calendar-50-sessions-0@1",
+    "source_locator": "/50/sessions/0",
+    "reason": "0157 Green gram (Vigna aureus) and 0232 Mung bean/Penauk identity/duration conflicts; no automatic taxonomic merge",
+    "disposition": "retain separately; independent identity review required; mapping blocked"
+  }
+]

@@ -1,0 +1,414 @@
+{
+  "purpose": "live connectivity and metadata probe; not scientific validation",
+  "checked_at_utc": "2026-11-14T09:20:52.501089+00:00",
+  "result": {
+    "schema_version": "environmental-context/1.0-proposal",
+    "as_of": "2026-11-14T09:20:52.500858Z",
+    "query": {
+      "schema_version": "environmental-context/1.0-proposal",
+      "target": {
+        "kind": "selected_area",
+        "representative_point": {
+          "latitude": 16.87,
+          "longitude": 96.2
+        },
+        "bbox": null
+      },
+      "approximate_user_location": null,
+      "timezone": "Asia/Yangon",
+      "soil_depths": [
+        "0-5cm"
+      ]
+    },
+    "evidence": [
+      {
+        "schema_version": "environmental-evidence/1.0-proposal",
+        "context_kind": "soil",
+        "availability": "unavailable",
+        "reason": "UPSTREAM_TRANSPORT_UNAVAILABLE",
+        "source": {
+          "provider": "ISRIC",
+          "dataset": "SoilGrids",
+          "api_version": "v2.0",
+          "release": null,
+          "model": null,
+          "model_identity_basis": null,
+          "documentation": [
+            "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html",
+            "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_02.html",
+            "https://rest.isric.org/soilgrids/v2.0/docs"
+          ],
+          "license": "CC BY 4.0",
+          "attribution": "ISRIC SoilGrids; point subset and documented unit conversions by EarthSync."
+        },
+        "retrieval": {
+          "requested_at": "2026-11-14T09:20:52.447324Z",
+          "retrieved_at": null,
+          "endpoint": "https://rest.isric.org/soilgrids/v2.0/properties/query",
+          "query": {
+            "lon": 96.2,
+            "lat": 16.87,
+            "property": [
+              "phh2o",
+              "clay",
+              "sand",
+              "silt",
+              "soc",
+              "nitrogen",
+              "cec",
+              "bdod"
+            ],
+            "depth": [
+              "0-5cm"
+            ],
+            "value": [
+              "mean",
+              "Q0.05",
+              "Q0.5",
+              "Q0.95"
+            ]
+          },
+          "http_status": null,
+          "response_sha256": null,
+          "etag": null,
+          "last_modified": null,
+          "raw_reference": null
+        },
+        "spatial_support": {
+          "query_point": {
+            "latitude": 16.87,
+            "longitude": 96.2
+          },
+          "returned_point": null,
+          "crs": "EPSG:4326",
+          "method": "not_retrieved",
+          "nominal_resolution_m": null,
+          "native_footprint": null,
+          "scope": "regional_context",
+          "on_farm_measurement": false
+        },
+        "temporal_support": {
+          "kind": "static_model",
+          "timezone": null,
+          "issue_time": null,
+          "valid_start": null,
+          "valid_end": null,
+          "retrieved_at": null,
+          "expires_at": null,
+          "freshness_policy": null,
+          "freshness": "unknown"
+        },
+        "values": [],
+        "quality": {
+          "expected": 0,
+          "present": 0,
+          "missing": 0,
+          "rejected": 0,
+          "qa_status": "unverified",
+          "uncertainty_status": "not_supplied",
+          "reasons": [
+            "UPSTREAM_TRANSPORT_UNAVAILABLE"
+          ]
+        },
+        "limitations": [
+          "No usable environmental values; unknown is not a favorable condition."
+        ],
+        "cache_hit": false
+      },
+      {
+        "schema_version": "environmental-evidence/1.0-proposal",
+        "context_kind": "weather",
+        "availability": "unavailable",
+        "reason": "UPSTREAM_TRANSPORT_UNAVAILABLE",
+        "source": {
+          "provider": "Open-Meteo / NOAA",
+          "dataset": "Open-Meteo current conditions and daily forecast",
+          "api_version": "v1",
+          "release": null,
+          "model": "gfs_global",
+          "model_identity_basis": "Explicit request selector; run/initialization not supplied by generic endpoint.",
+          "documentation": [
+            "https://open-meteo.com/en/docs",
+            "https://open-meteo.com/en/docs/gfs-api",
+            "https://open-meteo.com/en/terms"
+          ],
+          "license": "CC BY 4.0; free API access is noncommercial only",
+          "attribution": "Weather data by Open-Meteo, underlying GFS model by NOAA."
+        },
+        "retrieval": {
+          "requested_at": "2026-11-14T09:20:52.481719Z",
+          "retrieved_at": null,
+          "endpoint": "https://api.open-meteo.com/v1/forecast",
+          "query": {
+            "latitude": 16.87,
+            "longitude": 96.2,
+            "timezone": "Asia/Yangon",
+            "models": "gfs_global",
+            "current": "temperature_2m,relative_humidity_2m",
+            "daily": "temperature_2m_min,temperature_2m_max,precipitation_sum",
+            "forecast_days": 3,
+            "timeformat": "iso8601",
+            "temperature_unit": "celsius",
+            "precipitation_unit": "mm",
+            "cell_selection": "nearest",
+            "elevation": "nan"
+          },
+          "http_status": null,
+          "response_sha256": null,
+          "etag": null,
+          "last_modified": null,
+          "raw_reference": null
+        },
+        "spatial_support": {
+          "query_point": {
+            "latitude": 16.87,
+            "longitude": 96.2
+          },
+          "returned_point": null,
+          "crs": "EPSG:4326",
+          "method": "not_retrieved",
+          "nominal_resolution_m": null,
+          "native_footprint": null,
+          "scope": "regional_context",
+          "on_farm_measurement": false
+        },
+        "temporal_support": {
+          "kind": "weather",
+          "timezone": null,
+          "issue_time": null,
+          "valid_start": null,
+          "valid_end": null,
+          "retrieved_at": null,
+          "expires_at": null,
+          "freshness_policy": null,
+          "freshness": "unknown"
+        },
+        "values": [],
+        "quality": {
+          "expected": 0,
+          "present": 0,
+          "missing": 0,
+          "rejected": 0,
+          "qa_status": "unverified",
+          "uncertainty_status": "not_supplied",
+          "reasons": [
+            "UPSTREAM_TRANSPORT_UNAVAILABLE"
+          ]
+        },
+        "limitations": [
+          "No usable environmental values; unknown is not a favorable condition."
+        ],
+        "cache_hit": false
+      },
+      {
+        "schema_version": "environmental-evidence/1.0-proposal",
+        "context_kind": "ndvi",
+        "availability": "unavailable",
+        "reason": "MATCHING_QA_AND_PIXEL_SUPPORT_UNAVAILABLE",
+        "source": {
+          "provider": "NASA MODIS / ORNL DAAC",
+          "dataset": "MOD13Q1.061",
+          "api_version": null,
+          "release": null,
+          "model": null,
+          "model_identity_basis": null,
+          "documentation": [
+            "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/61/MOD13Q1",
+            "https://modis.ornl.gov/data/modis_webservice.html"
+          ],
+          "license": "NASA Earth science open data; retain exact product citation",
+          "attribution": "NASA MODIS; ORNL DAAC subset service, DOI 10.3334/ORNLDAAC/1600."
+        },
+        "retrieval": null,
+        "spatial_support": {
+          "query_point": {
+            "latitude": 16.87,
+            "longitude": 96.2
+          },
+          "returned_point": null,
+          "crs": "EPSG:4326",
+          "method": "not_retrieved",
+          "nominal_resolution_m": null,
+          "native_footprint": null,
+          "scope": "regional_context",
+          "on_farm_measurement": false
+        },
+        "temporal_support": {
+          "kind": "satellite_composite",
+          "timezone": null,
+          "issue_time": null,
+          "valid_start": null,
+          "valid_end": null,
+          "retrieved_at": null,
+          "expires_at": null,
+          "freshness_policy": null,
+          "freshness": "unknown"
+        },
+        "values": [],
+        "quality": {
+          "expected": 0,
+          "present": 0,
+          "missing": 0,
+          "rejected": 0,
+          "qa_status": "missing",
+          "uncertainty_status": "not_supplied",
+          "reasons": [
+            "MATCHING_QA_AND_PIXEL_SUPPORT_UNAVAILABLE"
+          ]
+        },
+        "limitations": [
+          "Required matching bands: NDVI + DetailedQA + pixel reliability.",
+          "Collection, raw fill/range/scale/offset, native pixel footprint, valid pixel counts and exact composite dates remain unverified.",
+          "Missing QA never means good quality. No MODIS number or browse image is used for scientific conclusions."
+        ],
+        "cache_hit": false
+      },
+      {
+        "schema_version": "environmental-evidence/1.0-proposal",
+        "context_kind": "evi",
+        "availability": "unavailable",
+        "reason": "MATCHING_QA_AND_PIXEL_SUPPORT_UNAVAILABLE",
+        "source": {
+          "provider": "NASA MODIS / ORNL DAAC",
+          "dataset": "MOD13Q1.061",
+          "api_version": null,
+          "release": null,
+          "model": null,
+          "model_identity_basis": null,
+          "documentation": [
+            "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/61/MOD13Q1",
+            "https://modis.ornl.gov/data/modis_webservice.html"
+          ],
+          "license": "NASA Earth science open data; retain exact product citation",
+          "attribution": "NASA MODIS; ORNL DAAC subset service, DOI 10.3334/ORNLDAAC/1600."
+        },
+        "retrieval": null,
+        "spatial_support": {
+          "query_point": {
+            "latitude": 16.87,
+            "longitude": 96.2
+          },
+          "returned_point": null,
+          "crs": "EPSG:4326",
+          "method": "not_retrieved",
+          "nominal_resolution_m": null,
+          "native_footprint": null,
+          "scope": "regional_context",
+          "on_farm_measurement": false
+        },
+        "temporal_support": {
+          "kind": "satellite_composite",
+          "timezone": null,
+          "issue_time": null,
+          "valid_start": null,
+          "valid_end": null,
+          "retrieved_at": null,
+          "expires_at": null,
+          "freshness_policy": null,
+          "freshness": "unknown"
+        },
+        "values": [],
+        "quality": {
+          "expected": 0,
+          "present": 0,
+          "missing": 0,
+          "rejected": 0,
+          "qa_status": "missing",
+          "uncertainty_status": "not_supplied",
+          "reasons": [
+            "MATCHING_QA_AND_PIXEL_SUPPORT_UNAVAILABLE"
+          ]
+        },
+        "limitations": [
+          "Required matching bands: EVI + DetailedQA + pixel reliability.",
+          "Collection, raw fill/range/scale/offset, native pixel footprint, valid pixel counts and exact composite dates remain unverified.",
+          "Missing QA never means good quality. No MODIS number or browse image is used for scientific conclusions."
+        ],
+        "cache_hit": false
+      },
+      {
+        "schema_version": "environmental-evidence/1.0-proposal",
+        "context_kind": "land_surface_temperature",
+        "availability": "unavailable",
+        "reason": "MATCHING_QA_AND_PIXEL_SUPPORT_UNAVAILABLE",
+        "source": {
+          "provider": "NASA MODIS / ORNL DAAC",
+          "dataset": "MOD11A2.061",
+          "api_version": null,
+          "release": null,
+          "model": null,
+          "model_identity_basis": null,
+          "documentation": [
+            "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/61/MOD11A2",
+            "https://modis.ornl.gov/data/modis_webservice.html"
+          ],
+          "license": "NASA Earth science open data; retain exact product citation",
+          "attribution": "NASA MODIS; ORNL DAAC subset service, DOI 10.3334/ORNLDAAC/1600."
+        },
+        "retrieval": null,
+        "spatial_support": {
+          "query_point": {
+            "latitude": 16.87,
+            "longitude": 96.2
+          },
+          "returned_point": null,
+          "crs": "EPSG:4326",
+          "method": "not_retrieved",
+          "nominal_resolution_m": null,
+          "native_footprint": null,
+          "scope": "regional_context",
+          "on_farm_measurement": false
+        },
+        "temporal_support": {
+          "kind": "satellite_composite",
+          "timezone": null,
+          "issue_time": null,
+          "valid_start": null,
+          "valid_end": null,
+          "retrieved_at": null,
+          "expires_at": null,
+          "freshness_policy": null,
+          "freshness": "unknown"
+        },
+        "values": [],
+        "quality": {
+          "expected": 0,
+          "present": 0,
+          "missing": 0,
+          "rejected": 0,
+          "qa_status": "missing",
+          "uncertainty_status": "not_supplied",
+          "reasons": [
+            "MATCHING_QA_AND_PIXEL_SUPPORT_UNAVAILABLE"
+          ]
+        },
+        "limitations": [
+          "Required matching bands: LST_Day/Night + QC_Day/Night + clear-sky support.",
+          "Collection, raw fill/range/scale/offset, native pixel footprint, valid pixel counts and exact composite dates remain unverified.",
+          "Missing QA never means good quality. No MODIS number or browse image is used for scientific conclusions."
+        ],
+        "cache_hit": false
+      }
+    ],
+    "situation": {
+      "availability": {
+        "soil": "unavailable",
+        "weather": "unavailable",
+        "ndvi": "unavailable",
+        "evi": "unavailable",
+        "land_surface_temperature": "unavailable"
+      },
+      "present_value_counts": {
+        "soil": 0,
+        "weather": 0,
+        "ndvi": 0,
+        "evi": 0,
+        "land_surface_temperature": 0
+      },
+      "field_specific_evidence": "not_supplied",
+      "agricultural_diagnosis": null,
+      "drainage": null,
+      "crop_recommendations": null
+    }
+  }
+}

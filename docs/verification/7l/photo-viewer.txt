@@ -1,0 +1,13 @@
+00:00 +0: loading /workspace/EarthSync-ui/app/test/photo_evidence/photo_evidence_test.dart
+00:00 +0: preflight dimensions are bounded without web-unsupported descriptor getters
+00:00 +1: shared v1 response keeps unknown states
+00:00 +2: GPS reader is never called without consent and upload pixels lose metadata
+00:00 +3: consented EXIF GPS is optional and uncertainty stays unknown
+00:00 +4: malformed signature and oversized input fail before GPS access
+00:00 +5: unknown dates, unlocated photos and farmer observations survive the contract
+00:00 +6: HTTP upload, unicode metadata, authenticated viewer, replace and remove use v1
+00:00 +7: service failures never become an empty successful list
+00:00 +8: select preview, edit, upload unlocated, view, replace and delete
+00:02 +9: EXIF consent can be revoked and farm association needs explicit selection
+00:02 +10: cancel selection, discard preview and unavailable service stay explicit
+00:02 +11: All tests passed!

@@ -1,0 +1,53 @@
+name: Crop intelligence and private research API
+on:
+  pull_request:
+    paths:
+      - 'server/earthsync/research/**'
+      - 'server/earthsync/platform_v1/**'
+      - 'server/tests/research/**'
+      - 'app/lib/features/companion/**'
+      - 'app/lib/data/platform_transport.dart'
+      - 'app/test/ui/crop_intelligence_test.dart'
+      - 'docs/crop-intelligence/**'
+      - 'docs/multimodal/**'
+      - '.github/workflows/crop-intelligence.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  contracts:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r server/requirements.lock
+      - run: python -m pytest -q server/tests/research
+        env:
+          PYTHONPATH: server
+      - run: python -m ruff check server/earthsync/research server/tests/research server/examples/research_client.py server/examples/make_synthetic_lab_report.py
+      - run: python -m ruff format --check server/earthsync/research server/tests/research server/examples/research_client.py server/examples/make_synthetic_lab_report.py
+      - run: python scripts/verify_7x_integrity.py
+      - run: python data/crop-rule-candidates/v1/tools/package.py --check
+  flutter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.0'
+          cache: true
+      - working-directory: app
+        run: flutter pub get --enforce-lockfile
+      - working-directory: app
+        run: |
+          dart format lib test integration_test test_support example
+          git diff --exit-code
+      - working-directory: app
+        run: flutter analyze
+      - working-directory: app
+        run: flutter test test/ui/crop_intelligence_test.dart test/ui/companion_test.dart

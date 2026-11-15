@@ -1,0 +1,17 @@
+{
+  "source_code_sha": "530c1e1d06c9202dfc1f5d06c659399409b7270f",
+  "flutter": "3.44.0",
+  "dart": "3.12.0",
+  "python": "3.12.14",
+  "backend_rust": "rustc 1.99.0 (b940084d7 2026-09-28)",
+  "android_rust": "1.100.0",
+  "frb": "2.13.0",
+  "chromium": "156.0.8078.79",
+  "pubspec_lock_sha256": "b70d5c5d8201b2504cf59568e096bd9da24f1793980842fb26a997ef5c316d1f",
+  "platform_release_v03_sha256": "533c65583bedb998a98e62eb690311ad3aa8c5eae6e797001015755b18ed870b",
+  "web_engine_sha256": "a5ed2fb87986cd86e35473f5601ccf99cb9fe2559f225dff97b13d807d816572",
+  "host_frb_sha256": "9f6bae1b51aeff4adbf4484c8b23d008145d40693b9251d44b433df0e1ff928e",
+  "private_hosted_api_enabled": false,
+  "platform_origin": "http://127.0.0.1:8021",
+  "browser_origin": "http://127.0.0.1:8080"
+}

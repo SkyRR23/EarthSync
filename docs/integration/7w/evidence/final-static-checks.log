@@ -1,0 +1,10 @@
+$ /workspace/.earthsync-python/bin/python -m ruff check server/earthsync/platform_v1 server/earthsync/assistant server/tests/platform_v1/test_water_intelligence.py scripts/browser_7w.py scripts/browser_7n.py ops/staging/staging.py
+All checks passed!
+exit=0
+
+$ git diff --check
+exit=0
+
+$ git diff --exit-code 940a8aad62da8b188cdd3af4d200f353d907997a -- data/crop-knowledge/v1 data/crop-knowledge/v2 server/earthsync/platform_v1/catalog.py engine/src/v03/types.rs engine/src/v03/assess.rs engine/src/v03/validate.rs
+exit=0
+Dart format: 110 files, zero changed; Ruff format: 31 files already formatted; cargo fmt --check passed; pip check passed (see verified tool outputs).

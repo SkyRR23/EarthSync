@@ -1,0 +1,166 @@
+[
+  {
+    "id": "ecocrop",
+    "title": "FAO ECOCROP original ecological crop database",
+    "official_urls": [
+      "https://www.fao.org/land-water/resources/tools/databases/ecocrop/en",
+      "https://ecocrop.apps.fao.org/ecocrop/srv/en/home",
+      "https://data.fao.org/catalog/dataset/ecocrop"
+    ],
+    "source_ids": [
+      "fao_ecocrop_metadata",
+      "fao_ecocrop_status",
+      "ecocrop_help_2000",
+      "ecocrop_help_2001"
+    ],
+    "version": "Historical ECOCROP, discontinued around 2015; per-record publication/revision unknown. Mirror pinned ea43ecd418fd1a1ea08d32c7dce64b7fae02dec4. FAO CKAN metadata modified 2025-04-03 is not a database refresh.",
+    "schema": "Official per-species HTML: Description, Ecology optimum/absolute, Cultivation, Uses. Mirror CSV: 55 columns, EcoPortCode identity, ScientificName/AUTH/FAMNAME/SYNO/COMNAME, CAT/PLAT, TOPMN/TOPMX/TMIN/TMAX, ROPMN/ROPMX/RMIN/RMAX, PH*, ALTMX, GMIN/GMAX, soil/photoperiod/tolerance text.",
+    "license": "Official CKAN ECOCROP metadata explicitly CC-BY-4.0. OpenCLIM repository code has no declared license; no code copied. Underlying FAO tabular facts attributed to FAO; mirror provenance remains separate.",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "coverage": "Global species ecological descriptions; 2568 distinct source names enumerated, 708 cultivated agricultural identities selected. Not all ECOCROP plants are farm crops.",
+    "resolution": "Species-level descriptive ranges, no spatial raster or farm resolution.",
+    "units": "Temperature degrees C (environmental average min/max within growing season per help 2000); annual rainfall mm (help 2001 allows supplemental irrigation/ground/run-on inputs); pH; altitude m above sea level; crop-cycle days; qualitative source soil categories.",
+    "update_cadence": "Discontinued historical reference; no current update cadence established.",
+    "download_method": "Official species sheets and metadata captured. Official catalog links a web tool, no verified official CSV/Parquet export found; guessed download route returned Service not found. Pinned third-party OpenCLIM CSV fetched with exact hash; priority temperature/rain/pH fields independently compared to official sheets.",
+    "restrictions": [
+      "Do not call the mirror an official FAO export or an independently authenticated complete database.",
+      "No third-party Parquet mirror imported. No full-data independent authentication claimed.",
+      "Temperature envelopes are not daily-extreme bounds; annual water descriptors cannot become growing-period rainfall or ETc.",
+      "Source soil depth is an ecological class, not a sampling layer. Missing original cells retained; ecological values remain in global profiles."
+    ],
+    "status": "offline_reference_imported",
+    "imported": "2568-source species inventory, 708 identity catalog, five direct official numerical/ecological reference profiles. Additional identities have zero agronomic requirements."
+  },
+  {
+    "id": "gaez_v5",
+    "title": "FAO / IIASA Global Agro-Ecological Zones v5",
+    "official_urls": [
+      "https://www.fao.org/gaez/en",
+      "https://data.apps.fao.org/gaez/",
+      "https://data.fao.org/catalog/dataset/gaez-v5-master-config",
+      "https://github.com/un-fao/gaezv5/wiki/21.-GAEZ-v5-Platform-User-Guide"
+    ],
+    "source_ids": [
+      "gaez_v5_metadata",
+      "gaez_v5_guide"
+    ],
+    "version": "GAEZ v5; exact master-config bytes pinned. Historical AgERA5 inputs and 2020 land-resource baseline; historical 1981–2000 / 2001–2020 averages and CMIP6 SSP126/370/585 future periods 2021–2040 through 2081–2100 per official guide.",
+    "schema": "CKAN package/result/resources with terriajs-group metadata; six spatial themes plus Crop Summary Data. Product names encode GAEZ-V5.variable.time-period.model.scenario.crop.water-management. RES05-SIX suitability index is distinct from yield variables; exact classification bins/units must be read from each product legend/readme before extraction.",
+    "license": "Master config CC-BY-4.0 per official metadata; confirm each selected product resource and third-party terms before numerical integration.",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "coverage": "Global modeled crop/land-utilization types; crop-specific physiological/soil/terrain assessments. Crop type is not a validated local cultivar.",
+    "resolution": "General products 5 arc-minute (~10 km equator); selected resources and suitability/attainable-yield assessments also 30 arc-second (~1 km). Read native product metadata; never assign one resolution to all products.",
+    "units": "Product-specific suitability classes/indices, modeled potential/attainable yields and climate variables. Master config has no numerical observation unit; no yield unit/scale guessed.",
+    "update_cadence": "Versioned assessment release; no daily/live crop advice. Resource metadata modification differs from effective climate baseline.",
+    "download_method": "Official CKAN API package_show succeeds. Lightweight metadata importer creates evidence/gaez-v5-reference.json. Official guide links filename-generation XLSX/readmes and Google bucket fao-gismgr-gaez-v5-data/DATA/GAEZ-V5/MAPSET. Prefer bounded product-specific queries/COG windows after accepting dimensions; no global raster archive downloaded. Crop Summary Data appears as official portal group, not a verified normalized table in this package.",
+    "restrictions": [
+      "HILM/LILM irrigated high/low-input; HRLM/LRLM rainfed high/low-input. Theme 3 additionally assumes 200 mm/m available water content.",
+      "Historical vs future scenarios, climate model, crop, management, water supply, spatial support and original units must remain distinct.",
+      "Suitability/production potentials are modeled regional estimates, not farm suitability or predicted farmer yield.",
+      "No numerical GAEZ suitability classification or yield claim imported; bounded spatial extraction is deferred P1."
+    ],
+    "status": "metadata_imported_numerical_unintegrated",
+    "imported": "Exact official master config and parsed reference manifest only; numerical_extract=null."
+  },
+  {
+    "id": "crop_calendar",
+    "title": "FAO Crop Calendar",
+    "official_urls": [
+      "https://cropcalendar.apps.fao.org/",
+      "https://api-cropcalendar.apps.fao.org/api/v1/countries?language=en",
+      "https://api-cropcalendar.apps.fao.org/api/v1/countries/MM/cropCalendar?language=en"
+    ],
+    "source_ids": [
+      "fao_calendar_countries",
+      "fao_calendar_crops",
+      "fao_calendar_mm_crops",
+      "fao_calendar_mm_aez",
+      "fao_calendar_mm"
+    ],
+    "version": "API v1 snapshot 2026-11-14; all 111 Myanmar records lastUpdated=26/02/2021. Original publication dates and contributing-calendar authorship not supplied.",
+    "schema": "countries[id,name]; crops[id,name,crop_scientific_name,crop_family]; country crops[crop_id,crop_name,crop_scientific_name,other_name]; country AEZ[zone_id,name,administratrative_units,geographical_description]; cropCalendar[id_country,lastUpdated,crop{id,name},aez{id,name},sessions[]]. Session early_sowing/later_sowing/early_harvest/late_harvest month/day, growing_period, additional_information, comments.",
+    "license": "Dataset-specific redistribution license for this app/API unresolved. Separate older CKAN crop-calendar package is License not specified and is not assumed to license this API. Store selected factual dates/durations/short context; no full API response, images, videos or third-party media redistributed.",
+    "license_url": null,
+    "coverage": "58 countries in captured country list; Myanmar present with six advisory agroecological zones, 111 records (including one empty-session rice record). Global crop list has 240 provider identities, with mixed taxonomy/category labels; not auto-merged as accepted taxa.",
+    "resolution": "Named country/subnational/agroecological zone context. No farm polygon or automatic coordinate-to-zone mapping.",
+    "units": "Advisory month/day endpoints; durations in source days with inclusive-count convention unknown; season/cultivar/production remarks retained. No source month index remapping.",
+    "update_cadence": "Per-record lastUpdated; cadence unspecified. No current season validity guarantee.",
+    "download_method": "Public GET API discovered from official app JS; official country/crop/aez queries succeeded and country download endpoint returned XLSX. 55 selected priority-crop sessions retained as normalized factual extracts with original JSON locators and full-response hashes. Full raw responses kept local pending rights review.",
+    "restrictions": [
+      "Monsoon, late/post monsoon, summer and winter names retain source meaning; summer rice may start in November. No invented national season calendar.",
+      "Same AEZ can have multiple rice sessions for favorable lowland, flood-prone and tidal systems; never collapse to one favorable window.",
+      "0157 Green gram vs 0232 Mung bean/Penauk identity/duration discrepancies and 0113 Maize/Corn sweet naming disagreement are preserved in separate disputed profiles; mappings blocked.",
+      "Irrigated alone does not establish flooded management; upland alone does not prove rainfed water supply.",
+      "No advisory window is a guaranteed local planting prescription."
+    ],
+    "status": "selected_offline_reference_imported",
+    "imported": "55 priority sessions, source-specific profiles, six zone labels, missingness/disagreement records. Full global calendar import blocked pending rights and identity review."
+  },
+  {
+    "id": "soilgrids",
+    "title": "ISRIC SoilGrids",
+    "official_urls": [
+      "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_02.html",
+      "https://docs.isric.org/globaldata/soilgrids/wcs.html",
+      "https://maps.isric.org/mapserv",
+      "https://files.isric.org/soilgrids/latest/data/",
+      "https://files.isric.org/soilgrids/README.md"
+    ],
+    "source_ids": [
+      "soilgrids_layers",
+      "soilgrids_access",
+      "soilgrids_root_readme",
+      "soilgrids_phh2o_directory"
+    ],
+    "version": "SoilGrids250m 2.0 product family; latest alias is mutable. Exact WCS release/product date not established. Descriptor+raster response hashes retained independently.",
+    "schema": "WCS2.0.1 DescribeCoverage + GetCoverage; property_depth_quantile grid names. WebDAV VRT/OVR/GeoTIFF products. Six standard native depth intervals 0–5,5–15,15–30,30–60,60–100,100–200 cm; mean,Q05,Q50,Q95.",
+    "license": "SoilGrids maps CC-BY-4.0 per ISRIC access documentation; retain attribution.",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "coverage": "Global modeled soil properties with provider mask/nodata; no field laboratory or irrigation evidence.",
+    "resolution": "Nominal 250 m, native Interrupted Goode Homolosine grid; retain exact CRS/transform, native depth and footprint.",
+    "units": "phh2o pH×10 /10→pH; soc dg/kg /10→g/kg; clay/sand/silt g/kg /10→mass%; bdod cg/cm3 /100→kg/dm3; cfvo cm3/dm3 /10→vol%; nitrogen cg/kg /100→g/kg. Preserve originals and nodata. Q05/Q95 are prediction quantiles, not sampling error bars.",
+    "update_cadence": "Static/versioned model products; no observation validity period inferred from retrieval date.",
+    "download_method": "REST documented paused; no REST retry. Existing 7I WCS transport/reader reused by standalone soil_probe.py. 2×2 pH descriptor+GeoTIFF successfully fetched for regional public query (22,95), but parser rejected absent nodata (SOIL_ENCODING_MISMATCH). WebDAV root README and pH directory reachable; wrong latest README URL 404 preserved. No valid numerical soil evidence accepted.",
+    "restrictions": [
+      "Mean, median and uncertainty quantiles must stay distinct. Q05/Q95 were not retrieved by the focused WCS probe.",
+      "Returned int16 raster lacked explicit nodata: do not assume every pixel valid or invent a sentinel. Keep existing 7I rejection unchanged.",
+      "No texture/drainage/field chemistry inference, no nutrient-zero fallback, no irrigation sufficiency from maps.",
+      "Scale-conversion helper is a decoder for already verified native samples, not a new provider pipeline."
+    ],
+    "status": "transport_reachable_numeric_evidence_unavailable",
+    "imported": "CC-BY diagnostic descriptor/raster bytes and rejected receipt; no crop-profile soil observations."
+  },
+  {
+    "id": "grin",
+    "title": "USDA ARS GRIN-Global Taxonomy",
+    "official_urls": [
+      "https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomysearch",
+      "https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomysearcheco",
+      "https://npgsweb.ars-grin.gov/gringlobal/taxon/abouttaxonomy"
+    ],
+    "source_ids": [
+      "grin_about",
+      "grin_rice_26077",
+      "grin_mung_bean",
+      "grin_sesame",
+      "grin_groundnut",
+      "grin_maize"
+    ],
+    "version": "Public website 2.3.12 observed; curated taxon-specific nomen/verification dates are distinct from web software version and species-publication dates. Exact dataset dump version unknown.",
+    "schema": "Taxonomy species/nomen IDs, scientific names/authorship, accepted names/synonyms, family hierarchy, multilingual common names, economic uses, geographic distributions, references, separate accession/cultivar/passport records. Public search and WEP results have downloads; not a single farming-requirement table.",
+    "license": "US government taxonomic facts cited to USDA ARS; third-party references/media/germplasm terms separate. No blanket reuse claim for every accession dataset or external database.",
+    "license_url": null,
+    "coverage": "Global taxa of germplasm/economic importance, including wild relatives; accession identity is not universal crop suitability.",
+    "resolution": "Taxon/accession identity, no field climate/soil resolution.",
+    "units": "Taxonomic IDs and names; no crop-wide temperature, rainfall, irrigation or yield parameters inferred.",
+    "update_cadence": "Curated records updated independently; cadence not guaranteed.",
+    "download_method": "Five official taxon pages fetched and species/family heading checked: rice26077, mung41629, sesame33749, groundnut3785, maize42207. Initial guessed rice26097 was actually Oryzopsis miliacea and explicitly rejected. Exact original hashes retained; selected identity checks stored, no whole HTML redistribution. Bulk updater/database tables and search exports evaluated but not installed.",
+    "restrictions": [
+      "Do not infer farming requirements from accessions, provenance regions or taxonomy.",
+      "Do not normalize a fuzzy/genus-level match into an accepted species or merge source aliases silently.",
+      "No accession record or cultivar performance evidence imported; independent current taxonomic reconciliation of all mirror species remains P2."
+    ],
+    "status": "priority_taxonomy_checked",
+    "imported": "Five checked species/family identities; original labels, accession limitations, exact source URLs/hashes."
+  }
+]

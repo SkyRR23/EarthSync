@@ -1,0 +1,10 @@
+{
+  "schema_version": "earthsync.public_verification_receipt.v1",
+  "raw_receipt_sha256": "bbd1cab8023c9d62eb23fb1d23891d19d466d1809c6a7e98e48a5af4dea20589",
+  "private_field_data_omitted": true,
+  "strategy_count": 3,
+  "baseline_declared_existing_plan": true,
+  "priority_count": 3,
+  "farmer_choice": "undecided",
+  "recommendation_eligible": false
+}

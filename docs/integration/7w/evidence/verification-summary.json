@@ -1,0 +1,50 @@
+{
+  "p0": "implemented and locally verified for accepted historical source/method subset",
+  "python": {
+    "passed": 413,
+    "skipped": 2,
+    "failed": 0,
+    "skips": [
+      "optional live SoilGrids numeric probe; known WCS nodata gap",
+      "optional live HLS discovery; no accepted pixels"
+    ]
+  },
+  "rust": {
+    "passed": 123,
+    "failed": 0
+  },
+  "v1_catalog": {
+    "passed": 39
+  },
+  "7p": {
+    "passed": 78,
+    "live_checks": 4,
+    "skipped": 0
+  },
+  "7v": {
+    "passed": 32,
+    "executable_rules_accepted": 0,
+    "blocked_candidates": 60
+  },
+  "flutter_offline": {
+    "passed": 112,
+    "opt_in_skipped": 3
+  },
+  "flutter_selected_live": {
+    "passed": 11,
+    "skipped": 0
+  },
+  "chromium": {
+    "7w_stages": 8,
+    "7n_stages": 12,
+    "unhandled_page_errors": 0
+  },
+  "backup_restore_restart": "passed",
+  "et0": "implemented; unsupported domains explicitly null",
+  "etc": "existing Rust numerical method only; no accepted real crop curve",
+  "field_water_balance": "not implemented; separate null outputs and exact dependencies",
+  "soil_satellite_numeric": "no newly accepted soil or non-POWER numerical products",
+  "public_deployment": false,
+  "merge_performed": false,
+  "remote_ci": "separate; not claimed by local report"
+}

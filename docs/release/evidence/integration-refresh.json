@@ -1,0 +1,64 @@
+{
+  "checked_at": "2026-11-15T04:57:55.206939+06:30",
+  "scope": "REAL GitHub PR/branch/Actions and completed chat handoff checks; REAL Cloudflare read-only account/resource checks",
+  "sources": [
+    {
+      "workstream": "7X",
+      "pr": 28,
+      "sha": "665cbecce3575724ded5145863a6823b44773a69",
+      "chat_status": "completed",
+      "workflows": {
+        "success": 11
+      }
+    },
+    {
+      "workstream": "7G",
+      "pr": 30,
+      "sha": "27584a6e506ecda362be516b113b850c6ac98259",
+      "chat_status": "completed",
+      "workflows": {
+        "success": 2,
+        "failure": 2
+      },
+      "historical_failures": [
+        "Windows catalog-byte integrity in old compatibility export",
+        "Docker omitted crop v2 build context"
+      ],
+      "combined_candidate_fixes_verified_separately": true
+    },
+    {
+      "workstream": "final fixing combined candidate",
+      "pr": 29,
+      "sha": "9d7ad9a40a23e76decdbc54a9d4fb1b75ec54ab7",
+      "workflows": {
+        "success": 11
+      },
+      "includes_exact_7x_7g_ancestry": true
+    }
+  ],
+  "dependencies_still_running": false,
+  "newer_dependency_heads": false,
+  "main_rollback_sha": "1ea3df7b09637cf8162f834411d830aa8621590c",
+  "cloudflare": {
+    "identity": "authenticated",
+    "account_inventory": "success",
+    "pages": "403 missing scope",
+    "workers_subdomain": "403 missing scope",
+    "subscriptions": "403 billing-scoped token required; OAuth insufficient",
+    "tunnels": "connector refused unavailable authorized inventory; not proof of zero tunnels",
+    "access_applications": "403 API reports Access not enabled",
+    "access_organization": "403 missing scope",
+    "account_id_email_and_raw_responses_omitted": true,
+    "account_plan_and_quota": "UNVERIFIED",
+    "mutations": 0
+  },
+  "deployment": "NOT DEPLOYED",
+  "windows_interactive_acceptance": "PENDING",
+  "user_merge_approval": "PENDING",
+  "main_merged": false,
+  "science": {
+    "approved_executable_rules": 0,
+    "blocked_candidates": 60,
+    "accepted_live_ndvi": "UNAVAILABLE"
+  }
+}

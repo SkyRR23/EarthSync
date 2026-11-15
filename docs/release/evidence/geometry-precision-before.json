@@ -1,0 +1,6 @@
+{
+  "status": "FAILED before fix; passed after fix",
+  "private_field_data_omitted": true,
+  "raw_receipt_sha256": "a72d6bb0370ac7fd5dd58131aa6ced2cde41c683504e6a8ffcc93138fac37e23",
+  "strict_equality_retained": true
+}

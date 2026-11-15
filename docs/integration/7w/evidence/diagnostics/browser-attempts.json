@@ -1,0 +1,296 @@
+[
+  {
+    "attempt": "browser",
+    "status": "diagnostic_not_complete_acceptance",
+    "passed_steps": [
+      "User confirms global point, farm and rainfed system; explicit database link"
+    ],
+    "files": [
+      {
+        "path": "browser/failure.png",
+        "sha256": "4028594d3067a1e92ec9739af15e6323e5566d038c2a151228fd267f08df8ac6"
+      },
+      {
+        "path": "browser/failure.txt",
+        "sha256": "fae9d476e7e2d80649d7a346bc43ed8412638b81dd4f393ec3e06641ddda0eab"
+      },
+      {
+        "path": "browser/farm-confirmation.json",
+        "sha256": "7689c1dcbae98e05949128c68dd1bfc4c0103a154a9ae973b1a9ff8db013493c"
+      },
+      {
+        "path": "browser/results.json",
+        "sha256": "c3781e108a77375b3a1a9cbda3aa426e046f83b9c920db8af02a3308c46fa2b5"
+      }
+    ]
+  },
+  {
+    "attempt": "browser-final",
+    "status": "diagnostic_not_complete_acceptance",
+    "passed_steps": [
+      "User confirms global point, farm and rainfed system; explicit database link"
+    ],
+    "files": [
+      {
+        "path": "browser-final/failure.png",
+        "sha256": "1b6f1978fa7bb758451c048b60ce60507e25a70d98fc5af2bce8884f8edcd49c"
+      },
+      {
+        "path": "browser-final/failure.txt",
+        "sha256": "d9c975af34cd9554b218c72314d3dd3d316b6afcf75233cd19544bb52eeec495"
+      },
+      {
+        "path": "browser-final/farm-confirmation.json",
+        "sha256": "ccbf0da0080ff40c77006584a129efb18a848e76684ef818c0cc9001a982c76f"
+      },
+      {
+        "path": "browser-final/live-water-job.json",
+        "sha256": "df58404a951a69219e72d05e0dfe0e558cdd0699bf1aafbc6ce0f14a9dd99365"
+      },
+      {
+        "path": "browser-final/results.json",
+        "sha256": "c3781e108a77375b3a1a9cbda3aa426e046f83b9c920db8af02a3308c46fa2b5"
+      },
+      {
+        "path": "browser-final/water-submission.json",
+        "sha256": "dd45455e8c8882dd41606c0c9850576f83a1e5d61d1634b9588f6cd95daa4cd4"
+      }
+    ]
+  },
+  {
+    "attempt": "browser-rc",
+    "status": "diagnostic_not_complete_acceptance",
+    "passed_steps": [
+      "User confirms global point, farm and rainfed system; explicit database link"
+    ],
+    "files": [
+      {
+        "path": "browser-rc/after-job.txt",
+        "sha256": "cb548e3d251e410957979233f82f954eab588300caeada5fea55989197479485"
+      },
+      {
+        "path": "browser-rc/failure.png",
+        "sha256": "1b6f1978fa7bb758451c048b60ce60507e25a70d98fc5af2bce8884f8edcd49c"
+      },
+      {
+        "path": "browser-rc/failure.txt",
+        "sha256": "d64fe18fa9df896d76dd1aee91c3eb00c0a109096b45efe5955c4d3870fcfd3d"
+      },
+      {
+        "path": "browser-rc/farm-confirmation.json",
+        "sha256": "a54422993aef82c1389b69d25a7e1b650677c99c748eee58a8e957ef56378b6f"
+      },
+      {
+        "path": "browser-rc/live-water-job.json",
+        "sha256": "8fce733079633b584cbf6150dc8c5c91daf35159cb6938020a3eb3540f2a1b14"
+      },
+      {
+        "path": "browser-rc/results.json",
+        "sha256": "c3781e108a77375b3a1a9cbda3aa426e046f83b9c920db8af02a3308c46fa2b5"
+      },
+      {
+        "path": "browser-rc/water-submission.json",
+        "sha256": "87ad3504c19410ae878360c59040ef7b4091d55ae4dad0941fc60d287d0861ab"
+      }
+    ]
+  },
+  {
+    "attempt": "browser-accepted",
+    "status": "diagnostic_not_complete_acceptance",
+    "passed_steps": [
+      "User confirms global point, farm and rainfed system; explicit database link",
+      "Real NASA inputs validated, actual Rust ET0 and rainfall persist and render exactly"
+    ],
+    "files": [
+      {
+        "path": "browser-accepted/after-job.txt",
+        "sha256": "09c3d47b302bfc07655a79786fdeec10bc1970c3201802b515f04658b049d1cf"
+      },
+      {
+        "path": "browser-accepted/failure.png",
+        "sha256": "700d800e5f513659f32d9340ef7c2b41320e6651aad5b7b30af51ef4a74e48f5"
+      },
+      {
+        "path": "browser-accepted/failure.txt",
+        "sha256": "5e68edebddc03c45cfdd4c9df8fe93d41ca667251bb39f310e3fbcdcafb13ff5"
+      },
+      {
+        "path": "browser-accepted/farm-confirmation.json",
+        "sha256": "089bb701ad48f95f31c2a0e00b363737ad5fdc513fa028dadd6b10681827db81"
+      },
+      {
+        "path": "browser-accepted/live-water-job.json",
+        "sha256": "d966840697b60cfbc40c1a56f0e1c41e5d6e9e7db11462b599339c2629992cac"
+      },
+      {
+        "path": "browser-accepted/real-water-calculation-desktop.png",
+        "sha256": "700d800e5f513659f32d9340ef7c2b41320e6651aad5b7b30af51ef4a74e48f5"
+      },
+      {
+        "path": "browser-accepted/results.json",
+        "sha256": "970e98df973c4b53b2a552de318fded689142b1c7ad9e649eef1508e5a546e3d"
+      },
+      {
+        "path": "browser-accepted/water-submission.json",
+        "sha256": "28b6bf226969770f1c9bc94a60666ef10b0782df89e9db60bd62d0c21651dd46"
+      }
+    ]
+  },
+  {
+    "attempt": "browser-verified",
+    "status": "diagnostic_not_complete_acceptance",
+    "passed_steps": [
+      "User confirms global point, farm and rainfed system; explicit database link",
+      "Real NASA inputs validated, actual Rust ET0 and rainfall persist and render exactly"
+    ],
+    "files": [
+      {
+        "path": "browser-verified/after-job.txt",
+        "sha256": "2b376f108a5f19a904e16dd43e8c29c811ecac29fb69f2b4869bb23f31602290"
+      },
+      {
+        "path": "browser-verified/failure.png",
+        "sha256": "1b6f1978fa7bb758451c048b60ce60507e25a70d98fc5af2bce8884f8edcd49c"
+      },
+      {
+        "path": "browser-verified/failure.txt",
+        "sha256": "bf77a2862715d5250ecf1c24dfc980cabfb0df6ea1120a123698a9838682be89"
+      },
+      {
+        "path": "browser-verified/farm-confirmation.json",
+        "sha256": "5635c5971e898011f6fad27ca23b5b2d7e0857af72ddcfa3a9f600f6184537cf"
+      },
+      {
+        "path": "browser-verified/live-water-job.json",
+        "sha256": "491d0c389110d95f146ec1cec32c026068556bb5984e907c0939b81be8149ec0"
+      },
+      {
+        "path": "browser-verified/real-water-calculation-desktop.png",
+        "sha256": "b8d3dd6caea4fdbe66508e525a917368903366c85737b36743c58f29752698aa"
+      },
+      {
+        "path": "browser-verified/results.json",
+        "sha256": "970e98df973c4b53b2a552de318fded689142b1c7ad9e649eef1508e5a546e3d"
+      },
+      {
+        "path": "browser-verified/water-submission.json",
+        "sha256": "d4169e141deaba07028cbd42a21982d1c4c4d545b212a9f34737e734e0fd54d3"
+      }
+    ]
+  },
+  {
+    "attempt": "browser-live-accepted",
+    "status": "diagnostic_not_complete_acceptance",
+    "passed_steps": [
+      "User confirms global point, farm and rainfed system; explicit database link",
+      "Real NASA inputs validated, actual Rust ET0 and rainfall persist and render exactly"
+    ],
+    "files": [
+      {
+        "path": "browser-live-accepted/after-job.txt",
+        "sha256": "f50db83a464ba2532d3ace0fbb08be861ac081e9dafbb007684d72da5ead7b47"
+      },
+      {
+        "path": "browser-live-accepted/failure.png",
+        "sha256": "93bd83601ff0d51426a8f0d4fbaf917efffa2960dfb76ad1002d7019510a125f"
+      },
+      {
+        "path": "browser-live-accepted/failure.txt",
+        "sha256": "6de56174e5038b2e4fb6244f1ffdd07eba48b62497f3c2e2a81172e71345d1ff"
+      },
+      {
+        "path": "browser-live-accepted/farm-confirmation.json",
+        "sha256": "cd8272595425548a463fd39129ec242bf7d61f6ac0491d99af3d78d7e5b56511"
+      },
+      {
+        "path": "browser-live-accepted/live-water-job.json",
+        "sha256": "47bd9d601397128c0e247851085333ce6c199c0d0fb3e98c7a3aa8fb3aaf0720"
+      },
+      {
+        "path": "browser-live-accepted/real-water-calculation-desktop.png",
+        "sha256": "24d8de781f52e6377430ec3096c8042f62fb2a31f83dee069141628c87b666e3"
+      },
+      {
+        "path": "browser-live-accepted/results.json",
+        "sha256": "970e98df973c4b53b2a552de318fded689142b1c7ad9e649eef1508e5a546e3d"
+      },
+      {
+        "path": "browser-live-accepted/water-submission.json",
+        "sha256": "90f82099e61a2c73993943ce965d76b797306bfd9da9f473b6a00989194b0bb8"
+      }
+    ]
+  },
+  {
+    "attempt": "browser-core",
+    "status": "diagnostic_not_complete_acceptance",
+    "passed_steps": [
+      "User confirms global point, farm and rainfed system; explicit database link",
+      "Real NASA inputs validated, actual Rust ET0 and rainfall persist and render exactly",
+      "7P exact profile and separate source sidecar reach Rust with zero executable rules",
+      "Browser refresh restores saved calculations and Rust decisions",
+      "Deterministic assistant explains the same persisted water values and cited reference duration"
+    ],
+    "files": [
+      {
+        "path": "browser-core/after-job.txt",
+        "sha256": "bf1cd960d06ffcb1cde3ca1ef8871ee412e23e149aea2946ecd40ceb04df19bd"
+      },
+      {
+        "path": "browser-core/assistant-persisted-reference-and-water.png",
+        "sha256": "fe2629625f4d50ea2aead26e52340da3ea75a2d3c17705ff07df3b3755660380"
+      },
+      {
+        "path": "browser-core/assistant-reference.json",
+        "sha256": "9c996ada084aa25b47970c2ad4f514d22d28057b6032e579699b52f04bd52e80"
+      },
+      {
+        "path": "browser-core/assistant-water.json",
+        "sha256": "6f1c561b31abbeac7bba24d6203a0457809b1cbb6ff7376b80516832b443ea20"
+      },
+      {
+        "path": "browser-core/crop-constraints-and-water-gaps.png",
+        "sha256": "0cc42d620f093b847093e303de4b951189c4650761b40bb524fb77420e16f474"
+      },
+      {
+        "path": "browser-core/failure.png",
+        "sha256": "7767c7632f270c05b3824909da335afd4b576898c7fca1fcd9a40b3bcac983fa"
+      },
+      {
+        "path": "browser-core/failure.txt",
+        "sha256": "35a235d175cad3a48c47007de2a0ffa3c7164ffbb4d63de4f4be68d3ee613dc2"
+      },
+      {
+        "path": "browser-core/farm-confirmation.json",
+        "sha256": "ed6c5ca4f7197839fc1dc9f10926ab0ce8ba7cafc6d9cd535ec2a1df39987b88"
+      },
+      {
+        "path": "browser-core/live-water-job.json",
+        "sha256": "f66f0872d96c22ab2482a38e7513f2c83b99201218f9add09447b9cbdfb2f4ef"
+      },
+      {
+        "path": "browser-core/real-water-calculation-desktop.png",
+        "sha256": "2700d091ae514663d003ba59d8b76157e87f0fc9d824d0ba189257b7d7cfae01"
+      },
+      {
+        "path": "browser-core/results.json",
+        "sha256": "efd10052e65da9fac864486f1f3e3e288c45b083cba3d7484fb7a9e4def1a1f2"
+      },
+      {
+        "path": "browser-core/saved-rust-v2-assessment.json",
+        "sha256": "6887415afb1eb36249abccd28516d2529155bc1ec80b07adcc5f091d7e251d6f"
+      },
+      {
+        "path": "browser-core/source-reviewed-reference.png",
+        "sha256": "4310c3e4ae56443e701b18f2cfa4d9c3c777ad1739a66f7a5906c4635cc937ff"
+      },
+      {
+        "path": "browser-core/v2-reference-lookup.json",
+        "sha256": "9afe2c621ab54a9215a36c74071f69dc794a4fb878bf0c6707a97c32c2c515c2"
+      },
+      {
+        "path": "browser-core/water-submission.json",
+        "sha256": "ac752f9e4eb564198f00f91a88bc86e5ee6e2bc190f625c749e24bb578d888b0"
+      }
+    ]
+  }
+]

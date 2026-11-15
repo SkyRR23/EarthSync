@@ -1,0 +1,33 @@
+{
+  "classification": "CACHED REAL PUBLIC NOAA SUBSET",
+  "sha256": "f1ae4ad7725f0370b71d5ea66b3c65772c810e8c7546762d24db7c7fcab955d4",
+  "bytes": 1335,
+  "model_initialized_at": "2026-11-14T18:00:00Z",
+  "forecast_hour": 6,
+  "public_reference": {
+    "latitude": 42.0308,
+    "longitude": -93.6319
+  },
+  "source": "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl",
+  "request": {
+    "file": "gfs.t18z.pgrb2.0p25.f006",
+    "dir": "/gfs.20261114/18/atmos",
+    "leftlon": 266,
+    "rightlon": 266.5,
+    "toplat": 42.25,
+    "bottomlat": 41.75,
+    "levels": [
+      "2_m_above_ground",
+      "10_m_above_ground",
+      "surface"
+    ],
+    "variables": [
+      "TMP",
+      "RH",
+      "UGRD",
+      "VGRD",
+      "APCP"
+    ]
+  },
+  "meaning": "Native encoding/grid/time/units/accumulation regression; not forecast accuracy or independent station validation"
+}

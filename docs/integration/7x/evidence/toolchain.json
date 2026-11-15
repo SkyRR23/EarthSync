@@ -1,0 +1,11 @@
+{
+  "python": "3.12.14",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "flutter": "3.44.0",
+  "dart": "3.12.0",
+  "flutter_image": "ghcr.io/cirruslabs/flutter@sha256:46691e311715845de03a3ba4753a475476936805b29431b1f00f1816981033f8",
+  "chromium": "Chromium 156.0.8078.79 built on Debian GNU/Linux 13 (trixie)",
+  "rust": "1.99.0",
+  "public_deployment": false,
+  "windows_browser_acceptance": false
+}

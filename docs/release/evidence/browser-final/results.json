@@ -1,0 +1,101 @@
+{
+  "schema_version": "earthsync.public_verification_receipt.v1",
+  "raw_receipt_sha256": "9b1b4d48b4efc003a72f63c3e657be12311719bb4d80e29d80092c11c980ac61",
+  "private_field_data_omitted": true,
+  "status": "PASS",
+  "steps": [
+    {
+      "step": "Real NASA inputs → actual Rust FAO-56 ET0 → persisted source values",
+      "classification": "CACHED REAL"
+    },
+    {
+      "step": "Select real soil and forecast snapshots as non-executable reference context",
+      "classification": "CACHED REAL"
+    },
+    {
+      "step": "Create three actual Rust rotation assessments with unchanged scientific gates",
+      "classification": "SYNTHETIC"
+    },
+    {
+      "step": "Actual Rust detects declared inclusive date overlap",
+      "classification": "SYNTHETIC"
+    },
+    {
+      "step": "Explicitly declare baseline, priorities and save the three-strategy group",
+      "classification": "SYNTHETIC"
+    },
+    {
+      "step": "Confirm a completed farmer-reported crop period for Rust history separately",
+      "classification": "SYNTHETIC"
+    },
+    {
+      "step": "Sanitize and save a farm-owned photo without GPS or original EXIF",
+      "classification": "SYNTHETIC"
+    },
+    {
+      "step": "Connect a dated farmer observation to the owned photo",
+      "classification": "SYNTHETIC"
+    },
+    {
+      "step": "New saved context offers explicit reassessment without background monitoring",
+      "classification": "SYNTHETIC"
+    },
+    {
+      "step": "Reopen and edit a proposal; explicitly selected report reaches a new immutable Rust assessment",
+      "classification": "SYNTHETIC"
+    },
+    {
+      "step": "Explicitly cache farm history, assessments and original evidence timestamps",
+      "classification": "SYNTHETIC"
+    },
+    {
+      "step": "Reopen confirmed polygon and unified farmer timeline",
+      "classification": "SYNTHETIC"
+    },
+    {
+      "step": "Reopen three exact persisted native assessments after browser restart",
+      "classification": "SYNTHETIC"
+    },
+    {
+      "step": "Reopen exact persisted comparison group after browser restart",
+      "classification": "SYNTHETIC"
+    },
+    {
+      "step": "Reopen three saved strategies with evidence, constraints and source explanations",
+      "classification": "SYNTHETIC"
+    },
+    {
+      "step": "Responsive mobile strategy comparison",
+      "classification": "SYNTHETIC"
+    },
+    {
+      "step": "Reopen exact photo-linked report and explicit reassessment after browser restart",
+      "classification": "SYNTHETIC"
+    },
+    {
+      "step": "Deterministic assistant explains the saved comparison and original citations",
+      "classification": "SYNTHETIC"
+    },
+    {
+      "step": "Burmese core interface and saved English scientific source text",
+      "classification": "SYNTHETIC"
+    },
+    {
+      "step": "Injected provider/backend outage uses timestamped cache and disables writes",
+      "classification": "MOCKED"
+    },
+    {
+      "step": "Reopen static app offline with cached read-only farm data; private API excluded from service worker",
+      "classification": "MOCKED"
+    },
+    {
+      "step": "Zero unhandled page errors in final farmer journey",
+      "classification": "REAL"
+    }
+  ],
+  "resumed_from_saved_native_decisions": true,
+  "farmer_records": "SYNTHETIC software-test inputs; no field ground truth",
+  "ndvi": "UNAVAILABLE: no accepted authorized raster observation; no fabricated pixels",
+  "browser_error_count": 0,
+  "tile_response_count": 0
+}

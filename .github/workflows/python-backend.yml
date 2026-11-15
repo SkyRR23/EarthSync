@@ -2,7 +2,7 @@ name: Python backend CI
 
 on:
   pull_request:
-    paths: ["server/**", "engine/**", ".github/workflows/python-backend.yml"]
+    paths: [".gitattributes", "server/**", "engine/**", "data/crop-knowledge/**", "data/crop-rule-candidates/v1/**", ".github/workflows/python-backend.yml"]
   push:
     branches: [main, feat/nasa-power-backend]
     paths: ["server/**", "engine/**", ".github/workflows/python-backend.yml"]
@@ -13,16 +13,22 @@ permissions:
 
 jobs:
   backend:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.12", "3.13"]
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     defaults:
       run:
+        shell: bash
         working-directory: server
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: ${{ matrix.python }}
           cache: pip
           cache-dependency-path: server/requirements.lock
       - uses: dtolnay/rust-toolchain@stable
@@ -33,15 +39,30 @@ jobs:
           python -m pip install -r requirements.lock
           python -m pip install --no-deps -e .
           python -m pip check
+      - name: Export actual combined compatibility interfaces
+        run: python platform-v1/tools/prepare_compat.py ../.platform-compat --revision HEAD
       - name: Cache Rust dependencies for offline contract tests
         run: cargo fetch --locked --manifest-path ../engine/Cargo.toml
       - name: Build actual Rust executable for web endpoint tests
-        run: cargo build --locked --manifest-path ../engine/Cargo.toml --example web_engine
+        run: cargo build --locked --manifest-path ../engine/Cargo.toml --examples
       - name: Ruff
         run: |
           python -m ruff check earthsync tests
           python -m ruff format --check earthsync tests
+      - name: Configure actual combined platform and Rust tests
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          suffix = '.exe' if os.name == 'nt' else ''
+          with open(os.environ['GITHUB_ENV'], 'a') as out:
+              out.write('EARTHSYNC_COMPAT_ROOT=' + str(Path('../.platform-compat').resolve()) + '\n')
+              out.write('EARTHSYNC_TEST_V03=' + str(Path('../engine/target/debug/examples/v03_demo' + suffix).resolve()) + '\n')
+          PY
       - name: Offline backend and Rust JSON compatibility tests
-        run: python -m pytest -q
+        # Turn a stalled runner into a diagnostic failure with all thread stacks;
+        # never skip a hanging test or allow it to report success.
+        run: python -c "import faulthandler, pytest; faulthandler.dump_traceback_later(120, exit=True); raise SystemExit(pytest.main(['-vv', '--durations=10']))"
       - name: Patch integrity
         run: git diff --check

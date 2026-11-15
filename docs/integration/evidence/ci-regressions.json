@@ -1,0 +1,21 @@
+{
+  "fixed_failures": [
+    {
+      "run_url": "https://github.com/SkyRR23/EarthSync/actions/runs/43594011912",
+      "head": "d051b36fdc02591e2c98ad3d18b55c2df0770b1d",
+      "linux_python_312_313": "passed",
+      "windows_python_312_313": "33 failed, 235 passed",
+      "confirmed_cause": "UTF-8 assistant locale resources were decoded using the Windows CP1252 default",
+      "fix": "Explicit UTF-8 resource/JSON I/O and English/Spanish CP1252-default regression tests"
+    },
+    {
+      "run_url": "https://github.com/SkyRR23/EarthSync/actions/runs/43594358347",
+      "head": "8eca7af24f8f1af5228734b9b08f508d6e0db94f",
+      "linux_python_312_313": "passed",
+      "windows_python_312_313": "1 failed, 269 passed",
+      "confirmed_cause": "Assistant wire response fixture used the same implicit Windows text encoding",
+      "fix": "Read all assistant wire/schema fixtures with explicit UTF-8"
+    }
+  ],
+  "log_access": "Expected GitHub job-log endpoint HTTPS redirects verified. Direct Azure blob downloads received proxy 403; completed logs retrieved successfully through GitHub integration and workflow archive. No TLS/security bypass."
+}

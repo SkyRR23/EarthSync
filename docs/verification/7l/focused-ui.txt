@@ -1,0 +1,14 @@
+00:00 +0: loading /workspace/EarthSync-ui/app/test/ui/responsive_product_test.dart
+00:00 +0: /workspace/EarthSync-ui/app/test/ui/responsive_product_test.dart: all product destinations handle unavailable services at 320.0
+00:04 +1: /workspace/EarthSync-ui/app/test/ui/responsive_product_test.dart: all product destinations handle unavailable services at 390.0
+00:06 +2: /workspace/EarthSync-ui/app/test/ui/responsive_product_test.dart: all product destinations handle unavailable services at 768.0
+00:08 +3: /workspace/EarthSync-ui/app/test/ui/responsive_product_test.dart: all product destinations handle unavailable services at 1024.0
+00:10 +4: /workspace/EarthSync-ui/app/test/ui/responsive_product_test.dart: all product destinations handle unavailable services at 1440.0
+00:10 +5: /workspace/EarthSync-ui/app/test/ui/responsive_product_test.dart: large text and dark mode retain source and navigation semantics
+00:11 +6: /workspace/EarthSync-ui/app/test/ui/responsive_product_test.dart: appearance persists and Burmese navigation uses bundled fallback
+00:11 +7: loading /workspace/EarthSync-ui/app/test/ui/platform_climate_test.dart
+00:11 +7: /workspace/EarthSync-ui/app/test/ui/platform_climate_test.dart: local-only adapter rejects hosted endpoints before making requests
+00:11 +8: /workspace/EarthSync-ui/app/test/ui/platform_climate_test.dart: 202 climate jobs use reviewed daily contract without ownership fields
+00:11 +9: /workspace/EarthSync-ui/app/test/ui/platform_climate_test.dart: source failures stay typed and never become synthetic success
+00:11 +10: /workspace/EarthSync-ui/app/test/ui/platform_climate_test.dart: daily measurement preserves unknown values, source units and reason
+00:11 +11: All tests passed!

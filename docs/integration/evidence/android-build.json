@@ -1,0 +1,11 @@
+{
+  "artifact": "app/build/app/outputs/flutter-apk/app-debug.apk",
+  "kind": "debug APK, software build only",
+  "sha256": "1c03a77f3cc1e5f3a86006052911d44389ff0cf0f9f12e248b74b7255a43f8d5",
+  "rust_bridge_abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86_64"
+  ],
+  "device_validation": false
+}

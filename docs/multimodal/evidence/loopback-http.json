@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "transport": "actual loopback HTTP",
+  "external_vision": "disabled by explicit user choice; no live model call",
+  "photo_status": "vision_unavailable",
+  "real_local_tesseract": true,
+  "synthetic_report": true,
+  "manual_correction_retained": true,
+  "unauthorized_image_status": 401,
+  "citation_count": 7,
+  "private_snapshot_created": true,
+  "photo_deleted": true
+}

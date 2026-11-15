@@ -16,3 +16,9 @@ Thumbs.db
 # Local Android SDK used for device integration builds.
 .android-sdk/
 .gradle-local/
+
+# Python bytecode is generated, never release source.
+**/__pycache__/
+/.venv/
+/.earthsync-runtime/
+/.pytest_cache/

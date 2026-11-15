@@ -1,0 +1,29 @@
+{
+  "source": "NASA POWER API response, actual network retrieval; not a farm observation",
+  "endpoint": "https://power.larc.nasa.gov/api/temporal/daily/point",
+  "query": {
+    "parameters": "T2M,PRECTOTCORR",
+    "community": "AG",
+    "latitude": 16.851234,
+    "longitude": 96.151234,
+    "start": "20240201",
+    "end": "20240202",
+    "format": "JSON",
+    "time-standard": "LST"
+  },
+  "status": 200,
+  "response_sha256": "22d057290c5dd9a96159f2eb35985317558e445efd8b844b521ee82e71287b93",
+  "retrieved_at": null,
+  "retrieval_date": "2026-11-14",
+  "retrieval_time_note": "The initial probe retained original body bytes and status but did not record an exact retrieval timestamp. Date is known; no timestamp invented.",
+  "observed_geometry": {
+    "type": "Point",
+    "coordinates": [
+      96.151,
+      16.851,
+      10.91
+    ]
+  },
+  "conclusion": "API v2.10.3 rounds response coordinates to three decimals for this high-precision query; 1e-6 rejects it. Allow half the three-decimal quantization step plus floating-point epsilon. This validates response association, not true pixel or farm accuracy.",
+  "new_archive_opened": false
+}

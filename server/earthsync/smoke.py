@@ -38,7 +38,7 @@ async def main():
         raise SystemExit(
             "Live response has incomplete coverage; no complete example written."
         )
-    args.output.write_text(result.model_dump_json(indent=2) + "\n")
+    args.output.write_text(result.model_dump_json(indent=2) + "\n", encoding="utf-8")
     print("Real NASA POWER example written with retrieval metadata.")
 
 

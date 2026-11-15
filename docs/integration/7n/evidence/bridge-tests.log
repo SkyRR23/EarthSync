@@ -1,0 +1,14 @@
+   Compiling field_shift_engine v0.1.0 (/workspace/EarthSync-final/engine)
+   Compiling field_shift_bridge v0.1.0 (/workspace/EarthSync-final/app/rust)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.52s
+     Running unittests src/lib.rs (app/rust/target/debug/deps/field_shift_bridge-feada5b9a3f96509)
+
+running 6 tests
+test api::bridge::tests::bad_farmer_json_is_error_envelope ... ok
+test api::bridge::tests::demo_with_unknown_answers_succeeds ... ok
+test api::bridge::tests::farmer_drainage_reaches_engine ... ok
+test api::bridge::tests::version_names_bridge_and_engine ... ok
+test api::bridge::tests::passthrough_uses_engine_envelope ... ok
+test api::bridge::tests::versioned_v03_dispatch_uses_real_engine_through_stable_abi ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s

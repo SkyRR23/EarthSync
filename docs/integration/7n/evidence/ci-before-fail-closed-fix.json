@@ -1,0 +1,85 @@
+{
+  "code_sha": "530c1e1d06c9202dfc1f5d06c659399409b7270f",
+  "workflows": [
+    {
+      "id": 43602191164,
+      "name": "Scientific source regression checks",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 4,
+      "jobs_url": "https://api.github.com/repos/SkyRR23/EarthSync/actions/runs/43602191164/jobs",
+      "logs_url": "https://api.github.com/repos/SkyRR23/EarthSync/actions/runs/43602191164/logs",
+      "workflow_id": 418313622,
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43602191164"
+    },
+    {
+      "id": 43602191142,
+      "name": "Rust engine CI",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 61,
+      "jobs_url": "https://api.github.com/repos/SkyRR23/EarthSync/actions/runs/43602191142/jobs",
+      "logs_url": "https://api.github.com/repos/SkyRR23/EarthSync/actions/runs/43602191142/logs",
+      "workflow_id": 418007454,
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43602191142"
+    },
+    {
+      "id": 43602191126,
+      "name": "Farmer assistant contract and UI",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 18,
+      "jobs_url": "https://api.github.com/repos/SkyRR23/EarthSync/actions/runs/43602191126/jobs",
+      "logs_url": "https://api.github.com/repos/SkyRR23/EarthSync/actions/runs/43602191126/logs",
+      "workflow_id": 418176568,
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43602191126"
+    },
+    {
+      "id": 43602191141,
+      "name": "Python backend CI",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 33,
+      "jobs_url": "https://api.github.com/repos/SkyRR23/EarthSync/actions/runs/43602191141/jobs",
+      "logs_url": "https://api.github.com/repos/SkyRR23/EarthSync/actions/runs/43602191141/logs",
+      "workflow_id": 418043987,
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43602191141"
+    },
+    {
+      "id": 43602191208,
+      "name": "Photo evidence contracts",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 16,
+      "jobs_url": "https://api.github.com/repos/SkyRR23/EarthSync/actions/runs/43602191208/jobs",
+      "logs_url": "https://api.github.com/repos/SkyRR23/EarthSync/actions/runs/43602191208/logs",
+      "workflow_id": 418177910,
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43602191208"
+    },
+    {
+      "id": 43602191172,
+      "name": "Backend evidence platform v1",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 6,
+      "jobs_url": "https://api.github.com/repos/SkyRR23/EarthSync/actions/runs/43602191172/jobs",
+      "logs_url": "https://api.github.com/repos/SkyRR23/EarthSync/actions/runs/43602191172/logs",
+      "workflow_id": 418248608,
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43602191172"
+    },
+    {
+      "id": 43602191201,
+      "name": "Flutter live integration",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 40,
+      "jobs_url": "https://api.github.com/repos/SkyRR23/EarthSync/actions/runs/43602191201/jobs",
+      "logs_url": "https://api.github.com/repos/SkyRR23/EarthSync/actions/runs/43602191201/logs",
+      "workflow_id": 418092533,
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43602191201"
+    }
+  ],
+  "reported_workflows_success": true,
+  "raw_log_audit_passed": false,
+  "reason": "Windows native-command failure was masked by later PowerShell commands; corrected in follow-up CI/test commit."
+}

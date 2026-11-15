@@ -1,0 +1,17 @@
+- heading "Persisted farm evidence" [level=2]
+- group:
+  - 'group "Database farm: 325141a7-694e-4579-9448-6041044c90e9 Confirmed point: 42.0308, -93.6319 Declared system: rainfed"':
+    - group "Saved decision 30a22242-e046-45dc-b6af-2ea8de0916a9 No calibrated suitability score, yield prediction, pest benefit or forecast safety claim is produced. Reviewed/source/applicability flags are caller assertions requiring catalog-owner review; citations alone do not verify a rule. Regional, modeled, reported and observed evidence remain separate in the retained context. Photos and approximate user location are not field measurements. ETc is standard-condition crop evapotranspiration arithmetic, not irrigation requirement, effective rainfall, actual soil moisture or a water balance.":
+      - 'group "requested_sequence · More information needed A supported comparison is not whole-crop suitability. Missing: These supplied rules are not an exhaustive crop recommendation or future safety assessment. sequence-plan:0: Profile has no requirements. sequence-plan:1: Sequential planting and harvest dates; this meets requirement next planting strictly after previous harvest (calendar days). sequence-plan:1: Profile has no requirements."':
+        - button "More information needed sequence-plan:0 · catalog.rules"
+        - button "Supported comparison sequence-plan:1 · schedule.sequential"
+        - button "More information needed sequence-plan:1 · catalog.rules"
+        - button "All crop and rotation findings"
+      - button "Full Rust evidence, source references and validation response"
+      - button "Persisted evidence gaps and source lineage"
+    - group "Saved decision df9bd578-9ecd-4d5d-9e3f-1c3bc34b3913 No calibrated suitability score, yield prediction, pest benefit or forecast safety claim is produced. Reviewed/source/applicability flags are caller assertions requiring catalog-owner review; citations alone do not verify a rule. Regional, modeled, reported and observed evidence remain separate in the retained context. Photos and approximate user location are not field measurements. ETc is standard-condition crop evapotranspiration arithmetic, not irrigation requirement, effective rainfall, actual soil moisture or a water balance.":
+      - 'group "requested:rice.mm.calendar-5-sessions-0@1 · More information needed A supported comparison is not whole-crop suitability. Missing: These supplied rules are not an exhaustive crop recommendation or future safety assessment. plan:rice.mm.calendar-5-sessions-0@1: Profile has no requirements."':
+        - button "More information needed plan:rice.mm.calendar-5-sessions-0@1 · catalog.rules"
+        - button "All crop and rotation findings"
+      - button "Full Rust evidence, source references and validation response"
+      - button "Persisted evidence gaps and source lineage"

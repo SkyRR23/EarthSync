@@ -1,0 +1,18 @@
+{
+  "passed": [
+    "A: new user skips location and reaches useful global home",
+    "K1: deterministic assistant works without a farm, location or LLM key",
+    "B: actual live NASA request and rendered historical climate graphs",
+    "C: explicit farm confirmation restores after browser refresh",
+    "H: main questionnaire invokes NASA/Python/compiled Rust and renders real results",
+    "D/E/G: field dashboard renders soil/weather and optical/SAR unavailable states",
+    "F: real browser file upload, authenticated image view, replacement, GPS withheld and deletion",
+    "I: actual compiled Rust v0.3 synthetic assessment, visibly labeled",
+    "J: catalog adapter invokes actual Rust and withholds unsupported suitability",
+    "K2: farm assistant explains supplied evidence with source details",
+    "L: explicitly simulated transport outage and real service recovery, no fallback",
+    "Fresh Chromium viewport 360x800 renders main farm navigation"
+  ],
+  "completed": true,
+  "unhandled_browser_errors": []
+}

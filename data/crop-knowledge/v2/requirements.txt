@@ -1,0 +1,3 @@
+# Same offline validation/tooling pins as the accepted v1 catalog.
+jsonschema==4.26.0
+ruff==0.14.5

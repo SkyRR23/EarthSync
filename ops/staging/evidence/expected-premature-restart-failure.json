@@ -1,0 +1,31 @@
+{
+  "generated_at": "2026-11-14T13:11:14.638266+00:00",
+  "status": "FAIL",
+  "checks": [
+    {
+      "name": "controlled provider outage",
+      "status": "PASS",
+      "detail": "Injected HTTP 503 produces 3 explicit retryable gaps, zero evidence/cache entries and no synthetic fallback or raw provider body"
+    },
+    {
+      "name": "platform readiness",
+      "status": "PASS",
+      "detail": "Storage integrity and actual Rust startup probe passed; hosted access disabled"
+    },
+    {
+      "name": "private boundary and invalid requests",
+      "status": "PASS",
+      "detail": "External Host/Origin denied and malformed requests rejected with safe JSON"
+    },
+    {
+      "name": "database persistence after restart",
+      "status": "FAIL",
+      "detail": "AssertionError; inspect this check locally"
+    },
+    {
+      "name": "platform HTTP flow",
+      "status": "PASS",
+      "detail": "Verified"
+    }
+  ]
+}

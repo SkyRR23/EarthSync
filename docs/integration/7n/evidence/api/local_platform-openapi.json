@@ -1,0 +1,1870 @@
+{
+  "components": {
+    "schemas": {
+      "AssessmentInput": {
+        "additionalProperties": false,
+        "properties": {
+          "end": {
+            "format": "date",
+            "title": "End",
+            "type": "string"
+          },
+          "evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 50,
+            "title": "Evidence Ids",
+            "type": "array"
+          },
+          "farm_id": {
+            "format": "uuid",
+            "title": "Farm Id",
+            "type": "string"
+          },
+          "pilot_id": {
+            "anyOf": [
+              {
+                "maxLength": 100,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pilot Id"
+          },
+          "plans": {
+            "items": {
+              "$ref": "#/components/schemas/PlanSelection"
+            },
+            "maxItems": 20,
+            "title": "Plans",
+            "type": "array"
+          },
+          "profile_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 20,
+            "title": "Profile Ids",
+            "type": "array"
+          },
+          "sequential_field": {
+            "default": false,
+            "title": "Sequential Field",
+            "type": "boolean"
+          },
+          "start": {
+            "format": "date",
+            "title": "Start",
+            "type": "string"
+          }
+        },
+        "required": [
+          "farm_id",
+          "start",
+          "end"
+        ],
+        "title": "AssessmentInput",
+        "type": "object"
+      },
+      "ClimateInput": {
+        "additionalProperties": false,
+        "properties": {
+          "farm_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Farm Id"
+          },
+          "query": {
+            "$ref": "#/components/schemas/ClimateQuery"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "title": "ClimateInput",
+        "type": "object"
+      },
+      "ClimateQuery": {
+        "additionalProperties": false,
+        "properties": {
+          "contract_version": {
+            "const": "power-daily-merra2.v1",
+            "default": "power-daily-merra2.v1",
+            "title": "Contract Version",
+            "type": "string"
+          },
+          "end": {
+            "format": "date",
+            "title": "End",
+            "type": "string"
+          },
+          "lineage": {
+            "const": "MERRA2",
+            "default": "MERRA2",
+            "title": "Lineage",
+            "type": "string"
+          },
+          "point": {
+            "$ref": "#/components/schemas/Point"
+          },
+          "start": {
+            "format": "date",
+            "title": "Start",
+            "type": "string"
+          }
+        },
+        "required": [
+          "point",
+          "start",
+          "end"
+        ],
+        "title": "ClimateQuery",
+        "type": "object"
+      },
+      "Depth": {
+        "additionalProperties": false,
+        "properties": {
+          "bottom_cm": {
+            "exclusiveMinimum": 0.0,
+            "title": "Bottom Cm",
+            "type": "number"
+          },
+          "top_cm": {
+            "minimum": 0.0,
+            "title": "Top Cm",
+            "type": "number"
+          }
+        },
+        "required": [
+          "top_cm",
+          "bottom_cm"
+        ],
+        "title": "Depth",
+        "type": "object"
+      },
+      "Evidence": {
+        "additionalProperties": false,
+        "properties": {
+          "data_type": {
+            "enum": [
+              "observed",
+              "modeled",
+              "forecast",
+              "farmer_reported",
+              "reference",
+              "synthetic"
+            ],
+            "title": "Data Type",
+            "type": "string"
+          },
+          "dataset": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Dataset",
+            "type": "string"
+          },
+          "dataset_version": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Dataset Version",
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^ev_[a-f0-9]{64}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 100,
+            "minItems": 1,
+            "title": "Limitations",
+            "type": "array"
+          },
+          "measurements": {
+            "items": {
+              "$ref": "#/components/schemas/Measurement"
+            },
+            "maxItems": 5000,
+            "title": "Measurements",
+            "type": "array"
+          },
+          "missing_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 100,
+            "title": "Missing Reasons",
+            "type": "array"
+          },
+          "provider": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Provider",
+            "type": "string"
+          },
+          "quality_flags": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 100,
+            "title": "Quality Flags",
+            "type": "array"
+          },
+          "response_sha256": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Response Sha256",
+            "type": "string"
+          },
+          "review": {
+            "enum": [
+              "unreviewed",
+              "reference_only",
+              "reviewed",
+              "synthetic"
+            ],
+            "title": "Review",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "earthsync.evidence.v1.0",
+            "default": "earthsync.evidence.v1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "source_identifier": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Source Identifier",
+            "type": "string"
+          },
+          "source_metadata": {
+            "additionalProperties": true,
+            "title": "Source Metadata",
+            "type": "object"
+          },
+          "source_url": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Source Url",
+            "type": "string"
+          },
+          "spatial": {
+            "$ref": "#/components/schemas/Spatial"
+          },
+          "temporal": {
+            "$ref": "#/components/schemas/Temporal"
+          },
+          "usable_for_assessment": {
+            "default": false,
+            "title": "Usable For Assessment",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "provider",
+          "dataset",
+          "dataset_version",
+          "source_url",
+          "source_identifier",
+          "data_type",
+          "spatial",
+          "temporal",
+          "measurements",
+          "quality_flags",
+          "missing_reasons",
+          "limitations",
+          "review",
+          "response_sha256",
+          "source_metadata"
+        ],
+        "title": "Evidence",
+        "type": "object"
+      },
+      "Farm": {
+        "additionalProperties": false,
+        "properties": {
+          "confirmed_on": {
+            "format": "date",
+            "title": "Confirmed On",
+            "type": "string"
+          },
+          "confirmed_point": {
+            "$ref": "#/components/schemas/Point"
+          },
+          "confirmed_polygon": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Polygon"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "production_system": {
+            "enum": [
+              "dryland",
+              "rainfed",
+              "irrigated",
+              "flooded_lowland"
+            ],
+            "title": "Production System",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "confirmed_point",
+          "confirmed_on",
+          "production_system",
+          "id"
+        ],
+        "title": "Farm",
+        "type": "object"
+      },
+      "FarmInput": {
+        "additionalProperties": false,
+        "properties": {
+          "confirmed_on": {
+            "format": "date",
+            "title": "Confirmed On",
+            "type": "string"
+          },
+          "confirmed_point": {
+            "$ref": "#/components/schemas/Point"
+          },
+          "confirmed_polygon": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Polygon"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "production_system": {
+            "enum": [
+              "dryland",
+              "rainfed",
+              "irrigated",
+              "flooded_lowland"
+            ],
+            "title": "Production System",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "confirmed_point",
+          "confirmed_on",
+          "production_system"
+        ],
+        "title": "FarmInput",
+        "type": "object"
+      },
+      "FarmLinkInput": {
+        "additionalProperties": false,
+        "properties": {
+          "farm": {
+            "$ref": "#/components/schemas/FarmInput"
+          },
+          "local_profile_id": {
+            "maxLength": 100,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Local Profile Id",
+            "type": "string"
+          },
+          "revision": {
+            "format": "date-time",
+            "title": "Revision",
+            "type": "string"
+          }
+        },
+        "required": [
+          "local_profile_id",
+          "revision",
+          "farm"
+        ],
+        "title": "FarmLinkInput",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "HistoryInput": {
+        "additionalProperties": false,
+        "properties": {
+          "crop_id": {
+            "anyOf": [
+              {
+                "maxLength": 150,
+                "pattern": "^[A-Za-z0-9_.-]+@[A-Za-z0-9_.-]+$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Crop Id"
+          },
+          "end": {
+            "format": "date",
+            "title": "End",
+            "type": "string"
+          },
+          "fallow": {
+            "default": false,
+            "title": "Fallow",
+            "type": "boolean"
+          },
+          "start": {
+            "format": "date",
+            "title": "Start",
+            "type": "string"
+          }
+        },
+        "required": [
+          "start",
+          "end"
+        ],
+        "title": "HistoryInput",
+        "type": "object"
+      },
+      "Measurement": {
+        "additionalProperties": false,
+        "properties": {
+          "conversion": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Conversion",
+            "type": "string"
+          },
+          "date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Date"
+          },
+          "depth": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Depth"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "missing_reason": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Missing Reason"
+          },
+          "original_unit": {
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Original Unit",
+            "type": "string"
+          },
+          "original_value": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Original Value"
+          },
+          "quality": {
+            "enum": [
+              "usable",
+              "missing",
+              "suspect",
+              "unavailable"
+            ],
+            "title": "Quality",
+            "type": "string"
+          },
+          "statistic": {
+            "default": "daily",
+            "maxLength": 80,
+            "title": "Statistic",
+            "type": "string"
+          },
+          "unit": {
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          },
+          "variable": {
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Variable",
+            "type": "string"
+          }
+        },
+        "required": [
+          "variable",
+          "original_value",
+          "original_unit",
+          "value",
+          "unit",
+          "conversion",
+          "quality"
+        ],
+        "title": "Measurement",
+        "type": "object"
+      },
+      "OpticalInput": {
+        "additionalProperties": false,
+        "properties": {
+          "end": {
+            "format": "date-time",
+            "title": "End",
+            "type": "string"
+          },
+          "farm_id": {
+            "format": "uuid",
+            "title": "Farm Id",
+            "type": "string"
+          },
+          "product": {
+            "default": "HLSS30",
+            "pattern": "^(HLSL30|HLSS30)$",
+            "title": "Product",
+            "type": "string"
+          },
+          "start": {
+            "format": "date-time",
+            "title": "Start",
+            "type": "string"
+          }
+        },
+        "required": [
+          "farm_id",
+          "start",
+          "end"
+        ],
+        "title": "OpticalInput",
+        "type": "object"
+      },
+      "PlanSelection": {
+        "additionalProperties": false,
+        "properties": {
+          "end": {
+            "format": "date",
+            "title": "End",
+            "type": "string"
+          },
+          "profile_id": {
+            "maxLength": 150,
+            "minLength": 1,
+            "title": "Profile Id",
+            "type": "string"
+          },
+          "start": {
+            "format": "date",
+            "title": "Start",
+            "type": "string"
+          }
+        },
+        "required": [
+          "profile_id",
+          "start",
+          "end"
+        ],
+        "title": "PlanSelection",
+        "type": "object"
+      },
+      "Point": {
+        "additionalProperties": false,
+        "properties": {
+          "latitude": {
+            "maximum": 90.0,
+            "minimum": -90.0,
+            "title": "Latitude",
+            "type": "number"
+          },
+          "longitude": {
+            "maximum": 180.0,
+            "minimum": -180.0,
+            "title": "Longitude",
+            "type": "number"
+          }
+        },
+        "required": [
+          "latitude",
+          "longitude"
+        ],
+        "title": "Point",
+        "type": "object"
+      },
+      "Polygon": {
+        "additionalProperties": false,
+        "properties": {
+          "coordinates": {
+            "items": {
+              "items": {
+                "maxItems": 2,
+                "minItems": 2,
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "maxItems": 1,
+            "minItems": 1,
+            "title": "Coordinates",
+            "type": "array"
+          },
+          "type": {
+            "const": "Polygon",
+            "default": "Polygon",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "coordinates"
+        ],
+        "title": "Polygon",
+        "type": "object"
+      },
+      "SoilInput": {
+        "additionalProperties": false,
+        "properties": {
+          "farm_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Farm Id"
+          },
+          "point": {
+            "$ref": "#/components/schemas/Point"
+          }
+        },
+        "required": [
+          "point"
+        ],
+        "title": "SoilInput",
+        "type": "object"
+      },
+      "Spatial": {
+        "additionalProperties": false,
+        "properties": {
+          "crs": {
+            "const": "EPSG:4326",
+            "default": "EPSG:4326",
+            "title": "Crs",
+            "type": "string"
+          },
+          "farm_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Farm Id"
+          },
+          "original_crs": {
+            "default": "EPSG:4326",
+            "maxLength": 3000,
+            "title": "Original Crs",
+            "type": "string"
+          },
+          "original_geometry": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Original Geometry"
+          },
+          "query_point": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Point"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "resolution_degrees": {
+            "anyOf": [
+              {
+                "maxItems": 2,
+                "minItems": 2,
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resolution Degrees"
+          },
+          "resolution_m": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resolution M"
+          },
+          "role": {
+            "enum": [
+              "approximate_area",
+              "confirmed_farm_point",
+              "confirmed_farm_polygon",
+              "farm_photo",
+              "satellite_acquisition",
+              "regional_context"
+            ],
+            "title": "Role",
+            "type": "string"
+          },
+          "support": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Support",
+            "type": "string"
+          }
+        },
+        "required": [
+          "role",
+          "support"
+        ],
+        "title": "Spatial",
+        "type": "object"
+      },
+      "Temporal": {
+        "additionalProperties": false,
+        "properties": {
+          "acquired_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Acquired At"
+          },
+          "day_basis": {
+            "anyOf": [
+              {
+                "maxLength": 100,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Day Basis"
+          },
+          "end": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End"
+          },
+          "issued_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Issued At"
+          },
+          "observed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observed At"
+          },
+          "retrieved_at": {
+            "format": "date-time",
+            "title": "Retrieved At",
+            "type": "string"
+          },
+          "start": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start"
+          },
+          "unknown_reason": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unknown Reason"
+          }
+        },
+        "required": [
+          "retrieved_at"
+        ],
+        "title": "Temporal",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "EarthSync backend evidence platform (local single-user)",
+    "version": "1.0.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/platform/v1/assessments": {
+      "post": {
+        "operationId": "assess_api_platform_v1_assessments_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssessmentInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Assess"
+      }
+    },
+    "/api/platform/v1/catalog/{profile_id}": {
+      "get": {
+        "operationId": "crop_api_platform_v1_catalog__profile_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "profile_id",
+            "required": true,
+            "schema": {
+              "title": "Profile Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Crop"
+      }
+    },
+    "/api/platform/v1/climate/jobs": {
+      "post": {
+        "operationId": "climate_api_platform_v1_climate_jobs_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClimateInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Climate"
+      }
+    },
+    "/api/platform/v1/evidence/{evidence_id}": {
+      "get": {
+        "operationId": "evidence_api_platform_v1_evidence__evidence_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "evidence_id",
+            "required": true,
+            "schema": {
+              "title": "Evidence Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Evidence"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Evidence"
+      }
+    },
+    "/api/platform/v1/farm-links": {
+      "post": {
+        "operationId": "link_farm_api_platform_v1_farm_links_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FarmLinkInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Link Farm"
+      }
+    },
+    "/api/platform/v1/farm-links/{local_profile_id}": {
+      "get": {
+        "operationId": "farm_link_api_platform_v1_farm_links__local_profile_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "local_profile_id",
+            "required": true,
+            "schema": {
+              "title": "Local Profile Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "revision",
+            "required": true,
+            "schema": {
+              "format": "date-time",
+              "title": "Revision",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Farm Link"
+      }
+    },
+    "/api/platform/v1/farms": {
+      "get": {
+        "operationId": "farms_api_platform_v1_farms_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Farm"
+                  },
+                  "title": "Response Farms Api Platform V1 Farms Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Farms"
+      },
+      "post": {
+        "operationId": "create_farm_api_platform_v1_farms_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FarmInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Farm"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Farm"
+      }
+    },
+    "/api/platform/v1/farms/{farm_id}": {
+      "get": {
+        "operationId": "farm_api_platform_v1_farms__farm_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "farm_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Farm Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Farm"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Farm"
+      }
+    },
+    "/api/platform/v1/farms/{farm_id}/assistant-context": {
+      "get": {
+        "operationId": "assistant_api_platform_v1_farms__farm_id__assistant_context_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "farm_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Farm Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Assistant"
+      }
+    },
+    "/api/platform/v1/farms/{farm_id}/context": {
+      "get": {
+        "operationId": "context_api_platform_v1_farms__farm_id__context_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "farm_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Farm Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Context"
+      }
+    },
+    "/api/platform/v1/farms/{farm_id}/decisions": {
+      "get": {
+        "operationId": "decisions_api_platform_v1_farms__farm_id__decisions_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "farm_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Farm Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Decisions"
+      }
+    },
+    "/api/platform/v1/farms/{farm_id}/history": {
+      "get": {
+        "operationId": "history_api_platform_v1_farms__farm_id__history_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "farm_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Farm Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "History"
+      },
+      "post": {
+        "operationId": "report_history_api_platform_v1_farms__farm_id__history_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "farm_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Farm Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HistoryInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Report History"
+      }
+    },
+    "/api/platform/v1/farms/{farm_id}/photos": {
+      "get": {
+        "operationId": "photos_api_platform_v1_farms__farm_id__photos_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "farm_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Farm Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Photos"
+      },
+      "post": {
+        "operationId": "upload_api_platform_v1_farms__farm_id__photos_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "farm_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Farm Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Upload"
+      }
+    },
+    "/api/platform/v1/farms/{farm_id}/photos/{photo_id}": {
+      "delete": {
+        "operationId": "delete_photo_api_platform_v1_farms__farm_id__photos__photo_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "farm_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Farm Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "photo_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Photo Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Delete Photo"
+      }
+    },
+    "/api/platform/v1/farms/{farm_id}/photos/{photo_id}/image": {
+      "get": {
+        "operationId": "photo_image_api_platform_v1_farms__farm_id__photos__photo_id__image_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "farm_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Farm Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "photo_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Photo Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Photo Image"
+      }
+    },
+    "/api/platform/v1/health": {
+      "get": {
+        "operationId": "liveness_api_platform_v1_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Liveness"
+      }
+    },
+    "/api/platform/v1/jobs/{job_id}": {
+      "delete": {
+        "operationId": "cancel_api_platform_v1_jobs__job_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Cancel"
+      },
+      "get": {
+        "operationId": "job_api_platform_v1_jobs__job_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Job"
+      }
+    },
+    "/api/platform/v1/optical/jobs": {
+      "post": {
+        "operationId": "optical_job_api_platform_v1_optical_jobs_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpticalInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Optical Job"
+      }
+    },
+    "/api/platform/v1/providers": {
+      "get": {
+        "operationId": "providers_api_platform_v1_providers_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Providers"
+      }
+    },
+    "/api/platform/v1/ready": {
+      "get": {
+        "operationId": "readiness_api_platform_v1_ready_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Readiness"
+      }
+    },
+    "/api/platform/v1/soil/jobs": {
+      "post": {
+        "operationId": "soil_job_api_platform_v1_soil_jobs_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SoilInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Soil Job"
+      }
+    }
+  }
+}

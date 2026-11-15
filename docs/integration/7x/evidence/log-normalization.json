@@ -1,0 +1,30 @@
+{
+  "scope": "Trailing whitespace/blank EOF normalization for captured tool logs only; all test output and scientific records retained",
+  "files": [
+    {
+      "path": "flutter-web-build.log",
+      "original_sha256": "78635c6fa6bcc00585d5151a7bcd7fbdb236fa660ec96968b723c98cbfcf1e47",
+      "normalized_sha256": "d8bb857983ba6e4ccfdbd397c6fdc515003058373f5a87dcfacee7b555433f43"
+    },
+    {
+      "path": "flutter-analyze.log",
+      "original_sha256": "f6dc1629dd4a347d62bd67419cf71e85a1102e1a9a8f83c03057f77365ea74a2",
+      "normalized_sha256": "15e6870ce09ff55467e3a1e407f180afc5fc087e2a4dde5ca267745ecf4c2c59"
+    },
+    {
+      "path": "rust-tests.log",
+      "original_sha256": "30b87c274d5f8af9edbde054c85116c16aceab16d51b80264835de3e239d076e",
+      "normalized_sha256": "4bf03239a3608e0fd26a982e834a153b205e9e513570b77938552186b8d00b08"
+    },
+    {
+      "path": "7q-linux-build.log",
+      "original_sha256": "1c8acfdaba00375e1288f0091a2c5b1b877a3524190285a2a90cb289cb73d178",
+      "normalized_sha256": "afd6a167e9f09c75e91fd1a874e8c6d28ec10a10ba1e5ddae6aa55f18deee8ae"
+    },
+    {
+      "path": "diagnostics/comparison-capture-selector.log",
+      "original_sha256": "4e6172255001370fe69d0d23929c5abdc4502f23101da1cbd8cf271da118b677",
+      "normalized_sha256": "48e59aa4c4b11f3aaf81fbb0fc9348ec05a8b9a7110aef711a55acc649ce9ffa"
+    }
+  ]
+}

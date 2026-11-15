@@ -1,0 +1,679 @@
+[
+  {
+    "id": "fao_ecocrop_metadata",
+    "url": "https://data.fao.org/catalog/api/3/action/package_show?id=ecocrop",
+    "status": "captured_pending_content_review",
+    "sha256": "a72d94cb0dfa1fe7c2023fbf78e1bfadd3e7b6dbd268c2c33b18d460babf4262",
+    "bytes": 7015,
+    "file": "fao_ecocrop_metadata.bin",
+    "final_url": "https://data.fao.org/catalog/api/3/action/package_show?id=ecocrop",
+    "http_status": 200,
+    "response_headers": {
+      "date": "Sat, 14 Nov 2026 14:46:43 GMT",
+      "content-type": "application/json;charset=utf-8",
+      "content-length": "7015"
+    },
+    "original_file_retained_in_package": "originals/fao_ecocrop_metadata.json",
+    "content_review": "reference_only_with_dataset_attribution",
+    "request_started_at": "2026-11-14T14:46:42.935441+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "fao_ecocrop_status",
+    "url": "https://www.fao.org/land-water/resources/tools/databases/ecocrop/en",
+    "status": "captured_pending_content_review",
+    "sha256": "1be1d9b0dff9cd5a0ff32f3cf1da7bb5f85e63a89bfcb08372f65033abfd837e",
+    "bytes": 57108,
+    "file": "fao_ecocrop_status.bin",
+    "final_url": "https://www.fao.org/land-water/resources/tools/databases/ecocrop/en",
+    "http_status": 200,
+    "response_headers": {
+      "date": "Sat, 14 Nov 2026 14:46:44 GMT",
+      "content-type": "text/html; charset=utf-8",
+      "last-modified": "Fri, 13 Nov 2026 11:04:59 GMT"
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "not_used_for_agricultural_claims",
+    "request_started_at": "2026-11-14T14:46:44.058172+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "ecocrop_openclim_ea43ecd",
+    "url": "https://raw.githubusercontent.com/OpenCLIM/ecocrop/ea43ecd418fd1a1ea08d32c7dce64b7fae02dec4/EcoCrop_DB.csv",
+    "status": "captured_pending_content_review",
+    "sha256": "4187e8846336e185c4583165211c5981855e95adfbefd897bd2bd481de48d106",
+    "bytes": 1622384,
+    "file": "ecocrop_openclim_ea43ecd.bin",
+    "final_url": "https://raw.githubusercontent.com/OpenCLIM/ecocrop/ea43ecd418fd1a1ea08d32c7dce64b7fae02dec4/EcoCrop_DB.csv",
+    "http_status": 200,
+    "response_headers": {
+      "content-type": "application/octet-stream",
+      "etag": "\"34bd005dbb2054e5b182b2ee46d256c6e0b8cf0e88099dc6a73f2eaea012a190\"",
+      "date": "Sat, 14 Nov 2026 14:46:44 GMT",
+      "content-length": "1622384"
+    },
+    "original_file_retained_in_package": "originals/ecocrop_openclim_ea43ecd.csv",
+    "content_review": "reference_only_with_dataset_attribution",
+    "request_started_at": "2026-11-14T14:46:44.259271+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "ecocrop_rice",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1574",
+    "status": "captured_pending_content_review",
+    "sha256": "73e150aaf5c203a6b4c55e95d87284cfd3b5c70a425b888c9c436bb74b217e6c",
+    "bytes": 6144,
+    "file": "ecocrop_rice.bin",
+    "final_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1574",
+    "http_status": 200,
+    "response_headers": {
+      "content-type": "text/html;charset=UTF-8",
+      "date": "Sat, 14 Nov 2026 14:46:46 GMT"
+    },
+    "original_file_retained_in_package": "originals/ecocrop_rice.html",
+    "content_review": "reference_only_with_dataset_attribution",
+    "request_started_at": "2026-11-14T14:46:46.013482+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "ecocrop_mung_bean",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2150",
+    "status": "captured_pending_content_review",
+    "sha256": "772f2edbece09d0ca0a641396c73a5b70ed52dea6fd78671ac8e2810d529254c",
+    "bytes": 6350,
+    "file": "ecocrop_mung_bean.bin",
+    "final_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2150",
+    "http_status": 200,
+    "response_headers": {
+      "content-type": "text/html;charset=UTF-8",
+      "date": "Sat, 14 Nov 2026 14:46:47 GMT"
+    },
+    "original_file_retained_in_package": "originals/ecocrop_mung_bean.html",
+    "content_review": "reference_only_with_dataset_attribution",
+    "request_started_at": "2026-11-14T14:46:46.880930+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "ecocrop_sesame",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1937",
+    "status": "captured_pending_content_review",
+    "sha256": "0e56e837107dfc2f7bc21d3bd4236ae6efc6cfc831877a0a5197ece19cafb5f7",
+    "bytes": 6382,
+    "file": "ecocrop_sesame.bin",
+    "final_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1937",
+    "http_status": 200,
+    "response_headers": {
+      "content-type": "text/html;charset=UTF-8",
+      "date": "Sat, 14 Nov 2026 14:46:47 GMT"
+    },
+    "original_file_retained_in_package": "originals/ecocrop_sesame.html",
+    "content_review": "reference_only_with_dataset_attribution",
+    "request_started_at": "2026-11-14T14:46:47.341001+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "ecocrop_groundnut",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2199",
+    "status": "captured_pending_content_review",
+    "sha256": "fc99ce99d40be5ef2b89d5c391e740fde7501ef68ae0ed3e14e54da782e07956",
+    "bytes": 6497,
+    "file": "ecocrop_groundnut.bin",
+    "final_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2199",
+    "http_status": 200,
+    "response_headers": {
+      "content-type": "text/html;charset=UTF-8",
+      "date": "Sat, 14 Nov 2026 14:46:48 GMT"
+    },
+    "original_file_retained_in_package": "originals/ecocrop_groundnut.html",
+    "content_review": "reference_only_with_dataset_attribution",
+    "request_started_at": "2026-11-14T14:46:47.783888+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "ecocrop_maize",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2175",
+    "status": "captured_pending_content_review",
+    "sha256": "285c1b1cc3522c5e34ddc552ec46306a364a7c44897421e421e1657bb8194bb0",
+    "bytes": 6393,
+    "file": "ecocrop_maize.bin",
+    "final_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2175",
+    "http_status": 200,
+    "response_headers": {
+      "content-type": "text/html;charset=UTF-8",
+      "date": "Sat, 14 Nov 2026 14:46:48 GMT"
+    },
+    "original_file_retained_in_package": "originals/ecocrop_maize.html",
+    "content_review": "reference_only_with_dataset_attribution",
+    "request_started_at": "2026-11-14T14:46:48.210099+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "grin_rice",
+    "url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=26097",
+    "status": "captured_pending_content_review",
+    "sha256": "f82c5c4974d0723b964ef5b572cd0404ceac72e064b32e2e3009b4b9fb7cde26",
+    "bytes": 46162,
+    "file": "grin_rice.bin",
+    "final_url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=26097",
+    "http_status": 200,
+    "response_headers": {
+      "date": "Sat, 14 Nov 2026 14:46:49 GMT",
+      "content-type": "text/html; charset=utf-8",
+      "content-length": "46162"
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "rejected_wrong_species_Oryzopsis_miliacea",
+    "request_started_at": "2026-11-14T14:46:48.624257+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "grin_mung_bean",
+    "url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=41629",
+    "status": "captured_pending_content_review",
+    "sha256": "b7abb1c2b33a93dfe2b55101553639e0ea5768cec242666c76cdc97aced9d6ce",
+    "bytes": 77929,
+    "file": "grin_mung_bean.bin",
+    "final_url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=41629",
+    "http_status": 200,
+    "response_headers": {
+      "date": "Sat, 14 Nov 2026 14:46:51 GMT",
+      "content-type": "text/html; charset=utf-8",
+      "content-length": "77929"
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "not_used_for_agricultural_claims",
+    "request_started_at": "2026-11-14T14:46:50.250245+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "grin_sesame",
+    "url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=33749",
+    "status": "captured_pending_content_review",
+    "sha256": "f3962427983273091df189152d6e51587f913263d878a2d787dcd95bc4e6e9c7",
+    "bytes": 82449,
+    "file": "grin_sesame.bin",
+    "final_url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=33749",
+    "http_status": 200,
+    "response_headers": {
+      "date": "Sat, 14 Nov 2026 14:46:52 GMT",
+      "content-type": "text/html; charset=utf-8",
+      "content-length": "82449"
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "not_used_for_agricultural_claims",
+    "request_started_at": "2026-11-14T14:46:51.568910+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "grin_groundnut",
+    "url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=3785",
+    "status": "captured_pending_content_review",
+    "sha256": "97f6405d41c17d816d63a165798eff949c0f5a2caa3c56b741afdd0685de982d",
+    "bytes": 173260,
+    "file": "grin_groundnut.bin",
+    "final_url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=3785",
+    "http_status": 200,
+    "response_headers": {
+      "date": "Sat, 14 Nov 2026 14:46:53 GMT",
+      "content-type": "text/html; charset=utf-8",
+      "content-length": "173260"
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "not_used_for_agricultural_claims",
+    "request_started_at": "2026-11-14T14:46:52.594972+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "grin_maize",
+    "url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=42207",
+    "status": "captured_pending_content_review",
+    "sha256": "5d730f290d28be46a5373a7f41f486469f1c98f43dbdcb4899bf3fb16270dab5",
+    "bytes": 65226,
+    "file": "grin_maize.bin",
+    "final_url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=42207",
+    "http_status": 200,
+    "response_headers": {
+      "date": "Sat, 14 Nov 2026 14:46:55 GMT",
+      "content-type": "text/html; charset=utf-8",
+      "content-length": "65226"
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "not_used_for_agricultural_claims",
+    "request_started_at": "2026-11-14T14:46:54.397405+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "grin_about",
+    "url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/abouttaxonomy",
+    "status": "captured_pending_content_review",
+    "sha256": "efad2e97dda0d27e9040574271caf6ef4f9feeb6e890bcee54091a3e4725eca4",
+    "bytes": 23669,
+    "file": "grin_about.bin",
+    "final_url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/abouttaxonomy",
+    "http_status": 200,
+    "response_headers": {
+      "date": "Sat, 14 Nov 2026 14:46:55 GMT",
+      "content-type": "text/html; charset=utf-8",
+      "content-length": "23669"
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "not_used_for_agricultural_claims",
+    "request_started_at": "2026-11-14T14:46:55.632332+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "fao_calendar_countries",
+    "url": "https://api-cropcalendar.apps.fao.org/api/v1/countries?language=en",
+    "status": "captured_pending_content_review",
+    "sha256": "daef4be3c25d62b22a7c03c4434afc59806aace2ecb31a0e676500cfb835b0ab",
+    "bytes": 1783,
+    "file": "fao_calendar_countries.bin",
+    "final_url": "https://api-cropcalendar.apps.fao.org/api/v1/countries?language=en",
+    "http_status": 200,
+    "response_headers": {
+      "date": "Sat, 14 Nov 2026 14:46:57 GMT",
+      "content-type": "application/json; charset=utf-8",
+      "content-length": "1783",
+      "etag": "W/\"6f7-2KfEbKOtJrTErLlUQUDGTq1xtRM\""
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "not_used_for_agricultural_claims",
+    "request_started_at": "2026-11-14T14:46:56.043132+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "fao_calendar_crops",
+    "url": "https://api-cropcalendar.apps.fao.org/api/v1/crops?language=en",
+    "status": "captured_pending_content_review",
+    "sha256": "042999fd0623804bd43ad67a81b1d0ca09a8ce3696d97450c2a94ad20e9c0c0d",
+    "bytes": 109053,
+    "file": "fao_calendar_crops.bin",
+    "final_url": "https://api-cropcalendar.apps.fao.org/api/v1/crops?language=en",
+    "http_status": 200,
+    "response_headers": {
+      "date": "Sat, 14 Nov 2026 14:46:58 GMT",
+      "content-type": "application/json; charset=utf-8",
+      "content-length": "109053",
+      "etag": "W/\"1a9fd-6J2jPzx4lOGjOHOgZrvcpyTKI6o\""
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "not_used_for_agricultural_claims",
+    "request_started_at": "2026-11-14T14:46:57.329259+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "fao_calendar_mm_crops",
+    "url": "https://api-cropcalendar.apps.fao.org/api/v1/countries/MM/crops?language=en",
+    "status": "captured_pending_content_review",
+    "sha256": "e072f86087f6a3b945459279cf0202826181ad2c842f9941a4f504e1ec205fff",
+    "bytes": 17539,
+    "file": "fao_calendar_mm_crops.bin",
+    "final_url": "https://api-cropcalendar.apps.fao.org/api/v1/countries/MM/crops?language=en",
+    "http_status": 200,
+    "response_headers": {
+      "date": "Sat, 14 Nov 2026 14:47:00 GMT",
+      "content-type": "application/json; charset=utf-8",
+      "content-length": "17539",
+      "etag": "W/\"4483-oZtIgTQEgga++hZibmAb1F6e0f8\""
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "not_used_for_agricultural_claims",
+    "request_started_at": "2026-11-14T14:46:59.366223+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "fao_calendar_mm_aez",
+    "url": "https://api-cropcalendar.apps.fao.org/api/v1/countries/MM/aez?language=en",
+    "status": "captured_pending_content_review",
+    "sha256": "cb1e34da28f3e7a30b76452bb1b52f5e1a782196e187a6bd89129d122b599508",
+    "bytes": 2457,
+    "file": "fao_calendar_mm_aez.bin",
+    "final_url": "https://api-cropcalendar.apps.fao.org/api/v1/countries/MM/aez?language=en",
+    "http_status": 200,
+    "response_headers": {
+      "date": "Sat, 14 Nov 2026 14:47:01 GMT",
+      "content-type": "application/json; charset=utf-8",
+      "content-length": "2457",
+      "etag": "W/\"999-wNUR9ohNBVQF5456iTMjgUvfTYk\""
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "not_used_for_agricultural_claims",
+    "request_started_at": "2026-11-14T14:47:00.496756+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "fao_calendar_mm",
+    "url": "https://api-cropcalendar.apps.fao.org/api/v1/countries/MM/cropCalendar?language=en",
+    "status": "captured_pending_content_review",
+    "sha256": "5566904e051b0df338a9a54dd7d241a83b270a532537facb1acaac86395ae842",
+    "bytes": 102535,
+    "file": "fao_calendar_mm.bin",
+    "final_url": "https://api-cropcalendar.apps.fao.org/api/v1/countries/MM/cropCalendar?language=en",
+    "http_status": 200,
+    "response_headers": {
+      "date": "Sat, 14 Nov 2026 14:47:05 GMT",
+      "content-type": "application/json; charset=utf-8",
+      "content-length": "102535",
+      "etag": "W/\"19087-AY3SLxR4DwKvLsNZvnNiBLzI3BM\""
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "not_used_for_agricultural_claims",
+    "request_started_at": "2026-11-14T14:47:01.732109+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "gaez_v5_metadata",
+    "url": "https://data.fao.org/catalog/api/3/action/package_show?id=gaez-v5-master-config",
+    "status": "captured_pending_content_review",
+    "sha256": "df4d4a7d9794d29daedba730aa1f2d58b454f461e296cff78776995abcdcc0a3",
+    "bytes": 23259,
+    "file": "gaez_v5_metadata.bin",
+    "final_url": "https://data.fao.org/catalog/api/3/action/package_show?id=gaez-v5-master-config",
+    "http_status": 200,
+    "response_headers": {
+      "date": "Sat, 14 Nov 2026 14:47:06 GMT",
+      "content-type": "application/json;charset=utf-8",
+      "content-length": "23259"
+    },
+    "original_file_retained_in_package": "originals/gaez_v5_metadata.json",
+    "content_review": "reference_only_with_dataset_attribution",
+    "request_started_at": "2026-11-14T14:47:06.381482+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "gaez_v5_guide",
+    "url": "https://raw.githubusercontent.com/wiki/un-fao/gaezv5/21.-GAEZ-v5-Platform-User-Guide.md",
+    "status": "captured_pending_content_review",
+    "sha256": "8b0fc35f2526d6d391d67540477a96c42911fa5059ce88a30874a2469ccb3e6c",
+    "bytes": 12344,
+    "file": "gaez_v5_guide.bin",
+    "final_url": "https://raw.githubusercontent.com/wiki/un-fao/gaezv5/21.-GAEZ-v5-Platform-User-Guide.md",
+    "http_status": 200,
+    "response_headers": {
+      "content-type": "text/plain; charset=utf-8",
+      "etag": "\"c82645670246e17c66e616bf15ef314a70af9c1a95a4f611ef530b233d0dff02\"",
+      "date": "Sat, 14 Nov 2026 14:47:07 GMT",
+      "content-length": "12344"
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "not_used_for_agricultural_claims",
+    "request_started_at": "2026-11-14T14:47:06.943064+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "soilgrids_layers",
+    "url": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html",
+    "status": "captured_pending_content_review",
+    "sha256": "1b0a5c1e951092827eed732dff02deed6ed9aad6f2ff0b54543444dc46259772",
+    "bytes": 47346,
+    "file": "soilgrids_layers.bin",
+    "final_url": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html",
+    "http_status": 200,
+    "response_headers": {
+      "date": "Sat, 14 Nov 2026 14:47:11 GMT",
+      "content-type": "text/html",
+      "content-length": "47346",
+      "last-modified": "Sat, 14 Nov 2026 14:27:58 GMT",
+      "etag": "\"6af86fee-b8f2\""
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "not_used_for_agricultural_claims",
+    "request_started_at": "2026-11-14T14:47:07.569386+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "soilgrids_access",
+    "url": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_02.html",
+    "status": "captured_pending_content_review",
+    "sha256": "bb355c3ff6b7454694a09c2fd73974179de5a1030d579beef89d10dc25a6b07e",
+    "bytes": 40295,
+    "file": "soilgrids_access.bin",
+    "final_url": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_02.html",
+    "http_status": 200,
+    "response_headers": {
+      "date": "Sat, 14 Nov 2026 14:47:11 GMT",
+      "content-type": "text/html",
+      "content-length": "40295",
+      "last-modified": "Sat, 14 Nov 2026 14:27:58 GMT",
+      "etag": "\"6af86fee-9d67\""
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "not_used_for_agricultural_claims",
+    "request_started_at": "2026-11-14T14:47:11.167255+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "soilgrids_webdav",
+    "url": "https://files.isric.org/soilgrids/latest/README.md",
+    "status": "unavailable",
+    "sha256": null,
+    "bytes": null,
+    "file": null,
+    "reason": "HTTP Error 404: Not Found",
+    "response_headers": {},
+    "original_file_retained_in_package": null,
+    "content_review": "not_used_for_agricultural_claims",
+    "request_started_at": "2026-11-14T14:47:11.604820+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "fao_myanmar_handbook_2022",
+    "url": "https://openknowledge.fao.org/server/api/core/bitstreams/a825f44a-0409-466a-94b4-135e4bc9fd27/content",
+    "status": "captured_pending_content_review",
+    "sha256": "7b38a1733989263b8cc7b12ba807679aa545ab6089f766f7497abc9a59e048c0",
+    "bytes": 9301024,
+    "file": "fao_myanmar_handbook_2022.bin",
+    "final_url": "https://openknowledge.fao.org/server/api/core/bitstreams/a825f44a-0409-466a-94b4-135e4bc9fd27/content",
+    "http_status": 200,
+    "response_headers": {
+      "last-modified": "Mon, 15 May 2023 07:55:50 GMT",
+      "etag": "\"028ccbaf2e6d04897abb0fb56c4d8121\"",
+      "content-type": "application/pdf;charset=UTF-8",
+      "date": "Sat, 14 Nov 2026 14:47:13 GMT"
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "not_used_for_agricultural_claims",
+    "request_started_at": "2026-11-14T14:47:12.720961+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "myanmar_doa_pulses_2017",
+    "url": "https://www.doa.gov.mm/doa_old/index.php?pavo_post_id=39&route=extension%2Fpavoblog%2Fsingle",
+    "status": "captured_pending_content_review",
+    "sha256": "f2b63f1f66d71dc9dba9e5aa4cac3f952bab916a82bac2aa3e933a8dc59b0395",
+    "bytes": 94980,
+    "file": "myanmar_doa_pulses_2017.bin",
+    "final_url": "https://www.doa.gov.mm/doa_old/index.php?pavo_post_id=39&route=extension%2Fpavoblog%2Fsingle",
+    "http_status": 200,
+    "response_headers": {
+      "date": "Sat, 14 Nov 2026 14:47:18 GMT",
+      "content-type": "text/html; charset=utf-8"
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "not_used_for_agricultural_claims",
+    "request_started_at": "2026-11-14T14:47:16.696372+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "nasa_cmr_collections",
+    "url": "https://cmr.earthdata.nasa.gov/search/collections.json?short_name=HLSL30&version=2.0&page_size=1",
+    "status": "captured_pending_content_review",
+    "sha256": "d83afb617ba95e13bc1ca148a73ae2dba9a81e984015c480eba44c4d6448208a",
+    "bytes": 11433,
+    "file": "nasa_cmr_collections.bin",
+    "final_url": "https://cmr.earthdata.nasa.gov/search/collections.json?short_name=HLSL30&version=2.0&page_size=1",
+    "http_status": 200,
+    "response_headers": {
+      "content-type": "application/json;charset=utf-8",
+      "content-length": "11433",
+      "date": "Sat, 14 Nov 2026 14:47:22 GMT"
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "not_used_for_agricultural_claims",
+    "request_started_at": "2026-11-14T14:47:21.067475+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "grin_rice_26077",
+    "url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=26077",
+    "status": "captured_pending_content_review",
+    "sha256": "b265610c690b285eba8c2985798a82968ba9e0ba7794bd4e16394d40cef62d89",
+    "bytes": 90159,
+    "file": "grin_rice_26077.bin",
+    "final_url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=26077",
+    "http_status": 200,
+    "response_headers": {
+      "date": "Sat, 14 Nov 2026 14:50:25 GMT",
+      "content-type": "text/html; charset=utf-8",
+      "content-length": "90159"
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "not_used_for_agricultural_claims",
+    "request_started_at": "2026-11-14T14:50:22.101828+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "ecocrop_help_2000",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/helpShow?id=2000",
+    "status": "captured_pending_content_review",
+    "sha256": "ef3eb9cfeed9b5a03380f4df7d63c09a267f26cb7a09366befb0d3505305affc",
+    "bytes": 655,
+    "file": "ecocrop_help_2000.bin",
+    "final_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/helpShow?id=2000",
+    "http_status": 200,
+    "response_headers": {
+      "content-type": "text/html;charset=UTF-8",
+      "date": "Sat, 14 Nov 2026 14:58:50 GMT"
+    },
+    "original_file_retained_in_package": "originals/ecocrop_help_2000.html",
+    "content_review": "reference_only_with_dataset_attribution",
+    "request_started_at": "2026-11-14T14:58:50.578701+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "ecocrop_help_2001",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/helpShow?id=2001",
+    "status": "captured_pending_content_review",
+    "sha256": "2d71b5a07c1f7e5eec2ac1cad883f0c3d632a67bae78c05889427a7d65c81097",
+    "bytes": 721,
+    "file": "ecocrop_help_2001.bin",
+    "final_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/helpShow?id=2001",
+    "http_status": 200,
+    "response_headers": {
+      "content-type": "text/html;charset=UTF-8",
+      "date": "Sat, 14 Nov 2026 14:58:51 GMT"
+    },
+    "original_file_retained_in_package": "originals/ecocrop_help_2001.html",
+    "content_review": "reference_only_with_dataset_attribution",
+    "request_started_at": "2026-11-14T14:58:50.967112+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "ecocrop_help_2003",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/helpShow?id=2003",
+    "status": "captured_pending_content_review",
+    "sha256": "c1c1974dc518b23b4fe4c75fa556a89395f85293b0c6aa647e9efd93dfa82038",
+    "bytes": 735,
+    "file": "ecocrop_help_2003.bin",
+    "final_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/helpShow?id=2003",
+    "http_status": 200,
+    "response_headers": {
+      "content-type": "text/html;charset=UTF-8",
+      "date": "Sat, 14 Nov 2026 14:58:51 GMT"
+    },
+    "original_file_retained_in_package": "originals/ecocrop_help_2003.html",
+    "content_review": "reference_only_with_dataset_attribution",
+    "request_started_at": "2026-11-14T14:58:51.338749+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "ecocrop_help_2004",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/helpShow?id=2004",
+    "status": "captured_pending_content_review",
+    "sha256": "097bf90a361bfb149e36a4975665db8ef35b6a7b52e6767eb81aa83861648988",
+    "bytes": 602,
+    "file": "ecocrop_help_2004.bin",
+    "final_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/helpShow?id=2004",
+    "http_status": 200,
+    "response_headers": {
+      "content-type": "text/html;charset=UTF-8",
+      "date": "Sat, 14 Nov 2026 14:58:51 GMT"
+    },
+    "original_file_retained_in_package": "originals/ecocrop_help_2004.html",
+    "content_review": "reference_only_with_dataset_attribution",
+    "request_started_at": "2026-11-14T14:58:51.700549+00:00",
+    "retrieved_at": null,
+    "timing_note": "Request start recorded; exact response completion timestamp unavailable in this initial capture batch. UTC retrieval day known; response Date retained where supplied."
+  },
+  {
+    "id": "soilgrids_root_readme",
+    "url": "https://files.isric.org/soilgrids/README.md",
+    "status": "captured_pending_content_review",
+    "request_started_at": "2026-11-14T15:07:56.400306+00:00",
+    "retrieved_at": "2026-11-14T15:07:57.927870+00:00",
+    "sha256": "cacc412b0b0100e66308d58d6c9d044f49bbfafff31152e372e73021d175cdba",
+    "bytes": 1177,
+    "file": "soilgrids_root_readme.bin",
+    "final_url": "https://files.isric.org/soilgrids/README.md",
+    "http_status": 200,
+    "response_headers": {
+      "date": "Sat, 14 Nov 2026 15:07:57 GMT",
+      "content-type": "text/markdown; charset=utf-8",
+      "content-length": "1177",
+      "last-modified": "Wed, 12 Jan 2022 14:39:04 GMT",
+      "etag": "\"11630936325-1641998344-1177\""
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "provider_access_metadata_only"
+  },
+  {
+    "id": "soilgrids_phh2o_directory",
+    "url": "https://files.isric.org/soilgrids/latest/data/phh2o/",
+    "status": "captured_pending_content_review",
+    "request_started_at": "2026-11-14T15:07:57.928139+00:00",
+    "retrieved_at": "2026-11-14T15:07:58.452594+00:00",
+    "sha256": "567650e1dac4065481cdcf6c02d52ccd8651ea4316d32a70dd13a256e2ca3d09",
+    "bytes": 29511,
+    "file": "soilgrids_phh2o_directory.bin",
+    "final_url": "https://files.isric.org/soilgrids/latest/data/phh2o/",
+    "http_status": 200,
+    "response_headers": {
+      "date": "Sat, 14 Nov 2026 15:07:58 GMT",
+      "content-type": "text/html; charset=utf-8",
+      "content-length": "29511"
+    },
+    "original_file_retained_in_package": null,
+    "content_review": "provider_access_metadata_only"
+  }
+]

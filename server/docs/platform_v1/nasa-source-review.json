@@ -1,0 +1,78 @@
+{
+  "id": "NASA-daily-source-review.v1",
+  "parameter_catalog": {
+    "url": "https://power.larc.nasa.gov/api/system/manager/parameters?community=AG&temporal=daily",
+    "response_sha256": "f4928676bfd19982eea63dcbc93c5652dac333dc450ea51c0372310606c28bab",
+    "parameters": {
+      "T2M_MIN": {
+        "type": "METEOROLOGY",
+        "temporal": "DAILY",
+        "source": "POWER",
+        "community": "AG",
+        "calculated": false,
+        "inputs": null,
+        "units": "C",
+        "name": "Temperature at 2 Meters Minimum",
+        "definition": "The minimum hourly air (dry bulb) temperature at 2 meters above the surface of the earth in the period of interest."
+      },
+      "T2M_MAX": {
+        "type": "METEOROLOGY",
+        "temporal": "DAILY",
+        "source": "POWER",
+        "community": "AG",
+        "calculated": false,
+        "inputs": null,
+        "units": "C",
+        "name": "Temperature at 2 Meters Maximum",
+        "definition": "The maximum hourly air (dry bulb) temperature at 2 meters above the surface of the earth in the period of interest."
+      },
+      "PRECTOTCORR": {
+        "type": "METEOROLOGY",
+        "temporal": "DAILY",
+        "source": "SOURCE",
+        "community": "AG",
+        "calculated": false,
+        "inputs": null,
+        "units": "mm/day",
+        "name": "Precipitation Corrected",
+        "definition": "The average MERRA-2 bias corrected total precipitation at the surface of the earth."
+      }
+    }
+  },
+  "methodology": {
+    "url": "https://power.larc.nasa.gov/docs/methodology/data/sources_meteorology/",
+    "response_sha256": "b2a8dcb492a3c43d39d940d231b72ad2580dd601e54d709655cf3bcf5c053f97",
+    "review": "NASA describes minimum/maximum as extrema over 24 hourly MERRA-2 values; the parameter catalog assigns those outputs to POWER. This is a documented transformation chain, not inferred temporal mixing."
+  },
+  "accepted_exact_source_headers": {
+    "T2M_MIN": [
+      "MERRA2",
+      "POWER"
+    ],
+    "T2M_MAX": [
+      "MERRA2",
+      "POWER"
+    ],
+    "PRECTOTCORR": [
+      "MERRA2"
+    ]
+  },
+  "captures": {
+    "power_iowa_202402_T2M_MAX.real.json": "cad07b45fc3907b5acab602d7e441255239d9ba6eb66ff041a942cc0a995c6d2",
+    "power_iowa_202402_PREC.real.json": "a5af6e43788d03f5bd4236f17c6092b15953aa6dc635cd898f870da355e3b112",
+    "power_iowa_202402_T2M_MIN.real.json": "06524ebda604c1db38d24892868ae2eadd2e7fa2a5b4e6c00c343caddd7144e2",
+    "power_iowa_202402_daily.real.json": "28a594bc55f10ffe65e189c8848a2f97090766229b958ce6b1b1e9068acb82a1"
+  },
+  "limitations": [
+    "Technical source/units/calendar verification only; no independent local agronomic applicability validation.",
+    "GEOSIT and undocumented source headers remain rejected.",
+    "No hourly-to-civil-calendar or ET0 conversion."
+  ],
+  "review_record_created_at": "2026-11-14T10:58:10.459342+00:00",
+  "capture_completion_times": {
+    "power_iowa_202402_T2M_MIN.real.json": "2026-11-14T10:53:56.804862+00:00",
+    "power_iowa_202402_T2M_MAX.real.json": "2026-11-14T10:53:57.923734+00:00",
+    "power_iowa_202402_PREC.real.json": "2026-11-14T10:53:59.364486+00:00",
+    "power_iowa_202402_daily.real.json": "2026-11-14T10:51:22.442164+00:00"
+  }
+}

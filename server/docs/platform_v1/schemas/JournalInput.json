@@ -1,0 +1,286 @@
+{
+  "$defs": {
+    "SoilTest": {
+      "additionalProperties": false,
+      "properties": {
+        "property": {
+          "enum": [
+            "ph",
+            "organic_carbon",
+            "nitrogen",
+            "clay",
+            "sand",
+            "silt"
+          ],
+          "title": "Property",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "number"
+        },
+        "unit": {
+          "enum": [
+            "pH",
+            "g/kg",
+            "%"
+          ],
+          "title": "Unit",
+          "type": "string"
+        },
+        "top_cm": {
+          "maximum": 1000,
+          "minimum": 0,
+          "title": "Top Cm",
+          "type": "number"
+        },
+        "bottom_cm": {
+          "exclusiveMinimum": 0,
+          "maximum": 1000,
+          "title": "Bottom Cm",
+          "type": "number"
+        },
+        "source": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "property",
+        "value",
+        "unit",
+        "top_cm",
+        "bottom_cm",
+        "source"
+      ],
+      "title": "SoilTest",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "earthsync.journal.v1",
+      "default": "earthsync.journal.v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "season",
+        "fallow",
+        "bare_field",
+        "plan",
+        "stage",
+        "irrigation",
+        "management",
+        "observation",
+        "problem",
+        "soil_test",
+        "priorities",
+        "warning_acknowledgment"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "occurred_on": {
+      "format": "date",
+      "title": "Occurred On",
+      "type": "string"
+    },
+    "crop_id": {
+      "anyOf": [
+        {
+          "maxLength": 150,
+          "pattern": "^[A-Za-z0-9_.-]+@[A-Za-z0-9_.-]+$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Crop Id"
+    },
+    "crop_name": {
+      "anyOf": [
+        {
+          "maxLength": 150,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Crop Name"
+    },
+    "harvest_on": {
+      "anyOf": [
+        {
+          "format": "date",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Harvest On"
+    },
+    "stage": {
+      "default": "unknown",
+      "enum": [
+        "unknown",
+        "sowing",
+        "emergence",
+        "vegetative",
+        "flowering",
+        "fruiting",
+        "maturity",
+        "harvested"
+      ],
+      "title": "Stage",
+      "type": "string"
+    },
+    "irrigation": {
+      "default": "unknown",
+      "enum": [
+        "unknown",
+        "available",
+        "limited",
+        "none"
+      ],
+      "title": "Irrigation",
+      "type": "string"
+    },
+    "drainage": {
+      "default": "unknown",
+      "enum": [
+        "unknown",
+        "good",
+        "moderate",
+        "poor"
+      ],
+      "title": "Drainage",
+      "type": "string"
+    },
+    "water_access": {
+      "default": "unknown",
+      "enum": [
+        "unknown",
+        "rain_only",
+        "well",
+        "canal",
+        "pond",
+        "other"
+      ],
+      "title": "Water Access",
+      "type": "string"
+    },
+    "priorities": {
+      "items": {
+        "enum": [
+          "food",
+          "income",
+          "less_water",
+          "soil",
+          "lower_risk",
+          "less_labor",
+          "nitrogen_potential",
+          "erosion",
+          "forage",
+          "equipment",
+          "market"
+        ],
+        "type": "string"
+      },
+      "maxItems": 11,
+      "title": "Priorities",
+      "type": "array"
+    },
+    "resources": {
+      "anyOf": [
+        {
+          "maxLength": 500,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Resources"
+    },
+    "notes": {
+      "default": "",
+      "maxLength": 2000,
+      "title": "Notes",
+      "type": "string"
+    },
+    "soil_test": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SoilTest"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "photo_ids": {
+      "items": {
+        "format": "uuid",
+        "type": "string"
+      },
+      "maxItems": 10,
+      "title": "Photo Ids",
+      "type": "array"
+    },
+    "evidence_ids": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "title": "Evidence Ids",
+      "type": "array"
+    },
+    "decision_id": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Decision Id"
+    },
+    "environmental_job_ids": {
+      "items": {
+        "format": "uuid",
+        "type": "string"
+      },
+      "maxItems": 10,
+      "title": "Environmental Job Ids",
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "kind",
+    "occurred_on"
+  ],
+  "title": "JournalInput",
+  "type": "object"
+}

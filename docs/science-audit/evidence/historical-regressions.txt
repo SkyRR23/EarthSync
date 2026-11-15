@@ -1,0 +1,113 @@
+   Compiling fieldshift-engine v0.1.0 (/tmp/earthsync-contributed-source-build/engine)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.38s
+     Running tests/audit_regressions.rs (/tmp/earthsync-contributed-source-build/engine/target/debug/deps/audit_regressions-93380b2d215833d1)
+
+running 12 tests
+test baseline_planting_month_must_not_be_replaced_by_a_crop_default ... FAILED
+test farm_and_context_geometry_must_agree ... FAILED
+test fixture_context_cannot_support_live_crop_findings ... FAILED
+test irrigation_category_cannot_establish_delivered_water ... FAILED
+test market_use_labels_cannot_establish_income ... FAILED
+test missing_nitrogen_evidence_must_not_be_a_positive_nitrogen_score ... FAILED
+test month_thirteen_cannot_replace_december ... FAILED
+test public_annual_aggregate_must_not_accept_one_month ... FAILED
+test negative_rainfall_must_fail_source_validation ... FAILED
+test repeated_baseline_crops_must_not_be_deduplicated ... FAILED
+test reported_shift_must_compare_the_two_declared_five_year_halves ... FAILED
+test unverified_parameters_cannot_establish_support ... FAILED
+
+failures:
+
+---- baseline_planting_month_must_not_be_replaced_by_a_crop_default stdout ----
+
+thread 'baseline_planting_month_must_not_be_replaced_by_a_crop_default' (8049) panicked at tests/audit_regressions.rs:132:5:
+assertion failed: result.scenarios[0].steps[0].reason_codes.iter().any(|c|
+        c == "WINDOW_MISMATCH")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- farm_and_context_geometry_must_agree stdout ----
+
+thread 'farm_and_context_geometry_must_agree' (8050) panicked at tests/audit_regressions.rs:61:5:
+assertion failed: analyze_field(&f, &context(), &library(), &rules(), "SYNTHETIC").is_err()
+
+---- fixture_context_cannot_support_live_crop_findings stdout ----
+
+thread 'fixture_context_cannot_support_live_crop_findings' (8051) panicked at tests/audit_regressions.rs:107:5:
+assertion failed: result.scenarios[0].steps.iter().all(|s|
+        s.eligibility != Eligibility::Supported)
+
+---- irrigation_category_cannot_establish_delivered_water stdout ----
+
+thread 'irrigation_category_cannot_establish_delivered_water' (8052) panicked at tests/audit_regressions.rs:53:5:
+assertion `left != right` failed
+  left: Supported
+ right: Supported
+
+---- market_use_labels_cannot_establish_income stdout ----
+
+thread 'market_use_labels_cannot_establish_income' (8053) panicked at tests/audit_regressions.rs:99:5:
+assertion `left == right` failed
+  left: Some(0.6666666666666666)
+ right: None
+
+---- missing_nitrogen_evidence_must_not_be_a_positive_nitrogen_score stdout ----
+
+thread 'missing_nitrogen_evidence_must_not_be_a_positive_nitrogen_score' (8054) panicked at tests/audit_regressions.rs:91:5:
+assertion `left == right` failed
+  left: Some(0.6)
+ right: None
+
+---- month_thirteen_cannot_replace_december stdout ----
+
+thread 'month_thirteen_cannot_replace_december' (8055) panicked at tests/audit_regressions.rs:68:5:
+assertion failed: analyze_field(&farmer(), &c, &library(), &rules(), "SYNTHETIC").is_err()
+
+---- public_annual_aggregate_must_not_accept_one_month stdout ----
+
+thread 'public_annual_aggregate_must_not_accept_one_month' (8057) panicked at tests/audit_regressions.rs:73:5:
+assertion `left == right` failed
+  left: Some(12.4)
+ right: None
+
+---- negative_rainfall_must_fail_source_validation stdout ----
+
+thread 'negative_rainfall_must_fail_source_validation' (8056) panicked at tests/audit_regressions.rs:114:5:
+assertion failed: analyze_field(&farmer(), &c, &library(), &rules(), "SYNTHETIC").is_err()
+
+---- repeated_baseline_crops_must_not_be_deduplicated stdout ----
+
+thread 'repeated_baseline_crops_must_not_be_deduplicated' (8058) panicked at tests/audit_regressions.rs:83:5:
+assertion `left == right` failed
+  left: ["rice_paddy", "black_gram"]
+ right: ["rice_paddy", "black_gram", "rice_paddy"]
+
+---- reported_shift_must_compare_the_two_declared_five_year_halves stdout ----
+
+thread 'reported_shift_must_compare_the_two_declared_five_year_halves' (8059) panicked at tests/audit_regressions.rs:124:5:
+actual 268.6999999999996, declared comparison 537.1999999999998
+
+---- unverified_parameters_cannot_establish_support stdout ----
+
+thread 'unverified_parameters_cannot_establish_support' (8060) panicked at tests/audit_regressions.rs:44:5:
+assertion `left != right` failed
+  left: Supported
+ right: Supported
+
+
+failures:
+    baseline_planting_month_must_not_be_replaced_by_a_crop_default
+    farm_and_context_geometry_must_agree
+    fixture_context_cannot_support_live_crop_findings
+    irrigation_category_cannot_establish_delivered_water
+    market_use_labels_cannot_establish_income
+    missing_nitrogen_evidence_must_not_be_a_positive_nitrogen_score
+    month_thirteen_cannot_replace_december
+    negative_rainfall_must_fail_source_validation
+    public_annual_aggregate_must_not_accept_one_month
+    repeated_baseline_crops_must_not_be_deduplicated
+    reported_shift_must_compare_the_two_declared_five_year_halves
+    unverified_parameters_cannot_establish_support
+
+test result: FAILED. 0 passed; 12 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `--test audit_regressions`
