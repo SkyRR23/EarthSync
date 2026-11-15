@@ -9,6 +9,7 @@ import '../../design/components/product.dart';
 import '../../state/home_provider.dart';
 import '../../state/platform_provider.dart';
 import '../map/gibs_layer.dart';
+import '../map/ndvi_panel.dart';
 
 /// Explicit requests only. Source snapshots keep their original dates offline.
 class GeospatialIntelligencePanel extends ConsumerStatefulWidget {
@@ -138,6 +139,15 @@ class _PanelState extends ConsumerState<GeospatialIntelligencePanel> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            ExpansionTile(
+              title: const Text('Satellite NDVI overlay for this field'),
+              children: [
+                NdviPanel(
+                  key: ValueKey('ndvi:${widget.farm.id}'),
+                  farmId: widget.farm.id,
+                ),
+              ],
+            ),
             const Text(
               'These saved snapshots are retrieved on demand. Real-time EarthSync separately monitors current sources while the local backend runs. Map tiles and new retrievals require a connection.',
             ),

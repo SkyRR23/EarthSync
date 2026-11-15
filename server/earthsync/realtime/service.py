@@ -3,6 +3,7 @@
 import asyncio
 import json
 import logging
+import os
 import time
 from datetime import datetime, timezone
 
@@ -102,6 +103,10 @@ class Repository:
 class Realtime:
     def __init__(self, store, *, client=None, clock=time.time, enabled=True, gfs=None):
         self.repository, self.clock, self.enabled = Repository(store), clock, enabled
+        if os.getenv("EARTHSYNC_PUBLIC_NASA_CACHE") == "1":
+            from .public_cache import seed
+
+            seed(self.repository)
         self.client = client or httpx.AsyncClient(
             timeout=httpx.Timeout(20),
             limits=httpx.Limits(max_connections=4, max_keepalive_connections=4),

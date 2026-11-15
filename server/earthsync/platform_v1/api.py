@@ -136,6 +136,10 @@ def create_app(
     realtime = Realtime(
         store, client=realtime_client, enabled=realtime_enabled, gfs=forecast_source
     )
+    from earthsync.realtime.ndvi import NdviOverlays, inspect_pixel
+    from earthsync.realtime.http import SourceError
+
+    ndvi = NdviOverlays(realtime)
 
     def association(farm_id, point):
         if farm_id and store.farm(OWNER, farm_id).confirmed_point != point:
@@ -257,6 +261,7 @@ def create_app(
         try:
             yield
         finally:
+            await ndvi.close()
             await realtime.close()
             await jobs.close()
             if client:
@@ -269,6 +274,7 @@ def create_app(
     )
     app.state.jobs, app.state.store = jobs, store
     app.state.realtime = realtime
+    app.state.ndvi = ndvi
     if allowed_origins:
         app.add_middleware(
             CORSMiddleware,
@@ -689,6 +695,53 @@ def create_app(
         farm = store.farm(OWNER, farm_id)
         location_id = realtime.farm_location(farm)
         return realtime.snapshot(location_id)
+
+    def overlay_target(location_id=None, farm_id=None):
+        if farm_id is not None:
+            farm = store.farm(OWNER, farm_id)
+            location = {"lat": farm.confirmed_point.latitude, "lon": farm.confirmed_point.longitude}
+            polygon = farm.confirmed_polygon.model_dump(mode="json") if farm.confirmed_polygon else None
+            return location, polygon
+        location = next((r for r in REFERENCES if r["id"] == location_id), None)
+        if location is None:
+            raise PlatformError("NOT_FOUND", 404)
+        return location, None
+
+    def overlay_snapshot(target, lat, lon):
+        try:
+            result = ndvi.snapshot(*target)
+            if lat is not None or lon is not None:
+                if lat is None or lon is None:
+                    raise SourceError("BOTH_COORDINATES_REQUIRED")
+                result["pixel"] = inspect_pixel(result["data"], lat, lon) if result["data"] else {"status": "unavailable", "value": None}
+                result.pop("data", None)
+            return result
+        except SourceError as exc:
+            raise PlatformError(exc.code, 422) from None
+
+    @app.get(PREFIX + "/realtime/{location_id}/ndvi-overlay")
+    def public_ndvi(location_id: str, lat: float | None = None, lon: float | None = None):
+        return overlay_snapshot(overlay_target(location_id), lat, lon)
+
+    @app.post(PREFIX + "/realtime/{location_id}/ndvi-overlay/refresh", status_code=202)
+    async def public_ndvi_refresh(location_id: str):
+        try:
+            ndvi.request(*overlay_target(location_id))
+            return {"scheduled": True}
+        except SourceError as exc:
+            raise PlatformError(exc.code, 422) from None
+
+    @app.get(PREFIX + "/farms/{farm_id}/ndvi-overlay")
+    def farm_ndvi(farm_id: UUID, lat: float | None = None, lon: float | None = None):
+        return overlay_snapshot(overlay_target(farm_id=farm_id), lat, lon)
+
+    @app.post(PREFIX + "/farms/{farm_id}/ndvi-overlay/refresh", status_code=202)
+    async def farm_ndvi_refresh(farm_id: UUID):
+        try:
+            ndvi.request(*overlay_target(farm_id=farm_id))
+            return {"scheduled": True}
+        except SourceError as exc:
+            raise PlatformError(exc.code, 422) from None
 
     from earthsync.research.local import local_router
 
