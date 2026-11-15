@@ -1,0 +1,101 @@
+{
+  "release_sha": "660b479c3ffb714cd1d489e1241c026ceae6ed67",
+  "attempts": [
+    {
+      "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-history.csv",
+      "status": "CACHED_HTTP_BODY",
+      "bytes": 2914601,
+      "sha256": "1994747ab4af1b97e63adb434b4d0d022f2daee76f0c144ea9ab46be2d906604",
+      "classification": "Content must still pass format/QA; not proof of observations"
+    },
+    {
+      "url": "https://www.ncei.noaa.gov/data/global-hourly/access/2024/72094200323.csv",
+      "status": "CACHED_HTTP_BODY",
+      "bytes": 36822,
+      "sha256": "48661c476a2bde160781f149d112592fa9ef719376f181049b351a585491d9a2",
+      "classification": "Content must still pass format/QA; not proof of observations"
+    },
+    {
+      "url": "https://noaa-global-hourly-pds.s3.amazonaws.com/2024/72094200323.csv",
+      "status": "CACHED_HTTP_BODY",
+      "bytes": 10925395,
+      "sha256": "37aff7511b171a93fd779c82e77a4afcdf27cdf3e10da2af0f41b27a22806cc5",
+      "classification": "Content must still pass format/QA; not proof of observations"
+    },
+    {
+      "url": "https://www.ncei.noaa.gov/data/global-hourly/access/2024/72531594870.csv",
+      "status": "CACHED_HTTP_BODY",
+      "bytes": 36822,
+      "sha256": "48661c476a2bde160781f149d112592fa9ef719376f181049b351a585491d9a2",
+      "classification": "Content must still pass format/QA; not proof of observations"
+    },
+    {
+      "url": "https://noaa-global-hourly-pds.s3.amazonaws.com/2024/72531594870.csv",
+      "status": "CACHED_HTTP_BODY",
+      "bytes": 6759965,
+      "sha256": "e61753f9be35e2439d183d55f0f523f00850baa16118d02a98255d35cefad5aa",
+      "classification": "Content must still pass format/QA; not proof of observations"
+    },
+    {
+      "url": "https://docs.isric.org/globaldata/wosis/",
+      "status": "CACHED_HTTP_BODY",
+      "bytes": 38626,
+      "sha256": "c9512fd1a33fce8e16efa9b5866e8e0f9e6d366e492f450340d786dfa5a332c1",
+      "classification": "Content must still pass format/QA; not proof of observations"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/docs/services/api/temporal/hourly/",
+      "status": "CACHED_HTTP_BODY",
+      "bytes": 39036,
+      "sha256": "861c8dbd3e0b7c2a644df08d3d331eae699ee1fa4286d375ad595a40c3fd804d",
+      "classification": "Content must still pass format/QA; not proof of observations"
+    },
+    {
+      "url": "https://www.ncei.noaa.gov/products/land-based-station/integrated-surface-database",
+      "status": "CACHED_HTTP_BODY",
+      "bytes": 48934,
+      "sha256": "a756f02d3265ffad94f6ccf0649fbbb497e58857e9e17b842a00b383f4d2220d",
+      "classification": "Content must still pass format/QA; not proof of observations"
+    }
+  ],
+  "stations": [
+    {
+      "site_id": "us_mead",
+      "station_id": "72094200323",
+      "name": "WAHOO MUNICIPAL AIRPORT",
+      "latitude": "+41.233",
+      "longitude": "-096.600",
+      "elevation_m": "+0373.1",
+      "distance_km": 12.79051347482566,
+      "source": "NOAA ISD public station catalog",
+      "independence": "MERRA-2 assimilation overlap not established; not held-out validation",
+      "initial_ncei_body_rejected": true,
+      "observation_source": "https://noaa-global-hourly-pds.s3.amazonaws.com/2024/72094200323.csv",
+      "observation_rows": 25350,
+      "accepted_temperature_rows": 24735,
+      "first": "2024-01-01T00:15:00",
+      "last": "2024-12-31T23:55:00",
+      "comparison_status": "NOT MEASURED: hourly UTC source obtained; POWER LST aggregation and held-out independence not independently established"
+    },
+    {
+      "site_id": "us_bondville",
+      "station_id": "72531594870",
+      "name": "UNIVERSI OF IL WILLARD APT",
+      "latitude": "+40.032",
+      "longitude": "-088.275",
+      "elevation_m": "+0226.5",
+      "distance_km": 3.1606792215730746,
+      "source": "NOAA ISD public station catalog",
+      "independence": "MERRA-2 assimilation overlap not established; not held-out validation",
+      "initial_ncei_body_rejected": true,
+      "observation_source": "https://noaa-global-hourly-pds.s3.amazonaws.com/2024/72531594870.csv",
+      "observation_rows": 11903,
+      "accepted_temperature_rows": 11408,
+      "first": "2024-01-01T00:37:00",
+      "last": "2024-12-31T23:53:00",
+      "comparison_status": "NOT MEASURED: hourly UTC source obtained; POWER LST aggregation and held-out independence not independently established"
+    }
+  ],
+  "soil_validation": "NOT MEASURED: no independent held-out 0\u20135 cm pH-in-water samples with sampling dates/method/license were obtained; WoSIS training overlap cannot be assumed absent",
+  "forecast_validation": "NOT MEASURED: current forward forecasts are not later observations; no QA-matched archived forecast/station pairs were obtained in this bounded run"
+}

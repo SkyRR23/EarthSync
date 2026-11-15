@@ -1,0 +1,104 @@
+{
+  "release_sha": "660b479c3ffb714cd1d489e1241c026ceae6ed67",
+  "classification": "SYNTHETIC farmer fixture inputs; real compiled Flutter, native Rust/SQLite and cached-real provider evidence",
+  "scope": "Native fixture creation then actual saved-farm selection and saved-comparison UI reopening; not 12 manual planting demonstrations",
+  "results": [
+    {
+      "site_id": "mm_delta",
+      "status": "PASS",
+      "three_saved_strategies_reopened": true,
+      "native_accessibility_explanations_present": true,
+      "local_review_warnings": 3,
+      "elapsed_seconds": 22.31279747499866
+    },
+    {
+      "site_id": "mm_bago",
+      "status": "PASS",
+      "three_saved_strategies_reopened": true,
+      "native_accessibility_explanations_present": true,
+      "local_review_warnings": 3,
+      "elapsed_seconds": 23.51589839100052
+    },
+    {
+      "site_id": "mm_mandalay",
+      "status": "PASS",
+      "three_saved_strategies_reopened": true,
+      "native_accessibility_explanations_present": true,
+      "local_review_warnings": 3,
+      "elapsed_seconds": 22.59355784500076
+    },
+    {
+      "site_id": "mm_magway",
+      "status": "PASS",
+      "three_saved_strategies_reopened": true,
+      "native_accessibility_explanations_present": true,
+      "local_review_warnings": 3,
+      "elapsed_seconds": 24.086333220999222
+    },
+    {
+      "site_id": "mm_shan",
+      "status": "PASS",
+      "three_saved_strategies_reopened": true,
+      "native_accessibility_explanations_present": true,
+      "local_review_warnings": 3,
+      "elapsed_seconds": 23.004395000996738
+    },
+    {
+      "site_id": "mm_yangon",
+      "status": "PASS",
+      "three_saved_strategies_reopened": true,
+      "native_accessibility_explanations_present": true,
+      "local_review_warnings": 3,
+      "elapsed_seconds": 23.596424367999134
+    },
+    {
+      "site_id": "us_mead",
+      "status": "PASS",
+      "three_saved_strategies_reopened": true,
+      "native_accessibility_explanations_present": true,
+      "local_review_warnings": 3,
+      "elapsed_seconds": 23.48115810499803
+    },
+    {
+      "site_id": "us_bondville",
+      "status": "PASS",
+      "three_saved_strategies_reopened": true,
+      "native_accessibility_explanations_present": true,
+      "local_review_warnings": 3,
+      "elapsed_seconds": 23.491451545000018
+    },
+    {
+      "site_id": "br_cerrados",
+      "status": "PASS",
+      "three_saved_strategies_reopened": true,
+      "native_accessibility_explanations_present": true,
+      "local_review_warnings": 3,
+      "elapsed_seconds": 22.59415469799933
+    },
+    {
+      "site_id": "ke_kabete",
+      "status": "PASS",
+      "three_saved_strategies_reopened": true,
+      "native_accessibility_explanations_present": true,
+      "local_review_warnings": 3,
+      "elapsed_seconds": 23.526002284997958
+    },
+    {
+      "site_id": "de_klingenberg",
+      "status": "PASS",
+      "three_saved_strategies_reopened": true,
+      "native_accessibility_explanations_present": true,
+      "local_review_warnings": 3,
+      "elapsed_seconds": 22.5833944670012
+    },
+    {
+      "site_id": "au_riggs",
+      "status": "PASS",
+      "three_saved_strategies_reopened": true,
+      "native_accessibility_explanations_present": true,
+      "local_review_warnings": 3,
+      "elapsed_seconds": 23.522920469000383
+    }
+  ],
+  "unhandled_page_errors": []
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "release_sha": "660b479c3ffb714cd1d489e1241c026ceae6ed67",
+    "site_id": "us_mead",
+    "purpose": "time-boundary audit only",
+    "source": "NASA POWER hourly T2M",
+    "time_standard": "UTC",
+    "sha256": "ceb9bee4c254e7d871ee3377f162b24a90dfd31198942c7aba3e46dc353fe5f4"
+  },
+  {
+    "release_sha": "660b479c3ffb714cd1d489e1241c026ceae6ed67",
+    "site_id": "us_mead",
+    "purpose": "time-boundary audit only",
+    "source": "NASA POWER hourly T2M",
+    "time_standard": "LST",
+    "sha256": "af82b7d2655e6b968bf2f67ca0118e1da4046ced7c4a246072fe476276c8d7fe"
+  },
+  {
+    "release_sha": "660b479c3ffb714cd1d489e1241c026ceae6ed67",
+    "site_id": "us_bondville",
+    "purpose": "time-boundary audit only",
+    "source": "NASA POWER hourly T2M",
+    "time_standard": "UTC",
+    "sha256": "215838c75c172c33ebb6a07d60a0443a47cdc1304e40841d9167f0592e391d41"
+  },
+  {
+    "release_sha": "660b479c3ffb714cd1d489e1241c026ceae6ed67",
+    "site_id": "us_bondville",
+    "purpose": "time-boundary audit only",
+    "source": "NASA POWER hourly T2M",
+    "time_standard": "LST",
+    "sha256": "22f6d29c1d21a83cd3c20785665ff1ebd403044729a99198a3a656ff1ad51a7a"
+  }
+]

@@ -1,0 +1,74 @@
+{
+  "subject": "660b479c3ffb714cd1d489e1241c026ceae6ed67",
+  "checked_at_utc": "2026-11-15",
+  "main": "1ea3df7b09637cf8162f834411d830aa8621590c",
+  "workflows": [
+    {
+      "name": "Rust engine CI",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43649095779"
+    },
+    {
+      "name": "Flutter live integration",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43649095615"
+    },
+    {
+      "name": "Backend evidence platform v1",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43649095634"
+    },
+    {
+      "name": "Crop knowledge evidence",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43649095566"
+    },
+    {
+      "name": "Crop rule candidate review contracts",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43649095593"
+    },
+    {
+      "name": "Scientific source regression checks",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43649095599"
+    },
+    {
+      "name": "Farmer assistant contract and UI",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43649095467"
+    },
+    {
+      "name": "Crop evidence v2 reference contracts",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43649095539"
+    },
+    {
+      "name": "Crop and water intelligence",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43649095611"
+    },
+    {
+      "name": "Photo evidence contracts",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43649095550"
+    },
+    {
+      "name": "Python backend CI",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43649095603"
+    }
+  ],
+  "scope": "Existing exact-candidate CI rechecked; not newly run global live or interactive Windows acceptance"
+}

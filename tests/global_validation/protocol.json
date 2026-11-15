@@ -1,0 +1,47 @@
+{
+  "schema": "earthsync.validation.protocol.v1",
+  "release_sha": "660b479c3ffb714cd1d489e1241c026ceae6ed67",
+  "site_manifest_sha256": "5f8a0aa4b5d1a1d070c05b862df1839df41ae71148a667978ec02da53a4e5eca",
+  "frozen_before_provider_results": true,
+  "periods": [
+    [
+      "2024-01-01",
+      "2024-01-07"
+    ],
+    [
+      "2024-07-01",
+      "2024-07-07"
+    ]
+  ],
+  "time_standard": "NASA_POWER_LST; never compare unaligned UTC daily observations",
+  "provider_max_concurrency": 2,
+  "provider_max_requests": 230,
+  "provider_transport_timeout_seconds": 35,
+  "provider_body_max_bytes": 4000000,
+  "et0_absolute_tolerance_mm": 1e-08,
+  "et0_relative_tolerance": 1e-08,
+  "metrics": {
+    "mae": "mean(abs(model-reference))",
+    "rmse": "sqrt(mean((model-reference)^2))",
+    "bias": "mean(model-reference)",
+    "minimum_station_days": 10,
+    "minimum_valid_station_hours_per_day": 18,
+    "maximum_station_distance_km": 50,
+    "maximum_elevation_difference_m": 300,
+    "weather_accuracy_pass_threshold": null,
+    "why_no_weather_threshold": "No independently established universal agronomic threshold; report errors only when sampling/time/QA/independence permits, never optimize a threshold after results.",
+    "soil_independence_required": true,
+    "soil_depth_method_match_required": true
+  },
+  "live_opt_in_required": true,
+  "classes": [
+    "REAL",
+    "CACHED REAL",
+    "SYNTHETIC",
+    "MOCKED",
+    "SKIPPED",
+    "FAILED",
+    "UNAVAILABLE"
+  ],
+  "no_overall_accuracy_percentage": true
+}

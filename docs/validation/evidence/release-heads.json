@@ -1,0 +1,29 @@
+{
+  "28": {
+    "html_url": "https://github.com/SkyRR23/EarthSync/pull/28",
+    "state": "open",
+    "draft": true,
+    "merged": false,
+    "updated_at": "2026-11-14T18:21:28Z",
+    "head": "665cbecce3575724ded5145863a6823b44773a69",
+    "base": "main"
+  },
+  "29": {
+    "html_url": "https://github.com/SkyRR23/EarthSync/pull/29",
+    "state": "open",
+    "draft": true,
+    "merged": false,
+    "updated_at": "2026-11-14T22:56:00Z",
+    "head": "660b479c3ffb714cd1d489e1241c026ceae6ed67",
+    "base": "main"
+  },
+  "30": {
+    "html_url": "https://github.com/SkyRR23/EarthSync/pull/30",
+    "state": "open",
+    "draft": true,
+    "merged": false,
+    "updated_at": "2026-11-14T18:37:26Z",
+    "head": "27584a6e506ecda362be516b113b850c6ac98259",
+    "base": "feat/earthsync-crop-water-advisor-v1"
+  }
+}
