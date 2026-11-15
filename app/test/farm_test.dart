@@ -1,7 +1,7 @@
 import 'package:earthsync/data/models/farm_boundary.dart';
 import 'package:earthsync/data/models/field_analysis.dart';
 import 'package:earthsync/design/components/scenario.dart';
-import 'package:earthsync/features/home/weather_tab.dart';
+import 'package:earthsync/features/home/climate_history.dart';
 import 'package:earthsync/state/providers.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:latlong2/latlong.dart';

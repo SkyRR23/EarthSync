@@ -12,6 +12,8 @@ from pydantic import ValidationError
 
 from .models import SeasonQuery, SeasonResponse
 from .power import PowerProvider, ProviderError
+from .forecast import ForecastCache, OpenMeteoProvider
+from .forecast import router as forecast_router
 from .recent import PowerRecentProvider, RecentCache
 from .recent import router as recent_router
 from .soil import router as soil_router
@@ -55,6 +57,8 @@ def create_app(
     soil_estimator=None,
     recent_provider=None,
     recent_cache=None,
+    forecast_provider=None,
+    forecast_cache=None,
 ):
     @asynccontextmanager
     async def lifespan(app):
@@ -66,6 +70,8 @@ def create_app(
             # Field Shift Today tasks (see recent.py); injectable for tests.
             app.state.recent_provider = recent_provider or PowerRecentProvider(client)
             app.state.recent_cache = recent_cache or RecentCache()
+            app.state.forecast_provider = forecast_provider or OpenMeteoProvider(client)
+            app.state.forecast_cache = forecast_cache or ForecastCache()
             yield
 
     app = FastAPI(
@@ -104,6 +110,7 @@ def create_app(
     app.state.soil_estimator = soil_estimator
     app.include_router(soil_router)
     app.include_router(recent_router)
+    app.include_router(forecast_router)
 
     @app.get("/api/v1/health")
     async def health():

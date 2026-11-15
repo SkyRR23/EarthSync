@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-/// Field Shift design tokens — Apple-style, tuned for outdoor use.
+/// EarthSync design tokens — warm, farm-friendly (team design, 15 Nov),
+/// tuned for outdoor use.
 /// Colours come from [FsPalette] (light/dark aware); read them with
 /// `context.fs`. Never hardcode colours or sizes in widgets.
 
@@ -34,7 +35,8 @@ abstract final class FsRadius {
   static const sm = 8.0;
   static const md = 12.0; // grouped sections, tiles
   static const lg = 16.0;
-  static const sheet = 20.0;
+  static const xl = 22.0; // hero and content cards
+  static const sheet = 24.0;
   static const capsule = 999.0;
 }
 
@@ -48,6 +50,16 @@ abstract final class FsMotion {
   /// Zero when the user asked the OS to reduce motion.
   static Duration of(BuildContext context, Duration d) =>
       MediaQuery.of(context).disableAnimations ? Duration.zero : d;
+}
+
+/// Soft card shadows (the team design's floating white cards).
+abstract final class FsShadow {
+  static List<BoxShadow> card(FsPalette p) => [
+    BoxShadow(color: p.shadow, blurRadius: 18, offset: const Offset(0, 6)),
+  ];
+  static List<BoxShadow> soft(FsPalette p) => [
+    BoxShadow(color: p.shadow, blurRadius: 10, offset: const Offset(0, 3)),
+  ];
 }
 
 /// Soft status tones used for capsule labels and banners.
@@ -87,6 +99,10 @@ class FsPalette extends ThemeExtension<FsPalette> {
     required this.crop3,
     required this.crop4,
     required this.barBackground,
+    required this.heading,
+    required this.sky,
+    required this.skySoft,
+    required this.shadow,
   });
 
   final Color background; // grouped page background
@@ -110,6 +126,9 @@ class FsPalette extends ThemeExtension<FsPalette> {
   final Color infoText, infoBg;
   final Color crop1, crop2, crop3, crop4; // timeline categories
   final Color barBackground; // translucent nav / tab bars
+  final Color heading; // big titles (deep green)
+  final Color sky, skySoft; // weather card gradient
+  final Color shadow; // soft card shadow
 
   List<Color> get cropColors => [crop1, crop2, crop3, crop4];
 
@@ -122,67 +141,75 @@ class FsPalette extends ThemeExtension<FsPalette> {
   };
 
   static const light = FsPalette(
-    background: Color(0xFFF2F2F7),
-    surface: Color(0xFFFFFFFF),
+    background: Color(0xFFF7F4EA),
+    surface: Color(0xFFFFFDF8),
     surfaceRaised: Color(0xFFFFFFFF),
-    fill: Color(0xFFE9E9EE),
-    fillStrong: Color(0xFFD1D1D6),
-    separator: Color(0xFFD8D8DC),
-    label: Color(0xFF1C1C1E),
-    secondaryLabel: Color(0xFF5C5C61),
-    tertiaryLabel: Color(0xFF8A8A8E),
-    tint: Color(0xFF1E7B4F),
+    fill: Color(0xFFEDE9DC),
+    fillStrong: Color(0xFFD5CFBD),
+    separator: Color(0xFFE6E1D2),
+    label: Color(0xFF1B2A1D),
+    secondaryLabel: Color(0xFF56624F),
+    tertiaryLabel: Color(0xFF858E7E),
+    tint: Color(0xFF2E6B34),
     onTint: Color(0xFFFFFFFF),
-    tintSoft: Color(0xFFE3F4EA),
-    rain: Color(0xFF0A60C2),
+    tintSoft: Color(0xFFE4F0DA),
+    rain: Color(0xFF2F7FD0),
     heat: Color(0xFFC2410C),
-    positiveText: Color(0xFF14532D),
-    positiveBg: Color(0xFFE3F4EA),
-    cautionText: Color(0xFF7A4A00),
-    cautionBg: Color(0xFFFFF1D6),
-    negativeText: Color(0xFF9F1D1D),
-    negativeBg: Color(0xFFFDE8E8),
-    neutralText: Color(0xFF3A3A3C),
-    neutralBg: Color(0xFFEDEDF0),
-    infoText: Color(0xFF0B4A8F),
-    infoBg: Color(0xFFE5F0FC),
-    crop1: Color(0xFF1E7B4F),
+    positiveText: Color(0xFF2F7D32),
+    positiveBg: Color(0xFFE3F1DB),
+    cautionText: Color(0xFFA35F00),
+    cautionBg: Color(0xFFFFF0D2),
+    negativeText: Color(0xFFA32222),
+    negativeBg: Color(0xFFFCE6E2),
+    neutralText: Color(0xFF3D463A),
+    neutralBg: Color(0xFFEDEAE0),
+    infoText: Color(0xFF1F5E99),
+    infoBg: Color(0xFFE4EFFA),
+    crop1: Color(0xFF2E6B34),
     crop2: Color(0xFF9A6B3F),
     crop3: Color(0xFF2F6FB3),
     crop4: Color(0xFF7A4FA8),
-    barBackground: Color(0xEFF9F9FB),
+    barBackground: Color(0xF2F7F4EA),
+    heading: Color(0xFF1E4D24),
+    sky: Color(0xFFCFE5F8),
+    skySoft: Color(0xFFEFF6FC),
+    shadow: Color(0x1A3B3A1F),
   );
 
   static const dark = FsPalette(
-    background: Color(0xFF000000),
-    surface: Color(0xFF1C1C1E),
-    surfaceRaised: Color(0xFF2C2C2E),
-    fill: Color(0xFF2C2C2E),
-    fillStrong: Color(0xFF48484A),
-    separator: Color(0xFF38383A),
-    label: Color(0xFFFFFFFF),
-    secondaryLabel: Color(0xFFAEAEB2),
-    tertiaryLabel: Color(0xFF8E8E93),
-    tint: Color(0xFF3CCB82),
-    onTint: Color(0xFF00210F),
-    tintSoft: Color(0xFF12351F),
-    rain: Color(0xFF64A8FF),
+    background: Color(0xFF0E1410),
+    surface: Color(0xFF18211A),
+    surfaceRaised: Color(0xFF1F2A21),
+    fill: Color(0xFF263128),
+    fillStrong: Color(0xFF3B483D),
+    separator: Color(0xFF2B362D),
+    label: Color(0xFFEEF3EA),
+    secondaryLabel: Color(0xFFADB8A8),
+    tertiaryLabel: Color(0xFF7F8B7C),
+    tint: Color(0xFF6CC477),
+    onTint: Color(0xFF0B2010),
+    tintSoft: Color(0xFF1C3720),
+    rain: Color(0xFF7DB8F2),
     heat: Color(0xFFFF9F5A),
-    positiveText: Color(0xFF8FE3B3),
-    positiveBg: Color(0xFF12351F),
-    cautionText: Color(0xFFFFC56B),
-    cautionBg: Color(0xFF3A2A0C),
+    positiveText: Color(0xFF9BDDA2),
+    positiveBg: Color(0xFF1C3720),
+    cautionText: Color(0xFFFFC66E),
+    cautionBg: Color(0xFF3A2B0E),
     negativeText: Color(0xFFFF9A9A),
-    negativeBg: Color(0xFF3D1414),
-    neutralText: Color(0xFFD1D1D6),
-    neutralBg: Color(0xFF2C2C2E),
+    negativeBg: Color(0xFF3D1616),
+    neutralText: Color(0xFFD3DAD0),
+    neutralBg: Color(0xFF263128),
     infoText: Color(0xFF9CC8FF),
-    infoBg: Color(0xFF0E2A4A),
-    crop1: Color(0xFF3CCB82),
+    infoBg: Color(0xFF12293F),
+    crop1: Color(0xFF6CC477),
     crop2: Color(0xFFD1A06E),
     crop3: Color(0xFF6FA8EE),
     crop4: Color(0xFFB792E0),
-    barBackground: Color(0xE61C1C1E),
+    barBackground: Color(0xF20E1410),
+    heading: Color(0xFFCFEBC9),
+    sky: Color(0xFF1C3347),
+    skySoft: Color(0xFF15232F),
+    shadow: Color(0x66000000),
   );
 
   @override

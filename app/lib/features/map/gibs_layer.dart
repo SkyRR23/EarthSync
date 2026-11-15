@@ -141,6 +141,18 @@ Widget streetTileLayer() => TileLayer(
   maxNativeZoom: 19,
 );
 
+/// Satellite photo base map (Esri World Imagery; credit "Esri" on screen).
+/// The picture's date varies by place; it shows the land, not crop health.
+Widget satelliteTileLayer() => TileLayer(
+  urlTemplate:
+      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+  userAgentPackageName: _userAgent,
+  maxNativeZoom: 17, // Esri often has no tiles above 17 in rural Myanmar
+  errorTileCallback: (_, _, _) {},
+);
+
+const satelliteCredit = 'Imagery © Esri';
+
 Widget gibsTileLayer(GibsLayerConfig c) => TileLayer(
   urlTemplate: c.urlTemplate,
   userAgentPackageName: _userAgent,

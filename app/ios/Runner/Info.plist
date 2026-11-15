@@ -7,13 +7,13 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Choose photos of your soil and field for your notes.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Field Shift uses your location once to mark your field on the map. It is not shared.</string>
+	<string>EarthSync uses your location once to mark your field on the map. It is not shared.</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Earthsync</string>
+	<string>EarthSync</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

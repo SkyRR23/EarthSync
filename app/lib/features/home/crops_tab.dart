@@ -12,12 +12,18 @@ import '../../design/tokens.dart';
 import 'field_tab.dart' show showAboutResults;
 import 'freshness_banner.dart';
 
-/// Crops tab: the answer and nothing else. Big cards, best fit first.
+/// "Check my crops": the crop plans the engine checked, best fit first.
 class CropsTab extends StatelessWidget {
-  const CropsTab({super.key, required this.analysis, this.fromCache = false});
+  const CropsTab({
+    super.key,
+    required this.analysis,
+    this.fromCache = false,
+    this.showBack = true,
+  });
 
   final FieldAnalysis analysis;
   final bool fromCache;
+  final bool showBack;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +31,7 @@ class CropsTab extends StatelessWidget {
     final items = sortedByFit(a.scenarios);
     return FsPage(
       title: S.nextSeason,
-      showBack: false,
+      showBack: showBack,
       subtitle: items.isEmpty ? null : S.bestFirst,
       children: [
         if (a.dataQuality.isDemo) ...[

@@ -1,7 +1,7 @@
 /// All English UI text in one place so P3 can review wording.
 /// Voice: very short, plain words a farmer uses. No jargon. Sentence case.
 abstract final class S {
-  static const appName = 'Field Shift';
+  static const appName = 'EarthSync';
 
   // Welcome
   static const welcomeTitle = 'Which crop fits your farm next?';
@@ -296,10 +296,10 @@ abstract final class S {
       'No ads and no selling of data. The app never measures anything from your photos.';
   static const deleteAll = 'Delete all my data';
   static const deleteFooter =
-      'Deletes everything on this phone and, if you signed in, everything online and your Field Shift account. It cannot be undone.';
+      'Deletes everything on this phone and, if you signed in, everything online and your EarthSync account. It cannot be undone.';
   static const deleteConfirmTitle = 'Delete everything?';
   static String deleteConfirmBody({required bool signedIn}) => signedIn
-      ? 'Your farm, answers, notes, photos and results will be deleted from this phone and from your online space, and your Field Shift account will be closed. This cannot be undone.'
+      ? 'Your farm, answers, notes, photos and results will be deleted from this phone and from your online space, and your EarthSync account will be closed. This cannot be undone.'
       : 'Your farm, answers, notes, photos and results will be deleted from this phone. This cannot be undone.';
   static const deleteWord = 'Delete';
   static const allDeleted = 'All your data was deleted.';
@@ -380,4 +380,72 @@ abstract final class S {
       'Last photo $days days ago. Photos show change over time.';
   static String photoDone(String ago) => 'Crop photo taken $ago';
   static const cropPhotoNote = 'Crop photo';
+  // Home (team design)
+  static const goodMorning = 'Good morning';
+  static const goodAfternoon = 'Good afternoon';
+  static const goodEvening = 'Good evening';
+  static const homeSubtitle = 'Here’s how your farm is doing';
+  static const savedPhone = 'Saved on this phone';
+  static const savedGoogle = 'Saved to your Google account';
+  static String cropField(String crop) => '$crop field';
+  static const yourFarm = 'Your farm';
+  static String toDoToday(int n) =>
+      n == 1 ? '1 thing to do today' : '$n things to do today';
+  static const allDoneToday = 'All done for today';
+  static String doneOf(int done, int total) => '$done of $total done today';
+  static const growingNow = 'Growing now';
+  static const nextCheck = 'Next check';
+  static const nothingDue = 'Nothing due';
+  static const notAnswered = 'Not answered';
+  static const yourFields = 'Your fields';
+  static const needsALook = 'Needs a look';
+  static const allDone = 'All done';
+  static String nToDo(int n) => '$n to do';
+  static const checkMyCrops = 'Check my crops';
+  static const todayTasks = 'Today';
+  static const notifications = 'Things to do';
+  // Task short names (for "Next check")
+  static const shortWater = 'Water check';
+  static const shortHeavy = 'Standing water';
+  static const shortSoil = 'Soil check';
+  static const shortPhoto = 'Crop photo';
+  // Field (team design)
+  static const yourFieldsTitle = 'Your fields';
+  static const viewFieldDetails = 'View field details';
+  static const fieldDetails = 'Field details';
+  static const plantHealthChip = 'Plant health';
+  static const onTrack = 'On track';
+  static const centerFarm = 'Show my farm';
+  static String cropAndSize(String crop, String size) => '$crop · $size';
+  static const tasksLabel = 'Tasks';
+  static const notMarkedYet = 'Corners not marked yet';
+  // Weather (team design)
+  static const weatherTitle = 'Weather for your farm';
+  static String feelsLike(int c) => 'Feels like $c°';
+  static const forecast5 = '5-Day Forecast';
+  static const todayShort = 'Today';
+  static const rainfall = 'Rainfall';
+  static const wind = 'Wind';
+  static String aboutMm(num mm) => '~ ${mm.round()} mm';
+  static String kmh(num v) => '${v.round()} km/h';
+  static const forecastNote =
+      'Forecast by Open-Meteo · Not a local sensor reading';
+  static const rainTomorrow = 'Rain expected tomorrow';
+  static String rainTomorrowBody(int mm, int? chance) =>
+      'About $mm mm${chance == null ? '' : ', $chance% chance'}. Plan field work around it.';
+  static const noRainToday = 'No rain expected today.';
+  static String rainToday(int mm) => 'Rain likely today: about $mm mm.';
+  static String rainChanceToday(int chance) =>
+      'Some chance of rain today ($chance%).';
+  static const forecastLoading = 'Getting the forecast…';
+  static const forecastFailed =
+      'Could not get the forecast right now. Check your connection.';
+  static String forecastOld(String time) =>
+      'No connection. Forecast from $time.';
+  static const nasaLast7 = 'Last 7 days · NASA';
+  static const nasaPastYear = 'Past year · NASA';
+  static const seeMonths = 'See every month';
+  static const pastYearBody =
+      'Rain and heat for each month of the past year at your farm, from NASA.';
+  static const nasaNotYet = 'NASA data is not here yet.';
 }

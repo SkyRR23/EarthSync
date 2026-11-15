@@ -7,7 +7,7 @@ import 'package:earthsync/data/environment/nasa_power_client.dart';
 import 'package:earthsync/data/models/farmer_input.dart';
 import 'package:earthsync/data/models/field_analysis.dart';
 import 'package:earthsync/design/theme.dart';
-import 'package:earthsync/features/home/weather_tab.dart';
+import 'package:earthsync/features/home/climate_history.dart';
 import 'package:earthsync/features/results/climate_provenance.dart';
 import 'package:earthsync/src/rust/api/bridge.dart' as rust;
 import 'package:earthsync/state/providers.dart';
@@ -43,7 +43,7 @@ Future<void> _pumpWeather(WidgetTester tester, FieldAnalysis a) async {
       overrides: [prefsProvider.overrideWithValue(prefs)],
       child: MaterialApp(
         theme: fsLightTheme(),
-        home: Scaffold(body: WeatherTab(analysis: a)),
+        home: ClimateHistoryPage(analysis: a),
       ),
     ),
   );

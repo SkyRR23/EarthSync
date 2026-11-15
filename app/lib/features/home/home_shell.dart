@@ -10,14 +10,14 @@ import '../../design/components/feedback.dart';
 import '../../design/components/grouped.dart';
 import '../../design/tokens.dart';
 import '../../state/providers.dart';
-import 'crops_tab.dart';
-import 'field_tab.dart';
+import 'field_overview.dart';
+import 'home_tab.dart';
 import 'notes_tab.dart';
-import 'today_tab.dart';
 import 'weather_tab.dart';
 
-/// The app after setup: 5 tabs — Today, Crops, Weather, Field, Notes.
-/// Phones get a bottom tab bar; tablets a sidebar.
+/// The app after setup, in the team design: 4 tabs — Crops (home, with
+/// today's tasks), Weather, Field, Notes. Phones get the design's bottom
+/// bar; tablets a sidebar.
 class HomeShell extends ConsumerStatefulWidget {
   const HomeShell({super.key, this.initialTab = 0});
   final int initialTab;
@@ -26,24 +26,34 @@ class HomeShell extends ConsumerStatefulWidget {
   ConsumerState<HomeShell> createState() => _HomeShellState();
 }
 
-class _HomeShellState extends ConsumerState<HomeShell> {
-  late int _tab = widget.initialTab.clamp(0, 4);
+class _HomeShellState extends ConsumerState<HomeShell>
+    with SingleTickerProviderStateMixin {
+  late int _tab = widget.initialTab.clamp(0, 3);
 
   static const _tabs = [
-    (
-      S.tabToday,
-      CupertinoIcons.checkmark_square,
-      CupertinoIcons.checkmark_square_fill,
-    ),
-    (S.tabCrops, Icons.grass_outlined, Icons.grass),
-    (
-      S.tabWeather,
-      CupertinoIcons.cloud_sun_rain,
-      CupertinoIcons.cloud_sun_rain_fill,
-    ),
+    (S.tabCrops, Icons.eco_outlined, Icons.eco),
+    (S.tabWeather, CupertinoIcons.cloud_sun, CupertinoIcons.cloud_sun_fill),
     (S.tabField, CupertinoIcons.map, CupertinoIcons.map_fill),
-    (S.tabNotes, CupertinoIcons.book, CupertinoIcons.book_fill),
+    (S.tabNotes, CupertinoIcons.doc_text, CupertinoIcons.doc_text_fill),
   ];
+
+  void _go(int i) {
+    if (i == _tab) return;
+    setState(() => _tab = i);
+    _fade.forward(from: 0);
+  }
+
+  late final AnimationController _fade = AnimationController(
+    vsync: this,
+    duration: FsMotion.normal,
+    value: 1,
+  );
+
+  @override
+  void dispose() {
+    _fade.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -59,16 +69,26 @@ class _HomeShellState extends ConsumerState<HomeShell> {
   @override
   Widget build(BuildContext context) {
     final p = context.fs;
-    final pages = [
-      const TodayTab(),
-      AnalysisGate(
-        builder: (a, cached) => CropsTab(analysis: a, fromCache: cached),
+    const pages = [HomeTab(), WeatherTab(), FieldTab(), NotesTab()];
+    final reduce = context.reduceMotion;
+    final body = HomeTabs(
+      current: _tab,
+      go: _go,
+      child: AnimatedBuilder(
+        animation: _fade,
+        builder: (_, child) {
+          final v = reduce ? 1.0 : FsMotion.curve.transform(_fade.value);
+          return Opacity(
+            opacity: 0.4 + 0.6 * v,
+            child: Transform.translate(
+              offset: Offset(0, (1 - v) * 10),
+              child: child,
+            ),
+          );
+        },
+        child: IndexedStack(index: _tab, children: pages),
       ),
-      AnalysisGate(builder: (a, _) => WeatherTab(analysis: a)),
-      const FieldTab(),
-      const NotesTab(),
-    ];
-    final body = IndexedStack(index: _tab, children: pages);
+    );
 
     return LayoutBuilder(
       builder: (context, c) {
@@ -119,7 +139,7 @@ class _HomeShellState extends ConsumerState<HomeShell> {
                                         )
                                       : null,
                                   chevron: false,
-                                  onTap: () => setState(() => _tab = i),
+                                  onTap: () => _go(i),
                                 ),
                               ),
                           ],
@@ -137,23 +157,10 @@ class _HomeShellState extends ConsumerState<HomeShell> {
         return Scaffold(
           backgroundColor: p.background,
           body: body,
-          bottomNavigationBar: CupertinoTabBar(
-            currentIndex: _tab,
-            onTap: (i) => setState(() => _tab = i),
-            activeColor: p.tint,
-            inactiveColor: p.secondaryLabel,
-            backgroundColor: p.barBackground,
-            border: Border(top: BorderSide(color: p.separator, width: 0.5)),
-            height: 58,
-            iconSize: 28,
-            items: [
-              for (final (label, icon, active) in _tabs)
-                BottomNavigationBarItem(
-                  icon: Icon(icon),
-                  activeIcon: Icon(active),
-                  label: label,
-                ),
-            ],
+          bottomNavigationBar: _EarthTabBar(
+            tabs: _tabs,
+            current: _tab,
+            onTap: _go,
           ),
         );
       },
@@ -296,4 +303,115 @@ class NoFarmView extends StatelessWidget {
       ),
     ),
   );
+}
+
+/// Lets a tab page switch tabs (the design's back arrow on Weather/Field
+/// returns to the home tab).
+class HomeTabs extends InheritedWidget {
+  const HomeTabs({
+    super.key,
+    required this.current,
+    required this.go,
+    required super.child,
+  });
+  final int current;
+  final void Function(int index) go;
+
+  static HomeTabs? of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<HomeTabs>();
+
+  @override
+  bool updateShouldNotify(HomeTabs old) => old.current != current;
+}
+
+/// The team design's bottom bar: icon over label, the active tab green
+/// with a short bar under it.
+class _EarthTabBar extends StatelessWidget {
+  const _EarthTabBar({
+    required this.tabs,
+    required this.current,
+    required this.onTap,
+  });
+  final List<(String, IconData, IconData)> tabs;
+  final int current;
+  final ValueChanged<int> onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.fs;
+    final dur = FsMotion.of(context, FsMotion.normal);
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: p.barBackground,
+        boxShadow: [
+          BoxShadow(
+            color: p.shadow,
+            blurRadius: 12,
+            offset: const Offset(0, -2),
+          ),
+        ],
+      ),
+      child: SafeArea(
+        top: false,
+        child: SizedBox(
+          height: 68,
+          child: Row(
+            children: [
+              for (final (i, (label, icon, active)) in tabs.indexed)
+                Expanded(
+                  child: Semantics(
+                    button: true,
+                    selected: i == current,
+                    label: label,
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () => onTap(i),
+                      child: ExcludeSemantics(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            AnimatedScale(
+                              scale: i == current ? 1.08 : 1,
+                              duration: dur,
+                              curve: FsMotion.spring,
+                              child: Icon(
+                                i == current ? active : icon,
+                                size: 27,
+                                color: i == current ? p.tint : p.secondaryLabel,
+                              ),
+                            ),
+                            const SizedBox(height: 3),
+                            Text(
+                              label,
+                              style: context.type.caption.copyWith(
+                                fontSize: 12.5,
+                                color: i == current ? p.tint : p.secondaryLabel,
+                                fontWeight: i == current
+                                    ? FontWeight.w700
+                                    : FontWeight.w500,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            AnimatedContainer(
+                              duration: dur,
+                              curve: FsMotion.curve,
+                              height: 3,
+                              width: i == current ? 30 : 0,
+                              decoration: BoxDecoration(
+                                color: p.tint,
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }

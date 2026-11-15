@@ -191,17 +191,16 @@ String shareSummary(FarmerDraft d, FieldAnalysis a) {
   return b.toString();
 }
 
-/// Field tab: the farm on a map, mark its 4 corners, answers and extras.
-class FieldTab extends ConsumerStatefulWidget {
-  const FieldTab({super.key});
+/// Field details ("View field details" on the Field tab): farm size and
+/// shape, the farmer's answers, soil, weather months, account and data.
+class FieldDetailsScreen extends ConsumerStatefulWidget {
+  const FieldDetailsScreen({super.key});
 
   @override
-  ConsumerState<FieldTab> createState() => _FieldTabState();
+  ConsumerState<FieldDetailsScreen> createState() => _FieldDetailsState();
 }
 
-class _FieldTabState extends ConsumerState<FieldTab> {
-  bool _plantHealth = false;
-
+class _FieldDetailsState extends ConsumerState<FieldDetailsScreen> {
   /// The team's NASA history window (completed months, up to 24).
   Future<void> _pickWeatherMonths(BuildContext context) async {
     final before = ref.read(historicalWindowProvider);
@@ -278,48 +277,9 @@ class _FieldTabState extends ConsumerState<FieldTab> {
     const iconIndent = FsSpace.lg + 30 + FsSpace.md;
 
     return FsPage(
-      title: S.myFarm,
-      showBack: false,
+      title: S.fieldDetails,
       subtitle: d.hasFarm ? farmSizeLabel(d.farm!) : null,
       children: [
-        FarmMapCard(draft: d, plantHealth: _plantHealth),
-        FsGroupedSection(
-          footer: !d.hasFarm
-              ? S.markFarmForHealth
-              : (_plantHealth
-                    ? '${plantHealthDateLabel(ref.watch(plantHealthDateProvider(d.farm!.center)).value)}. ${S.insideFarmOnly} ${S.pixelNote}'
-                    : null),
-          children: [
-            FsListRow(
-              leading: FsIconBadge(
-                CupertinoIcons.leaf_arrow_circlepath,
-                color: p.positiveText,
-              ),
-              title: S.showPlantHealth,
-              chevron: false,
-              trailing: CupertinoSwitch(
-                value: _plantHealth && d.hasFarm,
-                activeTrackColor: p.tint,
-                onChanged: d.hasFarm
-                    ? (v) => setState(() => _plantHealth = v)
-                    : null,
-              ),
-              onTap: d.hasFarm
-                  ? () => setState(() => _plantHealth = !_plantHealth)
-                  : null,
-            ),
-            if (_plantHealth && d.hasFarm)
-              const Padding(
-                padding: EdgeInsets.fromLTRB(
-                  FsSpace.lg,
-                  0,
-                  FsSpace.lg,
-                  FsSpace.md,
-                ),
-                child: PlantHealthLegend(),
-              ),
-          ],
-        ),
         if (!d.hasFarm)
           _MarkFarmCard(onTap: () => context.push('/farm'))
         else

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../data/environment/forecast.dart';
 import '../data/environment/recent_conditions.dart';
 import 'providers.dart';
 
@@ -202,3 +203,96 @@ final taskMarksProvider =
     NotifierProvider<TaskMarksNotifier, Map<String, String>>(
       TaskMarksNotifier.new,
     );
+
+final forecastClientProvider = Provider<ForecastClient>(
+  (ref) => ForecastClient(),
+);
+
+class ForecastState {
+  const ForecastState({this.data, this.loading = false, this.failed = false});
+  final Forecast? data;
+  final bool loading, failed;
+}
+
+/// 5-day forecast for the farm, with the last good copy kept for offline.
+class ForecastNotifier extends Notifier<ForecastState> {
+  static const _key = 'forecast_cache';
+  static const _fresh = Duration(minutes: 30);
+
+  (double, double)? get _place {
+    final d = ref.read(farmerDraftProvider);
+    final lat = d.fieldLatitude, lon = d.fieldLongitude;
+    return lat == null || lon == null ? null : (lat, lon);
+  }
+
+  @override
+  ForecastState build() {
+    ref.watch(
+      farmerDraftProvider.select((d) => (d.fieldLatitude, d.fieldLongitude)),
+    );
+    final place = _place;
+    final raw = ref.read(prefsProvider)?.getString(_key);
+    if (place == null || raw == null) return const ForecastState();
+    try {
+      final j = jsonDecode(raw) as Map<String, dynamic>;
+      final lat = j['lat'], lon = j['lon'];
+      if (lat is! num ||
+          lon is! num ||
+          (lat - place.$1).abs() > 1e-3 ||
+          (lon - place.$2).abs() > 1e-3) {
+        return const ForecastState();
+      }
+      return ForecastState(
+        data: Forecast.fromJson(
+          (j['data'] as Map).cast<String, dynamic>(),
+          fetchedAt: DateTime.parse(j['fetched_at'] as String),
+        ),
+      );
+    } catch (_) {
+      return const ForecastState();
+    }
+  }
+
+  Future<void> ensureFresh() async {
+    if (state.loading || _place == null) return;
+    final d = state.data;
+    if (d != null && DateTime.now().difference(d.fetchedAt) < _fresh) return;
+    await refresh();
+  }
+
+  Future<void> refresh() async {
+    final place = _place;
+    if (place == null) return;
+    state = ForecastState(data: state.data, loading: true);
+    try {
+      final (raw, data) = await ref
+          .read(forecastClientProvider)
+          .fetch(place.$1, place.$2);
+      if (!ref.mounted || _place != place) return;
+      state = ForecastState(data: data);
+      await ref
+          .read(prefsProvider)
+          ?.setString(
+            _key,
+            jsonEncode({
+              'lat': place.$1,
+              'lon': place.$2,
+              'fetched_at': data.fetchedAt.toIso8601String(),
+              'data': raw,
+            }),
+          );
+    } catch (_) {
+      if (!ref.mounted) return;
+      state = ForecastState(data: state.data, failed: true);
+    }
+  }
+
+  Future<void> forget() async {
+    state = const ForecastState();
+    await ref.read(prefsProvider)?.remove(_key);
+  }
+}
+
+final forecastProvider = NotifierProvider<ForecastNotifier, ForecastState>(
+  ForecastNotifier.new,
+);

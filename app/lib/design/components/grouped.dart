@@ -50,16 +50,16 @@ class FsGroupedSection extends StatelessWidget {
           if (header != null)
             Padding(
               padding: const EdgeInsets.fromLTRB(
-                FsSpace.gutter + FsSpace.lg,
+                FsSpace.gutter + FsSpace.xs,
                 0,
-                FsSpace.gutter + FsSpace.lg,
-                FsSpace.sm - 1,
+                FsSpace.gutter,
+                FsSpace.md,
               ),
               child: Semantics(
                 header: true,
                 child: Text(
-                  header!.toUpperCase(),
-                  style: context.type.footnote.copyWith(letterSpacing: 0.4),
+                  header!,
+                  style: context.type.title2.copyWith(fontSize: 20),
                 ),
               ),
             ),
@@ -67,7 +67,8 @@ class FsGroupedSection extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: FsSpace.gutter),
             decoration: BoxDecoration(
               color: p.surface,
-              borderRadius: BorderRadius.circular(FsRadius.md),
+              borderRadius: BorderRadius.circular(FsRadius.lg),
+              boxShadow: FsShadow.soft(p),
             ),
             clipBehavior: Clip.antiAlias,
             child: Padding(

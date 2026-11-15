@@ -82,6 +82,7 @@ Future<String?> deleteMyData(WidgetRef ref) async {
   ref.read(waterLogProvider.notifier).clearAll();
   ref.read(taskMarksProvider.notifier).clearAll();
   await ref.read(recentProvider.notifier).forget();
+  await ref.read(forecastProvider.notifier).forget();
   ref.read(farmerDraftProvider.notifier).reset();
   ref.read(analysisProvider.notifier).forget();
   await auth?.signOut();

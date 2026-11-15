@@ -20,8 +20,18 @@ TextTheme _textTheme(FsPalette p) {
     color: p.label,
   );
   return TextTheme(
-    displaySmall: s(34, FontWeight.w700, 1.2, tracking: -0.8), // large title
-    headlineMedium: s(28, FontWeight.w700, 1.22, tracking: -0.6), // title 1
+    displaySmall: s(
+      32,
+      FontWeight.w700,
+      1.18,
+      tracking: -0.8,
+    ).copyWith(color: p.heading), // large title
+    headlineMedium: s(
+      28,
+      FontWeight.w700,
+      1.22,
+      tracking: -0.6,
+    ).copyWith(color: p.heading), // title 1
     headlineSmall: s(22, FontWeight.w700, 1.27, tracking: -0.4), // title 2
     titleLarge: s(20, FontWeight.w600, 1.3, tracking: -0.3), // title 3
     titleMedium: s(17, FontWeight.w600, 1.35, tracking: -0.2), // headline

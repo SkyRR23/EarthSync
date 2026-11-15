@@ -1,326 +1,608 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../app/strings.dart';
-import '../../data/models/field_analysis.dart';
-import '../../design/components/feedback.dart';
-import '../../design/components/grouped.dart';
-import '../../design/components/page.dart';
-import '../../design/components/pressable.dart';
-import '../../design/components/scenario.dart' show monthNames, monthShort;
-import '../../design/components/status.dart';
+import '../../data/environment/forecast.dart';
+import '../../data/environment/recent_conditions.dart';
+import '../../design/components/buttons.dart';
+import '../../design/components/earth.dart';
+import '../../design/components/page.dart' show FsBackArrow;
 import '../../design/tokens.dart';
-import '../results/climate_provenance.dart';
-import 'freshness_banner.dart';
+import '../../state/providers.dart';
+import '../../state/today.dart';
+import '../today/farm_tasks.dart' show shortDate;
+import 'home_shell.dart';
 
-/// How a month compares with the other months of this record.
-enum MonthRain { most, middle, least, unknown }
+const _weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-/// Splits the engine's months into thirds by rain (most / middle / least).
-/// Only ranks the engine's own numbers — no rain thresholds are invented.
-List<MonthRain> rankRain(List<MonthlyClimate> months) {
-  final known = [for (final m in months) ?m.rainMm]..sort();
-  if (known.length < 3) {
-    return [
-      for (final m in months)
-        m.rainMm == null ? MonthRain.unknown : MonthRain.middle,
-    ];
-  }
-  final third = known.length ~/ 3;
-  final low = known[third - 1];
-  final high = known[known.length - third];
-  return [
-    for (final m in months)
-      switch (m.rainMm) {
-        null => MonthRain.unknown,
-        final r when r >= high => MonthRain.most,
-        final r when r <= low => MonthRain.least,
-        _ => MonthRain.middle,
-      },
-  ];
+/// One factual line about today's rain from the forecast (no advice).
+String rainTip(ForecastDay? today) {
+  if (today == null) return S.forecastLoading;
+  final mm = today.rainMm, chance = today.rainChance;
+  if ((mm ?? 0) >= 1) return S.rainToday(mm!.round());
+  if (chance != null && chance >= 30) return S.rainChanceToday(chance);
+  return S.noRainToday;
 }
 
-/// "Jun – Oct, Dec" for the months (in record order) that match.
-String monthRuns(List<MonthlyClimate> months, List<bool> match) {
-  final runs = <String>[];
-  var i = 0;
-  while (i < months.length) {
-    if (!match[i]) {
-      i++;
-      continue;
-    }
-    var j = i;
-    while (j + 1 < months.length && match[j + 1]) {
-      j++;
-    }
-    final a = monthShort[months[i].month - 1];
-    final b = monthShort[months[j].month - 1];
-    runs.add(i == j ? a : '$a – $b');
-    i = j + 1;
-  }
-  return runs.join(', ');
-}
-
-/// Weather tab: a picture strip of the months, then 3 plain sentences.
-/// Numbers appear only when the farmer taps a month.
-class WeatherTab extends StatefulWidget {
-  const WeatherTab({super.key, required this.analysis});
-  final FieldAnalysis analysis;
+/// Weather tab (team design): forecast now and 5 days (Open-Meteo), then
+/// NASA's last 7 days and the past year at the farm.
+class WeatherTab extends ConsumerStatefulWidget {
+  const WeatherTab({super.key});
 
   @override
-  State<WeatherTab> createState() => _WeatherTabState();
+  ConsumerState<WeatherTab> createState() => _WeatherTabState();
 }
 
-class _WeatherTabState extends State<WeatherTab> {
-  int? _selected;
+class _WeatherTabState extends ConsumerState<WeatherTab> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      ref.read(forecastProvider.notifier).ensureFresh();
+      ref.read(recentProvider.notifier).ensureFresh();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final a = widget.analysis;
-    final c = a.climateSummary;
+    final d = ref.watch(farmerDraftProvider);
+    if (!d.hasLocation) return const NoFarmView();
     final p = context.fs;
     final t = context.type;
-    final months = c.months;
-    final ranks = rankRain(months);
-    final ref = a.reference(c.sourceId);
+    final fc = ref.watch(forecastProvider);
+    final f = fc.data;
+    final recent = ref.watch(recentProvider).data;
+    final tabs = HomeTabs.of(context);
+    final today = f == null || f.days.isEmpty ? null : f.days.first;
+    final tomorrow = f == null || f.days.length < 2 ? null : f.days[1];
 
-    MonthlyClimate? hottest;
-    for (final m in months) {
-      if (m.tempMeanC != null &&
-          (hottest == null || m.tempMeanC! > hottest.tempMeanC!)) {
-        hottest = m;
-      }
-    }
-    final wet = monthRuns(months, [for (final r in ranks) r == MonthRain.most]);
-    final dry = monthRuns(months, [
-      for (final r in ranks) r == MonthRain.least,
-    ]);
-    final sel = _selected != null && _selected! < months.length
-        ? months[_selected!]
-        : null;
-
-    return FsPage(
-      title: S.tabWeather,
-      showBack: false,
-      subtitle: c.period.isEmpty ? null : c.period,
-      children: [
-        const FreshnessBanner(),
-        if (c.dataKind != null && c.dataKind != 'observed') ...[
-          const SizedBox(height: FsSpace.md),
-          FsBanner(
-            message: S.notMeasured(c.dataKind!),
-            tone: FsTone.caution,
-            icon: CupertinoIcons.exclamationmark_circle_fill,
-          ),
-        ],
-        if (months.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(
-              FsSpace.gutter,
-              FsSpace.lg,
-              FsSpace.gutter,
-              0,
-            ),
-            child: LayoutBuilder(
-              builder: (_, box) {
-                const cols = 6;
-                final w = ((box.maxWidth - FsSpace.xs * (cols - 1)) / cols)
-                    .clamp(0.0, double.infinity);
-                return Wrap(
-                  spacing: FsSpace.xs,
-                  runSpacing: FsSpace.xs,
-                  children: [
-                    for (final (i, m) in months.indexed)
-                      SizedBox(
-                        width: w,
-                        child: _MonthCell(
-                          month: m,
-                          rank: ranks[i],
-                          hottest: identical(m, hottest),
-                          selected: i == _selected,
-                          onTap: () => setState(
-                            () => _selected = i == _selected ? null : i,
+    return Scaffold(
+      backgroundColor: p.background,
+      body: SafeArea(
+        bottom: false,
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: FsSpace.maxContent),
+            child: RefreshIndicator(
+              color: p.tint,
+              onRefresh: () async {
+                await Future.wait([
+                  ref.read(forecastProvider.notifier).refresh(),
+                  ref.read(recentProvider.notifier).refresh(),
+                ]);
+              },
+              child: ListView(
+                padding: EdgeInsets.only(
+                  bottom: FsSpace.xxxl + MediaQuery.paddingOf(context).bottom,
+                ),
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      FsSpace.xs,
+                      FsSpace.sm,
+                      FsSpace.gutter,
+                      0,
+                    ),
+                    child: Row(
+                      children: [
+                        FsBackArrow(onTap: () => tabs?.go(0)),
+                        const SizedBox(width: FsSpace.xs),
+                        Expanded(
+                          child: Text(
+                            S.weatherTitle,
+                            style: t.title1.copyWith(fontSize: 26),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: FsSpace.sm),
+                    child: Center(
+                      child: FsLocationChip(
+                        label: S.myFarm,
+                        onTap: () => tabs?.go(2),
+                      ),
+                    ),
+                  ),
+                  FsEntrance(
+                    child: _NowCard(forecast: f, tip: rainTip(today)),
+                  ),
+                  if (fc.loading && f == null ||
+                      fc.failed && f == null ||
+                      fc.failed)
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        FsSpace.gutter + FsSpace.xxs,
+                        FsSpace.sm,
+                        FsSpace.gutter,
+                        0,
+                      ),
+                      child: Text(
+                        fc.loading
+                            ? S.forecastLoading
+                            : f != null
+                            ? S.forecastOld(_hm(f.fetchedAt))
+                            : S.forecastFailed,
+                        style: t.subhead.copyWith(color: p.secondaryLabel),
+                      ),
+                    ),
+                  const FsSectionTitle(S.forecast5),
+                  if (f != null && f.days.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        FsSpace.gutter - 3,
+                        FsSpace.sm,
+                        FsSpace.gutter - 3,
+                        0,
+                      ),
+                      child: Row(
+                        children: [
+                          for (final (i, day) in f.days.take(5).indexed)
+                            Expanded(
+                              child: FsEntrance(
+                                index: i + 1,
+                                child: _DayCard(day: day, isToday: i == 0),
+                              ),
+                            ),
+                        ],
+                      ),
+                    )
+                  else
+                    const _Placeholder(height: 120),
+                  if (tomorrow != null && (tomorrow.rainMm ?? 0) >= 1)
+                    FsEntrance(
+                      index: 3,
+                      child: FsCard(
+                        color: p.cautionBg,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(
+                              CupertinoIcons.exclamationmark_triangle_fill,
+                              color: p.cautionText,
+                              size: 30,
+                            ),
+                            const SizedBox(width: FsSpace.md),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    S.rainTomorrow,
+                                    style: t.headline.copyWith(
+                                      color: p.cautionText,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  const SizedBox(height: FsSpace.xxs),
+                                  Text(
+                                    S.rainTomorrowBody(
+                                      tomorrow.rainMm!.round(),
+                                      tomorrow.rainChance,
+                                    ),
+                                    style: t.callout,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  if (f != null)
+                    FsEntrance(
+                      index: 4,
+                      child: FsCard(
+                        child: IntrinsicHeight(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: _Metric(
+                                  icon: CupertinoIcons.drop_fill,
+                                  color: p.rain,
+                                  label: S.rainfall,
+                                  value: today?.rainMm == null
+                                      ? S.unknown
+                                      : S.aboutMm(today!.rainMm!),
+                                ),
+                              ),
+                              VerticalDivider(
+                                color: p.separator,
+                                width: FsSpace.xl,
+                              ),
+                              Expanded(
+                                child: _Metric(
+                                  icon: CupertinoIcons.wind,
+                                  color: p.rain,
+                                  label: S.wind,
+                                  value: f.current.windKmh == null
+                                      ? S.unknown
+                                      : S.kmh(f.current.windKmh!),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                  ],
-                );
-              },
-            ),
-          ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(
-            FsSpace.gutter,
-            FsSpace.md,
-            FsSpace.gutter,
-            0,
-          ),
-          child: Semantics(
-            liveRegion: true,
-            child: AnimatedContainer(
-              duration: FsMotion.of(context, FsMotion.fast),
-              padding: const EdgeInsets.all(FsSpace.lg),
-              decoration: BoxDecoration(
-                color: sel == null ? p.fill : p.surface,
-                borderRadius: BorderRadius.circular(FsRadius.lg),
-              ),
-              child: sel == null
-                  ? Text(
-                      S.tapMonth,
-                      textAlign: TextAlign.center,
-                      style: t.subhead,
-                    )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${monthNames[sel.month - 1]}${sel.year == null ? '' : ' ${sel.year}'}',
-                          style: t.title3,
-                        ),
-                        const SizedBox(height: FsSpace.xs),
-                        if (sel.rainMm == null && sel.tempMeanC == null)
-                          Text(S.noDataMonth, style: t.body)
-                        else
-                          Text(
-                            [
-                              '🌧️ ${sel.rainMm == null ? S.noData : '${sel.rainMm!.round()} mm ${S.rain.toLowerCase()}'}',
-                              '🌡️ ${sel.tempMeanC == null ? S.noData : '${sel.tempMeanC!.toStringAsFixed(0)} °C'}',
-                            ].join('    '),
-                            style: t.body,
+                    ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      FsSpace.gutter,
+                      FsSpace.md,
+                      FsSpace.gutter,
+                      0,
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: FsSpace.md,
+                        vertical: FsSpace.sm,
+                      ),
+                      decoration: BoxDecoration(
+                        color: p.neutralBg,
+                        borderRadius: BorderRadius.circular(FsRadius.capsule),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            CupertinoIcons.info_circle,
+                            size: 18,
+                            color: p.secondaryLabel,
                           ),
+                          const SizedBox(width: FsSpace.sm),
+                          Expanded(
+                            child: Text(
+                              S.forecastNote,
+                              style: t.footnote.copyWith(color: p.neutralText),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const FsSectionTitle(S.nasaLast7),
+                  FsEntrance(index: 5, child: _NasaRecentCard(recent: recent)),
+                  const FsSectionTitle(S.nasaPastYear),
+                  FsCard(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(S.pastYearBody, style: t.callout),
+                        const SizedBox(height: FsSpace.md),
+                        FsButton(
+                          S.seeMonths,
+                          kind: FsButtonKind.tinted,
+                          icon: CupertinoIcons.calendar,
+                          onPressed: () => context.push('/climate'),
+                        ),
                       ],
                     ),
-            ),
-          ),
-        ),
-        FsGroupedSection(
-          separatorIndent: FsSpace.lg + 30 + FsSpace.md,
-          children: [
-            if (wet.isNotEmpty)
-              FsListRow(
-                leading: const _Emoji('🌧️'),
-                title: S.mostRain,
-                value: wet,
-                titleStyle: t.headline,
-                chevron: false,
-              ),
-            if (dry.isNotEmpty)
-              FsListRow(
-                leading: const _Emoji('☀️'),
-                title: S.leastRain,
-                value: dry,
-                titleStyle: t.headline,
-                chevron: false,
-              ),
-            if (hottest != null)
-              FsListRow(
-                leading: const _Emoji('🌡️'),
-                title: S.hottest,
-                value:
-                    '${monthShort[hottest.month - 1]} · ${hottest.tempMeanC!.toStringAsFixed(0)} °C',
-                titleStyle: t.headline,
-                chevron: false,
-              ),
-          ],
-        ),
-        if (a.alerts.isNotEmpty)
-          FsGroupedSection(
-            header: S.watchOut,
-            separatorIndent: FsSpace.lg + 26 + FsSpace.md,
-            children: [
-              for (final al in a.alerts)
-                FsListRow(
-                  leading: Icon(
-                    hazardIcon(al.hazard),
-                    color: p.tone(riskTone(al.level)).$1,
-                    size: 26,
                   ),
-                  title: hazardLabel(al.hazard),
-                  titleStyle: t.headline,
-                  subtitle: al.message,
-                  below: FsRiskLabel(hazard: al.hazard, level: al.level),
-                ),
-            ],
-          ),
-        ClimateProvenance(analysis: a),
-        if (ref != null)
-          FsGroupedSection(
-            header: S.whereFrom,
-            separatorIndent: FsSpace.lg + 22 + FsSpace.md,
-            children: [FsEvidenceRow(ref)],
-          ),
-      ],
-    );
-  }
-}
-
-class _Emoji extends StatelessWidget {
-  const _Emoji(this.e);
-  final String e;
-
-  @override
-  Widget build(BuildContext context) =>
-      Text(e, style: const TextStyle(fontSize: 26));
-}
-
-class _MonthCell extends StatelessWidget {
-  const _MonthCell({
-    required this.month,
-    required this.rank,
-    required this.hottest,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final MonthlyClimate month;
-  final MonthRain rank;
-  final bool hottest;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final p = context.fs;
-    final (emoji, word) = switch (rank) {
-      MonthRain.most => ('🌧️', S.mostRain),
-      MonthRain.middle => ('⛅', 'Some rain'),
-      MonthRain.least => ('☀️', S.leastRain),
-      MonthRain.unknown => ('❔', S.noData),
-    };
-    return Semantics(
-      button: true,
-      selected: selected,
-      label:
-          '${monthNames[month.month - 1]}: $word${hottest ? ', ${S.hottest}' : ''}',
-      excludeSemantics: true,
-      child: FsPressable(
-        onTap: onTap,
-        scale: 0.94,
-        child: AnimatedContainer(
-          duration: FsMotion.of(context, FsMotion.fast),
-          padding: const EdgeInsets.symmetric(vertical: FsSpace.sm),
-          decoration: BoxDecoration(
-            color: selected ? p.tintSoft : p.surface,
-            borderRadius: BorderRadius.circular(FsRadius.md),
-            border: Border.all(
-              color: selected ? p.tint : (hottest ? p.heat : p.separator),
-              width: selected || hottest ? 2 : 0.5,
-            ),
-          ),
-          child: Column(
-            children: [
-              Text(emoji, style: const TextStyle(fontSize: 24)),
-              const SizedBox(height: FsSpace.xxs),
-              Text(
-                monthShort[month.month - 1],
-                style: context.type.footnote.copyWith(
-                  color: selected ? p.tint : p.label,
-                  fontWeight: FontWeight.w600,
-                ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
     );
   }
+
+  static String _hm(DateTime t) =>
+      '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
+}
+
+/// The sky card: picture, temperature, words, "feels like", and a tip strip.
+class _NowCard extends StatelessWidget {
+  const _NowCard({required this.forecast, required this.tip});
+  final Forecast? forecast;
+  final String tip;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.fs;
+    final t = context.type;
+    final c = forecast?.current;
+    final (label, emoji) = weatherLook(c?.code);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        FsSpace.gutter,
+        FsSpace.lg,
+        FsSpace.gutter,
+        0,
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [p.sky, p.skySoft],
+          ),
+          borderRadius: BorderRadius.circular(FsRadius.xl),
+          boxShadow: FsShadow.card(p),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                FsSpace.lg,
+                FsSpace.xl,
+                FsSpace.xl,
+                FsSpace.lg,
+              ),
+              child: Row(
+                children: [
+                  _Floating(
+                    child: Text(emoji, style: const TextStyle(fontSize: 84)),
+                  ),
+                  const SizedBox(width: FsSpace.md),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          c?.tempC == null ? '—' : '${c!.tempC!.round()}°',
+                          style: t.largeTitle.copyWith(
+                            fontSize: 64,
+                            height: 1,
+                            letterSpacing: -2,
+                          ),
+                        ),
+                        const SizedBox(height: FsSpace.xs),
+                        Text(
+                          c == null ? S.forecastLoading : label,
+                          textAlign: TextAlign.end,
+                          style: t.title2.copyWith(fontSize: 21),
+                        ),
+                        if (c?.feelsLikeC != null)
+                          Text(
+                            S.feelsLike(c!.feelsLikeC!.round()),
+                            style: t.body.copyWith(color: p.secondaryLabel),
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              color: p.tintSoft.withValues(alpha: 0.9),
+              padding: const EdgeInsets.symmetric(
+                horizontal: FsSpace.lg,
+                vertical: FsSpace.md,
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.eco_rounded, color: p.positiveText, size: 22),
+                  const SizedBox(width: FsSpace.sm),
+                  Expanded(
+                    child: Text(
+                      tip,
+                      style: t.callout.copyWith(
+                        color: p.positiveText,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Gently bobbing picture (still when the phone asks for less motion).
+class _Floating extends StatefulWidget {
+  const _Floating({required this.child});
+  final Widget child;
+
+  @override
+  State<_Floating> createState() => _FloatingState();
+}
+
+class _FloatingState extends State<_Floating>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 3),
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (context.reduceMotion) {
+      _c.stop();
+    } else if (!_c.isAnimating && TickerMode.valuesOf(context).enabled) {
+      _c.repeat(reverse: true);
+    }
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => AnimatedBuilder(
+    animation: _c,
+    child: widget.child,
+    builder: (_, child) => Transform.translate(
+      offset: Offset(0, -4 + 8 * Curves.easeInOut.transform(_c.value)),
+      child: child,
+    ),
+  );
+}
+
+class _DayCard extends StatelessWidget {
+  const _DayCard({required this.day, required this.isToday});
+  final ForecastDay day;
+  final bool isToday;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.fs;
+    final t = context.type;
+    final (_, emoji) = weatherLook(day.code);
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 3),
+      padding: const EdgeInsets.symmetric(vertical: FsSpace.md),
+      decoration: BoxDecoration(
+        color: isToday ? p.tintSoft : p.surface,
+        borderRadius: BorderRadius.circular(FsRadius.lg),
+        boxShadow: FsShadow.soft(p),
+      ),
+      child: Column(
+        children: [
+          Text(
+            isToday ? S.todayShort : _weekdays[day.date.weekday - 1],
+            style: t.subhead.copyWith(fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: FsSpace.xs),
+          Text(emoji, style: const TextStyle(fontSize: 30)),
+          const SizedBox(height: FsSpace.xs),
+          Text(
+            day.maxC == null ? '—' : '${day.maxC!.round()}°',
+            style: t.headline.copyWith(fontWeight: FontWeight.w700),
+          ),
+          Text(
+            day.minC == null ? '—' : '${day.minC!.round()}°',
+            style: t.subhead.copyWith(color: p.secondaryLabel),
+          ),
+          if (day.rainChance != null) ...[
+            const SizedBox(height: FsSpace.xxs),
+            Text(
+              '💧${day.rainChance}%',
+              style: t.caption.copyWith(color: p.rain),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _Metric extends StatelessWidget {
+  const _Metric({
+    required this.icon,
+    required this.color,
+    required this.label,
+    required this.value,
+  });
+  final IconData icon;
+  final Color color;
+  final String label, value;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.type;
+    return Row(
+      children: [
+        Icon(icon, color: color, size: 26),
+        const SizedBox(width: FsSpace.sm),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: t.subhead.copyWith(color: context.fs.secondaryLabel),
+              ),
+              Text(
+                value,
+                style: t.title3.copyWith(fontWeight: FontWeight.w700),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// NASA POWER's last 7 days at the farm (a few days behind today).
+class _NasaRecentCard extends StatelessWidget {
+  const _NasaRecentCard({required this.recent});
+  final RecentConditions? recent;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.fs;
+    final t = context.type;
+    final r = recent;
+    if (r == null || r.asOf == null) {
+      return FsCard(child: Text(S.nasaNotYet, style: t.callout));
+    }
+    final compared = switch (r.rainVsPast) {
+      Compared.lower => S.lessThanUsual,
+      Compared.higher => S.moreThanUsual,
+      Compared.usual => S.aboutUsual,
+      Compared.unknown => null,
+    };
+    final wet = switch (r.wetnessVsPast) {
+      Compared.lower => S.wetnessDrier,
+      Compared.higher => S.wetnessWetter,
+      Compared.usual => S.wetnessUsual,
+      Compared.unknown => null,
+    };
+    return FsCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(
+                r.rain7dMm == null ? '—' : '${r.rain7dMm!.round()} mm',
+                style: t.title1.copyWith(color: p.rain),
+              ),
+              const SizedBox(width: FsSpace.sm),
+              Expanded(
+                child: Text(
+                  S.rainfall,
+                  style: t.subhead.copyWith(color: p.secondaryLabel),
+                ),
+              ),
+            ],
+          ),
+          if (compared != null) Text(compared, style: t.callout),
+          if (wet != null)
+            Padding(
+              padding: const EdgeInsets.only(top: FsSpace.xs),
+              child: Text(wet, style: t.callout),
+            ),
+          const SizedBox(height: FsSpace.sm),
+          Text(S.nasaRecentSource(shortDate(r.asOf!)), style: t.footnote),
+        ],
+      ),
+    );
+  }
+}
+
+class _Placeholder extends StatelessWidget {
+  const _Placeholder({required this.height});
+  final double height;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.fromLTRB(
+      FsSpace.gutter,
+      FsSpace.sm,
+      FsSpace.gutter,
+      0,
+    ),
+    child: Container(
+      height: height,
+      decoration: BoxDecoration(
+        color: context.fs.fill,
+        borderRadius: BorderRadius.circular(FsRadius.lg),
+      ),
+    ),
+  );
 }

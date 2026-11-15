@@ -42,7 +42,11 @@ class FsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = context.fs;
-    final border = Border(bottom: BorderSide(color: p.separator, width: 0.5));
+    // Team design: no hairline under the bar; it melts into the page.
+    const border = Border();
+    final back = showBack && Navigator.of(context).canPop()
+        ? FsBackArrow(onTap: () => Navigator.of(context).maybePop())
+        : null;
 
     final content = SliverLayoutBuilder(
       builder: (ctx, constraints) {
@@ -86,8 +90,8 @@ class FsPage extends StatelessWidget {
             CupertinoSliverNavigationBar(
               largeTitle: Text(title),
               trailing: trailing,
-              automaticallyImplyLeading: showBack,
-              previousPageTitle: showBack ? S.back : null,
+              leading: back,
+              automaticallyImplyLeading: false,
               backgroundColor: p.barBackground,
               border: border,
               transitionBetweenRoutes: false,
@@ -109,8 +113,8 @@ class FsPage extends StatelessWidget {
       appBar: CupertinoNavigationBar(
         middle: Text(navMiddle ?? title),
         trailing: trailing,
-        automaticallyImplyLeading: showBack,
-        previousPageTitle: showBack ? S.back : null,
+        leading: back,
+        automaticallyImplyLeading: false,
         backgroundColor: p.barBackground,
         border: border,
         transitionBetweenRoutes: false,
@@ -209,4 +213,26 @@ class FsProgressLine extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
+}
+
+/// The team design's back control: a plain arrow.
+class FsBackArrow extends StatelessWidget {
+  const FsBackArrow({super.key, required this.onTap});
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    button: true,
+    label: S.back,
+    child: CupertinoButton(
+      padding: EdgeInsets.zero,
+      minimumSize: const Size.square(FsSpace.minTouch),
+      onPressed: onTap,
+      child: Icon(
+        CupertinoIcons.arrow_left,
+        size: 26,
+        color: context.fs.heading,
+      ),
+    ),
+  );
 }
