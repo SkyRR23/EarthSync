@@ -52,10 +52,11 @@ class _SoilWorkflowsState extends State<SoilWorkflows> {
         '${PlatformFarmClient.prefix}/image-capabilities',
         expectedStatus: 200,
       );
-      if (mounted)
+      if (mounted) {
         setState(
           () => _capabilities = Map<String, dynamic>.from(result as Map),
         );
+      }
     } catch (_) {
       if (mounted) setState(() => _capabilities = {'enabled': false});
     }
@@ -84,18 +85,20 @@ class _SoilWorkflowsState extends State<SoilWorkflows> {
     try {
       await action();
     } on PlatformFailure catch (error) {
-      if (mounted)
+      if (mounted) {
         setState(
           () => _message = error.code == 'EXTERNAL_IMAGE_CONSENT_REQUIRED'
               ? 'External processing requires explicit consent for this image.'
               : 'Action could not complete (${error.code}). Refresh reports before retrying extraction.',
         );
+      }
     } catch (_) {
-      if (mounted)
+      if (mounted) {
         setState(
           () => _message =
               'Action could not complete. Refresh reports before retrying extraction.',
         );
+      }
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -107,19 +110,21 @@ class _SoilWorkflowsState extends State<SoilWorkflows> {
       '$prefix/lab-reports',
       expectedStatus: 200,
     );
-    if (mounted)
+    if (mounted) {
       setState(() => _reports = List<Map<String, dynamic>>.from(data as List));
+    }
   }
 
   Future<void> _choose(PhotoOrigin origin) => _act(() async {
     final selected = await _picker.pick(origin, readGps: false);
-    if (selected != null && mounted)
+    if (selected != null && mounted) {
       setState(() {
         _selected = selected;
         _photoId = null;
         _appearance = null;
         _consent = false;
       });
+    }
   });
 
   Future<void> _analyze() => _act(() async {
@@ -165,10 +170,11 @@ class _SoilWorkflowsState extends State<SoilWorkflows> {
             'external_image_consent': _consent,
           },
         );
-        if (mounted)
+        if (mounted) {
           setState(
             () => _appearance = Map<String, dynamic>.from(result as Map),
           );
+        }
       }
     } finally {
       // Consent applies to one processing request, including transport failure.
@@ -196,10 +202,11 @@ class _SoilWorkflowsState extends State<SoilWorkflows> {
         originalImage: FutureBuilder<Object?>(
           future: pixels,
           builder: (_, state) {
-            if (state.hasError)
+            if (state.hasError) {
               return const Text(
                 'Original image unavailable. Cancel until you can check the report.',
               );
+            }
             if (!state.hasData) return const LinearProgressIndicator();
             return InteractiveViewer(
               child: Image.memory(
@@ -264,8 +271,9 @@ class _SoilWorkflowsState extends State<SoilWorkflows> {
           ),
           TextButton(
             onPressed: () {
-              if (notes.text.trim().isNotEmpty)
+              if (notes.text.trim().isNotEmpty) {
                 Navigator.pop(context, notes.text.trim());
+              }
             },
             child: Text(tr('Confirm my observation')),
           ),
@@ -281,10 +289,11 @@ class _SoilWorkflowsState extends State<SoilWorkflows> {
         'observed_on': dateLabel(day),
         'notes': '$text\nAppearance observation; associated photo: $_photoId',
       });
-      if (mounted)
+      if (mounted) {
         setState(
           () => _message = 'Saved as a farmer-reported appearance observation.',
         );
+      }
     });
   }
 

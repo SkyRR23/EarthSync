@@ -40,12 +40,13 @@ void main() {
                 );
               }
               mutations++;
-              if (request.url.path.endsWith('/photos'))
+              if (request.url.path.endsWith('/photos')) {
                 return http.Response(
                   '{"id":"test-photo"}',
                   201,
                   headers: {'content-type': 'application/json'},
                 );
+              }
               submitted = jsonDecode(request.body) as Map<String, dynamic>;
               return http.Response(
                 jsonEncode({
