@@ -161,6 +161,7 @@ def parse_lab_text(text):
         "confirmation_required": True,
         "values": [],
         "laboratory": None,
+        "transcription": text[:100_000],
         "sample_id": None,
         "sample_date": None,
         "method": None,

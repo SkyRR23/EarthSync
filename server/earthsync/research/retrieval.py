@@ -80,6 +80,28 @@ class EvidenceIndex:
             ],
         )
         self.db.commit()
+        # A separate collection in the same read-only FTS5 engine. Crop profiles
+        # cannot silently become disease evidence; existing corpus stays intact.
+        health = json.loads(
+            Path(__file__).with_name("plant_health.json").read_text(encoding="utf-8")
+        )
+        self.health_sources = {s["id"]: s for s in health["sources"]}
+        self.health_records = {r["id"]: r for r in health["claims"]}
+        if len(self.health_records) != len(health["claims"]) or any(
+            r["source_id"] not in self.health_sources for r in health["claims"]
+        ):
+            raise ValueError("Invalid plant-health dossier")
+        self.health_sha256 = hashlib.sha256(
+            json.dumps(health, sort_keys=True).encode()
+        ).hexdigest()
+        self.db.execute(
+            "CREATE VIRTUAL TABLE plant_health USING fts5(id UNINDEXED, text)"
+        )
+        self.db.executemany(
+            "INSERT INTO plant_health VALUES (?,?)",
+            [(r["id"], " ".join(r["features"])) for r in health["claims"]],
+        )
+        self.db.commit()
         # Pin the evidence corpus in each packet; no fetched/uploaded text enters this index.
         self.corpus_sha256 = hashlib.sha256(
             json.dumps(self.records, sort_keys=True).encode()
@@ -108,6 +130,57 @@ class EvidenceIndex:
                 )
             ][:100]
         )
+
+    def retrieve_health(self, *, image_kind, crop, features, region=None):
+        """Only actual feature matches, exact crop identities and explicit scope.
+
+        User questions cannot force retrieval of symptom evidence absent from
+        the validated image. Unknown crop/scope never becomes a local match.
+        """
+        crops = self.resolve(crop) if crop else []
+        crop_id = crops[0]["id"] if len(crops) == 1 else None
+        terms = [f for f in features if re.fullmatch(r"[a-z_]{1,60}", f)]
+        claims = []
+        if terms and (image_kind == "soil" or crop_id):
+            expression = " OR ".join('"' + f + '"' for f in terms)
+            with self.lock:
+                ids = [
+                    row[0]
+                    for row in self.db.execute(
+                        "SELECT id FROM plant_health WHERE plant_health MATCH ? ORDER BY bm25(plant_health), id LIMIT 12",
+                        (expression,),
+                    )
+                ]
+            claims = [
+                copy.deepcopy(self.health_records[i])
+                for i in ids
+                if self.health_records[i]["image_kind"] == image_kind
+                and self.health_records[i]["crop_id"]
+                == (crop_id if image_kind == "crop" else None)
+                and (
+                    not region
+                    or self.health_records[i]["region"].casefold() == region.casefold()
+                )
+                and set(self.health_records[i]["features"]) & set(terms)
+            ]
+        return {
+            "status": "evidence_available" if claims else "no_matching_evidence",
+            "claims": claims,
+            "sources": [
+                copy.deepcopy(self.health_sources[s])
+                for s in sorted({r["source_id"] for r in claims})
+            ],
+            "citations": [
+                {
+                    "claim_id": r["id"],
+                    "source_id": r["source_id"],
+                    "locator": r["locator"],
+                }
+                for r in claims
+            ],
+            "corpus_sha256": self.health_sha256,
+            "scope_note": "References retain their original geographic scope; they are not locally validated diagnoses.",
+        }
 
     def resolve(self, query):
         q = query.strip().casefold()

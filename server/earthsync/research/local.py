@@ -10,23 +10,39 @@ from starlette.concurrency import run_in_threadpool
 from earthsync.platform_v1.errors import PlatformError
 
 from .retrieval import EvidenceIndex, EvidenceQuery
-from .soil import LabConfirmation, LocalOCR, analyze_photo, soil_context
+from .soil import LabConfirmation, LocalOCR, soil_context
+from .multimodal import image_analysis, extract_report
+from .vision import ImageRequest, LabAssistRequest, configured_vision
+from .storage import ResearchError
 
 
-def local_router(store, objects, catalog, owner):
+def local_router(store, objects, catalog, owner, vision=None):
     router = APIRouter(prefix="/api/platform/v1")
     # Index initialization is lazy: inherited source-only routes keep working without it.
     index = None
     ocr = LocalOCR()
+    vision = vision or configured_vision()
 
-    @router.post("/crop-intelligence")
-    def evidence(value: EvidenceQuery):
+    @router.get("/image-capabilities")
+    def capabilities():
+        return {
+            "enabled": vision is not None,
+            "external": bool(vision and vision.external),
+            "provider": vision.name if vision else None,
+            "model": vision.model if vision else None,
+        }
+
+    def evidence_index():
         nonlocal index
         if catalog is None:
             raise PlatformError("CATALOG_NOT_INSTALLED", 503)
         if index is None:
             index = EvidenceIndex(catalog)
-        return index.retrieve(value)
+        return index
+
+    @router.post("/crop-intelligence")
+    def evidence(value: EvidenceQuery):
+        return evidence_index().retrieve(value)
 
     def report_row(db, farm_id, report_id):
         store.farm(owner, farm_id, db)
@@ -47,14 +63,37 @@ def local_router(store, objects, catalog, owner):
         }
 
     @router.post("/farms/{farm_id}/photos/{photo_id}/analyze")
-    def analyze(farm_id: UUID, photo_id: UUID):
+    def analyze(farm_id: UUID, photo_id: UUID, value: ImageRequest | None = None):
         pixels = objects.image(owner, farm_id, photo_id)
-        return analyze_photo(photo_id, pixels)
+        try:
+            return image_analysis(
+                photo_id,
+                pixels,
+                value=value or ImageRequest(),
+                index=evidence_index() if value and value.image_kind else None,
+                provider=vision,
+                saved_context=image_context(farm_id)
+                if value and value.image_kind
+                else None,
+            )
+        except ResearchError as exc:
+            raise PlatformError(exc.code, exc.status) from None
 
     @router.post("/farms/{farm_id}/photos/{photo_id}/lab-extraction", status_code=201)
-    async def extract(farm_id: UUID, photo_id: UUID):
+    async def extract(
+        farm_id: UUID, photo_id: UUID, value: LabAssistRequest | None = None
+    ):
         pixels = objects.image(owner, farm_id, photo_id)
-        extraction = await run_in_threadpool(ocr.extract, pixels)
+        try:
+            extraction = await run_in_threadpool(
+                extract_report,
+                pixels,
+                ocr=ocr,
+                value=value or LabAssistRequest(),
+                provider=vision,
+            )
+        except ResearchError as exc:
+            raise PlatformError(exc.code, exc.status) from None
         ident = str(uuid4())
         with store.connection() as db:
             db.execute("BEGIN IMMEDIATE")
@@ -126,5 +165,26 @@ def local_router(store, objects, catalog, owner):
             farmer_reported=store.observations(owner, farm_id),
             laboratory=reports(farm_id),
         )
+
+    def image_context(farm_id):
+        categories = {
+            "forecast": "regional_forecast_model",
+            "soil_map": "regional_modeled_soil",
+            "optical_discovery": "satellite_discovery_not_field_observation",
+        }
+        return {
+            **context(farm_id),
+            "saved_source_records": [
+                {"category": categories[job["kind"]], "result": job["result"]}
+                for job in store.intelligence(owner, farm_id)
+                if job["kind"] in categories and job["status"] == "succeeded"
+            ],
+            "saved_evidence_records": [
+                record.model_dump(mode="json")
+                for record in store.farm_records(owner, farm_id)
+            ],
+            "station_measurements": [],
+            "station_status": "No verified station measurements supplied by this workflow.",
+        }
 
     return router
