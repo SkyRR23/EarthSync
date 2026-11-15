@@ -22,8 +22,11 @@ bool _inMyanmar(LatLng p) =>
 
 /// Mark the field: stand in it and use GPS, tap the map, or use a sample.
 class LocationScreen extends ConsumerStatefulWidget {
-  const LocationScreen({super.key, this.editing = false});
+  const LocationScreen({super.key, this.editing = false, this.setup = false});
   final bool editing;
+
+  /// Opened from setup step 1 ("Pin it on the map instead").
+  final bool setup;
 
   @override
   ConsumerState<LocationScreen> createState() => _LocationScreenState();
@@ -81,6 +84,8 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
           .read(analysisProvider.notifier)
           .run(ref.read(farmerDraftProvider).toInput());
       context.pop();
+    } else if (widget.setup) {
+      context.push('/setup/2');
     } else {
       context.push('/question/1');
     }

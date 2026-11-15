@@ -79,6 +79,7 @@ flutter:
 
   assets:
     - assets/fixtures/
+    - assets/onboarding/
 
   # Inter (SIL Open Font License 1.1), latin subset via Fontsource.
   fonts:

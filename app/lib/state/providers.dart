@@ -107,6 +107,10 @@ class FarmerDraft {
     this.soilSource,
     this.soilConfidence,
     this.soilSigns = const [],
+    this.farmName,
+    this.farmType,
+    this.crops = const [],
+    this.harvestMonth,
   });
 
   /// The pin from setup (one tap or GPS).
@@ -134,6 +138,14 @@ class FarmerDraft {
 
   /// Visible soil signs (wire names: `white_crust`, `grey_spots`, ...).
   final List<String> soilSigns;
+
+  /// Setup (team design): optional farm name, `crop` / `livestock`, every
+  /// crop grown (the first is the main crop sent to the engine), and the
+  /// usual harvest month (0 = not sure).
+  final String? farmName;
+  final String? farmType;
+  final List<String> crops;
+  final int? harvestMonth;
 
   bool get hasLocation => latitude != null && longitude != null;
   bool get hasFarm => farm?.isComplete ?? false;
@@ -165,6 +177,10 @@ class FarmerDraft {
     String? soilSource,
     String? soilConfidence,
     List<String>? soilSigns,
+    String? farmName,
+    String? farmType,
+    List<String>? crops,
+    int? harvestMonth,
   }) => FarmerDraft(
     latitude: latitude ?? this.latitude,
     longitude: longitude ?? this.longitude,
@@ -180,6 +196,10 @@ class FarmerDraft {
     soilSource: soilSource ?? this.soilSource,
     soilConfidence: soilConfidence ?? this.soilConfidence,
     soilSigns: soilSigns ?? this.soilSigns,
+    farmName: farmName ?? this.farmName,
+    farmType: farmType ?? this.farmType,
+    crops: crops ?? this.crops,
+    harvestMonth: harvestMonth ?? this.harvestMonth,
   );
 
   FarmerInput toInput() {
@@ -217,6 +237,10 @@ class FarmerDraft {
     'soil_source': soilSource,
     'soil_confidence': soilConfidence,
     'soil_signs': soilSigns,
+    'farm_name': farmName,
+    'farm_type': farmType,
+    'crops': crops,
+    'harvest_month': harvestMonth,
   };
 
   factory FarmerDraft.fromJson(Map<String, dynamic> j) {
@@ -242,6 +266,10 @@ class FarmerDraft {
       soilSigns: [
         for (final x in (j['soil_signs'] as List? ?? const [])) x as String,
       ],
+      farmName: j['farm_name'] as String?,
+      farmType: j['farm_type'] as String?,
+      crops: [for (final x in (j['crops'] as List? ?? const [])) x as String],
+      harvestMonth: (j['harvest_month'] as num?)?.toInt(),
     );
   }
 }
@@ -406,6 +434,14 @@ class FarmerDraftNotifier extends Notifier<FarmerDraft> {
   void setCurrentCrop(String v) => _set(state.copyWith(currentCrop: v));
   void setPreviousCrop(String v) => _set(state.copyWith(previousCrop: v));
   void setPlantingMonth(int v) => _set(state.copyWith(plantingMonth: v));
+  void setHarvestMonth(int v) => _set(state.copyWith(harvestMonth: v));
+  void setFarmName(String v) => _set(state.copyWith(farmName: v.trim()));
+  void setFarmType(String v) => _set(state.copyWith(farmType: v));
+
+  /// Every crop grown; the first is the main crop the engine checks.
+  void setCrops(List<String> v) => _set(
+    state.copyWith(crops: v, currentCrop: v.isEmpty ? kUnknown : v.first),
+  );
   void setIrrigation(Irrigation v) => _set(state.copyWith(irrigation: v));
   void setDrainage(Drainage v) => _set(state.copyWith(drainage: v));
   void setPriorities(Set<Priority> v) => _set(state.copyWith(priorities: v));

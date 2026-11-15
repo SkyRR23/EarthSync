@@ -153,7 +153,9 @@ class _WeatherTabState extends ConsumerState<WeatherTab> {
                     )
                   else
                     const _Placeholder(height: 120),
-                  if (tomorrow != null && (tomorrow.rainMm ?? 0) >= 1)
+                  if (ref.watch(alertPrefsProvider).weather &&
+                      tomorrow != null &&
+                      (tomorrow.rainMm ?? 0) >= 1)
                     FsEntrance(
                       index: 3,
                       child: FsCard(

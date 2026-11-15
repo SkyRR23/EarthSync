@@ -19,6 +19,7 @@ abstract final class Crops {
     'sesame': 'Sesame',
     'maize': 'Maize',
     'vegetables': 'Vegetables',
+    'fruits': 'Fruits',
     'fallow': 'Nothing (rest)',
   };
 

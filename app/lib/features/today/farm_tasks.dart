@@ -6,7 +6,7 @@ import '../../data/models/soil_texture.dart';
 import '../../state/providers.dart';
 import '../../state/today.dart';
 
-enum TaskKind { heavyRain, water, soil, photo }
+enum TaskKind { heavyRain, water, soil, photo, pests }
 
 /// Water advice from data only. No amounts: crop water rules are not
 /// accepted yet, so the farmer's hand check always has the last word.
@@ -57,6 +57,7 @@ List<FarmTask> buildTasks({
   required DateTime now,
   bool canTakePhotos = true,
   Et0? et0,
+  AlertPrefs alerts = const AlertPrefs(),
 }) {
   final today = dayOf(now);
   final todo = <FarmTask>[], done = <FarmTask>[];
@@ -69,7 +70,8 @@ List<FarmTask> buildTasks({
   // 1. Heavy rain: only when this place's own record says it was unusual,
   // and the farmer said water stays (or does not know).
   final drain = draft.drainage;
-  if (recent != null &&
+  if (alerts.weather &&
+      recent != null &&
       recent.heaviestUnusual &&
       recent.heaviestDay != null &&
       (drain == null || drain == Drainage.poor || drain == Drainage.unknown)) {
@@ -95,7 +97,7 @@ List<FarmTask> buildTasks({
   }
 
   // 2. Water: skipped when the farmer said the field gets rain only.
-  if (draft.irrigation != Irrigation.none) {
+  if (alerts.water && draft.irrigation != Irrigation.none) {
     final last = waterLog.isEmpty ? null : waterLog.first;
     final since = last == null ? null : today.difference(dayOf(last)).inDays;
     if (since == 0) {
@@ -175,6 +177,24 @@ List<FarmTask> buildTasks({
         ),
       );
     }
+  }
+
+  // 5. Pest & disease check, weekly (setup alert choice).
+  if (alerts.pests) {
+    final seen = notes.any(
+      (n) =>
+          n.kind == NoteKind.pests &&
+          today.difference(dayOf(n.createdAt)).inDays < 7,
+    );
+    add(
+      seen
+          ? const FarmTask(kind: TaskKind.pests, title: S.pestDone, done: true)
+          : const FarmTask(
+              kind: TaskKind.pests,
+              title: S.pestTitle,
+              facts: [S.pestFact, S.pestNone],
+            ),
+    );
   }
 
   return [...todo, ...done];

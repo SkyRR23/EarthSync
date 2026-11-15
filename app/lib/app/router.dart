@@ -8,14 +8,15 @@ import '../features/home/home_shell.dart';
 import '../features/location/location_screen.dart';
 import '../features/map/map_screen.dart';
 import '../features/onboarding/sign_in_screen.dart';
-import '../features/onboarding/welcome_screen.dart';
+import '../features/onboarding/setup_flow.dart';
 import '../features/questionnaire/question_screen.dart';
 import '../features/results/scenario_detail_screen.dart';
 import '../features/privacy/your_data_screen.dart';
 import '../features/soil/soil_test_screen.dart';
 import '../features/sources/sources_screen.dart';
 
-/// Setup (first run only): / -> /location -> /question/1..3 -> /home.
+/// Setup (first run only, team design): / welcome -> /setup/1..7 (location,
+/// farm, crops, water, season, alerts, sign in) -> /home.
 /// After setup the app opens on /home: 4 tabs (Crops home, Weather, Field,
 /// Notes). /crops = "Check my crops"; /field-details = answers and settings;
 /// /climate = NASA months of the past year.
@@ -23,12 +24,23 @@ import '../features/sources/sources_screen.dart';
 GoRouter buildRouter({bool setupDone = false}) => GoRouter(
   initialLocation: setupDone ? '/home' : '/',
   routes: [
-    GoRoute(path: '/', builder: (_, _) => const WelcomeScreen()),
+    GoRoute(path: '/', builder: (_, _) => const SetupWelcome()),
+    GoRoute(
+      path: '/setup/:step',
+      builder: (_, s) => SetupStepScreen(
+        step: (int.tryParse(s.pathParameters['step'] ?? '') ?? 1).clamp(
+          1,
+          kSetupSteps,
+        ),
+      ),
+    ),
     GoRoute(path: '/signin', builder: (_, _) => const SignInScreen()),
     GoRoute(
       path: '/location',
-      builder: (_, s) =>
-          LocationScreen(editing: s.uri.queryParameters['edit'] == '1'),
+      builder: (_, s) => LocationScreen(
+        editing: s.uri.queryParameters['edit'] == '1',
+        setup: s.uri.queryParameters['setup'] == '1',
+      ),
     ),
     GoRoute(
       path: '/question/:step',

@@ -30,7 +30,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
       ref.read(analysisProvider.notifier).run(d.toInput());
       context.go('/home');
     } else {
-      context.push('/location');
+      context.go('/setup/1');
     }
   }
 

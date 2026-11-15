@@ -42,9 +42,11 @@ void main() {
     expect(a.scenarios, isNotEmpty);
   });
 
-  testWidgets('welcome screen shows start button', (tester) async {
+  testWidgets('welcome screen shows the team design start', (tester) async {
     await tester.pumpWidget(const ProviderScope(child: FieldShiftApp()));
-    expect(find.text('Start'), findsOneWidget);
+    await tester.pump();
+    expect(find.text(S.setupTitle), findsOneWidget);
+    expect(find.text(S.getStartedSetup), findsOneWidget);
   });
 
   testWidgets('crop card and detail show fit word and no percentages', (

@@ -12,6 +12,7 @@ import '../../design/tokens.dart';
 import '../../state/providers.dart';
 import '../../state/today.dart';
 import '../today/farm_tasks.dart';
+import 'home_shell.dart';
 
 /// The farm's tasks for [now] (shared by the home screen and its tests).
 List<FarmTask> watchTasks(WidgetRef ref, DateTime now) => buildTasks(
@@ -23,6 +24,7 @@ List<FarmTask> watchTasks(WidgetRef ref, DateTime now) => buildTasks(
   now: now,
   canTakePhotos: ref.watch(photoStoreProvider) != null,
   et0: ref.watch(et0Provider).value,
+  alerts: ref.watch(alertPrefsProvider),
 );
 
 /// Short task name for "Next check".
@@ -31,6 +33,7 @@ String taskShortName(TaskKind k) => switch (k) {
   TaskKind.water => S.shortWater,
   TaskKind.soil => S.shortSoil,
   TaskKind.photo => S.shortPhoto,
+  TaskKind.pests => S.shortPests,
 };
 
 /// A task that needs the farmer's eyes soon (shown as "Needs a look").
@@ -120,6 +123,14 @@ class _TaskSectionState extends ConsumerState<TaskSection> {
           kind: FsButtonKind.tinted,
           icon: CupertinoIcons.hand_raised_fill,
           onPressed: () => context.push('/soil-test'),
+        ),
+      ],
+      TaskKind.pests => [
+        FsButton(
+          S.addPestNote,
+          kind: FsButtonKind.tinted,
+          icon: CupertinoIcons.ant_fill,
+          onPressed: () => HomeTabs.of(context)?.go(3),
         ),
       ],
       TaskKind.photo => [
@@ -292,6 +303,7 @@ class TaskCard extends StatelessWidget {
         p.positiveText,
         p.positiveBg,
       ),
+      TaskKind.pests => (CupertinoIcons.ant_fill, p.cautionText, p.cautionBg),
     };
     final titleColor = switch (task.verdict) {
       WaterVerdict.mayNeed => p.cautionText,

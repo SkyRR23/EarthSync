@@ -25,6 +25,7 @@ class FsButton extends StatelessWidget {
     this.icon,
     this.loading = false,
     this.expand = true,
+    this.iconAfter = false,
   });
 
   final String label;
@@ -33,6 +34,9 @@ class FsButton extends StatelessWidget {
   final IconData? icon;
   final bool loading;
   final bool expand;
+
+  /// Icon after the label ("Next →" in the team design).
+  final bool iconAfter;
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +55,10 @@ class FsButton extends StatelessWidget {
       children: [
         if (loading)
           CupertinoActivityIndicator(color: fg)
-        else if (icon != null)
+        else if (icon != null && !iconAfter)
           Icon(icon, size: 20, color: fg),
-        if (loading || icon != null) const SizedBox(width: FsSpace.sm),
+        if (loading || (icon != null && !iconAfter))
+          const SizedBox(width: FsSpace.sm),
         Flexible(
           child: Text(
             label,
@@ -61,6 +66,10 @@ class FsButton extends StatelessWidget {
             style: context.type.labelLarge?.copyWith(color: fg),
           ),
         ),
+        if (!loading && icon != null && iconAfter) ...[
+          const SizedBox(width: FsSpace.sm),
+          Icon(icon, size: 20, color: fg),
+        ],
       ],
     );
 

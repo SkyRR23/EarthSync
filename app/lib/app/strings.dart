@@ -477,4 +477,68 @@ abstract final class S {
   static const greenBare = 'Bare';
   static const greenDense = 'Dense green';
   static const greenNotSeen = 'Cloud';
+  // Setup (team design onboarding)
+  static const tagline = 'Smart Farming, Better Harvest';
+  static const setupTitle = 'Let’s set up your farm!';
+  static const setupBody =
+      'Answer a few easy questions to get weather, water and soil help for your farm.';
+  static const getStartedSetup = 'Get Started';
+  static const haveAccount = 'Already have an account? Sign in';
+  static String stepSlash(int n, int of) => '$n / $of';
+  static const allowLocationTitle = 'Allow Location Access';
+  static const allowLocationBody =
+      'We’ll use your location to show accurate weather and nearby farm information.';
+  static const locationPrivacy =
+      'Your location is only used for farm-related features.';
+  static const allowLocation = 'Allow Location Access';
+  static const pinOnMap = 'Pin it on the map instead';
+  static const locationSaved = 'Location saved';
+  static const finding = 'Finding you…';
+  static const addFarmTitle = 'Add Your Farm';
+  static const addFarmBody = 'Tell us about your farm or field.';
+  static const farmNameHint = 'Farm Name (Optional)';
+  static const farmTypeLabel = 'Select Farm Type';
+  static const cropFarm = 'Crop Farm';
+  static const livestockFarm = 'Livestock Farm';
+  static const livestockNote =
+      'EarthSync gives crop, water and soil help. Livestock advice is not in the app yet.';
+  static const cropsTitle = 'What Crops Do You Grow?';
+  static const cropsBody = 'Select the crops you grow on your farm.';
+  static const cropCorn = 'Corn';
+  static const cropOther = 'Other';
+  static const cropsFirstNote = 'The first crop you pick is checked first.';
+  static const waterTitle = 'Water on Your Farm';
+  static const waterBody = 'Two quick questions for better watering help.';
+  static const waterQuestion = 'How often can you water your crops?';
+  static const rainQuestion = 'After heavy rain, water on the field…';
+  static const seasonTitle = 'Set Your Farming Season';
+  static const seasonBody = 'When do you usually plant and harvest?';
+  static const plantingSeason = 'Planting Season';
+  static const harvestSeason = 'Harvest Season';
+  static const selectMonth = 'Select month';
+  static const alertsTitle = 'Get Important Alerts';
+  static const alertsBody = 'Choose what kind of alerts you want to receive.';
+  static const alertWeather = 'Weather Warnings';
+  static const alertWeatherSub = '(Heavy rain, rain tomorrow)';
+  static const alertWater = 'Water Reminders';
+  static const alertWaterSub = '(When your field may need water)';
+  static const alertPests = 'Pest & Disease Checks';
+  static const alertPestsSub = '(A weekly reminder to look)';
+  static const alertsNote = 'They show on your home screen and the bell.';
+  static const finishSetup = 'Finish Setup';
+  static const maybeLater = 'Maybe later';
+  static const accountTitle = 'Save Your Farm';
+  static const accountBody =
+      'Sign in or create a free account with Google. Your farm, notes and photos stay safe and come back on a new phone.';
+  static const accountNote =
+      'The first time, Google creates your EarthSync account.';
+  static const skipForNow = 'Skip for now';
+  // Pest check task
+  static const pestTitle = 'Look for pests and disease';
+  static const pestFact =
+      'Check under leaves and at the stems. Add a note with a photo if you see something.';
+  static const pestNone = 'No pest check noted this week.';
+  static const pestDone = 'Pest check noted this week';
+  static const addPestNote = 'Add a pest note';
+  static const shortPests = 'Pest check';
 }

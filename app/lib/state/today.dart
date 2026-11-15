@@ -348,3 +348,53 @@ final greennessProvider = FutureProvider<FarmGreenness?>((ref) async {
   if (farm == null || !farm.isComplete) return null;
   return ref.read(greennessClientProvider).fetch(farm.corners);
 });
+
+/// Alert choices from setup (team design "Get Important Alerts"). They turn
+/// the matching home tasks and Weather alerts on or off.
+class AlertPrefs {
+  const AlertPrefs({this.weather = true, this.water = true, this.pests = true});
+  final bool weather, water, pests;
+  AlertPrefs copyWith({bool? weather, bool? water, bool? pests}) => AlertPrefs(
+    weather: weather ?? this.weather,
+    water: water ?? this.water,
+    pests: pests ?? this.pests,
+  );
+}
+
+class AlertPrefsNotifier extends Notifier<AlertPrefs> {
+  static const _key = 'alert_prefs';
+
+  @override
+  AlertPrefs build() {
+    final raw = ref.read(prefsProvider)?.getString(_key);
+    if (raw == null) return const AlertPrefs();
+    try {
+      final j = jsonDecode(raw) as Map;
+      return AlertPrefs(
+        weather: j['weather'] != false,
+        water: j['water'] != false,
+        pests: j['pests'] != false,
+      );
+    } catch (_) {
+      return const AlertPrefs();
+    }
+  }
+
+  void set(AlertPrefs v) {
+    state = v;
+    ref
+        .read(prefsProvider)
+        ?.setString(
+          _key,
+          jsonEncode({
+            'weather': v.weather,
+            'water': v.water,
+            'pests': v.pests,
+          }),
+        );
+  }
+}
+
+final alertPrefsProvider = NotifierProvider<AlertPrefsNotifier, AlertPrefs>(
+  AlertPrefsNotifier.new,
+);
