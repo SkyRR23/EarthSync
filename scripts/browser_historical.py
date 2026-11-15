@@ -9,6 +9,7 @@ All runtime IDs, browser state and raw receipts stay outside the checkout.
 import argparse
 import json
 import re
+from uuid import uuid4
 from pathlib import Path
 
 import httpx
@@ -17,6 +18,11 @@ from release_privacy import private_output
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--fixture", type=Path, required=True)
+parser.add_argument(
+    "--resume-saved",
+    type=Path,
+    help="Run saved-state/as-of follow-up without repeating source retrieval",
+)
 parser.add_argument("--output", type=Path, required=True)
 parser.add_argument("--base-url", default="http://127.0.0.1:8780")
 parser.add_argument("--platform-url", default="http://127.0.0.1:8771")
@@ -64,7 +70,10 @@ with sync_playwright() as driver:
     browser = driver.chromium.launch(
         executable_path="/usr/bin/chromium", headless=True, args=["--no-sandbox"]
     )
-    context = browser.new_context(viewport={"width": 1440, "height": 1050})
+    context = browser.new_context(
+        viewport={"width": 1440, "height": 1050},
+        storage_state=str(args.resume_saved) if args.resume_saved else None,
+    )
     context.add_init_script(
         "if(!localStorage.getItem('flutter.earthsync.home.v1'))localStorage.setItem('flutter.earthsync.home.v1',"
         + json.dumps(json.dumps(json.dumps(profile)))
@@ -73,7 +82,16 @@ with sync_playwright() as driver:
     page = context.new_page()
     page.set_default_timeout(30000)
     page.on("pageerror", lambda e: errors.append(str(e)))
-    tile_status, tile_failures = [], []
+    tile_status, tile_failures, tile_dates = [], [], []
+    page.on(
+        "response",
+        lambda r: tile_dates.append(
+            (re.search(r"/(\d{4}-\d{2}-\d{2})/", r.url).group(1), r.status)
+        )
+        if "gibs.earthdata.nasa.gov" in r.url
+        and re.search(r"/(\d{4}-\d{2}-\d{2})/", r.url)
+        else None,
+    )
     page.on(
         "response",
         lambda r: tile_status.append(r.status)
@@ -137,10 +155,7 @@ with sync_playwright() as driver:
         page.mouse.click(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
 
     def click(name):
-        if name == "Duplicate saved simulation & edit":
-            page.get_by_role("button", name=name, exact=True).dispatch_event("click")
-        else:
-            tap(find(name))
+        tap(find(name))
         page.wait_for_timeout(350)
 
     def choose(label, value):
@@ -189,124 +204,154 @@ with sync_playwright() as driver:
 
     page.goto(args.base_url + "/#/historical")
     enable()
-    click("Detailed 2024")
-    click("Retrieve selected NASA period")
-    find("Play")
-    record("Open confirmed farm and accepted 2024 archive with Rust ET0")
-    capture("replay-2024")
-    click("Play")
-    page.wait_for_timeout(1400)
-    click("Pause")
-    record("Historical playback advances local time and pauses")
-    click("Validate date & show NASA true colour")
-    page.wait_for_timeout(1600)
-    capture("dated-map-static-soil")
-    print("GIBS browser tiles", tile_status[:8], tile_failures[:3], flush=True)
-    if 200 not in tile_status:
-        raise AssertionError("No TLS-verified NASA GIBS tile rendered")
-    record("Inspect dated GIBS and fixed-version SoilGrids; NDVI stays unavailable")
-    click("Scenario editor")
-    click("Find source-backed crop identities")
-    profile_id = "rice.mm.calendar-5-sessions-0@1"
-    for identity in ["baseline", "alternative_a", "alternative_b"]:
-        if identity == "alternative_a":
-            click("Baseline · hypothetical existing plan")
-            click("Alternative A · hypothetical")
-        if identity == "alternative_b":
-            click("Alternative A · hypothetical")
-            click("Alternative B · hypothetical")
-        for kind in ["Previous crop", "Current / next crop"]:
-            choose(identity + " · " + kind + " reference", profile_id)
-    click("Run & save simulation")
-    wait_result()
-    record("Run baseline and two alternatives using real archived conditions")
-    rows = api.get(prefix + f"/farms/{farm['id']}/simulations").json()
-    first = api.get(prefix + f"/farms/{farm['id']}/simulations/{rows[0]['id']}").json()
-    (out / "first-result.json").write_text(json.dumps(first))
-    # Edit an actual calendar control; automatic recomputation saves a new result.
-    click("Scenario editor")
-    date_button = find("baseline crop 1 planting: 2024-01-01")
-    tap(date_button)
-    tap(page.get_by_role("button", name=re.compile("^Switch to input")))
-    field = page.get_by_role("textbox").last
-    tap(field)
-    page.keyboard.press("ControlOrMeta+A")
-    page.keyboard.type("01/15/2024")
-    tap(page.get_by_role("button", name="OK", exact=True))
-    page.wait_for_timeout(2500)
-    wait_result()
-    latest = api.get(prefix + f"/farms/{farm['id']}/simulations").json()[0]
-    changed = api.get(prefix + f"/farms/{farm['id']}/simulations/{latest['id']}").json()
-    assert changed["id"] != first["id"]
-    assert (
-        changed["periods"][0]["strategies"][0]["plans"][0]["duration_days"]
-        != first["periods"][0]["strategies"][0]["plans"][0]["duration_days"]
-    )
-    assert (
-        changed["periods"][0]["strategies"][0]["plans"][0]["environment"]
-        != first["periods"][0]["strategies"][0]["plans"][0]["environment"]
-    )
-    record("Planting-date edit changes saved period outputs and preserves original")
-    click("Scenario editor")
-    choose("baseline · Irrigation availability", "regular")
-    wait_result()
-    latest = api.get(prefix + f"/farms/{farm['id']}/simulations").json()[0]
-    water = api.get(prefix + f"/farms/{farm['id']}/simulations/{latest['id']}").json()
-    assert (
-        water["periods"][0]["strategies"][0]["assumptions"]["irrigation"] == "regular"
-    )
-    assert (
-        water["periods"][0]["strategies"][0]["water_quantities"]["gross_irrigation"][
-            "value"
-        ]
-        is None
-    )
-    record(
-        "Water assumption changes comparison constraints; irrigation quantity withheld"
-    )
-    click("Scenario editor")
-    choose("Environmental comparison", "two years")
-    page.wait_for_timeout(3500)
-    wait_result()
-    latest = api.get(prefix + f"/farms/{farm['id']}/simulations").json()[0]
-    two = api.get(prefix + f"/farms/{farm['id']}/simulations/{latest['id']}").json()
-    assert len(two["periods"]) == 2
-    assert (
-        two["periods"][0]["metrics"]["rainfall"]["value"]
-        != two["periods"][1]["metrics"]["rainfall"]["value"]
-    )
-    record("Compare actual 2024 and 2025 under the same hypothetical decisions")
-    scroll(-10000)
-    scroll(500)
-    capture("comparison-2024-2025")
-    click("Scenario editor")
-    choose("Environmental comparison", "context")
-    page.wait_for_timeout(6000)
-    wait_result()
-    latest = api.get(prefix + f"/farms/{farm['id']}/simulations").json()[0]
-    contextual = api.get(
-        prefix + f"/farms/{farm['id']}/simulations/{latest['id']}"
-    ).json()
-    assert len(contextual["periods"]) == 11
-    assert contextual["baseline"]["rainfall"]["sample_count"] == 11
-    record("2015–2025 contextual comparison exposes complete-season sample counts")
-    click("Keep for offline viewing")
-    record(
-        "Explicitly save selected historical replay and simulation for offline viewing"
-    )
-    context.storage_state(path=str(out / "browser-state.json"))
-    context.set_offline(True)
-    page.reload()
-    enable()
-    find("Refresh saved records")
-    assert "Offline" in page.locator("body").aria_snapshot()
-    record(
-        "Cold offline reopen uses original device snapshot read only",
-        "injected network outage / cached-real records",
-    )
-    capture("offline")
-    context.set_offline(False)
-    click("Refresh saved records")
+    if not args.resume_saved:
+        click("Detailed 2024")
+        click("Retrieve selected NASA period")
+        find("Play")
+        record("Open confirmed farm and accepted 2024 archive with Rust ET0")
+        capture("replay-2024")
+        click("Play")
+        page.wait_for_timeout(1400)
+        click("Pause")
+        record("Historical playback advances local time and pauses")
+        click("Validate date & show NASA true colour")
+        page.wait_for_timeout(1600)
+        capture("dated-map-static-soil")
+        print("GIBS browser tiles", tile_status[:8], tile_failures[:3], flush=True)
+        if 200 not in tile_status:
+            raise AssertionError("No TLS-verified NASA GIBS tile rendered")
+        record("Inspect dated GIBS and fixed-version SoilGrids; NDVI stays unavailable")
+        pin_date = tile_dates[-1][0]
+        click("Pin imagery for date comparison")
+        tap(find("Follow replay with dated imagery", role="checkbox", exact=False))
+        click("Next period")
+        find("Validate date & show NASA true colour")
+        scroll(150)
+        for _ in range(25):
+            if any(day != pin_date and status == 200 for day, status in tile_dates):
+                break
+            page.wait_for_timeout(400)
+        else:
+            capture("missing-next-image")
+            raise AssertionError("Replay did not retrieve the next dated image")
+        capture("two-date-imagery")
+        record(
+            "Replay changes actual tile dates and retains a separately dated pinned comparison"
+        )
+
+        click("Scenario editor")
+        click("Find source-backed crop identities")
+        profile_id = "rice.mm.calendar-5-sessions-0@1"
+        for identity in ["baseline", "alternative_a", "alternative_b"]:
+            if identity == "alternative_a":
+                click("Baseline · hypothetical existing plan")
+                click("Alternative A · hypothetical")
+            if identity == "alternative_b":
+                click("Alternative A · hypothetical")
+                click("Alternative B · hypothetical")
+            for kind in ["Previous crop", "Current / next crop"]:
+                choose(identity + " · " + kind + " reference", profile_id)
+        click("Run & save simulation")
+        wait_result()
+        record("Run baseline and two alternatives using real archived conditions")
+        rows = api.get(prefix + f"/farms/{farm['id']}/simulations").json()
+        first = api.get(
+            prefix + f"/farms/{farm['id']}/simulations/{rows[0]['id']}"
+        ).json()
+        (out / "first-result.json").write_text(json.dumps(first))
+        # Edit an actual calendar control; automatic recomputation saves a new result.
+        click("Scenario editor")
+        date_button = find("baseline crop 1 planting: 2024-01-01")
+        tap(date_button)
+        tap(page.get_by_role("button", name=re.compile("^Switch to input")))
+        field = page.get_by_role("textbox").last
+        tap(field)
+        page.keyboard.press("ControlOrMeta+A")
+        page.keyboard.type("01/15/2024")
+        tap(page.get_by_role("button", name="OK", exact=True))
+        page.wait_for_timeout(2500)
+        wait_result()
+        latest = api.get(prefix + f"/farms/{farm['id']}/simulations").json()[0]
+        changed = api.get(
+            prefix + f"/farms/{farm['id']}/simulations/{latest['id']}"
+        ).json()
+        assert changed["id"] != first["id"]
+        assert (
+            changed["periods"][0]["strategies"][0]["plans"][0]["duration_days"]
+            != first["periods"][0]["strategies"][0]["plans"][0]["duration_days"]
+        )
+        assert (
+            changed["periods"][0]["strategies"][0]["plans"][0]["environment"]
+            != first["periods"][0]["strategies"][0]["plans"][0]["environment"]
+        )
+        record("Planting-date edit changes saved period outputs and preserves original")
+        click("Scenario editor")
+        choose("baseline · Irrigation availability", "regular")
+        wait_result()
+        latest = api.get(prefix + f"/farms/{farm['id']}/simulations").json()[0]
+        water = api.get(
+            prefix + f"/farms/{farm['id']}/simulations/{latest['id']}"
+        ).json()
+        assert (
+            water["periods"][0]["strategies"][0]["assumptions"]["irrigation"]
+            == "regular"
+        )
+        assert (
+            water["periods"][0]["strategies"][0]["water_quantities"][
+                "gross_irrigation"
+            ]["value"]
+            is None
+        )
+        record(
+            "Water assumption changes comparison constraints; irrigation quantity withheld"
+        )
+        click("Scenario editor")
+        choose("Environmental comparison", "two years")
+        page.wait_for_timeout(3500)
+        wait_result()
+        latest = api.get(prefix + f"/farms/{farm['id']}/simulations").json()[0]
+        two = api.get(prefix + f"/farms/{farm['id']}/simulations/{latest['id']}").json()
+        assert len(two["periods"]) == 2
+        assert (
+            two["periods"][0]["metrics"]["rainfall"]["value"]
+            != two["periods"][1]["metrics"]["rainfall"]["value"]
+        )
+        record("Compare actual 2024 and 2025 under the same hypothetical decisions")
+        scroll(-10000)
+        scroll(500)
+        capture("comparison-2024-2025")
+        click("Scenario editor")
+        choose("Environmental comparison", "context")
+        page.wait_for_timeout(6000)
+        wait_result()
+        latest = api.get(prefix + f"/farms/{farm['id']}/simulations").json()[0]
+        contextual = api.get(
+            prefix + f"/farms/{farm['id']}/simulations/{latest['id']}"
+        ).json()
+        assert len(contextual["periods"]) == 11
+        assert contextual["baseline"]["rainfall"]["sample_count"] == 11
+        record("2015–2025 contextual comparison exposes complete-season sample counts")
+        click("Keep for offline viewing")
+        record(
+            "Explicitly save selected historical replay and simulation for offline viewing"
+        )
+        context.storage_state(path=str(out / "browser-state.json"))
+        context.set_offline(True)
+        page.reload()
+        enable()
+        find("Refresh saved records")
+        assert "Offline" in page.locator("body").aria_snapshot()
+        record(
+            "Cold offline reopen uses original device snapshot read only",
+            "injected network outage / cached-real records",
+        )
+        capture("offline")
+        context.set_offline(False)
+        click("Refresh saved records")
+    else:
+        click("Simulation results")
+        click("Reopen simulation")
+        record("Reopen saved simulation with original source lineage")
     click("Duplicate saved simulation & edit")
     # As-of-date simulation must not leak archives retrieved in the present.
     choose("Scientific mode", "as of date")
@@ -319,6 +364,62 @@ with sync_playwright() as driver:
         m["value"] is None for p in asof["periods"] for m in p["metrics"].values()
     )
     record("As-of-date mode withholds future-known environmental archives")
+    click("Duplicate saved simulation & edit")
+    click("Run & save simulation")
+    wait_result()
+    newest = api.get(prefix + f"/farms/{farm['id']}/simulations").json()[0]
+    reproduced = api.get(
+        prefix + f"/farms/{farm['id']}/simulations/{newest['id']}"
+    ).json()
+    assert reproduced["calculation_sha256"] == asof["calculation_sha256"]
+    assert reproduced["source_lineage"] == asof["source_lineage"]
+    record("Duplicate inputs reproduce the same calculation digest and source lineage")
+    original_group = {
+        "id": str(uuid4()),
+        "name": "Synthetic browser import " + uuid4().hex[:6],
+        "baseline_decision_id": reproduced["periods"][0]["strategies"][0][
+            "decision_id"
+        ],
+        "alternative_decision_ids": [
+            s["decision_id"] for s in reproduced["periods"][0]["strategies"][1:]
+        ],
+        "baseline_declared_existing_plan": True,
+        "exploration_reason": "Synthetic software acceptance of historical comparison import, not a farmer observation",
+    }
+    response = api.post(
+        prefix + f"/farms/{farm['id']}/comparisons", json=original_group
+    )
+    response.raise_for_status()
+    original = response.json()
+    click("Refresh saved records")
+    click("Scenario editor")
+    choose("Scientific mode", "retrospective")
+    wait_result()
+    click("Scenario editor")
+    choose("Attach to an existing three-strategy comparison", original_group["name"])
+    page.wait_for_timeout(1200)
+    click("Run & save simulation")
+    wait_result()
+    newest = api.get(prefix + f"/farms/{farm['id']}/simulations").json()[0]
+    imported = api.get(
+        prefix + f"/farms/{farm['id']}/simulations/{newest['id']}"
+    ).json()
+    assert imported["request"]["comparison_id"] == original["id"]
+    assert len(imported["saved_comparison_ids"]) == len(imported["periods"])
+    groups = api.get(prefix + f"/farms/{farm['id']}/comparisons").json()
+    assert next(g for g in groups if g["id"] == original["id"]) == original
+    record(
+        "Import an existing baseline/A/B and save new historical reassessments without overwriting it"
+    )
+    click("Reported history")
+    assert "Unknown gap" in page.locator("body").aria_snapshot()
+    capture("reported-history")
+    record("Reported crops, explicit bare field and unknown gaps remain distinct")
+    page.set_viewport_size({"width": 390, "height": 900})
+    click("Simulation results")
+    page.wait_for_timeout(500)
+    capture("mobile-results")
+    record("Compiled mobile layout retains accessible result and section controls")
     assert not errors, errors
     record("No unhandled page errors")
     browser.close()

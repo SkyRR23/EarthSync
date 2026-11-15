@@ -416,3 +416,22 @@ async def test_direct_decision_lookup_is_farm_owned_not_recent_list_dependent(
         store.decision("bob", farm.id, ident)
     with pytest.raises(PlatformError, match="NOT_FOUND"):
         store.decision("alice", farm.id, uuid4())
+
+
+async def test_assistant_does_not_substitute_a_different_requested_year(lab, store):
+    from earthsync.platform_v1.context import assistant_context
+    from earthsync.assistant.models import ChatRequest
+    from earthsync.assistant.service import explain
+
+    farm = link(store)
+    await lab.retrieve("alice", archive_request(farm))
+    result = explain(
+        ChatRequest(
+            question="How was rainfall in 2023?",
+            context=assistant_context(store, "alice", farm.id),
+        )
+    )
+    assert not any("59.97" in c.text for c in result.claims)
+    assert any(
+        "2023" in c.text and c.category == "unavailable_evidence" for c in result.claims
+    )

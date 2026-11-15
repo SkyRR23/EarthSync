@@ -57,5 +57,6 @@
   "history": "Saved farm reports describe what the farmer recorded, including plans and unknowns. Calendar days do not establish biological growth stage. Review the dated timeline and select sources explicitly before reassessing.",
   "farmer_report": "Farmer-reported record dated {date} (unverified; not a scientific measurement): {text}",
   "reference_snapshot": "Supplied reference snapshot (not an approved field-assessment input): {text}",
-  "historical": "Historical comparisons use saved accepted periods and show their actual coverage. Retrospective archives are not forecasts or proof of what was known at the time. Open the Historical Simulation Lab for hypothetical baseline/A/B periods, original sources and unavailable quantities."
+  "historical": "Historical comparisons use saved accepted periods and show their actual coverage. Retrospective archives are not forecasts or proof of what was known at the time. Open the Historical Simulation Lab for hypothetical baseline/A/B periods, original sources and unavailable quantities.",
+  "historical_missing_years": "No matching saved evidence was supplied for these requested years: {years}. Open the Historical Simulation Lab to inspect other saved periods or retrieve a supported archive."
 }

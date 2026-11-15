@@ -7,7 +7,7 @@ def historical_references(store, owner, farm_id):
     store.farm(owner, farm_id)
     with store.connection() as db:
         rows = db.execute(
-            "SELECT document FROM historical_windows WHERE owner=? AND farm_id=? ORDER BY created DESC LIMIT 10",
+            "SELECT document FROM historical_windows WHERE owner=? AND farm_id=? ORDER BY created DESC LIMIT 100",
             (owner, str(farm_id)),
         ).fetchall()
     windows, seen = [], set()
@@ -17,7 +17,8 @@ def historical_references(store, owner, farm_id):
             seen.add((w["start"], w["end"]))
             windows.append(w)
     sources, evidence = [], []
-    for w in windows[:2]:
+    windows.sort(key=lambda w: (w["start"], w["end"]), reverse=True)
+    for w in windows[:12]:
         source_id = "history:" + w["id"]
         sources.append(
             {

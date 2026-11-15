@@ -1,0 +1,20 @@
+{
+  "classification": "real NASA POWER / actual Rust; regional Myanmar software test, no field accuracy claim",
+  "farm_history_and_scenarios": "synthetic software fixtures, not actual farmer observations",
+  "periods": "2015-01-01 through 2025-12-31; separate bounded annual requests",
+  "native_day_basis": "NASA_POWER_LST",
+  "provider_api_version": "v2.10.3",
+  "rust_method": "fao56-daily-pm.v1",
+  "total_rainfall_valid_days": 4018,
+  "total_temperature_valid_days": 4018,
+  "total_et0_valid_days": 3959,
+  "total_et0_withheld_days": 59,
+  "ndvi": "unavailable: bounded HLS pixel GET 401; MODIS date discovery timeout",
+  "gibs": "capability validation and browser tile HTTP 200 with normal TLS",
+  "soil": "original accepted static RUN05 WebDAV pH; not annual soil change",
+  "raw_runtime_data": "excluded from Git; no farm IDs, geometry, browser state or raw source records in this receipt",
+  "source_record_count": 99,
+  "nasa_input_record_count": 88,
+  "rust_derived_record_count": 11,
+  "sorted_evidence_hashes_sha256": "1f6c96e3ac80fbf61fecd12eaff29033f5a1631031b97ea69a6c937586ae50ea"
+}

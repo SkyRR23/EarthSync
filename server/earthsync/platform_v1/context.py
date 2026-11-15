@@ -304,7 +304,7 @@ def assistant_context(store, owner, farm_id):
     evidence.extend(reference_views)
     historical_sources, historical_views = historical_references(store, owner, farm_id)
     sources.extend(historical_sources)
-    evidence = historical_views + evidence
+    evidence = (historical_views + evidence)[:120]
     value = {
         "schema_version": "assistant.v1-proposal",
         "context_id": "pending",

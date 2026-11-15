@@ -122,7 +122,8 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
       _comparison = 'selected',
       _pendingId = journalId();
   String? _error, _notice, _parent, _comparisonId;
-  bool _busy = false, _loading = true, _autoRun = false;
+  bool _busy = false, _loading = true, _autoRun = false, _followImagery = false;
+  Completer<void>? _imageryAbort;
   int _compareYear = 2025;
   DateTime _secondStart = DateTime.utc(2025),
       _secondEnd = DateTime.utc(2025, 12, 31);
@@ -141,6 +142,7 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
     _play?.cancel();
     _debounce?.cancel();
     _client.dispose();
+    if (_imageryAbort?.isCompleted == false) _imageryAbort!.complete();
     _name.dispose();
     _search.dispose();
     super.dispose();
@@ -199,14 +201,18 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
   }
 
   void _selectDate(DateTime day) {
+    if (_imageryAbort?.isCompleted == false) _imageryAbort!.complete();
     setState(() {
       _date = day;
       _imagery = null;
       _imageEpoch++;
     });
+    if (_followImagery && !offline) unawaited(_image());
   }
 
   void _setPeriod(DateTime start, DateTime end) {
+    if (_imageryAbort?.isCompleted == false) _imageryAbort!.complete();
+    _imageEpoch++;
     _play?.cancel();
     _play = null;
     final shift = start.year - _start.year;
@@ -320,6 +326,8 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
   }
 
   Future<void> _openArchive(Map<String, dynamic> a) async {
+    if (_imageryAbort?.isCompleted == false) _imageryAbort!.complete();
+    _imageEpoch++;
     _client.cancel();
     final epoch = ++_epoch;
     _play?.cancel();
@@ -534,7 +542,14 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
 
   Future<void> _openSimulation(Map<String, dynamic> saved) async {
     _client.cancel();
+    _debounce?.cancel();
+    _autoRun = false;
     final epoch = ++_epoch;
+    setState(() {
+      _result = null;
+      _busy = true;
+      _error = null;
+    });
     try {
       final value = offline
           ? _snapshot!.data['saved_result'] as Map<String, dynamic>?
@@ -562,11 +577,13 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
             'Saved result opened with its original inputs and source lineage. Duplicate it to edit.';
       });
     } catch (_) {
-      if (mounted) {
+      if (mounted && epoch == _epoch) {
         setState(
           () => _error = 'Saved simulation unavailable. Retry when connected.',
         );
       }
+    } finally {
+      if (mounted && epoch == _epoch) setState(() => _busy = false);
     }
   }
 
@@ -758,6 +775,9 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
   }
 
   Future<void> _image() async {
+    if (_imageryAbort?.isCompleted == false) _imageryAbort!.complete();
+    final abort = Completer<void>();
+    _imageryAbort = abort;
     final day = historicalDay(_date), epoch = ++_imageEpoch;
     try {
       final result = Map<String, dynamic>.from(
@@ -765,6 +785,7 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
               'GET',
               '$historicalPrefix/historical/imagery?day=$day',
               expectedStatus: 200,
+              abortTrigger: abort.future,
             )
             as Map,
       );
@@ -1566,6 +1587,20 @@ class _HistoricalWorkspaceState extends State<HistoricalWorkspace> {
           TextButton(
             onPressed: offline ? null : _image,
             child: const Text('Validate date & show NASA true colour'),
+          ),
+          CheckboxListTile(
+            contentPadding: EdgeInsets.zero,
+            value: _followImagery,
+            onChanged: offline
+                ? null
+                : (v) {
+                    setState(() => _followImagery = v ?? false);
+                    if (_followImagery) unawaited(_image());
+                  },
+            title: const Text('Follow replay with dated imagery'),
+            subtitle: const Text(
+              'Requests only the selected date’s tiles. Coverage is checked; clouds and missing imagery stay unknown.',
+            ),
           ),
           Slider(
             value: _opacity,
