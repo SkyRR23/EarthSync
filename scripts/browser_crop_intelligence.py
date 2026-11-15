@@ -166,7 +166,7 @@ def main():
             assert report["original"]["provider"] == "local-tesseract"
             assert next(v for v in report["original"]["values"] if v["parameter"] == "ph")["value"] == 6.4
             page.wait_for_timeout(1500)
-            click("button", re.compile("Report "))
+            click("button", re.compile("Soil report ·"))
             click("button", "Check, correct and confirm sample")
             expect(
                 page.get_by_text("Confirm laboratory sample values", exact=True)
