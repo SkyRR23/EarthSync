@@ -77,6 +77,7 @@ class _RotationPlansState extends ConsumerState<RotationPlansPage> {
         'updated_at': now,
         'origin': 'farmer_selected',
         if (!kIsWeb) 'simulation_assessment': _simulation,
+        if (!kIsWeb) 'simulated': true,
         'evidence_type': 'farmer_reported',
         'selected_option': _chosen,
         'reason': _reason.text.trim(),

@@ -11,12 +11,14 @@ class FieldNote {
     required this.text,
     this.photo,
     this.cloudPhoto,
+    this.simulated = false,
   });
 
   final String id;
   final DateTime createdAt;
   final NoteKind kind;
   final String text;
+  final bool simulated;
 
   /// Photo file name in the app's photo folder (null = no photo).
   final String? photo;
@@ -31,6 +33,7 @@ class FieldNote {
     text: text,
     photo: photo,
     cloudPhoto: path,
+    simulated: simulated,
   );
 
   Map<String, dynamic> toJson() => {
@@ -40,6 +43,7 @@ class FieldNote {
     'text': text,
     'photo': photo,
     'cloud_photo': cloudPhoto,
+    'simulated': simulated,
   };
 
   factory FieldNote.fromJson(Map<String, dynamic> j) => FieldNote(
@@ -52,5 +56,6 @@ class FieldNote {
     text: j['text'] as String? ?? '',
     photo: j['photo'] as String?,
     cloudPhoto: j['cloud_photo'] as String?,
+    simulated: j['simulated'] == true,
   );
 }

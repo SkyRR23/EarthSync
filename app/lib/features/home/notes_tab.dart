@@ -198,7 +198,7 @@ class _NoteRow extends ConsumerWidget {
     final store = ref.watch(photoStoreProvider);
     final label = noteLabel(note.kind);
     final text = note.text.isEmpty ? label : note.text;
-    final date = DateFormat('d MMM').format(note.createdAt);
+    final date = '${DateFormat('d MMM yyyy').format(note.createdAt)}${note.simulated ? ' · Simulation' : ''}';
     final file = (store != null && note.photo != null)
         ? store.file(note.photo!)
         : null;

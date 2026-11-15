@@ -515,6 +515,7 @@ class NotesNotifier extends Notifier<List<FieldNote>> {
     final note = FieldNote(
       id: id ?? now.microsecondsSinceEpoch.toString(),
       createdAt: observedOn ?? now,
+      simulated: observedOn != null,
       kind: kind,
       text: text.trim(),
       photo: photo,
