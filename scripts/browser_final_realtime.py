@@ -226,6 +226,9 @@ def main():
                 + json.dumps(json.dumps(json.dumps(profile)))
                 + ");"
             )
+            # Hash navigation preserves Dart's in-memory profile. Reload once
+            # to apply this explicitly synthetic test fixture before farm routes.
+            page.reload()
             go("image-analysis")
             with page.expect_file_chooser() as chooser:
                 click("button", "Choose image")
@@ -316,6 +319,10 @@ def main():
                             and json.loads(row[0])["name"]
                             == "AUTOMATED SYNTHETIC BROWSER FIELD - NO GROUND TRUTH"
                         ):
+                            db.execute(
+                                "DELETE FROM farm_links WHERE farm_id=? AND owner=?",
+                                (farm_id, "local-single-user"),
+                            )
                             db.execute(
                                 "DELETE FROM farms WHERE id=? AND owner=?",
                                 (farm_id, "local-single-user"),
