@@ -81,6 +81,15 @@ only a readable written report can provide values for manual review.
 External visual AI remains disabled. A missing raster disables NDVI controls;
 a genuine cached point reading is shown separately and never stretched into a map.
 
+Windows launch also supports an encrypted, per-user `PSCredential` at
+`.earthsync-runtime/earthdata-token.xml`. It is decrypted only for start/test and
+passed to backend child processes as `EARTHDATA_TOKEN`; it is ignored by Git
+and excluded from release archives. A session environment value takes precedence.
+GitHub uses the repository Actions secret `EARTHDATA_TOKEN` for the manual
+“Authenticated NASA raster smoke” workflow on main. That workflow performs real
+bounded extraction and stores a public derived metadata receipt, with individual
+IMERG/SMAP/NDVI outcomes. It is separate from offline mocked contract tests.
+
 1. Dashboard: Ames public reference; distinguish stations, forecasts and alerts.
 2. Satellite NDVI map: acquisition age, QA, coverage and a native pixel, or the
    honest unavailable state when Earthdata has not been configured.
