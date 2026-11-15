@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart' show ThemeMode;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -712,3 +713,28 @@ final analysisProvider = NotifierProvider<AnalysisNotifier, AnalysisState>(
 const kSampleLat = 16.85;
 const kSampleLon = 96.15;
 const _demoInput = FarmerInput(latitude: kSampleLat, longitude: kSampleLon);
+
+// ---------------------------------------------------------------------------
+// Screen colours (light / dark / follow the phone), saved on the phone.
+// Light by default: the team design is light and easier to read outdoors.
+// ---------------------------------------------------------------------------
+
+class ThemeModeNotifier extends Notifier<ThemeMode> {
+  static const _key = 'theme_mode';
+
+  @override
+  ThemeMode build() =>
+      ThemeMode.values
+          .where((m) => m.name == ref.read(prefsProvider)?.getString(_key))
+          .firstOrNull ??
+      ThemeMode.light;
+
+  void set(ThemeMode mode) {
+    state = mode;
+    ref.read(prefsProvider)?.setString(_key, mode.name);
+  }
+}
+
+final themeModeProvider = NotifierProvider<ThemeModeNotifier, ThemeMode>(
+  ThemeModeNotifier.new,
+);

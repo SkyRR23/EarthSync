@@ -57,15 +57,15 @@ Future<void> main() async {
   );
 }
 
-class FieldShiftApp extends StatefulWidget {
+class FieldShiftApp extends ConsumerStatefulWidget {
   const FieldShiftApp({super.key, this.setupDone = false});
   final bool setupDone;
 
   @override
-  State<FieldShiftApp> createState() => _FieldShiftAppState();
+  ConsumerState<FieldShiftApp> createState() => _FieldShiftAppState();
 }
 
-class _FieldShiftAppState extends State<FieldShiftApp> {
+class _FieldShiftAppState extends ConsumerState<FieldShiftApp> {
   late final _router = buildRouter(setupDone: widget.setupDone);
 
   @override
@@ -74,7 +74,7 @@ class _FieldShiftAppState extends State<FieldShiftApp> {
     debugShowCheckedModeBanner: false,
     theme: fsLightTheme(),
     darkTheme: fsDarkTheme(),
-    themeMode: ThemeMode.system,
+    themeMode: ref.watch(themeModeProvider),
     routerConfig: _router,
   );
 }

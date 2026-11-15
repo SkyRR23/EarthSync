@@ -15,6 +15,7 @@ import '../../data/models/field_analysis.dart';
 import '../../design/components/buttons.dart';
 import '../../design/components/grouped.dart';
 import '../../design/components/page.dart';
+import '../../design/components/segmented.dart';
 import '../../design/components/pressable.dart';
 import '../../design/components/scenario.dart';
 import '../../design/components/sheet.dart';
@@ -305,8 +306,26 @@ class _FieldDetailsState extends ConsumerState<FieldDetailsScreen> {
           ),
         if (d.soilTexture == null)
           _SoilCard(onTap: () => context.push('/soil-test')),
+        // The setup answers (crop, water, after rain, soil) only feed the
+        // analysis, so they are not listed here. In their place: screen
+        // colours. The farm pin stays.
         FsGroupedSection(
-          header: S.yourAnswers,
+          header: S.screenColours,
+          footer: S.screenColoursNote,
+          padded: true,
+          children: [
+            FsSegmented<ThemeMode>(
+              segments: const {
+                ThemeMode.light: S.lightMode,
+                ThemeMode.dark: S.darkMode,
+                ThemeMode.system: S.phoneMode,
+              },
+              value: ref.watch(themeModeProvider),
+              onChanged: ref.read(themeModeProvider.notifier).set,
+            ),
+          ],
+        ),
+        FsGroupedSection(
           separatorIndent: iconIndent,
           children: [
             FsListRow(
@@ -316,36 +335,6 @@ class _FieldDetailsState extends ConsumerState<FieldDetailsScreen> {
               ),
               title: S.location,
               onTap: () => context.push('/location?edit=1'),
-            ),
-            FsListRow(
-              leading: FsIconBadge(Icons.grass_rounded, color: p.crop1),
-              title: S.growNow,
-              value: answerCrop(d.currentCrop),
-              onTap: () => context.push('/question/1?edit=1'),
-            ),
-            FsListRow(
-              leading: FsIconBadge(CupertinoIcons.drop_fill, color: p.rain),
-              title: S.water,
-              value: answerWater(d.irrigation),
-              onTap: () => context.push('/question/2?edit=1'),
-            ),
-            FsListRow(
-              leading: FsIconBadge(
-                CupertinoIcons.cloud_rain_fill,
-                color: p.crop3,
-              ),
-              title: S.drainage,
-              value: answerDrain(d.drainage),
-              onTap: () => context.push('/question/3?edit=1'),
-            ),
-            FsListRow(
-              leading: FsIconBadge(
-                CupertinoIcons.hand_raised_fill,
-                color: p.crop2,
-              ),
-              title: S.soil,
-              value: answerSoil(d),
-              onTap: () => context.push('/soil-test'),
             ),
           ],
         ),

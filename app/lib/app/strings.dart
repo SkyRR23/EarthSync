@@ -448,4 +448,11 @@ abstract final class S {
   static const pastYearBody =
       'Rain and heat for each month of the past year at your farm, from NASA.';
   static const nasaNotYet = 'NASA data is not here yet.';
+  // Screen colours (Field details)
+  static const screenColours = 'Screen';
+  static const lightMode = 'Light';
+  static const darkMode = 'Dark';
+  static const phoneMode = 'Phone';
+  static const screenColoursNote =
+      'Light is easiest to read outside. Phone follows your phone setting.';
 }
