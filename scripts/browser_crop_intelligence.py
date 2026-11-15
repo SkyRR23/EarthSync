@@ -148,7 +148,17 @@ def main():
             assert analysis.value.json()["status"] == "vision_unavailable"
             steps.append("Actual image upload and honest disabled-vision fallback")
             click("button", "Crop / Leaf")
-            page.get_by_text("Soil Laboratory Report", exact=True).last.click(force=True)
+            # Flutter renders the menu through accessibility roles, not DOM text.
+            choice = page.get_by_role("menuitem", name="Soil Laboratory Report", exact=True)
+            if choice.count():
+                choice.click(force=True)
+            else:
+                # Exercise the real keyboard path when the browser flattens the
+                # menu semantics: selected crop -> soil -> laboratory report.
+                page.keyboard.press("ArrowDown")
+                page.keyboard.press("ArrowDown")
+                page.keyboard.press("Enter")
+            expect(page.get_by_role("button", name="Soil Laboratory Report").first).to_be_attached()
             with page.expect_response(lambda r: r.url.endswith("/lab-extraction")) as extraction:
                 click("button", "Analyze image")
             report = extraction.value.json()
