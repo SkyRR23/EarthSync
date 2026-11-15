@@ -1,0 +1,325 @@
+{
+  "release_sha": "660b479c3ffb714cd1d489e1241c026ceae6ed67",
+  "tiles": [
+    {
+      "site_id": "mm_delta",
+      "provider": "osm",
+      "status": "PASS",
+      "url": "https://tile.openstreetmap.org/6/48/28.png",
+      "bytes": 15983,
+      "sha256": "ed4fa34a54b18fca30c378f0b8cd92dbeb83bcaee7a9d06928058e8fe5f92ea2",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "mm_delta",
+      "provider": "gibs",
+      "status": "PASS",
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2024-07-01/GoogleMapsCompatible_Level9/6/28/48.jpg",
+      "bytes": 11581,
+      "sha256": "1eac5dd2330f07d1764bd7067637276c4614e99f5121c032e20259d4d1fe694c",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "mm_bago",
+      "provider": "osm",
+      "status": "PASS",
+      "url": "https://tile.openstreetmap.org/6/49/28.png",
+      "bytes": 39260,
+      "sha256": "0c4136d0bc2573a82adc018313e7fa136b32994118549091691589bade2ebff7",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "mm_bago",
+      "provider": "gibs",
+      "status": "PASS",
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2024-07-01/GoogleMapsCompatible_Level9/6/28/49.jpg",
+      "bytes": 11465,
+      "sha256": "9c75b272ae518bc1e09a9d7badceb5a3a27364bec226ec890ed50d91d0c8bb4a",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "mm_mandalay",
+      "provider": "osm",
+      "status": "PASS",
+      "url": "https://tile.openstreetmap.org/6/49/28.png",
+      "bytes": 39260,
+      "sha256": "0c4136d0bc2573a82adc018313e7fa136b32994118549091691589bade2ebff7",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "mm_mandalay",
+      "provider": "gibs",
+      "status": "PASS",
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2024-07-01/GoogleMapsCompatible_Level9/6/28/49.jpg",
+      "bytes": 11465,
+      "sha256": "9c75b272ae518bc1e09a9d7badceb5a3a27364bec226ec890ed50d91d0c8bb4a",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "mm_magway",
+      "provider": "osm",
+      "status": "PASS",
+      "url": "https://tile.openstreetmap.org/6/48/28.png",
+      "bytes": 15983,
+      "sha256": "ed4fa34a54b18fca30c378f0b8cd92dbeb83bcaee7a9d06928058e8fe5f92ea2",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "mm_magway",
+      "provider": "gibs",
+      "status": "PASS",
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2024-07-01/GoogleMapsCompatible_Level9/6/28/48.jpg",
+      "bytes": 11581,
+      "sha256": "1eac5dd2330f07d1764bd7067637276c4614e99f5121c032e20259d4d1fe694c",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "mm_shan",
+      "provider": "osm",
+      "status": "PASS",
+      "url": "https://tile.openstreetmap.org/6/49/28.png",
+      "bytes": 39260,
+      "sha256": "0c4136d0bc2573a82adc018313e7fa136b32994118549091691589bade2ebff7",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "mm_shan",
+      "provider": "gibs",
+      "status": "PASS",
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2024-07-01/GoogleMapsCompatible_Level9/6/28/49.jpg",
+      "bytes": 11465,
+      "sha256": "9c75b272ae518bc1e09a9d7badceb5a3a27364bec226ec890ed50d91d0c8bb4a",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "mm_yangon",
+      "provider": "osm",
+      "status": "PASS",
+      "url": "https://tile.openstreetmap.org/6/49/28.png",
+      "bytes": 39260,
+      "sha256": "0c4136d0bc2573a82adc018313e7fa136b32994118549091691589bade2ebff7",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "mm_yangon",
+      "provider": "gibs",
+      "status": "PASS",
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2024-07-01/GoogleMapsCompatible_Level9/6/28/49.jpg",
+      "bytes": 11465,
+      "sha256": "9c75b272ae518bc1e09a9d7badceb5a3a27364bec226ec890ed50d91d0c8bb4a",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "us_mead",
+      "provider": "osm",
+      "status": "PASS",
+      "url": "https://tile.openstreetmap.org/6/14/23.png",
+      "bytes": 17444,
+      "sha256": "27d57fdba7db6a88e2b4080d7976f502a2c79d92eb62cd5b38db499abc093719",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "us_mead",
+      "provider": "gibs",
+      "status": "PASS",
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2024-07-01/GoogleMapsCompatible_Level9/6/23/14.jpg",
+      "bytes": 10844,
+      "sha256": "5d07aef6d574342d5fa7cdee98bf50bb9deab42d656276e1d8b538adcab77c25",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "us_bondville",
+      "provider": "osm",
+      "status": "PASS",
+      "url": "https://tile.openstreetmap.org/6/16/24.png",
+      "bytes": 32452,
+      "sha256": "cf27879ad73cd85ac4b0a8c5410e16af224cdbcf55b4eca5e10393cc8d5916bd",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "us_bondville",
+      "provider": "gibs",
+      "status": "PASS",
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2024-07-01/GoogleMapsCompatible_Level9/6/24/16.jpg",
+      "bytes": 15885,
+      "sha256": "8ac330d9eba9efa31f734a0cd294913af7f666975cf8b5e6654de7e5b0b46f31",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "br_cerrados",
+      "provider": "osm",
+      "status": "PASS",
+      "url": "https://tile.openstreetmap.org/6/23/34.png",
+      "bytes": 22605,
+      "sha256": "6b399076596df585445b2a4619039c2e37e681b238371abf5400d7d53fd55c52",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "br_cerrados",
+      "provider": "gibs",
+      "status": "PASS",
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2024-07-01/GoogleMapsCompatible_Level9/6/34/23.jpg",
+      "bytes": 11557,
+      "sha256": "4a6fdf207c5c1f7c0c34bff1c91c7ea72372ca85b252d2f986f3fb973974fea9",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "ke_kabete",
+      "provider": "osm",
+      "status": "PASS",
+      "url": "https://tile.openstreetmap.org/6/38/32.png",
+      "bytes": 27247,
+      "sha256": "0888229b85d9e481ebc05801f55289d9431622a23eeef6e7f53347141fc121ca",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "ke_kabete",
+      "provider": "gibs",
+      "status": "PASS",
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2024-07-01/GoogleMapsCompatible_Level9/6/32/38.jpg",
+      "bytes": 19520,
+      "sha256": "e467ee363c7a9541092119167834f232a4780e90344ed3f24a27e4c4072c953b",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "de_klingenberg",
+      "provider": "osm",
+      "status": "PASS",
+      "url": "https://tile.openstreetmap.org/6/34/21.png",
+      "bytes": 56763,
+      "sha256": "b4055916055946704454f784bc8d2c95a0597d931fa63d16755fee7b16ebd57f",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "de_klingenberg",
+      "provider": "gibs",
+      "status": "PASS",
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2024-07-01/GoogleMapsCompatible_Level9/6/21/34.jpg",
+      "bytes": 17708,
+      "sha256": "137e36afaa12185f6c72f62470f79e55a4b394bb633b599d93a18bd5a9d11e73",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "au_riggs",
+      "provider": "osm",
+      "status": "PASS",
+      "url": "https://tile.openstreetmap.org/6/57/39.png",
+      "bytes": 20433,
+      "sha256": "47a8bfd1ffe7035c82ed6c418a49336a29bda5c51843e1b9b782a549df23baf3",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    },
+    {
+      "site_id": "au_riggs",
+      "provider": "gibs",
+      "status": "PASS",
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2024-07-01/GoogleMapsCompatible_Level9/6/39/57.jpg",
+      "bytes": 23563,
+      "sha256": "29c1d019f26c444ca01570242bf0cbe0669b94965a4f487f28430a584ed9846b",
+      "classification": "REAL display tile; not NDVI or crop-health observation"
+    }
+  ],
+  "soil_raster_checks": [
+    {
+      "site_id": "mm_delta",
+      "status": "PASS",
+      "raw_cell": 64,
+      "ph": 6.4,
+      "point_in_display_cell": true,
+      "classification": "SOFTWARE/SOURCE consistency; not independent soil accuracy"
+    },
+    {
+      "site_id": "mm_bago",
+      "status": "PASS",
+      "raw_cell": 62,
+      "ph": 6.2,
+      "point_in_display_cell": true,
+      "classification": "SOFTWARE/SOURCE consistency; not independent soil accuracy"
+    },
+    {
+      "site_id": "mm_mandalay",
+      "status": "PASS",
+      "raw_cell": -32768,
+      "ph": null,
+      "point_in_display_cell": true,
+      "classification": "SOFTWARE/SOURCE consistency; not independent soil accuracy"
+    },
+    {
+      "site_id": "mm_magway",
+      "status": "PASS",
+      "raw_cell": 66,
+      "ph": 6.6,
+      "point_in_display_cell": true,
+      "classification": "SOFTWARE/SOURCE consistency; not independent soil accuracy"
+    },
+    {
+      "site_id": "mm_shan",
+      "status": "PASS",
+      "raw_cell": 60,
+      "ph": 6.0,
+      "point_in_display_cell": true,
+      "classification": "SOFTWARE/SOURCE consistency; not independent soil accuracy"
+    },
+    {
+      "site_id": "mm_yangon",
+      "status": "PASS",
+      "raw_cell": 61,
+      "ph": 6.1,
+      "point_in_display_cell": true,
+      "classification": "SOFTWARE/SOURCE consistency; not independent soil accuracy"
+    },
+    {
+      "site_id": "us_mead",
+      "status": "PASS",
+      "raw_cell": 64,
+      "ph": 6.4,
+      "point_in_display_cell": true,
+      "classification": "SOFTWARE/SOURCE consistency; not independent soil accuracy"
+    },
+    {
+      "site_id": "us_bondville",
+      "status": "PASS",
+      "raw_cell": 62,
+      "ph": 6.2,
+      "point_in_display_cell": true,
+      "classification": "SOFTWARE/SOURCE consistency; not independent soil accuracy"
+    },
+    {
+      "site_id": "br_cerrados",
+      "status": "PASS",
+      "raw_cell": 53,
+      "ph": 5.3,
+      "point_in_display_cell": true,
+      "classification": "SOFTWARE/SOURCE consistency; not independent soil accuracy"
+    },
+    {
+      "site_id": "ke_kabete",
+      "status": "PASS",
+      "raw_cell": 67,
+      "ph": 6.7,
+      "point_in_display_cell": true,
+      "classification": "SOFTWARE/SOURCE consistency; not independent soil accuracy"
+    },
+    {
+      "site_id": "de_klingenberg",
+      "status": "PASS",
+      "raw_cell": 62,
+      "ph": 6.2,
+      "point_in_display_cell": true,
+      "classification": "SOFTWARE/SOURCE consistency; not independent soil accuracy"
+    },
+    {
+      "site_id": "au_riggs",
+      "status": "PASS",
+      "raw_cell": 61,
+      "ph": 6.1,
+      "point_in_display_cell": true,
+      "classification": "SOFTWARE/SOURCE consistency; not independent soil accuracy"
+    }
+  ],
+  "hls": {
+    "status": "metadata_available",
+    "records": 1,
+    "numeric_ndvi": "UNAVAILABLE: no authorized accepted raster/QA ingestion; no true-color substitution"
+  },
+  "tls_verification_disabled": false
+}

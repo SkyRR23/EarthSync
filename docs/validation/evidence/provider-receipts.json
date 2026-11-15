@@ -1,0 +1,3874 @@
+[
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": 16.738933333333332,
+      "longitude": 95.09211666666667,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "e0e880f5350af402367596a69ce9e54b65d568298844d2a2da178169b7ea7307",
+    "retrieved_at": "2026-11-14T23:56:05.565312+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 604,
+    "elapsed_seconds": 1.4811407350025547,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": 16.738933333333332,
+      "longitude": 95.09211666666667,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "f6553f7cdd7ee9c8904963ae41a0800cedad1f5a72825edbafab52b8c08f79a8",
+    "retrieved_at": "2026-11-14T23:56:07.491903+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 603,
+    "elapsed_seconds": 1.9250128519997816,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": 16.738933333333332,
+      "longitude": 95.09211666666667,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "ecbaf6f7d620d2e5c2fdc74be325fbb5fb17f07609959acde9dd260248290cc8",
+    "retrieved_at": "2026-11-14T23:56:08.983135+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 586,
+    "elapsed_seconds": 1.4905362909994437,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": 16.738933333333332,
+      "longitude": 95.09211666666667,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "8dbefda0b27eb14fd8c06e6a8aca2e21f684e7110be494b3955ca95e799f8a8a",
+    "retrieved_at": "2026-11-14T23:56:10.543201+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 590,
+    "elapsed_seconds": 1.5590995689999545,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": 16.738933333333332,
+      "longitude": 95.09211666666667,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "948c29a35efc12a7baef2a08f26589bc9093c0aa085ea47acdf4441acb45dad7",
+    "retrieved_at": "2026-11-14T23:56:12.282423+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 584,
+    "elapsed_seconds": 1.7384595740004443,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": 16.738933333333332,
+      "longitude": 95.09211666666667,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "2a86ca3e17fd4452f2bf1e173f783772b25333c7fb28af9099cc6d84154e973c",
+    "retrieved_at": "2026-11-14T23:56:13.832138+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 579,
+    "elapsed_seconds": 1.5489438320000772,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": 16.738933333333332,
+      "longitude": 95.09211666666667,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "3cf386464bc0354ee9bd4b27ee91d2a4a5f0fc3926b80fa9012cb9726261044e",
+    "retrieved_at": "2026-11-14T23:56:14.777172+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 640,
+    "elapsed_seconds": 0.9441903110018757,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": 16.738933333333332,
+      "longitude": 95.09211666666667,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "3f274d34c614fc73673f6ab4cb3d1f1ba28d31027e2816f6fd58e0e0f20be48e",
+    "retrieved_at": "2026-11-14T23:56:15.765235+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 604,
+    "elapsed_seconds": 0.97796806399856,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": 16.738933333333332,
+      "longitude": 95.09211666666667,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "6f690096b20faafd44250f389ebd49c9d16171bd62de9a61e94392292243b7e2",
+    "retrieved_at": "2026-11-14T23:56:17.036084+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 604,
+    "elapsed_seconds": 1.2685475270009192,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": 16.738933333333332,
+      "longitude": 95.09211666666667,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "33f4eb5fbce56e0760b074ce65347620f78e5a3301ea8043f462ad97979d3f08",
+    "retrieved_at": "2026-11-14T23:56:17.674061+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 593,
+    "elapsed_seconds": 0.636934811998799,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": 16.738933333333332,
+      "longitude": 95.09211666666667,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "4c78b597aa52433fad937b896b429be948769879becca7d255db1a65b5d48c00",
+    "retrieved_at": "2026-11-14T23:56:18.571124+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 590,
+    "elapsed_seconds": 0.8963987749993976,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": 16.738933333333332,
+      "longitude": 95.09211666666667,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "939958bb8ddc0be903fb27ee781e7e5ea80b140a1ebf39acc05750d290c406b9",
+    "retrieved_at": "2026-11-14T23:56:19.541993+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 583,
+    "elapsed_seconds": 0.9700692879996495,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": 16.738933333333332,
+      "longitude": 95.09211666666667,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "99097ec4d6b836ef454d5ee8b1124a5175b42e4e60f344b7af919df77b6791a6",
+    "retrieved_at": "2026-11-14T23:56:20.113258+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 579,
+    "elapsed_seconds": 0.5705446659994777,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": 16.738933333333332,
+      "longitude": 95.09211666666667,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "e12ed14b3fc64bd9035353999ab8c2d9426cd12c53c12cd14ec32920e2f23340",
+    "retrieved_at": "2026-11-14T23:56:20.977357+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 638,
+    "elapsed_seconds": 0.863403413000924,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://files.isric.org/soilgrids/latest/data/phh2o/phh2o_0-5cm_mean.vrt",
+    "params": {},
+    "sha256": "28bf9ceef0ee29a2d29926929b1760eddb6749b4f31ed212e8d536a226892f0d",
+    "retrieved_at": "2026-11-14T23:56:32.560718+00:00",
+    "headers": {
+      "content-type": "application/octet-stream",
+      "etag": "\"10771316263-1591112287-3524139\"",
+      "last-modified": "Tue, 02 Jun 2020 15:38:07 GMT"
+    },
+    "bytes": 3524139,
+    "elapsed_seconds": 11.586890099999437,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://files.isric.org/soilgrids/latest/data/phh2o/phh2o_0-5cm_mean/tileSG-014-067/tileSG-014-067_3-2.tif",
+    "params": {},
+    "sha256": "366e429bfc89661d49b626d3a52d290418210dc4c24c836bf30623dfc6d1c2a5",
+    "retrieved_at": "2026-11-14T23:56:35.344604+00:00",
+    "headers": {
+      "content-type": "image/tiff",
+      "etag": "\"10778108838-1586204808-721911\"",
+      "last-modified": "Mon, 06 Apr 2020 20:26:48 GMT"
+    },
+    "bytes": 721911,
+    "elapsed_seconds": 2.5967995280007017,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": 17.08972222222222,
+      "longitude": 96.46638888888889,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "7bb8569523d4391411fec07bd71da724ab81deeb39f2a439e4351f4421147271",
+    "retrieved_at": "2026-11-14T23:56:40.028608+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 605,
+    "elapsed_seconds": 1.7013348470027267,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": 17.08972222222222,
+      "longitude": 96.46638888888889,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "c01c7bcde56cb2842bfdf207f8007edb6d974e366f0005026ea7501c9a734215",
+    "retrieved_at": "2026-11-14T23:56:41.529898+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 604,
+    "elapsed_seconds": 1.5004179469979135,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": 17.08972222222222,
+      "longitude": 96.46638888888889,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "422214e9b01a4630df663b61a54e2587d835a35a8328b9e9f7c6823cd4151e6c",
+    "retrieved_at": "2026-11-14T23:56:43.010195+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 588,
+    "elapsed_seconds": 1.4827926060024765,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": 17.08972222222222,
+      "longitude": 96.46638888888889,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "813d854cf4e8529a2b430039201cdec2fd44201334a4f9fb77dc34b34f49fbaf",
+    "retrieved_at": "2026-11-14T23:56:44.374305+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 590,
+    "elapsed_seconds": 1.3596904290025122,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": 17.08972222222222,
+      "longitude": 96.46638888888889,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "4f0aaa7a1869e32a6a4f3b94559eb5e2bf2dfa1423c7fbbd3d8bbb09318be0e2",
+    "retrieved_at": "2026-11-14T23:56:45.204216+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 585,
+    "elapsed_seconds": 0.8289480819985329,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": 17.08972222222222,
+      "longitude": 96.46638888888889,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "64715c1cffe7955205f3845f820ee45e4f2aca3210b8baae13ae142016bf8526",
+    "retrieved_at": "2026-11-14T23:56:46.152498+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 580,
+    "elapsed_seconds": 0.947206188000564,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": 17.08972222222222,
+      "longitude": 96.46638888888889,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "c2c009da203186e63aae751db6ca66239be345cd7ae7da2b0c5002038457a7d6",
+    "retrieved_at": "2026-11-14T23:56:47.775957+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 640,
+    "elapsed_seconds": 1.6223188679978193,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": 17.08972222222222,
+      "longitude": 96.46638888888889,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "c4f0adba4c76c30fb3fc052e0d05ef5c33f2b45fa6f28bfb5721458d89b466e4",
+    "retrieved_at": "2026-11-14T23:56:49.134472+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 605,
+    "elapsed_seconds": 1.346385247001308,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": 17.08972222222222,
+      "longitude": 96.46638888888889,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "ee7e969861c1c3b4850fca99a232fa49b4946cc99ac3d0868f0af8aeae112337",
+    "retrieved_at": "2026-11-14T23:56:50.092528+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 605,
+    "elapsed_seconds": 0.9575760640000226,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": 17.08972222222222,
+      "longitude": 96.46638888888889,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "1e76b6975dde752c915dd9645dd3a90dfa873dfa4dda0b27d29a61ce6abe64e2",
+    "retrieved_at": "2026-11-14T23:56:51.706908+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 592,
+    "elapsed_seconds": 1.6126430139993317,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": 17.08972222222222,
+      "longitude": 96.46638888888889,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "a1f24d0a6bdbb7c8c79d75c341103fa2d52c03691eb315fe10998040d39b24ff",
+    "retrieved_at": "2026-11-14T23:56:52.696241+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 588,
+    "elapsed_seconds": 0.9876396040017426,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": 17.08972222222222,
+      "longitude": 96.46638888888889,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "38fdff053ea7e8e58e25a5dec093d21a7d1565fce22e6eb623bbd740c773146c",
+    "retrieved_at": "2026-11-14T23:56:53.602588+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 584,
+    "elapsed_seconds": 0.9051940839999588,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": 17.08972222222222,
+      "longitude": 96.46638888888889,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "7d32b664d288614f8bfdca0f2ee8271dd8896f726cc3851854fd9ad775c26bcc",
+    "retrieved_at": "2026-11-14T23:56:54.552984+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 581,
+    "elapsed_seconds": 0.9471762169996509,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": 17.08972222222222,
+      "longitude": 96.46638888888889,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "aee32cbcd47cef11872f347bc6ccb2f0b910b4debc4ac273097ac3c04529345f",
+    "retrieved_at": "2026-11-14T23:56:55.152517+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 641,
+    "elapsed_seconds": 0.598663510998449,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": 21.609830555555558,
+      "longitude": 96.13414166666668,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "715088381bcb95d29607ea2776948706f48f93df7d55d418bfad936b0a5276d3",
+    "retrieved_at": "2026-11-14T23:56:58.515047+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 604,
+    "elapsed_seconds": 0.508372848998988,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": 21.609830555555558,
+      "longitude": 96.13414166666668,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "372488032450202162232c2153914390d2e6ff3be8a56e9b50dca338a8b5bd41",
+    "retrieved_at": "2026-11-14T23:56:59.871716+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 604,
+    "elapsed_seconds": 1.3559343529996113,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": 21.609830555555558,
+      "longitude": 96.13414166666668,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "61f36c185a1d170593e17c8e822c87bde7324c6e827bb2ee40baf917c052f351",
+    "retrieved_at": "2026-11-14T23:57:00.729876+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 588,
+    "elapsed_seconds": 0.8574235720006982,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": 21.609830555555558,
+      "longitude": 96.13414166666668,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "e157c68b06e4cac7baf07ed4b0b4e83da39050b17f63a90497e4860b4f42b592",
+    "retrieved_at": "2026-11-14T23:57:01.344456+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 584,
+    "elapsed_seconds": 0.6135065119997307,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": 21.609830555555558,
+      "longitude": 96.13414166666668,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "6c48cf873b7ac0305ae1eab597df0cccf36d2645671bea2202a9bec3f78d848d",
+    "retrieved_at": "2026-11-14T23:57:02.318298+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 582,
+    "elapsed_seconds": 0.9729439849979826,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": 21.609830555555558,
+      "longitude": 96.13414166666668,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "4576f68db468680b2b9608c13cc27607044b6e318b354d373451d1a9980f1206",
+    "retrieved_at": "2026-11-14T23:57:03.247074+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 573,
+    "elapsed_seconds": 0.9279996680015756,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": 21.609830555555558,
+      "longitude": 96.13414166666668,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "92e05a527f3f4a1400a5534c08a3ce826e496af37959e587ddf26aef8c574d78",
+    "retrieved_at": "2026-11-14T23:57:04.065325+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 641,
+    "elapsed_seconds": 0.817228330000944,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": 21.609830555555558,
+      "longitude": 96.13414166666668,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "33468e9a70bfbece73648b2069588e3be6333f0558d4bd0801afd8fd1f9ee49e",
+    "retrieved_at": "2026-11-14T23:57:05.015593+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 604,
+    "elapsed_seconds": 0.9431543489990872,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": 21.609830555555558,
+      "longitude": 96.13414166666668,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "6956cdbf1cf476b35119cec7dd27c3fc0601ec69c8b6bd4675345f41d07c55cf",
+    "retrieved_at": "2026-11-14T23:57:05.619813+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 605,
+    "elapsed_seconds": 0.6034027249988867,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": 21.609830555555558,
+      "longitude": 96.13414166666668,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "b4c405fe94402d064fe553f98878be827969960f9b701802b4f5114b4007b52f",
+    "retrieved_at": "2026-11-14T23:57:06.610224+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 595,
+    "elapsed_seconds": 0.9894165850018908,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": 21.609830555555558,
+      "longitude": 96.13414166666668,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "f4566d793e306ff0c59e623197ed86b823aaffe6d2b5c34d8bac0ccd200cd0b5",
+    "retrieved_at": "2026-11-14T23:57:07.464045+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 591,
+    "elapsed_seconds": 0.8529512700006308,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": 21.609830555555558,
+      "longitude": 96.13414166666668,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "df4a475843be827bee0d703c0a0b56c62c1a6c7d08222c9044b22e89168c10af",
+    "retrieved_at": "2026-11-14T23:57:08.080835+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 585,
+    "elapsed_seconds": 0.6086729050002759,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": 21.609830555555558,
+      "longitude": 96.13414166666668,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "5bf39eeca211c366b41d117a457d1b67b0bb1f0537d60591841e684d374b7e77",
+    "retrieved_at": "2026-11-14T23:57:08.645284+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 574,
+    "elapsed_seconds": 0.5634860810023383,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": 21.609830555555558,
+      "longitude": 96.13414166666668,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "a134b467030d7222e32f06143febbf2ee3307cf1a22e40229fd47bfd3e54e30d",
+    "retrieved_at": "2026-11-14T23:57:09.474030+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 640,
+    "elapsed_seconds": 0.8277451889989607,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://files.isric.org/soilgrids/latest/data/phh2o/phh2o_0-5cm_mean/tileSG-013-067/tileSG-013-067_3-1.tif",
+    "params": {},
+    "sha256": "e1738e56e682dd45e7b690be9b758bf3b35c39e488bd5e47e5f1c3dda93ffbde",
+    "retrieved_at": "2026-11-14T23:57:14.513496+00:00",
+    "headers": {
+      "content-type": "image/tiff",
+      "etag": "\"10778505648-1586204818-721911\"",
+      "last-modified": "Mon, 06 Apr 2020 20:26:58 GMT"
+    },
+    "bytes": 721911,
+    "elapsed_seconds": 4.943169694997778,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": 19.62388888888889,
+      "longitude": 95.35666666666665,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "684a8a7639454bd49262669a53b07c302e18ae7c6c03952139a749931cc93880",
+    "retrieved_at": "2026-11-14T23:57:19.156718+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 605,
+    "elapsed_seconds": 1.886679922001349,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": 19.62388888888889,
+      "longitude": 95.35666666666665,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "d35e76da260f8d7bed28fa01dcbce2804712853cb517ca9dfad4088feb69191c",
+    "retrieved_at": "2026-11-14T23:57:20.617794+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 606,
+    "elapsed_seconds": 1.4601612920014304,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": 19.62388888888889,
+      "longitude": 95.35666666666665,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "8a08960cb7c1fe6fa8dbf2b1738d55e9b99c550d20842f23befae00692d9b7c5",
+    "retrieved_at": "2026-11-14T23:57:21.682601+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 590,
+    "elapsed_seconds": 1.0639955799997551,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": 19.62388888888889,
+      "longitude": 95.35666666666665,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "d185ea31fb609cadb3804ad839e86d7305e4e57bbd6685fb910249c7421de24a",
+    "retrieved_at": "2026-11-14T23:57:23.016718+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 590,
+    "elapsed_seconds": 1.3333651319990167,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": 19.62388888888889,
+      "longitude": 95.35666666666665,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "7d330c203a44fd6d7b6bd057f4f8a07286e1c9dfe71d8b76ad31a009352fbaae",
+    "retrieved_at": "2026-11-14T23:57:23.526356+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 586,
+    "elapsed_seconds": 0.5088236190022144,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": 19.62388888888889,
+      "longitude": 95.35666666666665,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "5c9cc9984a25b804aefa14e75b1e044be47cdd4bb7c73cdd29841ca46b433054",
+    "retrieved_at": "2026-11-14T23:57:24.152500+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 575,
+    "elapsed_seconds": 0.6253475730009086,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": 19.62388888888889,
+      "longitude": 95.35666666666665,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "a51360b06d38c16088f518a9ab5283ea427886520ee8afdbe9926c642ff50d66",
+    "retrieved_at": "2026-11-14T23:57:25.085596+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 642,
+    "elapsed_seconds": 0.9324497249981505,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": 19.62388888888889,
+      "longitude": 95.35666666666665,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "859bf61637a22fc8fc4e8c461cbc3f4d15afcdcacfba17811a7dfa68afffd6e7",
+    "retrieved_at": "2026-11-14T23:57:25.952002+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 606,
+    "elapsed_seconds": 0.8595342930020706,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": 19.62388888888889,
+      "longitude": 95.35666666666665,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "d31312460bfe9b6dc12866fdbf2153d8a2f12fa499312af4b1940a4de928b19f",
+    "retrieved_at": "2026-11-14T23:57:26.606844+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 606,
+    "elapsed_seconds": 0.6541258430006565,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": 19.62388888888889,
+      "longitude": 95.35666666666665,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "35ebec25ce3e62f37bef5ed2eb460bfdb5835e58c9ab94c22f7b92bae450a2b5",
+    "retrieved_at": "2026-11-14T23:57:27.239289+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 600,
+    "elapsed_seconds": 0.6316308540008322,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": 19.62388888888889,
+      "longitude": 95.35666666666665,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "c7ae51f786347000e049f26c6d2953951a8c26344b653652c32dd7d3b32f34d6",
+    "retrieved_at": "2026-11-14T23:57:27.885312+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 592,
+    "elapsed_seconds": 0.6452064639997843,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": 19.62388888888889,
+      "longitude": 95.35666666666665,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "7333bbd32cca4dd6b0fb84e5f99f928cd9d80f0a305db8e417f1b4d9327ad1db",
+    "retrieved_at": "2026-11-14T23:57:28.759591+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 584,
+    "elapsed_seconds": 0.8734299299976556,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": 19.62388888888889,
+      "longitude": 95.35666666666665,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "8123ea8f399c0d324c1412ff78af2735a0154d0e2d54cbd541e2c6de8d22c925",
+    "retrieved_at": "2026-11-14T23:57:29.607233+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 574,
+    "elapsed_seconds": 0.8468435040012992,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": 19.62388888888889,
+      "longitude": 95.35666666666665,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "f89fcca6c206f01faaef27195235af2d81f027dbebd68c30ce27b692ee1571e5",
+    "retrieved_at": "2026-11-14T23:57:30.579183+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 643,
+    "elapsed_seconds": 0.9711228069973004,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://files.isric.org/soilgrids/latest/data/phh2o/phh2o_0-5cm_mean/tileSG-014-067/tileSG-014-067_1-1.tif",
+    "params": {},
+    "sha256": "d12b096ebab86db66f08e66e853157591196b4907f6b765c665a8ce0f4052d2e",
+    "retrieved_at": "2026-11-14T23:57:33.402004+00:00",
+    "headers": {
+      "content-type": "image/tiff",
+      "etag": "\"10778943495-1586197738-721911\"",
+      "last-modified": "Mon, 06 Apr 2020 18:28:58 GMT"
+    },
+    "bytes": 721911,
+    "elapsed_seconds": 2.7253655710010207,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": 20.679166666666667,
+      "longitude": 96.65716666666667,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "7311531f24c29bc34e6b2505719d67fbe456b573c29462484c57a26581f457e1",
+    "retrieved_at": "2026-11-14T23:57:36.996097+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 608,
+    "elapsed_seconds": 0.9579518870013999,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": 20.679166666666667,
+      "longitude": 96.65716666666667,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "d666ab3b10a1da19061033f21c7883e1e69ebc677eca518904843f7eb06424bb",
+    "retrieved_at": "2026-11-14T23:57:37.847704+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 608,
+    "elapsed_seconds": 0.8509360939970065,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": 20.679166666666667,
+      "longitude": 96.65716666666667,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "e3e5696d3c02aa27d2024ee81048231fd48b6026c94cadff91e0e2cd0bdb57b4",
+    "retrieved_at": "2026-11-14T23:57:38.804438+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 591,
+    "elapsed_seconds": 0.9559683830011636,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": 20.679166666666667,
+      "longitude": 96.65716666666667,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "931791a1f06852e0c0034203c159b117b4a2a96666a456da165f96a1ee89563d",
+    "retrieved_at": "2026-11-14T23:57:39.703114+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 588,
+    "elapsed_seconds": 0.8979107289997046,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": 20.679166666666667,
+      "longitude": 96.65716666666667,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "5bd52ab3017b86b14b43207c2ebaa907bf0e21abedb7db7a410e6831f5b66658",
+    "retrieved_at": "2026-11-14T23:57:40.596325+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 587,
+    "elapsed_seconds": 0.8924343840008078,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": 20.679166666666667,
+      "longitude": 96.65716666666667,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "d32f8a675766635584196e3e80add4881f180c683818fb6fdcc0b094f8a2c4ec",
+    "retrieved_at": "2026-11-14T23:57:41.497348+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 574,
+    "elapsed_seconds": 0.90011925699946,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": 20.679166666666667,
+      "longitude": 96.65716666666667,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "cd92743528adac38b84cdabb0308108333f8da6a07364547de2e97164693f8f1",
+    "retrieved_at": "2026-11-14T23:57:41.999342+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 642,
+    "elapsed_seconds": 0.5012476850024541,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": 20.679166666666667,
+      "longitude": 96.65716666666667,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "7f461f79b1d475e4b565fe227027c74f2a7a579746662f563dcc4d082ad67d7c",
+    "retrieved_at": "2026-11-14T23:57:42.665007+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 608,
+    "elapsed_seconds": 0.6568928990018321,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": 20.679166666666667,
+      "longitude": 96.65716666666667,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "31d42206df1934f3432ded2e7f4626fdbf0b5669698e4ad8bde9d1a3fa6184c2",
+    "retrieved_at": "2026-11-14T23:57:43.522456+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 608,
+    "elapsed_seconds": 0.8559868209995329,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": 20.679166666666667,
+      "longitude": 96.65716666666667,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "6d13c9c5d5968996e98b43450eb613a7b25f24308beb7771a1ddd6932819cbc0",
+    "retrieved_at": "2026-11-14T23:57:44.147587+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 598,
+    "elapsed_seconds": 0.6244063570011349,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": 20.679166666666667,
+      "longitude": 96.65716666666667,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "16f4647e0f540e3810cb1621fceacd35c4a330f933240bd9dc5ca5fc216e9246",
+    "retrieved_at": "2026-11-14T23:57:45.057083+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 594,
+    "elapsed_seconds": 0.9089004359993851,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": 20.679166666666667,
+      "longitude": 96.65716666666667,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "59d4e542075b51ae409e223e21e2ff4dd10dd66d3374f19f77b244bb6eb7df3b",
+    "retrieved_at": "2026-11-14T23:57:45.781602+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 588,
+    "elapsed_seconds": 0.723164461000124,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": 20.679166666666667,
+      "longitude": 96.65716666666667,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "130c11aee4394282f0cfb75c83d0e3edfbea5dae8f29ef613d3129d68f0af5a6",
+    "retrieved_at": "2026-11-14T23:57:46.707675+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 576,
+    "elapsed_seconds": 0.9257309269996767,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": 20.679166666666667,
+      "longitude": 96.65716666666667,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "04146fc412e7603a47bca2f14d0185e7ac24179ed787c067bd9cd7106a356d44",
+    "retrieved_at": "2026-11-14T23:57:47.653095+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 643,
+    "elapsed_seconds": 0.9427317899971968,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://files.isric.org/soilgrids/latest/data/phh2o/phh2o_0-5cm_mean/tileSG-013-067/tileSG-013-067_3-2.tif",
+    "params": {},
+    "sha256": "cbfecaf4553a672df78a277ab6072d7b60491603f084c8389f6575cc765d23f9",
+    "retrieved_at": "2026-11-14T23:57:50.439348+00:00",
+    "headers": {
+      "content-type": "image/tiff",
+      "etag": "\"10778108793-1586206017-721911\"",
+      "last-modified": "Mon, 06 Apr 2020 20:46:57 GMT"
+    },
+    "bytes": 721911,
+    "elapsed_seconds": 2.693571370000427,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": 16.766666666666666,
+      "longitude": 96.53333333333333,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "81632edf5e4bf4ad10ad2ed63ab476eb93d4b9518664021fd276d2980f214895",
+    "retrieved_at": "2026-11-14T23:57:54.824598+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 606,
+    "elapsed_seconds": 1.675013621999824,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": 16.766666666666666,
+      "longitude": 96.53333333333333,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "76618ed1d1e7bed5f8c19821f1270832f8319b848a955d48e37336158db661f3",
+    "retrieved_at": "2026-11-14T23:57:56.802950+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 606,
+    "elapsed_seconds": 1.9775735949988302,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": 16.766666666666666,
+      "longitude": 96.53333333333333,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "a57c04b1da73b20d4d9756a84d627c27be0674dc6480744ad0ea718bc0d7040a",
+    "retrieved_at": "2026-11-14T23:57:58.460747+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 589,
+    "elapsed_seconds": 1.657023071002186,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": 16.766666666666666,
+      "longitude": 96.53333333333333,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "302feaeb8781146b88098ad514a53373d275692d764edcfd764ff1efa50ee940",
+    "retrieved_at": "2026-11-14T23:57:59.404505+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 591,
+    "elapsed_seconds": 0.9430531069992867,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": 16.766666666666666,
+      "longitude": 96.53333333333333,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "9348b324beccad3c0cde1aed877215f222a7e37b6e78823091a4fd928eefe6d3",
+    "retrieved_at": "2026-11-14T23:58:00.744938+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 586,
+    "elapsed_seconds": 1.3397653690008156,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": 16.766666666666666,
+      "longitude": 96.53333333333333,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "dea255b8c30977f835e2f146e2b308f445955347b4d9d91495f795293591bc90",
+    "retrieved_at": "2026-11-14T23:58:01.616055+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 581,
+    "elapsed_seconds": 0.8702229949994944,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": 16.766666666666666,
+      "longitude": 96.53333333333333,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "2b24f97ea1c57dc385bd88a9e78ec669f216e350ae2aa40d562ad949b91c82c1",
+    "retrieved_at": "2026-11-14T23:58:02.226139+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 641,
+    "elapsed_seconds": 0.6093213359999936,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": 16.766666666666666,
+      "longitude": 96.53333333333333,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "d747310fde7336b03de33118601577ff967e2627605881ff4dd967d3707376a2",
+    "retrieved_at": "2026-11-14T23:58:03.185574+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 606,
+    "elapsed_seconds": 0.9526907460021903,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": 16.766666666666666,
+      "longitude": 96.53333333333333,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "79df3565e222c928da3f0f8f7ef36785e2a40800707976a746607afd8b724a59",
+    "retrieved_at": "2026-11-14T23:58:04.138636+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 606,
+    "elapsed_seconds": 0.952279303000978,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": 16.766666666666666,
+      "longitude": 96.53333333333333,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "29aa378e52f6b5e66e4571b5ba0e75a6a57b75e03f64548071fbc2c9572e7c7e",
+    "retrieved_at": "2026-11-14T23:58:04.990724+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 593,
+    "elapsed_seconds": 0.8513864460001059,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": 16.766666666666666,
+      "longitude": 96.53333333333333,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "1925ed30910fd540e0eaa81ab52605f10ec265ac554f1b233b17d8e6851fc73f",
+    "retrieved_at": "2026-11-14T23:58:05.940010+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 588,
+    "elapsed_seconds": 0.9483956839976599,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": 16.766666666666666,
+      "longitude": 96.53333333333333,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "145e738641a1e14d02f7ecd6079d99bfb728ced37988e9849307efb48044f4b8",
+    "retrieved_at": "2026-11-14T23:58:06.565109+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 585,
+    "elapsed_seconds": 0.6243541090007056,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": 16.766666666666666,
+      "longitude": 96.53333333333333,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "7c28c15eed47e1a1d0b7a8d11a93cd7d49b6f3653e3bcaf7028f77651fe40b2d",
+    "retrieved_at": "2026-11-14T23:58:07.424013+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 582,
+    "elapsed_seconds": 0.8581612380003207,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": 16.766666666666666,
+      "longitude": 96.53333333333333,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "a7f325743b767065ecc02feec002966be5fd2e3e3187e1e2882510f96361826e",
+    "retrieved_at": "2026-11-14T23:58:08.364403+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 642,
+    "elapsed_seconds": 0.9397485410008812,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://files.isric.org/soilgrids/latest/data/phh2o/phh2o_0-5cm_mean/tileSG-014-067/tileSG-014-067_3-3.tif",
+    "params": {},
+    "sha256": "8016f795cd6b380ad835a0983f7dbbdaa4c18ded17f145a03550642c0e80f76e",
+    "retrieved_at": "2026-11-14T23:58:11.109359+00:00",
+    "headers": {
+      "content-type": "image/tiff",
+      "etag": "\"10777549256-1586205725-721911\"",
+      "last-modified": "Mon, 06 Apr 2020 20:42:05 GMT"
+    },
+    "bytes": 721911,
+    "elapsed_seconds": 2.641997604001517,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": 41.1651,
+      "longitude": -96.4766,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "97d1de728928bb4d258014e35eb2ff789a3b3ab2c5c27735091ae6c99128a5ef",
+    "retrieved_at": "2026-11-14T23:58:15.162553+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 607,
+    "elapsed_seconds": 1.3057191900006728,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": 41.1651,
+      "longitude": -96.4766,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "781d91b5966f4bcd74a56349c6b6b51081e864feeb4f9f6b188d85731da9429f",
+    "retrieved_at": "2026-11-14T23:58:16.916867+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 599,
+    "elapsed_seconds": 1.7517508460005047,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": 41.1651,
+      "longitude": -96.4766,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "c9233a06a945943ea5a3a22160a7f66b92495977c5ca89589073a5fa6b04fcc2",
+    "retrieved_at": "2026-11-14T23:58:18.403700+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 593,
+    "elapsed_seconds": 1.485537024000223,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": 41.1651,
+      "longitude": -96.4766,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "19e1113d7f8370bd2d521e3b4fd4ff4130b218e23f9807c21ff4d025232be432",
+    "retrieved_at": "2026-11-14T23:58:19.471188+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 591,
+    "elapsed_seconds": 1.0668021899982705,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": 41.1651,
+      "longitude": -96.4766,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "6028a342a7efe429aa238a39c02cdb96f3293b8273bebcd31e7c914996b5ba78",
+    "retrieved_at": "2026-11-14T23:58:20.407661+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 587,
+    "elapsed_seconds": 0.9355710740019276,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": 41.1651,
+      "longitude": -96.4766,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "62be290024ea73a70916e497fbec1749c0030dfe4a8d0aea464cf07f345e4402",
+    "retrieved_at": "2026-11-14T23:58:21.012723+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 575,
+    "elapsed_seconds": 0.6040585420014395,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": 41.1651,
+      "longitude": -96.4766,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "0a87ee97b87328552c4beaa45dda7dd507c6aa1c5a488334825dda26090e57f8",
+    "retrieved_at": "2026-11-14T23:58:21.860213+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 635,
+    "elapsed_seconds": 0.8467776629986474,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": 41.1651,
+      "longitude": -96.4766,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "399f573b0d3c40baf01f9c09b87e58a1882b5373f95bf52f5c09ed7ddb24cfc5",
+    "retrieved_at": "2026-11-14T23:58:22.851923+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 606,
+    "elapsed_seconds": 0.9849214749992825,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": 41.1651,
+      "longitude": -96.4766,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "e6d25bf9f0e6f936726d6662532903c1f27cb21d5709d160cd61f66c8e96d50b",
+    "retrieved_at": "2026-11-14T23:58:23.807058+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 605,
+    "elapsed_seconds": 0.9543737089989008,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": 41.1651,
+      "longitude": -96.4766,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "4da4f227436374a7a961c83b9037e7386d7a010aca7c863f139dc8da28017613",
+    "retrieved_at": "2026-11-14T23:58:24.693629+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 598,
+    "elapsed_seconds": 0.8855951969999296,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": 41.1651,
+      "longitude": -96.4766,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "857675dd3a47eeafdc941478818c3e4bb4c7c4523046eb19913bb97abe6f55c8",
+    "retrieved_at": "2026-11-14T23:58:25.634108+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 593,
+    "elapsed_seconds": 0.9397419960005209,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": 41.1651,
+      "longitude": -96.4766,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "5f7555a9c05604a9e1b2dbc9a86856875cceb00b9bab533d78f6119c42564057",
+    "retrieved_at": "2026-11-14T23:58:26.611269+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 586,
+    "elapsed_seconds": 0.9761029479996068,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": 41.1651,
+      "longitude": -96.4766,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "27993428255fc65fcceb4b7e7908c1f6076e86747a87b73f30026d46de978887",
+    "retrieved_at": "2026-11-14T23:58:27.492046+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 576,
+    "elapsed_seconds": 0.8798156299999391,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": 41.1651,
+      "longitude": -96.4766,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "8ac368326a4d95bab165ae986803116dd301058d67af18747c9cd42dabc04c6f",
+    "retrieved_at": "2026-11-14T23:58:28.427998+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 642,
+    "elapsed_seconds": 0.9353237929972238,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://files.isric.org/soilgrids/latest/data/phh2o/phh2o_0-5cm_mean/tileSG-008-020/tileSG-008-020_3-2.tif",
+    "params": {},
+    "sha256": "3fb3653ff32295264f4c60cc73a1ba4484e78273736d90495aca0cc7e6de4156",
+    "retrieved_at": "2026-11-14T23:58:31.059625+00:00",
+    "headers": {
+      "content-type": "image/tiff",
+      "etag": "\"10778364697-1586206893-721911\"",
+      "last-modified": "Mon, 06 Apr 2020 21:01:33 GMT"
+    },
+    "bytes": 721911,
+    "elapsed_seconds": 2.5215214230011043,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": 40.006,
+      "longitude": -88.29,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "b7eadc0905e902a50fc92c81c45f7968b17c8471528942e86223a11b40d40808",
+    "retrieved_at": "2026-11-14T23:58:34.512646+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 606,
+    "elapsed_seconds": 0.7485783830015862,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": 40.006,
+      "longitude": -88.29,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "eb63a2b2401bd0bf1ac5028e11679ebfc06bda334e920b941dee6ca582790be3",
+    "retrieved_at": "2026-11-14T23:58:35.500225+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 600,
+    "elapsed_seconds": 0.9867541550011083,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": 40.006,
+      "longitude": -88.29,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "ba4dd115c44fa7d043036aeb49f1f8bc747a4115034b0f7f0a760a1f7522a9c3",
+    "retrieved_at": "2026-11-14T23:58:36.357589+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 593,
+    "elapsed_seconds": 0.8569917929999065,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": 40.006,
+      "longitude": -88.29,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "73d57199a61de76743a91b39883473fe428a7f41097c19b1a224ea3eb02b56ec",
+    "retrieved_at": "2026-11-14T23:58:36.878463+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 592,
+    "elapsed_seconds": 0.5197178550006356,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": 40.006,
+      "longitude": -88.29,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "62028101beca9ce75484fd5e1cb68b673db3043e6b27a767f8023390c0c6a148",
+    "retrieved_at": "2026-11-14T23:58:37.832985+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 586,
+    "elapsed_seconds": 0.9537479319988051,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": 40.006,
+      "longitude": -88.29,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "f12551a4f423b53e9891247a41bbcdbf29df579e3b45d9ce898108a5b4ff95e7",
+    "retrieved_at": "2026-11-14T23:58:38.493249+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 577,
+    "elapsed_seconds": 0.6595691180009453,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": 40.006,
+      "longitude": -88.29,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "2bbbe592bd2940d88ff3d53f79f99a18f54ab3b5520ab418beaf9a9adb1d57a4",
+    "retrieved_at": "2026-11-14T23:58:39.463620+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 636,
+    "elapsed_seconds": 0.9706822400003148,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": 40.006,
+      "longitude": -88.29,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "78d6092f19d93404b67645680d867329788db3e3a9c2327adc2af0294bb3f2db",
+    "retrieved_at": "2026-11-14T23:58:39.992338+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 607,
+    "elapsed_seconds": 0.5139937100029783,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": 40.006,
+      "longitude": -88.29,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "0914da9c304d995aa5edf7570bc0f6c0f0ab96f3723caf33ef564f3686c8793b",
+    "retrieved_at": "2026-11-14T23:58:40.948098+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 605,
+    "elapsed_seconds": 0.9550654949998716,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": 40.006,
+      "longitude": -88.29,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "8a85bb7f0e561158f9a24139e7a979a60d6d7f65e267677dd1b7b4a3e8a367f1",
+    "retrieved_at": "2026-11-14T23:58:41.927643+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 595,
+    "elapsed_seconds": 0.9789107739998144,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": 40.006,
+      "longitude": -88.29,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "3f7975e6ce7d6c17543c809a2cf2d4e70209784c5a5454d2b8230831e02f0aa8",
+    "retrieved_at": "2026-11-14T23:58:42.546362+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 591,
+    "elapsed_seconds": 0.6173769100023492,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": 40.006,
+      "longitude": -88.29,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "cf4eca9b78f26827001b7126d609dca11745a30d49f0a477068ed22d0d738fb0",
+    "retrieved_at": "2026-11-14T23:58:43.506601+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 586,
+    "elapsed_seconds": 0.9595309190008265,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": 40.006,
+      "longitude": -88.29,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "7593564b9506287c6707e0b53d6a488c824d9d1028838b527580aca5fcc18b1c",
+    "retrieved_at": "2026-11-14T23:58:44.475206+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 576,
+    "elapsed_seconds": 0.9658140869978524,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": 40.006,
+      "longitude": -88.29,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "69a68791e7a66fccc50d314c33291a9d70d404d74c9627a02d33474cd8108585",
+    "retrieved_at": "2026-11-14T23:58:45.427218+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 640,
+    "elapsed_seconds": 0.9500225739975576,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://files.isric.org/soilgrids/latest/data/phh2o/phh2o_0-5cm_mean/tileSG-009-022/tileSG-009-022_1-1.tif",
+    "params": {},
+    "sha256": "455e846f79e550769212117faea4c8911d6bc567d427f96397008a27ea923290",
+    "retrieved_at": "2026-11-14T23:58:48.051759+00:00",
+    "headers": {
+      "content-type": "image/tiff",
+      "etag": "\"10779104008-1586197373-721911\"",
+      "last-modified": "Mon, 06 Apr 2020 18:22:53 GMT"
+    },
+    "bytes": 721911,
+    "elapsed_seconds": 2.4924353980022715,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": -15.559441666666668,
+      "longitude": -47.736755555555554,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "1fe7c57be5ba7f22fa39160ce70f98e3061c68979684c282b3eb7658dd16d292",
+    "retrieved_at": "2026-11-14T23:58:51.747770+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 608,
+    "elapsed_seconds": 0.9731685970000399,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": -15.559441666666668,
+      "longitude": -47.736755555555554,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "e7669bc3344af22491fdf54ab8c6d509b98586891e0da2215f4a5b303fb92961",
+    "retrieved_at": "2026-11-14T23:58:52.607296+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 609,
+    "elapsed_seconds": 0.8583751599981042,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": -15.559441666666668,
+      "longitude": -47.736755555555554,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "abc8ebd7bb9a7f3f020bcd5d4d440bcb7c693c71c89fa06294d3867a6a6aa29f",
+    "retrieved_at": "2026-11-14T23:58:53.165258+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 600,
+    "elapsed_seconds": 0.5571895290013344,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": -15.559441666666668,
+      "longitude": -47.736755555555554,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "c8d3d54e3f504a715ca35b813e92f929ab971c910556ebada7963de1706ca556",
+    "retrieved_at": "2026-11-14T23:58:54.039711+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 595,
+    "elapsed_seconds": 0.8736626489990158,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": -15.559441666666668,
+      "longitude": -47.736755555555554,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "4ec344cb880aa9da2f9ee979e3ab9e2b442cfa55e4b95a14983fff6cd657efc9",
+    "retrieved_at": "2026-11-14T23:58:54.652419+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 589,
+    "elapsed_seconds": 0.6121013240008324,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": -15.559441666666668,
+      "longitude": -47.736755555555554,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "d766e4662ea7d58384444fa16d3c8ba641d62dfbc9f1c682576631eb27675a06",
+    "retrieved_at": "2026-11-14T23:58:55.598368+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 577,
+    "elapsed_seconds": 0.9451781950010627,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": -15.559441666666668,
+      "longitude": -47.736755555555554,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "8e8e76d8240f6f7c2f320f29a7a7548fad1ffd78ea5a5604ccfabbc1b3efebbf",
+    "retrieved_at": "2026-11-14T23:58:56.442593+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 641,
+    "elapsed_seconds": 0.8434398409990536,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": -15.559441666666668,
+      "longitude": -47.736755555555554,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "05e4fe84b662e1ecb6a69989d0515f2f507150c734fce49728ebe47961a74166",
+    "retrieved_at": "2026-11-14T23:58:57.395940+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 607,
+    "elapsed_seconds": 0.945450419003464,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": -15.559441666666668,
+      "longitude": -47.736755555555554,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "171db95868cfda371e245026f6441ccfc6952eb4b57a065942b0be45b12d34ab",
+    "retrieved_at": "2026-11-14T23:58:58.292301+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 608,
+    "elapsed_seconds": 0.8956116320005094,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": -15.559441666666668,
+      "longitude": -47.736755555555554,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "82eb0700a66d328505b45f93481e613369ec53dc46e190598acb7870113150f3",
+    "retrieved_at": "2026-11-14T23:58:59.239119+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 593,
+    "elapsed_seconds": 0.9460854239987384,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": -15.559441666666668,
+      "longitude": -47.736755555555554,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "ba95f6ccfdd39871cac5badf82e86b601358c423b436e77e450fdf205d1c2999",
+    "retrieved_at": "2026-11-14T23:59:00.164071+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 587,
+    "elapsed_seconds": 0.923931110999547,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": -15.559441666666668,
+      "longitude": -47.736755555555554,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "149cc90fcb3ae57b5de00354f0335531df2a9f1fd9f497d1591534f935f03fec",
+    "retrieved_at": "2026-11-14T23:59:01.092058+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 589,
+    "elapsed_seconds": 0.9272151619989017,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": -15.559441666666668,
+      "longitude": -47.736755555555554,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "048c1c3722d7dd0ffde94d621e580209ecb762200bf91124bbbfe94e805d2bf2",
+    "retrieved_at": "2026-11-14T23:59:01.644713+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 577,
+    "elapsed_seconds": 0.5519361960032256,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": -15.559441666666668,
+      "longitude": -47.736755555555554,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "1be153121093b432348e99340cf1ce58983bedc3a90d91f921e35d9ac2184866",
+    "retrieved_at": "2026-11-14T23:59:02.582516+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 644,
+    "elapsed_seconds": 0.9366123500003596,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://files.isric.org/soilgrids/latest/data/phh2o/phh2o_0-5cm_mean/tileSG-022-032/tileSG-022-032_3-2.tif",
+    "params": {},
+    "sha256": "820ad9100bcd10260942d0010342e2e55a7c38ede2986396e44edf423801b04f",
+    "retrieved_at": "2026-11-14T23:59:05.231956+00:00",
+    "headers": {
+      "content-type": "image/tiff",
+      "etag": "\"10778944305-1586250569-721911\"",
+      "last-modified": "Tue, 07 Apr 2020 09:09:29 GMT"
+    },
+    "bytes": 721911,
+    "elapsed_seconds": 2.4927940359993954,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": -1.25,
+      "longitude": 36.733333333333334,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "a0b7d2202a8e632c6fbc373ce4258ac598a9624e5906ab3447fccc047efb1084",
+    "retrieved_at": "2026-11-14T23:59:08.946074+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 606,
+    "elapsed_seconds": 0.9163450070009276,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": -1.25,
+      "longitude": 36.733333333333334,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "67671537e0d01865804c25fc1549ca6690ad33bb19af7965c00ac5ccd4bf906f",
+    "retrieved_at": "2026-11-14T23:59:09.472121+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 604,
+    "elapsed_seconds": 0.5251018810013193,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": -1.25,
+      "longitude": 36.733333333333334,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "cafb0f727524e06cf96477a2b69ab115d4dc641a5993c37d3702bb1391568b58",
+    "retrieved_at": "2026-11-14T23:59:10.344662+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 595,
+    "elapsed_seconds": 0.8719279279976035,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": -1.25,
+      "longitude": 36.733333333333334,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "ff4a6dc7f7dbe45a842fe3289781c2e8adec67ce7e899b3d2302c4bac68ea1dd",
+    "retrieved_at": "2026-11-14T23:59:11.305306+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 592,
+    "elapsed_seconds": 0.9595765369995206,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": -1.25,
+      "longitude": 36.733333333333334,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "a7831e0b09680853be58e56f2b70fc33566427c69c3eb5ad8308891823941afd",
+    "retrieved_at": "2026-11-14T23:59:12.216005+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 585,
+    "elapsed_seconds": 0.9099988920024771,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": -1.25,
+      "longitude": 36.733333333333334,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "b62cbc7d44e0f0973bf4720ebff728aa4742daf71192351cbdc2c51d406b705b",
+    "retrieved_at": "2026-11-14T23:59:13.205972+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 574,
+    "elapsed_seconds": 0.9889767169988772,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": -1.25,
+      "longitude": 36.733333333333334,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "fec7fb0ca3d92cbd8d7691776999cd113f9ad920fe6ce95914ce80c54a4d26e5",
+    "retrieved_at": "2026-11-14T23:59:13.751874+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 642,
+    "elapsed_seconds": 0.5455798440016224,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": -1.25,
+      "longitude": 36.733333333333334,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "54e513dfd7e30eddd9c786d4ad879574f4196337ddf9c2b49c60b28abae75ac0",
+    "retrieved_at": "2026-11-14T23:59:14.628723+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 606,
+    "elapsed_seconds": 0.8668001629994251,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": -1.25,
+      "longitude": 36.733333333333334,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "8ecf7985af8cf686d9f5acdfbbae76fb54bef0ab98a589a853b8e60d97575880",
+    "retrieved_at": "2026-11-14T23:59:15.575118+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 606,
+    "elapsed_seconds": 0.9459632429970952,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": -1.25,
+      "longitude": 36.733333333333334,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "996533f2c1d6bcca60edd9c61476347b988d8a4c62c89826a1d06b876bdda492",
+    "retrieved_at": "2026-11-14T23:59:16.135757+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 597,
+    "elapsed_seconds": 0.5574439500014705,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": -1.25,
+      "longitude": 36.733333333333334,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "7856aa0bbd7cb247527eb3dc7cb7467c2dd065a0ddf1386a86d7109132bed3fd",
+    "retrieved_at": "2026-11-14T23:59:16.764398+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 590,
+    "elapsed_seconds": 0.6277536809975572,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": -1.25,
+      "longitude": 36.733333333333334,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "6c21ecf3ef4f1e60094bea010e2f74335f1a8abdd0d465be4109a27c3a4fd483",
+    "retrieved_at": "2026-11-14T23:59:17.633167+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 584,
+    "elapsed_seconds": 0.8678476640016015,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": -1.25,
+      "longitude": 36.733333333333334,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "9b9b745b7f1a4712052458d5bf4049725402a9248e6949686e97276eaeae5e94",
+    "retrieved_at": "2026-11-14T23:59:18.196954+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 576,
+    "elapsed_seconds": 0.5622254019981483,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": -1.25,
+      "longitude": 36.733333333333334,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "b6c2d24aeb5552ad59413665d82541c548410955764ba0e76b49f879be173e93",
+    "retrieved_at": "2026-11-14T23:59:18.797886+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 642,
+    "elapsed_seconds": 0.5999106210001628,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://files.isric.org/soilgrids/latest/data/phh2o/phh2o_0-5cm_mean/tileSG-019-053/tileSG-019-053_2-2.tif",
+    "params": {},
+    "sha256": "41a44aea58fec4df336f65106f771c9916a336cdfce8a3c30eed84b4f4e6418a",
+    "retrieved_at": "2026-11-14T23:59:21.385244+00:00",
+    "headers": {
+      "content-type": "image/tiff",
+      "etag": "\"10779104786-1586246435-721911\"",
+      "last-modified": "Tue, 07 Apr 2020 08:00:35 GMT"
+    },
+    "bytes": 721911,
+    "elapsed_seconds": 2.488638560000254,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": 50.8931,
+      "longitude": 13.5224,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "5e7e1691068bdb96e8e5dee74511857edcb6bf1077ff3a893ec77ac9970187f3",
+    "retrieved_at": "2026-11-14T23:59:25.119630+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 602,
+    "elapsed_seconds": 0.9648899759995402,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": 50.8931,
+      "longitude": 13.5224,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "ea6162fdf09440f803c4e44ba3db03c9b3f023707c9b83d0f8f9bc06a5f65a09",
+    "retrieved_at": "2026-11-14T23:59:26.000991+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 600,
+    "elapsed_seconds": 0.8806768110007397,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": 50.8931,
+      "longitude": 13.5224,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "e627626bdbc32c675be7aacf2ce48a257220148d453697353de28441b997ba08",
+    "retrieved_at": "2026-11-14T23:59:26.952877+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 597,
+    "elapsed_seconds": 0.9507431780002662,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": 50.8931,
+      "longitude": 13.5224,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "92b9897686de981977090d2dfc63a12afa09b5fbc4d5f36b9b93cc8fbaf5f30b",
+    "retrieved_at": "2026-11-14T23:59:27.914045+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 587,
+    "elapsed_seconds": 0.960500993001915,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": 50.8931,
+      "longitude": 13.5224,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "0be5b489dd06af6d1c4bd0779b0a4fdbaa611e13e21db7acb8fbf392ea86e237",
+    "retrieved_at": "2026-11-14T23:59:28.807563+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 586,
+    "elapsed_seconds": 0.8920817150028597,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": 50.8931,
+      "longitude": 13.5224,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "620115b812e9792cb92023d6b3e0fc7b3bf18a660eedc275f472550a9414fe96",
+    "retrieved_at": "2026-11-14T23:59:29.834355+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 575,
+    "elapsed_seconds": 1.026590034001856,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": 50.8931,
+      "longitude": 13.5224,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "5053731e75e8ebffe9448986fe5244499d4cd21f6ac363a31950dbc91adcf0a1",
+    "retrieved_at": "2026-11-14T23:59:30.788020+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 636,
+    "elapsed_seconds": 0.9510876999993343,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": 50.8931,
+      "longitude": 13.5224,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "6bd2880fb6000f5fc1ef2ab8e8f86e2e96116393340daee1fba2269ba80f72c8",
+    "retrieved_at": "2026-11-14T23:59:31.753547+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 607,
+    "elapsed_seconds": 0.9583282029998372,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": 50.8931,
+      "longitude": 13.5224,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "416b0c49eec0e1052c9d732f583b91d25c272bbc3c7b8e8c8374b9284121f670",
+    "retrieved_at": "2026-11-14T23:59:32.368608+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 607,
+    "elapsed_seconds": 0.6141581980009505,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": 50.8931,
+      "longitude": 13.5224,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "dd4d28945a62a22b7b3aefdd33fcb51e996de3ec812d7b7315d12875e32f6e87",
+    "retrieved_at": "2026-11-14T23:59:33.337573+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 595,
+    "elapsed_seconds": 0.9683449309995922,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": 50.8931,
+      "longitude": 13.5224,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "6baa6eda3399a1fc68dc78b326ce1a9e27bf5ef3f4a2b18bb825625dc9292829",
+    "retrieved_at": "2026-11-14T23:59:34.337804+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 591,
+    "elapsed_seconds": 0.999244976999762,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": 50.8931,
+      "longitude": 13.5224,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "5f0c6bcb113deb4d8828b4f49ff90394733a07b819fcff71863fcba3ac30c71f",
+    "retrieved_at": "2026-11-14T23:59:34.873158+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 587,
+    "elapsed_seconds": 0.53451332899931,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": 50.8931,
+      "longitude": 13.5224,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "59a96b039ff2a5e0ff9042718940919ea34254b63288983358b5780f5326ec78",
+    "retrieved_at": "2026-11-14T23:59:35.462735+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 574,
+    "elapsed_seconds": 0.5888631279995025,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": 50.8931,
+      "longitude": 13.5224,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "6304c34cdccd7cb7a44ba477afd0d7158a12b3f70cc579cddb654ed3827d8d5b",
+    "retrieved_at": "2026-11-14T23:59:36.380716+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 641,
+    "elapsed_seconds": 0.9168321569995896,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://files.isric.org/soilgrids/latest/data/phh2o/phh2o_0-5cm_mean/tileSG-006-049/tileSG-006-049_2-1.tif",
+    "params": {},
+    "sha256": "29572bd7e989997000ff54c872925fa2ac72ec9e899552a11d229768f676da8d",
+    "retrieved_at": "2026-11-14T23:59:38.960754+00:00",
+    "headers": {
+      "content-type": "image/tiff",
+      "etag": "\"10778862819-1586245058-721911\"",
+      "last-modified": "Tue, 07 Apr 2020 07:37:38 GMT"
+    },
+    "bytes": 721911,
+    "elapsed_seconds": 2.4763057619966276,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": -36.6499,
+      "longitude": 145.5759,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "c85303e1014c061fbfc28876be8802db9a03630b5a2935ef59a4e3307d216fdc",
+    "retrieved_at": "2026-11-14T23:59:43.456126+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 606,
+    "elapsed_seconds": 1.489244559998042,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": -36.6499,
+      "longitude": 145.5759,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "a577cacdc1ac612fbe6c9a98bae33bb5b130ff4b21940a0e0704a3b9484ea17e",
+    "retrieved_at": "2026-11-14T23:59:44.820263+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 606,
+    "elapsed_seconds": 1.3634582900012902,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": -36.6499,
+      "longitude": 145.5759,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "d46995ba6e8a180430b82ef13ae27c77617400a75816c5e28300a8b724a87c10",
+    "retrieved_at": "2026-11-14T23:59:45.447988+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 598,
+    "elapsed_seconds": 0.626644378000492,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": -36.6499,
+      "longitude": 145.5759,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "c5db3dc8346fccbf82605f8bab639e7ae74e5cadddbf1adcb08f7133e5cf4d08",
+    "retrieved_at": "2026-11-14T23:59:47.366162+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 593,
+    "elapsed_seconds": 1.9176389579988609,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": -36.6499,
+      "longitude": 145.5759,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "e03f5bb155b61d69cf7317f35c04686ad1673067ec79906bdb8e1c7264c627d0",
+    "retrieved_at": "2026-11-14T23:59:47.992925+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 587,
+    "elapsed_seconds": 0.6237396929973329,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": -36.6499,
+      "longitude": 145.5759,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "65a25742c73c3d9c0fcdfbc9550b930fdd0c09e6dfe9f0890ae771b2c3a114e1",
+    "retrieved_at": "2026-11-14T23:59:48.968099+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 573,
+    "elapsed_seconds": 0.974454864001018,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": -36.6499,
+      "longitude": 145.5759,
+      "start": "20240101",
+      "end": "20240107",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "abc4745b1e7fde62cd336d700a35cd3c86b48bc4574f0bc91a911830c23a105b",
+    "retrieved_at": "2026-11-14T23:59:49.614431+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 642,
+    "elapsed_seconds": 0.6454448820004473,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MIN",
+      "community": "AG",
+      "latitude": -36.6499,
+      "longitude": 145.5759,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "b09aa523eddd259b8fe6059d36112ba185f2e08a78e92884729643c93cb88a7a",
+    "retrieved_at": "2026-11-14T23:59:50.471648+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 601,
+    "elapsed_seconds": 0.8500038269994548,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2M_MAX",
+      "community": "AG",
+      "latitude": -36.6499,
+      "longitude": 145.5759,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "6ebedb693347293e882ea3b5cf392fe9d203d540bb415485387de05fc279473b",
+    "retrieved_at": "2026-11-14T23:59:51.900307+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 607,
+    "elapsed_seconds": 1.427950942001189,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PRECTOTCORR",
+      "community": "AG",
+      "latitude": -36.6499,
+      "longitude": 145.5759,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "c5cb622fc4ea319984b009497ccd815337d32ffda15b862d3f310186ce656c38",
+    "retrieved_at": "2026-11-14T23:59:52.523512+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 596,
+    "elapsed_seconds": 0.6223866469990753,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "T2MDEW",
+      "community": "AG",
+      "latitude": -36.6499,
+      "longitude": 145.5759,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "fa6f260044db5f2f19bbfe71939d920abc851bb4380e12c3a5400047420b105a",
+    "retrieved_at": "2026-11-14T23:59:53.409872+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 584,
+    "elapsed_seconds": 0.8855916669999715,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "WS2M",
+      "community": "AG",
+      "latitude": -36.6499,
+      "longitude": 145.5759,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "cc7db0fd0ccc676f68ecd859f95114a82025c60685a7b2cf430cb359ece760ac",
+    "retrieved_at": "2026-11-14T23:59:54.308948+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 586,
+    "elapsed_seconds": 0.8982935660023941,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "PS",
+      "community": "AG",
+      "latitude": -36.6499,
+      "longitude": 145.5759,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "46a162811146b9520497a0a0175e4f0d050d848c16ce2de07ed16a8b6bc37659",
+    "retrieved_at": "2026-11-14T23:59:54.839360+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 582,
+    "elapsed_seconds": 0.5296837159985444,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "params": {
+      "parameters": "ALLSKY_SFC_SW_DWN",
+      "community": "AG",
+      "latitude": -36.6499,
+      "longitude": 145.5759,
+      "start": "20240701",
+      "end": "20240707",
+      "format": "JSON",
+      "time-standard": "LST"
+    },
+    "sha256": "c3ba6835f063e451c87ee9173c10a10a887bc5f0dafbd81412c34e5435bf9932",
+    "retrieved_at": "2026-11-14T23:59:55.807831+00:00",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "bytes": 643,
+    "elapsed_seconds": 0.9677264099991589,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://files.isric.org/soilgrids/latest/data/phh2o/phh2o_0-5cm_mean/tileSG-028-080/tileSG-028-080_1-1.tif",
+    "params": {},
+    "sha256": "b0bd888b6f986111f28315463858ac3a96357f1a9f086610fded8897f1810031",
+    "retrieved_at": "2026-11-14T23:59:58.442639+00:00",
+    "headers": {
+      "content-type": "image/tiff",
+      "etag": "\"10778506225-1586241461-721911\"",
+      "last-modified": "Tue, 07 Apr 2020 06:37:41 GMT"
+    },
+    "bytes": 721911,
+    "elapsed_seconds": 2.4883316189989273,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl",
+    "params": {
+      "file": "gfs.t18z.pgrb2.0p25.f000",
+      "lev_2_m_above_ground": "on",
+      "var_TMP": "on",
+      "subregion": "",
+      "leftlon": "94.75",
+      "rightlon": "95.25",
+      "toplat": "17.0",
+      "bottomlat": "16.5",
+      "dir": "/gfs.20261114/18/atmos"
+    },
+    "sha256": "e0c94d44285e534c3cea3fba35070586db2e6d587446c90b9fe12c47a14550fd",
+    "retrieved_at": "2026-11-15T00:00:02.786105+00:00",
+    "headers": {
+      "content-type": "application/octet-stream"
+    },
+    "bytes": 187,
+    "elapsed_seconds": 1.5839650369998708,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl",
+    "params": {
+      "file": "gfs.t18z.pgrb2.0p25.f006",
+      "lev_2_m_above_ground": "on",
+      "var_TMP": "on",
+      "subregion": "",
+      "leftlon": "94.75",
+      "rightlon": "95.25",
+      "toplat": "17.0",
+      "bottomlat": "16.5",
+      "dir": "/gfs.20261114/18/atmos"
+    },
+    "sha256": "0f15b34cc07d18933b2f1a7c76f619861347f552fae86ab0869cfbd6ada37061",
+    "retrieved_at": "2026-11-15T00:00:04.478584+00:00",
+    "headers": {
+      "content-type": "application/octet-stream"
+    },
+    "bytes": 185,
+    "elapsed_seconds": 1.682760514999245,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl",
+    "params": {
+      "file": "gfs.t18z.pgrb2.0p25.f012",
+      "lev_2_m_above_ground": "on",
+      "var_TMP": "on",
+      "subregion": "",
+      "leftlon": "94.75",
+      "rightlon": "95.25",
+      "toplat": "17.0",
+      "bottomlat": "16.5",
+      "dir": "/gfs.20261114/18/atmos"
+    },
+    "sha256": "008c7b582e27526fbb80ae3b7661c994cfec1623ce0be94525c52ef5ef282328",
+    "retrieved_at": "2026-11-15T00:00:05.904757+00:00",
+    "headers": {
+      "content-type": "application/octet-stream"
+    },
+    "bytes": 187,
+    "elapsed_seconds": 1.4229422440002963,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl",
+    "params": {
+      "file": "gfs.t18z.pgrb2.0p25.f024",
+      "lev_2_m_above_ground": "on",
+      "var_TMP": "on",
+      "subregion": "",
+      "leftlon": "94.75",
+      "rightlon": "95.25",
+      "toplat": "17.0",
+      "bottomlat": "16.5",
+      "dir": "/gfs.20261114/18/atmos"
+    },
+    "sha256": "92c2ba2eda21d091d8c29b8203fd20123cab139aa4c9c31894eea55ec9472793",
+    "retrieved_at": "2026-11-15T00:00:06.584614+00:00",
+    "headers": {
+      "content-type": "application/octet-stream"
+    },
+    "bytes": 187,
+    "elapsed_seconds": 0.6767038520010829,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl",
+    "params": {
+      "file": "gfs.t18z.pgrb2.0p25.f000",
+      "lev_2_m_above_ground": "on",
+      "var_TMP": "on",
+      "subregion": "",
+      "leftlon": "263.25",
+      "rightlon": "263.75",
+      "toplat": "41.5",
+      "bottomlat": "41.0",
+      "dir": "/gfs.20261114/18/atmos"
+    },
+    "sha256": "89c2b92d899c1508fe949d9415e093e93d9f19ae6adc8543edd6dfbb737bf7ca",
+    "retrieved_at": "2026-11-15T00:00:07.332308+00:00",
+    "headers": {
+      "content-type": "application/octet-stream"
+    },
+    "bytes": 187,
+    "elapsed_seconds": 0.7406204549988615,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl",
+    "params": {
+      "file": "gfs.t18z.pgrb2.0p25.f006",
+      "lev_2_m_above_ground": "on",
+      "var_TMP": "on",
+      "subregion": "",
+      "leftlon": "263.25",
+      "rightlon": "263.75",
+      "toplat": "41.5",
+      "bottomlat": "41.0",
+      "dir": "/gfs.20261114/18/atmos"
+    },
+    "sha256": "09214dfe186f8d98774c3fa2b0edaddaa68a375418104131f0e86ca453d2c110",
+    "retrieved_at": "2026-11-15T00:00:08.016237+00:00",
+    "headers": {
+      "content-type": "application/octet-stream"
+    },
+    "bytes": 186,
+    "elapsed_seconds": 0.6804080969995994,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl",
+    "params": {
+      "file": "gfs.t18z.pgrb2.0p25.f012",
+      "lev_2_m_above_ground": "on",
+      "var_TMP": "on",
+      "subregion": "",
+      "leftlon": "263.25",
+      "rightlon": "263.75",
+      "toplat": "41.5",
+      "bottomlat": "41.0",
+      "dir": "/gfs.20261114/18/atmos"
+    },
+    "sha256": "7593f9e8e8bbb4327a9b5eee0603eb317a41bceea131138bfb18dd60f4b7e8ae",
+    "retrieved_at": "2026-11-15T00:00:08.655457+00:00",
+    "headers": {
+      "content-type": "application/octet-stream"
+    },
+    "bytes": 185,
+    "elapsed_seconds": 0.6358335279983294,
+    "classification": "REAL"
+  },
+  {
+    "url": "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl",
+    "params": {
+      "file": "gfs.t18z.pgrb2.0p25.f024",
+      "lev_2_m_above_ground": "on",
+      "var_TMP": "on",
+      "subregion": "",
+      "leftlon": "263.25",
+      "rightlon": "263.75",
+      "toplat": "41.5",
+      "bottomlat": "41.0",
+      "dir": "/gfs.20261114/18/atmos"
+    },
+    "sha256": "ca179d7ef61259af7446502a6b9f6cfcd777b6b14065a01230f9da43ee2944ec",
+    "retrieved_at": "2026-11-15T00:00:09.358109+00:00",
+    "headers": {
+      "content-type": "application/octet-stream"
+    },
+    "bytes": 187,
+    "elapsed_seconds": 0.6994733779974922,
+    "classification": "REAL"
+  }
+]

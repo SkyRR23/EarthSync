@@ -1,0 +1,21 @@
+{
+  "release_sha": "660b479c3ffb714cd1d489e1241c026ceae6ed67",
+  "hardware": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "native_sha256": "00d9175eb0bf6bb3c426a635d89d6a1c41fe0bfcdef1d299e40bc0afac5cae37",
+  "local_native_subprocess_single_day": {
+    "n": 20,
+    "minimum_seconds": 0.001262245001271367,
+    "median_seconds": 0.0016915209998842329,
+    "p95_nearest_rank_seconds": 0.0035165549998055212,
+    "maximum_seconds": 0.0037598119997710455
+  },
+  "real_network_transport_requests": {
+    "n": 188,
+    "minimum_seconds": 0.5012476850024541,
+    "median_seconds": 0.9381771730004402,
+    "p95_nearest_rank_seconds": 2.488638560000254,
+    "maximum_seconds": 11.586890099999437
+  },
+  "classification": "SYNTHETIC native timing inputs; REAL previously recorded network timings",
+  "limits": "20 sequential native calls, no external extra load; not a concurrent capacity, Windows, mobile or production SLA measurement"
+}
