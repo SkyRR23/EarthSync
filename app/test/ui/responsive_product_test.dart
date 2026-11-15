@@ -41,6 +41,7 @@ void main() {
           '/field',
           '/explore',
           '/assessment',
+          '/historical',
           '/photos',
           '/assistant',
           '/sources',

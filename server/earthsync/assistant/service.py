@@ -10,6 +10,10 @@ from .models import ChatRequest, ChatResponse, Claim
 # Agricultural content and translations live in locales; these are routing terms.
 INTENTS = (
     (
+        "historical",
+        r"historical|2024.*2025|2025.*2024|rainy season|(?:rain|precip|temperature|et0).*\b20\d{2}\b",
+    ),
+    (
         "history",
         r"\bhistory\b|\btimeline\b|\bstage\b|\bmanagement\b|priorit|field observation|planted|harvest|မှတ်တမ်း|အဆင့်",
     ),
@@ -32,6 +36,7 @@ INTENTS = (
     ),
 )
 TOPICS = {
+    "historical": {"climate", "rainfall", "temperature"},
     "history": {"farmer_input"},
     "water": {"climate"},
     "soil": {"soil"},
@@ -189,6 +194,63 @@ def explain(request: ChatRequest) -> ChatResponse:
     if intent == "limitations":
         wanted = set().union(*TOPICS.values())
     relevant = [record for record in context.evidence if record.topic in wanted]
+    if intent == "historical":
+        question = request.question.casefold()
+        topic = (
+            "rainfall"
+            if re.search(r"rain|precip", question)
+            else "climate"
+            if re.search(r"et0|evapotranspiration", question)
+            else "temperature"
+            if "temperature" in question
+            else None
+        )
+        if topic:
+            relevant = [r for r in relevant if r.topic == topic]
+        requested_years = set(re.findall(r"\b(?:19|20)\d{2}\b", question))
+        historical = [
+            r
+            for r in relevant
+            if r.metric in {"historical_period_summary", "historical_comparison"}
+        ]
+        if requested_years:
+            historical = [
+                r
+                for r in historical
+                if requested_years.intersection(
+                    re.findall(r"\b(?:19|20)\d{2}\b", str(r.value))
+                )
+            ]
+        historical.sort(key=lambda r: r.start_date or "", reverse=True)
+        historical.sort(
+            key=lambda r: r.metric != "historical_comparison"
+            or len(requested_years) == 1
+            or not requested_years.issubset(
+                set(re.findall(r"\b(?:19|20)\d{2}\b", str(r.value)))
+            )
+        )
+        available_years = (
+            set().union(
+                *(
+                    set(re.findall(r"\b(?:19|20)\d{2}\b", str(r.value)))
+                    for r in historical
+                )
+            )
+            if historical
+            else set()
+        )
+        missing_years = requested_years - available_years
+        if missing_years:
+            claims.append(
+                Claim(
+                    category="unavailable_evidence",
+                    text=words["historical_missing_years"].format(
+                        years=", ".join(sorted(missing_years))
+                    ),
+                )
+            )
+        # Do not answer a requested historical year with another archive year.
+        relevant = historical
     conflicts = _conflicts(relevant)
     warnings = []
     if comparison_requested:
@@ -220,8 +282,14 @@ def explain(request: ChatRequest) -> ChatResponse:
             )
             continue
         if (
-            record.metric in {"soil_reference_summary", "forecast_reference_summary"}
-            and record.topic in {"soil", "climate"}
+            record.metric
+            in {
+                "soil_reference_summary",
+                "forecast_reference_summary",
+                "historical_period_summary",
+                "historical_comparison",
+            }
+            and record.topic in {"soil", "climate", "rainfall", "temperature"}
             and record.kind in {"modeled", "forecast"}
             and record.quality in {"unverified", "stale"}
             and isinstance(record.value, str)
