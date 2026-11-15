@@ -571,7 +571,11 @@ class _NasaRecentCard extends StatelessWidget {
               ),
             ],
           ),
-          if (compared != null) Text(compared, style: t.callout),
+          if (compared != null)
+            Text(
+              '${compared[0].toUpperCase()}${compared.substring(1)}.',
+              style: t.callout,
+            ),
           if (wet != null)
             Padding(
               padding: const EdgeInsets.only(top: FsSpace.xs),

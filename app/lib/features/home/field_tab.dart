@@ -633,8 +633,8 @@ class _SoilCard extends StatelessWidget {
         padding: const EdgeInsets.all(FsSpace.lg),
         decoration: BoxDecoration(
           color: p.surface,
-          borderRadius: BorderRadius.circular(FsRadius.lg),
-          border: Border.all(color: p.separator),
+          borderRadius: BorderRadius.circular(FsRadius.xl),
+          boxShadow: FsShadow.card(p),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

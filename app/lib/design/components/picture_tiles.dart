@@ -135,9 +135,10 @@ class FsPictureTile extends StatelessWidget {
             color: selected ? p.tintSoft : p.surface,
             borderRadius: BorderRadius.circular(FsRadius.lg),
             border: Border.all(
-              color: selected ? p.tint : p.separator,
+              color: selected ? p.tint : p.separator.withValues(alpha: 0.6),
               width: selected ? 2.5 : 1,
             ),
+            boxShadow: selected ? null : FsShadow.soft(p),
           ),
           child: horizontal
               ? Row(

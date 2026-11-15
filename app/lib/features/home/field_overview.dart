@@ -39,7 +39,7 @@ class _FieldTabState extends ConsumerState<FieldTab> {
           CameraFit.coordinates(
             coordinates: farm.corners,
             padding: const EdgeInsets.all(48),
-            maxZoom: 18,
+            maxZoom: 17,
           ),
         );
       } else {
@@ -130,6 +130,8 @@ class _FieldTabState extends ConsumerState<FieldTab> {
                             FlutterMap(
                               mapController: _map,
                               options: MapOptions(
+                                // Draw the first tiles (see nudgeMap).
+                                onMapReady: () => nudgeMap(_map),
                                 initialCenter: pin,
                                 initialZoom: 16,
                                 initialCameraFit: farm == null
@@ -137,7 +139,7 @@ class _FieldTabState extends ConsumerState<FieldTab> {
                                     : CameraFit.coordinates(
                                         coordinates: farm.corners,
                                         padding: const EdgeInsets.all(48),
-                                        maxZoom: 18,
+                                        maxZoom: 17,
                                       ),
                                 interactionOptions: const InteractionOptions(
                                   flags:

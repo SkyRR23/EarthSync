@@ -10,11 +10,12 @@ import '../../app/strings.dart';
 import '../../data/models/field_note.dart';
 import '../../data/photos/photo_store.dart';
 import '../../design/components/buttons.dart';
-import '../../design/components/grouped.dart';
-import '../../design/components/page.dart';
+import '../../design/components/earth.dart';
+import '../../design/components/page.dart' show FsBackArrow;
 import '../../design/components/picture_tiles.dart';
 import '../../design/tokens.dart';
 import '../../state/providers.dart';
+import 'home_shell.dart';
 
 String noteEmoji(NoteKind kind) => switch (kind) {
   NoteKind.pests => '🐛',
@@ -57,77 +58,120 @@ class NotesTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final p = context.fs;
+    final t = context.type;
     final notes = ref.watch(notesProvider);
+    final tabs = HomeTabs.of(context);
 
-    return FsPage(
-      title: S.notesTitle,
-      showBack: false,
-      children: [
-        FsPictureGrid<NoteKind>(
-          choices: [
-            for (final k in NoteKind.values)
-              if (k != NoteKind.other) FsPicture(k, noteEmoji(k), noteLabel(k)),
-            FsPicture(
-              NoteKind.other,
-              noteEmoji(NoteKind.other),
-              noteLabel(NoteKind.other),
-            ),
-          ],
-          columns: 3,
-          selected: null,
-          tileHeight: 92,
-          onSelect: (k) => _add(context, ref, k),
-        ),
-        if (notes.isEmpty)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(
-              FsSpace.gutter,
-              FsSpace.xl,
-              FsSpace.gutter,
-              0,
-            ),
-            child: Text(
-              S.notesEmptyBody,
-              textAlign: TextAlign.center,
-              style: context.type.body.copyWith(color: p.secondaryLabel),
-            ),
-          )
-        else
-          FsGroupedSection(
-            header: S.yourNotes,
-            separatorIndent: FsSpace.lg + 52 + FsSpace.md,
-            children: [
-              for (final note in notes)
-                Dismissible(
-                  key: ValueKey(note.id),
-                  direction: DismissDirection.endToStart,
-                  background: Container(
-                    color: p.negativeText,
-                    alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.only(right: FsSpace.xl),
-                    child: const Icon(
-                      CupertinoIcons.trash,
-                      color: Colors.white,
-                    ),
+    return Scaffold(
+      backgroundColor: p.background,
+      body: SafeArea(
+        bottom: false,
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: FsSpace.maxContent),
+            child: ListView(
+              padding: EdgeInsets.only(
+                bottom: FsSpace.xxxl + MediaQuery.paddingOf(context).bottom,
+              ),
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    FsSpace.xs,
+                    FsSpace.sm,
+                    FsSpace.gutter,
+                    0,
                   ),
-                  onDismissed: (_) {
-                    final notifier = ref.read(notesProvider.notifier);
-                    notifier.remove(note.id);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: const Text(S.deleted),
-                        action: SnackBarAction(
-                          label: S.undo,
-                          onPressed: () => notifier.restore(note),
+                  child: Row(
+                    children: [
+                      FsBackArrow(onTap: () => tabs?.go(0)),
+                      const SizedBox(width: FsSpace.xs),
+                      Expanded(
+                        child: Text(
+                          S.notesTitle,
+                          style: t.title1.copyWith(fontSize: 26),
                         ),
                       ),
-                    );
-                  },
-                  child: _NoteRow(note),
+                    ],
+                  ),
                 ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    FsSpace.gutter + FsSpace.xxs,
+                    FsSpace.xs,
+                    FsSpace.gutter,
+                    FsSpace.sm,
+                  ),
+                  child: Text(
+                    S.notesEmptyBody,
+                    style: t.body.copyWith(color: p.secondaryLabel),
+                  ),
+                ),
+                FsEntrance(
+                  child: FsPictureGrid<NoteKind>(
+                    choices: [
+                      for (final k in NoteKind.values)
+                        if (k != NoteKind.other)
+                          FsPicture(k, noteEmoji(k), noteLabel(k)),
+                      FsPicture(
+                        NoteKind.other,
+                        noteEmoji(NoteKind.other),
+                        noteLabel(NoteKind.other),
+                      ),
+                    ],
+                    columns: 3,
+                    selected: null,
+                    tileHeight: 92,
+                    onSelect: (k) => _add(context, ref, k),
+                  ),
+                ),
+                if (notes.isNotEmpty) ...[
+                  const FsSectionTitle(S.yourNotes),
+                  for (final (i, note) in notes.indexed)
+                    FsEntrance(
+                      index: i + 1,
+                      child: Dismissible(
+                        key: ValueKey(note.id),
+                        direction: DismissDirection.endToStart,
+                        background: Container(
+                          margin: const EdgeInsets.fromLTRB(
+                            FsSpace.gutter,
+                            FsSpace.md,
+                            FsSpace.gutter,
+                            0,
+                          ),
+                          decoration: BoxDecoration(
+                            color: p.negativeText,
+                            borderRadius: BorderRadius.circular(FsRadius.xl),
+                          ),
+                          alignment: Alignment.centerRight,
+                          padding: const EdgeInsets.only(right: FsSpace.xl),
+                          child: const Icon(
+                            CupertinoIcons.trash,
+                            color: Colors.white,
+                          ),
+                        ),
+                        onDismissed: (_) {
+                          final notifier = ref.read(notesProvider.notifier);
+                          notifier.remove(note.id);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: const Text(S.deleted),
+                              action: SnackBarAction(
+                                label: S.undo,
+                                onPressed: () => notifier.restore(note),
+                              ),
+                            ),
+                          );
+                        },
+                        child: _NoteRow(note),
+                      ),
+                    ),
+                ],
+              ],
+            ),
           ),
-      ],
+        ),
+      ),
     );
   }
 }
@@ -145,21 +189,67 @@ class _NoteRow extends ConsumerWidget {
     final file = (store != null && note.photo != null)
         ? store.file(note.photo!)
         : null;
-    return FsListRow(
-      leading: file == null
-          ? Text(noteEmoji(note.kind), style: const TextStyle(fontSize: 26))
-          : NotePhotoThumb(file: file),
-      title: text,
-      titleMaxLines: 3,
-      subtitle: [
-        if (note.text.isNotEmpty) label,
-        date,
-        if (note.cloudPhoto != null) '☁️',
-      ].join(' · '),
-      chevron: false,
+    final p = context.fs;
+    final t = context.type;
+    return FsCard(
+      padding: const EdgeInsets.all(FsSpace.md),
       semanticLabel:
           '$label note, $date: $text${file == null ? '' : ', with photo'}',
       onTap: file == null ? null : () => showNotePhoto(context, file),
+      child: Row(
+        children: [
+          if (file == null)
+            Container(
+              width: 64,
+              height: 64,
+              decoration: BoxDecoration(
+                color: p.tintSoft,
+                borderRadius: BorderRadius.circular(FsRadius.md),
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                noteEmoji(note.kind),
+                style: const TextStyle(fontSize: 30),
+              ),
+            )
+          else
+            NotePhotoThumb(file: file, size: 64),
+          const SizedBox(width: FsSpace.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  text,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: t.headline.copyWith(fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: FsSpace.xs),
+                Wrap(
+                  spacing: FsSpace.sm,
+                  runSpacing: FsSpace.xs,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    if (note.text.isNotEmpty)
+                      FsStatusPill(label, tone: FsPillTone.info),
+                    Text(
+                      date,
+                      style: t.subhead.copyWith(color: p.secondaryLabel),
+                    ),
+                    if (note.cloudPhoto != null)
+                      Icon(
+                        CupertinoIcons.cloud_fill,
+                        size: 16,
+                        color: p.secondaryLabel,
+                      ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -171,7 +261,7 @@ class NotePhotoThumb extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ClipRRect(
-    borderRadius: BorderRadius.circular(FsRadius.sm),
+    borderRadius: BorderRadius.circular(FsRadius.md),
     child: Image.file(
       file,
       width: size,

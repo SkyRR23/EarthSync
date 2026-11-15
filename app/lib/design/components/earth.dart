@@ -391,7 +391,7 @@ class FsProgressBar extends StatelessWidget {
 
 /// Satellite picture of the farm (not interactive), with its border when
 /// the farmer marked the corners.
-class FarmPicture extends StatelessWidget {
+class FarmPicture extends StatefulWidget {
   const FarmPicture({
     super.key,
     required this.center,
@@ -405,24 +405,51 @@ class FarmPicture extends StatelessWidget {
   final Color? borderColor;
 
   @override
+  State<FarmPicture> createState() => _FarmPictureState();
+}
+
+class _FarmPictureState extends State<FarmPicture> {
+  final _map = MapController();
+
+  List<LatLng>? get _shape =>
+      widget.corners != null && widget.corners!.length >= 3
+      ? widget.corners
+      : null;
+
+  CameraFit? get _fit => _shape == null
+      ? null
+      : CameraFit.coordinates(
+          coordinates: _shape!,
+          padding: const EdgeInsets.all(14),
+          maxZoom: 17,
+        );
+
+  /// Fit, then nudge so the first tiles are drawn (see [nudgeMap]).
+  void _ready() {
+    try {
+      final fit = _fit;
+      if (fit != null) _map.fitCamera(fit);
+    } catch (_) {
+      // Not laid out yet; the initial camera still applies.
+    }
+    nudgeMap(_map);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final p = context.fs;
-    final shape = corners != null && corners!.length >= 3 ? corners : null;
-    final line = borderColor ?? const Color(0xFF8BE07E);
+    final shape = _shape;
+    final line = widget.borderColor ?? const Color(0xFF8BE07E);
     return IgnorePointer(
       child: ColoredBox(
         color: const Color(0xFF4F6B3A),
         child: FlutterMap(
+          mapController: _map,
           options: MapOptions(
-            initialCenter: center,
-            initialZoom: zoom,
-            initialCameraFit: shape == null
-                ? null
-                : CameraFit.coordinates(
-                    coordinates: shape,
-                    padding: const EdgeInsets.all(14),
-                    maxZoom: 18,
-                  ),
+            onMapReady: _ready,
+            initialCenter: widget.center,
+            initialZoom: widget.zoom,
+            initialCameraFit: _fit,
             interactionOptions: const InteractionOptions(
               flags: InteractiveFlag.none,
             ),

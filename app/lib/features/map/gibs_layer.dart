@@ -148,10 +148,27 @@ Widget satelliteTileLayer() => TileLayer(
       'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
   userAgentPackageName: _userAgent,
   maxNativeZoom: 17, // Esri often has no tiles above 17 in rural Myanmar
+  // Show tiles as soon as they arrive: a fade-in can stall on maps that
+  // start inside animated or hidden parents.
+  tileDisplay: const TileDisplay.instantaneous(),
   errorTileCallback: (_, _, _) {},
 );
 
 const satelliteCredit = 'Imagery © Esri';
+
+/// flutter_map paints the first tiles only after the camera moves; a map
+/// that just fitted itself has not moved yet. A tiny zoom change (invisible)
+/// right after the first frame makes the tiles appear.
+void nudgeMap(MapController map) {
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    try {
+      final c = map.camera;
+      map.move(c.center, c.zoom - 0.001);
+    } catch (_) {
+      // Map gone or not laid out: nothing to do.
+    }
+  });
+}
 
 Widget gibsTileLayer(GibsLayerConfig c) => TileLayer(
   urlTemplate: c.urlTemplate,
