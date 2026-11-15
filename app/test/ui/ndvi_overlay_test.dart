@@ -26,10 +26,21 @@ void main() {
           tester.view.devicePixelRatio = 1;
           addTearDown(tester.view.reset);
           var inspections = 0;
+          String? requestedBounds;
           final transport = PlatformTransport(
             MockClient((request) async {
-              if (request.method == 'POST') return http.Response('{}', 202);
+              if (request.method == 'POST') {
+                expect(
+                  request.url.path.endsWith('/ndvi-overlay/refresh'),
+                  isTrue,
+                );
+                requestedBounds = request.url.queryParameters['bbox'];
+                expect(request.url.queryParameters['preference'], 'clearest');
+                return http.Response('{}', 202);
+              }
               if (request.url.queryParameters.containsKey('lat')) {
+                expect(request.url.queryParameters['bbox'], requestedBounds);
+                expect(request.url.queryParameters['preference'], 'clearest');
                 inspections++;
                 return http.Response(
                   jsonEncode({
@@ -95,6 +106,7 @@ void main() {
             ),
           );
           await tester.pumpAndSettle();
+          expect(requestedBounds?.split(',').length, 4);
           expect(
             find.text('NDVI · dimensionless numerical scale'),
             cached ? findsOneWidget : findsNothing,

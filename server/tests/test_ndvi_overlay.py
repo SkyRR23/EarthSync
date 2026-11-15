@@ -14,7 +14,12 @@ from rasterio.warp import transform
 from earthsync.platform_v1.api import create_app, PREFIX
 from earthsync.platform_v1.store import Store
 from earthsync.realtime.http import SourceError
-from earthsync.realtime.ndvi import geometry, hls_window, inspect_pixel
+from earthsync.realtime.ndvi import (
+    geometry,
+    hls_window,
+    inspect_pixel,
+    viewport_bbox,
+)
 
 DATE = "2026-10-22T16:45:00+00:00"
 LOCATION = {"lat": 42.0308, "lon": -93.6319}
@@ -192,7 +197,56 @@ def test_invalid_or_oversized_geometry_rejected_before_raster_access():
             },
         )
     with pytest.raises(SourceError, match="AREA_TOO_LARGE"):
-        extract(geom=polygon(0, 0, 300, 300))
+        extract(geom=polygon(0, 0, 500, 300))
+
+
+def test_larger_bounded_window_counts_missing_cells_without_inventing_values():
+    data = extract(geom=polygon(0, 0, 300, 300))
+    assert data["polygon_pixels"] == 90000
+    assert data["valid_pixels"] == 16
+    assert data["quality"] == "partial"
+
+
+@pytest.mark.parametrize(
+    "bbox",
+    [
+        "nan,42,-93,43",
+        "-94,42,-93",
+        "-93,42,-94,43",
+        "-190,42,-189,43",
+        "-94,42,-93,43",
+    ],
+)
+def test_map_bounds_validation(bbox):
+    with pytest.raises(SourceError):
+        viewport_bbox(bbox)
+
+
+def test_viewport_api_uses_its_own_cached_geometry_and_original_pixel(
+    tmp_path, monkeypatch
+):
+    monkeypatch.delenv("EARTHDATA_TOKEN", raising=False)
+    app = create_app(store=Store(tmp_path), local_enabled=True)
+    bbox = "-93.65,42.02,-93.61,42.04"
+    location, geom = viewport_bbox(bbox)
+    key, _ = app.state.ndvi.key(location, geom, "clearest")
+    app.state.realtime.repository.put(key, extract())
+    route = PREFIX + "/realtime/ames/ndvi-overlay"
+    with TestClient(
+        app, base_url="http://127.0.0.1", client=("127.0.0.1", 12345)
+    ) as client:
+        assert client.get(route).json()["data"] is None
+        result = client.get(route, params={"bbox": bbox}).json()
+        assert result["data"]["valid_pixels"] == 16
+        pixel = client.get(
+            route, params={"bbox": bbox, "lat": LOCATION["lat"], "lon": LOCATION["lon"]}
+        ).json()["pixel"]
+        assert pixel["value"] == 0.539
+        assert client.get(route, params={"bbox": "nan,1,2,3"}).status_code == 422
+        assert (
+            client.post(route + "/refresh", params={"bbox": "nan,1,2,3"}).status_code
+            == 422
+        )
 
 
 def test_missing_auth_does_not_break_api_and_cached_acquisition_reopens(

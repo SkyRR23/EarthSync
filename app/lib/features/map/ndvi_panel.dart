@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math' as math;
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import '../../state/platform_provider.dart';
 import '../../state/home_provider.dart';
+import '../../data/platform_transport.dart';
 
 class NdviScreen extends ConsumerWidget {
   const NdviScreen({super.key});
@@ -52,14 +54,81 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
   bool _busy = false, _show = true;
   double _opacity = .75;
   int _revision = 0;
+  String _selectionQuery = '';
+  String _preference = 'clearest';
+  bool _viewChanged = false, _fitNext = false;
 
-  String get _path =>
+  String get _basePath =>
       '/api/platform/v1/${widget.farmId == null ? 'realtime/$_location' : 'farms/${widget.farmId}'}/ndvi-overlay';
+  String get _path => '$_basePath$_selectionQuery';
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _load(refresh: true));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.farmId == null) {
+        _loadView();
+      } else {
+        _load(refresh: true);
+      }
+    });
+  }
+
+  void _loadView() {
+    final bounds = _map.camera.visibleBounds;
+    final values = [bounds.west, bounds.south, bounds.east, bounds.north];
+    final centreLat = (bounds.south + bounds.north) / 2;
+    final width = (bounds.east - bounds.west) * 111320 * cosLatitude(centreLat);
+    final height = (bounds.north - bounds.south) * 111320;
+    if (bounds.west >= bounds.east ||
+        bounds.north - bounds.south > .2 ||
+        bounds.east - bounds.west > .2 ||
+        width > 15000 ||
+        height > 15000 ||
+        width * height > 110000000) {
+      setState(
+        () => _error =
+            'This map view is too large for a native 30 m layer. Zoom in, then tap “Load NDVI for this view”.',
+      );
+      return;
+    }
+    final query =
+        '?${Uri(queryParameters: {'bbox': values.map((v) => v.toStringAsFixed(6)).join(','), 'preference': _preference}).query}';
+    _selectArea(query);
+  }
+
+  double cosLatitude(double latitude) =>
+      math.cos(latitude * math.pi / 180).abs();
+
+  void _selectArea(String query, {bool fit = false}) {
+    if (_busy) return;
+    _timer?.cancel();
+    setState(() {
+      if (_selectionQuery != query) {
+        _snapshot = null;
+        _png = null;
+        _image = null;
+        _pixel = null;
+        _pointReading = null;
+      }
+      _selectionQuery = query;
+      _viewChanged = false;
+      _fitNext = fit;
+      _revision++;
+    });
+    _load(refresh: true);
+  }
+
+  void _fitBounds(List bounds) {
+    _map.fitCamera(
+      CameraFit.bounds(
+        bounds: LatLngBounds(
+          LatLng((bounds[1] as num).toDouble(), (bounds[0] as num).toDouble()),
+          LatLng((bounds[3] as num).toDouble(), (bounds[2] as num).toDouble()),
+        ),
+        padding: const EdgeInsets.all(24),
+      ),
+    );
   }
 
   @override
@@ -83,7 +152,7 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
       if (refresh) {
         await client.transport.request(
           'POST',
-          '$path/refresh',
+          '$_basePath/refresh$_selectionQuery',
           expectedStatus: 202,
         );
       }
@@ -122,6 +191,21 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
           _png = image == null ? null : base64Decode(image);
         }
       });
+      final bounds = (raw['data'] as Map?)?['bounds'] as List?;
+      if (_fitNext && bounds != null) {
+        _fitNext = false;
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted && revision == _revision) _fitBounds(bounds);
+        });
+      }
+    } on PlatformFailure catch (error) {
+      if (mounted && revision == _revision) {
+        setState(
+          () => _error = error.code == 'NDVI_AREA_TOO_LARGE'
+              ? 'This view is too large for a native 30 m layer. Zoom in and load this view again.'
+              : 'The satellite layer for this view could not be loaded (${error.code}). Try again or show the saved reference area.',
+        );
+      }
     } catch (_) {
       if (mounted && revision == _revision) {
         setState(
@@ -149,7 +233,7 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
       final raw =
           await client.transport.request(
                 'GET',
-                '$_path?lat=${point.latitude}&lon=${point.longitude}',
+                '$_path${_selectionQuery.isEmpty ? '?' : '&'}lat=${point.latitude}&lon=${point.longitude}',
                 expectedStatus: 200,
               )
               as Map;
@@ -244,21 +328,66 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
                           _pixel = null;
                           _pointReading = null;
                           _revision++;
+                          _selectionQuery = '';
                         });
                         _map.move(centreFor(value), 15);
-                        _load(refresh: true);
+                        _loadView();
                       },
               ),
             const SizedBox(height: 12),
+            if (widget.farmId == null) ...[
+              DropdownButtonFormField<String>(
+                initialValue: _preference,
+                isExpanded: true,
+                decoration: const InputDecoration(
+                  labelText: 'Satellite image preference',
+                ),
+                items: const [
+                  DropdownMenuItem(
+                    value: 'clearest',
+                    child: Text('Prefer clearer image'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'latest',
+                    child: Text('Prefer newest image'),
+                  ),
+                ],
+                onChanged: _busy || _snapshot?['status'] == 'loading'
+                    ? null
+                    : (value) {
+                        if (value == null) return;
+                        setState(() => _preference = value);
+                        _loadView();
+                      },
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'A clearer image may be older. Each layer uses one acquisition date; cloudy and missing cells stay transparent.',
+              ),
+              const SizedBox(height: 12),
+            ],
             Wrap(
               spacing: 12,
               runSpacing: 8,
               children: [
                 OutlinedButton.icon(
-                  onPressed: _busy ? null : () => _load(refresh: true),
+                  onPressed: _busy || _snapshot?['status'] == 'loading'
+                      ? null
+                      : widget.farmId == null
+                      ? _loadView
+                      : () => _load(refresh: true),
                   icon: const Icon(Icons.refresh),
-                  label: const Text('Check for satellite data'),
+                  label: Text(
+                    widget.farmId == null
+                        ? 'Load NDVI for this view'
+                        : 'Refresh field NDVI',
+                  ),
                 ),
+                if (widget.farmId == null)
+                  TextButton(
+                    onPressed: _busy ? null : () => _selectArea('', fit: true),
+                    child: const Text('Show saved reference area'),
+                  ),
                 if (bounds != null)
                   OutlinedButton.icon(
                     onPressed: () => _inspect(_map.camera.center),
@@ -267,21 +396,7 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
                   ),
                 if (bounds != null)
                   TextButton(
-                    onPressed: () => _map.fitCamera(
-                      CameraFit.bounds(
-                        bounds: LatLngBounds(
-                          LatLng(
-                            (bounds[1] as num).toDouble(),
-                            (bounds[0] as num).toDouble(),
-                          ),
-                          LatLng(
-                            (bounds[3] as num).toDouble(),
-                            (bounds[2] as num).toDouble(),
-                          ),
-                        ),
-                        padding: const EdgeInsets.all(24),
-                      ),
-                    ),
+                    onPressed: () => _fitBounds(bounds),
                     child: const Text('Fit acquisition'),
                   ),
               ],
@@ -292,6 +407,14 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
               ),
               const Text('Checking a bounded native raster window…'),
             ],
+            if (_viewChanged && widget.farmId == null)
+              const Text(
+                'Map moved. Load NDVI for this view to cover the new area with actual pixels.',
+              ),
+            if (widget.farmId != null)
+              const Text(
+                'This layer is clipped to your saved field outline. Use the public map above to explore surrounding land.',
+              ),
             if (_error != null)
               Text(
                 _error!,
@@ -373,7 +496,7 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
                 title: const Text('Source and quality policy'),
                 children: [
                   SelectableText(
-                    '${data['granule_id']}\n${data['qa_policy']}\n${data['coverage_definition']}\n${data['display_resampling']}',
+                    '${data['granule_id']}\n${data['qa_policy']}\n${data['coverage_definition']}\n${data['display_resampling']}\n${data['selection_policy'] ?? ''}\n${data['selection_note'] ?? ''}',
                   ),
                 ],
               ),
@@ -423,6 +546,11 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
                     minZoom: 3,
                     maxZoom: 20,
                     onTap: (_, point) => _inspect(point),
+                    onPositionChanged: (_, gesture) {
+                      if (gesture && !_viewChanged && widget.farmId == null) {
+                        setState(() => _viewChanged = true);
+                      }
+                    },
                   ),
                   children: [
                     TileLayer(
@@ -480,6 +608,36 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
                           ),
                         ],
                       ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton.filled(
+                            tooltip: 'Zoom in',
+                            onPressed: () {
+                              _map.move(
+                                _map.camera.center,
+                                (_map.camera.zoom + 1).clamp(3, 20),
+                              );
+                              setState(() => _viewChanged = true);
+                            },
+                            icon: const Icon(Icons.add),
+                          ),
+                          IconButton.filled(
+                            tooltip: 'Zoom out',
+                            onPressed: () {
+                              _map.move(
+                                _map.camera.center,
+                                (_map.camera.zoom - 1).clamp(3, 20),
+                              );
+                              setState(() => _viewChanged = true);
+                            },
+                            icon: const Icon(Icons.remove),
+                          ),
+                        ],
+                      ),
+                    ),
                     Align(
                       alignment: Alignment.bottomRight,
                       child: ColoredBox(

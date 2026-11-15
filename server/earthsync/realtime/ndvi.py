@@ -35,7 +35,7 @@ from .http import SourceError
 from .nasa_assets import AssetSession, RangeFile
 from .providers import timestamp
 
-MAX_CELLS = 65536
+MAX_CELLS = 131072
 POLICY = "hls-v2-conservative.v1"
 
 
@@ -47,9 +47,24 @@ def geometry(location, polygon=None):
     validated = Polygon.model_validate(polygon).model_dump(mode="json")
     geom = shape(validated)
     west, south, east, north = geom.bounds
-    if not (-80 < south < north < 80) or east - west > 0.1 or north - south > 0.1:
+    if not (-80 < south < north < 80) or east - west > 0.2 or north - south > 0.2:
         raise SourceError("NDVI_AREA_TOO_LARGE")
     return validated
+
+
+def viewport_bbox(value):
+    try:
+        west, south, east, north = map(float, value.split(","))
+    except (TypeError, ValueError):
+        raise SourceError("INVALID_MAP_BOUNDS") from None
+    if (
+        not all(math.isfinite(v) for v in (west, south, east, north))
+        or not -180 <= west < east <= 180
+        or not -80 < south < north < 80
+    ):
+        raise SourceError("INVALID_MAP_BOUNDS")
+    polygon = geometry({}, mapping(box(west, south, east, north)))
+    return {"lon": (west + east) / 2, "lat": (south + north) / 2}, polygon
 
 
 def _read(product, polygon, session, url, qa):
@@ -330,14 +345,19 @@ class NdviOverlays:
         self.checked = {}
         self.cancel = threading.Event()
 
-    def key(self, location, polygon=None):
+    def key(self, location, polygon=None, preference="latest"):
         geom = geometry(location, polygon)
+        selection = [POLICY, geom]
+        if preference == "clearest":
+            selection.append(preference)
+        elif preference != "latest":
+            raise SourceError("INVALID_ACQUISITION_PREFERENCE")
         return "ndvi:" + hashlib.sha256(
-            json.dumps([POLICY, geom], sort_keys=True).encode()
+            json.dumps(selection, sort_keys=True).encode()
         ).hexdigest(), geom
 
-    def snapshot(self, location, polygon=None):
-        key, _ = self.key(location, polygon)
+    def snapshot(self, location, polygon=None, preference="latest"):
+        key, _ = self.key(location, polygon, preference)
         data = self.repository.get(key)
         task = self.tasks.get(key)
         result = {
@@ -362,8 +382,8 @@ class NdviOverlays:
             result["stale"] = bool(self.errors.get(key)) or result["data_age_days"] > 16
         return result
 
-    def request(self, location, polygon=None):
-        key, geom = self.key(location, polygon)
+    def request(self, location, polygon=None, preference="latest"):
+        key, geom = self.key(location, polygon, preference)
         if key in self.tasks and not self.tasks[key].done():
             return
         if time.monotonic() - self.checked.get(key, -1000) < 60:
@@ -374,9 +394,11 @@ class NdviOverlays:
         if len(self.tasks) >= 2:
             self.errors[key] = "OVERLAY_BUSY_RETRY_LATER"
             return
-        self.tasks[key] = asyncio.create_task(self._refresh(key, location, geom))
+        self.tasks[key] = asyncio.create_task(
+            self._refresh(key, location, geom, preference)
+        )
 
-    async def _refresh(self, key, location, geom):
+    async def _refresh(self, key, location, geom, preference="latest"):
         try:
             if not os.getenv("EARTHDATA_TOKEN"):
                 raise SourceError("AUTHENTICATION_REQUIRED")
@@ -404,7 +426,9 @@ class NdviOverlays:
                 return
             # Reuse the point-reader semaphore and official authenticated range transport.
             async with adapter.lock:
-                result = await asyncio.to_thread(self._extract, products, geom)
+                result = await asyncio.to_thread(
+                    self._extract, products, geom, preference
+                )
             self.repository.put(key, result)
             with self.repository.store.connection() as db:
                 db.execute(
@@ -416,12 +440,14 @@ class NdviOverlays:
         except Exception:
             self.errors[key] = "OVERLAY_EXTRACTION_UNAVAILABLE"
 
-    def _extract(self, products, geom):
+    def _extract(self, products, geom, preference="latest"):
         session = AssetSession(self.cancel)
         best = None
         rejected = []
+        examined = []
         try:
             for product in products:
+                examined.append(product["granule_id"])
                 try:
                     result = hls_window(product, geom, session, reject_empty_qa=True)
                 except SourceError as error:
@@ -434,18 +460,38 @@ class NdviOverlays:
                             }
                         )
                         continue
+                    if (
+                        best
+                        and preference == "clearest"
+                        and error.code in {"PROVIDER_TIMEOUT", "ASSET_BYTE_LIMIT"}
+                    ):
+                        best["selection_note"] = (
+                            "Bounded search stopped; best verified acquisition examined is shown."
+                        )
+                        break
                     raise
                 result["checked_candidate_ids"] = [
                     [p["granule_id"], p.get("catalog_revision_at")] for p in products
                 ]
                 result["rejected_candidates"] = list(rejected)
                 result["total_bytes_downloaded"] = session.downloaded
-                if best is None or result["valid_pixels"] > best["valid_pixels"]:
+                result["selection_preference"] = preference
+                result["selection_policy"] = (
+                    "One acquisition: first with at least 90% QA coverage, otherwise highest coverage among bounded candidates examined."
+                    if preference == "clearest"
+                    else "Newest acquisition with at least one QA-accepted cell."
+                )
+                if best is None or result["coverage_pct"] > best["coverage_pct"]:
                     best = result
-                if result["valid_pixels"]:
-                    # Newest acquisition with at least one QA-accepted field cell.
+                if result["valid_pixels"] and (
+                    preference == "latest" or result["coverage_pct"] >= 90
+                ):
+                    result["examined_candidate_ids"] = list(examined)
                     return result
             if best:
+                best["examined_candidate_ids"] = list(examined)
+                best["rejected_candidates"] = list(rejected)
+                best["total_bytes_downloaded"] = session.downloaded
                 return best
             raise SourceError("SCIENTIFIC_QA_REJECTION")
         finally:

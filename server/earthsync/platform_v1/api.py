@@ -7,6 +7,7 @@ import time
 from contextlib import asynccontextmanager
 from pathlib import Path
 from uuid import UUID
+from typing import Literal
 
 import httpx
 from fastapi import FastAPI, Query, Request, Response
@@ -140,7 +141,7 @@ def create_app(
     realtime = Realtime(
         store, client=realtime_client, enabled=realtime_enabled, gfs=forecast_source
     )
-    from earthsync.realtime.ndvi import NdviOverlays, inspect_pixel
+    from earthsync.realtime.ndvi import NdviOverlays, inspect_pixel, viewport_bbox
     from earthsync.realtime.http import SourceError
 
     ndvi = NdviOverlays(realtime)
@@ -757,7 +758,9 @@ def create_app(
         location_id = realtime.farm_location(farm)
         return realtime.snapshot(location_id)
 
-    def overlay_target(location_id=None, farm_id=None):
+    def overlay_target(
+        location_id=None, farm_id=None, bbox=None, preference="clearest"
+    ):
         if farm_id is not None:
             farm = store.farm(OWNER, farm_id)
             location = {
@@ -773,6 +776,9 @@ def create_app(
         location = next((r for r in REFERENCES if r["id"] == location_id), None)
         if location is None:
             raise PlatformError("NOT_FOUND", 404)
+        if bbox is not None:
+            point, polygon = viewport_bbox(bbox)
+            return {**location, **point}, polygon, preference
         return location, None
 
     def overlay_snapshot(target, lat, lon):
@@ -793,14 +799,27 @@ def create_app(
 
     @app.get(PREFIX + "/realtime/{location_id}/ndvi-overlay")
     def public_ndvi(
-        location_id: str, lat: float | None = None, lon: float | None = None
+        location_id: str,
+        lat: float | None = None,
+        lon: float | None = None,
+        bbox: str | None = Query(default=None, max_length=120),
+        preference: Literal["latest", "clearest"] = "clearest",
     ):
-        return overlay_snapshot(overlay_target(location_id), lat, lon)
+        try:
+            return overlay_snapshot(
+                overlay_target(location_id, bbox=bbox, preference=preference), lat, lon
+            )
+        except SourceError as exc:
+            raise PlatformError(exc.code, 422) from None
 
     @app.post(PREFIX + "/realtime/{location_id}/ndvi-overlay/refresh", status_code=202)
-    async def public_ndvi_refresh(location_id: str):
+    async def public_ndvi_refresh(
+        location_id: str,
+        bbox: str | None = Query(default=None, max_length=120),
+        preference: Literal["latest", "clearest"] = "clearest",
+    ):
         try:
-            ndvi.request(*overlay_target(location_id))
+            ndvi.request(*overlay_target(location_id, bbox=bbox, preference=preference))
             return {"scheduled": True}
         except SourceError as exc:
             raise PlatformError(exc.code, 422) from None
