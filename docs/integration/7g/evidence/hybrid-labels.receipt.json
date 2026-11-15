@@ -1,0 +1,9 @@
+{
+  "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/Reference_Labels_15m/default/GoogleMapsCompatible_Level13/2/1/1.png",
+  "status": 500,
+  "bytes": 527,
+  "source": "NASA GIBS Reference Labels (15m, OSM)",
+  "native_max_zoom": 13,
+  "retrieved_at": "2026-11-14T17:59:01.975497+00:00",
+  "disposition": "unavailable: repeated HTTP 500 at z9/z13 near test point; one z2 PNG succeeded on a later request"
+}

@@ -1,0 +1,47 @@
+{
+  "query": {
+    "parameters": "PRECTOTCORR",
+    "community": "AG",
+    "latitude": 16.87,
+    "longitude": 96.2,
+    "start": "1991",
+    "end": "2020",
+    "format": "JSON"
+  },
+  "response_sha256": "3673bb7d12da5d71d1b2ff0c496c6c3e1bfe7236b2b3241bb4b9ab4d8c77dfb4",
+  "new_header": {
+    "title": "NASA/POWER Source Native Resolution Monthly and Annual",
+    "api": {
+      "version": "v2.10.0",
+      "name": "POWER Monthly and Annual API"
+    },
+    "sources": [
+      "MERRA2"
+    ],
+    "fill_value": -999.0,
+    "time_standard": "LST",
+    "start": "19910101",
+    "end": "20201231"
+  },
+  "contributed_header": {
+    "title": "NASA/POWER Source Native Resolution Monthly and Annual",
+    "api": {
+      "version": "v2.10.0",
+      "name": "POWER Monthly and Annual API"
+    },
+    "sources": [
+      "MERRA2",
+      "POWER"
+    ],
+    "fill_value": -999.0,
+    "time_standard": "LST",
+    "start": "19910101",
+    "end": "20201231"
+  },
+  "different_values": 0,
+  "compared_values": 390,
+  "sample_differences": [],
+  "conclusion": "All 390 contributed Hlegu precipitation values match the current one-parameter provider response. This reproduces those values, not original retrieval time, causal product-instability claims, or farm accuracy. Header source lists differ because the contributed request includes derived parameters.",
+  "retrieved_at": null,
+  "retrieval_date": "2026-11-14"
+}

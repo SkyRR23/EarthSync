@@ -1,0 +1,21 @@
+services:
+  platform:
+    image: earthsync-platform-v1:local
+    # Linux local-only demo. Do not add public ports or reverse-proxy exposure.
+    network_mode: host
+    environment:
+      EARTHSYNC_PLATFORM_LOCAL: "1"
+      EARTHSYNC_PLATFORM_DIR: /data
+    volumes:
+      - platform-data:/data
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 64
+    mem_limit: 1g
+    cpus: 2
+    restart: "no"
+volumes:
+  platform-data:

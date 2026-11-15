@@ -1,0 +1,3 @@
+   Compiling field_shift_engine v0.1.0 (/workspace/EarthSync-final/engine)
+   Compiling field_shift_bridge v0.1.0 (/workspace/EarthSync-final/app/rust)
+    Finished `release` profile [optimized] target(s) in 14.92s

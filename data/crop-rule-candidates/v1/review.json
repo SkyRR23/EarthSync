@@ -1,0 +1,398 @@
+{
+  "schema_version": "earthsync.crop-rule-review.v1",
+  "content_version": "1.0.0",
+  "reviewed_on": "2026-11-14",
+  "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+  "upstream_sha": "940a8aad62da8b188cdd3af4d200f353d907997a",
+  "audit_7j_sha": "7b27699f13c94461a9d3d6596c47debfcfb9fed6",
+  "crops": {
+    "rice": "1574",
+    "maize": "2175",
+    "mung_bean": "2150",
+    "sesame": "1937",
+    "groundnut": "2199"
+  },
+  "domains": {
+    "planting_window": {
+      "target_condition": "planting_window",
+      "parameters": [
+        "planting_window"
+      ],
+      "reason": "Calendar remains dated advisory context; AEZ label does not locate a farm or establish a safe planting constraint.",
+      "required_evidence": [
+        "Local extension/agronomist review of crop identity, cultivar, establishment, geography and water regime.",
+        "Explicit date convention, relevant year and weather/soil contingency."
+      ]
+    },
+    "growing_duration": {
+      "target_condition": "duration",
+      "parameters": [
+        "growing_duration",
+        "ecological_crop_cycle"
+      ],
+      "reason": "Global species cycles and reported type/calendar durations do not establish inclusive plan duration for a selected cultivar.",
+      "required_evidence": [
+        "Named cultivar/type, establishment origin, harvest purpose, location and season.",
+        "Source versus inclusive end-day convention reconciled."
+      ]
+    },
+    "temperature": {
+      "target_condition": "temperature",
+      "parameters": [
+        "ecological_temperature",
+        "daily_extreme_temperature",
+        "growing_degree_days"
+      ],
+      "reason": "Seasonal average Tmin/Tmax envelopes cannot bound each daily extreme; monthly means and GDD are different statistics.",
+      "required_evidence": [
+        "Original stage/cultivar-specific daily-extreme or thermal-time evidence.",
+        "Exact temporal statistic and accepted regional data with full period coverage."
+      ]
+    },
+    "growing_period_rainfall": {
+      "target_condition": "growing_period_rainfall",
+      "parameters": [
+        "annual_precipitation",
+        "growing_period_rainfall",
+        "water_demand"
+      ],
+      "reason": "Annual ecological envelopes cannot be prorated into growing-period rainfall, effective rain, ETc or irrigation demand.",
+      "required_evidence": [
+        "Original crop-season rainfall requirement with period/statistic/system and cultivar.",
+        "Separate ETc, effective rain, storage, irrigation and paddy loss accounting where relevant."
+      ]
+    },
+    "soil_ph": {
+      "target_condition": "soil_numeric",
+      "parameters": [
+        "ecological_soil_ph",
+        "soil_ph_by_depth",
+        "ecological_soil_depth"
+      ],
+      "reason": "Ecological pH has no accepted depth or chemical method; ecological root depth is not a sample layer.",
+      "required_evidence": [
+        "Crop requirement at explicit depth and pH method (water/salt).",
+        "Representative soil evidence with units, uncertainty and temporal support."
+      ]
+    },
+    "soil_texture": {
+      "target_condition": "soil_category",
+      "parameters": [
+        "soil_texture"
+      ],
+      "reason": "Qualitative ecological texture categories need a reviewed crosswalk; absence in maize remains unknown.",
+      "required_evidence": [
+        "Source and engine category vocabulary crosswalk with independent review.",
+        "Field representative texture evidence; texture does not establish drainage."
+      ]
+    },
+    "soil_drainage": {
+      "target_condition": "soil_category",
+      "parameters": [
+        "soil_drainage"
+      ],
+      "reason": "Ecological drainage descriptors do not establish present field drainage or flood tolerance.",
+      "required_evidence": [
+        "Reviewed category vocabulary and production-system-specific constraint.",
+        "Attributed field drainage/landform/water-table evidence; no soil-colour proxy."
+      ]
+    },
+    "flood_tolerance": {
+      "target_condition": null,
+      "parameters": [
+        "flooding_tolerance",
+        "flooded_management",
+        "irrigation_requirements"
+      ],
+      "reason": "No validated stage-specific flood depth, duration or recovery threshold; irrigation and paddy culture do not prove submergence tolerance.",
+      "required_evidence": [
+        "Original cultivar/stage-specific flood experiments and quantitative exposure definition.",
+        "Separate rice upland, lowland, delayed flooding and management regimes; v0.3 has no flood-injury requirement."
+      ]
+    },
+    "drought_stage_sensitivity": {
+      "target_condition": null,
+      "parameters": [
+        "drought_tolerance",
+        "stage_vulnerabilities"
+      ],
+      "reason": "Training sensitivity classes lack quantitative drought exposure and crop-stage dates; generic tolerance cannot waive water requirements.",
+      "required_evidence": [
+        "Stage/cultivar-specific intensity-duration evidence and uncertainty.",
+        "Validated phenology and soil-water exposure; v0.3 has no stage-injury condition."
+      ]
+    },
+    "kc_curve": {
+      "target_condition": "crop_evapotranspiration",
+      "parameters": [
+        "kc_stages",
+        "et0_method"
+      ],
+      "reason": "Source Kc rows require local adjustments and endpoint selection; v0.3 constant stages cannot silently replace FAO-56 linear transitions.",
+      "required_evidence": [
+        "Applicable Kc initial/wetting and mid/end climate/height corrections.",
+        "Locally reviewed day-indexed linear curve encoding and aligned daily grass-reference ETo.",
+        "Review that ETc is standard-condition demand, not rainfall/irrigation sufficiency."
+      ]
+    },
+    "stage_duration": {
+      "target_condition": "crop_evapotranspiration",
+      "parameters": [
+        "kc_stages",
+        "growing_duration"
+      ],
+      "reason": "Table 11 stages are regional examples needing local validation; they do not fill calendar-profile stage offsets automatically.",
+      "required_evidence": [
+        "Validated crop/cultivar stage lengths with establishment origin and actual season.",
+        "Resolve any source total disagreement before daily indexing."
+      ]
+    },
+    "succession": {
+      "target_condition": "succession",
+      "parameters": [
+        "succession",
+        "crop_history_relationships"
+      ],
+      "reason": "Published sequences and general family identity do not establish mandatory predecessor or numerical fallow requirements.",
+      "required_evidence": [
+        "Original system/location-specific predecessor and fallow evidence.",
+        "Complete attributed confirmed-field history; elapsed gap is not proof of fallow.",
+        "Separate rotation from intercropping; independently substantiate any N/pest/yield claim."
+      ]
+    }
+  },
+  "verified_upstream_claim_ids": [
+    "groundnut.eco.annual_precipitation",
+    "groundnut.eco.ecological_crop_cycle",
+    "groundnut.eco.ecological_soil_ph",
+    "groundnut.eco.ecological_temperature",
+    "groundnut.eco.soil_drainage",
+    "groundnut.eco.soil_texture",
+    "groundnut.fao56.kc",
+    "groundnut.fao56.method",
+    "groundnut.mm.calendar-65-sessions-0@1.growing_duration",
+    "groundnut.mm.calendar-65-sessions-0@1.harvest_window",
+    "groundnut.mm.calendar-65-sessions-0@1.planting_window",
+    "groundnut.mm.calendar-65-sessions-1@1.growing_duration",
+    "groundnut.mm.calendar-65-sessions-1@1.harvest_window",
+    "groundnut.mm.calendar-65-sessions-1@1.planting_window",
+    "groundnut.mm.calendar-66-sessions-0@1.growing_duration",
+    "groundnut.mm.calendar-66-sessions-0@1.harvest_window",
+    "groundnut.mm.calendar-66-sessions-0@1.planting_window",
+    "groundnut.mm.calendar-66-sessions-1@1.growing_duration",
+    "groundnut.mm.calendar-66-sessions-1@1.harvest_window",
+    "groundnut.mm.calendar-66-sessions-1@1.planting_window",
+    "groundnut.mm.calendar-66-sessions-2@1.growing_duration",
+    "groundnut.mm.calendar-66-sessions-2@1.harvest_window",
+    "groundnut.mm.calendar-66-sessions-2@1.planting_window",
+    "groundnut.mm.calendar-66-sessions-3@1.growing_duration",
+    "groundnut.mm.calendar-66-sessions-3@1.harvest_window",
+    "groundnut.mm.calendar-66-sessions-3@1.planting_window",
+    "groundnut.mm.calendar-67-sessions-0@1.growing_duration",
+    "groundnut.mm.calendar-67-sessions-0@1.harvest_window",
+    "groundnut.mm.calendar-67-sessions-0@1.planting_window",
+    "groundnut.mm.calendar-67-sessions-1@1.growing_duration",
+    "groundnut.mm.calendar-67-sessions-1@1.harvest_window",
+    "groundnut.mm.calendar-67-sessions-1@1.planting_window",
+    "groundnut.mm.calendar-68-sessions-0@1.growing_duration",
+    "groundnut.mm.calendar-68-sessions-0@1.harvest_window",
+    "groundnut.mm.calendar-68-sessions-0@1.planting_window",
+    "groundnut.mm.calendar-68-sessions-1@1.growing_duration",
+    "groundnut.mm.calendar-68-sessions-1@1.harvest_window",
+    "groundnut.mm.calendar-68-sessions-1@1.planting_window",
+    "groundnut.mm.calendar-69-sessions-0@1.growing_duration",
+    "groundnut.mm.calendar-69-sessions-0@1.harvest_window",
+    "groundnut.mm.calendar-69-sessions-0@1.planting_window",
+    "groundnut.mm.calendar-69-sessions-1@1.growing_duration",
+    "groundnut.mm.calendar-69-sessions-1@1.harvest_window",
+    "groundnut.mm.calendar-69-sessions-1@1.planting_window",
+    "groundnut.mm.calendar-70-sessions-0@1.growing_duration",
+    "groundnut.mm.calendar-70-sessions-0@1.harvest_window",
+    "groundnut.mm.calendar-70-sessions-0@1.planting_window",
+    "groundnut.mm.calendar-70-sessions-1@1.growing_duration",
+    "groundnut.mm.calendar-70-sessions-1@1.harvest_window",
+    "groundnut.mm.calendar-70-sessions-1@1.planting_window",
+    "groundnut.mm.erect-duration",
+    "groundnut.water-stress.drought_tolerance",
+    "groundnut.water-stress.stage_vulnerabilities",
+    "maize.eco.annual_precipitation",
+    "maize.eco.ecological_crop_cycle",
+    "maize.eco.ecological_soil_ph",
+    "maize.eco.ecological_temperature",
+    "maize.fao56.kc",
+    "maize.fao56.method",
+    "maize.mm.calendar-0-sessions-0@1.growing_duration",
+    "maize.mm.calendar-0-sessions-0@1.harvest_window",
+    "maize.mm.calendar-0-sessions-0@1.planting_window",
+    "maize.mm.calendar-1-sessions-0@1.growing_duration",
+    "maize.mm.calendar-1-sessions-0@1.harvest_window",
+    "maize.mm.calendar-1-sessions-0@1.planting_window",
+    "maize.mm.calendar-1-sessions-1@1.growing_duration",
+    "maize.mm.calendar-1-sessions-1@1.harvest_window",
+    "maize.mm.calendar-1-sessions-1@1.planting_window",
+    "maize.mm.calendar-2-sessions-0@1.growing_duration",
+    "maize.mm.calendar-2-sessions-0@1.harvest_window",
+    "maize.mm.calendar-2-sessions-0@1.planting_window",
+    "maize.mm.calendar-3-sessions-0@1.growing_duration",
+    "maize.mm.calendar-3-sessions-0@1.harvest_window",
+    "maize.mm.calendar-3-sessions-0@1.planting_window",
+    "maize.mm.calendar-4-sessions-0@1.growing_duration",
+    "maize.mm.calendar-4-sessions-0@1.harvest_window",
+    "maize.mm.calendar-4-sessions-0@1.planting_window",
+    "maize.water-stress.drought_tolerance",
+    "maize.water-stress.stage_vulnerabilities",
+    "mung_bean.eco.annual_precipitation",
+    "mung_bean.eco.ecological_crop_cycle",
+    "mung_bean.eco.ecological_soil_ph",
+    "mung_bean.eco.ecological_temperature",
+    "mung_bean.eco.soil_drainage",
+    "mung_bean.eco.soil_texture",
+    "mung_bean.fao56.kc",
+    "mung_bean.fao56.method",
+    "mung_bean.mm.calendar-37-sessions-0@1.growing_duration",
+    "mung_bean.mm.calendar-37-sessions-0@1.harvest_window",
+    "mung_bean.mm.calendar-37-sessions-0@1.planting_window",
+    "mung_bean.mm.calendar-38-sessions-0@1.growing_duration",
+    "mung_bean.mm.calendar-38-sessions-0@1.harvest_window",
+    "mung_bean.mm.calendar-38-sessions-0@1.planting_window",
+    "mung_bean.mm.calendar-38-sessions-1@1.growing_duration",
+    "mung_bean.mm.calendar-38-sessions-1@1.harvest_window",
+    "mung_bean.mm.calendar-38-sessions-1@1.planting_window",
+    "mung_bean.mm.calendar-38-sessions-2@1.growing_duration",
+    "mung_bean.mm.calendar-38-sessions-2@1.harvest_window",
+    "mung_bean.mm.calendar-38-sessions-2@1.planting_window",
+    "mung_bean.mm.calendar-39-sessions-0@1.growing_duration",
+    "mung_bean.mm.calendar-39-sessions-0@1.harvest_window",
+    "mung_bean.mm.calendar-39-sessions-0@1.planting_window",
+    "mung_bean.mm.calendar-40-sessions-0@1.growing_duration",
+    "mung_bean.mm.calendar-40-sessions-0@1.harvest_window",
+    "mung_bean.mm.calendar-40-sessions-0@1.planting_window",
+    "mung_bean.mm.calendar-47-sessions-0@1.growing_duration",
+    "mung_bean.mm.calendar-47-sessions-0@1.harvest_window",
+    "mung_bean.mm.calendar-47-sessions-0@1.planting_window",
+    "mung_bean.mm.calendar-48-sessions-0@1.growing_duration",
+    "mung_bean.mm.calendar-48-sessions-0@1.harvest_window",
+    "mung_bean.mm.calendar-48-sessions-0@1.planting_window",
+    "mung_bean.mm.calendar-48-sessions-1@1.growing_duration",
+    "mung_bean.mm.calendar-48-sessions-1@1.harvest_window",
+    "mung_bean.mm.calendar-48-sessions-1@1.planting_window",
+    "mung_bean.mm.calendar-49-sessions-0@1.growing_duration",
+    "mung_bean.mm.calendar-49-sessions-0@1.harvest_window",
+    "mung_bean.mm.calendar-49-sessions-0@1.planting_window",
+    "mung_bean.mm.calendar-50-sessions-0@1.growing_duration",
+    "mung_bean.mm.calendar-50-sessions-0@1.harvest_window",
+    "mung_bean.mm.calendar-50-sessions-0@1.planting_window",
+    "rice.eco.annual_precipitation",
+    "rice.eco.ecological_crop_cycle",
+    "rice.eco.ecological_soil_ph",
+    "rice.eco.ecological_temperature",
+    "rice.eco.soil_drainage",
+    "rice.eco.soil_texture",
+    "rice.fao56.kc",
+    "rice.fao56.method",
+    "rice.mm.calendar-10-sessions-0@1.growing_duration",
+    "rice.mm.calendar-10-sessions-0@1.harvest_window",
+    "rice.mm.calendar-10-sessions-0@1.planting_window",
+    "rice.mm.calendar-10-sessions-1@1.growing_duration",
+    "rice.mm.calendar-10-sessions-1@1.harvest_window",
+    "rice.mm.calendar-10-sessions-1@1.planting_window",
+    "rice.mm.calendar-5-sessions-0@1.growing_duration",
+    "rice.mm.calendar-5-sessions-0@1.harvest_window",
+    "rice.mm.calendar-5-sessions-0@1.planting_window",
+    "rice.mm.calendar-5-sessions-1@1.growing_duration",
+    "rice.mm.calendar-5-sessions-1@1.harvest_window",
+    "rice.mm.calendar-5-sessions-1@1.planting_window",
+    "rice.mm.calendar-6-sessions-0@1.growing_duration",
+    "rice.mm.calendar-6-sessions-0@1.harvest_window",
+    "rice.mm.calendar-6-sessions-0@1.planting_window",
+    "rice.mm.calendar-8-sessions-0@1.growing_duration",
+    "rice.mm.calendar-8-sessions-0@1.harvest_window",
+    "rice.mm.calendar-8-sessions-0@1.planting_window",
+    "rice.mm.calendar-8-sessions-1@1.growing_duration",
+    "rice.mm.calendar-8-sessions-1@1.harvest_window",
+    "rice.mm.calendar-8-sessions-1@1.planting_window",
+    "rice.mm.calendar-8-sessions-2@1.growing_duration",
+    "rice.mm.calendar-8-sessions-2@1.harvest_window",
+    "rice.mm.calendar-8-sessions-2@1.planting_window",
+    "rice.mm.calendar-8-sessions-3@1.growing_duration",
+    "rice.mm.calendar-8-sessions-3@1.harvest_window",
+    "rice.mm.calendar-8-sessions-3@1.planting_window",
+    "rice.mm.calendar-9-sessions-0@1.growing_duration",
+    "rice.mm.calendar-9-sessions-0@1.harvest_window",
+    "rice.mm.calendar-9-sessions-0@1.planting_window",
+    "rice.water-stress.drought_tolerance",
+    "rice.water-stress.stage_vulnerabilities",
+    "sesame.eco.annual_precipitation",
+    "sesame.eco.ecological_crop_cycle",
+    "sesame.eco.ecological_soil_ph",
+    "sesame.eco.ecological_temperature",
+    "sesame.eco.soil_drainage",
+    "sesame.eco.soil_texture",
+    "sesame.fao56.kc",
+    "sesame.fao56.method",
+    "sesame.mm.calendar-75-sessions-0@1.growing_duration",
+    "sesame.mm.calendar-75-sessions-0@1.harvest_window",
+    "sesame.mm.calendar-75-sessions-0@1.planting_window",
+    "sesame.mm.calendar-75-sessions-1@1.growing_duration",
+    "sesame.mm.calendar-75-sessions-1@1.harvest_window",
+    "sesame.mm.calendar-75-sessions-1@1.planting_window",
+    "sesame.mm.calendar-75-sessions-2@1.growing_duration",
+    "sesame.mm.calendar-75-sessions-2@1.harvest_window",
+    "sesame.mm.calendar-75-sessions-2@1.planting_window",
+    "sesame.mm.calendar-76-sessions-0@1.growing_duration",
+    "sesame.mm.calendar-76-sessions-0@1.harvest_window",
+    "sesame.mm.calendar-76-sessions-0@1.planting_window",
+    "sesame.mm.calendar-76-sessions-1@1.growing_duration",
+    "sesame.mm.calendar-76-sessions-1@1.harvest_window",
+    "sesame.mm.calendar-76-sessions-1@1.planting_window",
+    "sesame.mm.calendar-76-sessions-2@1.growing_duration",
+    "sesame.mm.calendar-76-sessions-2@1.harvest_window",
+    "sesame.mm.calendar-76-sessions-2@1.planting_window",
+    "sesame.mm.calendar-77-sessions-0@1.growing_duration",
+    "sesame.mm.calendar-77-sessions-0@1.harvest_window",
+    "sesame.mm.calendar-77-sessions-0@1.planting_window",
+    "sesame.mm.calendar-77-sessions-1@1.growing_duration",
+    "sesame.mm.calendar-77-sessions-1@1.harvest_window",
+    "sesame.mm.calendar-77-sessions-1@1.planting_window",
+    "sesame.mm.calendar-77-sessions-2@1.growing_duration",
+    "sesame.mm.calendar-77-sessions-2@1.harvest_window",
+    "sesame.mm.calendar-77-sessions-2@1.planting_window",
+    "sesame.mm.calendar-78-sessions-0@1.growing_duration",
+    "sesame.mm.calendar-78-sessions-0@1.harvest_window",
+    "sesame.mm.calendar-78-sessions-0@1.planting_window",
+    "sesame.mm.calendar-78-sessions-1@1.growing_duration",
+    "sesame.mm.calendar-78-sessions-1@1.harvest_window",
+    "sesame.mm.calendar-78-sessions-1@1.planting_window",
+    "sesame.mm.calendar-79-sessions-0@1.growing_duration",
+    "sesame.mm.calendar-79-sessions-0@1.harvest_window",
+    "sesame.mm.calendar-79-sessions-0@1.planting_window",
+    "sesame.mm.calendar-79-sessions-1@1.growing_duration",
+    "sesame.mm.calendar-79-sessions-1@1.harvest_window",
+    "sesame.mm.calendar-79-sessions-1@1.planting_window",
+    "sesame.mm.calendar-79-sessions-2@1.growing_duration",
+    "sesame.mm.calendar-79-sessions-2@1.harvest_window",
+    "sesame.mm.calendar-79-sessions-2@1.planting_window"
+  ],
+  "crop_notes": {
+    "rice": [
+      "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+      "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+    ],
+    "maize": [
+      "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+      "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+    ],
+    "mung_bean": [
+      "0157 Green gram/Vigna aureus versus 0232 Mung bean/Penauk conflict unresolved.",
+      "FAO-56 green gram/cowpeas group does not identify a named mung cultivar."
+    ],
+    "sesame": [
+      "FAO-56 Table 11 HTML stage sum 110 versus stated 100 is unresolved.",
+      "No quantitative flood/drought tolerance established by well-drained ecology."
+    ],
+    "groundnut": [
+      "90–100-day erect type and 5–6-month prostrate type remain separate.",
+      "Table 11 groundnut planting cells appear split; do not infer one combined planting window."
+    ]
+  }
+}

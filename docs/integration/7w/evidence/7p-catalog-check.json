@@ -1,0 +1,10 @@
+{
+  "crops": 708,
+  "profiles": 75,
+  "claims": 937,
+  "sources": 40,
+  "rotations": 8,
+  "ambiguous_aliases": 179,
+  "executable_requirements": 0,
+  "recommendation_eligible": false
+}

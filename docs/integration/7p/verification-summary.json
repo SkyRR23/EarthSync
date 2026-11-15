@@ -1,0 +1,49 @@
+{
+  "local_validation_date_utc": "2026-11-14",
+  "offline": {
+    "passed": 55,
+    "failed": 0,
+    "skipped": 0
+  },
+  "scientific_mechanical_safeguards": {
+    "passed": 14,
+    "failed": 0,
+    "skipped": 0,
+    "independent_agronomic_review": false
+  },
+  "native_rust_contract": {
+    "passed": 5,
+    "fixture_requests": 10,
+    "failed": 0,
+    "skipped": 0
+  },
+  "live_source_checks": {
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "scope": "ECOCROP sheet/license, Myanmar calendar, CMR collection metadata; no live satellite pixels or numerical soil acceptance"
+  },
+  "existing_engine": {
+    "passed": 118,
+    "failed": 0,
+    "ignored": 0
+  },
+  "soil_wcs_numerical_probe": {
+    "status": "unavailable",
+    "reason": "SOIL_ENCODING_MISMATCH; explicit nodata absent",
+    "transport_succeeded": true,
+    "counted_as_passed_numerical_integration": false
+  },
+  "build_reproducibility": "16 artifacts reproduced byte-for-byte",
+  "ruff_check": "passed",
+  "ruff_format": "passed",
+  "protected_files_unchanged": true,
+  "database_indexing": "not_applicable_no_database",
+  "source_hashes_scope": "Stored originals/derivatives only; not proof of scientific truth",
+  "remote_ci": "not_run_at_report_generation",
+  "existing_v1_catalog": {
+    "passed": 39,
+    "failed": 0,
+    "skipped": 0
+  }
+}

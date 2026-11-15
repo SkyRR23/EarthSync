@@ -1,0 +1,91 @@
+{
+  "_comment": "DEMO FIXTURE for UI development only. Climate numbers are placeholders, NOT real NASA POWER values. Replace with the frozen contracts/ v1 fixture from P1/P2.",
+  "schema_version": "v1-draft",
+  "location": { "latitude": 16.8661, "longitude": 96.1951, "name": "Sample field near Yangon" },
+  "data_quality": { "is_demo": true, "fetched_at": "2026-11-14T00:00:00Z", "stale": false },
+  "climate_summary": {
+    "source_id": "nasa_power_monthly",
+    "period": "Placeholder values (demo)",
+    "grid_resolution": "~0.5° regional grid",
+    "monthly": [
+      { "month": 1,  "rain_mm": 5,   "temp_mean_c": 25 },
+      { "month": 2,  "rain_mm": 5,   "temp_mean_c": 26 },
+      { "month": 3,  "rain_mm": 10,  "temp_mean_c": 28 },
+      { "month": 4,  "rain_mm": 40,  "temp_mean_c": 30 },
+      { "month": 5,  "rain_mm": 300, "temp_mean_c": 29 },
+      { "month": 6,  "rain_mm": 550, "temp_mean_c": 27 },
+      { "month": 7,  "rain_mm": null, "temp_mean_c": 27 },
+      { "month": 8,  "rain_mm": 550, "temp_mean_c": 27 },
+      { "month": 9,  "rain_mm": 400, "temp_mean_c": 27 },
+      { "month": 10, "rain_mm": 180, "temp_mean_c": 27 },
+      { "month": 11, "rain_mm": 50,  "temp_mean_c": 26 },
+      { "month": 12, "rain_mm": 10,  "temp_mean_c": 25 }
+    ]
+  },
+  "scenarios": [
+    {
+      "id": "baseline",
+      "title": "Monsoon rice, then fallow",
+      "is_baseline": true,
+      "eligibility": "supported",
+      "steps": [
+        { "crop_id": "rice", "start_month": 6, "end_month": 10, "feasibility": "supported" },
+        { "crop_id": "fallow", "start_month": 11, "end_month": 5, "feasibility": "supported" }
+      ],
+      "likely_benefits": ["Matches your current practice and monsoon rains."],
+      "risks": [
+        { "hazard": "waterlogging", "level": "unknown", "note": "Drainage was not reported." }
+      ],
+      "limitations": ["Field is empty in the dry season."],
+      "evidence_ids": ["nasa_power_monthly", "demo_unverified"]
+    },
+    {
+      "id": "alt_pulse",
+      "title": "Monsoon rice, then mung bean",
+      "is_baseline": false,
+      "eligibility": "constrained",
+      "steps": [
+        { "crop_id": "rice", "start_month": 6, "end_month": 10, "feasibility": "supported" },
+        { "crop_id": "mung_bean", "start_month": 11, "end_month": 2, "feasibility": "constrained" }
+      ],
+      "likely_benefits": ["Uses the dry season.", "Pulses can add nitrogen to the soil."],
+      "risks": [
+        { "hazard": "drought", "level": "medium", "note": "Little rain after November; needs some water." }
+      ],
+      "limitations": ["Demo text — wording and rules not yet verified by the data team."],
+      "evidence_ids": ["nasa_power_monthly", "demo_unverified"]
+    },
+    {
+      "id": "alt_oilseed",
+      "title": "Monsoon rice, then sesame",
+      "is_baseline": false,
+      "eligibility": "unknown",
+      "steps": [
+        { "crop_id": "rice", "start_month": 6, "end_month": 10, "feasibility": "supported" },
+        { "crop_id": "sesame", "start_month": null, "end_month": null, "feasibility": "unknown" }
+      ],
+      "likely_benefits": ["Another dry-season crop option."],
+      "risks": [
+        { "hazard": "heat", "level": "unknown", "note": "No verified crop limits yet." }
+      ],
+      "limitations": ["Planting window not verified."],
+      "evidence_ids": ["demo_unverified"]
+    }
+  ],
+  "alerts": [
+    { "hazard": "drought", "level": "medium", "message": "Dry season (Dec–Apr) has very little rain.", "evidence_ids": ["nasa_power_monthly"] }
+  ],
+  "assumptions": [
+    "Field location is a regional estimate, not your exact plot.",
+    "Climate is a multi-year average, not this year's forecast."
+  ],
+  "data_gaps": [
+    { "field": "rain_mm.july", "reason": "Month missing in demo data." },
+    { "field": "drainage", "reason": "Not reported by farmer." }
+  ],
+  "references": [
+    { "id": "nasa_power_monthly", "title": "NASA POWER monthly climate", "type": "observation", "period": "Placeholder (demo)", "spatial_scale": "~0.5° grid", "url": "https://power.larc.nasa.gov/" },
+    { "id": "nasa_gibs", "title": "NASA GIBS satellite imagery", "type": "imagery", "url": "https://www.earthdata.nasa.gov/engage/open-data-services-software/earthdata-developer-portal/gibs-api" },
+    { "id": "demo_unverified", "title": "Demo crop rule (unverified)", "type": "unverified", "note": "Placeholder until P2 supplies FAO/IRRI-backed crop facts." }
+  ]
+}

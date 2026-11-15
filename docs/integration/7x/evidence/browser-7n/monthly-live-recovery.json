@@ -1,0 +1,382 @@
+{
+  "schema_version": "1.0-proposal",
+  "status": "success",
+  "environment": {
+    "latitude": 42.030234,
+    "longitude": -93.620234,
+    "seasonal": {
+      "window": {
+        "start": {
+          "year": 2025,
+          "month": 1
+        },
+        "end": {
+          "year": 2025,
+          "month": 12
+        }
+      },
+      "metadata": {
+        "source": "NASA POWER",
+        "dataset": "POWER daily meteorology / MERRA-2",
+        "data_kind": "modeled",
+        "rainfall_unit": "mm",
+        "temperature_unit": "deg_c"
+      },
+      "observations": [
+        {
+          "period": {
+            "year": 2025,
+            "month": 1
+          },
+          "rainfall_mm": 6.97,
+          "mean_temperature_c": -7.448709677419355,
+          "rainfall_complete": true,
+          "temperature_complete": true
+        },
+        {
+          "period": {
+            "year": 2025,
+            "month": 2
+          },
+          "rainfall_mm": 10.05,
+          "mean_temperature_c": -5.346785714285715,
+          "rainfall_complete": true,
+          "temperature_complete": true
+        },
+        {
+          "period": {
+            "year": 2025,
+            "month": 3
+          },
+          "rainfall_mm": 66.66,
+          "mean_temperature_c": 5.934838709677419,
+          "rainfall_complete": true,
+          "temperature_complete": true
+        },
+        {
+          "period": {
+            "year": 2025,
+            "month": 4
+          },
+          "rainfall_mm": 89.75,
+          "mean_temperature_c": 10.455333333333334,
+          "rainfall_complete": true,
+          "temperature_complete": true
+        },
+        {
+          "period": {
+            "year": 2025,
+            "month": 5
+          },
+          "rainfall_mm": 75.75999999999999,
+          "mean_temperature_c": 16.073225806451614,
+          "rainfall_complete": true,
+          "temperature_complete": true
+        },
+        {
+          "period": {
+            "year": 2025,
+            "month": 6
+          },
+          "rainfall_mm": 187.45,
+          "mean_temperature_c": 22.902333333333335,
+          "rainfall_complete": true,
+          "temperature_complete": true
+        },
+        {
+          "period": {
+            "year": 2025,
+            "month": 7
+          },
+          "rainfall_mm": 236.04999999999998,
+          "mean_temperature_c": 24.56967741935484,
+          "rainfall_complete": true,
+          "temperature_complete": true
+        },
+        {
+          "period": {
+            "year": 2025,
+            "month": 8
+          },
+          "rainfall_mm": 82.57,
+          "mean_temperature_c": 21.92483870967742,
+          "rainfall_complete": true,
+          "temperature_complete": true
+        },
+        {
+          "period": {
+            "year": 2025,
+            "month": 9
+          },
+          "rainfall_mm": 39.94,
+          "mean_temperature_c": 19.794333333333334,
+          "rainfall_complete": true,
+          "temperature_complete": true
+        },
+        {
+          "period": {
+            "year": 2025,
+            "month": 10
+          },
+          "rainfall_mm": 59.12,
+          "mean_temperature_c": 13.64258064516129,
+          "rainfall_complete": true,
+          "temperature_complete": true
+        },
+        {
+          "period": {
+            "year": 2025,
+            "month": 11
+          },
+          "rainfall_mm": 39.03,
+          "mean_temperature_c": 4.308666666666666,
+          "rainfall_complete": true,
+          "temperature_complete": true
+        },
+        {
+          "period": {
+            "year": 2025,
+            "month": 12
+          },
+          "rainfall_mm": 20.79,
+          "mean_temperature_c": -4.5038709677419355,
+          "rainfall_complete": true,
+          "temperature_complete": true
+        }
+      ]
+    }
+  },
+  "provenance": {
+    "provider": "NASA POWER",
+    "product": "Daily point meteorology / MERRA-2",
+    "data_kind": "modeled",
+    "query_coordinates": {
+      "latitude": 42.030234,
+      "longitude": -93.620234
+    },
+    "interval": {
+      "start": "2025-01-01",
+      "end": "2025-12-31"
+    },
+    "time_standard": "LST",
+    "original_units": {
+      "T2M": "C",
+      "PRECTOTCORR": "mm/day"
+    },
+    "normalized_units": {
+      "mean_temperature_c": "deg_c",
+      "rainfall_mm": "mm"
+    },
+    "spatial_support": "Gridded meteorology, nominal MERRA-2 0.5 degree latitude x 0.625 degree longitude; query point is not a farm measurement or grid centroid.",
+    "aggregation": "Sum daily PRECTOTCORR rates multiplied by one day; arithmetic mean of daily T2M means over all calendar days in LST.",
+    "coverage": [
+      {
+        "period": {
+          "year": 2025,
+          "month": 1
+        },
+        "expected_days": 31,
+        "missing_or_invalid_dates": {
+          "T2M": [],
+          "PRECTOTCORR": []
+        },
+        "reason": "Complete only when every calendar day has a finite valid value; no gap filling."
+      },
+      {
+        "period": {
+          "year": 2025,
+          "month": 2
+        },
+        "expected_days": 28,
+        "missing_or_invalid_dates": {
+          "T2M": [],
+          "PRECTOTCORR": []
+        },
+        "reason": "Complete only when every calendar day has a finite valid value; no gap filling."
+      },
+      {
+        "period": {
+          "year": 2025,
+          "month": 3
+        },
+        "expected_days": 31,
+        "missing_or_invalid_dates": {
+          "T2M": [],
+          "PRECTOTCORR": []
+        },
+        "reason": "Complete only when every calendar day has a finite valid value; no gap filling."
+      },
+      {
+        "period": {
+          "year": 2025,
+          "month": 4
+        },
+        "expected_days": 30,
+        "missing_or_invalid_dates": {
+          "T2M": [],
+          "PRECTOTCORR": []
+        },
+        "reason": "Complete only when every calendar day has a finite valid value; no gap filling."
+      },
+      {
+        "period": {
+          "year": 2025,
+          "month": 5
+        },
+        "expected_days": 31,
+        "missing_or_invalid_dates": {
+          "T2M": [],
+          "PRECTOTCORR": []
+        },
+        "reason": "Complete only when every calendar day has a finite valid value; no gap filling."
+      },
+      {
+        "period": {
+          "year": 2025,
+          "month": 6
+        },
+        "expected_days": 30,
+        "missing_or_invalid_dates": {
+          "T2M": [],
+          "PRECTOTCORR": []
+        },
+        "reason": "Complete only when every calendar day has a finite valid value; no gap filling."
+      },
+      {
+        "period": {
+          "year": 2025,
+          "month": 7
+        },
+        "expected_days": 31,
+        "missing_or_invalid_dates": {
+          "T2M": [],
+          "PRECTOTCORR": []
+        },
+        "reason": "Complete only when every calendar day has a finite valid value; no gap filling."
+      },
+      {
+        "period": {
+          "year": 2025,
+          "month": 8
+        },
+        "expected_days": 31,
+        "missing_or_invalid_dates": {
+          "T2M": [],
+          "PRECTOTCORR": []
+        },
+        "reason": "Complete only when every calendar day has a finite valid value; no gap filling."
+      },
+      {
+        "period": {
+          "year": 2025,
+          "month": 9
+        },
+        "expected_days": 30,
+        "missing_or_invalid_dates": {
+          "T2M": [],
+          "PRECTOTCORR": []
+        },
+        "reason": "Complete only when every calendar day has a finite valid value; no gap filling."
+      },
+      {
+        "period": {
+          "year": 2025,
+          "month": 10
+        },
+        "expected_days": 31,
+        "missing_or_invalid_dates": {
+          "T2M": [],
+          "PRECTOTCORR": []
+        },
+        "reason": "Complete only when every calendar day has a finite valid value; no gap filling."
+      },
+      {
+        "period": {
+          "year": 2025,
+          "month": 11
+        },
+        "expected_days": 30,
+        "missing_or_invalid_dates": {
+          "T2M": [],
+          "PRECTOTCORR": []
+        },
+        "reason": "Complete only when every calendar day has a finite valid value; no gap filling."
+      },
+      {
+        "period": {
+          "year": 2025,
+          "month": 12
+        },
+        "expected_days": 31,
+        "missing_or_invalid_dates": {
+          "T2M": [],
+          "PRECTOTCORR": []
+        },
+        "reason": "Complete only when every calendar day has a finite valid value; no gap filling."
+      }
+    ],
+    "source_requests": [
+      {
+        "endpoint": "https://power.larc.nasa.gov/api/temporal/daily/point",
+        "query": {
+          "parameters": "T2M,PRECTOTCORR",
+          "community": "AG",
+          "latitude": 42.030234,
+          "longitude": -93.620234,
+          "start": "20250101",
+          "end": "20251231",
+          "format": "JSON",
+          "time-standard": "LST"
+        },
+        "retrieved_at": "2026-11-14T17:50:00.682237+00:00",
+        "header": {
+          "title": "NASA/POWER Source Native Resolution Daily Data",
+          "api": {
+            "version": "v2.10.3",
+            "name": "POWER Daily API"
+          },
+          "sources": [
+            "MERRA2"
+          ],
+          "fill_value": -999.0,
+          "time_standard": "LST",
+          "start": "20250101",
+          "end": "20251231"
+        },
+        "parameters": {
+          "T2M": {
+            "units": "C",
+            "longname": "Temperature at 2 Meters"
+          },
+          "PRECTOTCORR": {
+            "units": "mm/day",
+            "longname": "Precipitation Corrected"
+          }
+        },
+        "source_geometry": {
+          "type": "Point",
+          "coordinates": [
+            -93.62,
+            42.03,
+            310.22
+          ]
+        },
+        "source_messages": [],
+        "response_sha256": "3343fe25c71ed0e22446bf3f73542826de14e6c555e71bd8c4e75ccb255dfa9b"
+      }
+    ],
+    "documentation": [
+      "https://power.larc.nasa.gov/docs/services/api/temporal/daily/",
+      "https://power.larc.nasa.gov/docs/methodology/data/sources_meteorology/"
+    ],
+    "limitations": [
+      "Model/reanalysis context, not direct farm observations or crop suitability.",
+      "Completeness means daily record coverage, not independently verified scientific quality.",
+      "Retain this envelope beside Rust inputs: the Rust schema cannot carry all provenance."
+    ]
+  },
+  "cache": {
+    "hit": true,
+    "ttl_seconds": 3600
+  }
+}

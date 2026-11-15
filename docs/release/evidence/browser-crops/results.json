@@ -1,0 +1,13 @@
+{
+  "schema_version": "earthsync.public_verification_receipt.v1",
+  "raw_receipt_sha256": "923a0a4136cb7059266a2e9f8f91ddaf92adcd163385a38670d7dd73713be076",
+  "private_field_data_omitted": true,
+  "status": "PASS",
+  "public_catalog": "CACHED REAL reviewed reference package, no new live agronomic observation",
+  "farmer_choices": "SYNTHETIC",
+  "api_outage": "MOCKED",
+  "alias_search_and_two_crop_comparison": true,
+  "cached_original_timestamps": true,
+  "browser_error_count": 0,
+  "tile_response_count": 0
+}

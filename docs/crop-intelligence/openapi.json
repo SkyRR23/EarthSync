@@ -1,0 +1,1761 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "EarthSync Research API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/research/v1/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_api_research_v1_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "507": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          }
+        },
+        "x-required-scopes": []
+      }
+    },
+    "/api/research/v1/crops/search": {
+      "post": {
+        "summary": "Search",
+        "operationId": "search_api_research_v1_crops_search_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Search"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "507": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          }
+        },
+        "x-required-scopes": [
+          "crop:evidence:read"
+        ]
+      }
+    },
+    "/api/research/v1/crops/evidence": {
+      "post": {
+        "summary": "Evidence",
+        "operationId": "evidence_api_research_v1_crops_evidence_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvidenceQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "507": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          }
+        },
+        "x-required-scopes": [
+          "crop:evidence:read"
+        ]
+      }
+    },
+    "/api/research/v1/crops/compare": {
+      "post": {
+        "summary": "Compare",
+        "operationId": "compare_api_research_v1_crops_compare_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Compare"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "507": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          }
+        },
+        "x-required-scopes": [
+          "crop:evidence:read"
+        ]
+      }
+    },
+    "/api/research/v1/photos": {
+      "post": {
+        "summary": "Upload",
+        "operationId": "upload_api_research_v1_photos_post",
+        "parameters": [
+          {
+            "name": "farm_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Farm Id"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "507": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          }
+        },
+        "x-required-scopes": [
+          "photo:upload"
+        ]
+      }
+    },
+    "/api/research/v1/photos/{photo_id}/image": {
+      "get": {
+        "summary": "Image",
+        "operationId": "image_api_research_v1_photos__photo_id__image_get",
+        "parameters": [
+          {
+            "name": "photo_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Photo Id"
+            }
+          },
+          {
+            "name": "farm_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Farm Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "507": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          }
+        },
+        "x-required-scopes": [
+          "photo:read"
+        ]
+      }
+    },
+    "/api/research/v1/photos/{photo_id}": {
+      "delete": {
+        "summary": "Delete",
+        "operationId": "delete_api_research_v1_photos__photo_id__delete",
+        "parameters": [
+          {
+            "name": "photo_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Photo Id"
+            }
+          },
+          {
+            "name": "farm_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Farm Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "507": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          }
+        },
+        "x-required-scopes": [
+          "photo:delete"
+        ]
+      }
+    },
+    "/api/research/v1/photos/{photo_id}/analyze": {
+      "post": {
+        "summary": "Analyze",
+        "operationId": "analyze_api_research_v1_photos__photo_id__analyze_post",
+        "parameters": [
+          {
+            "name": "photo_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Photo Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhotoAction"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "507": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          }
+        },
+        "x-required-scopes": [
+          "photo:analyze"
+        ]
+      }
+    },
+    "/api/research/v1/lab-reports/extract": {
+      "post": {
+        "summary": "Extract",
+        "operationId": "extract_api_research_v1_lab_reports_extract_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Extract"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "507": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          }
+        },
+        "x-required-scopes": [
+          "lab:extract"
+        ]
+      }
+    },
+    "/api/research/v1/lab-reports/{report_id}": {
+      "get": {
+        "summary": "Report",
+        "operationId": "report_api_research_v1_lab_reports__report_id__get",
+        "parameters": [
+          {
+            "name": "report_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Report Id"
+            }
+          },
+          {
+            "name": "farm_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Farm Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "507": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          }
+        },
+        "x-required-scopes": [
+          "lab:extract"
+        ]
+      }
+    },
+    "/api/research/v1/lab-reports/{report_id}/confirm": {
+      "post": {
+        "summary": "Confirm",
+        "operationId": "confirm_api_research_v1_lab_reports__report_id__confirm_post",
+        "parameters": [
+          {
+            "name": "report_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Report Id"
+            }
+          },
+          {
+            "name": "farm_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Farm Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LabConfirmation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "507": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          }
+        },
+        "x-required-scopes": [
+          "lab:confirm"
+        ]
+      }
+    },
+    "/api/research/v1/soil/context": {
+      "post": {
+        "summary": "Context",
+        "operationId": "context_api_research_v1_soil_context_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Context"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          },
+          "507": {
+            "description": "Research API error; private input is never echoed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchError"
+                }
+              }
+            }
+          }
+        },
+        "x-required-scopes": [
+          "soil:reference:read"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Compare": {
+        "properties": {
+          "crops": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "minItems": 2,
+            "title": "Crops"
+          },
+          "question": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Question",
+            "default": ""
+          },
+          "region": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 150
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Region"
+          },
+          "cultivar": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 150
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cultivar"
+          },
+          "system": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 150
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "System"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "crops"
+        ],
+        "title": "Compare"
+      },
+      "Context": {
+        "properties": {
+          "farm_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Farm Id"
+          },
+          "report_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Report Ids"
+          },
+          "farmer_reports": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Farmer Reports"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "farm_id"
+        ],
+        "title": "Context"
+      },
+      "EvidenceQuery": {
+        "properties": {
+          "crop": {
+            "type": "string",
+            "maxLength": 150,
+            "title": "Crop",
+            "default": ""
+          },
+          "question": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Question",
+            "default": ""
+          },
+          "region": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 150,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Region"
+          },
+          "cultivar": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 150,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cultivar"
+          },
+          "system": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 150,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "System"
+          },
+          "limit": {
+            "type": "integer",
+            "maximum": 25.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "default": 12
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "EvidenceQuery"
+      },
+      "Extract": {
+        "properties": {
+          "request_ai_assistance": {
+            "type": "boolean",
+            "title": "Request Ai Assistance",
+            "default": false
+          },
+          "external_image_consent": {
+            "type": "boolean",
+            "title": "External Image Consent",
+            "default": false
+          },
+          "farm_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Farm Id"
+          },
+          "photo_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Photo Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "farm_id",
+          "photo_id"
+        ],
+        "title": "Extract"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "LabConfirmation": {
+        "properties": {
+          "confirmed": {
+            "type": "boolean",
+            "const": true,
+            "title": "Confirmed"
+          },
+          "document_kind": {
+            "type": "string",
+            "const": "laboratory_report",
+            "title": "Document Kind"
+          },
+          "laboratory": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 150,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Laboratory"
+          },
+          "sample_id": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Sample Id"
+          },
+          "sample_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sample Date"
+          },
+          "values": {
+            "items": {
+              "$ref": "#/components/schemas/LabValue"
+            },
+            "type": "array",
+            "maxItems": 30,
+            "minItems": 1,
+            "title": "Values"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "confirmed",
+          "document_kind",
+          "sample_id",
+          "values"
+        ],
+        "title": "LabConfirmation"
+      },
+      "LabValue": {
+        "properties": {
+          "parameter": {
+            "type": "string",
+            "enum": [
+              "ph",
+              "organic_matter",
+              "nitrogen",
+              "phosphorus",
+              "potassium",
+              "organic_carbon",
+              "salinity"
+            ],
+            "title": "Parameter"
+          },
+          "value": {
+            "type": "number",
+            "maximum": 1000000000.0,
+            "minimum": 0.0,
+            "title": "Value"
+          },
+          "unit": {
+            "type": "string",
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Unit"
+          },
+          "method": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 150,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Method"
+          },
+          "depth": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Depth"
+          },
+          "reference_range": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 150
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reference Range"
+          },
+          "source_locator": {
+            "type": "string",
+            "maxLength": 150,
+            "minLength": 1,
+            "title": "Source Locator"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "parameter",
+          "value",
+          "unit",
+          "source_locator"
+        ],
+        "title": "LabValue"
+      },
+      "PhotoAction": {
+        "properties": {
+          "image_kind": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "crop",
+                  "soil"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image Kind"
+          },
+          "crop": {
+            "type": "string",
+            "maxLength": 150,
+            "title": "Crop",
+            "default": ""
+          },
+          "question": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Question",
+            "default": ""
+          },
+          "region": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 150,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Region"
+          },
+          "growth_stage": {
+            "type": "string",
+            "maxLength": 150,
+            "title": "Growth Stage",
+            "default": ""
+          },
+          "weather_context": {
+            "type": "string",
+            "maxLength": 500,
+            "title": "Weather Context",
+            "default": ""
+          },
+          "farmer_symptoms": {
+            "type": "string",
+            "maxLength": 500,
+            "title": "Farmer Symptoms",
+            "default": ""
+          },
+          "external_image_consent": {
+            "type": "boolean",
+            "title": "External Image Consent",
+            "default": false
+          },
+          "farm_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Farm Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "farm_id"
+        ],
+        "title": "PhotoAction"
+      },
+      "Search": {
+        "properties": {
+          "query": {
+            "type": "string",
+            "maxLength": 150,
+            "title": "Query",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "Search"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "ResearchError": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": [
+              "code",
+              "retryable"
+            ],
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "retryable": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "ResearchBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "ResearchBearer": []
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "MM-FAO-AEZ-001",
+    "provider_name": "A. Bago, Kachin River-Side Land",
+    "administrative_units_as_published": "Ayeyarwady Division, Kachin State, Sagaing Dvision, Mandalay Division, and Bago Division",
+    "scope": "Regional advisory zone; no farm boundary or coordinate association inferred",
+    "source_id": "fao_calendar_mm_aez",
+    "locator": "/0"
+  },
+  {
+    "id": "MM-FAO-AEZ-002",
+    "provider_name": "B. Central Dry Zone",
+    "administrative_units_as_published": "Magway Division, Mandalay Division, and Sagaing Division",
+    "scope": "Regional advisory zone; no farm boundary or coordinate association inferred",
+    "source_id": "fao_calendar_mm_aez",
+    "locator": "/1"
+  },
+  {
+    "id": "MM-FAO-AEZ-003",
+    "provider_name": "C. Delta and Coastal Lowland",
+    "administrative_units_as_published": "Ayeyarwady Division, Yangon Division, Bago Division, Mon State, Kahyin State, Taninitharyi Division and Rakhine State",
+    "scope": "Regional advisory zone; no farm boundary or coordinate association inferred",
+    "source_id": "fao_calendar_mm_aez",
+    "locator": "/2"
+  },
+  {
+    "id": "MM-FAO-AEZ-004",
+    "provider_name": "D. Kachin and Coastal Upland",
+    "administrative_units_as_published": "Kachin State, Rakhine State, Tanintharyi Division, Mon State, Kayin State, Kayah State, Yangon Division, and Bago Division",
+    "scope": "Regional advisory zone; no farm boundary or coordinate association inferred",
+    "source_id": "fao_calendar_mm_aez",
+    "locator": "/3"
+  },
+  {
+    "id": "MM-FAO-AEZ-005",
+    "provider_name": "E. North, East and West Hills",
+    "administrative_units_as_published": "Kachin State, Chin State and Shan State",
+    "scope": "Regional advisory zone; no farm boundary or coordinate association inferred",
+    "source_id": "fao_calendar_mm_aez",
+    "locator": "/4"
+  },
+  {
+    "id": "MM-FAO-AEZ-006",
+    "provider_name": "F. Upper, Lower Myanmar and Shan Plain",
+    "administrative_units_as_published": "Sagaing Division, Kachin State, Shan State, Bago Division, Magway Division, Mandalay Division and Yangon Division",
+    "scope": "Regional advisory zone; no farm boundary or coordinate association inferred",
+    "source_id": "fao_calendar_mm_aez",
+    "locator": "/5"
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "schema_version": "earthsync.public_verification_receipt.v1",
+  "raw_receipt_sha256": "0c1dc35f1d0b0f11a76e1740fef8194ea1c86c846eb7f28b677dcd75ddf2f69d",
+  "private_field_data_omitted": true,
+  "source": {
+    "license": "US government data; NOAA attribution",
+    "model_initialized_at": "2026-11-14T12:00:00+00:00",
+    "retrieved_at": "2026-11-14T21:00:08.538069+00:00",
+    "grid_spacing_degrees": 0.25,
+    "usable_for_assessment": false,
+    "issued_at": null,
+    "unit": "°C",
+    "status": "partial",
+    "provider": "NOAA NCEP GFS",
+    "dataset": "GFS 0.25 degree operational 2 m temperature"
+  },
+  "source_cache_hit": false,
+  "measurement_record_count": 4,
+  "raster_cell_count": 0
+}

@@ -1,0 +1,1262 @@
+[
+  {
+    "id": "us_ia_story_corn_rainfed_v1",
+    "crop_id": "corn",
+    "common_name": "Corn (maize)",
+    "kind": "crop",
+    "production_system": "rainfed_upland",
+    "pilot_id": "us_ia_story",
+    "cultivar": null,
+    "review_status": "reviewed",
+    "review": {
+      "method": "source_desk_review",
+      "reviewed_on": "2026-11-14",
+      "reviewer": "EarthSync 7G source audit (Codex); independent agronomist review pending",
+      "independent_agronomic_review": false,
+      "limitations": [
+        "Reviewed means source/parameter desk review only, not scientific field validation or authorization to recommend a crop.",
+        "Unknown properties were explicitly reviewed as gaps. Cultivar, current field conditions, water adequacy and disease history are unavailable."
+      ]
+    },
+    "recommendation_eligible": false,
+    "parameters": {
+      "scientific_name": {
+        "state": "available",
+        "value": "Zea mays",
+        "unit": "text",
+        "claim_ids": [
+          "taxonomy_corn"
+        ],
+        "review_status": "reviewed",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "crop_family": {
+        "state": "available",
+        "value": "Poaceae",
+        "unit": "text",
+        "claim_ids": [
+          "taxonomy_corn"
+        ],
+        "review_status": "reviewed",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "planting_window": {
+        "state": "available",
+        "value": {
+          "start": "04-11",
+          "end": "05-18",
+          "crosses_year": false,
+          "meaning": "advisory_not_hard_limit"
+        },
+        "unit": "MM-DD",
+        "claim_ids": [
+          "iowa_corn_dates"
+        ],
+        "review_status": "reviewed",
+        "uncertainty": "Historical Iowa advisory endpoints; field conditions override calendar guidance, and endpoints are not hard biological limits.",
+        "reason": null
+      },
+      "harvest_window": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "MM-DD",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No cultivar- and system-specific harvest guidance verified."
+      },
+      "duration_days": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "day",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No cultivar/maturity-group duration verified; no typical estimate substituted."
+      },
+      "air_temperature_limits": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "degC",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No applicable air-temperature bounds verified; soil establishment guidance is not air-temperature tolerance."
+      },
+      "soil_temperature_guidance": {
+        "state": "available",
+        "value": {
+          "threshold": 50,
+          "comparison": "above",
+          "medium": "soil",
+          "depth_cm": null,
+          "conditions": [
+            "Warming soil trend and a relevant 3–7 day warming outlook are part of the guidance.",
+            "Field seedbed moisture/fitness must be checked; no current forecast or soil observation supplied."
+          ]
+        },
+        "unit": "degF",
+        "claim_ids": [
+          "iowa_soil_temperature"
+        ],
+        "review_status": "reviewed",
+        "uncertainty": "Depth is unspecified in the 2026 establishment guidance; monthly air temperature is not an interchangeable input.",
+        "reason": null
+      },
+      "water_management": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "text",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No quantitative or system-specific regional water requirement verified. Rainfed scope does not imply sufficient rainfall."
+      },
+      "soil_properties": {
+        "state": "available",
+        "value": "Inspect seedbed for crumbling rather than smearing, and check wetness beneath the surface. This is qualitative seedbed condition, not a soil texture or numeric moisture bound.",
+        "unit": "text",
+        "claim_ids": [
+          "iowa_seedbed_condition"
+        ],
+        "review_status": "reviewed",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "soil_depth_cm": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "cm",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No soil-property sampling horizon or required root-zone depth verified."
+      },
+      "rotation_information": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "text",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No context-specific succession restriction or rotation benefit verified."
+      },
+      "crop_coefficients": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "1",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "FAO-56 method reviewed, but applicable stage-specific Kc and stage durations are unavailable."
+      }
+    },
+    "unknown_properties": [
+      "harvest_window",
+      "duration_days",
+      "air_temperature_limits",
+      "water_management",
+      "soil_depth_cm",
+      "rotation_information",
+      "crop_coefficients"
+    ],
+    "coverage_limits": [
+      "A named pilot denotes a research scope; user location, a farmer-confirmed farm and geotagged photos remain separate.",
+      "No field observation, current forecast, crop suitability score, yield estimate or farm recommendation is supplied.",
+      "Sources cannot be generalized to another region, cultivar or production system without review.",
+      "The rainfed profile is the pilot scope; general Iowa planting guidance does not verify rainfed water sufficiency or a cultivar."
+    ]
+  },
+  {
+    "id": "us_ia_story_soybean_rainfed_v1",
+    "crop_id": "soybean",
+    "common_name": "Soybean",
+    "kind": "crop",
+    "production_system": "rainfed_upland",
+    "pilot_id": "us_ia_story",
+    "cultivar": null,
+    "review_status": "reviewed",
+    "review": {
+      "method": "source_desk_review",
+      "reviewed_on": "2026-11-14",
+      "reviewer": "EarthSync 7G source audit (Codex); independent agronomist review pending",
+      "independent_agronomic_review": false,
+      "limitations": [
+        "Reviewed means source/parameter desk review only, not scientific field validation or authorization to recommend a crop.",
+        "Unknown properties were explicitly reviewed as gaps. Cultivar, current field conditions, water adequacy and disease history are unavailable."
+      ]
+    },
+    "recommendation_eligible": false,
+    "parameters": {
+      "scientific_name": {
+        "state": "available",
+        "value": "Glycine max",
+        "unit": "text",
+        "claim_ids": [
+          "taxonomy_soybean"
+        ],
+        "review_status": "reviewed",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "crop_family": {
+        "state": "available",
+        "value": "Fabaceae",
+        "unit": "text",
+        "claim_ids": [
+          "taxonomy_soybean"
+        ],
+        "review_status": "reviewed",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "planting_window": {
+        "state": "available",
+        "value": {
+          "start": null,
+          "end": "05-20",
+          "crosses_year": false,
+          "meaning": "advisory_not_hard_limit"
+        },
+        "unit": "MM-DD",
+        "claim_ids": [
+          "iowa_soybean_dates"
+        ],
+        "review_status": "reviewed",
+        "uncertainty": "Advisory before-May-20 endpoint only. Earliest date unknown; no insurance date converted to a crop requirement.",
+        "reason": null
+      },
+      "harvest_window": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "MM-DD",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No cultivar- and system-specific harvest guidance verified."
+      },
+      "duration_days": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "day",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No cultivar/maturity-group duration verified; no typical estimate substituted."
+      },
+      "air_temperature_limits": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "degC",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No applicable air-temperature bounds verified; soil establishment guidance is not air-temperature tolerance."
+      },
+      "soil_temperature_guidance": {
+        "state": "available",
+        "value": {
+          "threshold": 50,
+          "comparison": "above",
+          "medium": "soil",
+          "depth_cm": null,
+          "conditions": [
+            "Warming soil trend and a relevant 3–7 day warming outlook are part of the guidance.",
+            "Field seedbed moisture/fitness must be checked; no current forecast or soil observation supplied.",
+            "Early planting guidance also calls for no soil cooling during the first 24 hours."
+          ]
+        },
+        "unit": "degF",
+        "claim_ids": [
+          "iowa_soil_temperature",
+          "iowa_soybean_cold_window"
+        ],
+        "review_status": "reviewed",
+        "uncertainty": "Depth is unspecified in the 2026 establishment guidance; monthly air temperature is not an interchangeable input.",
+        "reason": null
+      },
+      "water_management": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "text",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No quantitative or system-specific regional water requirement verified. Rainfed scope does not imply sufficient rainfall."
+      },
+      "soil_properties": {
+        "state": "available",
+        "value": "Inspect seedbed for crumbling rather than smearing, and check wetness beneath the surface. This is qualitative seedbed condition, not a soil texture or numeric moisture bound.",
+        "unit": "text",
+        "claim_ids": [
+          "iowa_seedbed_condition"
+        ],
+        "review_status": "reviewed",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "soil_depth_cm": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "cm",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No soil-property sampling horizon or required root-zone depth verified."
+      },
+      "rotation_information": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "text",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No context-specific succession restriction or rotation benefit verified."
+      },
+      "crop_coefficients": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "1",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "FAO-56 method reviewed, but applicable stage-specific Kc and stage durations are unavailable."
+      }
+    },
+    "unknown_properties": [
+      "harvest_window",
+      "duration_days",
+      "air_temperature_limits",
+      "water_management",
+      "soil_depth_cm",
+      "rotation_information",
+      "crop_coefficients"
+    ],
+    "coverage_limits": [
+      "A named pilot denotes a research scope; user location, a farmer-confirmed farm and geotagged photos remain separate.",
+      "No field observation, current forecast, crop suitability score, yield estimate or farm recommendation is supplied.",
+      "Sources cannot be generalized to another region, cultivar or production system without review.",
+      "The rainfed profile is the pilot scope; general Iowa planting guidance does not verify rainfed water sufficiency or a cultivar."
+    ]
+  },
+  {
+    "id": "us_ks_tribune_winter_wheat_dryland_v1",
+    "crop_id": "winter_wheat",
+    "common_name": "Winter wheat",
+    "kind": "crop",
+    "production_system": "dryland_winter_cereal",
+    "pilot_id": "us_ks_tribune",
+    "cultivar": null,
+    "review_status": "reference_only",
+    "review": {
+      "method": "initial_source_inventory",
+      "reviewed_on": "2026-11-14",
+      "reviewer": "EarthSync 7G source audit (Codex); independent agronomist review pending",
+      "independent_agronomic_review": false,
+      "limitations": [
+        "Reviewed means source/parameter desk review only, not scientific field validation or authorization to recommend a crop.",
+        "Unknown properties were explicitly reviewed as gaps. Cultivar, current field conditions, water adequacy and disease history are unavailable."
+      ]
+    },
+    "recommendation_eligible": false,
+    "parameters": {
+      "scientific_name": {
+        "state": "available",
+        "value": "Triticum aestivum",
+        "unit": "text",
+        "claim_ids": [
+          "taxonomy_winter_wheat"
+        ],
+        "review_status": "reviewed",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "crop_family": {
+        "state": "available",
+        "value": "Poaceae",
+        "unit": "text",
+        "claim_ids": [
+          "taxonomy_winter_wheat"
+        ],
+        "review_status": "reviewed",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "planting_window": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "MM-DD",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No system/cultivar-specific regional calendar verified."
+      },
+      "harvest_window": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "MM-DD",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No cultivar- and system-specific harvest guidance verified."
+      },
+      "duration_days": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "day",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No cultivar/maturity-group duration verified; no typical estimate substituted."
+      },
+      "air_temperature_limits": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "degC",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No applicable air-temperature bounds verified; soil establishment guidance is not air-temperature tolerance."
+      },
+      "soil_temperature_guidance": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "degF",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No applicable seed-zone temperature guidance verified."
+      },
+      "water_management": {
+        "state": "available",
+        "value": "Dryland research context with precipitation and stored soil water; no irrigation amount, fallow length or water-sufficiency threshold established.",
+        "unit": "text",
+        "claim_ids": [
+          "tribune_wsf"
+        ],
+        "review_status": "reference_only",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "soil_properties": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "text",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No applicable soil-property requirements verified."
+      },
+      "soil_depth_cm": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "cm",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No soil-property sampling horizon or required root-zone depth verified."
+      },
+      "rotation_information": {
+        "state": "available",
+        "value": "Wheat–sorghum–fallow appears as a researched no-till sequence near Tribune; this is not a farm recommendation or a benefit rule.",
+        "unit": "text",
+        "claim_ids": [
+          "tribune_wsf"
+        ],
+        "review_status": "reference_only",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "crop_coefficients": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "1",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "FAO-56 method reviewed, but applicable stage-specific Kc and stage durations are unavailable."
+      }
+    },
+    "unknown_properties": [
+      "planting_window",
+      "harvest_window",
+      "duration_days",
+      "air_temperature_limits",
+      "soil_temperature_guidance",
+      "soil_properties",
+      "soil_depth_cm",
+      "crop_coefficients"
+    ],
+    "coverage_limits": [
+      "A named pilot denotes a research scope; user location, a farmer-confirmed farm and geotagged photos remain separate.",
+      "No field observation, current forecast, crop suitability score, yield estimate or farm recommendation is supplied.",
+      "Sources cannot be generalized to another region, cultivar or production system without review."
+    ]
+  },
+  {
+    "id": "us_ks_tribune_sorghum_dryland_v1",
+    "crop_id": "sorghum",
+    "common_name": "Grain sorghum",
+    "kind": "crop",
+    "production_system": "dryland_summer_cereal",
+    "pilot_id": "us_ks_tribune",
+    "cultivar": null,
+    "review_status": "reference_only",
+    "review": {
+      "method": "initial_source_inventory",
+      "reviewed_on": "2026-11-14",
+      "reviewer": "EarthSync 7G source audit (Codex); independent agronomist review pending",
+      "independent_agronomic_review": false,
+      "limitations": [
+        "Reviewed means source/parameter desk review only, not scientific field validation or authorization to recommend a crop.",
+        "Unknown properties were explicitly reviewed as gaps. Cultivar, current field conditions, water adequacy and disease history are unavailable."
+      ]
+    },
+    "recommendation_eligible": false,
+    "parameters": {
+      "scientific_name": {
+        "state": "available",
+        "value": "Sorghum bicolor",
+        "unit": "text",
+        "claim_ids": [
+          "taxonomy_sorghum"
+        ],
+        "review_status": "reviewed",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "crop_family": {
+        "state": "available",
+        "value": "Poaceae",
+        "unit": "text",
+        "claim_ids": [
+          "taxonomy_sorghum"
+        ],
+        "review_status": "reviewed",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "planting_window": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "MM-DD",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No system/cultivar-specific regional calendar verified."
+      },
+      "harvest_window": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "MM-DD",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No cultivar- and system-specific harvest guidance verified."
+      },
+      "duration_days": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "day",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No cultivar/maturity-group duration verified; no typical estimate substituted."
+      },
+      "air_temperature_limits": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "degC",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No applicable air-temperature bounds verified; soil establishment guidance is not air-temperature tolerance."
+      },
+      "soil_temperature_guidance": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "degF",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No applicable seed-zone temperature guidance verified."
+      },
+      "water_management": {
+        "state": "available",
+        "value": "Dryland research context with precipitation and stored soil water; no irrigation amount, fallow length or water-sufficiency threshold established.",
+        "unit": "text",
+        "claim_ids": [
+          "tribune_wsf"
+        ],
+        "review_status": "reference_only",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "soil_properties": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "text",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No applicable soil-property requirements verified."
+      },
+      "soil_depth_cm": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "cm",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No soil-property sampling horizon or required root-zone depth verified."
+      },
+      "rotation_information": {
+        "state": "available",
+        "value": "Wheat–sorghum–fallow appears as a researched no-till sequence near Tribune; this is not a farm recommendation or a benefit rule.",
+        "unit": "text",
+        "claim_ids": [
+          "tribune_wsf"
+        ],
+        "review_status": "reference_only",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "crop_coefficients": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "1",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "FAO-56 method reviewed, but applicable stage-specific Kc and stage durations are unavailable."
+      }
+    },
+    "unknown_properties": [
+      "planting_window",
+      "harvest_window",
+      "duration_days",
+      "air_temperature_limits",
+      "soil_temperature_guidance",
+      "soil_properties",
+      "soil_depth_cm",
+      "crop_coefficients"
+    ],
+    "coverage_limits": [
+      "A named pilot denotes a research scope; user location, a farmer-confirmed farm and geotagged photos remain separate.",
+      "No field observation, current forecast, crop suitability score, yield estimate or farm recommendation is supplied.",
+      "Sources cannot be generalized to another region, cultivar or production system without review."
+    ]
+  },
+  {
+    "id": "us_ks_tribune_fallow_v1",
+    "crop_id": null,
+    "common_name": "Fallow (management period)",
+    "kind": "fallow",
+    "production_system": "dryland_fallow",
+    "pilot_id": "us_ks_tribune",
+    "cultivar": null,
+    "review_status": "reference_only",
+    "review": {
+      "method": "initial_source_inventory",
+      "reviewed_on": "2026-11-14",
+      "reviewer": "EarthSync 7G source audit (Codex); independent agronomist review pending",
+      "independent_agronomic_review": false,
+      "limitations": [
+        "Reviewed means source/parameter desk review only, not scientific field validation or authorization to recommend a crop.",
+        "Unknown properties were explicitly reviewed as gaps. Cultivar, current field conditions, water adequacy and disease history are unavailable."
+      ]
+    },
+    "recommendation_eligible": false,
+    "parameters": {
+      "scientific_name": {
+        "state": "not_applicable",
+        "value": null,
+        "unit": "text",
+        "claim_ids": [],
+        "review_status": "not_applicable",
+        "uncertainty": "Not a taxonomic entity.",
+        "reason": "Fallow is a land-management period, not a crop."
+      },
+      "crop_family": {
+        "state": "not_applicable",
+        "value": null,
+        "unit": "text",
+        "claim_ids": [],
+        "review_status": "not_applicable",
+        "uncertainty": "Not a taxonomic entity.",
+        "reason": "Fallow is a land-management period, not a crop."
+      },
+      "planting_window": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "MM-DD",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No system/cultivar-specific regional calendar verified."
+      },
+      "harvest_window": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "MM-DD",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No cultivar- and system-specific harvest guidance verified."
+      },
+      "duration_days": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "day",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No cultivar/maturity-group duration verified; no typical estimate substituted."
+      },
+      "air_temperature_limits": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "degC",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No applicable air-temperature bounds verified; soil establishment guidance is not air-temperature tolerance."
+      },
+      "soil_temperature_guidance": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "degF",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No applicable seed-zone temperature guidance verified."
+      },
+      "water_management": {
+        "state": "available",
+        "value": "Dryland research context with precipitation and stored soil water; no irrigation amount, fallow length or water-sufficiency threshold established.",
+        "unit": "text",
+        "claim_ids": [
+          "tribune_wsf"
+        ],
+        "review_status": "reference_only",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "soil_properties": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "text",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No applicable soil-property requirements verified."
+      },
+      "soil_depth_cm": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "cm",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No soil-property sampling horizon or required root-zone depth verified."
+      },
+      "rotation_information": {
+        "state": "available",
+        "value": "Wheat–sorghum–fallow appears as a researched no-till sequence near Tribune; this is not a farm recommendation or a benefit rule.",
+        "unit": "text",
+        "claim_ids": [
+          "tribune_wsf"
+        ],
+        "review_status": "reference_only",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "crop_coefficients": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "1",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "FAO-56 method reviewed, but applicable stage-specific Kc and stage durations are unavailable."
+      }
+    },
+    "unknown_properties": [
+      "planting_window",
+      "harvest_window",
+      "duration_days",
+      "air_temperature_limits",
+      "soil_temperature_guidance",
+      "soil_properties",
+      "soil_depth_cm",
+      "crop_coefficients"
+    ],
+    "coverage_limits": [
+      "A named pilot denotes a research scope; user location, a farmer-confirmed farm and geotagged photos remain separate.",
+      "No field observation, current forecast, crop suitability score, yield estimate or farm recommendation is supplied.",
+      "Sources cannot be generalized to another region, cultivar or production system without review."
+    ]
+  },
+  {
+    "id": "us_ar_stuttgart_rice_flooded_v1",
+    "crop_id": "rice",
+    "common_name": "Rice",
+    "kind": "crop",
+    "production_system": "irrigated_flooded_lowland",
+    "pilot_id": "us_ar_stuttgart",
+    "cultivar": null,
+    "review_status": "reference_only",
+    "review": {
+      "method": "initial_source_inventory",
+      "reviewed_on": "2026-11-14",
+      "reviewer": "EarthSync 7G source audit (Codex); independent agronomist review pending",
+      "independent_agronomic_review": false,
+      "limitations": [
+        "Reviewed means source/parameter desk review only, not scientific field validation or authorization to recommend a crop.",
+        "Unknown properties were explicitly reviewed as gaps. Cultivar, current field conditions, water adequacy and disease history are unavailable."
+      ]
+    },
+    "recommendation_eligible": false,
+    "parameters": {
+      "scientific_name": {
+        "state": "available",
+        "value": "Oryza sativa",
+        "unit": "text",
+        "claim_ids": [
+          "taxonomy_rice"
+        ],
+        "review_status": "reviewed",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "crop_family": {
+        "state": "available",
+        "value": "Poaceae",
+        "unit": "text",
+        "claim_ids": [
+          "taxonomy_rice"
+        ],
+        "review_status": "reviewed",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "planting_window": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "MM-DD",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No system/cultivar-specific regional calendar verified."
+      },
+      "harvest_window": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "MM-DD",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No cultivar- and system-specific harvest guidance verified."
+      },
+      "duration_days": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "day",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No cultivar/maturity-group duration verified; no typical estimate substituted."
+      },
+      "air_temperature_limits": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "degC",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No applicable air-temperature bounds verified; soil establishment guidance is not air-temperature tolerance."
+      },
+      "soil_temperature_guidance": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "degF",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No applicable seed-zone temperature guidance verified."
+      },
+      "water_management": {
+        "state": "available",
+        "value": "Manage irrigation delivery, flood retention and drainage according to cultivar and growth stage. Conventional flooding and alternate wetting/drying are distinct management regimes; do not infer supply adequacy from rainfall.",
+        "unit": "text",
+        "claim_ids": [
+          "arkansas_flood_management"
+        ],
+        "review_status": "reference_only",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "soil_properties": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "text",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No applicable soil-property requirements verified."
+      },
+      "soil_depth_cm": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "cm",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No soil-property sampling horizon or required root-zone depth verified."
+      },
+      "rotation_information": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "text",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No context-specific succession restriction or rotation benefit verified."
+      },
+      "crop_coefficients": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "1",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "FAO-56 method reviewed, but applicable stage-specific Kc and stage durations are unavailable."
+      }
+    },
+    "unknown_properties": [
+      "planting_window",
+      "harvest_window",
+      "duration_days",
+      "air_temperature_limits",
+      "soil_temperature_guidance",
+      "soil_properties",
+      "soil_depth_cm",
+      "rotation_information",
+      "crop_coefficients"
+    ],
+    "coverage_limits": [
+      "A named pilot denotes a research scope; user location, a farmer-confirmed farm and geotagged photos remain separate.",
+      "No field observation, current forecast, crop suitability score, yield estimate or farm recommendation is supplied.",
+      "Sources cannot be generalized to another region, cultivar or production system without review."
+    ]
+  },
+  {
+    "id": "us_ar_stuttgart_soybean_irrigated_v1",
+    "crop_id": "soybean",
+    "common_name": "Soybean",
+    "kind": "crop",
+    "production_system": "irrigated_upland",
+    "pilot_id": "us_ar_stuttgart",
+    "cultivar": null,
+    "review_status": "reference_only",
+    "review": {
+      "method": "initial_source_inventory",
+      "reviewed_on": "2026-11-14",
+      "reviewer": "EarthSync 7G source audit (Codex); independent agronomist review pending",
+      "independent_agronomic_review": false,
+      "limitations": [
+        "Reviewed means source/parameter desk review only, not scientific field validation or authorization to recommend a crop.",
+        "Unknown properties were explicitly reviewed as gaps. Cultivar, current field conditions, water adequacy and disease history are unavailable."
+      ]
+    },
+    "recommendation_eligible": false,
+    "parameters": {
+      "scientific_name": {
+        "state": "available",
+        "value": "Glycine max",
+        "unit": "text",
+        "claim_ids": [
+          "taxonomy_soybean"
+        ],
+        "review_status": "reviewed",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "crop_family": {
+        "state": "available",
+        "value": "Fabaceae",
+        "unit": "text",
+        "claim_ids": [
+          "taxonomy_soybean"
+        ],
+        "review_status": "reviewed",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "planting_window": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "MM-DD",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No system/cultivar-specific regional calendar verified."
+      },
+      "harvest_window": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "MM-DD",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No cultivar- and system-specific harvest guidance verified."
+      },
+      "duration_days": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "day",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No cultivar/maturity-group duration verified; no typical estimate substituted."
+      },
+      "air_temperature_limits": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "degC",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No applicable air-temperature bounds verified; soil establishment guidance is not air-temperature tolerance."
+      },
+      "soil_temperature_guidance": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "degF",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No applicable seed-zone temperature guidance verified."
+      },
+      "water_management": {
+        "state": "available",
+        "value": "Provide adequate surface drainage in irrigated soybean; mapped drainage classes and regional crop presence do not establish field drainage.",
+        "unit": "text",
+        "claim_ids": [
+          "arkansas_soybean_drainage"
+        ],
+        "review_status": "reference_only",
+        "uncertainty": "Historical 2000 reference; current regional and field review required.",
+        "reason": null
+      },
+      "soil_properties": {
+        "state": "available",
+        "value": "Provide adequate surface drainage in irrigated soybean; mapped drainage classes and regional crop presence do not establish field drainage.",
+        "unit": "text",
+        "claim_ids": [
+          "arkansas_soybean_drainage"
+        ],
+        "review_status": "reference_only",
+        "uncertainty": "Historical 2000 reference; current regional and field review required.",
+        "reason": null
+      },
+      "soil_depth_cm": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "cm",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No soil-property sampling horizon or required root-zone depth verified."
+      },
+      "rotation_information": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "text",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No context-specific succession restriction or rotation benefit verified."
+      },
+      "crop_coefficients": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "1",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "FAO-56 method reviewed, but applicable stage-specific Kc and stage durations are unavailable."
+      }
+    },
+    "unknown_properties": [
+      "planting_window",
+      "harvest_window",
+      "duration_days",
+      "air_temperature_limits",
+      "soil_temperature_guidance",
+      "soil_depth_cm",
+      "rotation_information",
+      "crop_coefficients"
+    ],
+    "coverage_limits": [
+      "A named pilot denotes a research scope; user location, a farmer-confirmed farm and geotagged photos remain separate.",
+      "No field observation, current forecast, crop suitability score, yield estimate or farm recommendation is supplied.",
+      "Sources cannot be generalized to another region, cultivar or production system without review."
+    ]
+  },
+  {
+    "id": "au_nsw_riverina_rice_drill_irrigated_v1",
+    "crop_id": "rice",
+    "common_name": "Rice (drill sown, delayed permanent water)",
+    "kind": "crop",
+    "production_system": "irrigated_drill_sown_delayed_flood",
+    "pilot_id": "au_nsw_riverina",
+    "cultivar": null,
+    "review_status": "reference_only",
+    "review": {
+      "method": "initial_source_inventory",
+      "reviewed_on": "2026-11-14",
+      "reviewer": "EarthSync 7G source audit (Codex); independent agronomist review pending",
+      "independent_agronomic_review": false,
+      "limitations": [
+        "Reviewed means source/parameter desk review only, not scientific field validation or authorization to recommend a crop.",
+        "Unknown properties were explicitly reviewed as gaps. Cultivar, current field conditions, water adequacy and disease history are unavailable."
+      ]
+    },
+    "recommendation_eligible": false,
+    "parameters": {
+      "scientific_name": {
+        "state": "available",
+        "value": "Oryza sativa",
+        "unit": "text",
+        "claim_ids": [
+          "taxonomy_rice"
+        ],
+        "review_status": "reviewed",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "crop_family": {
+        "state": "available",
+        "value": "Poaceae",
+        "unit": "text",
+        "claim_ids": [
+          "taxonomy_rice"
+        ],
+        "review_status": "reviewed",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "planting_window": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "MM-DD",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No system/cultivar-specific regional calendar verified."
+      },
+      "harvest_window": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "MM-DD",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No cultivar- and system-specific harvest guidance verified."
+      },
+      "duration_days": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "day",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No cultivar/maturity-group duration verified; no typical estimate substituted."
+      },
+      "air_temperature_limits": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "degC",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No applicable air-temperature bounds verified; soil establishment guidance is not air-temperature tolerance."
+      },
+      "soil_temperature_guidance": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "degF",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No applicable seed-zone temperature guidance verified."
+      },
+      "water_management": {
+        "state": "available",
+        "value": "Drill-sown establishment uses flush irrigation before permanent water. Timing depends on crop stage and the selected system; the reference is not an aerial-sown rice profile.",
+        "unit": "text",
+        "claim_ids": [
+          "riverina_drill_water"
+        ],
+        "review_status": "reference_only",
+        "uncertainty": "Published reference within its stated spatial, temporal and production-system limits; no calibrated confidence.",
+        "reason": null
+      },
+      "soil_properties": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "text",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No applicable soil-property requirements verified."
+      },
+      "soil_depth_cm": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "cm",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No soil-property sampling horizon or required root-zone depth verified."
+      },
+      "rotation_information": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "text",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "No context-specific succession restriction or rotation benefit verified."
+      },
+      "crop_coefficients": {
+        "state": "unavailable",
+        "value": null,
+        "unit": "1",
+        "claim_ids": [],
+        "review_status": "unavailable",
+        "uncertainty": "Unknown; no numerical confidence assigned.",
+        "reason": "FAO-56 method reviewed, but applicable stage-specific Kc and stage durations are unavailable."
+      }
+    },
+    "unknown_properties": [
+      "planting_window",
+      "harvest_window",
+      "duration_days",
+      "air_temperature_limits",
+      "soil_temperature_guidance",
+      "soil_properties",
+      "soil_depth_cm",
+      "rotation_information",
+      "crop_coefficients"
+    ],
+    "coverage_limits": [
+      "A named pilot denotes a research scope; user location, a farmer-confirmed farm and geotagged photos remain separate.",
+      "No field observation, current forecast, crop suitability score, yield estimate or farm recommendation is supplied.",
+      "Sources cannot be generalized to another region, cultivar or production system without review."
+    ]
+  }
+]

@@ -12,6 +12,13 @@ pub mod decision;
 /// Provisional orchestration for backend/Flutter integration; existing APIs unchanged.
 pub mod integration;
 
+/// Provisional v0.2 soil, history and daily-schedule extension.
+pub mod v02;
+
+/// Opt-in, offline agricultural rules contract. Does not alter legacy APIs.
+pub mod v03;
+pub use v03::analyze_v03_json;
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

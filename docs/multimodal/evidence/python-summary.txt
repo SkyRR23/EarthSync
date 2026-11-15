@@ -1,0 +1,6 @@
+Command: EARTHSYNC_COMPAT_ROOT=<isolated PR29 exports> EARTHSYNC_TEST_V03=<actual compiled v03_demo> PYTHONPATH=server python -m pytest -q server/tests ops/staging/tests
+568 passed, 7 skipped, 92 warnings in 19.91s
+Research focused suite: 101 passed; overlaps this broad suite.
+Original 7V unittest suite: 32 passed.
+Ruff check and format checks: passed.
+External vision: disabled by explicit user choice; not tested live.

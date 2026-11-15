@@ -1,0 +1,8 @@
+{
+  "url": "https://modis.ornl.gov/rst/api/v1/MOD13Q1/dates?latitude=42.0308&longitude=-93.6319",
+  "status": 503,
+  "retrieved_at": "2026-11-14T17:31:47.940604+00:00",
+  "bytes": 299,
+  "sha256": "5764fed31b533e202f88d735a531f70a4ee3f66bb856afa4277872a758e6b578",
+  "content_type": "text/html; charset=iso-8859-1"
+}

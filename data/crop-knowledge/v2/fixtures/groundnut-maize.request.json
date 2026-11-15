@@ -1,0 +1,123 @@
+{
+  "schema_version": "earthsync.engine.v0.3.0",
+  "day_basis": "synthetic Gregorian dates; no NASA LST/civil conversion",
+  "mode": "software_test",
+  "region_id": null,
+  "approximate_user_location": null,
+  "farm": {
+    "field_id": "software-example-field",
+    "point": {
+      "latitude": 0,
+      "longitude": 0
+    },
+    "boundary": null,
+    "confirmed_on": {
+      "year": 2024,
+      "month": 1,
+      "day": 1
+    }
+  },
+  "photos": [],
+  "climate_intent": "historical",
+  "sources": [
+    {
+      "id": "software-example-dates",
+      "title": "Invented dates and field for contract tests",
+      "citation": "EarthSync 7P software fixture; not farm history or crop calendar guidance",
+      "url": null,
+      "published_on": null,
+      "reviewed_on": null,
+      "review": "synthetic",
+      "limitations": [
+        "No agricultural validity or real field asserted."
+      ]
+    }
+  ],
+  "catalog": [
+    {
+      "id": "groundnut.mm.calendar-65-sessions-0@1",
+      "crop_id": "ecocrop.2199@1",
+      "family": "Fabaceae",
+      "cultivar": null,
+      "system": "rainfed",
+      "approved_for_candidates": false,
+      "review": "reference_only",
+      "rules": []
+    },
+    {
+      "id": "maize.mm.rainfed-research@1",
+      "crop_id": "ecocrop.2175@1",
+      "family": "Poaceae",
+      "cultivar": null,
+      "system": "rainfed",
+      "approved_for_candidates": false,
+      "review": "reference_only",
+      "rules": []
+    }
+  ],
+  "observations": [],
+  "climate": [],
+  "history_complete": false,
+  "history": [],
+  "scenarios": [
+    {
+      "id": "groundnut-maize",
+      "plans": [
+        {
+          "id": "plan-1",
+          "crop_id": "ecocrop.2199@1",
+          "profile_id": "groundnut.mm.calendar-65-sessions-0@1",
+          "system": "rainfed",
+          "cultivar": null,
+          "period": {
+            "start": {
+              "year": 2024,
+              "month": 5,
+              "day": 1
+            },
+            "end": {
+              "year": 2024,
+              "month": 8,
+              "day": 31
+            }
+          }
+        },
+        {
+          "id": "plan-2",
+          "crop_id": "ecocrop.2175@1",
+          "profile_id": "maize.mm.rainfed-research@1",
+          "system": "rainfed",
+          "cultivar": null,
+          "period": {
+            "start": {
+              "year": 2025,
+              "month": 5,
+              "day": 1
+            },
+            "end": {
+              "year": 2025,
+              "month": 8,
+              "day": 31
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "sequential_field": true,
+  "candidate_window": {
+    "period": {
+      "start": {
+        "year": 2027,
+        "month": 1,
+        "day": 1
+      },
+      "end": {
+        "year": 2027,
+        "month": 5,
+        "day": 31
+      }
+    },
+    "system": "rainfed"
+  }
+}

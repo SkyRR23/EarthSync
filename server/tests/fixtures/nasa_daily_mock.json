@@ -1,0 +1,8 @@
+{
+  "_fixture_note": "MOCKED NASA-shaped response; not downloaded observations. Tests expand daily values explicitly.",
+  "header": {"title": "Mock POWER daily", "api": {"version": "mock"}, "fill_value": -999, "time_standard": "LST", "sources": ["MERRA2"]},
+  "parameters": {"T2M": {"units": "C", "longname": "Temperature at 2 Meters"}, "PRECTOTCORR": {"units": "mm/day", "longname": "Precipitation Corrected"}},
+  "geometry": {"type": "Point", "coordinates": [96.15, 16.85, 0]},
+  "properties": {"parameter": {"T2M": {}, "PRECTOTCORR": {}}},
+  "messages": []
+}

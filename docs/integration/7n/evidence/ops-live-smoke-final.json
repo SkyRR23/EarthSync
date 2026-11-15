@@ -1,0 +1,56 @@
+{
+  "generated_at": "2026-11-14T13:53:22.384756+00:00",
+  "status": "INCOMPLETE",
+  "checks": [
+    {
+      "name": "controlled provider outage",
+      "status": "PASS",
+      "detail": "Injected HTTP 503 produces 3 explicit retryable gaps, zero evidence/cache entries and no synthetic fallback or raw provider body"
+    },
+    {
+      "name": "platform readiness",
+      "status": "PASS",
+      "detail": "Storage integrity and actual Rust startup probe passed; hosted access disabled"
+    },
+    {
+      "name": "private boundary and invalid requests",
+      "status": "PASS",
+      "detail": "External Host/Origin denied and malformed requests rejected with safe JSON"
+    },
+    {
+      "name": "farm create and retrieve",
+      "status": "PASS",
+      "detail": "Confirmed sample farm stored and retrieved"
+    },
+    {
+      "name": "live NASA provenance and job transitions",
+      "status": "PASS",
+      "detail": "Live uncached historical POWER: 3 original hashes/lineage records, 29 days, correct farm; states queued \u2192 running \u2192 succeeded"
+    },
+    {
+      "name": "actual Rust and decision history",
+      "status": "PASS",
+      "detail": "Compiled Rust v0.3, farm association, persisted decision and reference-only crop status"
+    },
+    {
+      "name": "photo authorization model",
+      "status": "PASS",
+      "detail": "7I local OS principal only; no hosted user authentication is implied"
+    },
+    {
+      "name": "platform private photos",
+      "status": "PASS",
+      "detail": "Sanitized image stored privately and retrieved with matching hash/no-store"
+    },
+    {
+      "name": "database persistence after restart",
+      "status": "BLOCKED",
+      "detail": "Stop and restart this service, then run --phase restart with this receipt"
+    },
+    {
+      "name": "platform HTTP flow",
+      "status": "PASS",
+      "detail": "Verified"
+    }
+  ]
+}

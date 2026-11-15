@@ -1,0 +1,164 @@
+[
+  {
+    "id": "fao_ecocrop_metadata",
+    "url": "https://data.fao.org/catalog/api/3/action/package_show?id=ecocrop",
+    "format": "json",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "fao_ecocrop_status",
+    "url": "https://www.fao.org/land-water/resources/tools/databases/ecocrop/en",
+    "format": "html",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "ecocrop_openclim_ea43ecd",
+    "url": "https://raw.githubusercontent.com/OpenCLIM/ecocrop/ea43ecd418fd1a1ea08d32c7dce64b7fae02dec4/EcoCrop_DB.csv",
+    "format": "csv",
+    "maximum_bytes": 3000000
+  },
+  {
+    "id": "ecocrop_rice",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1574",
+    "format": "ecocrop_html",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "ecocrop_mung_bean",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2150",
+    "format": "ecocrop_html",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "ecocrop_sesame",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1937",
+    "format": "ecocrop_html",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "ecocrop_groundnut",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2199",
+    "format": "ecocrop_html",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "ecocrop_maize",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2175",
+    "format": "ecocrop_html",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "grin_rice",
+    "url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=26097",
+    "format": "html",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "grin_mung_bean",
+    "url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=41629",
+    "format": "html",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "grin_sesame",
+    "url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=33749",
+    "format": "html",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "grin_groundnut",
+    "url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=3785",
+    "format": "html",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "grin_maize",
+    "url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=42207",
+    "format": "html",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "grin_about",
+    "url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/abouttaxonomy",
+    "format": "html",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "fao_calendar_countries",
+    "url": "https://api-cropcalendar.apps.fao.org/api/v1/countries?language=en",
+    "format": "json",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "fao_calendar_crops",
+    "url": "https://api-cropcalendar.apps.fao.org/api/v1/crops?language=en",
+    "format": "json",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "fao_calendar_mm_crops",
+    "url": "https://api-cropcalendar.apps.fao.org/api/v1/countries/MM/crops?language=en",
+    "format": "json",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "fao_calendar_mm_aez",
+    "url": "https://api-cropcalendar.apps.fao.org/api/v1/countries/MM/aez?language=en",
+    "format": "json",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "fao_calendar_mm",
+    "url": "https://api-cropcalendar.apps.fao.org/api/v1/countries/MM/cropCalendar?language=en",
+    "format": "json",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "gaez_v5_metadata",
+    "url": "https://data.fao.org/catalog/api/3/action/package_show?id=gaez-v5-master-config",
+    "format": "json",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "gaez_v5_guide",
+    "url": "https://raw.githubusercontent.com/wiki/un-fao/gaezv5/21.-GAEZ-v5-Platform-User-Guide.md",
+    "format": "text",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "soilgrids_layers",
+    "url": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html",
+    "format": "html",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "soilgrids_access",
+    "url": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_02.html",
+    "format": "html",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "soilgrids_webdav",
+    "url": "https://files.isric.org/soilgrids/latest/README.md",
+    "format": "text",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "fao_myanmar_handbook_2022",
+    "url": "https://openknowledge.fao.org/server/api/core/bitstreams/a825f44a-0409-466a-94b4-135e4bc9fd27/content",
+    "format": "pdf",
+    "maximum_bytes": 15000000
+  },
+  {
+    "id": "myanmar_doa_pulses_2017",
+    "url": "https://www.doa.gov.mm/doa_old/index.php?pavo_post_id=39&route=extension%2Fpavoblog%2Fsingle",
+    "format": "html",
+    "maximum_bytes": 2000000
+  },
+  {
+    "id": "nasa_cmr_collections",
+    "url": "https://cmr.earthdata.nasa.gov/search/collections.json?short_name=HLSL30&version=2.0&page_size=1",
+    "format": "json",
+    "maximum_bytes": 2000000
+  }
+]

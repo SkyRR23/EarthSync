@@ -1,0 +1,36 @@
+{
+  "release_pr": "https://github.com/SkyRR23/EarthSync/pull/24",
+  "release_branch": "integration/earthsync-final-stack-v1",
+  "release_commit": "530c1e1d06c9202dfc1f5d06c659399409b7270f",
+  "scope": "Targeted read-only source comparison, not independent full 7N runtime audit. No checkout, edit or merge of 7N.",
+  "J01_J06": "All six modern corrections present; do not reapply or count as unresolved release defects.",
+  "artifacts": [
+    {
+      "path": "server/earthsync/power.py",
+      "sha256": "19fb15dc78431ebb77372ef9e7551ee71df1442f988dbc377ec2f1ff9e5917ec",
+      "exact_match": true
+    },
+    {
+      "path": "server/earthsync/source_validation.py",
+      "sha256": "132736e1f2b51bbb44480f066b54a45b6fef27ed171315e1a2f3a41880b01e28",
+      "exact_match": true
+    },
+    {
+      "path": "engine/src/v03/assess.rs",
+      "sha256": "f5ff7d953b75ac589292b913c0bb6b9a21cb7350b630ae27ba8a8ca618a69792",
+      "exact_match": true
+    },
+    {
+      "path": "server/earthsync/platform_v1/providers/power_daily.py",
+      "sha256": "942331b680bef2acd140c8872387f58dd76df0f478ac841650e898eb1674c8f1",
+      "exact_match": false,
+      "additional_validation": "7N additionally rejects out-of-domain returned longitude/latitude; the reviewed coordinate-precision fix is retained."
+    },
+    {
+      "path": "server/earthsync/catalog_adapter.py",
+      "sha256": "eb2b2f19f55108054b529d20c7ee7c9ec70c8cce59ee446e24bbe8466a216a21",
+      "exact_match": true
+    }
+  ],
+  "remaining": "Scientific acceptance gaps: forecast runs, crop rules, ET0/Kc/water balance, soil/satellite QA and field applicability. Expanded crop research belongs to 7P."
+}

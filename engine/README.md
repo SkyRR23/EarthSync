@@ -61,3 +61,26 @@ explicitly synthetic `tests/fixtures/synthetic_integration_request.json` via
 `cargo test --locked --test integration`. See
 [the proposed integration design](../docs/INTEGRATION_READINESS.md). Existing APIs
 remain available; real backend/Flutter/FRB configuration is still required.
+
+## v0.2 P0 (opt-in, provisional)
+
+The separate `v02` module preserves independent soil records and history, checks
+reviewed/applicable daily crop duration and sequential schedules, and retains
+existing integration output. It is not a production crop recommendation system.
+See [the v0.2 contract](../docs/ENGINE_CONTRACT_v0.2.md). Run the explicitly synthetic
+workflow with `cargo run --locked --example v02_demo`; no network required.
+
+## v0.3 agricultural evidence checks (opt-in)
+
+`v03::analyze_v03` and the additive `analyze_v03_json` evaluate supplied reviewed
+crop/system rules against daily growing-period climate, depth-aware soil,
+irrigation/flooded management, aligned Kc × ET0 and dated rotation/fallow records.
+Missing or inapplicable evidence stays explicit; no scores or whole-crop
+recommendations are invented. Existing interfaces remain unchanged.
+
+See [the proposed v0.3 contract](../docs/ENGINE_CONTRACT_v0.3.md) for types,
+formulas, provenance, cross-team mapping and remaining integration requirements.
+Run `cargo test --offline --locked --test v03` or
+`cargo run --offline --locked --example v03_demo`. The example uses fictional,
+clearly labeled software fixtures; reviewed real crop profiles and new external
+adapters must be supplied by their owners.

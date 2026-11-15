@@ -1,0 +1,24 @@
+{
+  "schema_version": "earthsync.public_verification_receipt.v1",
+  "raw_receipt_sha256": "1d92640b787e808bc8083e2dcdadafab9c5c2c79b6755da2ed8bf11c3a9fd3be",
+  "private_field_data_omitted": true,
+  "passed": [
+    "Draw four real map vertices",
+    "Undo last vertex",
+    "Enter an explicit boundary corner through accessible coordinate fields",
+    "Validate boundary and calculate approximate area",
+    "Save, reopen and cancel editing without losing boundary",
+    "Select and move a vertex; undo and cancel",
+    "Switch to dated NASA true-color satellite mode",
+    "Withhold hybrid labels after verified provider failures",
+    "Persist exact confirmed polygon in private SQLite",
+    "Retrieve real SoilGrids pH and render native cells with legend",
+    "Retrieve real NOAA forecast with model and valid timestamps",
+    "Persist a dated farmer report with unknown context",
+    "Reload saved source snapshots without new provider calls",
+    "Render farm intelligence at mobile width"
+  ],
+  "test_scoped_ignore_https_errors": false,
+  "browser_error_count": 0,
+  "tile_response_count": 0
+}

@@ -128,3 +128,11 @@ new success/error envelope; it does not replace earlier JSON adapters. See
 [INTEGRATION_READINESS.md](INTEGRATION_READINESS.md) for input/output, provenance,
 completeness, error semantics, proposed FRB v2 boundary and unresolved P2/P4 decisions.
 This adds no crop scoring, network calls, generated bindings or finalized schema.
+
+## v0.2 P0 proposal
+
+The opt-in `v02::analyze_v02` / `v02::analyze_v02_json` boundary adds independent
+soil/history attribution and applicability-gated daily scheduling. Existing types,
+functions and response fields remain unchanged. See
+[ENGINE_CONTRACT_v0.2.md](ENGINE_CONTRACT_v0.2.md) for exact models, status meanings,
+actual Flutter bridge gaps, test fixtures and unapproved P2/P4 integration decisions.

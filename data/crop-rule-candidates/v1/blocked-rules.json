@@ -1,0 +1,852 @@
+[
+  {
+    "id": "7v.rice.planting_window@1",
+    "target_condition": "planting_window",
+    "execution_status": "blocked",
+    "block_reason": "Calendar remains dated advisory context; AEZ label does not locate a farm or establish a safe planting constraint.",
+    "required_evidence": [
+      "Local extension/agronomist review of crop identity, cultivar, establishment, geography and water regime.",
+      "Explicit date convention, relevant year and weather/soil contingency."
+    ],
+    "contradictions_and_limits": [
+      "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+      "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+    ]
+  },
+  {
+    "id": "7v.rice.growing_duration@1",
+    "target_condition": "duration",
+    "execution_status": "blocked",
+    "block_reason": "Global species cycles and reported type/calendar durations do not establish inclusive plan duration for a selected cultivar.",
+    "required_evidence": [
+      "Named cultivar/type, establishment origin, harvest purpose, location and season.",
+      "Source versus inclusive end-day convention reconciled."
+    ],
+    "contradictions_and_limits": [
+      "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+      "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+    ]
+  },
+  {
+    "id": "7v.rice.temperature@1",
+    "target_condition": "temperature",
+    "execution_status": "blocked",
+    "block_reason": "Seasonal average Tmin/Tmax envelopes cannot bound each daily extreme; monthly means and GDD are different statistics.",
+    "required_evidence": [
+      "Original stage/cultivar-specific daily-extreme or thermal-time evidence.",
+      "Exact temporal statistic and accepted regional data with full period coverage."
+    ],
+    "contradictions_and_limits": [
+      "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+      "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+    ]
+  },
+  {
+    "id": "7v.rice.growing_period_rainfall@1",
+    "target_condition": "growing_period_rainfall",
+    "execution_status": "blocked",
+    "block_reason": "Annual ecological envelopes cannot be prorated into growing-period rainfall, effective rain, ETc or irrigation demand.",
+    "required_evidence": [
+      "Original crop-season rainfall requirement with period/statistic/system and cultivar.",
+      "Separate ETc, effective rain, storage, irrigation and paddy loss accounting where relevant."
+    ],
+    "contradictions_and_limits": [
+      "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+      "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+    ]
+  },
+  {
+    "id": "7v.rice.soil_ph@1",
+    "target_condition": "soil_numeric",
+    "execution_status": "blocked",
+    "block_reason": "Ecological pH has no accepted depth or chemical method; ecological root depth is not a sample layer.",
+    "required_evidence": [
+      "Crop requirement at explicit depth and pH method (water/salt).",
+      "Representative soil evidence with units, uncertainty and temporal support."
+    ],
+    "contradictions_and_limits": [
+      "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+      "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+    ]
+  },
+  {
+    "id": "7v.rice.soil_texture@1",
+    "target_condition": "soil_category",
+    "execution_status": "blocked",
+    "block_reason": "Qualitative ecological texture categories need a reviewed crosswalk; absence in maize remains unknown.",
+    "required_evidence": [
+      "Source and engine category vocabulary crosswalk with independent review.",
+      "Field representative texture evidence; texture does not establish drainage."
+    ],
+    "contradictions_and_limits": [
+      "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+      "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+    ]
+  },
+  {
+    "id": "7v.rice.soil_drainage@1",
+    "target_condition": "soil_category",
+    "execution_status": "blocked",
+    "block_reason": "Ecological drainage descriptors do not establish present field drainage or flood tolerance.",
+    "required_evidence": [
+      "Reviewed category vocabulary and production-system-specific constraint.",
+      "Attributed field drainage/landform/water-table evidence; no soil-colour proxy."
+    ],
+    "contradictions_and_limits": [
+      "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+      "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+    ]
+  },
+  {
+    "id": "7v.rice.flood_tolerance@1",
+    "target_condition": null,
+    "execution_status": "blocked",
+    "block_reason": "No validated stage-specific flood depth, duration or recovery threshold; irrigation and paddy culture do not prove submergence tolerance.",
+    "required_evidence": [
+      "Original cultivar/stage-specific flood experiments and quantitative exposure definition.",
+      "Separate rice upland, lowland, delayed flooding and management regimes; v0.3 has no flood-injury requirement."
+    ],
+    "contradictions_and_limits": [
+      "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+      "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+    ]
+  },
+  {
+    "id": "7v.rice.drought_stage_sensitivity@1",
+    "target_condition": null,
+    "execution_status": "blocked",
+    "block_reason": "Training sensitivity classes lack quantitative drought exposure and crop-stage dates; generic tolerance cannot waive water requirements.",
+    "required_evidence": [
+      "Stage/cultivar-specific intensity-duration evidence and uncertainty.",
+      "Validated phenology and soil-water exposure; v0.3 has no stage-injury condition."
+    ],
+    "contradictions_and_limits": [
+      "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+      "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+    ]
+  },
+  {
+    "id": "7v.rice.kc_curve@1",
+    "target_condition": "crop_evapotranspiration",
+    "execution_status": "blocked",
+    "block_reason": "Source Kc rows require local adjustments and endpoint selection; v0.3 constant stages cannot silently replace FAO-56 linear transitions.",
+    "required_evidence": [
+      "Applicable Kc initial/wetting and mid/end climate/height corrections.",
+      "Locally reviewed day-indexed linear curve encoding and aligned daily grass-reference ETo.",
+      "Review that ETc is standard-condition demand, not rainfall/irrigation sufficiency."
+    ],
+    "contradictions_and_limits": [
+      "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+      "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+    ]
+  },
+  {
+    "id": "7v.rice.stage_duration@1",
+    "target_condition": "crop_evapotranspiration",
+    "execution_status": "blocked",
+    "block_reason": "Table 11 stages are regional examples needing local validation; they do not fill calendar-profile stage offsets automatically.",
+    "required_evidence": [
+      "Validated crop/cultivar stage lengths with establishment origin and actual season.",
+      "Resolve any source total disagreement before daily indexing."
+    ],
+    "contradictions_and_limits": [
+      "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+      "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+    ]
+  },
+  {
+    "id": "7v.rice.succession@1",
+    "target_condition": "succession",
+    "execution_status": "blocked",
+    "block_reason": "Published sequences and general family identity do not establish mandatory predecessor or numerical fallow requirements.",
+    "required_evidence": [
+      "Original system/location-specific predecessor and fallow evidence.",
+      "Complete attributed confirmed-field history; elapsed gap is not proof of fallow.",
+      "Separate rotation from intercropping; independently substantiate any N/pest/yield claim."
+    ],
+    "contradictions_and_limits": [
+      "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+      "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+    ]
+  },
+  {
+    "id": "7v.maize.planting_window@1",
+    "target_condition": "planting_window",
+    "execution_status": "blocked",
+    "block_reason": "Calendar remains dated advisory context; AEZ label does not locate a farm or establish a safe planting constraint.",
+    "required_evidence": [
+      "Local extension/agronomist review of crop identity, cultivar, establishment, geography and water regime.",
+      "Explicit date convention, relevant year and weather/soil contingency."
+    ],
+    "contradictions_and_limits": [
+      "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+      "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+    ]
+  },
+  {
+    "id": "7v.maize.growing_duration@1",
+    "target_condition": "duration",
+    "execution_status": "blocked",
+    "block_reason": "Global species cycles and reported type/calendar durations do not establish inclusive plan duration for a selected cultivar.",
+    "required_evidence": [
+      "Named cultivar/type, establishment origin, harvest purpose, location and season.",
+      "Source versus inclusive end-day convention reconciled."
+    ],
+    "contradictions_and_limits": [
+      "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+      "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+    ]
+  },
+  {
+    "id": "7v.maize.temperature@1",
+    "target_condition": "temperature",
+    "execution_status": "blocked",
+    "block_reason": "Seasonal average Tmin/Tmax envelopes cannot bound each daily extreme; monthly means and GDD are different statistics.",
+    "required_evidence": [
+      "Original stage/cultivar-specific daily-extreme or thermal-time evidence.",
+      "Exact temporal statistic and accepted regional data with full period coverage."
+    ],
+    "contradictions_and_limits": [
+      "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+      "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+    ]
+  },
+  {
+    "id": "7v.maize.growing_period_rainfall@1",
+    "target_condition": "growing_period_rainfall",
+    "execution_status": "blocked",
+    "block_reason": "Annual ecological envelopes cannot be prorated into growing-period rainfall, effective rain, ETc or irrigation demand.",
+    "required_evidence": [
+      "Original crop-season rainfall requirement with period/statistic/system and cultivar.",
+      "Separate ETc, effective rain, storage, irrigation and paddy loss accounting where relevant."
+    ],
+    "contradictions_and_limits": [
+      "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+      "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+    ]
+  },
+  {
+    "id": "7v.maize.soil_ph@1",
+    "target_condition": "soil_numeric",
+    "execution_status": "blocked",
+    "block_reason": "Ecological pH has no accepted depth or chemical method; ecological root depth is not a sample layer.",
+    "required_evidence": [
+      "Crop requirement at explicit depth and pH method (water/salt).",
+      "Representative soil evidence with units, uncertainty and temporal support."
+    ],
+    "contradictions_and_limits": [
+      "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+      "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+    ]
+  },
+  {
+    "id": "7v.maize.soil_texture@1",
+    "target_condition": "soil_category",
+    "execution_status": "blocked",
+    "block_reason": "Qualitative ecological texture categories need a reviewed crosswalk; absence in maize remains unknown.",
+    "required_evidence": [
+      "Source and engine category vocabulary crosswalk with independent review.",
+      "Field representative texture evidence; texture does not establish drainage."
+    ],
+    "contradictions_and_limits": [
+      "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+      "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+    ]
+  },
+  {
+    "id": "7v.maize.soil_drainage@1",
+    "target_condition": "soil_category",
+    "execution_status": "blocked",
+    "block_reason": "Ecological drainage descriptors do not establish present field drainage or flood tolerance.",
+    "required_evidence": [
+      "Reviewed category vocabulary and production-system-specific constraint.",
+      "Attributed field drainage/landform/water-table evidence; no soil-colour proxy."
+    ],
+    "contradictions_and_limits": [
+      "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+      "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+    ]
+  },
+  {
+    "id": "7v.maize.flood_tolerance@1",
+    "target_condition": null,
+    "execution_status": "blocked",
+    "block_reason": "No validated stage-specific flood depth, duration or recovery threshold; irrigation and paddy culture do not prove submergence tolerance.",
+    "required_evidence": [
+      "Original cultivar/stage-specific flood experiments and quantitative exposure definition.",
+      "Separate rice upland, lowland, delayed flooding and management regimes; v0.3 has no flood-injury requirement."
+    ],
+    "contradictions_and_limits": [
+      "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+      "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+    ]
+  },
+  {
+    "id": "7v.maize.drought_stage_sensitivity@1",
+    "target_condition": null,
+    "execution_status": "blocked",
+    "block_reason": "Training sensitivity classes lack quantitative drought exposure and crop-stage dates; generic tolerance cannot waive water requirements.",
+    "required_evidence": [
+      "Stage/cultivar-specific intensity-duration evidence and uncertainty.",
+      "Validated phenology and soil-water exposure; v0.3 has no stage-injury condition."
+    ],
+    "contradictions_and_limits": [
+      "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+      "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+    ]
+  },
+  {
+    "id": "7v.maize.kc_curve@1",
+    "target_condition": "crop_evapotranspiration",
+    "execution_status": "blocked",
+    "block_reason": "Source Kc rows require local adjustments and endpoint selection; v0.3 constant stages cannot silently replace FAO-56 linear transitions.",
+    "required_evidence": [
+      "Applicable Kc initial/wetting and mid/end climate/height corrections.",
+      "Locally reviewed day-indexed linear curve encoding and aligned daily grass-reference ETo.",
+      "Review that ETc is standard-condition demand, not rainfall/irrigation sufficiency."
+    ],
+    "contradictions_and_limits": [
+      "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+      "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+    ]
+  },
+  {
+    "id": "7v.maize.stage_duration@1",
+    "target_condition": "crop_evapotranspiration",
+    "execution_status": "blocked",
+    "block_reason": "Table 11 stages are regional examples needing local validation; they do not fill calendar-profile stage offsets automatically.",
+    "required_evidence": [
+      "Validated crop/cultivar stage lengths with establishment origin and actual season.",
+      "Resolve any source total disagreement before daily indexing."
+    ],
+    "contradictions_and_limits": [
+      "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+      "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+    ]
+  },
+  {
+    "id": "7v.maize.succession@1",
+    "target_condition": "succession",
+    "execution_status": "blocked",
+    "block_reason": "Published sequences and general family identity do not establish mandatory predecessor or numerical fallow requirements.",
+    "required_evidence": [
+      "Original system/location-specific predecessor and fallow evidence.",
+      "Complete attributed confirmed-field history; elapsed gap is not proof of fallow.",
+      "Separate rotation from intercropping; independently substantiate any N/pest/yield claim."
+    ],
+    "contradictions_and_limits": [
+      "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+      "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+    ]
+  },
+  {
+    "id": "7v.mung_bean.planting_window@1",
+    "target_condition": "planting_window",
+    "execution_status": "blocked",
+    "block_reason": "Calendar remains dated advisory context; AEZ label does not locate a farm or establish a safe planting constraint.",
+    "required_evidence": [
+      "Local extension/agronomist review of crop identity, cultivar, establishment, geography and water regime.",
+      "Explicit date convention, relevant year and weather/soil contingency."
+    ],
+    "contradictions_and_limits": [
+      "0157 Green gram/Vigna aureus versus 0232 Mung bean/Penauk conflict unresolved.",
+      "FAO-56 green gram/cowpeas group does not identify a named mung cultivar."
+    ]
+  },
+  {
+    "id": "7v.mung_bean.growing_duration@1",
+    "target_condition": "duration",
+    "execution_status": "blocked",
+    "block_reason": "Global species cycles and reported type/calendar durations do not establish inclusive plan duration for a selected cultivar.",
+    "required_evidence": [
+      "Named cultivar/type, establishment origin, harvest purpose, location and season.",
+      "Source versus inclusive end-day convention reconciled."
+    ],
+    "contradictions_and_limits": [
+      "0157 Green gram/Vigna aureus versus 0232 Mung bean/Penauk conflict unresolved.",
+      "FAO-56 green gram/cowpeas group does not identify a named mung cultivar."
+    ]
+  },
+  {
+    "id": "7v.mung_bean.temperature@1",
+    "target_condition": "temperature",
+    "execution_status": "blocked",
+    "block_reason": "Seasonal average Tmin/Tmax envelopes cannot bound each daily extreme; monthly means and GDD are different statistics.",
+    "required_evidence": [
+      "Original stage/cultivar-specific daily-extreme or thermal-time evidence.",
+      "Exact temporal statistic and accepted regional data with full period coverage."
+    ],
+    "contradictions_and_limits": [
+      "0157 Green gram/Vigna aureus versus 0232 Mung bean/Penauk conflict unresolved.",
+      "FAO-56 green gram/cowpeas group does not identify a named mung cultivar."
+    ]
+  },
+  {
+    "id": "7v.mung_bean.growing_period_rainfall@1",
+    "target_condition": "growing_period_rainfall",
+    "execution_status": "blocked",
+    "block_reason": "Annual ecological envelopes cannot be prorated into growing-period rainfall, effective rain, ETc or irrigation demand.",
+    "required_evidence": [
+      "Original crop-season rainfall requirement with period/statistic/system and cultivar.",
+      "Separate ETc, effective rain, storage, irrigation and paddy loss accounting where relevant."
+    ],
+    "contradictions_and_limits": [
+      "0157 Green gram/Vigna aureus versus 0232 Mung bean/Penauk conflict unresolved.",
+      "FAO-56 green gram/cowpeas group does not identify a named mung cultivar."
+    ]
+  },
+  {
+    "id": "7v.mung_bean.soil_ph@1",
+    "target_condition": "soil_numeric",
+    "execution_status": "blocked",
+    "block_reason": "Ecological pH has no accepted depth or chemical method; ecological root depth is not a sample layer.",
+    "required_evidence": [
+      "Crop requirement at explicit depth and pH method (water/salt).",
+      "Representative soil evidence with units, uncertainty and temporal support."
+    ],
+    "contradictions_and_limits": [
+      "0157 Green gram/Vigna aureus versus 0232 Mung bean/Penauk conflict unresolved.",
+      "FAO-56 green gram/cowpeas group does not identify a named mung cultivar."
+    ]
+  },
+  {
+    "id": "7v.mung_bean.soil_texture@1",
+    "target_condition": "soil_category",
+    "execution_status": "blocked",
+    "block_reason": "Qualitative ecological texture categories need a reviewed crosswalk; absence in maize remains unknown.",
+    "required_evidence": [
+      "Source and engine category vocabulary crosswalk with independent review.",
+      "Field representative texture evidence; texture does not establish drainage."
+    ],
+    "contradictions_and_limits": [
+      "0157 Green gram/Vigna aureus versus 0232 Mung bean/Penauk conflict unresolved.",
+      "FAO-56 green gram/cowpeas group does not identify a named mung cultivar."
+    ]
+  },
+  {
+    "id": "7v.mung_bean.soil_drainage@1",
+    "target_condition": "soil_category",
+    "execution_status": "blocked",
+    "block_reason": "Ecological drainage descriptors do not establish present field drainage or flood tolerance.",
+    "required_evidence": [
+      "Reviewed category vocabulary and production-system-specific constraint.",
+      "Attributed field drainage/landform/water-table evidence; no soil-colour proxy."
+    ],
+    "contradictions_and_limits": [
+      "0157 Green gram/Vigna aureus versus 0232 Mung bean/Penauk conflict unresolved.",
+      "FAO-56 green gram/cowpeas group does not identify a named mung cultivar."
+    ]
+  },
+  {
+    "id": "7v.mung_bean.flood_tolerance@1",
+    "target_condition": null,
+    "execution_status": "blocked",
+    "block_reason": "No validated stage-specific flood depth, duration or recovery threshold; irrigation and paddy culture do not prove submergence tolerance.",
+    "required_evidence": [
+      "Original cultivar/stage-specific flood experiments and quantitative exposure definition.",
+      "Separate rice upland, lowland, delayed flooding and management regimes; v0.3 has no flood-injury requirement."
+    ],
+    "contradictions_and_limits": [
+      "0157 Green gram/Vigna aureus versus 0232 Mung bean/Penauk conflict unresolved.",
+      "FAO-56 green gram/cowpeas group does not identify a named mung cultivar."
+    ]
+  },
+  {
+    "id": "7v.mung_bean.drought_stage_sensitivity@1",
+    "target_condition": null,
+    "execution_status": "blocked",
+    "block_reason": "Training sensitivity classes lack quantitative drought exposure and crop-stage dates; generic tolerance cannot waive water requirements.",
+    "required_evidence": [
+      "Stage/cultivar-specific intensity-duration evidence and uncertainty.",
+      "Validated phenology and soil-water exposure; v0.3 has no stage-injury condition."
+    ],
+    "contradictions_and_limits": [
+      "0157 Green gram/Vigna aureus versus 0232 Mung bean/Penauk conflict unresolved.",
+      "FAO-56 green gram/cowpeas group does not identify a named mung cultivar."
+    ]
+  },
+  {
+    "id": "7v.mung_bean.kc_curve@1",
+    "target_condition": "crop_evapotranspiration",
+    "execution_status": "blocked",
+    "block_reason": "Source Kc rows require local adjustments and endpoint selection; v0.3 constant stages cannot silently replace FAO-56 linear transitions.",
+    "required_evidence": [
+      "Applicable Kc initial/wetting and mid/end climate/height corrections.",
+      "Locally reviewed day-indexed linear curve encoding and aligned daily grass-reference ETo.",
+      "Review that ETc is standard-condition demand, not rainfall/irrigation sufficiency."
+    ],
+    "contradictions_and_limits": [
+      "0157 Green gram/Vigna aureus versus 0232 Mung bean/Penauk conflict unresolved.",
+      "FAO-56 green gram/cowpeas group does not identify a named mung cultivar."
+    ]
+  },
+  {
+    "id": "7v.mung_bean.stage_duration@1",
+    "target_condition": "crop_evapotranspiration",
+    "execution_status": "blocked",
+    "block_reason": "Table 11 stages are regional examples needing local validation; they do not fill calendar-profile stage offsets automatically.",
+    "required_evidence": [
+      "Validated crop/cultivar stage lengths with establishment origin and actual season.",
+      "Resolve any source total disagreement before daily indexing."
+    ],
+    "contradictions_and_limits": [
+      "0157 Green gram/Vigna aureus versus 0232 Mung bean/Penauk conflict unresolved.",
+      "FAO-56 green gram/cowpeas group does not identify a named mung cultivar."
+    ]
+  },
+  {
+    "id": "7v.mung_bean.succession@1",
+    "target_condition": "succession",
+    "execution_status": "blocked",
+    "block_reason": "Published sequences and general family identity do not establish mandatory predecessor or numerical fallow requirements.",
+    "required_evidence": [
+      "Original system/location-specific predecessor and fallow evidence.",
+      "Complete attributed confirmed-field history; elapsed gap is not proof of fallow.",
+      "Separate rotation from intercropping; independently substantiate any N/pest/yield claim."
+    ],
+    "contradictions_and_limits": [
+      "0157 Green gram/Vigna aureus versus 0232 Mung bean/Penauk conflict unresolved.",
+      "FAO-56 green gram/cowpeas group does not identify a named mung cultivar."
+    ]
+  },
+  {
+    "id": "7v.sesame.planting_window@1",
+    "target_condition": "planting_window",
+    "execution_status": "blocked",
+    "block_reason": "Calendar remains dated advisory context; AEZ label does not locate a farm or establish a safe planting constraint.",
+    "required_evidence": [
+      "Local extension/agronomist review of crop identity, cultivar, establishment, geography and water regime.",
+      "Explicit date convention, relevant year and weather/soil contingency."
+    ],
+    "contradictions_and_limits": [
+      "FAO-56 Table 11 HTML stage sum 110 versus stated 100 is unresolved.",
+      "No quantitative flood/drought tolerance established by well-drained ecology."
+    ]
+  },
+  {
+    "id": "7v.sesame.growing_duration@1",
+    "target_condition": "duration",
+    "execution_status": "blocked",
+    "block_reason": "Global species cycles and reported type/calendar durations do not establish inclusive plan duration for a selected cultivar.",
+    "required_evidence": [
+      "Named cultivar/type, establishment origin, harvest purpose, location and season.",
+      "Source versus inclusive end-day convention reconciled."
+    ],
+    "contradictions_and_limits": [
+      "FAO-56 Table 11 HTML stage sum 110 versus stated 100 is unresolved.",
+      "No quantitative flood/drought tolerance established by well-drained ecology."
+    ]
+  },
+  {
+    "id": "7v.sesame.temperature@1",
+    "target_condition": "temperature",
+    "execution_status": "blocked",
+    "block_reason": "Seasonal average Tmin/Tmax envelopes cannot bound each daily extreme; monthly means and GDD are different statistics.",
+    "required_evidence": [
+      "Original stage/cultivar-specific daily-extreme or thermal-time evidence.",
+      "Exact temporal statistic and accepted regional data with full period coverage."
+    ],
+    "contradictions_and_limits": [
+      "FAO-56 Table 11 HTML stage sum 110 versus stated 100 is unresolved.",
+      "No quantitative flood/drought tolerance established by well-drained ecology."
+    ]
+  },
+  {
+    "id": "7v.sesame.growing_period_rainfall@1",
+    "target_condition": "growing_period_rainfall",
+    "execution_status": "blocked",
+    "block_reason": "Annual ecological envelopes cannot be prorated into growing-period rainfall, effective rain, ETc or irrigation demand.",
+    "required_evidence": [
+      "Original crop-season rainfall requirement with period/statistic/system and cultivar.",
+      "Separate ETc, effective rain, storage, irrigation and paddy loss accounting where relevant."
+    ],
+    "contradictions_and_limits": [
+      "FAO-56 Table 11 HTML stage sum 110 versus stated 100 is unresolved.",
+      "No quantitative flood/drought tolerance established by well-drained ecology."
+    ]
+  },
+  {
+    "id": "7v.sesame.soil_ph@1",
+    "target_condition": "soil_numeric",
+    "execution_status": "blocked",
+    "block_reason": "Ecological pH has no accepted depth or chemical method; ecological root depth is not a sample layer.",
+    "required_evidence": [
+      "Crop requirement at explicit depth and pH method (water/salt).",
+      "Representative soil evidence with units, uncertainty and temporal support."
+    ],
+    "contradictions_and_limits": [
+      "FAO-56 Table 11 HTML stage sum 110 versus stated 100 is unresolved.",
+      "No quantitative flood/drought tolerance established by well-drained ecology."
+    ]
+  },
+  {
+    "id": "7v.sesame.soil_texture@1",
+    "target_condition": "soil_category",
+    "execution_status": "blocked",
+    "block_reason": "Qualitative ecological texture categories need a reviewed crosswalk; absence in maize remains unknown.",
+    "required_evidence": [
+      "Source and engine category vocabulary crosswalk with independent review.",
+      "Field representative texture evidence; texture does not establish drainage."
+    ],
+    "contradictions_and_limits": [
+      "FAO-56 Table 11 HTML stage sum 110 versus stated 100 is unresolved.",
+      "No quantitative flood/drought tolerance established by well-drained ecology."
+    ]
+  },
+  {
+    "id": "7v.sesame.soil_drainage@1",
+    "target_condition": "soil_category",
+    "execution_status": "blocked",
+    "block_reason": "Ecological drainage descriptors do not establish present field drainage or flood tolerance.",
+    "required_evidence": [
+      "Reviewed category vocabulary and production-system-specific constraint.",
+      "Attributed field drainage/landform/water-table evidence; no soil-colour proxy."
+    ],
+    "contradictions_and_limits": [
+      "FAO-56 Table 11 HTML stage sum 110 versus stated 100 is unresolved.",
+      "No quantitative flood/drought tolerance established by well-drained ecology."
+    ]
+  },
+  {
+    "id": "7v.sesame.flood_tolerance@1",
+    "target_condition": null,
+    "execution_status": "blocked",
+    "block_reason": "No validated stage-specific flood depth, duration or recovery threshold; irrigation and paddy culture do not prove submergence tolerance.",
+    "required_evidence": [
+      "Original cultivar/stage-specific flood experiments and quantitative exposure definition.",
+      "Separate rice upland, lowland, delayed flooding and management regimes; v0.3 has no flood-injury requirement."
+    ],
+    "contradictions_and_limits": [
+      "FAO-56 Table 11 HTML stage sum 110 versus stated 100 is unresolved.",
+      "No quantitative flood/drought tolerance established by well-drained ecology."
+    ]
+  },
+  {
+    "id": "7v.sesame.drought_stage_sensitivity@1",
+    "target_condition": null,
+    "execution_status": "blocked",
+    "block_reason": "Training sensitivity classes lack quantitative drought exposure and crop-stage dates; generic tolerance cannot waive water requirements.",
+    "required_evidence": [
+      "Stage/cultivar-specific intensity-duration evidence and uncertainty.",
+      "Validated phenology and soil-water exposure; v0.3 has no stage-injury condition."
+    ],
+    "contradictions_and_limits": [
+      "FAO-56 Table 11 HTML stage sum 110 versus stated 100 is unresolved.",
+      "No quantitative flood/drought tolerance established by well-drained ecology."
+    ]
+  },
+  {
+    "id": "7v.sesame.kc_curve@1",
+    "target_condition": "crop_evapotranspiration",
+    "execution_status": "blocked",
+    "block_reason": "Source Kc rows require local adjustments and endpoint selection; v0.3 constant stages cannot silently replace FAO-56 linear transitions.",
+    "required_evidence": [
+      "Applicable Kc initial/wetting and mid/end climate/height corrections.",
+      "Locally reviewed day-indexed linear curve encoding and aligned daily grass-reference ETo.",
+      "Review that ETc is standard-condition demand, not rainfall/irrigation sufficiency."
+    ],
+    "contradictions_and_limits": [
+      "FAO-56 Table 11 HTML stage sum 110 versus stated 100 is unresolved.",
+      "No quantitative flood/drought tolerance established by well-drained ecology."
+    ]
+  },
+  {
+    "id": "7v.sesame.stage_duration@1",
+    "target_condition": "crop_evapotranspiration",
+    "execution_status": "blocked",
+    "block_reason": "Table 11 stages are regional examples needing local validation; they do not fill calendar-profile stage offsets automatically.",
+    "required_evidence": [
+      "Validated crop/cultivar stage lengths with establishment origin and actual season.",
+      "Resolve any source total disagreement before daily indexing."
+    ],
+    "contradictions_and_limits": [
+      "FAO-56 Table 11 HTML stage sum 110 versus stated 100 is unresolved.",
+      "No quantitative flood/drought tolerance established by well-drained ecology."
+    ]
+  },
+  {
+    "id": "7v.sesame.succession@1",
+    "target_condition": "succession",
+    "execution_status": "blocked",
+    "block_reason": "Published sequences and general family identity do not establish mandatory predecessor or numerical fallow requirements.",
+    "required_evidence": [
+      "Original system/location-specific predecessor and fallow evidence.",
+      "Complete attributed confirmed-field history; elapsed gap is not proof of fallow.",
+      "Separate rotation from intercropping; independently substantiate any N/pest/yield claim."
+    ],
+    "contradictions_and_limits": [
+      "FAO-56 Table 11 HTML stage sum 110 versus stated 100 is unresolved.",
+      "No quantitative flood/drought tolerance established by well-drained ecology."
+    ]
+  },
+  {
+    "id": "7v.groundnut.planting_window@1",
+    "target_condition": "planting_window",
+    "execution_status": "blocked",
+    "block_reason": "Calendar remains dated advisory context; AEZ label does not locate a farm or establish a safe planting constraint.",
+    "required_evidence": [
+      "Local extension/agronomist review of crop identity, cultivar, establishment, geography and water regime.",
+      "Explicit date convention, relevant year and weather/soil contingency."
+    ],
+    "contradictions_and_limits": [
+      "90–100-day erect type and 5–6-month prostrate type remain separate.",
+      "Table 11 groundnut planting cells appear split; do not infer one combined planting window."
+    ]
+  },
+  {
+    "id": "7v.groundnut.growing_duration@1",
+    "target_condition": "duration",
+    "execution_status": "blocked",
+    "block_reason": "Global species cycles and reported type/calendar durations do not establish inclusive plan duration for a selected cultivar.",
+    "required_evidence": [
+      "Named cultivar/type, establishment origin, harvest purpose, location and season.",
+      "Source versus inclusive end-day convention reconciled."
+    ],
+    "contradictions_and_limits": [
+      "90–100-day erect type and 5–6-month prostrate type remain separate.",
+      "Table 11 groundnut planting cells appear split; do not infer one combined planting window."
+    ]
+  },
+  {
+    "id": "7v.groundnut.temperature@1",
+    "target_condition": "temperature",
+    "execution_status": "blocked",
+    "block_reason": "Seasonal average Tmin/Tmax envelopes cannot bound each daily extreme; monthly means and GDD are different statistics.",
+    "required_evidence": [
+      "Original stage/cultivar-specific daily-extreme or thermal-time evidence.",
+      "Exact temporal statistic and accepted regional data with full period coverage."
+    ],
+    "contradictions_and_limits": [
+      "90–100-day erect type and 5–6-month prostrate type remain separate.",
+      "Table 11 groundnut planting cells appear split; do not infer one combined planting window."
+    ]
+  },
+  {
+    "id": "7v.groundnut.growing_period_rainfall@1",
+    "target_condition": "growing_period_rainfall",
+    "execution_status": "blocked",
+    "block_reason": "Annual ecological envelopes cannot be prorated into growing-period rainfall, effective rain, ETc or irrigation demand.",
+    "required_evidence": [
+      "Original crop-season rainfall requirement with period/statistic/system and cultivar.",
+      "Separate ETc, effective rain, storage, irrigation and paddy loss accounting where relevant."
+    ],
+    "contradictions_and_limits": [
+      "90–100-day erect type and 5–6-month prostrate type remain separate.",
+      "Table 11 groundnut planting cells appear split; do not infer one combined planting window."
+    ]
+  },
+  {
+    "id": "7v.groundnut.soil_ph@1",
+    "target_condition": "soil_numeric",
+    "execution_status": "blocked",
+    "block_reason": "Ecological pH has no accepted depth or chemical method; ecological root depth is not a sample layer.",
+    "required_evidence": [
+      "Crop requirement at explicit depth and pH method (water/salt).",
+      "Representative soil evidence with units, uncertainty and temporal support."
+    ],
+    "contradictions_and_limits": [
+      "90–100-day erect type and 5–6-month prostrate type remain separate.",
+      "Table 11 groundnut planting cells appear split; do not infer one combined planting window."
+    ]
+  },
+  {
+    "id": "7v.groundnut.soil_texture@1",
+    "target_condition": "soil_category",
+    "execution_status": "blocked",
+    "block_reason": "Qualitative ecological texture categories need a reviewed crosswalk; absence in maize remains unknown.",
+    "required_evidence": [
+      "Source and engine category vocabulary crosswalk with independent review.",
+      "Field representative texture evidence; texture does not establish drainage."
+    ],
+    "contradictions_and_limits": [
+      "90–100-day erect type and 5–6-month prostrate type remain separate.",
+      "Table 11 groundnut planting cells appear split; do not infer one combined planting window."
+    ]
+  },
+  {
+    "id": "7v.groundnut.soil_drainage@1",
+    "target_condition": "soil_category",
+    "execution_status": "blocked",
+    "block_reason": "Ecological drainage descriptors do not establish present field drainage or flood tolerance.",
+    "required_evidence": [
+      "Reviewed category vocabulary and production-system-specific constraint.",
+      "Attributed field drainage/landform/water-table evidence; no soil-colour proxy."
+    ],
+    "contradictions_and_limits": [
+      "90–100-day erect type and 5–6-month prostrate type remain separate.",
+      "Table 11 groundnut planting cells appear split; do not infer one combined planting window."
+    ]
+  },
+  {
+    "id": "7v.groundnut.flood_tolerance@1",
+    "target_condition": null,
+    "execution_status": "blocked",
+    "block_reason": "No validated stage-specific flood depth, duration or recovery threshold; irrigation and paddy culture do not prove submergence tolerance.",
+    "required_evidence": [
+      "Original cultivar/stage-specific flood experiments and quantitative exposure definition.",
+      "Separate rice upland, lowland, delayed flooding and management regimes; v0.3 has no flood-injury requirement."
+    ],
+    "contradictions_and_limits": [
+      "90–100-day erect type and 5–6-month prostrate type remain separate.",
+      "Table 11 groundnut planting cells appear split; do not infer one combined planting window."
+    ]
+  },
+  {
+    "id": "7v.groundnut.drought_stage_sensitivity@1",
+    "target_condition": null,
+    "execution_status": "blocked",
+    "block_reason": "Training sensitivity classes lack quantitative drought exposure and crop-stage dates; generic tolerance cannot waive water requirements.",
+    "required_evidence": [
+      "Stage/cultivar-specific intensity-duration evidence and uncertainty.",
+      "Validated phenology and soil-water exposure; v0.3 has no stage-injury condition."
+    ],
+    "contradictions_and_limits": [
+      "90–100-day erect type and 5–6-month prostrate type remain separate.",
+      "Table 11 groundnut planting cells appear split; do not infer one combined planting window."
+    ]
+  },
+  {
+    "id": "7v.groundnut.kc_curve@1",
+    "target_condition": "crop_evapotranspiration",
+    "execution_status": "blocked",
+    "block_reason": "Source Kc rows require local adjustments and endpoint selection; v0.3 constant stages cannot silently replace FAO-56 linear transitions.",
+    "required_evidence": [
+      "Applicable Kc initial/wetting and mid/end climate/height corrections.",
+      "Locally reviewed day-indexed linear curve encoding and aligned daily grass-reference ETo.",
+      "Review that ETc is standard-condition demand, not rainfall/irrigation sufficiency."
+    ],
+    "contradictions_and_limits": [
+      "90–100-day erect type and 5–6-month prostrate type remain separate.",
+      "Table 11 groundnut planting cells appear split; do not infer one combined planting window."
+    ]
+  },
+  {
+    "id": "7v.groundnut.stage_duration@1",
+    "target_condition": "crop_evapotranspiration",
+    "execution_status": "blocked",
+    "block_reason": "Table 11 stages are regional examples needing local validation; they do not fill calendar-profile stage offsets automatically.",
+    "required_evidence": [
+      "Validated crop/cultivar stage lengths with establishment origin and actual season.",
+      "Resolve any source total disagreement before daily indexing."
+    ],
+    "contradictions_and_limits": [
+      "90–100-day erect type and 5–6-month prostrate type remain separate.",
+      "Table 11 groundnut planting cells appear split; do not infer one combined planting window."
+    ]
+  },
+  {
+    "id": "7v.groundnut.succession@1",
+    "target_condition": "succession",
+    "execution_status": "blocked",
+    "block_reason": "Published sequences and general family identity do not establish mandatory predecessor or numerical fallow requirements.",
+    "required_evidence": [
+      "Original system/location-specific predecessor and fallow evidence.",
+      "Complete attributed confirmed-field history; elapsed gap is not proof of fallow.",
+      "Separate rotation from intercropping; independently substantiate any N/pest/yield claim."
+    ],
+    "contradictions_and_limits": [
+      "90–100-day erect type and 5–6-month prostrate type remain separate.",
+      "Table 11 groundnut planting cells appear split; do not infer one combined planting window."
+    ]
+  }
+]

@@ -1,0 +1,3585 @@
+{
+  "engine_version": "earthsync.engine.v0.3.0",
+  "engine_binary_sha256": "ca76c2ac3ae34eaab35182d568293ae140e2b9d0c5438db0f7ceed1252bf899c",
+  "assessed_at": "2026-11-14T18:09:02.525442+00:00",
+  "recommendation_eligible": false,
+  "result": {
+    "status": "success",
+    "data": {
+      "schema_version": "earthsync.engine.v0.3.0",
+      "software_test_only": false,
+      "summaries": [
+        {
+          "scenario_id": "requested:rice.mm.calendar-5-sessions-0@1",
+          "status": "insufficient_information",
+          "findings": [
+            {
+              "plan_id": "plan:rice.mm.calendar-5-sessions-0@1",
+              "rule_id": "catalog.rules",
+              "status": "insufficient_information",
+              "message": "Profile has no requirements."
+            }
+          ],
+          "unknowns": [
+            "These supplied rules are not an exhaustive crop recommendation or future safety assessment."
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "scenario_id": "requested:rice.mm.calendar-5-sessions-0@1",
+          "plan_id": "plan:rice.mm.calendar-5-sessions-0@1",
+          "rule_id": "catalog.rules",
+          "status": "insufficient_information",
+          "condition": "catalog.rules",
+          "input": {
+            "crop_id": "ecocrop.1574@1",
+            "growing_period": {
+              "end": {
+                "day": 7,
+                "month": 7,
+                "year": 2024
+              },
+              "start": {
+                "day": 3,
+                "month": 7,
+                "year": 2024
+              }
+            },
+            "profile_id": "rice.mm.calendar-5-sessions-0@1"
+          },
+          "requirement": {
+            "contract_rule": "catalog.rules"
+          },
+          "units": "not_applicable",
+          "source_ids": [],
+          "input_ids": [
+            "plan:rice.mm.calendar-5-sessions-0@1"
+          ],
+          "explanation": "Profile has no requirements.",
+          "unknowns": [
+            "Profile has no requirements."
+          ],
+          "limitations": [],
+          "software_test_only": false
+        }
+      ],
+      "candidates": [],
+      "context": {
+        "schema_version": "earthsync.engine.v0.3.0",
+        "day_basis": "NASA_POWER_LST",
+        "mode": "evidence_assessment",
+        "region_id": null,
+        "approximate_user_location": null,
+        "farm": {
+          "field_id": "311b0217-8173-4464-9b77-5a787dbc857a",
+          "point": {
+            "latitude": 42.0308,
+            "longitude": -93.6319
+          },
+          "boundary": null,
+          "confirmed_on": {
+            "year": 2026,
+            "month": 11,
+            "day": 14
+          }
+        },
+        "photos": [],
+        "climate_intent": "historical",
+        "sources": [
+          {
+            "id": "ev_0c2d834c25c1aa16590c97eedf251991416c39613c30becb5f32a8e351c77548",
+            "title": "Calculated FAO-56 reference-grass ET0",
+            "citation": "fao56-daily-pm.v1",
+            "url": "https://www.fao.org/4/X0490E/x0490e08.htm",
+            "published_on": null,
+            "reviewed_on": null,
+            "review": "reference_only",
+            "limitations": [
+              "Calculated historical reference-grass ET0 from regional modeled/satellite-derived inputs, not a field observation or forecast.",
+              "MERRA-2 meteorology (0.5 by 0.625 degrees) and SYN1deg radiation (1 degree) are distinct spatial supports, aligned only by requested point and NASA LST date.",
+              "NASA LST is a 15-degree solar-time swath, not the farmer's civil calendar. Provider elevation is model terrain, not surveyed field elevation.",
+              "Daily dewpoint is used in FAO-56 Eq.14; vapour pressure from mean dewpoint approximates mean daily vapour pressure. Below-freezing Dew/Frost Point phase conversion is unvalidated and withheld. No field accuracy or calibrated uncertainty interval is established.",
+              "FAO-56 daily reference grass: albedo 0.23, G=0; clear-sky Rs/Rso capped at 1. Polar night, negative cloud factor, negative ET0 and incompatible inputs are withheld.",
+              "ET0 is not ETc, effective rain, root-zone depletion, irrigation requirement, water stress or proof of water availability."
+            ]
+          },
+          {
+            "id": "ev_46e6c0ba01c22955623907784c84d71f4c9eb5ff4219ea13298a313cbbe50575",
+            "title": "POWER daily / MERRA2/POWER",
+            "citation": "power-fao56-inputs.v1:T2M_MIN",
+            "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+            "published_on": null,
+            "reviewed_on": null,
+            "review": "reference_only",
+            "limitations": [
+              "Daily coverage is not proof of local scientific accuracy.",
+              "LST is solar-time swath, not civil farm calendar; no timezone conversion inferred.",
+              "No forecast, ET0, GDD or recommendation calculated by Python."
+            ]
+          },
+          {
+            "id": "ev_28b30acdcb2c86a3e62458007355a7ed95047272462bcd0033c34ab674153f61",
+            "title": "POWER daily / MERRA2/POWER",
+            "citation": "power-fao56-inputs.v1:T2M_MAX",
+            "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+            "published_on": null,
+            "reviewed_on": null,
+            "review": "reference_only",
+            "limitations": [
+              "Daily coverage is not proof of local scientific accuracy.",
+              "LST is solar-time swath, not civil farm calendar; no timezone conversion inferred.",
+              "No forecast, ET0, GDD or recommendation calculated by Python."
+            ]
+          },
+          {
+            "id": "ev_a96e50afa6517bae2763878d43e4f6c9668702180279d472d9809a9840833b7a",
+            "title": "POWER daily / MERRA2",
+            "citation": "power-fao56-inputs.v1:PRECTOTCORR",
+            "url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+            "published_on": null,
+            "reviewed_on": null,
+            "review": "reference_only",
+            "limitations": [
+              "Daily coverage is not proof of local scientific accuracy.",
+              "LST is solar-time swath, not civil farm calendar; no timezone conversion inferred.",
+              "No forecast, ET0, GDD or recommendation calculated by Python."
+            ]
+          }
+        ],
+        "catalog": [
+          {
+            "id": "rice.mm.calendar-5-sessions-0@1",
+            "crop_id": "ecocrop.1574@1",
+            "family": "Poaceae",
+            "cultivar": null,
+            "system": "rainfed",
+            "approved_for_candidates": false,
+            "review": "reference_only",
+            "rules": []
+          }
+        ],
+        "observations": [],
+        "climate": [
+          {
+            "id": "ev_0c2d834c25c1aa16590c97eedf251991416c39613c30becb5f32a8e351c77548:et0",
+            "day_basis": "NASA_POWER_LST",
+            "variable": "et0",
+            "unit": "mm_per_day",
+            "provenance": {
+              "kind": "modeled",
+              "source_ids": [
+                "ev_0c2d834c25c1aa16590c97eedf251991416c39613c30becb5f32a8e351c77548"
+              ],
+              "period": {
+                "start": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 3
+                },
+                "end": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 7
+                }
+              },
+              "retrieved_on": {
+                "year": 2026,
+                "month": 11,
+                "day": 14
+              },
+              "issued_on": null,
+              "spatial": {
+                "scope": "regional",
+                "region_id": "power-query-context",
+                "resolution_m": null
+              },
+              "quality": "usable",
+              "uncertainty": "Regional model; local applicability not independently verified",
+              "method": "fao56-daily-pm.v1"
+            },
+            "days": [
+              {
+                "date": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 3
+                },
+                "value": 5.1165884030451645,
+                "quality": "usable"
+              },
+              {
+                "date": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 4
+                },
+                "value": 4.461158810990774,
+                "quality": "usable"
+              },
+              {
+                "date": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 5
+                },
+                "value": 4.383031480061403,
+                "quality": "usable"
+              },
+              {
+                "date": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 6
+                },
+                "value": 4.846836409623925,
+                "quality": "usable"
+              },
+              {
+                "date": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 7
+                },
+                "value": 4.386068326730708,
+                "quality": "usable"
+              }
+            ]
+          },
+          {
+            "id": "ev_46e6c0ba01c22955623907784c84d71f4c9eb5ff4219ea13298a313cbbe50575:tmin",
+            "day_basis": "NASA_POWER_LST",
+            "variable": "tmin",
+            "unit": "celsius",
+            "provenance": {
+              "kind": "modeled",
+              "source_ids": [
+                "ev_46e6c0ba01c22955623907784c84d71f4c9eb5ff4219ea13298a313cbbe50575"
+              ],
+              "period": {
+                "start": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 3
+                },
+                "end": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 7
+                }
+              },
+              "retrieved_on": {
+                "year": 2026,
+                "month": 11,
+                "day": 14
+              },
+              "issued_on": null,
+              "spatial": {
+                "scope": "regional",
+                "region_id": "power-query-context",
+                "resolution_m": null
+              },
+              "quality": "usable",
+              "uncertainty": "Regional model; local applicability not independently verified",
+              "method": "power-fao56-inputs.v1:T2M_MIN"
+            },
+            "days": [
+              {
+                "date": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 3
+                },
+                "value": 15.93,
+                "quality": "usable"
+              },
+              {
+                "date": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 4
+                },
+                "value": 16.3,
+                "quality": "usable"
+              },
+              {
+                "date": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 5
+                },
+                "value": 15.24,
+                "quality": "usable"
+              },
+              {
+                "date": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 6
+                },
+                "value": 15.92,
+                "quality": "usable"
+              },
+              {
+                "date": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 7
+                },
+                "value": 18.84,
+                "quality": "usable"
+              }
+            ]
+          },
+          {
+            "id": "ev_28b30acdcb2c86a3e62458007355a7ed95047272462bcd0033c34ab674153f61:tmax",
+            "day_basis": "NASA_POWER_LST",
+            "variable": "tmax",
+            "unit": "celsius",
+            "provenance": {
+              "kind": "modeled",
+              "source_ids": [
+                "ev_28b30acdcb2c86a3e62458007355a7ed95047272462bcd0033c34ab674153f61"
+              ],
+              "period": {
+                "start": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 3
+                },
+                "end": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 7
+                }
+              },
+              "retrieved_on": {
+                "year": 2026,
+                "month": 11,
+                "day": 14
+              },
+              "issued_on": null,
+              "spatial": {
+                "scope": "regional",
+                "region_id": "power-query-context",
+                "resolution_m": null
+              },
+              "quality": "usable",
+              "uncertainty": "Regional model; local applicability not independently verified",
+              "method": "power-fao56-inputs.v1:T2M_MAX"
+            },
+            "days": [
+              {
+                "date": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 3
+                },
+                "value": 28.26,
+                "quality": "usable"
+              },
+              {
+                "date": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 4
+                },
+                "value": 26.97,
+                "quality": "usable"
+              },
+              {
+                "date": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 5
+                },
+                "value": 24.97,
+                "quality": "usable"
+              },
+              {
+                "date": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 6
+                },
+                "value": 27.36,
+                "quality": "usable"
+              },
+              {
+                "date": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 7
+                },
+                "value": 27.45,
+                "quality": "usable"
+              }
+            ]
+          },
+          {
+            "id": "ev_a96e50afa6517bae2763878d43e4f6c9668702180279d472d9809a9840833b7a:rainfall",
+            "day_basis": "NASA_POWER_LST",
+            "variable": "rainfall",
+            "unit": "mm_per_day",
+            "provenance": {
+              "kind": "modeled",
+              "source_ids": [
+                "ev_a96e50afa6517bae2763878d43e4f6c9668702180279d472d9809a9840833b7a"
+              ],
+              "period": {
+                "start": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 3
+                },
+                "end": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 7
+                }
+              },
+              "retrieved_on": {
+                "year": 2026,
+                "month": 11,
+                "day": 14
+              },
+              "issued_on": null,
+              "spatial": {
+                "scope": "regional",
+                "region_id": "power-query-context",
+                "resolution_m": null
+              },
+              "quality": "usable",
+              "uncertainty": "Regional model; local applicability not independently verified",
+              "method": "power-fao56-inputs.v1:PRECTOTCORR"
+            },
+            "days": [
+              {
+                "date": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 3
+                },
+                "value": 0.16,
+                "quality": "usable"
+              },
+              {
+                "date": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 4
+                },
+                "value": 3.32,
+                "quality": "usable"
+              },
+              {
+                "date": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 5
+                },
+                "value": 0.75,
+                "quality": "usable"
+              },
+              {
+                "date": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 6
+                },
+                "value": 0.71,
+                "quality": "usable"
+              },
+              {
+                "date": {
+                  "year": 2024,
+                  "month": 7,
+                  "day": 7
+                },
+                "value": 23.74,
+                "quality": "usable"
+              }
+            ]
+          }
+        ],
+        "history_complete": false,
+        "history": [],
+        "scenarios": [
+          {
+            "id": "requested:rice.mm.calendar-5-sessions-0@1",
+            "plans": [
+              {
+                "id": "plan:rice.mm.calendar-5-sessions-0@1",
+                "crop_id": "ecocrop.1574@1",
+                "profile_id": "rice.mm.calendar-5-sessions-0@1",
+                "system": "rainfed",
+                "cultivar": null,
+                "period": {
+                  "start": {
+                    "year": 2024,
+                    "month": 7,
+                    "day": 3
+                  },
+                  "end": {
+                    "year": 2024,
+                    "month": 7,
+                    "day": 7
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "sequential_field": false,
+        "candidate_window": null
+      },
+      "limitations": [
+        "No calibrated suitability score, yield prediction, pest benefit or forecast safety claim is produced.",
+        "Reviewed/source/applicability flags are caller assertions requiring catalog-owner review; citations alone do not verify a rule.",
+        "Regional, modeled, reported and observed evidence remain separate in the retained context. Photos and approximate user location are not field measurements.",
+        "ETc is standard-condition crop evapotranspiration arithmetic, not irrigation requirement, effective rainfall, actual soil moisture or a water balance."
+      ]
+    }
+  },
+  "evidence_gaps": [
+    {
+      "evidence_id": "ev_e4981d4f567f76ede8211592c67634f1d84745cbb4323dbeca6732b1ecd688ad",
+      "code": "RETAINED_WEATHER_INPUT_NOT_V03_VARIABLE"
+    },
+    {
+      "evidence_id": "ev_152b833fbe55c3022b0b2c51e82d228b5f8b2720cf20dfc2e5fb582772eec945",
+      "code": "RETAINED_WEATHER_INPUT_NOT_V03_VARIABLE"
+    },
+    {
+      "evidence_id": "ev_553f9078050466fab24ddb440e984e344402ddbbbc913ce992b3dc5a0f26f10b",
+      "code": "RETAINED_WEATHER_INPUT_NOT_V03_VARIABLE"
+    },
+    {
+      "evidence_id": "ev_86ec293365608f9c72db81d8800f9d0cf5a0090519a0cd4218aaf74027ec2a9a",
+      "code": "RETAINED_WEATHER_INPUT_NOT_V03_VARIABLE"
+    }
+  ],
+  "catalog_projection": [
+    {
+      "profile": {
+        "id": "rice.mm.calendar-5-sessions-0@1",
+        "crop_id": "ecocrop.1574@1",
+        "region_id": "MM-FAO-AEZ-001",
+        "production_system": "rainfed_lowland",
+        "cultivar": null,
+        "country": "MM",
+        "agroecological_zone": "MM-FAO-AEZ-001",
+        "season": "Monsoon Rice",
+        "source_context": "Provider crop code 0303 / Rice; rainfed, lowland, favorable",
+        "recommendation_eligible": false,
+        "approved_for_candidates": false,
+        "review": "reference_only",
+        "executable_rules": [],
+        "parameters": {
+          "planting_window": {
+            "state": "available",
+            "value": {
+              "first_mmdd": 601,
+              "last_mmdd": 731,
+              "wraps_year": false,
+              "advisory": true
+            },
+            "unit": "MMDD",
+            "statistic": "advisory month/day endpoints; not guaranteed field window",
+            "temporal_support": "Seasonal calendar; lastUpdated 2021-02-26",
+            "spatial_support": "A. Bago, Kachin River-Side Land; advisory agroecological zone, not farm boundary",
+            "method": "Source factual extraction",
+            "uncertainty": "Unquantified; source descriptors are not calibrated local confidence intervals.",
+            "claim_ids": [
+              "rice.mm.calendar-5-sessions-0@1.planting_window"
+            ],
+            "review": "reference_only",
+            "missing_reason": null
+          },
+          "harvest_window": {
+            "state": "available",
+            "value": {
+              "first_mmdd": 1001,
+              "last_mmdd": 1231,
+              "wraps_year": false,
+              "advisory": true
+            },
+            "unit": "MMDD",
+            "statistic": "advisory month/day endpoints; not guaranteed field window",
+            "temporal_support": "Seasonal calendar; lastUpdated 2021-02-26",
+            "spatial_support": "A. Bago, Kachin River-Side Land; advisory agroecological zone, not farm boundary",
+            "method": "Source factual extraction",
+            "uncertainty": "Unquantified; source descriptors are not calibrated local confidence intervals.",
+            "claim_ids": [
+              "rice.mm.calendar-5-sessions-0@1.harvest_window"
+            ],
+            "review": "reference_only",
+            "missing_reason": null
+          },
+          "growing_duration": {
+            "state": "available",
+            "value": {
+              "min": 135.0,
+              "max": 165.0
+            },
+            "unit": "days",
+            "statistic": "advisory source duration; inclusive-day convention unknown",
+            "temporal_support": "Seasonal calendar; lastUpdated 2021-02-26",
+            "spatial_support": "A. Bago, Kachin River-Side Land; advisory agroecological zone, not farm boundary",
+            "method": "Source factual extraction",
+            "uncertainty": "Unquantified; source descriptors are not calibrated local confidence intervals.",
+            "claim_ids": [
+              "rice.mm.calendar-5-sessions-0@1.growing_duration"
+            ],
+            "review": "reference_only",
+            "missing_reason": null
+          },
+          "ecological_temperature": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "daily_extreme_temperature": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "growing_degree_days": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "annual_precipitation": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "growing_period_rainfall": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "water_demand": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "et0_method": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "kc_stages": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "drought_tolerance": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "flooding_tolerance": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "stage_vulnerabilities": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "ecological_soil_ph": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "soil_ph_by_depth": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "soil_texture": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "soil_drainage": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "ecological_soil_depth": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "irrigation_requirements": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "flooded_management": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "succession": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "crop_history_relationships": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "altitude": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "ecological_crop_cycle": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          },
+          "climate_zone": {
+            "state": "unknown",
+            "value": null,
+            "unit": null,
+            "statistic": "unknown",
+            "temporal_support": "unknown",
+            "spatial_support": "unknown",
+            "method": "unknown",
+            "claim_ids": [],
+            "review": "reference_only",
+            "uncertainty": "unquantified",
+            "missing_reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+          }
+        },
+        "limitations": [
+          "Reference only; neither a farm observation nor an independently accepted executable requirement."
+        ]
+      },
+      "crop": {
+        "id": "ecocrop.1574@1",
+        "scientific_name": "Oryza sativa",
+        "aliases": [
+          "rice",
+          "paddy",
+          "paddy rice"
+        ],
+        "family": "Poaceae",
+        "categories": [
+          "cereals_grains"
+        ],
+        "agricultural_basis": "Official crop datasheet use plus GRIN species check",
+        "identity_claim_id": "identity-1574",
+        "profile_coverage": "reference_profiles",
+        "recommendation_eligible": false,
+        "approved_for_candidates": false,
+        "review": "reference_only"
+      },
+      "claims": [
+        {
+          "id": "identity-1574",
+          "source_id": "grin_rice_26077",
+          "source_version": "GRIN-Global public website 2.3.12; taxon record revision unspecified",
+          "locator": "Taxon heading; Nomenclature/Summary/Family; ECOCROP names and editorial English aliases",
+          "supporting_source_ids": [
+            "ecocrop_rice"
+          ],
+          "crop_id": "ecocrop.1574@1",
+          "parameter": "identity",
+          "value": {
+            "scientific_name": "Oryza sativa",
+            "aliases": [
+              "rice",
+              "paddy",
+              "paddy rice"
+            ],
+            "family": "Poaceae"
+          },
+          "unit": "taxonomic_identity",
+          "statistic": "species identity; aliases do not establish requirements",
+          "region_id": null,
+          "production_system": null,
+          "cultivar": null,
+          "temporal_support": "Source reference; not a dated environmental observation",
+          "spatial_support": "Global species reference; regional applicability unverified",
+          "method": "GRIN identity/family checked; documented editorial English alias normalization",
+          "review": "reference_only",
+          "evidence_kind": "taxonomy",
+          "uncertainty": "Unquantified; source descriptors are not calibrated local confidence intervals.",
+          "limitations": [
+            "Reference only; neither a farm observation nor an independently accepted executable requirement.",
+            "Additional mirror identities have not been independently reconciled against current accepted taxonomy."
+          ]
+        },
+        {
+          "id": "rice.mm.calendar-5-sessions-0@1.planting_window",
+          "source_id": "fao_calendar_mm",
+          "source_version": "API v1 snapshot 2026-11-14; Myanmar records lastUpdated 2021-02-26",
+          "locator": "/5/sessions/0/early_sowing + later_sowing",
+          "supporting_source_ids": [],
+          "crop_id": "ecocrop.1574@1",
+          "parameter": "planting_window",
+          "value": {
+            "first_mmdd": 601,
+            "last_mmdd": 731,
+            "wraps_year": false,
+            "advisory": true
+          },
+          "unit": "MMDD",
+          "statistic": "advisory month/day endpoints; not guaranteed field window",
+          "region_id": "MM-FAO-AEZ-001",
+          "production_system": "rainfed_lowland",
+          "cultivar": null,
+          "temporal_support": "Seasonal calendar; lastUpdated 2021-02-26",
+          "spatial_support": "A. Bago, Kachin River-Side Land; advisory agroecological zone, not farm boundary",
+          "method": "Source factual extraction",
+          "review": "reference_only",
+          "evidence_kind": "advisory_calendar",
+          "uncertainty": "Unquantified; source descriptors are not calibrated local confidence intervals.",
+          "limitations": [
+            "Reference only; neither a farm observation nor an independently accepted executable requirement.",
+            "Provider crop code 0303 / Rice; rainfed, lowland, favorable",
+            "Calendar periods do not guarantee a compatible planting/harvest pair or duration.",
+            "No irrigation adequacy, rainfall requirement, precise cultivar or field drainage supplied."
+          ]
+        },
+        {
+          "id": "rice.mm.calendar-5-sessions-0@1.harvest_window",
+          "source_id": "fao_calendar_mm",
+          "source_version": "API v1 snapshot 2026-11-14; Myanmar records lastUpdated 2021-02-26",
+          "locator": "/5/sessions/0/early_harvest + late_harvest",
+          "supporting_source_ids": [],
+          "crop_id": "ecocrop.1574@1",
+          "parameter": "harvest_window",
+          "value": {
+            "first_mmdd": 1001,
+            "last_mmdd": 1231,
+            "wraps_year": false,
+            "advisory": true
+          },
+          "unit": "MMDD",
+          "statistic": "advisory month/day endpoints; not guaranteed field window",
+          "region_id": "MM-FAO-AEZ-001",
+          "production_system": "rainfed_lowland",
+          "cultivar": null,
+          "temporal_support": "Seasonal calendar; lastUpdated 2021-02-26",
+          "spatial_support": "A. Bago, Kachin River-Side Land; advisory agroecological zone, not farm boundary",
+          "method": "Source factual extraction",
+          "review": "reference_only",
+          "evidence_kind": "advisory_calendar",
+          "uncertainty": "Unquantified; source descriptors are not calibrated local confidence intervals.",
+          "limitations": [
+            "Reference only; neither a farm observation nor an independently accepted executable requirement.",
+            "Provider crop code 0303 / Rice; rainfed, lowland, favorable",
+            "Calendar periods do not guarantee a compatible planting/harvest pair or duration.",
+            "No irrigation adequacy, rainfall requirement, precise cultivar or field drainage supplied."
+          ]
+        },
+        {
+          "id": "rice.mm.calendar-5-sessions-0@1.growing_duration",
+          "source_id": "fao_calendar_mm",
+          "source_version": "API v1 snapshot 2026-11-14; Myanmar records lastUpdated 2021-02-26",
+          "locator": "/5/sessions/0/growing_period",
+          "supporting_source_ids": [],
+          "crop_id": "ecocrop.1574@1",
+          "parameter": "growing_duration",
+          "value": {
+            "min": 135.0,
+            "max": 165.0
+          },
+          "unit": "days",
+          "statistic": "advisory source duration; inclusive-day convention unknown",
+          "region_id": "MM-FAO-AEZ-001",
+          "production_system": "rainfed_lowland",
+          "cultivar": null,
+          "temporal_support": "Seasonal calendar; lastUpdated 2021-02-26",
+          "spatial_support": "A. Bago, Kachin River-Side Land; advisory agroecological zone, not farm boundary",
+          "method": "Source factual extraction",
+          "review": "reference_only",
+          "evidence_kind": "advisory_calendar",
+          "uncertainty": "Unquantified; source descriptors are not calibrated local confidence intervals.",
+          "limitations": [
+            "Reference only; neither a farm observation nor an independently accepted executable requirement.",
+            "Provider crop code 0303 / Rice; rainfed, lowland, favorable",
+            "Calendar periods do not guarantee a compatible planting/harvest pair or duration.",
+            "No irrigation adequacy, rainfall requirement, precise cultivar or field drainage supplied."
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "id": "fao_calendar_mm",
+          "dataset_id": "crop_calendar",
+          "title": "FAO Crop Calendar Myanmar sessions",
+          "publisher": "FAO",
+          "url": "https://api-cropcalendar.apps.fao.org/api/v1/countries/MM/cropCalendar?language=en",
+          "version": "API v1 snapshot 2026-11-14; Myanmar records lastUpdated 2021-02-26",
+          "publication_date": null,
+          "publication_date_precision": "unknown",
+          "retrieved_at": null,
+          "retrieval_date": "2026-11-14",
+          "access_status": "captured",
+          "review": "reference_only",
+          "license": "No dataset-specific license established; selected numerical facts only",
+          "license_url": null,
+          "rights_note": "Retain attribution and limitations. Full response redistributed only where original_file is present; other sources have selected factual extracts/metadata, not licensed full-text copies. No images, logos or third-party figures copied.",
+          "attribution": "FAO; FAO Crop Calendar Myanmar sessions; API v1 snapshot 2026-11-14; Myanmar records lastUpdated 2021-02-26; https://api-cropcalendar.apps.fao.org/api/v1/countries/MM/cropCalendar?language=en",
+          "response_sha256": "5566904e051b0df338a9a54dd7d241a83b270a532537facb1acaac86395ae842",
+          "original_file": null,
+          "limitations": [
+            "Source inspection is a reference desk review, not independent agronomic acceptance.",
+            "Publication/revision and local applicability remain bounded by this source."
+          ]
+        },
+        {
+          "id": "ecocrop_rice",
+          "dataset_id": "ecocrop",
+          "title": "ECOCROP data sheet 1574: Oryza sativa",
+          "publisher": "FAO",
+          "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1574",
+          "version": "historical database; discontinued circa 2015; per-sheet publication unknown",
+          "publication_date": null,
+          "publication_date_precision": "unknown",
+          "retrieved_at": null,
+          "retrieval_date": "2026-11-14",
+          "access_status": "captured",
+          "review": "reference_only",
+          "license": "CC-BY-4.0 per official ECOCROP dataset metadata",
+          "license_url": "https://creativecommons.org/licenses/by/4.0/",
+          "rights_note": "Retain attribution and limitations. Full response redistributed only where original_file is present; other sources have selected factual extracts/metadata, not licensed full-text copies. No images, logos or third-party figures copied.",
+          "attribution": "FAO; ECOCROP data sheet 1574: Oryza sativa; historical database; discontinued circa 2015; per-sheet publication unknown; https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1574",
+          "response_sha256": "73e150aaf5c203a6b4c55e95d87284cfd3b5c70a425b888c9c436bb74b217e6c",
+          "original_file": "originals/ecocrop_rice.html",
+          "limitations": [
+            "Source inspection is a reference desk review, not independent agronomic acceptance.",
+            "Publication/revision and local applicability remain bounded by this source."
+          ]
+        },
+        {
+          "id": "grin_rice_26077",
+          "dataset_id": "grin",
+          "title": "GRIN Taxonomy: Oryza sativa",
+          "publisher": "USDA ARS",
+          "url": "https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=26077",
+          "version": "GRIN-Global public website 2.3.12; taxon record revision unspecified",
+          "publication_date": null,
+          "publication_date_precision": "unknown",
+          "retrieved_at": null,
+          "retrieval_date": "2026-11-14",
+          "access_status": "captured",
+          "review": "reference_only",
+          "license": "US government taxonomic facts; accession/third-party rights separate",
+          "license_url": null,
+          "rights_note": "Retain attribution and limitations. Full response redistributed only where original_file is present; other sources have selected factual extracts/metadata, not licensed full-text copies. No images, logos or third-party figures copied.",
+          "attribution": "USDA ARS; GRIN Taxonomy: Oryza sativa; GRIN-Global public website 2.3.12; taxon record revision unspecified; https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=26077",
+          "response_sha256": "b265610c690b285eba8c2985798a82968ba9e0ba7794bd4e16394d40cef62d89",
+          "original_file": null,
+          "limitations": [
+            "Source inspection is a reference desk review, not independent agronomic acceptance.",
+            "Publication/revision and local applicability remain bounded by this source."
+          ]
+        }
+      ],
+      "catalog_sha256": "9c61fc394bd73f990fa12cba21d77a3e21028c233b956e1ce31f664178ad241b",
+      "identity_claim_id": "identity-1574",
+      "blocked_conversions": [
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "planting_window",
+          "claim_ids": [
+            "rice.mm.calendar-5-sessions-0@1.planting_window"
+          ],
+          "proposed_condition": "planting_window",
+          "status": "blocked",
+          "reason": "Advisory regional calendar is not an independently accepted permitted planting window."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "harvest_window",
+          "claim_ids": [
+            "rice.mm.calendar-5-sessions-0@1.harvest_window"
+          ],
+          "proposed_condition": null,
+          "status": "blocked",
+          "reason": "v0.3 plans require caller-declared dates; no harvest-window requirement exists."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "growing_duration",
+          "claim_ids": [
+            "rice.mm.calendar-5-sessions-0@1.growing_duration"
+          ],
+          "proposed_condition": "duration",
+          "status": "blocked",
+          "reason": "Cultivar/establishment and inclusive-day convention are unverified; reference only."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "ecological_temperature",
+          "claim_ids": [],
+          "proposed_condition": "temperature",
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "daily_extreme_temperature",
+          "claim_ids": [],
+          "proposed_condition": "temperature",
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "growing_degree_days",
+          "claim_ids": [],
+          "proposed_condition": "growing_degree_days",
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "annual_precipitation",
+          "claim_ids": [],
+          "proposed_condition": "growing_period_rainfall",
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "growing_period_rainfall",
+          "claim_ids": [],
+          "proposed_condition": "growing_period_rainfall",
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "water_demand",
+          "claim_ids": [],
+          "proposed_condition": "crop_evapotranspiration",
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "et0_method",
+          "claim_ids": [],
+          "proposed_condition": "crop_evapotranspiration",
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "kc_stages",
+          "claim_ids": [],
+          "proposed_condition": "crop_evapotranspiration",
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "drought_tolerance",
+          "claim_ids": [],
+          "proposed_condition": null,
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "flooding_tolerance",
+          "claim_ids": [],
+          "proposed_condition": null,
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "stage_vulnerabilities",
+          "claim_ids": [],
+          "proposed_condition": null,
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "ecological_soil_ph",
+          "claim_ids": [],
+          "proposed_condition": "soil_numeric",
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "soil_ph_by_depth",
+          "claim_ids": [],
+          "proposed_condition": "soil_numeric",
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "soil_texture",
+          "claim_ids": [],
+          "proposed_condition": "soil_category",
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "soil_drainage",
+          "claim_ids": [],
+          "proposed_condition": "soil_category",
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "ecological_soil_depth",
+          "claim_ids": [],
+          "proposed_condition": null,
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "irrigation_requirements",
+          "claim_ids": [],
+          "proposed_condition": "irrigation_required",
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "flooded_management",
+          "claim_ids": [],
+          "proposed_condition": "flooded_management",
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "succession",
+          "claim_ids": [],
+          "proposed_condition": "succession",
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "crop_history_relationships",
+          "claim_ids": [],
+          "proposed_condition": "succession",
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "altitude",
+          "claim_ids": [],
+          "proposed_condition": null,
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "ecological_crop_cycle",
+          "claim_ids": [],
+          "proposed_condition": null,
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        },
+        {
+          "profile_id": "rice.mm.calendar-5-sessions-0@1",
+          "parameter": "climate_zone",
+          "claim_ids": [],
+          "proposed_condition": null,
+          "status": "blocked",
+          "reason": "No independently applicable source claim accepted for this crop, region, cultivar, system and statistic."
+        }
+      ],
+      "recommendation_eligible": false,
+      "rule_review": {
+        "source_sha": "5ffe71e45f0f141d0e383cd437ab35c843960dc6",
+        "source_pr": "https://github.com/SkyRR23/EarthSync/pull/26",
+        "source_package_sha256": "0771cc950de3eda4c47c283616728102d3256d1f5233fb503f93ad34939d3c84",
+        "source_path": "data/crop-rule-candidates/v1/package.json",
+        "review_kind": "Independent automated scientific desk review; no credentialed agronomist or field applicability approval",
+        "executable_rule_count": 0,
+        "candidate_count": 60,
+        "method_findings": {
+          "kc_curve": "FAO-56 Eq.66: constant initial/mid stages; linear development/late stages",
+          "synthetic_example_28": {
+            "etc_mm_with_interpolation": 358.5,
+            "etc_mm_with_four_constant_endpoints": 381.0,
+            "synthetic_et0_mm_per_day": 5,
+            "days": 100,
+            "field_applicability": false
+          },
+          "sesame_table_11": "Official HTML stage lengths sum to 110 days beside a stated total of 100; unresolved, conversion blocked"
+        },
+        "status": "blocked_or_not_independently_reviewed",
+        "candidates": [
+          {
+            "id": "7v.rice.planting_window@1",
+            "crop_id": "ecocrop.1574@1",
+            "domain": "planting_window",
+            "execution_status": "blocked",
+            "recommendation_eligible": false,
+            "approved_for_candidates": false,
+            "block_reason": "Calendar remains dated advisory context; AEZ label does not locate a farm or establish a safe planting constraint.",
+            "required_evidence": [
+              "Local extension/agronomist review of crop identity, cultivar, establishment, geography and water regime.",
+              "Explicit date convention, relevant year and weather/soil contingency."
+            ],
+            "contradictions_and_limits": [
+              "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+              "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+            ],
+            "review": {
+              "source_fact": "verified",
+              "method_numerically_verified": false,
+              "applicable_rule_independently_reviewed": false,
+              "needs_agronomist_field_validation": true,
+              "unsupported": false,
+              "independent_review_status": "desk_review_complete_execution_blocked",
+              "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+              "reviewed_on": "2026-11-14",
+              "agronomist_reviewer": null
+            }
+          },
+          {
+            "id": "7v.rice.growing_duration@1",
+            "crop_id": "ecocrop.1574@1",
+            "domain": "growing_duration",
+            "execution_status": "blocked",
+            "recommendation_eligible": false,
+            "approved_for_candidates": false,
+            "block_reason": "Global species cycles and reported type/calendar durations do not establish inclusive plan duration for a selected cultivar.",
+            "required_evidence": [
+              "Named cultivar/type, establishment origin, harvest purpose, location and season.",
+              "Source versus inclusive end-day convention reconciled."
+            ],
+            "contradictions_and_limits": [
+              "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+              "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+            ],
+            "review": {
+              "source_fact": "verified",
+              "method_numerically_verified": false,
+              "applicable_rule_independently_reviewed": false,
+              "needs_agronomist_field_validation": true,
+              "unsupported": false,
+              "independent_review_status": "desk_review_complete_execution_blocked",
+              "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+              "reviewed_on": "2026-11-14",
+              "agronomist_reviewer": null
+            }
+          },
+          {
+            "id": "7v.rice.temperature@1",
+            "crop_id": "ecocrop.1574@1",
+            "domain": "temperature",
+            "execution_status": "blocked",
+            "recommendation_eligible": false,
+            "approved_for_candidates": false,
+            "block_reason": "Seasonal average Tmin/Tmax envelopes cannot bound each daily extreme; monthly means and GDD are different statistics.",
+            "required_evidence": [
+              "Original stage/cultivar-specific daily-extreme or thermal-time evidence.",
+              "Exact temporal statistic and accepted regional data with full period coverage."
+            ],
+            "contradictions_and_limits": [
+              "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+              "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+            ],
+            "review": {
+              "source_fact": "verified",
+              "method_numerically_verified": false,
+              "applicable_rule_independently_reviewed": false,
+              "needs_agronomist_field_validation": true,
+              "unsupported": false,
+              "independent_review_status": "desk_review_complete_execution_blocked",
+              "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+              "reviewed_on": "2026-11-14",
+              "agronomist_reviewer": null
+            }
+          },
+          {
+            "id": "7v.rice.growing_period_rainfall@1",
+            "crop_id": "ecocrop.1574@1",
+            "domain": "growing_period_rainfall",
+            "execution_status": "blocked",
+            "recommendation_eligible": false,
+            "approved_for_candidates": false,
+            "block_reason": "Annual ecological envelopes cannot be prorated into growing-period rainfall, effective rain, ETc or irrigation demand.",
+            "required_evidence": [
+              "Original crop-season rainfall requirement with period/statistic/system and cultivar.",
+              "Separate ETc, effective rain, storage, irrigation and paddy loss accounting where relevant."
+            ],
+            "contradictions_and_limits": [
+              "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+              "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+            ],
+            "review": {
+              "source_fact": "verified",
+              "method_numerically_verified": false,
+              "applicable_rule_independently_reviewed": false,
+              "needs_agronomist_field_validation": true,
+              "unsupported": false,
+              "independent_review_status": "desk_review_complete_execution_blocked",
+              "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+              "reviewed_on": "2026-11-14",
+              "agronomist_reviewer": null
+            }
+          },
+          {
+            "id": "7v.rice.soil_ph@1",
+            "crop_id": "ecocrop.1574@1",
+            "domain": "soil_ph",
+            "execution_status": "blocked",
+            "recommendation_eligible": false,
+            "approved_for_candidates": false,
+            "block_reason": "Ecological pH has no accepted depth or chemical method; ecological root depth is not a sample layer.",
+            "required_evidence": [
+              "Crop requirement at explicit depth and pH method (water/salt).",
+              "Representative soil evidence with units, uncertainty and temporal support."
+            ],
+            "contradictions_and_limits": [
+              "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+              "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+            ],
+            "review": {
+              "source_fact": "partially_verified",
+              "method_numerically_verified": false,
+              "applicable_rule_independently_reviewed": false,
+              "needs_agronomist_field_validation": true,
+              "unsupported": false,
+              "independent_review_status": "desk_review_complete_execution_blocked",
+              "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+              "reviewed_on": "2026-11-14",
+              "agronomist_reviewer": null
+            }
+          },
+          {
+            "id": "7v.rice.soil_texture@1",
+            "crop_id": "ecocrop.1574@1",
+            "domain": "soil_texture",
+            "execution_status": "blocked",
+            "recommendation_eligible": false,
+            "approved_for_candidates": false,
+            "block_reason": "Qualitative ecological texture categories need a reviewed crosswalk; absence in maize remains unknown.",
+            "required_evidence": [
+              "Source and engine category vocabulary crosswalk with independent review.",
+              "Field representative texture evidence; texture does not establish drainage."
+            ],
+            "contradictions_and_limits": [
+              "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+              "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+            ],
+            "review": {
+              "source_fact": "verified",
+              "method_numerically_verified": false,
+              "applicable_rule_independently_reviewed": false,
+              "needs_agronomist_field_validation": true,
+              "unsupported": false,
+              "independent_review_status": "desk_review_complete_execution_blocked",
+              "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+              "reviewed_on": "2026-11-14",
+              "agronomist_reviewer": null
+            }
+          },
+          {
+            "id": "7v.rice.soil_drainage@1",
+            "crop_id": "ecocrop.1574@1",
+            "domain": "soil_drainage",
+            "execution_status": "blocked",
+            "recommendation_eligible": false,
+            "approved_for_candidates": false,
+            "block_reason": "Ecological drainage descriptors do not establish present field drainage or flood tolerance.",
+            "required_evidence": [
+              "Reviewed category vocabulary and production-system-specific constraint.",
+              "Attributed field drainage/landform/water-table evidence; no soil-colour proxy."
+            ],
+            "contradictions_and_limits": [
+              "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+              "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+            ],
+            "review": {
+              "source_fact": "verified",
+              "method_numerically_verified": false,
+              "applicable_rule_independently_reviewed": false,
+              "needs_agronomist_field_validation": true,
+              "unsupported": false,
+              "independent_review_status": "desk_review_complete_execution_blocked",
+              "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+              "reviewed_on": "2026-11-14",
+              "agronomist_reviewer": null
+            }
+          },
+          {
+            "id": "7v.rice.flood_tolerance@1",
+            "crop_id": "ecocrop.1574@1",
+            "domain": "flood_tolerance",
+            "execution_status": "blocked",
+            "recommendation_eligible": false,
+            "approved_for_candidates": false,
+            "block_reason": "No validated stage-specific flood depth, duration or recovery threshold; irrigation and paddy culture do not prove submergence tolerance.",
+            "required_evidence": [
+              "Original cultivar/stage-specific flood experiments and quantitative exposure definition.",
+              "Separate rice upland, lowland, delayed flooding and management regimes; v0.3 has no flood-injury requirement."
+            ],
+            "contradictions_and_limits": [
+              "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+              "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+            ],
+            "review": {
+              "source_fact": "not_independently_rechecked",
+              "method_numerically_verified": false,
+              "applicable_rule_independently_reviewed": false,
+              "needs_agronomist_field_validation": true,
+              "unsupported": false,
+              "independent_review_status": "desk_review_complete_execution_blocked",
+              "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+              "reviewed_on": "2026-11-14",
+              "agronomist_reviewer": null
+            }
+          },
+          {
+            "id": "7v.rice.drought_stage_sensitivity@1",
+            "crop_id": "ecocrop.1574@1",
+            "domain": "drought_stage_sensitivity",
+            "execution_status": "blocked",
+            "recommendation_eligible": false,
+            "approved_for_candidates": false,
+            "block_reason": "Training sensitivity classes lack quantitative drought exposure and crop-stage dates; generic tolerance cannot waive water requirements.",
+            "required_evidence": [
+              "Stage/cultivar-specific intensity-duration evidence and uncertainty.",
+              "Validated phenology and soil-water exposure; v0.3 has no stage-injury condition."
+            ],
+            "contradictions_and_limits": [
+              "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+              "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+            ],
+            "review": {
+              "source_fact": "verified",
+              "method_numerically_verified": false,
+              "applicable_rule_independently_reviewed": false,
+              "needs_agronomist_field_validation": true,
+              "unsupported": false,
+              "independent_review_status": "desk_review_complete_execution_blocked",
+              "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+              "reviewed_on": "2026-11-14",
+              "agronomist_reviewer": null
+            }
+          },
+          {
+            "id": "7v.rice.kc_curve@1",
+            "crop_id": "ecocrop.1574@1",
+            "domain": "kc_curve",
+            "execution_status": "blocked",
+            "recommendation_eligible": false,
+            "approved_for_candidates": false,
+            "block_reason": "Source Kc rows require local adjustments and endpoint selection; v0.3 constant stages cannot silently replace FAO-56 linear transitions.",
+            "required_evidence": [
+              "Applicable Kc initial/wetting and mid/end climate/height corrections.",
+              "Locally reviewed day-indexed linear curve encoding and aligned daily grass-reference ETo.",
+              "Review that ETc is standard-condition demand, not rainfall/irrigation sufficiency."
+            ],
+            "contradictions_and_limits": [
+              "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+              "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+            ],
+            "review": {
+              "source_fact": "verified",
+              "method_numerically_verified": true,
+              "applicable_rule_independently_reviewed": false,
+              "needs_agronomist_field_validation": true,
+              "unsupported": false,
+              "independent_review_status": "desk_review_complete_execution_blocked",
+              "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+              "reviewed_on": "2026-11-14",
+              "agronomist_reviewer": null
+            }
+          },
+          {
+            "id": "7v.rice.stage_duration@1",
+            "crop_id": "ecocrop.1574@1",
+            "domain": "stage_duration",
+            "execution_status": "blocked",
+            "recommendation_eligible": false,
+            "approved_for_candidates": false,
+            "block_reason": "Table 11 stages are regional examples needing local validation; they do not fill calendar-profile stage offsets automatically.",
+            "required_evidence": [
+              "Validated crop/cultivar stage lengths with establishment origin and actual season.",
+              "Resolve any source total disagreement before daily indexing."
+            ],
+            "contradictions_and_limits": [
+              "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+              "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+            ],
+            "review": {
+              "source_fact": "verified",
+              "method_numerically_verified": false,
+              "applicable_rule_independently_reviewed": false,
+              "needs_agronomist_field_validation": true,
+              "unsupported": false,
+              "independent_review_status": "desk_review_complete_execution_blocked",
+              "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+              "reviewed_on": "2026-11-14",
+              "agronomist_reviewer": null
+            }
+          },
+          {
+            "id": "7v.rice.succession@1",
+            "crop_id": "ecocrop.1574@1",
+            "domain": "succession",
+            "execution_status": "blocked",
+            "recommendation_eligible": false,
+            "approved_for_candidates": false,
+            "block_reason": "Published sequences and general family identity do not establish mandatory predecessor or numerical fallow requirements.",
+            "required_evidence": [
+              "Original system/location-specific predecessor and fallow evidence.",
+              "Complete attributed confirmed-field history; elapsed gap is not proof of fallow.",
+              "Separate rotation from intercropping; independently substantiate any N/pest/yield claim."
+            ],
+            "contradictions_and_limits": [
+              "Maintain upland, rainfed lowland, flooded irrigated and NSW delayed permanent-water scopes separately.",
+              "ECOCROP saturated drainage is wet-rice ecological context, not universal rice management."
+            ],
+            "review": {
+              "source_fact": "partially_verified",
+              "method_numerically_verified": false,
+              "applicable_rule_independently_reviewed": false,
+              "needs_agronomist_field_validation": true,
+              "unsupported": false,
+              "independent_review_status": "desk_review_complete_execution_blocked",
+              "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+              "reviewed_on": "2026-11-14",
+              "agronomist_reviewer": null
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "water_findings": {
+    "etc": {
+      "value": null,
+      "status": "missing",
+      "required": [
+        "Independently accepted crop/cultivar/system Kc stages, actual stage dates and local adjustments",
+        "FAO-56 Eq.66 linear development/late-stage interpolation; four constant endpoint stages do not preserve the method (7V review)",
+        "Complete aligned ET0"
+      ]
+    },
+    "effective_rainfall": {
+      "value": null,
+      "status": "missing",
+      "required": [
+        "Field rainfall and accepted runoff/infiltration/interception method"
+      ]
+    },
+    "soil_water_storage": {
+      "value": null,
+      "status": "missing",
+      "required": [
+        "Depth-specific field capacity and wilting point, effective root depth and initial water content"
+      ]
+    },
+    "root_zone_depletion": {
+      "value": null,
+      "status": "missing",
+      "required": [
+        "Initial depletion, daily effective rain, ETc, capillary rise, irrigation and deep percolation"
+      ]
+    },
+    "net_irrigation": {
+      "value": null,
+      "status": "missing",
+      "required": [
+        "Accepted depletion target and complete field water balance"
+      ]
+    },
+    "gross_irrigation": {
+      "value": null,
+      "status": "missing",
+      "required": [
+        "Net irrigation and measured application/conveyance efficiency"
+      ]
+    },
+    "actual_availability": {
+      "value": null,
+      "status": "missing",
+      "required": [
+        "Farmer-confirmed source, allocation, delivery capacity and dates"
+      ]
+    },
+    "water_stress": {
+      "value": null,
+      "status": "missing",
+      "required": [
+        "Actual root-zone depletion, accepted readily available water and crop stress parameters"
+      ]
+    }
+  },
+  "environmental_metrics": [
+    {
+      "day_basis": "NASA_POWER_LST",
+      "days": [
+        {
+          "date": {
+            "day": 3,
+            "month": 7,
+            "year": 2024
+          },
+          "et0_mm": 5.1165884030451645,
+          "intermediate": {
+            "aerodynamic_term_mm": 1.2703089104430252,
+            "day_of_year": 185.0,
+            "declination_rad": 0.3987971126914351,
+            "delta_kpa_c": 0.1619618466269262,
+            "denominator": 0.2711458026269262,
+            "ea_kpa": 1.9549879848189866,
+            "es_kpa": 2.823852442636311,
+            "g_mj_m2_day": 0.0,
+            "gamma_kpa_c": 0.06499045,
+            "inverse_distance": 0.9670305542016264,
+            "ra_mj_m2_day": 41.539946602561685,
+            "radiation_term_mm": 3.8462794926021395,
+            "rn_mj_m2_day": 15.782319910960165,
+            "rnl_mj_m2_day": 4.091380089039835,
+            "rns_mj_m2_day": 19.8737,
+            "rs_rso_raw": 0.8216424532288819,
+            "rs_rso_used": 0.8216424532288819,
+            "rso_mj_m2_day": 31.412690396622196,
+            "sunset_angle_rad": 1.9603969941762847,
+            "tmean_c": 22.095,
+            "vpd_kpa": 0.8688644578173246
+          },
+          "rainfall_mm": 0.16
+        },
+        {
+          "date": {
+            "day": 4,
+            "month": 7,
+            "year": 2024
+          },
+          "et0_mm": 4.461158810990774,
+          "intermediate": {
+            "aerodynamic_term_mm": 1.079280349057392,
+            "day_of_year": 186.0,
+            "declination_rad": 0.3971753171117292,
+            "delta_kpa_c": 0.15803929183523796,
+            "denominator": 0.27145661123523795,
+            "ea_kpa": 2.034328884901337,
+            "es_kpa": 2.7062462857140104,
+            "g_mj_m2_day": 0.0,
+            "gamma_kpa_c": 0.06488405,
+            "inverse_distance": 0.9670598773624287,
+            "ra_mj_m2_day": 41.485618407743615,
+            "radiation_term_mm": 3.381878461933382,
+            "rn_mj_m2_day": 14.237481770234602,
+            "rnl_mj_m2_day": 3.2723182297653963,
+            "rns_mj_m2_day": 17.5098,
+            "rs_rso_raw": 0.7248592611767941,
+            "rs_rso_used": 0.7248592611767941,
+            "rso_mj_m2_day": 31.371607176656717,
+            "sunset_angle_rad": 1.958538106322409,
+            "tmean_c": 21.634999999999998,
+            "vpd_kpa": 0.6719174008126734
+          },
+          "rainfall_mm": 3.32
+        },
+        {
+          "date": {
+            "day": 5,
+            "month": 7,
+            "year": 2024
+          },
+          "et0_mm": 4.383031480061403,
+          "intermediate": {
+            "aerodynamic_term_mm": 1.5614204076064897,
+            "day_of_year": 187.0,
+            "declination_rad": 0.3954358299138177,
+            "delta_kpa_c": 0.1455648182175625,
+            "denominator": 0.2857472358375625,
+            "ea_kpa": 1.79059959104506,
+            "es_kpa": 2.446998392175014,
+            "g_mj_m2_day": 0.0,
+            "gamma_kpa_c": 0.0649173,
+            "inverse_distance": 0.9670989613924745,
+            "ra_mj_m2_day": 41.42763796227027,
+            "radiation_term_mm": 2.8216110724549135,
+            "rn_mj_m2_day": 13.575711602384315,
+            "rnl_mj_m2_day": 3.2949883976156844,
+            "rns_mj_m2_day": 16.8707,
+            "rs_rso_raw": 0.6993796723811406,
+            "rs_rso_used": 0.6993796723811406,
+            "rso_mj_m2_day": 31.32776210867581,
+            "sunset_angle_rad": 1.956548694015415,
+            "tmean_c": 20.105,
+            "vpd_kpa": 0.656398801129954
+          },
+          "rainfall_mm": 0.75
+        },
+        {
+          "date": {
+            "day": 6,
+            "month": 7,
+            "year": 2024
+          },
+          "et0_mm": 4.846836409623925,
+          "intermediate": {
+            "aerodynamic_term_mm": 0.7433633971561898,
+            "day_of_year": 188.0,
+            "declination_rad": 0.3935791665452986,
+            "delta_kpa_c": 0.1580814927718008,
+            "denominator": 0.2503169661718008,
+            "ea_kpa": 1.9636676760301612,
+            "es_kpa": 2.725176682678321,
+            "g_mj_m2_day": 0.0,
+            "gamma_kpa_c": 0.065037,
+            "inverse_distance": 0.9671477947103223,
+            "ra_mj_m2_day": 41.36601314115736,
+            "radiation_term_mm": 4.1034730124677345,
+            "rn_mj_m2_day": 15.925778701634938,
+            "rnl_mj_m2_day": 4.132721298365064,
+            "rns_mj_m2_day": 20.058500000000002,
+            "rs_rso_raw": 0.8327695981909305,
+            "rs_rso_used": 0.8327695981909305,
+            "rso_mj_m2_day": 31.28116114780102,
+            "sunset_angle_rad": 1.9544302222588137,
+            "tmean_c": 21.64,
+            "vpd_kpa": 0.7615090066481596
+          },
+          "rainfall_mm": 0.71
+        },
+        {
+          "date": {
+            "day": 7,
+            "month": 7,
+            "year": 2024
+          },
+          "et0_mm": 4.386068326730708,
+          "intermediate": {
+            "aerodynamic_term_mm": 0.792694593576231,
+            "day_of_year": 189.0,
+            "declination_rad": 0.391605877175598,
+            "delta_kpa_c": 0.17122454880972565,
+            "denominator": 0.27434732772972564,
+            "ea_kpa": 2.281005772982453,
+            "es_kpa": 2.9180550196254487,
+            "g_mj_m2_day": 0.0,
+            "gamma_kpa_c": 0.0649306,
+            "inverse_distance": 0.9672063628456061,
+            "ra_mj_m2_day": 41.30075218806453,
+            "radiation_term_mm": 3.593373733154477,
+            "rn_mj_m2_day": 14.111621833614493,
+            "rnl_mj_m2_day": 2.9592781663855083,
+            "rns_mj_m2_day": 17.0709,
+            "rs_rso_raw": 0.7098531793466807,
+            "rs_rso_used": 0.7098531793466807,
+            "rso_mj_m2_day": 31.231810527924026,
+            "sunset_angle_rad": 1.9521842355180328,
+            "tmean_c": 23.145,
+            "vpd_kpa": 0.6370492466429956
+          },
+          "rainfall_mm": 23.74
+        }
+      ],
+      "et0_partial_sum_mm": 23.193683430451973,
+      "et0_total_mm": 23.193683430451973,
+      "et0_usable_days": 5,
+      "expected_days": 5,
+      "input": {
+        "day_basis": "NASA_POWER_LST",
+        "days": [
+          {
+            "date": {
+              "day": 3,
+              "month": 7,
+              "year": 2024
+            },
+            "dewpoint_c": 17.14,
+            "pressure_kpa": 97.73,
+            "rainfall_mm": 0.16,
+            "solar_mj_m2_day": 25.81,
+            "tmax_c": 28.26,
+            "tmin_c": 15.93,
+            "wind_2m_m_s": 2.0
+          },
+          {
+            "date": {
+              "day": 4,
+              "month": 7,
+              "year": 2024
+            },
+            "dewpoint_c": 17.77,
+            "pressure_kpa": 97.57,
+            "rainfall_mm": 3.32,
+            "solar_mj_m2_day": 22.74,
+            "tmax_c": 26.97,
+            "tmin_c": 16.3,
+            "wind_2m_m_s": 2.2
+          },
+          {
+            "date": {
+              "day": 5,
+              "month": 7,
+              "year": 2024
+            },
+            "dewpoint_c": 15.76,
+            "pressure_kpa": 97.62,
+            "rainfall_mm": 0.75,
+            "solar_mj_m2_day": 21.91,
+            "tmax_c": 24.97,
+            "tmin_c": 15.24,
+            "wind_2m_m_s": 3.41
+          },
+          {
+            "date": {
+              "day": 6,
+              "month": 7,
+              "year": 2024
+            },
+            "dewpoint_c": 17.21,
+            "pressure_kpa": 97.8,
+            "rainfall_mm": 0.71,
+            "solar_mj_m2_day": 26.05,
+            "tmax_c": 27.36,
+            "tmin_c": 15.92,
+            "wind_2m_m_s": 1.23
+          },
+          {
+            "date": {
+              "day": 7,
+              "month": 7,
+              "year": 2024
+            },
+            "dewpoint_c": 19.6,
+            "pressure_kpa": 97.64,
+            "rainfall_mm": 23.74,
+            "solar_mj_m2_day": 22.17,
+            "tmax_c": 27.45,
+            "tmin_c": 18.84,
+            "wind_2m_m_s": 1.73
+          }
+        ],
+        "elevation_m": 310.22,
+        "latitude": 42.0308,
+        "method": "fao56-daily-pm.v1"
+      },
+      "method": "fao56-daily-pm.v1",
+      "rainfall_partial_sum_mm": 28.68,
+      "rainfall_total_mm": 28.68,
+      "rainfall_usable_days": 5
+    }
+  ],
+  "evidence": [
+    {
+      "schema_version": "earthsync.evidence.v1.0",
+      "id": "ev_0c2d834c25c1aa16590c97eedf251991416c39613c30becb5f32a8e351c77548",
+      "provider": "EarthSync Rust / NASA POWER",
+      "dataset": "Calculated FAO-56 reference-grass ET0",
+      "dataset_version": "fao56-daily-pm.v1",
+      "source_url": "https://www.fao.org/4/X0490E/x0490e08.htm",
+      "source_identifier": "fao56-daily-pm.v1",
+      "data_type": "modeled",
+      "spatial": {
+        "crs": "EPSG:4326",
+        "original_crs": "EPSG:4326",
+        "role": "regional_context",
+        "query_point": {
+          "latitude": 42.0308,
+          "longitude": -93.6319
+        },
+        "original_geometry": {
+          "coordinates": [
+            -93.632,
+            42.031,
+            310.22
+          ],
+          "type": "Point"
+        },
+        "support": "MERRA-2 0.5\u00b0 \u00d7 0.625\u00b0 meteorology and SYN1deg 1\u00b0 radiation at query point; not field measurements",
+        "resolution_m": null,
+        "resolution_degrees": null,
+        "farm_id": null
+      },
+      "temporal": {
+        "start": "2024-07-03",
+        "end": "2024-07-07",
+        "observed_at": null,
+        "acquired_at": null,
+        "retrieved_at": "2026-11-14T18:08:52.292502Z",
+        "issued_at": null,
+        "day_basis": "NASA_POWER_LST",
+        "unknown_reason": null
+      },
+      "measurements": [
+        {
+          "variable": "et0",
+          "date": "2024-07-03",
+          "original_value": 5.1165884030451645,
+          "original_unit": "mm/day",
+          "value": 5.1165884030451645,
+          "unit": "mm_per_day",
+          "conversion": "FAO-56 daily Penman\u2013Monteith; calculated once in compiled Rust",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "et0",
+          "date": "2024-07-04",
+          "original_value": 4.461158810990774,
+          "original_unit": "mm/day",
+          "value": 4.461158810990774,
+          "unit": "mm_per_day",
+          "conversion": "FAO-56 daily Penman\u2013Monteith; calculated once in compiled Rust",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "et0",
+          "date": "2024-07-05",
+          "original_value": 4.383031480061403,
+          "original_unit": "mm/day",
+          "value": 4.383031480061403,
+          "unit": "mm_per_day",
+          "conversion": "FAO-56 daily Penman\u2013Monteith; calculated once in compiled Rust",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "et0",
+          "date": "2024-07-06",
+          "original_value": 4.846836409623925,
+          "original_unit": "mm/day",
+          "value": 4.846836409623925,
+          "unit": "mm_per_day",
+          "conversion": "FAO-56 daily Penman\u2013Monteith; calculated once in compiled Rust",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "et0",
+          "date": "2024-07-07",
+          "original_value": 4.386068326730708,
+          "original_unit": "mm/day",
+          "value": 4.386068326730708,
+          "unit": "mm_per_day",
+          "conversion": "FAO-56 daily Penman\u2013Monteith; calculated once in compiled Rust",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        }
+      ],
+      "quality_flags": [
+        "DERIVED_REGIONAL_REFERENCE_ET0"
+      ],
+      "missing_reasons": [],
+      "limitations": [
+        "Calculated historical reference-grass ET0 from regional modeled/satellite-derived inputs, not a field observation or forecast.",
+        "MERRA-2 meteorology (0.5 by 0.625 degrees) and SYN1deg radiation (1 degree) are distinct spatial supports, aligned only by requested point and NASA LST date.",
+        "NASA LST is a 15-degree solar-time swath, not the farmer's civil calendar. Provider elevation is model terrain, not surveyed field elevation.",
+        "Daily dewpoint is used in FAO-56 Eq.14; vapour pressure from mean dewpoint approximates mean daily vapour pressure. Below-freezing Dew/Frost Point phase conversion is unvalidated and withheld. No field accuracy or calibrated uncertainty interval is established.",
+        "FAO-56 daily reference grass: albedo 0.23, G=0; clear-sky Rs/Rso capped at 1. Polar night, negative cloud factor, negative ET0 and incompatible inputs are withheld.",
+        "ET0 is not ETc, effective rain, root-zone depletion, irrigation requirement, water stress or proof of water availability."
+      ],
+      "usable_for_assessment": true,
+      "review": "reviewed",
+      "response_sha256": "0490f3b7395ca7d8b178375f2b3dd359174a1019416b4a266c68c39297115072",
+      "source_metadata": {
+        "calculation": {
+          "day_basis": "NASA_POWER_LST",
+          "days": [
+            {
+              "date": {
+                "day": 3,
+                "month": 7,
+                "year": 2024
+              },
+              "et0_mm": 5.1165884030451645,
+              "intermediate": {
+                "aerodynamic_term_mm": 1.2703089104430252,
+                "day_of_year": 185.0,
+                "declination_rad": 0.3987971126914351,
+                "delta_kpa_c": 0.1619618466269262,
+                "denominator": 0.2711458026269262,
+                "ea_kpa": 1.9549879848189866,
+                "es_kpa": 2.823852442636311,
+                "g_mj_m2_day": 0.0,
+                "gamma_kpa_c": 0.06499045,
+                "inverse_distance": 0.9670305542016264,
+                "ra_mj_m2_day": 41.539946602561685,
+                "radiation_term_mm": 3.8462794926021395,
+                "rn_mj_m2_day": 15.782319910960165,
+                "rnl_mj_m2_day": 4.091380089039835,
+                "rns_mj_m2_day": 19.8737,
+                "rs_rso_raw": 0.8216424532288819,
+                "rs_rso_used": 0.8216424532288819,
+                "rso_mj_m2_day": 31.412690396622196,
+                "sunset_angle_rad": 1.9603969941762847,
+                "tmean_c": 22.095,
+                "vpd_kpa": 0.8688644578173246
+              },
+              "rainfall_mm": 0.16
+            },
+            {
+              "date": {
+                "day": 4,
+                "month": 7,
+                "year": 2024
+              },
+              "et0_mm": 4.461158810990774,
+              "intermediate": {
+                "aerodynamic_term_mm": 1.079280349057392,
+                "day_of_year": 186.0,
+                "declination_rad": 0.3971753171117292,
+                "delta_kpa_c": 0.15803929183523796,
+                "denominator": 0.27145661123523795,
+                "ea_kpa": 2.034328884901337,
+                "es_kpa": 2.7062462857140104,
+                "g_mj_m2_day": 0.0,
+                "gamma_kpa_c": 0.06488405,
+                "inverse_distance": 0.9670598773624287,
+                "ra_mj_m2_day": 41.485618407743615,
+                "radiation_term_mm": 3.381878461933382,
+                "rn_mj_m2_day": 14.237481770234602,
+                "rnl_mj_m2_day": 3.2723182297653963,
+                "rns_mj_m2_day": 17.5098,
+                "rs_rso_raw": 0.7248592611767941,
+                "rs_rso_used": 0.7248592611767941,
+                "rso_mj_m2_day": 31.371607176656717,
+                "sunset_angle_rad": 1.958538106322409,
+                "tmean_c": 21.634999999999998,
+                "vpd_kpa": 0.6719174008126734
+              },
+              "rainfall_mm": 3.32
+            },
+            {
+              "date": {
+                "day": 5,
+                "month": 7,
+                "year": 2024
+              },
+              "et0_mm": 4.383031480061403,
+              "intermediate": {
+                "aerodynamic_term_mm": 1.5614204076064897,
+                "day_of_year": 187.0,
+                "declination_rad": 0.3954358299138177,
+                "delta_kpa_c": 0.1455648182175625,
+                "denominator": 0.2857472358375625,
+                "ea_kpa": 1.79059959104506,
+                "es_kpa": 2.446998392175014,
+                "g_mj_m2_day": 0.0,
+                "gamma_kpa_c": 0.0649173,
+                "inverse_distance": 0.9670989613924745,
+                "ra_mj_m2_day": 41.42763796227027,
+                "radiation_term_mm": 2.8216110724549135,
+                "rn_mj_m2_day": 13.575711602384315,
+                "rnl_mj_m2_day": 3.2949883976156844,
+                "rns_mj_m2_day": 16.8707,
+                "rs_rso_raw": 0.6993796723811406,
+                "rs_rso_used": 0.6993796723811406,
+                "rso_mj_m2_day": 31.32776210867581,
+                "sunset_angle_rad": 1.956548694015415,
+                "tmean_c": 20.105,
+                "vpd_kpa": 0.656398801129954
+              },
+              "rainfall_mm": 0.75
+            },
+            {
+              "date": {
+                "day": 6,
+                "month": 7,
+                "year": 2024
+              },
+              "et0_mm": 4.846836409623925,
+              "intermediate": {
+                "aerodynamic_term_mm": 0.7433633971561898,
+                "day_of_year": 188.0,
+                "declination_rad": 0.3935791665452986,
+                "delta_kpa_c": 0.1580814927718008,
+                "denominator": 0.2503169661718008,
+                "ea_kpa": 1.9636676760301612,
+                "es_kpa": 2.725176682678321,
+                "g_mj_m2_day": 0.0,
+                "gamma_kpa_c": 0.065037,
+                "inverse_distance": 0.9671477947103223,
+                "ra_mj_m2_day": 41.36601314115736,
+                "radiation_term_mm": 4.1034730124677345,
+                "rn_mj_m2_day": 15.925778701634938,
+                "rnl_mj_m2_day": 4.132721298365064,
+                "rns_mj_m2_day": 20.058500000000002,
+                "rs_rso_raw": 0.8327695981909305,
+                "rs_rso_used": 0.8327695981909305,
+                "rso_mj_m2_day": 31.28116114780102,
+                "sunset_angle_rad": 1.9544302222588137,
+                "tmean_c": 21.64,
+                "vpd_kpa": 0.7615090066481596
+              },
+              "rainfall_mm": 0.71
+            },
+            {
+              "date": {
+                "day": 7,
+                "month": 7,
+                "year": 2024
+              },
+              "et0_mm": 4.386068326730708,
+              "intermediate": {
+                "aerodynamic_term_mm": 0.792694593576231,
+                "day_of_year": 189.0,
+                "declination_rad": 0.391605877175598,
+                "delta_kpa_c": 0.17122454880972565,
+                "denominator": 0.27434732772972564,
+                "ea_kpa": 2.281005772982453,
+                "es_kpa": 2.9180550196254487,
+                "g_mj_m2_day": 0.0,
+                "gamma_kpa_c": 0.0649306,
+                "inverse_distance": 0.9672063628456061,
+                "ra_mj_m2_day": 41.30075218806453,
+                "radiation_term_mm": 3.593373733154477,
+                "rn_mj_m2_day": 14.111621833614493,
+                "rnl_mj_m2_day": 2.9592781663855083,
+                "rns_mj_m2_day": 17.0709,
+                "rs_rso_raw": 0.7098531793466807,
+                "rs_rso_used": 0.7098531793466807,
+                "rso_mj_m2_day": 31.231810527924026,
+                "sunset_angle_rad": 1.9521842355180328,
+                "tmean_c": 23.145,
+                "vpd_kpa": 0.6370492466429956
+              },
+              "rainfall_mm": 23.74
+            }
+          ],
+          "et0_partial_sum_mm": 23.193683430451973,
+          "et0_total_mm": 23.193683430451973,
+          "et0_usable_days": 5,
+          "expected_days": 5,
+          "input": {
+            "day_basis": "NASA_POWER_LST",
+            "days": [
+              {
+                "date": {
+                  "day": 3,
+                  "month": 7,
+                  "year": 2024
+                },
+                "dewpoint_c": 17.14,
+                "pressure_kpa": 97.73,
+                "rainfall_mm": 0.16,
+                "solar_mj_m2_day": 25.81,
+                "tmax_c": 28.26,
+                "tmin_c": 15.93,
+                "wind_2m_m_s": 2.0
+              },
+              {
+                "date": {
+                  "day": 4,
+                  "month": 7,
+                  "year": 2024
+                },
+                "dewpoint_c": 17.77,
+                "pressure_kpa": 97.57,
+                "rainfall_mm": 3.32,
+                "solar_mj_m2_day": 22.74,
+                "tmax_c": 26.97,
+                "tmin_c": 16.3,
+                "wind_2m_m_s": 2.2
+              },
+              {
+                "date": {
+                  "day": 5,
+                  "month": 7,
+                  "year": 2024
+                },
+                "dewpoint_c": 15.76,
+                "pressure_kpa": 97.62,
+                "rainfall_mm": 0.75,
+                "solar_mj_m2_day": 21.91,
+                "tmax_c": 24.97,
+                "tmin_c": 15.24,
+                "wind_2m_m_s": 3.41
+              },
+              {
+                "date": {
+                  "day": 6,
+                  "month": 7,
+                  "year": 2024
+                },
+                "dewpoint_c": 17.21,
+                "pressure_kpa": 97.8,
+                "rainfall_mm": 0.71,
+                "solar_mj_m2_day": 26.05,
+                "tmax_c": 27.36,
+                "tmin_c": 15.92,
+                "wind_2m_m_s": 1.23
+              },
+              {
+                "date": {
+                  "day": 7,
+                  "month": 7,
+                  "year": 2024
+                },
+                "dewpoint_c": 19.6,
+                "pressure_kpa": 97.64,
+                "rainfall_mm": 23.74,
+                "solar_mj_m2_day": 22.17,
+                "tmax_c": 27.45,
+                "tmin_c": 18.84,
+                "wind_2m_m_s": 1.73
+              }
+            ],
+            "elevation_m": 310.22,
+            "latitude": 42.0308,
+            "method": "fao56-daily-pm.v1"
+          },
+          "method": "fao56-daily-pm.v1",
+          "rainfall_partial_sum_mm": 28.68,
+          "rainfall_total_mm": 28.68,
+          "rainfall_usable_days": 5
+        },
+        "engine_binary_sha256": "ca76c2ac3ae34eaab35182d568293ae140e2b9d0c5438db0f7ceed1252bf899c",
+        "hash_scope": "SHA-256 of canonical calculated result, not a provider HTTP response",
+        "parameter": "et0",
+        "parent_evidence_ids": [
+          "ev_46e6c0ba01c22955623907784c84d71f4c9eb5ff4219ea13298a313cbbe50575",
+          "ev_28b30acdcb2c86a3e62458007355a7ed95047272462bcd0033c34ab674153f61",
+          "ev_a96e50afa6517bae2763878d43e4f6c9668702180279d472d9809a9840833b7a",
+          "ev_e4981d4f567f76ede8211592c67634f1d84745cbb4323dbeca6732b1ecd688ad",
+          "ev_152b833fbe55c3022b0b2c51e82d228b5f8b2720cf20dfc2e5fb582772eec945",
+          "ev_553f9078050466fab24ddb440e984e344402ddbbbc913ce992b3dc5a0f26f10b",
+          "ev_86ec293365608f9c72db81d8800f9d0cf5a0090519a0cd4218aaf74027ec2a9a"
+        ],
+        "parent_response_sha256": {
+          "ev_152b833fbe55c3022b0b2c51e82d228b5f8b2720cf20dfc2e5fb582772eec945": "c1557485a08239c45fd6199cba9b7d0a52ab3a36bbeee7abfc571ffa8c30a686",
+          "ev_28b30acdcb2c86a3e62458007355a7ed95047272462bcd0033c34ab674153f61": "dbe9f9922006ccadf1f9e68ac360f86359a94f454ebcc5c01d87937912f43cac",
+          "ev_46e6c0ba01c22955623907784c84d71f4c9eb5ff4219ea13298a313cbbe50575": "c76b8b1592a7baad5af83638f7e6e0299d623fc387d05670fbbaa9c61289760c",
+          "ev_553f9078050466fab24ddb440e984e344402ddbbbc913ce992b3dc5a0f26f10b": "24e5fd70611e56450b8a6935d1e4ffeda816ba7a0c819cda320c215ea613bc38",
+          "ev_86ec293365608f9c72db81d8800f9d0cf5a0090519a0cd4218aaf74027ec2a9a": "a0bbb0c774941678880343cea03152a74b6cf77fe02565f17db6ccbc4a4769f7",
+          "ev_a96e50afa6517bae2763878d43e4f6c9668702180279d472d9809a9840833b7a": "121df60530bac47cff318ba6b5bd3e81ff22f8220bcf722a03187dfdd60f2305",
+          "ev_e4981d4f567f76ede8211592c67634f1d84745cbb4323dbeca6732b1ecd688ad": "d873a6154df2949c26eae13f5078e9ae63a66cb0bc29fe144871e90d386ba6f8"
+        },
+        "policy": "fao56-daily-pm.v1",
+        "review_scope": "Numerical method and provider semantics; no independent field/crop applicability approval"
+      }
+    },
+    {
+      "schema_version": "earthsync.evidence.v1.0",
+      "id": "ev_46e6c0ba01c22955623907784c84d71f4c9eb5ff4219ea13298a313cbbe50575",
+      "provider": "NASA POWER",
+      "dataset": "POWER daily / MERRA2/POWER",
+      "dataset_version": "v2.10.3",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+      "source_identifier": "power-fao56-inputs.v1:T2M_MIN",
+      "data_type": "modeled",
+      "spatial": {
+        "crs": "EPSG:4326",
+        "original_crs": "EPSG:4326",
+        "role": "regional_context",
+        "query_point": {
+          "latitude": 42.0308,
+          "longitude": -93.6319
+        },
+        "original_geometry": {
+          "coordinates": [
+            -93.632,
+            42.031,
+            310.22
+          ],
+          "type": "Point"
+        },
+        "support": "Native modeled grid context queried at point; not farm measurements or polygon average",
+        "resolution_m": null,
+        "resolution_degrees": [
+          0.5,
+          0.625
+        ],
+        "farm_id": null
+      },
+      "temporal": {
+        "start": "2024-07-03",
+        "end": "2024-07-07",
+        "observed_at": null,
+        "acquired_at": null,
+        "retrieved_at": "2026-11-14T18:08:45.873165Z",
+        "issued_at": null,
+        "day_basis": "NASA_POWER_LST",
+        "unknown_reason": null
+      },
+      "measurements": [
+        {
+          "variable": "tmin",
+          "date": "2024-07-03",
+          "original_value": 15.93,
+          "original_unit": "C",
+          "value": 15.93,
+          "unit": "celsius",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "tmin",
+          "date": "2024-07-04",
+          "original_value": 16.3,
+          "original_unit": "C",
+          "value": 16.3,
+          "unit": "celsius",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "tmin",
+          "date": "2024-07-05",
+          "original_value": 15.24,
+          "original_unit": "C",
+          "value": 15.24,
+          "unit": "celsius",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "tmin",
+          "date": "2024-07-06",
+          "original_value": 15.92,
+          "original_unit": "C",
+          "value": 15.92,
+          "unit": "celsius",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "tmin",
+          "date": "2024-07-07",
+          "original_value": 18.84,
+          "original_unit": "C",
+          "value": 18.84,
+          "unit": "celsius",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        }
+      ],
+      "quality_flags": [
+        "REGIONAL_MODEL_NOT_FIELD_OBSERVATION"
+      ],
+      "missing_reasons": [],
+      "limitations": [
+        "Daily coverage is not proof of local scientific accuracy.",
+        "LST is solar-time swath, not civil farm calendar; no timezone conversion inferred.",
+        "No forecast, ET0, GDD or recommendation calculated by Python."
+      ],
+      "usable_for_assessment": true,
+      "review": "reviewed",
+      "response_sha256": "c76b8b1592a7baad5af83638f7e6e0299d623fc387d05670fbbaa9c61289760c",
+      "source_metadata": {
+        "header": {
+          "api": {
+            "name": "POWER Daily API",
+            "version": "v2.10.3"
+          },
+          "end": "20240707",
+          "fill_value": -999.0,
+          "sources": [
+            "MERRA2",
+            "POWER"
+          ],
+          "start": "20240703",
+          "time_standard": "LST",
+          "title": "NASA/POWER Source Native Resolution Daily Data"
+        },
+        "http_headers": {
+          "content-type": "application/json"
+        },
+        "lineage": {
+          "attribution": "single-parameter header plus pinned NASA parameter catalog and methodology",
+          "provider_sources": [
+            "MERRA2",
+            "POWER"
+          ],
+          "source_review": "NASA-water-source-review.v1"
+        },
+        "messages": [],
+        "parameter": "T2M_MIN",
+        "parameters": {
+          "T2M_MIN": {
+            "longname": "Temperature at 2 Meters Minimum",
+            "units": "C"
+          }
+        },
+        "policy": "power-fao56-inputs.v1",
+        "review_scope": "Technical metadata and transport contract only; no agronomic applicability approval"
+      }
+    },
+    {
+      "schema_version": "earthsync.evidence.v1.0",
+      "id": "ev_28b30acdcb2c86a3e62458007355a7ed95047272462bcd0033c34ab674153f61",
+      "provider": "NASA POWER",
+      "dataset": "POWER daily / MERRA2/POWER",
+      "dataset_version": "v2.10.3",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+      "source_identifier": "power-fao56-inputs.v1:T2M_MAX",
+      "data_type": "modeled",
+      "spatial": {
+        "crs": "EPSG:4326",
+        "original_crs": "EPSG:4326",
+        "role": "regional_context",
+        "query_point": {
+          "latitude": 42.0308,
+          "longitude": -93.6319
+        },
+        "original_geometry": {
+          "coordinates": [
+            -93.632,
+            42.031,
+            310.22
+          ],
+          "type": "Point"
+        },
+        "support": "Native modeled grid context queried at point; not farm measurements or polygon average",
+        "resolution_m": null,
+        "resolution_degrees": [
+          0.5,
+          0.625
+        ],
+        "farm_id": null
+      },
+      "temporal": {
+        "start": "2024-07-03",
+        "end": "2024-07-07",
+        "observed_at": null,
+        "acquired_at": null,
+        "retrieved_at": "2026-11-14T18:08:47.003173Z",
+        "issued_at": null,
+        "day_basis": "NASA_POWER_LST",
+        "unknown_reason": null
+      },
+      "measurements": [
+        {
+          "variable": "tmax",
+          "date": "2024-07-03",
+          "original_value": 28.26,
+          "original_unit": "C",
+          "value": 28.26,
+          "unit": "celsius",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "tmax",
+          "date": "2024-07-04",
+          "original_value": 26.97,
+          "original_unit": "C",
+          "value": 26.97,
+          "unit": "celsius",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "tmax",
+          "date": "2024-07-05",
+          "original_value": 24.97,
+          "original_unit": "C",
+          "value": 24.97,
+          "unit": "celsius",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "tmax",
+          "date": "2024-07-06",
+          "original_value": 27.36,
+          "original_unit": "C",
+          "value": 27.36,
+          "unit": "celsius",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "tmax",
+          "date": "2024-07-07",
+          "original_value": 27.45,
+          "original_unit": "C",
+          "value": 27.45,
+          "unit": "celsius",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        }
+      ],
+      "quality_flags": [
+        "REGIONAL_MODEL_NOT_FIELD_OBSERVATION"
+      ],
+      "missing_reasons": [],
+      "limitations": [
+        "Daily coverage is not proof of local scientific accuracy.",
+        "LST is solar-time swath, not civil farm calendar; no timezone conversion inferred.",
+        "No forecast, ET0, GDD or recommendation calculated by Python."
+      ],
+      "usable_for_assessment": true,
+      "review": "reviewed",
+      "response_sha256": "dbe9f9922006ccadf1f9e68ac360f86359a94f454ebcc5c01d87937912f43cac",
+      "source_metadata": {
+        "header": {
+          "api": {
+            "name": "POWER Daily API",
+            "version": "v2.10.3"
+          },
+          "end": "20240707",
+          "fill_value": -999.0,
+          "sources": [
+            "MERRA2",
+            "POWER"
+          ],
+          "start": "20240703",
+          "time_standard": "LST",
+          "title": "NASA/POWER Source Native Resolution Daily Data"
+        },
+        "http_headers": {
+          "content-type": "application/json"
+        },
+        "lineage": {
+          "attribution": "single-parameter header plus pinned NASA parameter catalog and methodology",
+          "provider_sources": [
+            "MERRA2",
+            "POWER"
+          ],
+          "source_review": "NASA-water-source-review.v1"
+        },
+        "messages": [],
+        "parameter": "T2M_MAX",
+        "parameters": {
+          "T2M_MAX": {
+            "longname": "Temperature at 2 Meters Maximum",
+            "units": "C"
+          }
+        },
+        "policy": "power-fao56-inputs.v1",
+        "review_scope": "Technical metadata and transport contract only; no agronomic applicability approval"
+      }
+    },
+    {
+      "schema_version": "earthsync.evidence.v1.0",
+      "id": "ev_a96e50afa6517bae2763878d43e4f6c9668702180279d472d9809a9840833b7a",
+      "provider": "NASA POWER",
+      "dataset": "POWER daily / MERRA2",
+      "dataset_version": "v2.10.3",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+      "source_identifier": "power-fao56-inputs.v1:PRECTOTCORR",
+      "data_type": "modeled",
+      "spatial": {
+        "crs": "EPSG:4326",
+        "original_crs": "EPSG:4326",
+        "role": "regional_context",
+        "query_point": {
+          "latitude": 42.0308,
+          "longitude": -93.6319
+        },
+        "original_geometry": {
+          "coordinates": [
+            -93.632,
+            42.031,
+            310.22
+          ],
+          "type": "Point"
+        },
+        "support": "Native modeled grid context queried at point; not farm measurements or polygon average",
+        "resolution_m": null,
+        "resolution_degrees": [
+          0.5,
+          0.625
+        ],
+        "farm_id": null
+      },
+      "temporal": {
+        "start": "2024-07-03",
+        "end": "2024-07-07",
+        "observed_at": null,
+        "acquired_at": null,
+        "retrieved_at": "2026-11-14T18:08:48.575831Z",
+        "issued_at": null,
+        "day_basis": "NASA_POWER_LST",
+        "unknown_reason": null
+      },
+      "measurements": [
+        {
+          "variable": "rainfall",
+          "date": "2024-07-03",
+          "original_value": 0.16,
+          "original_unit": "mm/day",
+          "value": 0.16,
+          "unit": "mm_per_day",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "rainfall",
+          "date": "2024-07-04",
+          "original_value": 3.32,
+          "original_unit": "mm/day",
+          "value": 3.32,
+          "unit": "mm_per_day",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "rainfall",
+          "date": "2024-07-05",
+          "original_value": 0.75,
+          "original_unit": "mm/day",
+          "value": 0.75,
+          "unit": "mm_per_day",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "rainfall",
+          "date": "2024-07-06",
+          "original_value": 0.71,
+          "original_unit": "mm/day",
+          "value": 0.71,
+          "unit": "mm_per_day",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "rainfall",
+          "date": "2024-07-07",
+          "original_value": 23.74,
+          "original_unit": "mm/day",
+          "value": 23.74,
+          "unit": "mm_per_day",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        }
+      ],
+      "quality_flags": [
+        "REGIONAL_MODEL_NOT_FIELD_OBSERVATION"
+      ],
+      "missing_reasons": [],
+      "limitations": [
+        "Daily coverage is not proof of local scientific accuracy.",
+        "LST is solar-time swath, not civil farm calendar; no timezone conversion inferred.",
+        "No forecast, ET0, GDD or recommendation calculated by Python."
+      ],
+      "usable_for_assessment": true,
+      "review": "reviewed",
+      "response_sha256": "121df60530bac47cff318ba6b5bd3e81ff22f8220bcf722a03187dfdd60f2305",
+      "source_metadata": {
+        "header": {
+          "api": {
+            "name": "POWER Daily API",
+            "version": "v2.10.3"
+          },
+          "end": "20240707",
+          "fill_value": -999.0,
+          "sources": [
+            "MERRA2"
+          ],
+          "start": "20240703",
+          "time_standard": "LST",
+          "title": "NASA/POWER Source Native Resolution Daily Data"
+        },
+        "http_headers": {
+          "content-type": "application/json"
+        },
+        "lineage": {
+          "attribution": "single-parameter header plus pinned NASA parameter catalog and methodology",
+          "provider_sources": [
+            "MERRA2"
+          ],
+          "source_review": "NASA-water-source-review.v1"
+        },
+        "messages": [],
+        "parameter": "PRECTOTCORR",
+        "parameters": {
+          "PRECTOTCORR": {
+            "longname": "Precipitation Corrected",
+            "units": "mm/day"
+          }
+        },
+        "policy": "power-fao56-inputs.v1",
+        "review_scope": "Technical metadata and transport contract only; no agronomic applicability approval"
+      }
+    },
+    {
+      "schema_version": "earthsync.evidence.v1.0",
+      "id": "ev_e4981d4f567f76ede8211592c67634f1d84745cbb4323dbeca6732b1ecd688ad",
+      "provider": "NASA POWER",
+      "dataset": "POWER daily / MERRA2",
+      "dataset_version": "v2.10.3",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+      "source_identifier": "power-fao56-inputs.v1:T2MDEW",
+      "data_type": "modeled",
+      "spatial": {
+        "crs": "EPSG:4326",
+        "original_crs": "EPSG:4326",
+        "role": "regional_context",
+        "query_point": {
+          "latitude": 42.0308,
+          "longitude": -93.6319
+        },
+        "original_geometry": {
+          "coordinates": [
+            -93.632,
+            42.031,
+            310.22
+          ],
+          "type": "Point"
+        },
+        "support": "Native modeled grid context queried at point; not farm measurements or polygon average",
+        "resolution_m": null,
+        "resolution_degrees": [
+          0.5,
+          0.625
+        ],
+        "farm_id": null
+      },
+      "temporal": {
+        "start": "2024-07-03",
+        "end": "2024-07-07",
+        "observed_at": null,
+        "acquired_at": null,
+        "retrieved_at": "2026-11-14T18:08:49.675267Z",
+        "issued_at": null,
+        "day_basis": "NASA_POWER_LST",
+        "unknown_reason": null
+      },
+      "measurements": [
+        {
+          "variable": "dewpoint",
+          "date": "2024-07-03",
+          "original_value": 17.14,
+          "original_unit": "C",
+          "value": 17.14,
+          "unit": "celsius",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "dewpoint",
+          "date": "2024-07-04",
+          "original_value": 17.77,
+          "original_unit": "C",
+          "value": 17.77,
+          "unit": "celsius",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "dewpoint",
+          "date": "2024-07-05",
+          "original_value": 15.76,
+          "original_unit": "C",
+          "value": 15.76,
+          "unit": "celsius",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "dewpoint",
+          "date": "2024-07-06",
+          "original_value": 17.21,
+          "original_unit": "C",
+          "value": 17.21,
+          "unit": "celsius",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "dewpoint",
+          "date": "2024-07-07",
+          "original_value": 19.6,
+          "original_unit": "C",
+          "value": 19.6,
+          "unit": "celsius",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        }
+      ],
+      "quality_flags": [
+        "REGIONAL_MODEL_NOT_FIELD_OBSERVATION"
+      ],
+      "missing_reasons": [],
+      "limitations": [
+        "Daily coverage is not proof of local scientific accuracy.",
+        "LST is solar-time swath, not civil farm calendar; no timezone conversion inferred.",
+        "No forecast, ET0, GDD or recommendation calculated by Python."
+      ],
+      "usable_for_assessment": true,
+      "review": "reviewed",
+      "response_sha256": "d873a6154df2949c26eae13f5078e9ae63a66cb0bc29fe144871e90d386ba6f8",
+      "source_metadata": {
+        "header": {
+          "api": {
+            "name": "POWER Daily API",
+            "version": "v2.10.3"
+          },
+          "end": "20240707",
+          "fill_value": -999.0,
+          "sources": [
+            "MERRA2"
+          ],
+          "start": "20240703",
+          "time_standard": "LST",
+          "title": "NASA/POWER Source Native Resolution Daily Data"
+        },
+        "http_headers": {
+          "content-type": "application/json"
+        },
+        "lineage": {
+          "attribution": "single-parameter header plus pinned NASA parameter catalog and methodology",
+          "provider_sources": [
+            "MERRA2"
+          ],
+          "source_review": "NASA-water-source-review.v1"
+        },
+        "messages": [],
+        "parameter": "T2MDEW",
+        "parameters": {
+          "T2MDEW": {
+            "longname": "Dew/Frost Point at 2 Meters",
+            "units": "C"
+          }
+        },
+        "policy": "power-fao56-inputs.v1",
+        "review_scope": "Technical metadata and transport contract only; no agronomic applicability approval"
+      }
+    },
+    {
+      "schema_version": "earthsync.evidence.v1.0",
+      "id": "ev_152b833fbe55c3022b0b2c51e82d228b5f8b2720cf20dfc2e5fb582772eec945",
+      "provider": "NASA POWER",
+      "dataset": "POWER daily / MERRA2/POWER",
+      "dataset_version": "v2.10.3",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+      "source_identifier": "power-fao56-inputs.v1:WS2M",
+      "data_type": "modeled",
+      "spatial": {
+        "crs": "EPSG:4326",
+        "original_crs": "EPSG:4326",
+        "role": "regional_context",
+        "query_point": {
+          "latitude": 42.0308,
+          "longitude": -93.6319
+        },
+        "original_geometry": {
+          "coordinates": [
+            -93.632,
+            42.031,
+            310.22
+          ],
+          "type": "Point"
+        },
+        "support": "Native modeled grid context queried at point; not farm measurements or polygon average",
+        "resolution_m": null,
+        "resolution_degrees": [
+          0.5,
+          0.625
+        ],
+        "farm_id": null
+      },
+      "temporal": {
+        "start": "2024-07-03",
+        "end": "2024-07-07",
+        "observed_at": null,
+        "acquired_at": null,
+        "retrieved_at": "2026-11-14T18:08:50.280154Z",
+        "issued_at": null,
+        "day_basis": "NASA_POWER_LST",
+        "unknown_reason": null
+      },
+      "measurements": [
+        {
+          "variable": "wind_2m",
+          "date": "2024-07-03",
+          "original_value": 2.0,
+          "original_unit": "m/s",
+          "value": 2.0,
+          "unit": "m_per_s",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "wind_2m",
+          "date": "2024-07-04",
+          "original_value": 2.2,
+          "original_unit": "m/s",
+          "value": 2.2,
+          "unit": "m_per_s",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "wind_2m",
+          "date": "2024-07-05",
+          "original_value": 3.41,
+          "original_unit": "m/s",
+          "value": 3.41,
+          "unit": "m_per_s",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "wind_2m",
+          "date": "2024-07-06",
+          "original_value": 1.23,
+          "original_unit": "m/s",
+          "value": 1.23,
+          "unit": "m_per_s",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "wind_2m",
+          "date": "2024-07-07",
+          "original_value": 1.73,
+          "original_unit": "m/s",
+          "value": 1.73,
+          "unit": "m_per_s",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        }
+      ],
+      "quality_flags": [
+        "REGIONAL_MODEL_NOT_FIELD_OBSERVATION"
+      ],
+      "missing_reasons": [],
+      "limitations": [
+        "Daily coverage is not proof of local scientific accuracy.",
+        "LST is solar-time swath, not civil farm calendar; no timezone conversion inferred.",
+        "No forecast, ET0, GDD or recommendation calculated by Python."
+      ],
+      "usable_for_assessment": true,
+      "review": "reviewed",
+      "response_sha256": "c1557485a08239c45fd6199cba9b7d0a52ab3a36bbeee7abfc571ffa8c30a686",
+      "source_metadata": {
+        "header": {
+          "api": {
+            "name": "POWER Daily API",
+            "version": "v2.10.3"
+          },
+          "end": "20240707",
+          "fill_value": -999.0,
+          "sources": [
+            "MERRA2",
+            "POWER"
+          ],
+          "start": "20240703",
+          "time_standard": "LST",
+          "title": "NASA/POWER Source Native Resolution Daily Data"
+        },
+        "http_headers": {
+          "content-type": "application/json"
+        },
+        "lineage": {
+          "attribution": "single-parameter header plus pinned NASA parameter catalog and methodology",
+          "provider_sources": [
+            "MERRA2",
+            "POWER"
+          ],
+          "source_review": "NASA-water-source-review.v1"
+        },
+        "messages": [],
+        "parameter": "WS2M",
+        "parameters": {
+          "WS2M": {
+            "longname": "Wind Speed at 2 Meters",
+            "units": "m/s"
+          }
+        },
+        "policy": "power-fao56-inputs.v1",
+        "review_scope": "Technical metadata and transport contract only; no agronomic applicability approval"
+      }
+    },
+    {
+      "schema_version": "earthsync.evidence.v1.0",
+      "id": "ev_553f9078050466fab24ddb440e984e344402ddbbbc913ce992b3dc5a0f26f10b",
+      "provider": "NASA POWER",
+      "dataset": "POWER daily / MERRA2",
+      "dataset_version": "v2.10.3",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+      "source_identifier": "power-fao56-inputs.v1:PS",
+      "data_type": "modeled",
+      "spatial": {
+        "crs": "EPSG:4326",
+        "original_crs": "EPSG:4326",
+        "role": "regional_context",
+        "query_point": {
+          "latitude": 42.0308,
+          "longitude": -93.6319
+        },
+        "original_geometry": {
+          "coordinates": [
+            -93.632,
+            42.031,
+            310.22
+          ],
+          "type": "Point"
+        },
+        "support": "Native modeled grid context queried at point; not farm measurements or polygon average",
+        "resolution_m": null,
+        "resolution_degrees": [
+          0.5,
+          0.625
+        ],
+        "farm_id": null
+      },
+      "temporal": {
+        "start": "2024-07-03",
+        "end": "2024-07-07",
+        "observed_at": null,
+        "acquired_at": null,
+        "retrieved_at": "2026-11-14T18:08:51.576848Z",
+        "issued_at": null,
+        "day_basis": "NASA_POWER_LST",
+        "unknown_reason": null
+      },
+      "measurements": [
+        {
+          "variable": "pressure",
+          "date": "2024-07-03",
+          "original_value": 97.73,
+          "original_unit": "kPa",
+          "value": 97.73,
+          "unit": "kPa",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "pressure",
+          "date": "2024-07-04",
+          "original_value": 97.57,
+          "original_unit": "kPa",
+          "value": 97.57,
+          "unit": "kPa",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "pressure",
+          "date": "2024-07-05",
+          "original_value": 97.62,
+          "original_unit": "kPa",
+          "value": 97.62,
+          "unit": "kPa",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "pressure",
+          "date": "2024-07-06",
+          "original_value": 97.8,
+          "original_unit": "kPa",
+          "value": 97.8,
+          "unit": "kPa",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "pressure",
+          "date": "2024-07-07",
+          "original_value": 97.64,
+          "original_unit": "kPa",
+          "value": 97.64,
+          "unit": "kPa",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        }
+      ],
+      "quality_flags": [
+        "REGIONAL_MODEL_NOT_FIELD_OBSERVATION"
+      ],
+      "missing_reasons": [],
+      "limitations": [
+        "Daily coverage is not proof of local scientific accuracy.",
+        "LST is solar-time swath, not civil farm calendar; no timezone conversion inferred.",
+        "No forecast, ET0, GDD or recommendation calculated by Python."
+      ],
+      "usable_for_assessment": true,
+      "review": "reviewed",
+      "response_sha256": "24e5fd70611e56450b8a6935d1e4ffeda816ba7a0c819cda320c215ea613bc38",
+      "source_metadata": {
+        "header": {
+          "api": {
+            "name": "POWER Daily API",
+            "version": "v2.10.3"
+          },
+          "end": "20240707",
+          "fill_value": -999.0,
+          "sources": [
+            "MERRA2"
+          ],
+          "start": "20240703",
+          "time_standard": "LST",
+          "title": "NASA/POWER Source Native Resolution Daily Data"
+        },
+        "http_headers": {
+          "content-type": "application/json"
+        },
+        "lineage": {
+          "attribution": "single-parameter header plus pinned NASA parameter catalog and methodology",
+          "provider_sources": [
+            "MERRA2"
+          ],
+          "source_review": "NASA-water-source-review.v1"
+        },
+        "messages": [],
+        "parameter": "PS",
+        "parameters": {
+          "PS": {
+            "longname": "Surface Pressure",
+            "units": "kPa"
+          }
+        },
+        "policy": "power-fao56-inputs.v1",
+        "review_scope": "Technical metadata and transport contract only; no agronomic applicability approval"
+      }
+    },
+    {
+      "schema_version": "earthsync.evidence.v1.0",
+      "id": "ev_86ec293365608f9c72db81d8800f9d0cf5a0090519a0cd4218aaf74027ec2a9a",
+      "provider": "NASA POWER",
+      "dataset": "POWER daily / SYN1DEG",
+      "dataset_version": "v2.10.3",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point",
+      "source_identifier": "power-fao56-inputs.v1:ALLSKY_SFC_SW_DWN",
+      "data_type": "modeled",
+      "spatial": {
+        "crs": "EPSG:4326",
+        "original_crs": "EPSG:4326",
+        "role": "regional_context",
+        "query_point": {
+          "latitude": 42.0308,
+          "longitude": -93.6319
+        },
+        "original_geometry": {
+          "coordinates": [
+            -93.632,
+            42.031,
+            310.22
+          ],
+          "type": "Point"
+        },
+        "support": "Native modeled grid context queried at point; not farm measurements or polygon average",
+        "resolution_m": null,
+        "resolution_degrees": [
+          1.0,
+          1.0
+        ],
+        "farm_id": null
+      },
+      "temporal": {
+        "start": "2024-07-03",
+        "end": "2024-07-07",
+        "observed_at": null,
+        "acquired_at": null,
+        "retrieved_at": "2026-11-14T18:08:52.272865Z",
+        "issued_at": null,
+        "day_basis": "NASA_POWER_LST",
+        "unknown_reason": null
+      },
+      "measurements": [
+        {
+          "variable": "solar_radiation",
+          "date": "2024-07-03",
+          "original_value": 25.81,
+          "original_unit": "MJ/m^2/day",
+          "value": 25.81,
+          "unit": "MJ_per_m2_day",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "solar_radiation",
+          "date": "2024-07-04",
+          "original_value": 22.74,
+          "original_unit": "MJ/m^2/day",
+          "value": 22.74,
+          "unit": "MJ_per_m2_day",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "solar_radiation",
+          "date": "2024-07-05",
+          "original_value": 21.91,
+          "original_unit": "MJ/m^2/day",
+          "value": 21.91,
+          "unit": "MJ_per_m2_day",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "solar_radiation",
+          "date": "2024-07-06",
+          "original_value": 26.05,
+          "original_unit": "MJ/m^2/day",
+          "value": 26.05,
+          "unit": "MJ_per_m2_day",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        },
+        {
+          "variable": "solar_radiation",
+          "date": "2024-07-07",
+          "original_value": 22.17,
+          "original_unit": "MJ/m^2/day",
+          "value": 22.17,
+          "unit": "MJ_per_m2_day",
+          "conversion": "identity; daily rate retained, no monthly interpolation",
+          "depth": null,
+          "statistic": "daily",
+          "quality": "usable",
+          "missing_reason": null
+        }
+      ],
+      "quality_flags": [
+        "REGIONAL_MODEL_NOT_FIELD_OBSERVATION"
+      ],
+      "missing_reasons": [],
+      "limitations": [
+        "Daily coverage is not proof of local scientific accuracy.",
+        "LST is solar-time swath, not civil farm calendar; no timezone conversion inferred.",
+        "No forecast, ET0, GDD or recommendation calculated by Python."
+      ],
+      "usable_for_assessment": true,
+      "review": "reviewed",
+      "response_sha256": "a0bbb0c774941678880343cea03152a74b6cf77fe02565f17db6ccbc4a4769f7",
+      "source_metadata": {
+        "header": {
+          "api": {
+            "name": "POWER Daily API",
+            "version": "v2.10.3"
+          },
+          "end": "20240707",
+          "fill_value": -999.0,
+          "sources": [
+            "SYN1DEG"
+          ],
+          "start": "20240703",
+          "time_standard": "LST",
+          "title": "NASA/POWER Source Native Resolution Daily Data"
+        },
+        "http_headers": {
+          "content-type": "application/json"
+        },
+        "lineage": {
+          "attribution": "single-parameter header plus pinned NASA parameter catalog and methodology",
+          "provider_sources": [
+            "SYN1DEG"
+          ],
+          "source_review": "NASA-water-source-review.v1"
+        },
+        "messages": [],
+        "parameter": "ALLSKY_SFC_SW_DWN",
+        "parameters": {
+          "ALLSKY_SFC_SW_DWN": {
+            "longname": "All Sky Surface Shortwave Downward Irradiance",
+            "units": "MJ/m^2/day"
+          }
+        },
+        "policy": "power-fao56-inputs.v1",
+        "review_scope": "Technical metadata and transport contract only; no agronomic applicability approval"
+      }
+    }
+  ],
+  "limitations": [
+    "Reference-only crop profiles cannot authorize recommendations.",
+    "POWER LST growing periods need explicit farm-calendar applicability review."
+  ],
+  "decision_id": "490de4d7-4b99-4f3d-94dc-f6e018755e5b"
+}

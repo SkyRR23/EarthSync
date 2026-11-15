@@ -1,0 +1,100 @@
+[
+  {
+    "path": "originals/fao_ecocrop_metadata.json",
+    "sha256": "a72d94cb0dfa1fe7c2023fbf78e1bfadd3e7b6dbd268c2c33b18d460babf4262",
+    "bytes": 7015,
+    "source_id": "fao_ecocrop_metadata",
+    "url": "https://data.fao.org/catalog/api/3/action/package_show?id=ecocrop"
+  },
+  {
+    "path": "originals/ecocrop_openclim_ea43ecd.csv",
+    "sha256": "4187e8846336e185c4583165211c5981855e95adfbefd897bd2bd481de48d106",
+    "bytes": 1622384,
+    "source_id": "ecocrop_openclim_ea43ecd",
+    "url": "https://raw.githubusercontent.com/OpenCLIM/ecocrop/ea43ecd418fd1a1ea08d32c7dce64b7fae02dec4/EcoCrop_DB.csv"
+  },
+  {
+    "path": "originals/ecocrop_rice.html",
+    "sha256": "73e150aaf5c203a6b4c55e95d87284cfd3b5c70a425b888c9c436bb74b217e6c",
+    "bytes": 6144,
+    "source_id": "ecocrop_rice",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1574"
+  },
+  {
+    "path": "originals/ecocrop_mung_bean.html",
+    "sha256": "772f2edbece09d0ca0a641396c73a5b70ed52dea6fd78671ac8e2810d529254c",
+    "bytes": 6350,
+    "source_id": "ecocrop_mung_bean",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2150"
+  },
+  {
+    "path": "originals/ecocrop_sesame.html",
+    "sha256": "0e56e837107dfc2f7bc21d3bd4236ae6efc6cfc831877a0a5197ece19cafb5f7",
+    "bytes": 6382,
+    "source_id": "ecocrop_sesame",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1937"
+  },
+  {
+    "path": "originals/ecocrop_groundnut.html",
+    "sha256": "fc99ce99d40be5ef2b89d5c391e740fde7501ef68ae0ed3e14e54da782e07956",
+    "bytes": 6497,
+    "source_id": "ecocrop_groundnut",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2199"
+  },
+  {
+    "path": "originals/ecocrop_maize.html",
+    "sha256": "285c1b1cc3522c5e34ddc552ec46306a364a7c44897421e421e1657bb8194bb0",
+    "bytes": 6393,
+    "source_id": "ecocrop_maize",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2175"
+  },
+  {
+    "path": "originals/gaez_v5_metadata.json",
+    "sha256": "df4d4a7d9794d29daedba730aa1f2d58b454f461e296cff78776995abcdcc0a3",
+    "bytes": 23259,
+    "source_id": "gaez_v5_metadata",
+    "url": "https://data.fao.org/catalog/api/3/action/package_show?id=gaez-v5-master-config"
+  },
+  {
+    "path": "originals/ecocrop_help_2000.html",
+    "sha256": "ef3eb9cfeed9b5a03380f4df7d63c09a267f26cb7a09366befb0d3505305affc",
+    "bytes": 655,
+    "source_id": "ecocrop_help_2000",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/helpShow?id=2000"
+  },
+  {
+    "path": "originals/ecocrop_help_2001.html",
+    "sha256": "2d71b5a07c1f7e5eec2ac1cad883f0c3d632a67bae78c05889427a7d65c81097",
+    "bytes": 721,
+    "source_id": "ecocrop_help_2001",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/helpShow?id=2001"
+  },
+  {
+    "path": "originals/ecocrop_help_2003.html",
+    "sha256": "c1c1974dc518b23b4fe4c75fa556a89395f85293b0c6aa647e9efd93dfa82038",
+    "bytes": 735,
+    "source_id": "ecocrop_help_2003",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/helpShow?id=2003"
+  },
+  {
+    "path": "originals/ecocrop_help_2004.html",
+    "sha256": "097bf90a361bfb149e36a4975665db8ef35b6a7b52e6767eb81aa83861648988",
+    "bytes": 602,
+    "source_id": "ecocrop_help_2004",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/helpShow?id=2004"
+  },
+  {
+    "path": "originals/soil-wcs-capture-0.bin",
+    "sha256": "967770398980215524e116d8e9a8c6901202f8072a07b709a99430530026012e",
+    "bytes": 2535,
+    "source_id": "soilgrids_wcs_rejected",
+    "url": "https://maps.isric.org/mapserv"
+  },
+  {
+    "path": "originals/soil-wcs-capture-1.bin",
+    "sha256": "dd0e39567b60214e700e6c6ef6e982a42d86f497b2e7c8d430500c98a6e4b2fa",
+    "bytes": 1070,
+    "source_id": "soilgrids_wcs_rejected",
+    "url": "https://maps.isric.org/mapserv"
+  }
+]

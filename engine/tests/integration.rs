@@ -317,3 +317,80 @@ fn malformed_json_wrong_units_and_multiple_series_are_rejected_without_echo() {
         "INVALID_JSON"
     );
 }
+
+// Captured NASA response: real modeled climate, no crop constraints.
+fn captured_climate_only() -> IntegrationRequest {
+    let capture: serde_json::Value = serde_json::from_str(include_str!(
+        "../../app/assets/fixtures/nasa_power_real.json"
+    ))
+    .unwrap();
+    let mut request = sample();
+    request.data_mode = DataMode::SuppliedData;
+    request.field.latitude = 16.85;
+    request.field.longitude = 96.15;
+    request.field.current_crop.clear(); // Legacy string representation of unreported crop.
+    request.environment = serde_json::from_value(capture["environment"].clone()).unwrap();
+    request.crop_references.sources.clear();
+    request.crop_references.profiles.clear();
+    request.scenarios.clear();
+    request
+}
+
+#[test]
+fn real_capture_climate_only_never_invents_a_crop_or_suitability() {
+    let result = analyze_integration(&captured_climate_only()).unwrap();
+    assert_eq!(result.climate.rainfall_total_mm, Some(0.04));
+    assert!(
+        (result
+            .climate
+            .calendar_day_weighted_mean_temperature_c
+            .unwrap()
+            - 28.03655172413793)
+            .abs()
+            < 1e-12
+    );
+    assert_eq!(result.climate.calendar_days, 29);
+    assert!(result.field.current_crop.is_empty());
+    assert!(result.rotations.scenarios.is_empty());
+    assert!(!result.rotations.contains_synthetic_references);
+    assert!(has_notice(&result, "CLIMATE_CONTEXT_ONLY"));
+}
+
+#[test]
+fn climate_only_missing_month_is_successful_unknown_not_zero() {
+    let mut request = captured_climate_only();
+    request.environment.seasonal.observations.clear();
+    let result = analyze_integration(&request).unwrap();
+    assert_eq!(result.climate.rainfall_total_mm, None);
+    assert_eq!(
+        result.climate.calendar_day_weighted_mean_temperature_c,
+        None
+    );
+    assert_eq!(result.climate.rainfall_gap_months.len(), 1);
+    assert!(has_notice(&result, "INCOMPLETE_CLIMATE"));
+}
+
+#[test]
+fn climate_only_still_validates_field_and_exact_point() {
+    let mut request = captured_climate_only();
+    request.field.latitude = 91.0;
+    assert_eq!(
+        analyze_integration(&request).unwrap_err().code,
+        IntegrationErrorCode::InvalidField
+    );
+    request.field.latitude = 16.86;
+    assert_eq!(
+        analyze_integration(&request).unwrap_err().code,
+        IntegrationErrorCode::LocationMismatch
+    );
+}
+
+#[test]
+fn empty_scenarios_with_crop_evidence_still_rejects_invalid_rotations() {
+    let mut request = captured_climate_only();
+    request.crop_references = sample().crop_references;
+    assert_eq!(
+        analyze_integration(&request).unwrap_err().code,
+        IntegrationErrorCode::InvalidRotations
+    );
+}

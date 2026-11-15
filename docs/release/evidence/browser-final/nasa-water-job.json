@@ -1,0 +1,9 @@
+{
+  "schema_version": "earthsync.public_verification_receipt.v1",
+  "raw_receipt_sha256": "7041ae24237f518ad8c7293cc45f1fb58c7a54927f866c773b1b9d948e532292",
+  "private_field_data_omitted": true,
+  "source": {},
+  "source_cache_hit": true,
+  "measurement_record_count": 8,
+  "raster_cell_count": 0
+}

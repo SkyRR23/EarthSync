@@ -1,0 +1,98 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "earthsync.comparison.v1",
+      "default": "earthsync.comparison.v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "maxLength": 150,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "baseline_decision_id": {
+      "format": "uuid",
+      "title": "Baseline Decision Id",
+      "type": "string"
+    },
+    "alternative_decision_ids": {
+      "items": {
+        "format": "uuid",
+        "type": "string"
+      },
+      "maxItems": 5,
+      "minItems": 2,
+      "title": "Alternative Decision Ids",
+      "type": "array"
+    },
+    "chosen_decision_id": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Chosen Decision Id"
+    },
+    "baseline_declared_existing_plan": {
+      "const": true,
+      "title": "Baseline Declared Existing Plan",
+      "type": "boolean"
+    },
+    "priorities": {
+      "items": {
+        "enum": [
+          "food",
+          "income",
+          "less_water",
+          "soil",
+          "lower_risk",
+          "less_labor",
+          "nitrogen_potential",
+          "erosion",
+          "forage",
+          "equipment",
+          "market"
+        ],
+        "type": "string"
+      },
+      "maxItems": 11,
+      "title": "Priorities",
+      "type": "array"
+    },
+    "practical_constraints": {
+      "default": "",
+      "maxLength": 1000,
+      "title": "Practical Constraints",
+      "type": "string"
+    },
+    "exploration_reason": {
+      "maxLength": 1000,
+      "minLength": 1,
+      "title": "Exploration Reason",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "baseline_decision_id",
+    "alternative_decision_ids",
+    "baseline_declared_existing_plan",
+    "exploration_reason"
+  ],
+  "title": "ComparisonInput",
+  "type": "object"
+}

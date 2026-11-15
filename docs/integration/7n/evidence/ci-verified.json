@@ -1,0 +1,87 @@
+{
+  "verified_code_sha": "ab745a027b7b66a6c63fb033b024b19053b12c55",
+  "runtime_artifact_source_sha": "530c1e1d06c9202dfc1f5d06c659399409b7270f",
+  "workflow_count": 7,
+  "all_workflows_passed": true,
+  "windows_raw_logs_audited": true,
+  "summaries": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "job_id": 132472023644,
+        "summaries": [
+          "2026-11-14T14:07:53.4724221Z 401 passed, 3 skipped, 34 warnings in 18.64s"
+        ]
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "job_id": 132472023734,
+        "summaries": [
+          "2026-11-14T14:08:51.7643875Z 398 passed, 6 skipped, 34 warnings in 40.72s"
+        ]
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "job_id": 132472023795,
+        "summaries": [
+          "2026-11-14T14:09:07.5226723Z 398 passed, 6 skipped, 34 warnings in 40.60s"
+        ]
+      }
+    }
+  ],
+  "workflows": [
+    {
+      "name": "Scientific source regression checks",
+      "id": 43603151418,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43603151418"
+    },
+    {
+      "name": "Rust engine CI",
+      "id": 43603151414,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43603151414"
+    },
+    {
+      "name": "Photo evidence contracts",
+      "id": 43603151396,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43603151396"
+    },
+    {
+      "name": "Farmer assistant contract and UI",
+      "id": 43603151405,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43603151405"
+    },
+    {
+      "name": "Flutter live integration",
+      "id": 43603151434,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43603151434"
+    },
+    {
+      "name": "Python backend CI",
+      "id": 43603151392,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43603151392"
+    },
+    {
+      "name": "Backend evidence platform v1",
+      "id": 43603151440,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/SkyRR23/EarthSync/actions/runs/43603151440"
+    }
+  ]
+}

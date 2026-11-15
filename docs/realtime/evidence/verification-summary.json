@@ -1,0 +1,146 @@
+{
+  "classification": "ACTUAL_RUNTIME_AND_LIVE_PROVIDERS; numerical/farmer fault fixtures separately labeled",
+  "baseline_sha": "660b479c3ffb714cd1d489e1241c026ceae6ed67",
+  "python": {
+    "passed": 504,
+    "skipped": 7,
+    "new_realtime_contracts": 38
+  },
+  "flutter": {
+    "passed": 137,
+    "live_opt_in_skipped": 3,
+    "analyzer": "clean",
+    "release_web": "built"
+  },
+  "rust_engine": {
+    "passed": 124
+  },
+  "browser_monitoring": {
+    "classification": "ACTUAL_BROWSER_AND_LIVE_PROVIDERS",
+    "steps": [
+      {
+        "step": "Render actual public Ames station values and acquisition times",
+        "status": "PASS"
+      },
+      {
+        "step": "Measure genuine local cached HTTP response time",
+        "status": "PASS"
+      },
+      {
+        "step": "Display a newer genuine station observation without restarting or manual refresh",
+        "status": "PASS"
+      },
+      {
+        "step": "Injected LOCAL cache transport failure shows unverified alert status",
+        "status": "PASS \u00b7 INJECTED LOCAL OUTAGE"
+      },
+      {
+        "step": "Recover current cached data after the injected local outage",
+        "status": "PASS"
+      },
+      {
+        "step": "Render monitoring at phone width without horizontal overflow",
+        "status": "PASS"
+      },
+      {
+        "step": "Preserve Burmese monitoring labels through actual settings",
+        "status": "PASS"
+      }
+    ],
+    "page_errors": [],
+    "tls_verification_disabled": false,
+    "cached_api_ms": {
+      "samples": 12,
+      "mean": 31.26711116662288,
+      "max": 47.71985500065057
+    },
+    "refresh": {
+      "before_observed_at": "2026-11-15T04:36:00+00:00",
+      "after_observed_at": "2026-11-15T04:37:00+00:00",
+      "backend_first_noticed_at": "2026-11-15T04:38:05.302485+00:00",
+      "browser_visible_at": "2026-11-15T04:38:14.687424+00:00",
+      "display_after_backend_notice_ms": 9384.957897999811,
+      "source_latency": {
+        "observation_to_publication_seconds": null,
+        "publication_to_ingestion_seconds": null,
+        "observation_to_ingestion_seconds": 63.203723
+      },
+      "publication_to_ingestion_seconds": null
+    },
+    "final_sources": {
+      "iowa_station": {
+        "status": "FRESH",
+        "error": null,
+        "last_success_at": "2026-11-15T04:38:03.203723+00:00"
+      },
+      "nws_forecast": {
+        "status": "FRESH",
+        "error": null,
+        "last_success_at": "2026-11-15T04:20:33.799268+00:00"
+      },
+      "nws_grid": {
+        "status": "FRESH",
+        "error": null,
+        "last_success_at": "2026-11-15T03:54:01.436405+00:00"
+      },
+      "nws_alerts": {
+        "status": "FRESH",
+        "error": null,
+        "last_success_at": "2026-11-15T04:38:03.195333+00:00"
+      },
+      "open_meteo": {
+        "status": "FRESH",
+        "error": null,
+        "last_success_at": "2026-11-15T04:30:07.950354+00:00"
+      },
+      "nasa_catalog": {
+        "status": "METADATA_ONLY",
+        "error": null,
+        "last_success_at": "2026-11-15T03:54:00.545745+00:00"
+      },
+      "noaa_gfs": {
+        "status": "FRESH",
+        "error": null,
+        "last_success_at": "2026-11-15T03:54:30.426106+00:00"
+      },
+      "imerg": {
+        "status": "LATEST_AVAILABLE_DELAYED",
+        "error": null,
+        "last_success_at": "2026-11-15T04:24:11.911366+00:00"
+      },
+      "smap": {
+        "status": "LATEST_AVAILABLE_DELAYED",
+        "error": null,
+        "last_success_at": "2026-11-15T04:11:11.788284+00:00"
+      },
+      "hls_ndvi": {
+        "status": "LATEST_AVAILABLE_DELAYED",
+        "error": null,
+        "last_success_at": "2026-11-15T03:54:38.119872+00:00"
+      }
+    }
+  },
+  "browser_map": {
+    "passed_steps": 14,
+    "page_errors": [],
+    "tls_exception": false,
+    "limitation": "map mode interactions passed; direct tile HTTP checks are separate from rendered-tile evidence"
+  },
+  "browser_farmer": {
+    "passed_steps": 19,
+    "page_errors": [],
+    "classification": "SYNTHETIC farmer plans/history/photos; actual Rust and real/cached-real environmental evidence; named outage steps injected"
+  },
+  "prior_diagnostics": [
+    "Initial verifier used an incorrect composite dropdown selector; corrected to actual accessible names.",
+    "Card semantics initially hid readings from Chromium accessibility; fixed and regression tested.",
+    "An inherited Chromium response-body read failed after a successful native save; verifier now checks the single newly persisted decision without replaying POST.",
+    "Periodic timeout polling could keep Refresh disabled; switched to single-flight polling with an idle gap and a timeout regression."
+  ],
+  "windows_interactive": "PENDING USER",
+  "main_merged": false,
+  "historical_worktree_modified": false,
+  "rust_bridge": {
+    "passed": 6
+  }
+}

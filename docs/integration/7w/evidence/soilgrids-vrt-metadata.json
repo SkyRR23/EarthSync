@@ -1,0 +1,13 @@
+{
+  "rasterXSize": "159246",
+  "rasterYSize": "58034",
+  "srs": "PROJCS[\"Interrupted_Goode_Homolosine\",GEOGCS[\"GCS_WGS_1984 ellipse\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]],PROJECTION[\"Interrupted_Goode_Homolosine\"],UNIT[\"Meter\",1]]",
+  "geotransform": " -1.9949750000000000e+07,  2.5000000000000000e+02,  0.0000000000000000e+00,  8.3610000000000000e+06,  0.0000000000000000e+00, -2.5000000000000000e+02",
+  "nodata": [
+    "-32768"
+  ],
+  "source_nodata": [
+    "-32768"
+  ],
+  "status": "metadata_only_not_numerical_integration"
+}

@@ -1,0 +1,21 @@
+{
+  "passed": [
+    "Onboarding and useful global home without location permission",
+    "Confirmed local farm restores after browser refresh",
+    "Explicit 201 farm link and database UUID displayed",
+    "Actual POWER daily job, bounded polling and three persisted 29-day source records",
+    "Selected database evidence reaches actual Rust and rendered reference gap findings",
+    "201 historical report and persisted decisions survive refresh",
+    "Deterministic assistant consumes permitted saved evidence and exact decision states",
+    "Private photo auth, sanitized browser upload, confirmed 204 deletion, session-only token",
+    "All primary and supporting navigation destinations render",
+    "Phone layouts preserve farm identity, evidence and responsive navigation",
+    "Explicit simulated outage followed by real monthly API recovery; no synthetic fallback",
+    "Zero unhandled browser errors"
+  ],
+  "browser_errors": [],
+  "job_statuses": [
+    "queued",
+    "succeeded"
+  ]
+}

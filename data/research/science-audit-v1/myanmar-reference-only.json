@@ -1,0 +1,1353 @@
+{
+  "schema_version": "earthsync.research-quarantine.v1",
+  "classification": "research_only",
+  "archive_sha256": "241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788",
+  "recommendation_eligible": false,
+  "profiles": [
+    {
+      "profile_id": "rice_paddy",
+      "archive_sha256": "241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788",
+      "original_member": "nasa_space_challenges/contracts/data/crop-profiles.v1.json",
+      "source_assertion": {
+        "crop_id": "rice_paddy",
+        "name_en": "Paddy rice",
+        "name_my": "စပါး",
+        "family": "poaceae",
+        "cycle_days": {
+          "low": 110.0,
+          "high": 150.0
+        },
+        "plant_months": [
+          6,
+          7
+        ],
+        "harvest_months": [
+          10,
+          11
+        ],
+        "temp_c": {
+          "min": 10.0,
+          "opt_low": 20.0,
+          "opt_high": 30.0,
+          "max": 36.0
+        },
+        "water_mm": {
+          "low": 450.0,
+          "high": 900.0
+        },
+        "drainage_need": "poor_tolerant",
+        "drought_tolerance": "low",
+        "waterlogging_tolerance": "high",
+        "n_fixation_kg_ha": {
+          "low": null,
+          "high": null
+        },
+        "root_depth_cm": 50.0,
+        "residue_index": 0.35,
+        "is_cover_crop": false,
+        "break_targets": [
+          "root_knot_nematode"
+        ],
+        "market_use": [
+          "staple"
+        ],
+        "evidence": [
+          {
+            "source_id": "CURATED",
+            "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1574",
+            "date": "2026-11-14",
+            "confidence": "medium"
+          }
+        ],
+        "unverified": [
+          "n_fixation_kg_ha"
+        ],
+        "notes": "P2 replaces every number with a sourced FAO/IRRI value | Temperature limits from FAO ECOCROP id 1574 (abs min 10C, optimal 20-30C, abs max 36C). ECOCROP annual-rain and cycle range kept in data-pack/csv/crop_requirements_ecocrop.csv; duration and water_mm here are the Myanmar annual-crop values (FAO-56 ETc estimate), not ECOCROP's perennial-inclusive max."
+      },
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "executable_rules": [],
+      "temperature_reference_class": "source_reviewed_reference_fact",
+      "executable_temperature_rule": false,
+      "other_agronomic_assertions_class": "unverified_assertion",
+      "production_system_acceptance": null,
+      "region_acceptance": null,
+      "independent_agronomist_acceptance": null,
+      "limitations": [
+        "A matching ECOCROP numeric reference is not a verified Myanmar field rule.",
+        "Team duration, seasonal water, N fixation, pest benefits, root depth, residue and calendars require parameter-specific evidence.",
+        "No source-review status or caller-supplied confidence promotes a crop recommendation."
+      ]
+    },
+    {
+      "profile_id": "black_gram",
+      "archive_sha256": "241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788",
+      "original_member": "nasa_space_challenges/contracts/data/crop-profiles.v1.json",
+      "source_assertion": {
+        "crop_id": "black_gram",
+        "name_en": "Black gram",
+        "name_my": "မတ်ပဲ",
+        "family": "fabaceae",
+        "cycle_days": {
+          "low": 60.0,
+          "high": 90.0
+        },
+        "plant_months": [
+          10,
+          11
+        ],
+        "harvest_months": [
+          1,
+          2
+        ],
+        "temp_c": {
+          "min": 8.0,
+          "opt_low": 22.0,
+          "opt_high": 35.0,
+          "max": 40.0
+        },
+        "water_mm": {
+          "low": 250.0,
+          "high": 400.0
+        },
+        "drainage_need": "well_drained_required",
+        "drought_tolerance": "medium",
+        "waterlogging_tolerance": "low",
+        "n_fixation_kg_ha": {
+          "low": 20.0,
+          "high": 40.0
+        },
+        "root_depth_cm": 90.0,
+        "residue_index": 0.25,
+        "is_cover_crop": false,
+        "break_targets": [
+          "root_knot_nematode",
+          "soil_borne_fungal"
+        ],
+        "market_use": [
+          "pulse",
+          "export"
+        ],
+        "evidence": [
+          {
+            "source_id": "CURATED",
+            "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2149",
+            "date": "2026-11-14",
+            "confidence": "medium"
+          }
+        ],
+        "unverified": [],
+        "notes": "P2 must confirm delta planting window and water range | Temperature limits from FAO ECOCROP id 2149 (abs min 8C, optimal 22-35C, abs max 40C). ECOCROP annual-rain and cycle range kept in data-pack/csv/crop_requirements_ecocrop.csv; duration and water_mm here are the Myanmar annual-crop values (FAO-56 ETc estimate), not ECOCROP's perennial-inclusive max."
+      },
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "executable_rules": [],
+      "temperature_reference_class": "source_reviewed_reference_fact",
+      "executable_temperature_rule": false,
+      "other_agronomic_assertions_class": "unverified_assertion",
+      "production_system_acceptance": null,
+      "region_acceptance": null,
+      "independent_agronomist_acceptance": null,
+      "limitations": [
+        "A matching ECOCROP numeric reference is not a verified Myanmar field rule.",
+        "Team duration, seasonal water, N fixation, pest benefits, root depth, residue and calendars require parameter-specific evidence.",
+        "No source-review status or caller-supplied confidence promotes a crop recommendation."
+      ]
+    },
+    {
+      "profile_id": "mung_bean",
+      "archive_sha256": "241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788",
+      "original_member": "nasa_space_challenges/contracts/data/crop-profiles.v1.json",
+      "source_assertion": {
+        "crop_id": "mung_bean",
+        "name_en": "Mung bean",
+        "name_my": "ပဲတီစိမ်း",
+        "family": "fabaceae",
+        "cycle_days": {
+          "low": 55.0,
+          "high": 75.0
+        },
+        "plant_months": [
+          10,
+          11,
+          2
+        ],
+        "harvest_months": [
+          1,
+          2,
+          4
+        ],
+        "temp_c": {
+          "min": 8.0,
+          "opt_low": 21.0,
+          "opt_high": 36.0,
+          "max": 40.0
+        },
+        "water_mm": {
+          "low": 200.0,
+          "high": 350.0
+        },
+        "drainage_need": "well_drained_required",
+        "drought_tolerance": "medium",
+        "waterlogging_tolerance": "low",
+        "n_fixation_kg_ha": {
+          "low": 20.0,
+          "high": 35.0
+        },
+        "root_depth_cm": 80.0,
+        "residue_index": 0.22,
+        "is_cover_crop": false,
+        "break_targets": [
+          "root_knot_nematode",
+          "soil_borne_fungal"
+        ],
+        "market_use": [
+          "pulse",
+          "export"
+        ],
+        "evidence": [
+          {
+            "source_id": "CURATED",
+            "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2150",
+            "date": "2026-11-14",
+            "confidence": "medium"
+          }
+        ],
+        "unverified": [],
+        "notes": "Temperature limits from FAO ECOCROP id 2150 (abs min 8C, optimal 21-36C, abs max 40C). ECOCROP annual-rain and cycle range kept in data-pack/csv/crop_requirements_ecocrop.csv; duration and water_mm here are the Myanmar annual-crop values (FAO-56 ETc estimate), not ECOCROP's perennial-inclusive max."
+      },
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "executable_rules": [],
+      "temperature_reference_class": "source_reviewed_reference_fact",
+      "executable_temperature_rule": false,
+      "other_agronomic_assertions_class": "unverified_assertion",
+      "production_system_acceptance": null,
+      "region_acceptance": null,
+      "independent_agronomist_acceptance": null,
+      "limitations": [
+        "A matching ECOCROP numeric reference is not a verified Myanmar field rule.",
+        "Team duration, seasonal water, N fixation, pest benefits, root depth, residue and calendars require parameter-specific evidence.",
+        "No source-review status or caller-supplied confidence promotes a crop recommendation."
+      ]
+    },
+    {
+      "profile_id": "groundnut",
+      "archive_sha256": "241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788",
+      "original_member": "nasa_space_challenges/contracts/data/crop-profiles.v1.json",
+      "source_assertion": {
+        "crop_id": "groundnut",
+        "name_en": "Groundnut",
+        "name_my": "မြေပဲ",
+        "family": "fabaceae",
+        "cycle_days": {
+          "low": 95.0,
+          "high": 130.0
+        },
+        "plant_months": [
+          5,
+          6,
+          10,
+          11
+        ],
+        "harvest_months": [
+          9,
+          10,
+          2,
+          3
+        ],
+        "temp_c": {
+          "min": 10.0,
+          "opt_low": 22.0,
+          "opt_high": 32.0,
+          "max": 45.0
+        },
+        "water_mm": {
+          "low": 450.0,
+          "high": 600.0
+        },
+        "drainage_need": "well_drained_required",
+        "drought_tolerance": "medium",
+        "waterlogging_tolerance": "low",
+        "n_fixation_kg_ha": {
+          "low": 15.0,
+          "high": 30.0
+        },
+        "root_depth_cm": 100.0,
+        "residue_index": 0.3,
+        "is_cover_crop": false,
+        "break_targets": [
+          "soil_borne_fungal",
+          "root_knot_nematode"
+        ],
+        "market_use": [
+          "oil",
+          "pulse"
+        ],
+        "evidence": [
+          {
+            "source_id": "CURATED",
+            "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2199",
+            "date": "2026-11-14",
+            "confidence": "medium"
+          }
+        ],
+        "unverified": [],
+        "notes": "Temperature limits from FAO ECOCROP id 2199 (abs min 10C, optimal 22-32C, abs max 45C). ECOCROP annual-rain and cycle range kept in data-pack/csv/crop_requirements_ecocrop.csv; duration and water_mm here are the Myanmar annual-crop values (FAO-56 ETc estimate), not ECOCROP's perennial-inclusive max."
+      },
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "executable_rules": [],
+      "temperature_reference_class": "source_reviewed_reference_fact",
+      "executable_temperature_rule": false,
+      "other_agronomic_assertions_class": "unverified_assertion",
+      "production_system_acceptance": null,
+      "region_acceptance": null,
+      "independent_agronomist_acceptance": null,
+      "limitations": [
+        "A matching ECOCROP numeric reference is not a verified Myanmar field rule.",
+        "Team duration, seasonal water, N fixation, pest benefits, root depth, residue and calendars require parameter-specific evidence.",
+        "No source-review status or caller-supplied confidence promotes a crop recommendation."
+      ]
+    },
+    {
+      "profile_id": "sesame",
+      "archive_sha256": "241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788",
+      "original_member": "nasa_space_challenges/contracts/data/crop-profiles.v1.json",
+      "source_assertion": {
+        "crop_id": "sesame",
+        "name_en": "Sesame",
+        "name_my": "နှမ်း",
+        "family": "pedaliaceae",
+        "cycle_days": {
+          "low": 80.0,
+          "high": 110.0
+        },
+        "plant_months": [
+          4,
+          5,
+          11
+        ],
+        "harvest_months": [
+          8,
+          9,
+          2
+        ],
+        "temp_c": {
+          "min": 10.0,
+          "opt_low": 20.0,
+          "opt_high": 30.0,
+          "max": 40.0
+        },
+        "water_mm": {
+          "low": 350.0,
+          "high": 500.0
+        },
+        "drainage_need": "well_drained_required",
+        "drought_tolerance": "high",
+        "waterlogging_tolerance": "low",
+        "n_fixation_kg_ha": {
+          "low": null,
+          "high": null
+        },
+        "root_depth_cm": 110.0,
+        "residue_index": 0.2,
+        "is_cover_crop": false,
+        "break_targets": [
+          "none"
+        ],
+        "market_use": [
+          "oil",
+          "export"
+        ],
+        "evidence": [
+          {
+            "source_id": "CURATED",
+            "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1937",
+            "date": "2026-11-14",
+            "confidence": "medium"
+          }
+        ],
+        "unverified": [
+          "n_fixation_kg_ha"
+        ],
+        "notes": "Temperature limits from FAO ECOCROP id 1937 (abs min 10C, optimal 20-30C, abs max 40C). ECOCROP annual-rain and cycle range kept in data-pack/csv/crop_requirements_ecocrop.csv; duration and water_mm here are the Myanmar annual-crop values (FAO-56 ETc estimate), not ECOCROP's perennial-inclusive max."
+      },
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "executable_rules": [],
+      "temperature_reference_class": "source_reviewed_reference_fact",
+      "executable_temperature_rule": false,
+      "other_agronomic_assertions_class": "unverified_assertion",
+      "production_system_acceptance": null,
+      "region_acceptance": null,
+      "independent_agronomist_acceptance": null,
+      "limitations": [
+        "A matching ECOCROP numeric reference is not a verified Myanmar field rule.",
+        "Team duration, seasonal water, N fixation, pest benefits, root depth, residue and calendars require parameter-specific evidence.",
+        "No source-review status or caller-supplied confidence promotes a crop recommendation."
+      ]
+    },
+    {
+      "profile_id": "maize",
+      "archive_sha256": "241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788",
+      "original_member": "nasa_space_challenges/contracts/data/crop-profiles.v1.json",
+      "source_assertion": {
+        "crop_id": "maize",
+        "name_en": "Maize",
+        "name_my": "ပြောင်း",
+        "family": "poaceae",
+        "cycle_days": {
+          "low": 95.0,
+          "high": 120.0
+        },
+        "plant_months": [
+          5,
+          6,
+          10
+        ],
+        "harvest_months": [
+          9,
+          10,
+          2
+        ],
+        "temp_c": {
+          "min": 10.0,
+          "opt_low": 18.0,
+          "opt_high": 33.0,
+          "max": 47.0
+        },
+        "water_mm": {
+          "low": 450.0,
+          "high": 600.0
+        },
+        "drainage_need": "moderate",
+        "drought_tolerance": "medium",
+        "waterlogging_tolerance": "low",
+        "n_fixation_kg_ha": {
+          "low": null,
+          "high": null
+        },
+        "root_depth_cm": 120.0,
+        "residue_index": 0.45,
+        "is_cover_crop": false,
+        "break_targets": [
+          "fall_armyworm"
+        ],
+        "market_use": [
+          "feed",
+          "food"
+        ],
+        "evidence": [
+          {
+            "source_id": "CURATED",
+            "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2175",
+            "date": "2026-11-14",
+            "confidence": "medium"
+          }
+        ],
+        "unverified": [
+          "n_fixation_kg_ha"
+        ],
+        "notes": "Temperature limits from FAO ECOCROP id 2175 (abs min 10C, optimal 18-33C, abs max 47C). ECOCROP annual-rain and cycle range kept in data-pack/csv/crop_requirements_ecocrop.csv; duration and water_mm here are the Myanmar annual-crop values (FAO-56 ETc estimate), not ECOCROP's perennial-inclusive max."
+      },
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "executable_rules": [],
+      "temperature_reference_class": "source_reviewed_reference_fact",
+      "executable_temperature_rule": false,
+      "other_agronomic_assertions_class": "unverified_assertion",
+      "production_system_acceptance": null,
+      "region_acceptance": null,
+      "independent_agronomist_acceptance": null,
+      "limitations": [
+        "A matching ECOCROP numeric reference is not a verified Myanmar field rule.",
+        "Team duration, seasonal water, N fixation, pest benefits, root depth, residue and calendars require parameter-specific evidence.",
+        "No source-review status or caller-supplied confidence promotes a crop recommendation."
+      ]
+    },
+    {
+      "profile_id": "chickpea",
+      "archive_sha256": "241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788",
+      "original_member": "nasa_space_challenges/contracts/data/crop-profiles.v1.json",
+      "source_assertion": {
+        "crop_id": "chickpea",
+        "name_en": "Chickpea",
+        "name_my": "ကုလားပဲ",
+        "family": "fabaceae",
+        "cycle_days": {
+          "low": 95.0,
+          "high": 120.0
+        },
+        "plant_months": [
+          11,
+          12
+        ],
+        "harvest_months": [
+          2,
+          3
+        ],
+        "temp_c": {
+          "min": 7.0,
+          "opt_low": 15.0,
+          "opt_high": 29.0,
+          "max": 35.0
+        },
+        "water_mm": {
+          "low": 300.0,
+          "high": 450.0
+        },
+        "drainage_need": "well_drained_required",
+        "drought_tolerance": "high",
+        "waterlogging_tolerance": "low",
+        "n_fixation_kg_ha": {
+          "low": 20.0,
+          "high": 40.0
+        },
+        "root_depth_cm": 100.0,
+        "residue_index": 0.28,
+        "is_cover_crop": false,
+        "break_targets": [
+          "soil_borne_fungal",
+          "pulse_beetle"
+        ],
+        "market_use": [
+          "pulse",
+          "export"
+        ],
+        "evidence": [
+          {
+            "source_id": "CURATED",
+            "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2479",
+            "date": "2026-11-14",
+            "confidence": "medium"
+          }
+        ],
+        "unverified": [],
+        "notes": "Temperature limits from FAO ECOCROP id 2479 (abs min 7C, optimal 15-29C, abs max 35C). ECOCROP annual-rain and cycle range kept in data-pack/csv/crop_requirements_ecocrop.csv; duration and water_mm here are the Myanmar annual-crop values (FAO-56 ETc estimate), not ECOCROP's perennial-inclusive max."
+      },
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "executable_rules": [],
+      "temperature_reference_class": "source_reviewed_reference_fact",
+      "executable_temperature_rule": false,
+      "other_agronomic_assertions_class": "unverified_assertion",
+      "production_system_acceptance": null,
+      "region_acceptance": null,
+      "independent_agronomist_acceptance": null,
+      "limitations": [
+        "A matching ECOCROP numeric reference is not a verified Myanmar field rule.",
+        "Team duration, seasonal water, N fixation, pest benefits, root depth, residue and calendars require parameter-specific evidence.",
+        "No source-review status or caller-supplied confidence promotes a crop recommendation."
+      ]
+    },
+    {
+      "profile_id": "pigeon_pea",
+      "archive_sha256": "241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788",
+      "original_member": "nasa_space_challenges/contracts/data/crop-profiles.v1.json",
+      "source_assertion": {
+        "crop_id": "pigeon_pea",
+        "name_en": "Pigeon pea",
+        "name_my": null,
+        "family": "fabaceae",
+        "cycle_days": {
+          "low": 150.0,
+          "high": 210.0
+        },
+        "plant_months": [
+          6,
+          7
+        ],
+        "harvest_months": [
+          12,
+          1
+        ],
+        "temp_c": {
+          "min": 10.0,
+          "opt_low": 18.0,
+          "opt_high": 38.0,
+          "max": 45.0
+        },
+        "water_mm": {
+          "low": 400.0,
+          "high": 600.0
+        },
+        "drainage_need": "well_drained_required",
+        "drought_tolerance": "high",
+        "waterlogging_tolerance": "low",
+        "n_fixation_kg_ha": {
+          "low": 30.0,
+          "high": 60.0
+        },
+        "root_depth_cm": 180.0,
+        "residue_index": 0.5,
+        "is_cover_crop": false,
+        "break_targets": [
+          "root_knot_nematode"
+        ],
+        "market_use": [
+          "pulse",
+          "fuel"
+        ],
+        "evidence": [
+          {
+            "source_id": "CURATED",
+            "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=576",
+            "date": "2026-11-14",
+            "confidence": "medium"
+          }
+        ],
+        "unverified": [],
+        "notes": "P3 fills the Burmese label | Temperature limits from FAO ECOCROP id 576 (abs min 10C, optimal 18-38C, abs max 45C). ECOCROP annual-rain and cycle range kept in data-pack/csv/crop_requirements_ecocrop.csv; duration and water_mm here are the Myanmar annual-crop values (FAO-56 ETc estimate), not ECOCROP's perennial-inclusive max."
+      },
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "executable_rules": [],
+      "temperature_reference_class": "source_reviewed_reference_fact",
+      "executable_temperature_rule": false,
+      "other_agronomic_assertions_class": "unverified_assertion",
+      "production_system_acceptance": null,
+      "region_acceptance": null,
+      "independent_agronomist_acceptance": null,
+      "limitations": [
+        "A matching ECOCROP numeric reference is not a verified Myanmar field rule.",
+        "Team duration, seasonal water, N fixation, pest benefits, root depth, residue and calendars require parameter-specific evidence.",
+        "No source-review status or caller-supplied confidence promotes a crop recommendation."
+      ]
+    },
+    {
+      "profile_id": "sunflower",
+      "archive_sha256": "241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788",
+      "original_member": "nasa_space_challenges/contracts/data/crop-profiles.v1.json",
+      "source_assertion": {
+        "crop_id": "sunflower",
+        "name_en": "Sunflower",
+        "name_my": "နေကြာ",
+        "family": "asteraceae",
+        "cycle_days": {
+          "low": 90.0,
+          "high": 120.0
+        },
+        "plant_months": [
+          11,
+          12
+        ],
+        "harvest_months": [
+          3,
+          4
+        ],
+        "temp_c": {
+          "min": 5.0,
+          "opt_low": 17.0,
+          "opt_high": 34.0,
+          "max": 45.0
+        },
+        "water_mm": {
+          "low": 400.0,
+          "high": 600.0
+        },
+        "drainage_need": "moderate",
+        "drought_tolerance": "high",
+        "waterlogging_tolerance": "low",
+        "n_fixation_kg_ha": {
+          "low": null,
+          "high": null
+        },
+        "root_depth_cm": 150.0,
+        "residue_index": 0.4,
+        "is_cover_crop": false,
+        "break_targets": [
+          "none"
+        ],
+        "market_use": [
+          "oil",
+          "feed"
+        ],
+        "evidence": [
+          {
+            "source_id": "CURATED",
+            "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1191",
+            "date": "2026-11-14",
+            "confidence": "medium"
+          }
+        ],
+        "unverified": [
+          "n_fixation_kg_ha"
+        ],
+        "notes": "Temperature limits from FAO ECOCROP id 1191 (abs min 5C, optimal 17-34C, abs max 45C). ECOCROP annual-rain and cycle range kept in data-pack/csv/crop_requirements_ecocrop.csv; duration and water_mm here are the Myanmar annual-crop values (FAO-56 ETc estimate), not ECOCROP's perennial-inclusive max."
+      },
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "executable_rules": [],
+      "temperature_reference_class": "cached_source_reference_only",
+      "executable_temperature_rule": false,
+      "other_agronomic_assertions_class": "unverified_assertion",
+      "production_system_acceptance": null,
+      "region_acceptance": null,
+      "independent_agronomist_acceptance": null,
+      "limitations": [
+        "Indexed original-source reference matches; direct retrieval failed. No fresh source availability or executable applicability accepted.",
+        "Team duration, seasonal water, N fixation, pest benefits, root depth, residue and calendars require parameter-specific evidence.",
+        "No source-review status or caller-supplied confidence promotes a crop recommendation."
+      ]
+    },
+    {
+      "profile_id": "cotton",
+      "archive_sha256": "241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788",
+      "original_member": "nasa_space_challenges/contracts/data/crop-profiles.v1.json",
+      "source_assertion": {
+        "crop_id": "cotton",
+        "name_en": "Cotton",
+        "name_my": "ဝါ",
+        "family": "malvaceae",
+        "cycle_days": {
+          "low": 150.0,
+          "high": 180.0
+        },
+        "plant_months": [
+          5,
+          6
+        ],
+        "harvest_months": [
+          11,
+          12
+        ],
+        "temp_c": {
+          "min": 15.0,
+          "opt_low": 22.0,
+          "opt_high": 36.0,
+          "max": 42.0
+        },
+        "water_mm": {
+          "low": 600.0,
+          "high": 900.0
+        },
+        "drainage_need": "moderate",
+        "drought_tolerance": "medium",
+        "waterlogging_tolerance": "low",
+        "n_fixation_kg_ha": {
+          "low": null,
+          "high": null
+        },
+        "root_depth_cm": 150.0,
+        "residue_index": 0.35,
+        "is_cover_crop": false,
+        "break_targets": [
+          "none"
+        ],
+        "market_use": [
+          "fiber",
+          "cash"
+        ],
+        "evidence": [
+          {
+            "source_id": "CURATED",
+            "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1160",
+            "date": "2026-11-14",
+            "confidence": "medium"
+          }
+        ],
+        "unverified": [
+          "n_fixation_kg_ha"
+        ],
+        "notes": "Temperature limits from FAO ECOCROP id 1160 (abs min 15C, optimal 22-36C, abs max 42C). ECOCROP annual-rain and cycle range kept in data-pack/csv/crop_requirements_ecocrop.csv; duration and water_mm here are the Myanmar annual-crop values (FAO-56 ETc estimate), not ECOCROP's perennial-inclusive max."
+      },
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "executable_rules": [],
+      "temperature_reference_class": "source_reviewed_reference_fact",
+      "executable_temperature_rule": false,
+      "other_agronomic_assertions_class": "unverified_assertion",
+      "production_system_acceptance": null,
+      "region_acceptance": null,
+      "independent_agronomist_acceptance": null,
+      "limitations": [
+        "A matching ECOCROP numeric reference is not a verified Myanmar field rule.",
+        "Team duration, seasonal water, N fixation, pest benefits, root depth, residue and calendars require parameter-specific evidence.",
+        "No source-review status or caller-supplied confidence promotes a crop recommendation."
+      ]
+    },
+    {
+      "profile_id": "green_manure_sunnhemp",
+      "archive_sha256": "241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788",
+      "original_member": "nasa_space_challenges/contracts/data/crop-profiles.v1.json",
+      "source_assertion": {
+        "crop_id": "green_manure_sunnhemp",
+        "name_en": "Sunn hemp",
+        "name_my": null,
+        "family": "fabaceae",
+        "cycle_days": {
+          "low": 45.0,
+          "high": 60.0
+        },
+        "plant_months": [
+          5,
+          6,
+          9
+        ],
+        "harvest_months": [
+          7,
+          8,
+          11
+        ],
+        "temp_c": {
+          "min": 4.0,
+          "opt_low": 20.0,
+          "opt_high": 30.0,
+          "max": 40.0
+        },
+        "water_mm": {
+          "low": 150.0,
+          "high": 250.0
+        },
+        "drainage_need": "moderate",
+        "drought_tolerance": "high",
+        "waterlogging_tolerance": "low",
+        "n_fixation_kg_ha": {
+          "low": 40.0,
+          "high": 80.0
+        },
+        "root_depth_cm": 120.0,
+        "residue_index": 0.55,
+        "is_cover_crop": true,
+        "break_targets": [
+          "root_knot_nematode",
+          "soil_borne_fungal"
+        ],
+        "market_use": [
+          "green_manure"
+        ],
+        "evidence": [
+          {
+            "source_id": "CURATED",
+            "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=801",
+            "date": "2026-11-14",
+            "confidence": "medium"
+          }
+        ],
+        "unverified": [],
+        "notes": "cover crop; P3 fills the Burmese label | Temperature limits from FAO ECOCROP id 801 (abs min 4C, optimal 20-30C, abs max 40C). ECOCROP annual-rain and cycle range kept in data-pack/csv/crop_requirements_ecocrop.csv; duration and water_mm here are the Myanmar annual-crop values (FAO-56 ETc estimate), not ECOCROP's perennial-inclusive max."
+      },
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "executable_rules": [],
+      "temperature_reference_class": "source_reviewed_reference_fact",
+      "executable_temperature_rule": false,
+      "other_agronomic_assertions_class": "unverified_assertion",
+      "production_system_acceptance": null,
+      "region_acceptance": null,
+      "independent_agronomist_acceptance": null,
+      "limitations": [
+        "A matching ECOCROP numeric reference is not a verified Myanmar field rule.",
+        "Team duration, seasonal water, N fixation, pest benefits, root depth, residue and calendars require parameter-specific evidence.",
+        "No source-review status or caller-supplied confidence promotes a crop recommendation."
+      ]
+    },
+    {
+      "profile_id": "mustard",
+      "archive_sha256": "241cdcfac1df62b7608b403e8cbcb48d0b8ba9ca9fddc8cce766279016327788",
+      "original_member": "nasa_space_challenges/contracts/data/crop-profiles.v1.json",
+      "source_assertion": {
+        "crop_id": "mustard",
+        "name_en": "Mustard",
+        "name_my": "မုန်ညင်း",
+        "family": "brassicaceae",
+        "cycle_days": {
+          "low": 55.0,
+          "high": 75.0
+        },
+        "plant_months": [
+          10,
+          11
+        ],
+        "harvest_months": [
+          12,
+          1
+        ],
+        "temp_c": {
+          "min": 7.0,
+          "opt_low": 15.0,
+          "opt_high": 28.0,
+          "max": 40.0
+        },
+        "water_mm": {
+          "low": 150.0,
+          "high": 250.0
+        },
+        "drainage_need": "moderate",
+        "drought_tolerance": "medium",
+        "waterlogging_tolerance": "low",
+        "n_fixation_kg_ha": {
+          "low": null,
+          "high": null
+        },
+        "root_depth_cm": 90.0,
+        "residue_index": 0.18,
+        "is_cover_crop": true,
+        "break_targets": [
+          "soil_borne_fungal"
+        ],
+        "market_use": [
+          "oil"
+        ],
+        "evidence": [
+          {
+            "source_id": "CURATED",
+            "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=548",
+            "date": "2026-11-14",
+            "confidence": "medium"
+          }
+        ],
+        "unverified": [
+          "n_fixation_kg_ha"
+        ],
+        "notes": "fast catch crop for the dry season | Temperature limits from FAO ECOCROP id 548 (abs min 7C, optimal 15-28C, abs max 40C). ECOCROP annual-rain and cycle range kept in data-pack/csv/crop_requirements_ecocrop.csv; duration and water_mm here are the Myanmar annual-crop values (FAO-56 ETc estimate), not ECOCROP's perennial-inclusive max."
+      },
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "executable_rules": [],
+      "temperature_reference_class": "source_reviewed_reference_fact",
+      "executable_temperature_rule": false,
+      "other_agronomic_assertions_class": "unverified_assertion",
+      "production_system_acceptance": null,
+      "region_acceptance": null,
+      "independent_agronomist_acceptance": null,
+      "limitations": [
+        "A matching ECOCROP numeric reference is not a verified Myanmar field rule.",
+        "Team duration, seasonal water, N fixation, pest benefits, root depth, residue and calendars require parameter-specific evidence.",
+        "No source-review status or caller-supplied confidence promotes a crop recommendation."
+      ]
+    }
+  ],
+  "rainfall_normals_reference_only": {
+    "hlegu": {
+      "classification": "model_derived_environmental_estimate",
+      "data_kind": "modeled",
+      "recommendation_eligible": false,
+      "source_header": {
+        "title": "NASA/POWER Source Native Resolution Monthly and Annual",
+        "api": {
+          "version": "v2.10.0",
+          "name": "POWER Monthly and Annual API"
+        },
+        "sources": [
+          "MERRA2",
+          "POWER"
+        ],
+        "fill_value": -999.0,
+        "time_standard": "LST",
+        "start": "20160101",
+        "end": "20251231"
+      },
+      "source_geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.2,
+          16.87,
+          10.91
+        ]
+      },
+      "source_parameters": {
+        "EVPTRNS": {
+          "units": "MJ/m^2/day",
+          "longname": "Evapotranspiration Energy Flux"
+        },
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "RH2M": {
+          "units": "%",
+          "longname": "Relative Humidity at 2 Meters"
+        },
+        "T2M": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "months": [
+        {
+          "month": 1,
+          "rainfall_mm": 12.431000000000001,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 2,
+          "rainfall_mm": 8.835,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 3,
+          "rainfall_mm": 6.5409999999999995,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 4,
+          "rainfall_mm": 65.58,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 5,
+          "rainfall_mm": 218.64299999999997,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 6,
+          "rainfall_mm": 304.26,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 7,
+          "rainfall_mm": 443.889,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 8,
+          "rainfall_mm": 373.116,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 9,
+          "rainfall_mm": 326.03999999999996,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 10,
+          "rainfall_mm": 174.251,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 11,
+          "rainfall_mm": 43.95,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 12,
+          "rainfall_mm": 4.433,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        }
+      ],
+      "limitations": [
+        "Research arithmetic only; source retrieval and local applicability remain separate acceptance requirements."
+      ]
+    },
+    "bago": {
+      "classification": "model_derived_environmental_estimate",
+      "data_kind": "modeled",
+      "recommendation_eligible": false,
+      "source_header": {
+        "title": "NASA/POWER Source Native Resolution Monthly and Annual",
+        "api": {
+          "version": "v2.10.0",
+          "name": "POWER Monthly and Annual API"
+        },
+        "sources": [
+          "MERRA2",
+          "POWER"
+        ],
+        "fill_value": -999.0,
+        "time_standard": "LST",
+        "start": "20160101",
+        "end": "20251231"
+      },
+      "source_geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.48,
+          17.33,
+          52.99
+        ]
+      },
+      "source_parameters": {
+        "EVPTRNS": {
+          "units": "MJ/m^2/day",
+          "longname": "Evapotranspiration Energy Flux"
+        },
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "RH2M": {
+          "units": "%",
+          "longname": "Relative Humidity at 2 Meters"
+        },
+        "T2M": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "months": [
+        {
+          "month": 1,
+          "rainfall_mm": 10.974,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 2,
+          "rainfall_mm": 8.672,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 3,
+          "rainfall_mm": 5.239,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 4,
+          "rainfall_mm": 56.970000000000006,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 5,
+          "rainfall_mm": 172.918,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 6,
+          "rainfall_mm": 232.83,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 7,
+          "rainfall_mm": 322.338,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 8,
+          "rainfall_mm": 271.994,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 9,
+          "rainfall_mm": 251.94,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 10,
+          "rainfall_mm": 147.18800000000002,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 11,
+          "rainfall_mm": 39.72,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 12,
+          "rainfall_mm": 5.425,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        }
+      ],
+      "limitations": [
+        "Research arithmetic only; source retrieval and local applicability remain separate acceptance requirements."
+      ]
+    },
+    "magway": {
+      "classification": "model_derived_environmental_estimate",
+      "data_kind": "modeled",
+      "recommendation_eligible": false,
+      "source_header": {
+        "title": "NASA/POWER Source Native Resolution Monthly and Annual",
+        "api": {
+          "version": "v2.10.0",
+          "name": "POWER Monthly and Annual API"
+        },
+        "sources": [
+          "MERRA2",
+          "POWER"
+        ],
+        "fill_value": -999.0,
+        "time_standard": "LST",
+        "start": "20160101",
+        "end": "20251231"
+      },
+      "source_geometry": {
+        "type": "Point",
+        "coordinates": [
+          94.93,
+          20.15,
+          166.35
+        ]
+      },
+      "source_parameters": {
+        "EVPTRNS": {
+          "units": "MJ/m^2/day",
+          "longname": "Evapotranspiration Energy Flux"
+        },
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "RH2M": {
+          "units": "%",
+          "longname": "Relative Humidity at 2 Meters"
+        },
+        "T2M": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        }
+      },
+      "months": [
+        {
+          "month": 1,
+          "rainfall_mm": 9.3,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 2,
+          "rainfall_mm": 7.305,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 3,
+          "rainfall_mm": 8.68,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 4,
+          "rainfall_mm": 21.3,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 5,
+          "rainfall_mm": 72.075,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 6,
+          "rainfall_mm": 134.52,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 7,
+          "rainfall_mm": 173.38299999999998,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 8,
+          "rainfall_mm": 131.905,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 9,
+          "rainfall_mm": 108.27000000000001,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 10,
+          "rainfall_mm": 116.684,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 11,
+          "rainfall_mm": 26.910000000000004,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        },
+        {
+          "month": 12,
+          "rainfall_mm": 10.354000000000001,
+          "expected_years": 10,
+          "usable_years": 10,
+          "missing_year_months": []
+        }
+      ],
+      "limitations": [
+        "Research arithmetic only; source retrieval and local applicability remain separate acceptance requirements."
+      ]
+    }
+  }
+}

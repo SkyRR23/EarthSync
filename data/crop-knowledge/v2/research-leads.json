@@ -1,0 +1,82 @@
+[
+  {
+    "id": "myanmar_doa",
+    "url": "https://www.doa.gov.mm/doa_old/index.php?pavo_post_id=39&route=extension%2Fpavoblog%2Fsingle",
+    "title": "Good agricultural practices for green gram, black gram and cowpea",
+    "publication_date": "2017-11-17",
+    "locator": "Species/common-name table and following guidance",
+    "status": "official_source_retrieved",
+    "scope": "Myanmar extension guidance; Green gram/Mungbean identity independently corroborates common-name association",
+    "limitation": "No numerical thresholds from Burmese prose accepted without exact translation/context review. Does not repair conflicting FAO provider identities automatically."
+  },
+  {
+    "id": "myanmar_dar",
+    "url": "https://www.dar.gov.mm/",
+    "title": "Department of Agricultural Research",
+    "publication_date": null,
+    "locator": "Institutional portal; cultivar research lead",
+    "status": "discovery_only",
+    "scope": "Official identity corroborated by Myanmar government directory; handbook pp9–10 discusses DAR sesame varieties",
+    "limitation": "No standalone DAR experimental dataset or independently verified cultivar thresholds retrieved. Reported recommendation in handbook is not EarthSync acceptance."
+  },
+  {
+    "id": "yau",
+    "url": "https://www.yau.edu.mm/agri-production-departments/1.-department-of-agronomy",
+    "title": "Yezin Agricultural University Department of Agronomy",
+    "publication_date": null,
+    "locator": "Research activities overview",
+    "status": "official_web_research_lead",
+    "scope": "Crop production, cultivar selection, physiology, nutrition and cropping systems",
+    "limitation": "Institution overview is not parameter evidence. No cultivar/season/field trial thresholds imported."
+  },
+  {
+    "id": "yau_doa_trials",
+    "url": "https://landusedivision.doa.gov.mm/en/technology/",
+    "title": "Land Use Division technology: YAU field experiments",
+    "publication_date": null,
+    "locator": "Mungbean boron/molybdenum monsoon/post-monsoon2021–2022 research summary",
+    "status": "official_web_research_lead",
+    "scope": "Single trial/program context at Yezin",
+    "limitation": "No fertilizer-dose recommendation, nitrogen credit or crop-wide threshold extracted."
+  },
+  {
+    "id": "aciar_mungbean",
+    "url": "https://www.aciar.gov.au/publication/books-and-manuals/mungbean-production-guide-cambodian-conditions",
+    "title": "Mungbean production guide for Cambodian conditions",
+    "publication_date": null,
+    "locator": "Publication landing page; supersedes2016 Monograph162",
+    "status": "official_web_research_lead",
+    "scope": "Cambodian conditions, not automatically Myanmar",
+    "limitation": "Full guide not independently audited; local varietal/calendar transfer blocked."
+  },
+  {
+    "id": "original_mungbean_paper",
+    "url": "https://doi.org/10.1186/s40066-020-00260-y",
+    "title": "Impact and returns on investment of mungbean research and development in Myanmar",
+    "publication_date": "2020",
+    "locator": "Original research article; production-system/background lead",
+    "status": "original_publication_discovered_not_parameter_accepted",
+    "scope": "Myanmar rice/mungbean production and breeding/economic study",
+    "limitation": "No economic gains, future income, N credit, farm-specific calendar or quantitative suitability imported from abstract."
+  },
+  {
+    "id": "original_rotation_nematode_paper",
+    "url": "https://doi.org/10.1080/09670874.2019.1647369",
+    "title": "Crop rotation sequencing to minimize yield losses of summer-irrigated lowland rice in Myanmar caused by the rice root-knot nematode Meloidogyne graminicola",
+    "publication_date": "2019",
+    "locator": "Original article abstract; cultivar Thihtatyin and multi-season treatments",
+    "status": "original_publication_discovered_not_parameter_accepted",
+    "scope": "Specific susceptible rice cultivar, irrigated lowland trial and nematode",
+    "limitation": "Full experiment/soil/pathogen/sequence applicability unverified. No generalized pest benefit or recommended two-crop rotation extracted."
+  },
+  {
+    "id": "worldbank_7j",
+    "url": "https://documents1.worldbank.org/curated/en/623701579900727742/pdf/Myanmar-Rice-and-Pulses-Farm-Production-Economics-and-Value-Chain-Dynamics.pdf",
+    "title": "Myanmar Rice and Pulses: Farm Production Economics and Value Chain Dynamics",
+    "publication_date": "2019-06",
+    "locator": "7J verified cover date; printed p14/PDFp26 Figure24 and adjacent text",
+    "status": "reuse_7j_accepted_research_lead_only",
+    "scope": "Central/lower Myanmar seasons and pulse-system context",
+    "limitation": "No repeated forensic audit; no contributed old thresholds/economic model imported. Reference title/date retained from exact 7J audit."
+  }
+]

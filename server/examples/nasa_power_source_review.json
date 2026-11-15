@@ -1,0 +1,44 @@
+{
+  "checked_at": "2026-11-14T05:27:38.178920+00:00",
+  "parameter_catalog_url": "https://power.larc.nasa.gov/api/system/manager/parameters?community=AG&temporal=daily",
+  "parameters": {
+    "T2M": {
+      "type": "METEOROLOGY",
+      "temporal": "DAILY",
+      "source": "SOURCE",
+      "community": "AG",
+      "calculated": false,
+      "inputs": null,
+      "units": "C",
+      "name": "Temperature at 2 Meters",
+      "definition": "The average air (dry bulb) temperature at 2 meters above the surface of the earth."
+    },
+    "PRECTOTCORR": {
+      "type": "METEOROLOGY",
+      "temporal": "DAILY",
+      "source": "SOURCE",
+      "community": "AG",
+      "calculated": false,
+      "inputs": null,
+      "units": "mm/day",
+      "name": "Precipitation Corrected",
+      "definition": "The average MERRA-2 bias corrected total precipitation at the surface of the earth."
+    }
+  },
+  "documentation": [
+    {
+      "url": "https://power.larc.nasa.gov/docs/services/api/temporal/daily/",
+      "sha256": "d624945397c5fa517d5d8d63c3c802550869271d545c93f31c0e7e419cf4a9f6"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/docs/methodology/data/sources_meteorology/",
+      "sha256": "b2a8dcb492a3c43d39d940d231b72ad2580dd601e54d709655cf3bcf5c053f97"
+    }
+  ],
+  "raw_capture": {
+    "path": "server/tests/fixtures/nasa_power_yangon_202402_live.json",
+    "http_status": 200,
+    "response_date": "Sat, 14 Nov 2026 05:25:46 GMT",
+    "sha256": "826a916682b3bf2995535b7532a723964ddff6d2174d00198c110effac34e07c"
+  }
+}

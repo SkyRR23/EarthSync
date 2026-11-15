@@ -1,0 +1,56 @@
+{
+  "before": {
+    "farms": {
+      "rows": 7,
+      "sha256": "70a2d03fd508268a8e864dfd168ac45171c8fd30cea8041f2bd45d6947f5fc7d"
+    },
+    "evidence": {
+      "rows": 14,
+      "sha256": "087591598fc84b22c125613a576899fb4f1d24fec010cf3b1d8a93fcba6b9ec9"
+    },
+    "decisions": {
+      "rows": 1,
+      "sha256": "565021684e2aef9d54722f31359bd0918bfb786cb1bdd41d1c9f98f42a839e98"
+    },
+    "farm_evidence": {
+      "rows": 56,
+      "sha256": "95982634b32f2cfafb6bf98a1d9e921054eec574e5e8524ef7daf1d608a8ae60"
+    },
+    "history": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "restored": {
+    "farms": {
+      "rows": 7,
+      "sha256": "70a2d03fd508268a8e864dfd168ac45171c8fd30cea8041f2bd45d6947f5fc7d"
+    },
+    "evidence": {
+      "rows": 14,
+      "sha256": "087591598fc84b22c125613a576899fb4f1d24fec010cf3b1d8a93fcba6b9ec9"
+    },
+    "decisions": {
+      "rows": 1,
+      "sha256": "565021684e2aef9d54722f31359bd0918bfb786cb1bdd41d1c9f98f42a839e98"
+    },
+    "farm_evidence": {
+      "rows": 56,
+      "sha256": "95982634b32f2cfafb6bf98a1d9e921054eec574e5e8524ef7daf1d608a8ae60"
+    },
+    "history": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "backup_restore": "passed",
+  "previous_processes": {
+    "platform": 8614,
+    "web": 8624
+  },
+  "restart": "passed; all original saved rows retained byte-for-byte; later explicit browser records may be added",
+  "current_processes": {
+    "platform": 11583,
+    "web": 11594
+  }
+}

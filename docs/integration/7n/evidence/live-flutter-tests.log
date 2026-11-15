@@ -1,0 +1,32 @@
+00:00 +0: loading /workspace/EarthSync-final/app/test/native_bridge_test.dart
+00:00 +0: /workspace/EarthSync-final/app/test/native_bridge_test.dart: (setUpAll)
+Initializing the actual native Rust bridge.
+Native bridge initialized; analyzing the captured NASA response.
+00:01 +0: /workspace/EarthSync-final/app/test/native_bridge_test.dart: captured real NASA -> actual FRB -> Rust -> Flutter climate display
+00:02 +1: /workspace/EarthSync-final/app/test/native_bridge_test.dart: missing historical months return unknown values and render safely
+00:02 +2: /workspace/EarthSync-final/app/test/native_bridge_test.dart: Rust rejects mismatched field/environment coordinates through actual FRB
+00:02 +3: /workspace/EarthSync-final/app/test/native_bridge_test.dart: live Python -> NASA -> actual FRB -> Rust -> Flutter
+00:02 +4: /workspace/EarthSync-final/app/test/native_bridge_test.dart: synthetic crop warning stays visible with modeled climate
+00:02 +5: /workspace/EarthSync-final/app/test/native_bridge_test.dart: (tearDownAll)
+00:02 +5: loading /workspace/EarthSync-final/app/test/web_engine_test.dart
+00:07 +5: /workspace/EarthSync-final/app/test/web_engine_test.dart: (setUpAll)
+00:08 +5: /workspace/EarthSync-final/app/test/web_engine_test.dart: web reference options use actual Rust and cannot become verified advice
+00:08 +6: /workspace/EarthSync-final/app/test/web_engine_test.dart: live failure never requests captured data or invokes Rust
+00:09 +7: /workspace/EarthSync-final/app/test/web_engine_test.dart: phone results show Rust values, crop options and monthly coverage
+00:12 +8: /workspace/EarthSync-final/app/test/web_engine_test.dart: no crop shows climate and an actionable empty recommendation state
+00:12 +9: /workspace/EarthSync-final/app/test/web_engine_test.dart: live web HTTP to Python to Rust returns and displays twelve months
+00:12 +10: /workspace/EarthSync-final/app/test/web_engine_test.dart: (tearDownAll)
+00:12 +10: loading /workspace/EarthSync-final/app/test/ui/platform_live_test.dart
+00:13 +10: /workspace/EarthSync-final/app/test/ui/platform_live_test.dart: actual local 7I job retains live daily evidence and quality
+00:17 +10 -1: /workspace/EarthSync-final/app/test/ui/platform_live_test.dart: actual local 7I job retains live daily evidence and quality [E]
+  Expected: ClimateJobStatus:<ClimateJobStatus.succeeded>
+    Actual: ClimateJobStatus:<ClimateJobStatus.failed>
+
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test/ui/platform_live_test.dart 25:7                main.<fn>
+
+00:17 +10 -1: Some tests failed.
+
+Failing tests:
+  /workspace/EarthSync-final/app/test/ui/platform_live_test.dart: actual local 7I job retains live daily evidence and quality

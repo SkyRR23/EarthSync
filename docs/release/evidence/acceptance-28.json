@@ -1,0 +1,215 @@
+{
+  "schema_version": "earthsync.final_acceptance.v1",
+  "release_status": "BLOCKED — mandatory real vegetation unavailable; partial weather/warning scope",
+  "main_merged": false,
+  "method": "Actual combined application; resumed checkpoints across defect repair, not an uninterrupted 28-step pass",
+  "evidence_scope": "Farmer inputs/photos are SYNTHETIC; REAL runtime execution does not turn them into field observations",
+  "approved_executable_crop_rules": 0,
+  "blocked_candidates": 60,
+  "steps": [
+    {
+      "number": 1,
+      "objective": "Open Flutter Web",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "REAL",
+      "evidence": "browser-final/results.json"
+    },
+    {
+      "number": 2,
+      "objective": "Select confirmed location",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "SYNTHETIC",
+      "evidence": "browser-7g/results.json"
+    },
+    {
+      "number": 3,
+      "objective": "Draw/edit/confirm/save boundary",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "SYNTHETIC",
+      "evidence": "browser-7g/results.json"
+    },
+    {
+      "number": 4,
+      "objective": "Reopen saved field",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "SYNTHETIC",
+      "evidence": "browser-final/farm.json"
+    },
+    {
+      "number": 5,
+      "objective": "Inspect interactive map",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "REAL",
+      "evidence": "browser-7g-tile-verification/results.json"
+    },
+    {
+      "number": 6,
+      "objective": "Inspect accepted real vegetation observation",
+      "status": "UNAVAILABLE",
+      "classification": "UNAVAILABLE",
+      "evidence": "../../integration/7g/SCIENCE.md"
+    },
+    {
+      "number": 7,
+      "objective": "Inspect supported real soil property",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "REAL",
+      "evidence": "browser-7g/soil-map-job.json"
+    },
+    {
+      "number": 8,
+      "objective": "Current weather/forecast scope",
+      "status": "PARTIAL",
+      "classification": "CACHED REAL",
+      "evidence": "browser-risk/results.json"
+    },
+    {
+      "number": 9,
+      "objective": "Crop and farmer priorities",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "SYNTHETIC",
+      "evidence": "browser-final/saved-comparison.json"
+    },
+    {
+      "number": 10,
+      "objective": "NASA historical climate",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "CACHED REAL",
+      "evidence": "browser-final/nasa-water-job.json"
+    },
+    {
+      "number": 11,
+      "objective": "Actual Rust FAO-56 reference ET0",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "REAL",
+      "evidence": "browser-final/nasa-water-job.json"
+    },
+    {
+      "number": 12,
+      "objective": "Select crop references",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "CACHED REAL",
+      "evidence": "browser-crops/results.json"
+    },
+    {
+      "number": 13,
+      "objective": "Compare baseline and two alternatives",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "SYNTHETIC",
+      "evidence": "browser-final/saved-comparison.json"
+    },
+    {
+      "number": 14,
+      "objective": "Supported chronology and unknowns",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "SYNTHETIC",
+      "evidence": "browser-final/strategy-2.json"
+    },
+    {
+      "number": 15,
+      "objective": "Save choice and planned dates",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "SYNTHETIC",
+      "evidence": "browser-final/saved-comparison.json"
+    },
+    {
+      "number": 16,
+      "objective": "Confirm actual reported crop history",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "SYNTHETIC",
+      "evidence": "browser-final/history-confirmation.json"
+    },
+    {
+      "number": 17,
+      "objective": "Dated observation/photo connection",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "SYNTHETIC",
+      "evidence": "browser-final/observation.json"
+    },
+    {
+      "number": 18,
+      "objective": "Season timeline",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "SYNTHETIC",
+      "evidence": "browser-final/results.json"
+    },
+    {
+      "number": 19,
+      "objective": "Warnings and validity",
+      "status": "PARTIAL",
+      "classification": "CACHED REAL",
+      "evidence": "browser-risk/results.json"
+    },
+    {
+      "number": 20,
+      "objective": "Deterministic saved-evidence explanation",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "SYNTHETIC",
+      "evidence": "browser-final/assistant-comparison.json"
+    },
+    {
+      "number": 21,
+      "objective": "Refresh and restart",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "REAL",
+      "evidence": "restarted-http.json"
+    },
+    {
+      "number": 22,
+      "objective": "Persisted records and source lineage",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "CACHED REAL",
+      "evidence": "restored-http.json"
+    },
+    {
+      "number": 23,
+      "objective": "Provider outage and missing evidence",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "MOCKED",
+      "evidence": "browser-final/results.json"
+    },
+    {
+      "number": 24,
+      "objective": "Offline cold app and cached crop references",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "MOCKED",
+      "evidence": "browser-final/offline-public-cache.json"
+    },
+    {
+      "number": 25,
+      "objective": "English/Burmese core workflow",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "SYNTHETIC",
+      "evidence": "browser-final/burmese-season.png"
+    },
+    {
+      "number": 26,
+      "objective": "Desktop/mobile comparison",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "SYNTHETIC",
+      "evidence": "browser-final/three-strategies-phone.png"
+    },
+    {
+      "number": 27,
+      "objective": "Backup/restore exact stores",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "REAL",
+      "evidence": "recovery-exact-stores.json"
+    },
+    {
+      "number": 28,
+      "objective": "Local access controls and privacy",
+      "status": "IMPLEMENTED AND VERIFIED",
+      "classification": "REAL",
+      "evidence": "workspace-photo-auth.json"
+    }
+  ],
+  "limits": {
+    "6": "No authorized QA-accepted raster; operational NDVI analysis/overlay is not accepted. Both source availability and feature acceptance remain incomplete.",
+    "8": "Sparse GFS temperature only; current observed weather, precipitation, publication time unavailable.",
+    "15": "Browser saves and reopens Undecided as the optional choice; selecting an alternative and preserving its ID are exercised in the production widget/API/context regression tests. No scientific ranking.",
+    "19": "Dated regional forecast, staleness and acknowledgment verified; no official issued alerts.",
+    "25": "Core labels/font/language switch verified, not every untranslated label or native agricultural translation accuracy.",
+    "28": "Local single-user loopback scope; no public multi-user authentication or hosting claim."
+  }
+}

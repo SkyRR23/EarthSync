@@ -1,0 +1,9 @@
+{
+  "fixture": "Generated synthetic test image; not a field observation",
+  "platform_farm": "41687278-3c52-4dcd-b529-9044b552ddfd",
+  "platform_photo": "b5d92d7a-bd42-46fd-a51d-e7ef9ac88e5d",
+  "workspace_photo": "6a3e03ea-1565-4355-a464-e0abe3fc81a9",
+  "image_sha256": "a089cf49091c635ef543fe98df3281812f75a984c58bfc24781b35229c04825f",
+  "host_origin_denied": true,
+  "workspace_unauthenticated_denied": true
+}

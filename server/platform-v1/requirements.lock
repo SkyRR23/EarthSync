@@ -1,0 +1,2 @@
+# Combined 7N lock retains the latest 7H sanitizer and Windows timezone pins.
+-r ../requirements.lock

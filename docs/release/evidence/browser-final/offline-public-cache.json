@@ -1,0 +1,7 @@
+{
+  "schema_version": "earthsync.public_verification_receipt.v1",
+  "raw_receipt_sha256": "6bf0070159d0cf282e9dad885556fdcdb67efbb1794e88598e5c34006e6237b6",
+  "private_field_data_omitted": true,
+  "public_static_resource_count": 43,
+  "private_api_cached": false
+}

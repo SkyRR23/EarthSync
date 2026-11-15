@@ -1,0 +1,11 @@
+{
+  "schema_version": "earthsync.public_verification_receipt.v1",
+  "raw_receipt_sha256": "30b9633a98e7451da77d1c05ad82e5742d39fe92ffa9868a52726d706d2ad746",
+  "private_field_data_omitted": true,
+  "status": "PASS",
+  "classification": "SYNTHETIC farmer acknowledgment; CACHED REAL dated GFS forecast",
+  "official_alerts": "UNAVAILABLE",
+  "automatic_monitoring": false,
+  "browser_error_count": 0,
+  "tile_response_count": 0
+}

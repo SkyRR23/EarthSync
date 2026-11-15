@@ -1,0 +1,25 @@
+{
+  "schema_version": "earthsync.public_verification_receipt.v1",
+  "raw_receipt_sha256": "369781d85be82471744df7eb166bfe07d888ea076cf7bc4553c815570ba810d9",
+  "private_field_data_omitted": true,
+  "source": {
+    "license": "CC BY 4.0 · ISRIC SoilGrids",
+    "retrieved_at": "2026-11-14T21:00:03.784129+00:00",
+    "usable_for_assessment": false,
+    "statistic": "mean",
+    "resolution_m": 250,
+    "unit": "pH",
+    "property": "phh2o",
+    "status": "available",
+    "depth_cm": [
+      0,
+      5
+    ],
+    "provider": "ISRIC SoilGrids",
+    "observation_time": null,
+    "dataset": "SoilGrids 2.0 / RUN05 / March 2020 model snapshot"
+  },
+  "source_cache_hit": false,
+  "measurement_record_count": 0,
+  "raster_cell_count": 25
+}

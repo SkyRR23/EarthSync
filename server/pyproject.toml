@@ -1,0 +1,27 @@
+[project]
+name = "earthsync-backend"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = ["fastapi==0.121.3", "httpx==0.28.1", "uvicorn==0.38.0", "jsonschema==4.26.0", "pillow==12.2.0", "tzdata==2026.6", "numpy==2.3.5", "rasterio==1.4.3", "shapely==2.1.2", "earthaccess==0.19.0", "h5py==3.15.1"]
+
+[project.optional-dependencies]
+evidence = ["pillow==12.2.0"]
+test = ["pytest==9.0.1", "pytest-asyncio==1.3.0", "ruff==0.14.5"]
+
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["earthsync*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.setuptools.package-data]
+"earthsync.assistant" = ["locales/*.json"]
+
+"earthsync.platform_v1" = ["migrations/*.sql", "rule_review.json"]
+
+"earthsync.research" = ["additional_evidence.json", "plant_health.json"]

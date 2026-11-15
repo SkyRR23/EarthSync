@@ -1,0 +1,335 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://earthsync.invalid/schemas/crop-rule-candidates-v1.json",
+  "title": "7V non-executable candidate review; any promotion requires a separately reviewed schema/version",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "content_version",
+    "upstream_sha",
+    "language",
+    "recommendation_eligible",
+    "approved_for_candidates",
+    "executable_rules",
+    "candidates"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "earthsync.crop-rule-candidates.v1"
+    },
+    "content_version": {
+      "const": "1.0.0"
+    },
+    "upstream_sha": {
+      "const": "940a8aad62da8b188cdd3af4d200f353d907997a"
+    },
+    "language": {
+      "const": "en"
+    },
+    "recommendation_eligible": {
+      "const": false
+    },
+    "approved_for_candidates": {
+      "const": false
+    },
+    "executable_rules": {
+      "type": "array",
+      "maxItems": 0
+    },
+    "candidates": {
+      "type": "array",
+      "minItems": 60,
+      "maxItems": 60,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "crop_id",
+          "domain",
+          "target_condition",
+          "proposed_requirement",
+          "profile_parameter_links",
+          "claim_ids",
+          "fact_ids",
+          "scope_policy",
+          "review",
+          "execution_status",
+          "recommendation_eligible",
+          "approved_for_candidates",
+          "block_reason",
+          "required_evidence",
+          "contradictions_and_limits",
+          "uncertainty"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^7v\\.(rice|maize|mung_bean|sesame|groundnut)\\.[a-z_]+@1$"
+          },
+          "crop_id": {
+            "enum": [
+              "ecocrop.1574@1",
+              "ecocrop.2175@1",
+              "ecocrop.2150@1",
+              "ecocrop.1937@1",
+              "ecocrop.2199@1"
+            ]
+          },
+          "domain": {
+            "enum": [
+              "planting_window",
+              "growing_duration",
+              "temperature",
+              "growing_period_rainfall",
+              "soil_ph",
+              "soil_texture",
+              "soil_drainage",
+              "flood_tolerance",
+              "drought_stage_sensitivity",
+              "kc_curve",
+              "stage_duration",
+              "succession"
+            ]
+          },
+          "target_condition": {
+            "enum": [
+              "planting_window",
+              "duration",
+              "temperature",
+              "growing_period_rainfall",
+              "soil_numeric",
+              "soil_category",
+              "crop_evapotranspiration",
+              "succession",
+              null
+            ]
+          },
+          "proposed_requirement": {
+            "type": "null"
+          },
+          "profile_parameter_links": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "profile_id",
+                "parameter"
+              ],
+              "properties": {
+                "profile_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "parameter": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "claim_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "fact_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "scope_policy": {
+            "type": "string",
+            "minLength": 1
+          },
+          "review": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source_fact",
+              "method_numerically_verified",
+              "applicable_rule_independently_reviewed",
+              "needs_agronomist_field_validation",
+              "unsupported",
+              "independent_review_status",
+              "reviewer",
+              "reviewed_on",
+              "agronomist_reviewer"
+            ],
+            "properties": {
+              "source_fact": {
+                "enum": [
+                  "verified",
+                  "partially_verified",
+                  "not_independently_rechecked",
+                  "unsupported"
+                ]
+              },
+              "method_numerically_verified": {
+                "type": "boolean"
+              },
+              "applicable_rule_independently_reviewed": {
+                "const": false
+              },
+              "needs_agronomist_field_validation": {
+                "const": true
+              },
+              "unsupported": {
+                "type": "boolean"
+              },
+              "independent_review_status": {
+                "const": "desk_review_complete_execution_blocked"
+              },
+              "reviewer": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reviewed_on": {
+                "type": "string",
+                "format": "date"
+              },
+              "agronomist_reviewer": {
+                "type": "null"
+              }
+            }
+          },
+          "execution_status": {
+            "const": "blocked"
+          },
+          "recommendation_eligible": {
+            "const": false
+          },
+          "approved_for_candidates": {
+            "const": false
+          },
+          "block_reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "required_evidence": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true,
+            "minItems": 1
+          },
+          "contradictions_and_limits": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true,
+            "minItems": 1
+          },
+          "uncertainty": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source_id",
+        "crop_id",
+        "locator",
+        "claim",
+        "value",
+        "unit",
+        "statistic",
+        "geographic_applicability",
+        "production_system",
+        "cultivar",
+        "source_fact_status",
+        "independent_applicability_status",
+        "needs_agronomist_field_validation",
+        "uncertainty",
+        "limitations"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "crop_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {},
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "statistic": {
+          "type": "string",
+          "minLength": 1
+        },
+        "geographic_applicability": {
+          "type": "string",
+          "minLength": 1
+        },
+        "production_system": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cultivar": {
+          "type": "null"
+        },
+        "source_fact_status": {
+          "const": "verified"
+        },
+        "independent_applicability_status": {
+          "const": "not_approved"
+        },
+        "needs_agronomist_field_validation": {
+          "const": true
+        },
+        "uncertainty": {
+          "type": "string",
+          "minLength": 1
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        }
+      }
+    }
+  }
+}

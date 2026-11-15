@@ -1,0 +1,15 @@
+{
+  "local_profile_id": "farm-1794673802278000",
+  "revision": "2026-11-14T16:30:02.278000+00:00",
+  "farm": {
+    "name": "7N software test farm (no ground truth)",
+    "confirmed_point": {
+      "latitude": 42.030234,
+      "longitude": -93.620234
+    },
+    "confirmed_polygon": null,
+    "confirmed_on": "2026-11-14",
+    "production_system": "rainfed",
+    "id": "f777165b-2bf5-4a83-8daf-77a599595f33"
+  }
+}

@@ -1,0 +1,255 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../data/environment/nasa_power_client.dart';
+import '../data/engine/engine_gateway.dart';
+import '../data/engine/mock_engine.dart';
+import '../data/engine/rust_engine.dart';
+import '../data/engine/web_engine.dart';
+import '../data/models/farmer_input.dart';
+import '../data/models/field_analysis.dart';
+import 'home_provider.dart';
+
+const _engineDefine = String.fromEnvironment('ENGINE');
+
+/// Native apps use FRB; browsers call the shared Rust engine on the demo host.
+/// Fixture presentation requires an explicit ENGINE=mock selection.
+final kEngine = _engineDefine.isNotEmpty
+    ? _engineDefine
+    : (kIsWeb ? (Uri.base.queryParameters['engine'] ?? 'web') : 'rust');
+
+final engineProvider = Provider<EngineGateway>(
+  (ref) => switch (kEngine) {
+    'rust' => RustEngine(window: ref.watch(historicalWindowProvider)),
+    'web' => WebEngine(window: ref.watch(historicalWindowProvider)),
+    'mock' => MockEngine(),
+    _ => throw StateError(
+      'Unsupported ENGINE value. Choose rust, web or mock.',
+    ),
+  },
+);
+
+class HistoricalWindowNotifier extends Notifier<HistoricalWindow> {
+  @override
+  HistoricalWindow build() {
+    if (kIsWeb && Uri.base.queryParameters['climate'] == 'captured') {
+      return const HistoricalWindow();
+    }
+    final year = DateTime.now().toUtc().year - 1;
+    return HistoricalWindow(
+      startYear: year,
+      startMonth: 1,
+      endYear: year,
+      endMonth: 12,
+    );
+  }
+
+  void setWindow(HistoricalWindow window) => state = window;
+}
+
+final historicalWindowProvider =
+    NotifierProvider<HistoricalWindowNotifier, HistoricalWindow>(
+      HistoricalWindowNotifier.new,
+    );
+
+// ---------------------------------------------------------------------------
+// Questionnaire draft
+// ---------------------------------------------------------------------------
+
+/// Sentinel used by choice questions for "I don't know".
+const kUnknown = 'unknown';
+
+/// null field = not answered yet. [kUnknown] / 0 / `.unknown` = "I don't know".
+class FarmerDraft {
+  const FarmerDraft({
+    this.latitude,
+    this.longitude,
+    this.currentCrop,
+    this.previousCrop,
+    this.plantingMonth,
+    this.irrigation,
+    this.drainage,
+    this.priorities,
+  });
+
+  final double? latitude;
+  final double? longitude;
+  final String? currentCrop;
+  final String? previousCrop;
+  final int? plantingMonth; // 0 = unknown
+  final Irrigation? irrigation;
+  final Drainage? drainage;
+  final Set<Priority>? priorities; // empty set = "I don't know"
+
+  bool get hasLocation => latitude != null && longitude != null;
+
+  FarmerDraft copyWith({
+    double? latitude,
+    double? longitude,
+    String? currentCrop,
+    String? previousCrop,
+    int? plantingMonth,
+    Irrigation? irrigation,
+    Drainage? drainage,
+    Set<Priority>? priorities,
+  }) => FarmerDraft(
+    latitude: latitude ?? this.latitude,
+    longitude: longitude ?? this.longitude,
+    currentCrop: currentCrop ?? this.currentCrop,
+    previousCrop: previousCrop ?? this.previousCrop,
+    plantingMonth: plantingMonth ?? this.plantingMonth,
+    irrigation: irrigation ?? this.irrigation,
+    drainage: drainage ?? this.drainage,
+    priorities: priorities ?? this.priorities,
+  );
+
+  FarmerInput toInput() {
+    String? crop(String? v) => (v == null || v == kUnknown) ? null : v;
+    return FarmerInput(
+      latitude: latitude!,
+      longitude: longitude!,
+      currentCrop: crop(currentCrop),
+      recentRotation: [if (crop(previousCrop) != null) previousCrop!],
+      plantingMonth: (plantingMonth == null || plantingMonth == 0)
+          ? null
+          : plantingMonth,
+      irrigation: irrigation ?? Irrigation.unknown,
+      drainage: drainage ?? Drainage.unknown,
+      priorities: (priorities ?? const {}).toList(),
+    );
+  }
+}
+
+class FarmerDraftNotifier extends Notifier<FarmerDraft> {
+  @override
+  FarmerDraft build() {
+    final farm = ref.read(homeProfileProvider).value?.farm;
+    return FarmerDraft(
+      latitude: farm?.point.latitude,
+      longitude: farm?.point.longitude,
+    );
+  }
+
+  void setLocation(double lat, double lon) =>
+      state = state.copyWith(latitude: lat, longitude: lon);
+  void setCurrentCrop(String v) => state = state.copyWith(currentCrop: v);
+  void setPreviousCrop(String v) => state = state.copyWith(previousCrop: v);
+  void setPlantingMonth(int v) => state = state.copyWith(plantingMonth: v);
+  void setIrrigation(Irrigation v) => state = state.copyWith(irrigation: v);
+  void setDrainage(Drainage v) => state = state.copyWith(drainage: v);
+  void setPriorities(Set<Priority> v) => state = state.copyWith(priorities: v);
+
+  /// Back to "not answered" (e.g. user unticked every priority).
+  void clearPriorities() => state = FarmerDraft(
+    latitude: state.latitude,
+    longitude: state.longitude,
+    currentCrop: state.currentCrop,
+    previousCrop: state.previousCrop,
+    plantingMonth: state.plantingMonth,
+    irrigation: state.irrigation,
+    drainage: state.drainage,
+  );
+}
+
+final farmerDraftProvider = NotifierProvider<FarmerDraftNotifier, FarmerDraft>(
+  FarmerDraftNotifier.new,
+);
+
+// ---------------------------------------------------------------------------
+// Analysis state machine: Idle -> Analyzing -> Ready | Failed
+// ---------------------------------------------------------------------------
+
+sealed class AnalysisState {
+  const AnalysisState();
+}
+
+class AnalysisIdle extends AnalysisState {
+  const AnalysisIdle();
+}
+
+class AnalysisRunning extends AnalysisState {
+  const AnalysisRunning();
+}
+
+class AnalysisReady extends AnalysisState {
+  const AnalysisReady(this.analysis, {this.fromCache = false});
+  final FieldAnalysis analysis;
+  final bool fromCache;
+}
+
+class AnalysisFailed extends AnalysisState {
+  const AnalysisFailed(this.error, {this.lastGood});
+  final EngineError error;
+  final FieldAnalysis? lastGood;
+}
+
+class AnalysisNotifier extends Notifier<AnalysisState> {
+  FieldAnalysis? _lastGood;
+  int _generation = 0;
+
+  @override
+  AnalysisState build() {
+    ref.watch(homeProfileProvider.select((p) => p.value?.farm));
+    ref.watch(historicalWindowProvider);
+    ++_generation;
+    _lastGood = null;
+    ref.onDispose(() => ++_generation);
+    return const AnalysisIdle();
+  }
+
+  Future<void> run(FarmerInput input) async {
+    final generation = ++_generation;
+    state = const AnalysisRunning();
+    try {
+      final result = await ref.read(engineProvider).analyzeField(input);
+      if (generation != _generation) return;
+      _lastGood = result;
+      state = AnalysisReady(result);
+    } on EngineError catch (e) {
+      if (generation != _generation) return;
+      state = AnalysisFailed(e, lastGood: _lastGood);
+    } catch (e) {
+      if (generation != _generation) return;
+      state = AnalysisFailed(
+        EngineError(code: 'unexpected', message: e.toString()),
+        lastGood: _lastGood,
+      );
+    }
+  }
+
+  /// Fallback for outages: the bundled demo fixture (master plan §12, H28).
+  Future<void> runDemo() async {
+    final generation = ++_generation;
+    state = const AnalysisRunning();
+    try {
+      final result = await MockEngine(
+        delay: Duration.zero,
+      ).analyzeField(_demoInput);
+      if (generation != _generation) return;
+      state = AnalysisReady(result);
+    } on EngineError catch (e) {
+      if (generation != _generation) return;
+      state = AnalysisFailed(e);
+    }
+  }
+
+  void reset() {
+    ++_generation;
+    _lastGood = null;
+    state = const AnalysisIdle();
+  }
+
+  void showLastGood() {
+    ++_generation;
+    if (_lastGood != null) state = AnalysisReady(_lastGood!, fromCache: true);
+  }
+}
+
+final analysisProvider = NotifierProvider<AnalysisNotifier, AnalysisState>(
+  AnalysisNotifier.new,
+);
+
+/// Sample field near Yangon used by "Use sample field" and the demo fallback.
+const kSampleLat = 16.85;
+const kSampleLon = 96.15;
+const _demoInput = FarmerInput(latitude: kSampleLat, longitude: kSampleLon);

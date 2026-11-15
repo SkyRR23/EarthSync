@@ -31,3 +31,11 @@ and the proposed PR #2 contract, then added deterministic integration orchestrat
 structured JSON error/success envelopes, synthetic workflow fixtures/tests and a
 proposed server/Flutter/FRB v2 handoff. No Flutter/backend files or generated bindings
 were created; no live observations, crop rules or benefits were invented.
+
+Milestone 4B P0: Codex inspected current merged main, the real Flutter/FRB branch
+and the unmerged team contract. Added an opt-in v0.2 soil/history/daily-schedule
+boundary, provenance validation, applicability-gated categorical/duration checks,
+synthetic tests/fixtures/demo and contract reconciliation. No real crop thresholds,
+NASA observations, forecast risks, benefits or production validation were generated.
+Existing APIs and teammate components remain unchanged. Human scientific review
+and P2/P4 schema agreement are required before real-data integration.

@@ -1,0 +1,11 @@
+{
+  "schema_version": "earthsync.public_verification_receipt.v1",
+  "raw_receipt_sha256": "783e1270ca2c91dc31e01fea55aff0835613d9260db35a85a39b5f48f32b818d",
+  "private_field_data_omitted": true,
+  "intent": "crops",
+  "claim_count": 20,
+  "decision_count": 3,
+  "citation_count": 1,
+  "baseline_explained": true,
+  "alternative_b_explained": true
+}

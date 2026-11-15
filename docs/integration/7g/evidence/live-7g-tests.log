@@ -1,0 +1,16 @@
+..                                                                       [100%]
+=============================== warnings summary ===============================
+tests/platform_v1/test_live_7g.py::test_live_accepted_isric_ph
+  /workspace/EarthSync-7G/server/earthsync/platform_v1/providers/soil_webdav.py:47: PendingDeprecationWarning: Use `@` matmul instead of `*` mul operator for matrix multiplication
+    col, row = ~affine * (x[0], y[0])
+
+tests/platform_v1/test_live_7g.py::test_live_accepted_isric_ph
+  /workspace/EarthSync-7G/server/earthsync/platform_v1/providers/soil_webdav.py:64: PendingDeprecationWarning: Use `@` matmul instead of `*` mul operator for matrix multiplication
+    (BASE + path, affine * Affine.translation(rect["xOff"], rect["yOff"]))
+
+tests/platform_v1/test_live_7g.py: 25 warnings
+  /workspace/EarthSync-7G/server/earthsync/platform_v1/providers/soil_webdav.py:116: PendingDeprecationWarning: Use `@` matmul instead of `*` mul operator for matrix multiplication
+    left, top = ds.transform * (native_col, native_row)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2 passed, 27 warnings in 17.82s
