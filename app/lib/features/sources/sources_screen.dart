@@ -28,6 +28,7 @@ class SourcesScreen extends ConsumerWidget {
       title: S.sources,
       children: [
         if (!kIsWeb) const SimulationBanner(),
+        if (!kIsWeb) const SelectableText('Build: ${String.fromEnvironment("SOURCE_SHA", defaultValue: "development")}'),
         Padding(
           padding: const EdgeInsets.fromLTRB(
             FsSpace.gutter + FsSpace.xs,

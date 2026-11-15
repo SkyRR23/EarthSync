@@ -1,7 +1,7 @@
 name: Submission APK
 on:
   push:
-    branches: [integration/earthsync-submission-timeline, feat/farmer-first-android, main]
+    branches: [integration/earthsync-submission-timeline]
     paths: ['app/**', 'engine/**', '.github/workflows/submission-android.yml']
   workflow_dispatch:
 permissions:
@@ -38,7 +38,7 @@ jobs:
         run: flutter pub get --enforce-lockfile
       - name: Build sideload submission APK
         working-directory: app
-        run: flutter build apk --release --dart-define-from-file=config/cloud.json
+        run: flutter build apk --release --dart-define-from-file=config/cloud.json --dart-define=SOURCE_SHA=$GITHUB_SHA
       - name: Record source and checksum
         run: |
           mkdir -p submission

@@ -11,6 +11,10 @@ health. Service availability/configuration is unresolved with the teammate who
 manages Cloud Run. That is the main reason this version keeps real-time features
 separate and unused in the simulation.
 
+`realtime_weather.dart` is the unused adapter for the original visual weather
+screen. A future host can mount it with the normal providers and navigation
+after the API deployment is repaired. The primary app never imports it.
+
 The retained implementations are in `data/environment/forecast.dart`,
 `data/environment/recent_conditions.dart`, `features/home/weather_tab.dart` and
 `evidence/features/realtime/`. They remain in their original paths for compatibility

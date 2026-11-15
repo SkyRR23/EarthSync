@@ -1,3 +1,4 @@
+import 'weather_history_visual.dart';
 import '../features/home/home_shell.dart';
 import '../data/models/field_analysis.dart';
 import 'historical_reference.dart';
@@ -29,7 +30,12 @@ class HistoricalWeatherSummary extends ConsumerWidget {
     final reference = ref.watch(historicalReferenceProvider).value;
     final rows = usingReference ? <MonthlyClimate>[for (final m in reference?['months'] as List? ?? []) if (m['year'] == date.year) MonthlyClimate(year: m['year'] as int, month: m['month'] as int, rainMm: (m['rain_mm'] as num?)?.toDouble())] : climate?.months ?? <MonthlyClimate>[];
     final month = rows.where((m) => m.year == date.year && m.month == date.month).firstOrNull;
-    return Card(child: Padding(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+    String dayKey(DateTime d) => '${d.year.toString().padLeft(4,'0')}${d.month.toString().padLeft(2,'0')}${d.day.toString().padLeft(2,'0')}';
+    final daily = usingReference ? reference?['daily'] as Map? : null;
+    final selectedDay = daily?[dayKey(date)] as Map?;
+    final visual = WeatherHistoryVisual(date:date, source:usingReference ? 'Yangon reference' : 'Your field’s historical context', temperature:month?.tempMeanC, rain:usingReference ? (selectedDay?['rain_mm'] as num?)?.toDouble() : month?.rainMm, wetness:(selectedDay?['root_wetness'] as num?)?.toDouble(), rainIsDaily:usingReference, compact:compact, onOpen:()=>HomeTabs.of(context)?.go(1), days:[if(usingReference) for(var i=6;i>=0;i--) {'date':date.subtract(Duration(days:i)), 'rain':(daily?[dayKey(date.subtract(Duration(days:i)))] as Map?)?['rain_mm']}]);
+    if(compact) return visual;
+    final details = Card(child: Padding(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Text('NASA historical context · ${date.month}/${date.year}', style: Theme.of(context).textTheme.titleLarge),
       if (!compact) const Text('Monthly modeled context, not the weather measured on this particular day. No daily rain, heat or wind is inferred from a monthly average.'),
       Text('Rainfall total: ${month?.rainMm?.toStringAsFixed(1) ?? 'Unknown'}${month?.rainMm == null ? '' : ' mm'}'),
@@ -58,5 +64,6 @@ class HistoricalWeatherSummary extends ConsumerWidget {
       if (compact) Text(usingReference ? 'Yangon reference · not your field measurement' : 'Selected-field historical context'),
       if (compact) TextButton(onPressed: () => HomeTabs.of(context)?.go(1), child: const Text('Open historical weather & data sources')),
     ])));
+    return Column(crossAxisAlignment:CrossAxisAlignment.stretch,children:[visual,const SizedBox(height:12),if(usingReference) const Text('Yangon reference point 16.85, 96.15 · regional archive, not your field measurements.'),if(!usingReference) TextButton(onPressed:()=>ref.read(referenceChoiceProvider.notifier).select(true),child:const Text('Use included offline Yangon reference (2016–2025)')),ExpansionTile(title:const Text('Year chart, source choice & details'),subtitle:const Text('Reference point and source limits remain visible here'),children:[details])]);
   }
 }
