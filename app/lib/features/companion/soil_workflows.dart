@@ -325,7 +325,7 @@ class _SoilWorkflowsState extends State<SoilWorkflows> {
             ),
           if (_message != null) Text(_message!, semanticsLabel: _message),
           DropdownButtonFormField<String>(
-          isExpanded: true,
+            isExpanded: true,
             initialValue: _kind,
             decoration: InputDecoration(labelText: tr('Image category')),
             items: [
