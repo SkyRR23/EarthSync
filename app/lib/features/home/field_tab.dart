@@ -7,6 +7,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../app/strings.dart';
+import '../../data/environment/nasa_power_client.dart';
 import '../../data/models/farm_boundary.dart';
 import '../../data/models/farmer_input.dart';
 import '../../data/models/soil_texture.dart';
@@ -149,6 +150,17 @@ String answerSoil(String? texture) {
   if (texture == null) return S.soilNotChecked;
   final t = soilTextureFromName(texture);
   return t == null ? S.dontKnow : '${t.emoji} ${t.label}';
+}
+
+/// "2025" for a whole year, "Mar – Sep 2025", or "Nov 2024 – Feb 2025".
+String windowLabel(HistoricalWindow w) {
+  String m(int i) => monthShort[i - 1];
+  if (w.startYear == w.endYear) {
+    if (w.startMonth == 1 && w.endMonth == 12) return '${w.startYear}';
+    if (w.startMonth == w.endMonth) return '${m(w.startMonth)} ${w.startYear}';
+    return '${m(w.startMonth)} – ${m(w.endMonth)} ${w.startYear}';
+  }
+  return '${m(w.startMonth)} ${w.startYear} – ${m(w.endMonth)} ${w.endYear}';
 }
 
 /// Plain-text summary the farmer can send to an extension officer (OpenFarm
@@ -381,7 +393,7 @@ class _FieldTabState extends ConsumerState<FieldTab> {
             FsListRow(
               leading: FsIconBadge(CupertinoIcons.calendar, color: p.rain),
               title: S.weatherMonths,
-              value: a?.climateSummary.period,
+              value: windowLabel(ref.watch(historicalWindowProvider)),
               onTap: () => _pickWeatherMonths(context),
             ),
             if (a != null) ...[

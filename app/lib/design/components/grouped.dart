@@ -157,46 +157,95 @@ class FsListRow extends StatelessWidget {
               const SizedBox(width: FsSpace.md),
             ],
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (overline != null)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: FsSpace.xxs),
-                      child: Text(overline!, style: t.footnote),
-                    ),
-                  Text(
+              child: LayoutBuilder(
+                builder: (context, box) {
+                  final titleText = Text(
                     title,
                     style: titleStyle ?? t.body,
                     maxLines: titleMaxLines,
                     overflow: titleMaxLines != null
                         ? TextOverflow.ellipsis
                         : null,
-                  ),
-                  if (subtitle != null)
-                    Padding(
-                      padding: const EdgeInsets.only(top: FsSpace.xxs),
-                      child: Text(subtitle!, style: t.footnote),
-                    ),
-                  if (below != null)
-                    Padding(
-                      padding: const EdgeInsets.only(top: FsSpace.sm),
-                      child: below!,
-                    ),
-                ],
+                  );
+                  List<Widget> extras() => [
+                    if (subtitle != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: FsSpace.xxs),
+                        child: Text(subtitle!, style: t.footnote),
+                      ),
+                    if (below != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: FsSpace.sm),
+                        child: below!,
+                      ),
+                  ];
+                  final head = [
+                    if (overline != null)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: FsSpace.xxs),
+                        child: Text(overline!, style: t.footnote),
+                      ),
+                  ];
+                  final v = value;
+                  if (v == null) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [...head, titleText, ...extras()],
+                    );
+                  }
+                  // Settings-style value: beside the title when both fit on
+                  // one line, otherwise on its own line under the title —
+                  // never squeezed into a narrow wrapped column.
+                  final valueStyle = t.body.copyWith(color: p.secondaryLabel);
+                  final scaler = MediaQuery.textScalerOf(context);
+                  double widthOf(String s, TextStyle st) => (TextPainter(
+                    text: TextSpan(text: s, style: st),
+                    textDirection: Directionality.of(context),
+                    textScaler: scaler,
+                    maxLines: 1,
+                  )..layout()).width;
+                  final fits =
+                      widthOf(title, titleStyle ?? t.body) +
+                          FsSpace.md +
+                          widthOf(v, valueStyle) <=
+                      box.maxWidth;
+                  if (fits) {
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [...head, titleText, ...extras()],
+                          ),
+                        ),
+                        const SizedBox(width: FsSpace.md),
+                        Text(v, style: valueStyle, maxLines: 1),
+                      ],
+                    );
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ...head,
+                      titleText,
+                      Padding(
+                        padding: const EdgeInsets.only(top: FsSpace.xxs),
+                        child: Text(
+                          v,
+                          style: valueStyle,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      ...extras(),
+                    ],
+                  );
+                },
               ),
             ),
-            if (value != null) ...[
-              const SizedBox(width: FsSpace.sm),
-              Flexible(
-                child: Text(
-                  value!,
-                  textAlign: TextAlign.end,
-                  style: t.body.copyWith(color: p.secondaryLabel),
-                ),
-              ),
-            ],
             if (trailing != null) ...[
               const SizedBox(width: FsSpace.sm),
               trailing!,
