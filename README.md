@@ -67,7 +67,7 @@ Each product has its own scale and update schedule. A regional soil estimate or 
 
 Simplified flow:
 
-\`\`\`text
+```text
 NASA / weather / soil / crop sources + farmer input
                        ↓
            Backend and Rust processing
@@ -77,7 +77,7 @@ NASA / weather / soil / crop sources + farmer input
              Flutter app interface
                        ↓
            Explore • Compare • Save
-\`\`\`
+```
 
 Some workflows run locally without sign-in. Fresh external observations require connectivity and properly configured providers; cached evidence keeps its original dates.
 
@@ -87,29 +87,29 @@ Use the local launcher to evaluate the **full-stack implementation**, not the si
 
 **Requirements:** Python 3.12+, Rust/native toolchain (reviewed with Rust 1.99.0), Flutter 3.44.0 / Dart 3.12.0, and build tools for your platform. Some NASA services require optional Earthdata authorization.
 
-\`\`\`bash
+```bash
 git clone https://github.com/SkyRR23/EarthSync.git
 cd EarthSync
-\`\`\`
+```
 
 **Windows (PowerShell):**
 
-\`\`\`powershell
+```powershell
 .\start-earthsync.ps1
-\`\`\`
+```
 
 **Linux / macOS:**
 
-\`\`\`bash
+```bash
 ./start-earthsync.sh
-\`\`\`
+```
 
 Wait for the launcher's readiness checks and open **the browser URL printed by the launcher**. It may use a different local port on different machines.
 
 | Action | Windows | Linux / macOS |
 | --- | --- | --- |
-| Smoke test | \`.\test-earthsync.ps1\` | \`./test-earthsync.sh\` |
-| Stop services | \`.\stop-earthsync.ps1\` | \`./stop-earthsync.sh\` |
+| Smoke test | `.\test-earthsync.ps1` | `./test-earthsync.sh` |
+| Stop services | `.\stop-earthsync.ps1` | `./stop-earthsync.sh` |
 
 The scripts build and run local services; they do not deploy the backend to the public website. Private databases, photos, credentials and local runtime state should not be committed.
 
