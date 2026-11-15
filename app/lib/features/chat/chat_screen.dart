@@ -24,6 +24,11 @@ class ChatScreen extends ConsumerStatefulWidget {
 class _ChatScreenState extends ConsumerState<ChatScreen> {
   final _input = TextEditingController();
   final _scroll = ScrollController();
+  bool _aboutField = false;
+
+  Map<String, String> _facts() => kIsWeb || _aboutField
+      ? farmFacts(ref, widget.now ?? DateTime.now())
+      : const {};
 
   @override
   void dispose() {
@@ -35,7 +40,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   Future<void> _send(String text) async {
     if (text.trim().isEmpty) return;
     _input.clear();
-    final facts = farmFacts(ref, widget.now ?? DateTime.now());
+    final facts = _facts();
     final f = ref.read(chatProvider.notifier).send(text, facts);
     _toEnd();
     await f;
@@ -109,6 +114,21 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     ],
                   ),
                 ),
+                if (!kIsWeb)
+                  Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: SegmentedButton<bool>(
+                      segments: const [
+                        ButtonSegment(value: false, label: Text('General crops'), icon: Icon(Icons.spa_outlined)),
+                        ButtonSegment(value: true, label: Text('My field'), icon: Icon(Icons.grass)),
+                      ],
+                      selected: {_aboutField},
+                      onSelectionChanged: s.sending ? null : (value) {
+                        setState(() => _aboutField = value.single);
+                        ref.read(chatProvider.notifier).clear();
+                      },
+                    ),
+                  ),
                 Expanded(
                   child: ListView(
                     controller: _scroll,
@@ -158,7 +178,10 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                               ),
                               child: _Suggestion(
                                 text: q,
-                                onTap: s.sending ? null : () => _send(q),
+                                onTap: s.sending ? null : () {
+                                  if (!kIsWeb && q == 'What do you know about my field?') setState(() => _aboutField = true);
+                                  _send(q);
+                                },
                               ),
                             ),
                           ),
@@ -171,7 +194,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                           child: FsStatusPill(s.error!, tone: FsPillTone.look),
                         ),
                       if (!kIsWeb && s.error != null)
-                        TextButton.icon(onPressed: s.sending ? null : () => ref.read(chatProvider.notifier).retry(farmFacts(ref, widget.now ?? DateTime.now())), icon: const Icon(Icons.refresh), label: const Text('Try my question again')),
+                        TextButton.icon(onPressed: s.sending ? null : () => ref.read(chatProvider.notifier).retry(_facts()), icon: const Icon(Icons.refresh), label: const Text('Try my question again')),
                     ],
                   ),
                 ),
