@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/environment/forecast.dart';
+import '../data/environment/greenness.dart';
 import '../data/environment/recent_conditions.dart';
 import 'providers.dart';
 
@@ -335,4 +336,15 @@ final et0Provider = FutureProvider<Et0?>((ref) async {
   } catch (_) {
     return null;
   }
+});
+
+final greennessClientProvider = Provider<GreennessClient>(
+  (ref) => GreennessClient(),
+);
+
+/// NASA HLS greenness for the marked farm (null without 4 corners).
+final greennessProvider = FutureProvider<FarmGreenness?>((ref) async {
+  final farm = ref.watch(farmerDraftProvider.select((d) => d.farm));
+  if (farm == null || !farm.isComplete) return null;
+  return ref.read(greennessClientProvider).fetch(farm.corners);
 });

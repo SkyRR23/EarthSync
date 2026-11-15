@@ -1,3 +1,7 @@
+import 'package:earthsync/data/environment/greenness.dart';
+import 'package:earthsync/state/today.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/testing.dart';
 import 'dart:convert';
 import 'dart:io';
 
@@ -49,6 +53,18 @@ Future<Widget> _shell({required bool withFarm}) async {
     overrides: [
       prefsProvider.overrideWithValue(prefs),
       analysisProvider.overrideWith(() => _Ready(a)),
+      // NASA HLS answers "no clear image": the MODIS layer is used.
+      greennessClientProvider.overrideWithValue(
+        GreennessClient(
+          baseUrl: 'https://example.test',
+          client: MockClient(
+            (_) async => http.Response(
+              '{"status":"success","latest":null,"previous":null}',
+              200,
+            ),
+          ),
+        ),
+      ),
     ],
     child: MaterialApp(
       theme: fsLightTheme(),

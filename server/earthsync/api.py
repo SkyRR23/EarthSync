@@ -13,6 +13,8 @@ from pydantic import ValidationError
 from .models import SeasonQuery, SeasonResponse
 from .power import PowerProvider, ProviderError
 from .forecast import ForecastCache, OpenMeteoProvider
+from .greenness import GreennessCache, StacSearch
+from .greenness import router as greenness_router
 from .forecast import router as forecast_router
 from .recent import PowerRecentProvider, RecentCache
 from .recent import router as recent_router
@@ -59,6 +61,9 @@ def create_app(
     recent_cache=None,
     forecast_provider=None,
     forecast_cache=None,
+    greenness_search=None,
+    greenness_reader=None,
+    greenness_cache=None,
 ):
     @asynccontextmanager
     async def lifespan(app):
@@ -72,6 +77,8 @@ def create_app(
             app.state.recent_cache = recent_cache or RecentCache()
             app.state.forecast_provider = forecast_provider or OpenMeteoProvider(client)
             app.state.forecast_cache = forecast_cache or ForecastCache()
+            app.state.greenness_search = greenness_search or StacSearch(client)
+            app.state.greenness_cache = greenness_cache or GreennessCache()
             yield
 
     app = FastAPI(
@@ -111,6 +118,9 @@ def create_app(
     app.include_router(soil_router)
     app.include_router(recent_router)
     app.include_router(forecast_router)
+    # Farm greenness from NASA HLS; reader injectable for tests.
+    app.state.greenness_reader = greenness_reader
+    app.include_router(greenness_router)
 
     @app.get("/api/v1/health")
     async def health():

@@ -12,6 +12,9 @@ import '../../design/components/earth.dart';
 import '../../design/components/page.dart' show FsBackArrow;
 import '../../design/components/pressable.dart';
 import '../../design/tokens.dart';
+import '../../data/environment/greenness.dart';
+import '../../state/today.dart';
+import '../today/farm_tasks.dart' show shortDate;
 import '../../state/providers.dart';
 import '../map/gibs_layer.dart';
 import 'home_shell.dart';
@@ -76,11 +79,25 @@ class _FieldTabState extends ConsumerState<FieldTab> {
     final line = look ? const Color(0xFFF2B233) : const Color(0xFF7EE07A);
     final crop = cropName(d);
     final health = _plantHealth && farm != null;
-    final caption = farm == null
-        ? S.markFarmForHealth
-        : health
+    // NASA HLS (30 m) greenness inside the border; MODIS (250 m) when HLS
+    // has no clear image or cannot be read.
+    final green = health ? ref.watch(greennessProvider) : null;
+    final scene = green?.value?.latest;
+    final hls = scene != null && scene.cells.isNotEmpty;
+    final modis = health
         ? '${plantHealthDateLabel(ref.watch(plantHealthDateProvider(farm.center)).value)}. ${S.insideFarmOnly} ${S.pixelNote}'
         : null;
+    final caption = farm == null
+        ? S.markFarmForHealth
+        : !health
+        ? null
+        : hls
+        ? greenCaption(green!.value!)
+        : green!.isLoading
+        ? S.greenLoading
+        : green.hasError
+        ? '${S.greenFailed} $modis'
+        : '${S.greenNone} $modis';
 
     return Scaffold(
       backgroundColor: p.background,
@@ -162,7 +179,23 @@ class _FieldTabState extends ConsumerState<FieldTab> {
                               children: [
                                 satelliteTileLayer(),
                                 if (health)
-                                  plantHealthLayer(farmCorners: farm.corners),
+                                  hls
+                                      ? PolygonLayer(
+                                          polygons: [
+                                            for (final c in scene.cells)
+                                              Polygon(
+                                                points: c.corners,
+                                                color: ndviColor(c.ndvi),
+                                                borderColor: const Color(
+                                                  0x33FFFFFF,
+                                                ),
+                                                borderStrokeWidth: 0.5,
+                                              ),
+                                          ],
+                                        )
+                                      : plantHealthLayer(
+                                          farmCorners: farm.corners,
+                                        ),
                                 if (farm != null)
                                   PolygonLayer(
                                     polygons: [
@@ -261,7 +294,9 @@ class _FieldTabState extends ConsumerState<FieldTab> {
                                 alignment: Alignment.bottomLeft,
                                 child: _MapPill(
                                   child: health
-                                      ? const PlantHealthLegend()
+                                      ? (hls
+                                            ? const _GreenLegend()
+                                            : const PlantHealthLegend())
                                       : Wrap(
                                           spacing: FsSpace.md,
                                           runSpacing: FsSpace.xs,
@@ -520,6 +555,61 @@ class _FieldLabel extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// Colour bins for NDVI on the map (display only, not a verdict).
+Color ndviColor(double? v) => switch (v) {
+  null => const Color(0x99D9D9D9),
+  < 0.2 => const Color(0xD9A0522D),
+  < 0.35 => const Color(0xD9D8B04A),
+  < 0.5 => const Color(0xD9A5C94B),
+  < 0.65 => const Color(0xD95DA34A),
+  _ => const Color(0xD92E7D32),
+};
+
+/// "Green cover 0.62 on 2 Nov · 0.52 on 28 Oct", pixels and source.
+String greenCaption(FarmGreenness g) {
+  final l = g.latest!;
+  final p = g.previous;
+  final now = S.greenNow(
+    l.ndviMean?.toStringAsFixed(2) ?? '—',
+    shortDate(l.date),
+  );
+  final before = p?.ndviMean == null
+      ? ''
+      : ' · ${S.greenBefore(p!.ndviMean!.toStringAsFixed(2), shortDate(p.date))}';
+  return '$now$before. ${S.greenPixels(l.pixelsClear, l.pixelsInside, l.sensor)}. ${S.greenScale}.';
+}
+
+class _GreenLegend extends StatelessWidget {
+  const _GreenLegend();
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.type;
+    Widget sw(Color c) => Container(
+      width: 14,
+      height: 14,
+      margin: const EdgeInsets.symmetric(horizontal: 1),
+      decoration: BoxDecoration(
+        color: c,
+        borderRadius: BorderRadius.circular(3),
+      ),
+    );
+    return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.center,
+      spacing: FsSpace.xs,
+      runSpacing: FsSpace.xs,
+      children: [
+        Text(S.greenBare, style: t.footnote),
+        for (final v in [0.1, 0.3, 0.45, 0.6, 0.8]) sw(ndviColor(v)),
+        Text(S.greenDense, style: t.footnote),
+        const SizedBox(width: FsSpace.xs),
+        sw(ndviColor(null)),
+        Text(S.greenNotSeen, style: t.footnote),
+      ],
     );
   }
 }

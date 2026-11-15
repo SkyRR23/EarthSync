@@ -10,7 +10,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /srv
 COPY requirements.lock pyproject.toml ./
 COPY earthsync ./earthsync
-RUN pip install -c requirements.lock . \
+RUN pip install -c requirements.lock ".[satellite]" \
     && useradd --create-home --uid 10001 app
 
 USER app

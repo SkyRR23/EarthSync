@@ -463,4 +463,18 @@ abstract final class S {
   static String et0Partial(int mm, int days, int of) =>
       'A grass field lost about $mm mm of water to sun and wind in $days of these $of days (NASA sunlight data for the rest is not in yet).';
   static const et0Source = 'Water loss: FAO-56, team engine.';
+  // NASA HLS greenness (Field map, plant health on)
+  static String greenNow(String v, String date) => 'Green cover $v on $date';
+  static String greenBefore(String v, String date) => '$v on $date';
+  static String greenPixels(int clear, int inside, String sensor) =>
+      '$clear of $inside pixels clear · $sensor, NASA HLS 30 m';
+  static const greenScale = '0 = bare soil, 1 = dense green';
+  static const greenLoading = 'Getting NASA HLS images…';
+  static const greenNone =
+      'No clear NASA HLS image of your farm in the last 75 days. Showing the coarser MODIS layer.';
+  static const greenFailed =
+      'NASA HLS images could not be read. Showing the coarser MODIS layer.';
+  static const greenBare = 'Bare';
+  static const greenDense = 'Dense green';
+  static const greenNotSeen = 'Cloud';
 }
