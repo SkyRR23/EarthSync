@@ -29,7 +29,7 @@ import '../features/sources/sources_screen.dart';
 /// /climate = NASA months of the past year.
 /// /farm marks the whole farm with 4 corner pins (from the Field tab).
 GoRouter buildRouter({bool setupDone = false, bool introductionDone = true}) => GoRouter(
-  initialLocation: !kIsWeb && !introductionDone ? '/intro' : setupDone ? '/home' : '/',
+  initialLocation: !kIsWeb ? (introductionDone ? '/home' : '/intro') : setupDone ? '/home' : '/',
   routes: [
     GoRoute(path: '/intro', builder: (_, _) => const FarmerIntroduction()),
     ...buildEvidenceRoutes(),

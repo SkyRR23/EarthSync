@@ -26,6 +26,12 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   final _scroll = ScrollController();
   bool _aboutField = false;
 
+  @override
+  void initState() {
+    super.initState();
+    if (!kIsWeb) _aboutField = ref.read(prefsProvider)?.getBool('chat_about_field') ?? false;
+  }
+
   Map<String, String> _facts() => kIsWeb || _aboutField
       ? farmFacts(ref, widget.now ?? DateTime.now())
       : const {};
@@ -125,10 +131,13 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                       selected: {_aboutField},
                       onSelectionChanged: s.sending ? null : (value) {
                         setState(() => _aboutField = value.single);
+                        ref.read(prefsProvider)?.setBool('chat_about_field', _aboutField);
                         ref.read(chatProvider.notifier).clear();
                       },
                     ),
                   ),
+                if (!kIsWeb)
+                  const Text('Switching topics starts a new conversation.', style: TextStyle(fontSize: 12)),
                 Expanded(
                   child: ListView(
                     controller: _scroll,
