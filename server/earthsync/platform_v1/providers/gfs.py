@@ -101,6 +101,16 @@ class GfsForecast:
         self.transport, self.store = transport, store
         self.slots = asyncio.Semaphore(1)
         self.last_attempt = None
+        self.last_grib_request = None
+
+    async def request_subset(self, params):
+        # Caller holds slots across the entire subset loop.
+        if self.last_grib_request is not None:
+            await asyncio.sleep(
+                max(0, 10 - (time.monotonic() - self.last_grib_request))
+            )
+        self.last_grib_request = time.monotonic()
+        return await self.transport.get(ENDPOINT, params)
 
     async def retrieve(self, point, now=None):
         from .transport import Capture
@@ -139,7 +149,9 @@ class GfsForecast:
                     "bottomlat": str(max(-90, lat - 0.25)),
                     "dir": f"/gfs.{run:%Y%m%d}/{run.hour:02d}/atmos",
                 }
-                cap = await self.transport.get(ENDPOINT, params)
+                # NOMADS GRIB Filter asks scripted request loops to leave at
+                # least ten seconds between requests, even for small subsets.
+                cap = await self.request_subset(params)
                 cap = Capture(
                     cap.body,
                     cap.retrieved_at,

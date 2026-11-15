@@ -13,6 +13,7 @@ import '../onboarding/location_choices.dart';
 import '../questionnaire/historical_window_selector.dart';
 import 'climate_panel.dart';
 import 'satellite_preview.dart';
+import '../realtime/realtime_panel.dart';
 
 class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
@@ -220,6 +221,11 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                         context.push('/assistant${_areaView ? '?area=1' : ''}'),
                   ),
                 ),
+                RealtimePanel(
+                  key: ValueKey('realtime:$showingFarm:${farm?.id}'),
+                  compact: true,
+                  fieldOnly: showingFarm,
+                ),
                 if (point == null) ...[
                   SectionCard(
                     title: tr('discover'),
@@ -277,7 +283,16 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                         EvidenceNotice(
                           title: tr('forecast'),
                           message: tr('forecastBody'),
-                          icon: Icons.cloud_off_outlined,
+                          icon: Icons.cloud_outlined,
+                          action: TextButton(
+                            onPressed: () => context.push('/realtime'),
+                            child: Text(
+                              realtimeCopy(
+                                context,
+                                'Open monitoring dashboard',
+                              ),
+                            ),
+                          ),
                         ),
                         if (showingFarm)
                           OutlinedButton.icon(

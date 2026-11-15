@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
@@ -138,7 +139,12 @@ class _PanelState extends ConsumerState<GeospatialIntelligencePanel> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const Text(
-              'Retrieve sources when needed. No background monitoring runs. Saved results remain dated reference views; map tiles and new source retrievals require a connection.',
+              'These saved snapshots are retrieved on demand. Real-time EarthSync separately monitors current sources while the local backend runs. Map tiles and new retrievals require a connection.',
+            ),
+            TextButton.icon(
+              onPressed: () => context.push('/realtime?field=1'),
+              icon: const Icon(Icons.update),
+              label: const Text('Open monitoring for the selected field'),
             ),
             Wrap(
               spacing: 8,
@@ -272,7 +278,7 @@ class _PanelState extends ConsumerState<GeospatialIntelligencePanel> {
                   '${r['valid_at']} · ${r['temperature_c'] == null ? 'missing' : (r['temperature_c'] as num).toStringAsFixed(1)} °C · ${r['forecast_hour'] == 0 ? 'model analysis, not current observation' : 'forecast'}',
                 ),
               const Text(
-                'Official issued warnings: unavailable. Current observed weather: unavailable. Precipitation, storm and dry-spell indicators: unavailable.',
+                'This saved temperature snapshot does not contain official warnings or observed weather. Open Real-time EarthSync for separately dated station, forecast and alert sources. No crop-specific storm or dry-spell risk is inferred.',
               ),
               for (final r in forecast['derived_indicators'] as List)
                 Text(
@@ -297,7 +303,7 @@ class _PanelState extends ConsumerState<GeospatialIntelligencePanel> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const Text(
-              'NDVI overlay unavailable: no authorized, quality-controlled NASA raster observation is installed. MODIS ORNL discovery returned HTTP 503 during verification. HLS raster access returned Earthdata HTTP 401; metadata discovery does not establish valid pixels; NASA GIBS true color is visual context only.',
+              'NDVI overlay unavailable in this saved-snapshot panel. Real-time EarthSync separately reads authorized, quality-controlled HLS-VI point pixels when available. Metadata discovery and NASA GIBS true color do not establish numeric NDVI.',
             ),
             TextButton(
               onPressed: _busy
@@ -335,7 +341,7 @@ class _PanelState extends ConsumerState<GeospatialIntelligencePanel> {
               ),
               for (final r in (optical.first['result']['records'] as List))
                 Text(
-                  '${r['acquired_at']} · ${r['granule_id']} · metadata only; NDVI unavailable',
+                  '${r['acquired_at']} · ${r['granule_id']} · metadata only; not numeric NDVI',
                 ),
             ],
           ],

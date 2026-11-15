@@ -1,0 +1,79 @@
+{
+  "status": "PASS",
+  "originals_unchanged": true,
+  "new_restore_destination": true,
+  "platform_tables": {
+    "artifacts": {
+      "rows": 1,
+      "sha256": "50aedf4027c66b04eb82ea82e7d08b0c6db855454fc5fa8325740f11ec65c39e"
+    },
+    "audit": {
+      "rows": 21,
+      "sha256": "272e4b5115757d52be88980d273e5a8471636d9d3406eb6f5571a64fab492369"
+    },
+    "decisions": {
+      "rows": 5,
+      "sha256": "afc51e8f379d121c8aaefda4fea3ee936457889b55b0ea3dde478f0abd919190"
+    },
+    "evidence": {
+      "rows": 9,
+      "sha256": "3d6e5c7009b0af9f8af1d8d59a6ef28bd93a29b84309a637e3f1a9865f9a91d8"
+    },
+    "farm_evidence": {
+      "rows": 9,
+      "sha256": "22f69494e9b872a9dfb5fae4b88591dd74630d1f4b3f4a0b64e7d1b2d5b9f0ff"
+    },
+    "farm_links": {
+      "rows": 1,
+      "sha256": "ec49e70c28e129e02467f8d589de1d0ebe72a13803d0e69cfcffd26387da8564"
+    },
+    "farmer_journal": {
+      "rows": 2,
+      "sha256": "e94d6735dd44257979d52a9962dc10242bc44a3890af0295374691fe4392ec9e"
+    },
+    "farms": {
+      "rows": 1,
+      "sha256": "8c1774355dd38cd87c1618baf35c7c3c8257262c7639cf28cb6f19d6b7a45b72"
+    },
+    "history": {
+      "rows": 1,
+      "sha256": "3d6651932304310690096670af9354ef8116a0922670783977412ad447e5d7dd"
+    },
+    "jobs": {
+      "rows": 4,
+      "sha256": "09620a197f0380a5441b203f808e855ef253d0cc82fc3707d3c2d0be8224fafd"
+    },
+    "journal_history_links": {
+      "rows": 1,
+      "sha256": "976330688e6c934f3ba5a868cd85b1a7d4f3f3c77c52db3e36b160488397196b"
+    },
+    "observations": {
+      "rows": 1,
+      "sha256": "238a3f9800c55ad2184ea88a1e6973bc6f81f14430ba7a430f72975697f6019f"
+    },
+    "realtime_state": {
+      "rows": 65,
+      "sha256": "d148a98426d7de265eae246ed3e3eae4679ed8eecea2511b5e9b24eda4c834df"
+    },
+    "rotation_comparisons": {
+      "rows": 1,
+      "sha256": "720a5817557537f1e5ea616055a4f31b34cc4e85ec653326b0df9e9716468ee3"
+    },
+    "schema_migrations": {
+      "rows": 6,
+      "sha256": "4e2a5cd5e21167b71b17a0b756bc9d9bff8b053bea37d7cbfec94efc47fd64f1"
+    },
+    "source_cache": {
+      "rows": 4,
+      "sha256": "b177075e3b66f7f4ccfb8f2d1102f883780654d3626773d0526bde92aaa54016"
+    }
+  },
+  "workspace_tables": {
+    "photos": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "workspace_token_equal": true,
+  "runtime_records": "SYNTHETIC farmer fixtures + actual/cached-real environmental sources; hashes/counts only"
+}

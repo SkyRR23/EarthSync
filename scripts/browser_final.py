@@ -12,7 +12,7 @@ from pathlib import Path
 from datetime import datetime, timezone
 from urllib.parse import urlencode
 
-from playwright.sync_api import sync_playwright, expect
+from playwright.sync_api import sync_playwright, expect, Error as PlaywrightError
 from release_privacy import private_output
 
 parser = argparse.ArgumentParser(description=__doc__)
@@ -58,7 +58,7 @@ def record(name, classification):
             "resumed_from_saved_native_decisions": args.resume_strategies,
             "browser_errors": errors,
             "farmer_records": "SYNTHETIC software-test inputs; no field ground truth",
-            "ndvi": "UNAVAILABLE: no accepted authorized raster observation; no fabricated pixels",
+            "ndvi": "Legacy geospatial overlay is separate; numeric point NDVI is verified by the realtime suite, never inferred from true color.",
         },
     )
     print("PASS", classification, name, flush=True)
@@ -335,13 +335,47 @@ with sync_playwright() as p:
                     "2024-07-04" if index == 2 else "2024-07-05",
                 )
                 fill("Second declared harvest (YYYY-MM-DD)", "2024-07-07")
+                before_ids = {
+                    row["id"]
+                    for row in context.request.get(
+                        args.platform_url
+                        + "/api/platform/v1/farms/"
+                        + farm_id
+                        + "/decisions"
+                    ).json()
+                }
                 with page.expect_response(
                     lambda r: r.url.endswith("/assessments")
                     and r.request.method == "POST"
                 ) as result:
                     button("Save crop & water evidence assessment")
                 assert result.value.status == 200, result.value.text()
-                assessment = result.value.json()
+                try:
+                    assessment = result.value.json()
+                except PlaywrightError as exc:
+                    if "Network.getResponseBody" not in str(exc):
+                        raise
+                    # Chromium may discard a consumed fetch body. Verify the
+                    # one newly committed native result without replaying POST.
+                    created = [
+                        row
+                        for row in context.request.get(
+                            args.platform_url
+                            + "/api/platform/v1/farms/"
+                            + farm_id
+                            + "/decisions"
+                        ).json()
+                        if row["id"] not in before_ids
+                    ]
+                    assert len(created) == 1
+                    assessment = {
+                        **created[0]["assessment"],
+                        "decision_id": created[0]["id"],
+                    }
+                    print(
+                        "Chromium body unavailable; verified newly persisted native result through API",
+                        flush=True,
+                    )
                 receipt(f"strategy-{index}", assessment)
                 assert assessment["recommendation_eligible"] is False
                 assert (

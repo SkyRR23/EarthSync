@@ -520,7 +520,7 @@ class _StrategyEvidence extends StatelessWidget {
                     '${r['valid_at']} · ${r['temperature_c'] ?? 'Unknown'} ${r['unit']} · original forecast, not historical crop-period evidence',
                   ),
                 const Text(
-                  'Check original valid times before use; older snapshots may have expired. Official warnings and current observed weather are unavailable.',
+                  'Check original valid times before use; older snapshots may have expired. These saved snapshots do not contain official warnings or current observations; those sources are separate in Real-time EarthSync.',
                 ),
               ],
               if (job['kind'] == 'optical_discovery')

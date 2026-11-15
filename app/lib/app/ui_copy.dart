@@ -69,7 +69,7 @@ abstract final class UiCopy {
         'Farm and area choices are stored on this device. GPS is optional. Photo metadata requires consent; private workspace tokens stay in session memory.',
     'forecast': 'Current weather & forecast',
     'forecastBody':
-        'Current observations and official warnings are unavailable. Saved farms can request dated NOAA temperature forecasts in Persisted farm evidence. NASA POWER remains historical climate.',
+        'Open Real-time EarthSync for latest available observations, forecasts and official alerts within provider coverage. NASA POWER remains dated climate reference.',
     'fieldTitle': 'Know your field',
     'fieldBody':
         'Available evidence and the information still needed. Data availability is not a field health score.',

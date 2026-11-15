@@ -70,10 +70,14 @@ void main() {
         expect(
           tester
               .getSemantics(
-                find.textContaining('Official issued warnings: unavailable.'),
+                find.textContaining(
+                  'This saved temperature snapshot does not contain official warnings',
+                ),
               )
               .label,
-          contains('Current observed weather: unavailable.'),
+          contains(
+            'Open Real-time EarthSync for separately dated station, forecast and alert sources.',
+          ),
         );
         expect(
           find.textContaining('NASA satellite vegetation'),
