@@ -161,7 +161,7 @@ class OfficialVision:
 
     def __init__(self, name, model, key, timeout=20, *, transport=None):
         endpoint, models, _ = PROVIDERS[name]
-        if model not in models or not key or not 1 <= timeout <= 30:
+        if model not in models or not key or not 1 <= timeout <= 20:
             raise ValueError("Invalid vision configuration")
         self.name, self.model = name, model
         self._endpoint, self._key = endpoint, key

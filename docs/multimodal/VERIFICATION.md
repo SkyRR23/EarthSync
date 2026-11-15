@@ -6,8 +6,8 @@ commit and remote CI status; inherited PR receipts are not counted as this patch
 
 Initial broad regression after integration: **567 passed, 7 skipped** (existing live
 opt-ins and environment-specific skips), using actual compiled native engine and
-base-exported compatibility interfaces. Initial focused multimodal/research run:
-**100 passed**, overlapping that broad suite. Subsequent final receipts are listed
+base-exported compatibility interfaces. Focused multimodal/research run:
+**101 passed**, overlapping that broad suite. Subsequent final receipts are listed
 in `evidence/` and the draft PR; do not add overlapping counts.
 
 Original 7V suite: **32 passed**. Source integrity: 49 v2 artifacts, 11 review
@@ -53,3 +53,13 @@ Start both local services via `scripts/run_final_local.py`, generate the existin
 labeled synthetic report and use `scripts/browser_crop_intelligence.py` for actual
 Chromium, no mocked HTTP. Private browser outputs must be outside Git. Windows
 commands and required human acceptance are described in USER_ACTIONS_REQUIRED.md.
+
+Actual loopback HTTP smoke passed: scoped retrieval with seven citations, private
+PNG upload, new-contract vision-unavailable response, actual local Tesseract on a
+labeled synthetic report, explicit 6.4 → 6.6 correction with original retained,
+401 unauthenticated image access and deletion. No external model was called.
+See `evidence/loopback-http.json`.
+
+The first remote Flutter attempt stopped at its formatting gate; the exact Dart
+formatter patch was retrieved and applied. Both Windows/Linux research contract
+jobs passed. No skipped analyzer or widget step is counted as a pass.

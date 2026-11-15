@@ -14,11 +14,14 @@ abstract final class CompanionCopy {
     'Analyze image': 'ပုံကို စစ်ဆေးရန်',
     'Visible findings': 'ပုံတွင် မြင်ရသောအချက်များ',
     'Possible causes to investigate': 'စူးစမ်းရန် ဖြစ်နိုင်သောအကြောင်းရင်းများ',
-    'Limitations and missing information': 'ကန့်သတ်ချက်များနှင့် လိုအပ်သောအချက်အလက်',
+    'Limitations and missing information':
+        'ကန့်သတ်ချက်များနှင့် လိုအပ်သောအချက်အလက်',
     'Safe follow-up observations': 'ထပ်မံလေ့လာရန် အချက်များ',
     'Confirm my observation': 'မိမိလေ့လာချက်ကို အတည်ပြုရန်',
-    'I authorize external processing of this image': 'ဤပုံကို ပြင်ပဝန်ဆောင်မှုဖြင့် စစ်ဆေးရန် ခွင့်ပြုသည်',
-    'External vision is unavailable. Local OCR and saved evidence still work.': 'ပြင်ပပုံစစ်ဆေးမှု မရရှိပါ။ စက်တွင်းစာဖတ်ခြင်းနှင့် သိမ်းထားသောအထောက်အထားကို အသုံးပြုနိုင်ပါသည်။',
+    'I authorize external processing of this image':
+        'ဤပုံကို ပြင်ပဝန်ဆောင်မှုဖြင့် စစ်ဆေးရန် ခွင့်ပြုသည်',
+    'External vision is unavailable. Local OCR and saved evidence still work.':
+        'ပြင်ပပုံစစ်ဆေးမှု မရရှိပါ။ စက်တွင်းစာဖတ်ခြင်းနှင့် သိမ်းထားသောအထောက်အထားကို အသုံးပြုနိုင်ပါသည်။',
     'Crop intelligence': 'သီးနှံအချက်အလက်',
     'Known requirements': 'သိရှိထားသော လိုအပ်ချက်များ',
     'Retrieve evidence': 'အထောက်အထား ရယူရန်',

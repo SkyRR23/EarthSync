@@ -17,58 +17,122 @@ import 'package:http/testing.dart';
 
 void main() {
   for (final width in [390.0, 1280.0]) {
-    testWidgets('image preview, explicit consent and validated findings at $width', (tester) async {
-      tester.view.physicalSize = Size(width, 2400);
-      tester.view.devicePixelRatio = 1;
-      addTearDown(tester.view.resetPhysicalSize);
-      addTearDown(tester.view.resetDevicePixelRatio);
-      Map<String, dynamic>? submitted;
-      var mutations = 0;
-      final client = PlatformFarmClient(PlatformTransport(MockClient((request) async {
-        if (request.url.path.endsWith('/image-capabilities')) {
-          return http.Response(jsonEncode({'enabled': true, 'provider': 'mock', 'model': 'synthetic-test'}), 200);
-        }
-        mutations++;
-        if (request.url.path.endsWith('/photos')) return http.Response('{"id":"test-photo"}', 201, headers: {'content-type': 'application/json'});
-        submitted = jsonDecode(request.body) as Map<String, dynamic>;
-        return http.Response(jsonEncode({
-          'status': 'unverified_model_observation', 'provider_status': 'succeeded',
-          'observations': [{'feature': 'yellowing', 'visibility': 'uncertain'}],
-          'possible_explanations': [], 'sources': [], 'citations': [],
-          'limitations': ['No confirmed diagnosis.'], 'missing_information': [], 'follow_up': [],
-        }), 200);
-      }), baseUri: Uri.parse('http://127.0.0.1:8021')));
-      await tester.pumpWidget(MaterialApp(home: Scaffold(body: SingleChildScrollView(child: SoilWorkflows(client: client, farmId: 'synthetic-farm', picker: _SyntheticPicker())))));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('Choose image'));
-      await tester.pumpAndSettle();
-      expect(mutations, 0);
-      expect(find.byType(Image), findsOneWidget);
-      final analyze = find.widgetWithText(FilledButton, 'Analyze image');
-      expect(tester.widget<FilledButton>(analyze).onPressed, isNull);
-      await tester.ensureVisible(find.byType(CheckboxListTile));
-      await tester.tap(find.byType(CheckboxListTile));
-      await tester.pumpAndSettle();
-      await tester.ensureVisible(analyze);
-      await tester.tap(analyze);
-      await tester.pumpAndSettle();
-      expect(submitted?['external_image_consent'], true);
-      expect(submitted?['image_kind'], 'crop');
-      expect(mutations, 2); // upload + analyze only; no automatic observation write.
-      expect(find.text('yellowing · uncertain'), findsOneWidget);
-      expect(find.text('Possible causes to investigate'), findsOneWidget);
-      expect(tester.widget<CheckboxListTile>(find.byType(CheckboxListTile)).value, false);
-      expect(tester.takeException(), isNull);
-    });
+    testWidgets(
+      'image preview, explicit consent and validated findings at $width',
+      (tester) async {
+        tester.view.physicalSize = Size(width, 2400);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.resetPhysicalSize);
+        addTearDown(tester.view.resetDevicePixelRatio);
+        Map<String, dynamic>? submitted;
+        var mutations = 0;
+        final client = PlatformFarmClient(
+          PlatformTransport(
+            MockClient((request) async {
+              if (request.url.path.endsWith('/image-capabilities')) {
+                return http.Response(
+                  jsonEncode({
+                    'enabled': true,
+                    'provider': 'mock',
+                    'model': 'synthetic-test',
+                  }),
+                  200,
+                );
+              }
+              mutations++;
+              if (request.url.path.endsWith('/photos'))
+                return http.Response(
+                  '{"id":"test-photo"}',
+                  201,
+                  headers: {'content-type': 'application/json'},
+                );
+              submitted = jsonDecode(request.body) as Map<String, dynamic>;
+              return http.Response(
+                jsonEncode({
+                  'status': 'unverified_model_observation',
+                  'provider_status': 'succeeded',
+                  'observations': [
+                    {'feature': 'yellowing', 'visibility': 'uncertain'},
+                  ],
+                  'possible_explanations': [],
+                  'sources': [],
+                  'citations': [],
+                  'limitations': ['No confirmed diagnosis.'],
+                  'missing_information': [],
+                  'follow_up': [],
+                }),
+                200,
+              );
+            }),
+            baseUri: Uri.parse('http://127.0.0.1:8021'),
+          ),
+        );
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: SingleChildScrollView(
+                child: SoilWorkflows(
+                  client: client,
+                  farmId: 'synthetic-farm',
+                  picker: _SyntheticPicker(),
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Choose image'));
+        await tester.pumpAndSettle();
+        expect(mutations, 0);
+        expect(find.byType(Image), findsOneWidget);
+        final analyze = find.widgetWithText(FilledButton, 'Analyze image');
+        expect(tester.widget<FilledButton>(analyze).onPressed, isNull);
+        await tester.ensureVisible(find.byType(CheckboxListTile));
+        await tester.tap(find.byType(CheckboxListTile));
+        await tester.pumpAndSettle();
+        await tester.ensureVisible(analyze);
+        await tester.tap(analyze);
+        await tester.pumpAndSettle();
+        expect(submitted?['external_image_consent'], true);
+        expect(submitted?['image_kind'], 'crop');
+        expect(
+          mutations,
+          2,
+        ); // upload + analyze only; no automatic observation write.
+        expect(find.text('yellowing · uncertain'), findsOneWidget);
+        expect(find.text('Possible causes to investigate'), findsOneWidget);
+        expect(
+          tester.widget<CheckboxListTile>(find.byType(CheckboxListTile)).value,
+          false,
+        );
+        expect(tester.takeException(), isNull);
+      },
+    );
   }
 
-  testWidgets('unavailable output retains limitations and no inferred cause', (tester) async {
-    await tester.pumpWidget(const MaterialApp(home: Scaffold(body: SingleChildScrollView(child: ImageEvidenceResult(packet: {
-      'status': 'vision_unavailable', 'provider_status': 'vision_unavailable',
-      'limitations': ['A photo cannot measure soil pH.'],
-      'missing_information': ['Laboratory sample required.'],
-    })))));
-    expect(find.text('No supported cause is inferred from this image.'), findsOneWidget);
+  testWidgets('unavailable output retains limitations and no inferred cause', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: SingleChildScrollView(
+            child: ImageEvidenceResult(
+              packet: {
+                'status': 'vision_unavailable',
+                'provider_status': 'vision_unavailable',
+                'limitations': ['A photo cannot measure soil pH.'],
+                'missing_information': ['Laboratory sample required.'],
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+    expect(
+      find.text('No supported cause is inferred from this image.'),
+      findsOneWidget,
+    );
     expect(find.text('• A photo cannot measure soil pH.'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
@@ -243,8 +307,20 @@ class _SyntheticPicker implements FieldPhotoPicker {
   @override
   bool get supportsCamera => false;
   @override
-  Future<PreparedPhoto?> pick(PhotoOrigin origin, {required bool readGps}) async {
+  Future<PreparedPhoto?> pick(
+    PhotoOrigin origin, {
+    required bool readGps,
+  }) async {
     if (readGps) throw StateError('GPS must not be requested');
-    return PreparedPhoto(png: Uint8List.fromList(base64Decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScLbtAAAAABJRU5ErkJggg==')), origin: origin, width: 1, height: 1);
+    return PreparedPhoto(
+      png: Uint8List.fromList(
+        base64Decode(
+          'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGNgmMbwHwACxgGWtyLbjwAAAABJRU5ErkJggg==',
+        ),
+      ),
+      origin: origin,
+      width: 1,
+      height: 1,
+    );
   }
 }

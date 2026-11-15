@@ -23,7 +23,7 @@ OpenAI uses automatic image detail; documented sizing for this model includes a
 Provider limits and account availability may change: validate before rollout.
 
 `EARTHSYNC_VISION_ENABLED=1` explicitly enables a configured backend adapter;
-`EARTHSYNC_VISION_TIMEOUT_SECONDS` defaults to 20 (accepted 1–30 seconds).
+`EARTHSYNC_VISION_TIMEOUT_SECONDS` defaults to 20 (accepted 1–20 seconds).
 Missing/invalid settings leave vision unavailable and the app working. Leave
 `EARTHSYNC_VISION_ENABLED=0` for the authorized delivery in this chat. Keys belong
 in the server process environment or a secret manager, never Flutter definitions,

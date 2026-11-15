@@ -8,7 +8,12 @@ import '../photo_evidence/photo_evidence_models.dart';
 import 'companion_copy.dart';
 
 class SoilWorkflows extends StatefulWidget {
-  const SoilWorkflows({super.key, required this.client, required this.farmId, this.picker});
+  const SoilWorkflows({
+    super.key,
+    required this.client,
+    required this.farmId,
+    this.picker,
+  });
   final PlatformFarmClient client;
   final String farmId;
   final FieldPhotoPicker? picker;
@@ -23,10 +28,14 @@ class _SoilWorkflowsState extends State<SoilWorkflows> {
   PreparedPhoto? _selected;
   Map<String, dynamic>? _appearance, _capabilities;
   List<Map<String, dynamic>> _reports = [];
-  final _crop = TextEditingController(), _question = TextEditingController(),
-      _region = TextEditingController(), _growth = TextEditingController(),
-      _weather = TextEditingController(), _symptoms = TextEditingController();
-  late final FieldPhotoPicker _picker = widget.picker ?? PlatformFieldPhotoPicker();
+  final _crop = TextEditingController(),
+      _question = TextEditingController(),
+      _region = TextEditingController(),
+      _growth = TextEditingController(),
+      _weather = TextEditingController(),
+      _symptoms = TextEditingController();
+  late final FieldPhotoPicker _picker =
+      widget.picker ?? PlatformFieldPhotoPicker();
   String get prefix => '${PlatformFarmClient.prefix}/farms/${widget.farmId}';
   String tr(String text) => CompanionCopy.text(context, text);
 
@@ -38,8 +47,15 @@ class _SoilWorkflowsState extends State<SoilWorkflows> {
 
   Future<void> _loadCapabilities() async {
     try {
-      final result = await widget.client.transport.request('GET', '${PlatformFarmClient.prefix}/image-capabilities', expectedStatus: 200);
-      if (mounted) setState(() => _capabilities = Map<String, dynamic>.from(result as Map));
+      final result = await widget.client.transport.request(
+        'GET',
+        '${PlatformFarmClient.prefix}/image-capabilities',
+        expectedStatus: 200,
+      );
+      if (mounted)
+        setState(
+          () => _capabilities = Map<String, dynamic>.from(result as Map),
+        );
     } catch (_) {
       if (mounted) setState(() => _capabilities = {'enabled': false});
     }
@@ -47,53 +63,113 @@ class _SoilWorkflowsState extends State<SoilWorkflows> {
 
   @override
   void dispose() {
-    for (final controller in [_crop, _question, _region, _growth, _weather, _symptoms]) { controller.dispose(); }
+    for (final controller in [
+      _crop,
+      _question,
+      _region,
+      _growth,
+      _weather,
+      _symptoms,
+    ]) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
   Future<void> _act(Future<void> Function() action) async {
-    setState(() { _busy = true; _message = null; });
-    try { await action(); }
-    on PlatformFailure catch (error) {
-      if (mounted) setState(() => _message = error.code == 'EXTERNAL_IMAGE_CONSENT_REQUIRED'
-          ? 'External processing requires explicit consent for this image.'
-          : 'Action could not complete (${error.code}). Refresh reports before retrying extraction.');
+    setState(() {
+      _busy = true;
+      _message = null;
+    });
+    try {
+      await action();
+    } on PlatformFailure catch (error) {
+      if (mounted)
+        setState(
+          () => _message = error.code == 'EXTERNAL_IMAGE_CONSENT_REQUIRED'
+              ? 'External processing requires explicit consent for this image.'
+              : 'Action could not complete (${error.code}). Refresh reports before retrying extraction.',
+        );
     } catch (_) {
-      if (mounted) setState(() => _message = 'Action could not complete. Refresh reports before retrying extraction.');
-    } finally { if (mounted) setState(() => _busy = false); }
+      if (mounted)
+        setState(
+          () => _message =
+              'Action could not complete. Refresh reports before retrying extraction.',
+        );
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
   }
 
   Future<void> _refresh() async {
-    final data = await widget.client.transport.request('GET', '$prefix/lab-reports', expectedStatus: 200);
-    if (mounted) setState(() => _reports = List<Map<String, dynamic>>.from(data as List));
+    final data = await widget.client.transport.request(
+      'GET',
+      '$prefix/lab-reports',
+      expectedStatus: 200,
+    );
+    if (mounted)
+      setState(() => _reports = List<Map<String, dynamic>>.from(data as List));
   }
 
   Future<void> _choose(PhotoOrigin origin) => _act(() async {
     final selected = await _picker.pick(origin, readGps: false);
-    if (selected != null && mounted) setState(() {
-      _selected = selected; _photoId = null; _appearance = null; _consent = false;
-    });
+    if (selected != null && mounted)
+      setState(() {
+        _selected = selected;
+        _photoId = null;
+        _appearance = null;
+        _consent = false;
+      });
   });
 
   Future<void> _analyze() => _act(() async {
     if (_selected == null) return;
     try {
-    if (_photoId == null) {
-      final photo = await widget.client.transport.request('POST', '$prefix/photos', expectedStatus: 201, bytes: _selected!.png, contentType: 'image/png') as Map;
-      _photoId = photo['id'] as String;
-    }
-    if (_kind == 'lab') {
-      await widget.client.transport.request('POST', '$prefix/photos/$_photoId/lab-extraction', expectedStatus: 201,
-          body: {'request_ai_assistance': _assist, 'external_image_consent': _consent});
-      await _refresh();
-    } else {
-      final result = await widget.client.transport.request('POST', '$prefix/photos/$_photoId/analyze', expectedStatus: 200,
-          body: {'image_kind': _kind, 'crop': _crop.text.trim(), 'question': _question.text.trim(),
+      if (_photoId == null) {
+        final photo =
+            await widget.client.transport.request(
+                  'POST',
+                  '$prefix/photos',
+                  expectedStatus: 201,
+                  bytes: _selected!.png,
+                  contentType: 'image/png',
+                )
+                as Map;
+        _photoId = photo['id'] as String;
+      }
+      if (_kind == 'lab') {
+        await widget.client.transport.request(
+          'POST',
+          '$prefix/photos/$_photoId/lab-extraction',
+          expectedStatus: 201,
+          timeout: const Duration(seconds: 45),
+          body: {
+            'request_ai_assistance': _assist,
+            'external_image_consent': _consent,
+          },
+        );
+        await _refresh();
+      } else {
+        final result = await widget.client.transport.request(
+          'POST',
+          '$prefix/photos/$_photoId/analyze',
+          expectedStatus: 200,
+          body: {
+            'image_kind': _kind,
+            'crop': _crop.text.trim(),
+            'question': _question.text.trim(),
             if (_region.text.trim().isNotEmpty) 'region': _region.text.trim(),
-            'growth_stage': _growth.text.trim(), 'weather_context': _weather.text.trim(),
-            'farmer_symptoms': _symptoms.text.trim(), 'external_image_consent': _consent});
-      if (mounted) setState(() => _appearance = Map<String, dynamic>.from(result as Map));
-    }
+            'growth_stage': _growth.text.trim(),
+            'weather_context': _weather.text.trim(),
+            'farmer_symptoms': _symptoms.text.trim(),
+            'external_image_consent': _consent,
+          },
+        );
+        if (mounted)
+          setState(
+            () => _appearance = Map<String, dynamic>.from(result as Map),
+          );
+      }
     } finally {
       // Consent applies to one processing request, including transport failure.
       if (mounted) setState(() => _consent = false);
@@ -101,102 +177,291 @@ class _SoilWorkflowsState extends State<SoilWorkflows> {
   });
 
   Future<void> _edit(Map<String, dynamic> report, {bool ai = false}) async {
-    final pixels = widget.client.transport.request('GET', '$prefix/photos/${report['photo_id']}/image', expectedStatus: 200, contentType: 'image/png');
+    final pixels = widget.client.transport.request(
+      'GET',
+      '$prefix/photos/${report['photo_id']}/image',
+      expectedStatus: 200,
+      contentType: 'image/png',
+    );
     final correction = await showDialog<Map<String, dynamic>>(
       context: context,
       builder: (_) => LabReportEditor(
-        report: ai ? {...report, 'confirmed': null, 'original': report['original']['ai_assistance']} : report,
-        originalImage: FutureBuilder<Object?>(future: pixels, builder: (_, state) {
-          if (state.hasError) return const Text('Original image unavailable. Cancel until you can check the report.');
-          if (!state.hasData) return const LinearProgressIndicator();
-          return InteractiveViewer(child: Image.memory(Uint8List.fromList(state.data! as List<int>), height: 300, fit: BoxFit.contain, semanticLabel: 'Original laboratory report for manual checking'));
-        }),
+        report: ai
+            ? {
+                ...report,
+                'confirmed': null,
+                'original': report['original']['ai_assistance'],
+              }
+            : report,
+        originalImage: FutureBuilder<Object?>(
+          future: pixels,
+          builder: (_, state) {
+            if (state.hasError)
+              return const Text(
+                'Original image unavailable. Cancel until you can check the report.',
+              );
+            if (!state.hasData) return const LinearProgressIndicator();
+            return InteractiveViewer(
+              child: Image.memory(
+                Uint8List.fromList(state.data! as List<int>),
+                height: 300,
+                fit: BoxFit.contain,
+                semanticLabel: 'Original laboratory report for manual checking',
+              ),
+            );
+          },
+        ),
       ),
     );
     if (correction == null || !mounted) return;
     await _act(() async {
-      await widget.client.transport.request('POST', '$prefix/lab-reports/${report['id']}/confirm', expectedStatus: 200, body: correction);
+      await widget.client.transport.request(
+        'POST',
+        '$prefix/lab-reports/${report['id']}/confirm',
+        expectedStatus: 200,
+        body: correction,
+      );
       await _refresh();
     });
   }
 
   Future<void> _saveObservation() async {
     final notes = TextEditingController();
-    final day = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2000), lastDate: DateTime.now());
-    if (day == null || !mounted) { notes.dispose(); return; }
-    final text = await showDialog<String>(context: context, builder: (context) => AlertDialog(
-      title: Text(tr('Confirm my observation')),
-      content: Column(mainAxisSize: MainAxisSize.min, children: [
-        const Text('Describe only what you personally observed. Model findings are not copied into confirmed history.'),
-        TextField(controller: notes, maxLength: 1500, maxLines: 3, decoration: const InputDecoration(labelText: 'My appearance observation')),
-      ]),
-      actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
-        TextButton(onPressed: () { if (notes.text.trim().isNotEmpty) Navigator.pop(context, notes.text.trim()); }, child: Text(tr('Confirm my observation')))],
-    ));
+    final day = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    );
+    if (day == null || !mounted) {
+      notes.dispose();
+      return;
+    }
+    final text = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(tr('Confirm my observation')),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              'Describe only what you personally observed. Model findings are not copied into confirmed history.',
+            ),
+            TextField(
+              controller: notes,
+              maxLength: 1500,
+              maxLines: 3,
+              decoration: const InputDecoration(
+                labelText: 'My appearance observation',
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              if (notes.text.trim().isNotEmpty)
+                Navigator.pop(context, notes.text.trim());
+            },
+            child: Text(tr('Confirm my observation')),
+          ),
+        ],
+      ),
+    );
     // The dialog's closing animation may still reference its controller.
     await Future<void>.delayed(const Duration(milliseconds: 250));
     notes.dispose();
     if (text == null || !mounted) return;
     await _act(() async {
-      await widget.client.reportObservation(widget.farmId, {'observed_on': dateLabel(day), 'notes': '$text\nAppearance observation; associated photo: $_photoId'});
-      if (mounted) setState(() => _message = 'Saved as a farmer-reported appearance observation.');
+      await widget.client.reportObservation(widget.farmId, {
+        'observed_on': dateLabel(day),
+        'notes': '$text\nAppearance observation; associated photo: $_photoId',
+      });
+      if (mounted)
+        setState(
+          () => _message = 'Saved as a farmer-reported appearance observation.',
+        );
     });
   }
 
-  Widget _input(String label, TextEditingController controller, int limit) => TextField(
-    controller: controller, enabled: !_busy, maxLength: limit, decoration: InputDecoration(labelText: tr(label)));
+  Widget _input(String label, TextEditingController controller, int limit) =>
+      TextField(
+        controller: controller,
+        enabled: !_busy,
+        maxLength: limit,
+        decoration: InputDecoration(labelText: tr(label)),
+      );
 
   @override
   Widget build(BuildContext context) {
     final enabled = _capabilities?['enabled'] == true;
     final needsConsent = enabled && (_kind != 'lab' || _assist);
-    return SectionCard(title: tr('Image evidence check'), child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Text(tr('Appearance observations and laboratory sample values stay separate.')),
-      if (_busy) const LinearProgressIndicator(semanticsLabel: 'Processing image evidence'),
-      if (_message != null) Text(_message!, semanticsLabel: _message),
-      DropdownButtonFormField<String>(initialValue: _kind, decoration: InputDecoration(labelText: tr('Image category')),
-        items: [for (final entry in {'crop': 'Crop / Leaf', 'soil': 'Soil Appearance', 'lab': 'Soil Laboratory Report'}.entries) DropdownMenuItem(value: entry.key, child: Text(tr(entry.value)))],
-        onChanged: _busy ? null : (value) => setState(() { _kind = value!; _appearance = null; _consent = false; _assist = false; })),
-      Wrap(spacing: 8, runSpacing: 8, children: [
-        OutlinedButton(onPressed: _busy ? null : () => _choose(PhotoOrigin.gallery), child: Text(tr('Choose image'))),
-        if (_picker.supportsCamera) OutlinedButton(onPressed: _busy ? null : () => _choose(PhotoOrigin.camera), child: Text(tr('Take photo'))),
-        TextButton(onPressed: _busy ? null : () => _act(_refresh), child: const Text('Load saved reports')),
-      ]),
-      if (_selected != null) Image.memory(_selected!.png, height: 220, fit: BoxFit.contain, semanticLabel: 'Selected sanitized image preview'),
-      if (_kind != 'lab') ...[
-        _input('Crop (farmer provided, optional)', _crop, 150),
-        _input('Question about the image', _question, 1000),
-        _input('Reference region filter (optional)', _region, 150),
-        _input('Reported growth stage (optional)', _growth, 150),
-        _input('Reported weather (optional)', _weather, 500),
-        _input('Reported symptoms (optional)', _symptoms, 500),
-      ] else ...[
-        const Text('Local Tesseract runs first. Check every value against the original report. Uploads are not independently authenticated.'),
-        CheckboxListTile(value: _assist, onChanged: !enabled || _busy ? null : (v) => setState(() { _assist = v ?? false; _consent = false; }), title: const Text('Request optional AI document assistance')),
-      ],
-      if (!enabled) Text(tr('External vision is unavailable. Local OCR and saved evidence still work.')),
-      if (needsConsent) CheckboxListTile(value: _consent, onChanged: _busy ? null : (v) => setState(() => _consent = v ?? false),
-        title: Text(tr('I authorize external processing of this image')),
-        subtitle: Text('Sanitized pixels will be sent to ${_capabilities?['provider']} / ${_capabilities?['model']}. Image text can contain personal information.')),
-      FilledButton(onPressed: _busy || _selected == null || (needsConsent && !_consent) ? null : _analyze, child: Text(tr('Analyze image'))),
-      if (_appearance != null) ...[
-        ImageEvidenceResult(packet: _appearance!),
-        OutlinedButton(onPressed: _busy ? null : _saveObservation, child: Text(tr('Confirm my observation'))),
-      ],
-      for (final report in _reports) ExpansionTile(key: ValueKey(report['id']), title: Text('Report ${report['id']}'),
-        subtitle: Text(report['confirmed'] == null ? '${report['original']['status']} · check before confirmation' : 'User-confirmed sample transcription'),
-        expandedCrossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          const Text('Original local OCR (retained separately from corrections):'),
-          _LabValues(data: Map<String, dynamic>.from(report['original'] as Map)),
-          if (report['original']['ai_assistance'] != null) ...[
-            const Text('Unverified AI assistance (never automatically confirmed):'),
-            _LabValues(data: Map<String, dynamic>.from(report['original']['ai_assistance'] as Map)),
-            TextButton(onPressed: _busy ? null : () => _edit(report, ai: true), child: const Text('Check AI transcription against original image')),
+    return SectionCard(
+      title: tr('Image evidence check'),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            tr(
+              'Appearance observations and laboratory sample values stay separate.',
+            ),
+          ),
+          if (_busy)
+            const LinearProgressIndicator(
+              semanticsLabel: 'Processing image evidence',
+            ),
+          if (_message != null) Text(_message!, semanticsLabel: _message),
+          DropdownButtonFormField<String>(
+            initialValue: _kind,
+            decoration: InputDecoration(labelText: tr('Image category')),
+            items: [
+              for (final entry in {
+                'crop': 'Crop / Leaf',
+                'soil': 'Soil Appearance',
+                'lab': 'Soil Laboratory Report',
+              }.entries)
+                DropdownMenuItem(
+                  value: entry.key,
+                  child: Text(tr(entry.value)),
+                ),
+            ],
+            onChanged: _busy
+                ? null
+                : (value) => setState(() {
+                    _kind = value!;
+                    _appearance = null;
+                    _consent = false;
+                    _assist = false;
+                  }),
+          ),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              OutlinedButton(
+                onPressed: _busy ? null : () => _choose(PhotoOrigin.gallery),
+                child: Text(tr('Choose image')),
+              ),
+              if (_picker.supportsCamera)
+                OutlinedButton(
+                  onPressed: _busy ? null : () => _choose(PhotoOrigin.camera),
+                  child: Text(tr('Take photo')),
+                ),
+              TextButton(
+                onPressed: _busy ? null : () => _act(_refresh),
+                child: const Text('Load saved reports'),
+              ),
+            ],
+          ),
+          if (_selected != null)
+            Image.memory(
+              _selected!.png,
+              height: 220,
+              fit: BoxFit.contain,
+              semanticLabel: 'Selected sanitized image preview',
+            ),
+          if (_kind != 'lab') ...[
+            _input('Crop (farmer provided, optional)', _crop, 150),
+            _input('Question about the image', _question, 1000),
+            _input('Reference region filter (optional)', _region, 150),
+            _input('Reported growth stage (optional)', _growth, 150),
+            _input('Reported weather (optional)', _weather, 500),
+            _input('Reported symptoms (optional)', _symptoms, 500),
+          ] else ...[
+            const Text(
+              'Local Tesseract runs first. Check every value against the original report. Uploads are not independently authenticated.',
+            ),
+            CheckboxListTile(
+              value: _assist,
+              onChanged: !enabled || _busy
+                  ? null
+                  : (v) => setState(() {
+                      _assist = v ?? false;
+                      _consent = false;
+                    }),
+              title: const Text('Request optional AI document assistance'),
+            ),
           ],
-          if (report['confirmed'] != null) _LabValues(data: Map<String, dynamic>.from(report['confirmed'] as Map)),
-          TextButton(onPressed: _busy ? null : () => _edit(report), child: const Text('Check, correct and confirm sample')),
-        ]),
-    ]));
+          if (!enabled)
+            Text(
+              tr(
+                'External vision is unavailable. Local OCR and saved evidence still work.',
+              ),
+            ),
+          if (needsConsent)
+            CheckboxListTile(
+              value: _consent,
+              onChanged: _busy
+                  ? null
+                  : (v) => setState(() => _consent = v ?? false),
+              title: Text(tr('I authorize external processing of this image')),
+              subtitle: Text(
+                'Sanitized pixels will be sent to ${_capabilities?['provider']} / ${_capabilities?['model']}. Image text can contain personal information.',
+              ),
+            ),
+          FilledButton(
+            onPressed: _busy || _selected == null || (needsConsent && !_consent)
+                ? null
+                : _analyze,
+            child: Text(tr('Analyze image')),
+          ),
+          if (_appearance != null) ...[
+            ImageEvidenceResult(packet: _appearance!),
+            OutlinedButton(
+              onPressed: _busy ? null : _saveObservation,
+              child: Text(tr('Confirm my observation')),
+            ),
+          ],
+          for (final report in _reports)
+            ExpansionTile(
+              key: ValueKey(report['id']),
+              title: Text('Report ${report['id']}'),
+              subtitle: Text(
+                report['confirmed'] == null
+                    ? '${report['original']['status']} · check before confirmation'
+                    : 'User-confirmed sample transcription',
+              ),
+              expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Text(
+                  'Original local OCR (retained separately from corrections):',
+                ),
+                _LabValues(
+                  data: Map<String, dynamic>.from(report['original'] as Map),
+                ),
+                if (report['original']['ai_assistance'] != null) ...[
+                  const Text(
+                    'Unverified AI assistance (never automatically confirmed):',
+                  ),
+                  _LabValues(
+                    data: Map<String, dynamic>.from(
+                      report['original']['ai_assistance'] as Map,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: _busy ? null : () => _edit(report, ai: true),
+                    child: const Text(
+                      'Check AI transcription against original image',
+                    ),
+                  ),
+                ],
+                if (report['confirmed'] != null)
+                  _LabValues(
+                    data: Map<String, dynamic>.from(report['confirmed'] as Map),
+                  ),
+                TextButton(
+                  onPressed: _busy ? null : () => _edit(report),
+                  child: const Text('Check, correct and confirm sample'),
+                ),
+              ],
+            ),
+        ],
+      ),
+    );
   }
 }
 
@@ -208,41 +473,83 @@ class ImageEvidenceResult extends StatelessWidget {
   Widget build(BuildContext context) {
     String tr(String text) => CompanionCopy.text(context, text);
     final saved = packet['saved_environmental_evidence'] as Map? ?? {};
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Text('${packet['status']} · ${packet['provider_status'] ?? ''}'),
-      if (packet['provider'] != null) Text('${packet['provider']} / ${packet['model']} · ${packet['latency_ms'] ?? '?'} ms'),
-      Text(tr('Visible findings')),
-      for (final finding in packet['observations'] as List? ?? []) Text('${finding['feature'].toString().replaceAll('_', ' ')} · ${finding['visibility']}'),
-      Text(tr('Possible causes to investigate')),
-      for (final explanation in packet['possible_explanations'] as List? ?? []) ...[
-        Text(explanation['reference_says'] as String),
-        for (final possibility in explanation['possibilities'] as List? ?? []) Text('• $possibility'),
-        for (final limit in explanation['limitations'] as List? ?? []) Text('• $limit'),
-        Text('Source: ${explanation['source_id']} · ${explanation['claim_id']}'),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text('${packet['status']} · ${packet['provider_status'] ?? ''}'),
+        if (packet['provider'] != null)
+          Text(
+            '${packet['provider']} / ${packet['model']} · ${packet['latency_ms'] ?? '?'} ms',
+          ),
+        Text(tr('Visible findings')),
+        for (final finding in packet['observations'] as List? ?? [])
+          Text(
+            '${finding['feature'].toString().replaceAll('_', ' ')} · ${finding['visibility']}',
+          ),
+        Text(tr('Possible causes to investigate')),
+        for (final explanation
+            in packet['possible_explanations'] as List? ?? []) ...[
+          Text(explanation['reference_says'] as String),
+          for (final possibility in explanation['possibilities'] as List? ?? [])
+            Text('• $possibility'),
+          for (final limit in explanation['limitations'] as List? ?? [])
+            Text('• $limit'),
+          Text(
+            'Source: ${explanation['source_id']} · ${explanation['claim_id']}',
+          ),
+        ],
+        if ((packet['possible_explanations'] as List? ?? []).isEmpty)
+          const Text('No supported cause is inferred from this image.'),
+        Text(tr('References')),
+        for (final source in packet['sources'] as List? ?? [])
+          SelectableText(
+            '${source['title']}\n${source['publisher']}\n${source['url']}',
+          ),
+        for (final citation in packet['citations'] as List? ?? [])
+          Text('${citation['source_id']}: ${citation['locator']}'),
+        Text(tr('Limitations and missing information')),
+        for (final item in [
+          ...(packet['limitations'] as List? ?? []),
+          ...(packet['missing_information'] as List? ?? []),
+        ])
+          Text('• $item'),
+        Text(tr('Safe follow-up observations')),
+        for (final item in packet['follow_up'] as List? ?? []) Text('• $item'),
+        Text(tr('Saved environmental evidence (separate from the photo)')),
+        for (final model
+            in saved['modeled_regional_reference'] as List? ?? []) ...[
+          Text(
+            'Regional modeled SoilGrids pH · depth ${model['depth_cm']} cm · not measured from this photo',
+          ),
+          for (final cell in model['cells'] as List? ?? [])
+            Text('pH: ${cell['value'] ?? 'unavailable'}'),
+        ],
+        for (final record in saved['saved_evidence_records'] as List? ?? [])
+          ExpansionTile(
+            title: Text('${record['provider']} · ${record['data_type']}'),
+            subtitle: Text('${record['dataset']} · ${record['temporal']}'),
+            children: [
+              SelectableText('Source: ${record['source_url']}'),
+              Text('${record['limitations']}'),
+              for (final measurement in record['measurements'] as List? ?? [])
+                Text(
+                  '${measurement['parameter']}: ${measurement['value']} ${measurement['unit']}',
+                ),
+            ],
+          ),
+        for (final record in saved['saved_source_records'] as List? ?? [])
+          Text(
+            '${record['category']} · ${record['result']?['provider'] ?? 'source'} · ${record['result']?['retrieved_at'] ?? 'retrieval time unavailable'}',
+          ),
+        const Text(
+          'Regional climate and forecast grids are not current station or field observations.',
+        ),
+        Text(
+          'Farmer reports: ${(saved['farmer_reported'] as List? ?? []).length}; lab transcriptions: ${(saved['laboratory_sample_transcriptions'] as List? ?? []).length}. These do not confirm a visual cause.',
+        ),
+        if (saved['status'] != null) Text(saved['status'] as String),
       ],
-      if ((packet['possible_explanations'] as List? ?? []).isEmpty) const Text('No supported cause is inferred from this image.'),
-      Text(tr('References')),
-      for (final source in packet['sources'] as List? ?? []) SelectableText('${source['title']}\n${source['publisher']}\n${source['url']}'),
-      for (final citation in packet['citations'] as List? ?? []) Text('${citation['source_id']}: ${citation['locator']}'),
-      Text(tr('Limitations and missing information')),
-      for (final item in [...(packet['limitations'] as List? ?? []), ...(packet['missing_information'] as List? ?? [])]) Text('• $item'),
-      Text(tr('Safe follow-up observations')),
-      for (final item in packet['follow_up'] as List? ?? []) Text('• $item'),
-      Text(tr('Saved environmental evidence (separate from the photo)')),
-      for (final model in saved['modeled_regional_reference'] as List? ?? []) ...[
-        Text('Regional modeled SoilGrids pH · depth ${model['depth_cm']} cm · not measured from this photo'),
-        for (final cell in model['cells'] as List? ?? []) Text('pH: ${cell['value'] ?? 'unavailable'}'),
-      ],
-      for (final record in saved['saved_evidence_records'] as List? ?? []) ExpansionTile(
-        title: Text('${record['provider']} · ${record['data_type']}'),
-        subtitle: Text('${record['dataset']} · ${record['temporal']}'),
-        children: [SelectableText('Source: ${record['source_url']}'), Text('${record['limitations']}'),
-          for (final measurement in record['measurements'] as List? ?? []) Text('${measurement['parameter']}: ${measurement['value']} ${measurement['unit']}')]),
-      for (final record in saved['saved_source_records'] as List? ?? []) Text('${record['category']} · ${record['result']?['provider'] ?? 'source'} · ${record['result']?['retrieved_at'] ?? 'retrieval time unavailable'}'),
-      const Text('Regional climate and forecast grids are not current station or field observations.'),
-      Text('Farmer reports: ${(saved['farmer_reported'] as List? ?? []).length}; lab transcriptions: ${(saved['laboratory_sample_transcriptions'] as List? ?? []).length}. These do not confirm a visual cause.'),
-      if (saved['status'] != null) Text(saved['status'] as String),
-    ]);
+    );
   }
 }
 

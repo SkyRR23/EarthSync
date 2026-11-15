@@ -7,6 +7,7 @@ Start scripts/run_final_local.py first and generate the labeled report fixture.
 import argparse
 import json
 import re
+import shutil
 from pathlib import Path
 
 from playwright.sync_api import expect, sync_playwright
@@ -19,6 +20,7 @@ def main():
     parser.add_argument("--platform-url", default="http://127.0.0.1:8021")
     parser.add_argument("--lab-image", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--chromium", default=shutil.which("chromium"))
     args = parser.parse_args()
     output = private_output(args.output)
     profile = {
@@ -38,7 +40,7 @@ def main():
     steps, errors = [], []
     with sync_playwright() as driver:
         browser = driver.chromium.launch(
-            executable_path="/usr/bin/chromium", headless=True, args=["--no-sandbox"]
+            executable_path=args.chromium, headless=True, args=["--no-sandbox"]
         )
         context = browser.new_context(viewport={"width": 1440, "height": 1100})
         context.add_init_script(
@@ -139,9 +141,20 @@ def main():
             page.screenshot(path=str(output / "crop-intelligence.png"))
             go("farm-photos")
             with page.expect_file_chooser() as chooser:
-                click("button", "Laboratory report")
+                click("button", "Choose image")
             chooser.value.set_files(str(args.lab_image))
-            click("button", re.compile("^Upload$"))
+            with page.expect_response(lambda r: r.url.endswith("/analyze")) as analysis:
+                click("button", "Analyze image")
+            assert analysis.value.json()["status"] == "vision_unavailable"
+            steps.append("Actual image upload and honest disabled-vision fallback")
+            click("button", re.compile("Crop / Leaf"))
+            page.get_by_text("Soil Laboratory Report", exact=True).last.click(force=True)
+            with page.expect_response(lambda r: r.url.endswith("/lab-extraction")) as extraction:
+                click("button", "Analyze image")
+            report = extraction.value.json()
+            assert report["confirmed"] is None
+            assert report["original"]["provider"] == "local-tesseract"
+            assert next(v for v in report["original"]["values"] if v["parameter"] == "ph")["value"] == 6.4
             page.wait_for_timeout(1500)
             click("button", re.compile("Report "))
             click("button", "Check, correct and confirm sample")

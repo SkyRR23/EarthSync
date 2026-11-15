@@ -50,7 +50,7 @@
       "source_id": "health.isu.striping.2021",
       "crop_id": "ecocrop.2175@1",
       "image_kind": "crop",
-      "features": ["yellowing", "discoloration", "unusual_leaf_shape"],
+      "features": ["yellowing", "discoloration"],
       "region": "US-IA",
       "locator": "Genetic Striping; Nutrient Deficiencies; concluding diagnostic caution",
       "claim": "Maize striping has several potential explanations including hybrid traits and nutrient stress. Similar symptoms need field comparisons and soil or plant analysis to investigate.",
