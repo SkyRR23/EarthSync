@@ -1,7 +1,12 @@
+import 'dart:math' as math;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart' show LatLng;
 
 import '../../app/strings.dart';
 import '../../design/components/grouped.dart';
@@ -19,7 +24,12 @@ class GibsLayerConfig {
     required this.maxNativeZoom,
     required this.legend,
     this.dateLagDays = 2,
+    this.latest = false,
   });
+
+  /// Ask GIBS for its newest image (`default` time) instead of a fixed lag.
+  /// The real date comes back in the `layer-time-actual` header.
+  final bool latest;
 
   final String layerId;
   final String title;
@@ -38,7 +48,21 @@ class GibsLayerConfig {
 
   String get urlTemplate =>
       'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/$layerId/default/'
-      '$dateString/$tileMatrixSet/{z}/{y}/{x}.$format';
+      '${latest ? 'default' : dateString}/$tileMatrixSet/{z}/{y}/{x}.$format';
+
+  /// URL of the one tile that covers [at] at zoom [z].
+  String tileUrlAt(LatLng at, [int z = 9]) {
+    final n = 1 << z;
+    final x = ((at.longitude + 180) / 360 * n).floor();
+    final lat = at.latitude * math.pi / 180;
+    final y =
+        ((1 - math.log(math.tan(lat) + 1 / math.cos(lat)) / math.pi) / 2 * n)
+            .floor();
+    return urlTemplate
+        .replaceFirst('{z}', '$z')
+        .replaceFirst('{y}', '$y')
+        .replaceFirst('{x}', '$x');
+  }
 
   static const provisional = GibsLayerConfig(
     layerId: 'MODIS_Terra_CorrectedReflectance_TrueColor',
@@ -60,6 +84,7 @@ class GibsLayerConfig {
     legend:
         'Greener means more growing plants. Brown means bare ground or dry plants.',
     dateLagDays: 10,
+    latest: true,
   );
 }
 
@@ -185,4 +210,70 @@ void showImageryLegend(BuildContext context, GibsLayerConfig? c) {
       ],
     ),
   );
+}
+
+/// The real date of the newest image GIBS serves for [at] (one tile request).
+Future<DateTime?> fetchLatestGibsDate(GibsLayerConfig c, LatLng at) async {
+  try {
+    final r = await http
+        .get(Uri.parse(c.tileUrlAt(at)))
+        .timeout(const Duration(seconds: 20));
+    if (r.statusCode != 200) return null;
+    return DateTime.tryParse(r.headers['layer-time-actual'] ?? '');
+  } catch (_) {
+    return null;
+  }
+}
+
+/// Date of the newest NASA plant-health image at a farm (null = unknown).
+final plantHealthDateProvider = FutureProvider.family<DateTime?, LatLng>(
+  (ref, at) => fetchLatestGibsDate(GibsLayerConfig.plantHealth, at),
+);
+
+/// "NASA 8-day image, newest: 13 Nov 2026".
+String plantHealthDateLabel(DateTime? d) => d == null
+    ? S.plantHealthNewest
+    : '${S.plantHealthNewest}: ${DateFormat('d MMM y').format(d.toUtc())}';
+
+/// Shows [child] (a map layer) only inside [corners] — used to colour plant
+/// health inside the farm border and nowhere else.
+class ClipToPolygon extends StatelessWidget {
+  const ClipToPolygon({super.key, required this.corners, required this.child});
+  final List<LatLng> corners;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final camera = MapCamera.of(context);
+    final pts = [for (final c in corners) camera.latLngToScreenOffset(c)];
+    return ClipPath(clipper: _PolygonClipper(pts), child: child);
+  }
+}
+
+class _PolygonClipper extends CustomClipper<Path> {
+  _PolygonClipper(this.points);
+  final List<Offset> points;
+
+  @override
+  Path getClip(Size size) => Path()..addPolygon(points, true);
+
+  @override
+  bool shouldReclip(_PolygonClipper old) {
+    if (old.points.length != points.length) return true;
+    for (var i = 0; i < points.length; i++) {
+      if (old.points[i] != points[i]) return true;
+    }
+    return false;
+  }
+}
+
+/// NASA plant health: inside the farm border only when a farm is marked.
+Widget plantHealthLayer({List<LatLng>? farmCorners}) {
+  final layer = Opacity(
+    opacity: 0.85,
+    child: gibsTileLayer(GibsLayerConfig.plantHealth),
+  );
+  return farmCorners == null || farmCorners.length < 3
+      ? layer
+      : ClipToPolygon(corners: farmCorners, child: layer);
 }

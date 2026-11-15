@@ -155,7 +155,11 @@ abstract final class S {
   static const imageryNote =
       'For looking only. Satellite images are not used in any calculation.';
   static const pixelNote =
-      'Each NASA plant-health square is about 250 m wide, so small farms share a square with their neighbours.';
+      'Not live: NASA builds this picture from 8 days of satellite passes. Each square is about 250 m wide, so a small farm is often one colour.';
+  static const plantHealthNewest = 'NASA 8-day image, newest';
+  static const insideFarmOnly = 'Colour is shown inside your farm border only.';
+  static const markFarmForHealth =
+      'Mark your farm to see plant health inside it.';
 
   // Notes (field diary)
   static const notesTitle = 'What did you see?';

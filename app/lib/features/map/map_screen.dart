@@ -73,7 +73,9 @@ class _MapScreenState extends ConsumerState<MapScreen> {
               // Street map underneath so a missing satellite tile is never a hole.
               streetTileLayer(),
               if (cfg != null)
-                Opacity(opacity: 0.75, child: gibsTileLayer(cfg)),
+                cfg.layerId == GibsLayerConfig.plantHealth.layerId
+                    ? plantHealthLayer(farmCorners: farm?.corners)
+                    : Opacity(opacity: 0.75, child: gibsTileLayer(cfg)),
               if (farm != null) farmOutlineLayer(context, farm),
               if (farm == null)
                 MarkerLayer(
@@ -148,13 +150,23 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                                       Text(
                                         cfg == null
                                             ? S.street
-                                            : 'NASA · ${cfg.dateLabel}',
+                                            : (cfg.latest
+                                                  ? plantHealthDateLabel(
+                                                      ref
+                                                          .watch(
+                                                            plantHealthDateProvider(
+                                                              pt,
+                                                            ),
+                                                          )
+                                                          .value,
+                                                    )
+                                                  : 'NASA · ${cfg.dateLabel}'),
                                         style: t.headline,
                                       ),
                                       Text(
                                         cfg == null
                                             ? '© OpenStreetMap contributors'
-                                            : '${cfg.legend} ${S.pixelNote}',
+                                            : '${cfg.legend} ${farm == null ? '' : '${S.insideFarmOnly} '}${S.pixelNote}',
                                         style: t.footnote,
                                       ),
                                     ],

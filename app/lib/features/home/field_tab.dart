@@ -270,7 +270,11 @@ class _FieldTabState extends ConsumerState<FieldTab> {
       children: [
         FarmMapCard(draft: d, plantHealth: _plantHealth),
         FsGroupedSection(
-          footer: _plantHealth ? S.pixelNote : null,
+          footer: !d.hasFarm
+              ? S.markFarmForHealth
+              : (_plantHealth
+                    ? '${plantHealthDateLabel(ref.watch(plantHealthDateProvider(d.farm!.center)).value)}. ${S.insideFarmOnly} ${S.pixelNote}'
+                    : null),
           children: [
             FsListRow(
               leading: FsIconBadge(
@@ -280,13 +284,17 @@ class _FieldTabState extends ConsumerState<FieldTab> {
               title: S.showPlantHealth,
               chevron: false,
               trailing: CupertinoSwitch(
-                value: _plantHealth,
+                value: _plantHealth && d.hasFarm,
                 activeTrackColor: p.tint,
-                onChanged: (v) => setState(() => _plantHealth = v),
+                onChanged: d.hasFarm
+                    ? (v) => setState(() => _plantHealth = v)
+                    : null,
               ),
-              onTap: () => setState(() => _plantHealth = !_plantHealth),
+              onTap: d.hasFarm
+                  ? () => setState(() => _plantHealth = !_plantHealth)
+                  : null,
             ),
-            if (_plantHealth)
+            if (_plantHealth && d.hasFarm)
               const Padding(
                 padding: EdgeInsets.fromLTRB(
                   FsSpace.lg,
@@ -574,11 +582,8 @@ class FarmMapCard extends StatelessWidget {
                     ),
                     children: [
                       streetTileLayer(),
-                      if (plantHealth)
-                        Opacity(
-                          opacity: 0.75,
-                          child: gibsTileLayer(GibsLayerConfig.plantHealth),
-                        ),
+                      if (plantHealth && farm != null)
+                        plantHealthLayer(farmCorners: farm.corners),
                       if (farm != null)
                         farmOutlineLayer(context, farm)
                       else
