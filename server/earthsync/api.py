@@ -12,6 +12,7 @@ from pydantic import ValidationError
 
 from .models import SeasonQuery, SeasonResponse
 from .power import PowerProvider, ProviderError
+from .chat import router as chat_router
 from .forecast import ForecastCache, OpenMeteoProvider
 from .greenness import GreennessCache, StacSearch
 from .greenness import router as greenness_router
@@ -64,6 +65,7 @@ def create_app(
     greenness_search=None,
     greenness_reader=None,
     greenness_cache=None,
+    chat_bot=None,
 ):
     @asynccontextmanager
     async def lifespan(app):
@@ -121,6 +123,9 @@ def create_app(
     # Farm greenness from NASA HLS; reader injectable for tests.
     app.state.greenness_reader = greenness_reader
     app.include_router(greenness_router)
+    # Farm chat (Groq); bot injectable for tests.
+    app.state.chat_bot = chat_bot
+    app.include_router(chat_router)
 
     @app.get("/api/v1/health")
     async def health():

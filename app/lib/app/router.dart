@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 
+import '../features/chat/chat_screen.dart';
 import '../features/farm/mark_farm_screen.dart';
 import '../features/home/climate_history.dart';
 import '../features/home/crops_tab.dart';
@@ -67,6 +68,7 @@ GoRouter buildRouter({bool setupDone = false}) => GoRouter(
           MapScreen(plantHealth: s.uri.queryParameters['layer'] == 'health'),
     ),
     GoRoute(path: '/farm', builder: (_, _) => const MarkFarmScreen()),
+    GoRoute(path: '/chat', builder: (_, _) => const ChatScreen()),
     GoRoute(
       path: '/crops',
       builder: (_, _) => AnalysisGate(

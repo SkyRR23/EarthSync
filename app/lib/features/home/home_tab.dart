@@ -83,6 +83,14 @@ class _HomeTabState extends ConsumerState<HomeTab> {
 
     return Scaffold(
       backgroundColor: p.background,
+      floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'ask',
+        onPressed: () => context.push('/chat'),
+        backgroundColor: p.tint,
+        foregroundColor: p.onTint,
+        icon: const Icon(CupertinoIcons.chat_bubble_2_fill),
+        label: Text(S.chatAsk, style: t.headline.copyWith(color: p.onTint)),
+      ),
       body: SafeArea(
         bottom: false,
         child: Center(

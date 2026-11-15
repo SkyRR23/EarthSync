@@ -541,4 +541,27 @@ abstract final class S {
   static const pestDone = 'Pest check noted this week';
   static const addPestNote = 'Add a pest note';
   static const shortPests = 'Pest check';
+  // Farm chat
+  static const chatTitle = 'Ask EarthSync';
+  static const chatSubtitle = 'Answers use your farm’s data';
+  static const chatAsk = 'Ask';
+  static const chatHello =
+      'Hi! Ask me about your farm: watering, weather, soil or what to check today.';
+  static const chatTry = 'Try asking';
+  static const chatSuggestions = [
+    'Should I water my field today?',
+    'Is rain coming this week?',
+    'What does my soil type mean for my crops?',
+    'How do I check my crops for pests?',
+  ];
+  static const chatHint = 'Ask about your farm…';
+  static const chatSend = 'Send';
+  static const chatClear = 'Clear chat';
+  static const chatThinking = 'Thinking…';
+  static const chatDisclaimer =
+      'AI answers from your farm data. Check big decisions with your local extension officer.';
+  static const chatNotSetUp = 'The farm chat is not set up yet.';
+  static const chatBusy = 'The chat is busy. Try again in a minute.';
+  static const chatOffline = 'No connection. Try again when you have signal.';
+  static const chatFailed = 'The chat could not answer. Try again.';
 }
