@@ -12,10 +12,12 @@ class SoilWorkflows extends StatefulWidget {
     super.key,
     required this.client,
     required this.farmId,
+    this.initialKind = 'crop',
     this.picker,
   });
   final PlatformFarmClient client;
   final String farmId;
+  final String initialKind;
   final FieldPhotoPicker? picker;
   @override
   State<SoilWorkflows> createState() => _SoilWorkflowsState();
@@ -42,6 +44,7 @@ class _SoilWorkflowsState extends State<SoilWorkflows> {
   @override
   void initState() {
     super.initState();
+    _kind = widget.initialKind;
     _loadCapabilities();
   }
 

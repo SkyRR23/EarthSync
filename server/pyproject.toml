@@ -24,4 +24,4 @@ testpaths = ["tests"]
 
 "earthsync.platform_v1" = ["migrations/*.sql", "rule_review.json"]
 
-"earthsync.research" = ["additional_evidence.json"]
+"earthsync.research" = ["additional_evidence.json", "plant_health.json"]

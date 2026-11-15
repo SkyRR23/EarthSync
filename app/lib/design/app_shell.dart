@@ -8,6 +8,17 @@ class AppShell extends ConsumerWidget {
   const AppShell({super.key, required this.child, required this.path});
   final Widget child;
   final String path;
+  static const features = [
+    ('Real-Time EarthSync', '/realtime', Icons.update),
+    ('Satellite NDVI Map', '/ndvi', Icons.layers_outlined),
+    ('Farm Map', '/location', Icons.map_outlined),
+    ('Crops', '/crops', Icons.spa_outlined),
+    ('Crop Intelligence', '/crop-intelligence', Icons.menu_book_outlined),
+    ('Photos / Image Analysis', '/image-analysis', Icons.photo_camera_outlined),
+    ('Laboratory Reports', '/lab-reports', Icons.science_outlined),
+    ('Farmer Journal', '/season', Icons.history),
+    ('Rotation Comparison', '/rotations', Icons.compare_arrows),
+  ];
   static const destinations = [
     ('home', '/dashboard', Icons.grid_view_outlined),
     ('farm', '/field', Icons.grass_outlined),
@@ -47,6 +58,38 @@ class AppShell extends ConsumerWidget {
       builder: (context, box) {
         final wide = box.maxWidth >= 1000;
         return Scaffold(
+          appBar: wide
+              ? null
+              : AppBar(title: const Text('EarthSync menu'), toolbarHeight: 44),
+          drawer: wide
+              ? null
+              : Drawer(
+                  child: SafeArea(
+                    child: ListView(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Text(
+                            'EarthSync',
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        for (final feature in features)
+                          ListTile(
+                            leading: Icon(feature.$3),
+                            title: Text(feature.$1),
+                            onTap: () {
+                              Navigator.of(context).pop();
+                              context.go(feature.$2);
+                            },
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
           body: Row(
             children: [
               if (wide)
@@ -102,6 +145,15 @@ class AppShell extends ConsumerWidget {
                                 title: Text(UiCopy.text(context, d.$1)),
                                 onTap: () => context.go(d.$2),
                               ),
+                            ),
+                          const Divider(),
+                          for (final feature in features)
+                            ListTile(
+                              dense: true,
+                              leading: Icon(feature.$3),
+                              title: Text(feature.$1),
+                              selected: path == feature.$2,
+                              onTap: () => context.go(feature.$2),
                             ),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(20, 48, 20, 20),

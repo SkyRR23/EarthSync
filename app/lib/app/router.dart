@@ -1,5 +1,6 @@
 import '../features/companion/rotation_workspace.dart';
 import '../features/realtime/realtime_panel.dart';
+import '../features/map/ndvi_panel.dart';
 import '../features/companion/companion_screen.dart';
 import '../features/companion/crop_explorer.dart';
 import '../features/companion/farm_photos.dart';
@@ -30,6 +31,20 @@ GoRouter buildRouter() => GoRouter(
       builder: (_, state, child) =>
           AppShell(path: state.uri.path, child: child),
       routes: [
+        GoRoute(path: '/ndvi', builder: (_, _) => const NdviScreen()),
+        GoRoute(
+          path: '/crop-intelligence',
+          builder: (_, _) => const CropExplorer(),
+        ),
+        GoRoute(
+          path: '/image-analysis',
+          builder: (_, _) => const FarmRequired(child: FarmPhotosScreen()),
+        ),
+        GoRoute(
+          path: '/lab-reports',
+          builder: (_, _) =>
+              const FarmRequired(child: FarmPhotosScreen(initialKind: 'lab')),
+        ),
         GoRoute(
           path: '/realtime',
           builder: (_, s) => RealtimeScreen(

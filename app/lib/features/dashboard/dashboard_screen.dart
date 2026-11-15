@@ -204,6 +204,13 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     label: const Text(UiLabels.openFarmQuestionnaire),
                   ),
                 ],
+                const DemoNavigation(),
+                const SizedBox(height: 16),
+                RealtimePanel(
+                  key: ValueKey('realtime:$showingFarm:${farm?.id}'),
+                  compact: true,
+                  fieldOnly: showingFarm,
+                ),
                 ResponsivePair(
                   first: ActionCard(
                     title: tr('planning'),
@@ -220,11 +227,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     onTap: () =>
                         context.push('/assistant${_areaView ? '?area=1' : ''}'),
                   ),
-                ),
-                RealtimePanel(
-                  key: ValueKey('realtime:$showingFarm:${farm?.id}'),
-                  compact: true,
-                  fieldOnly: showingFarm,
                 ),
                 if (point == null) ...[
                   SectionCard(
@@ -321,4 +323,30 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       ),
     );
   }
+}
+
+class DemoNavigation extends StatelessWidget {
+  const DemoNavigation({super.key});
+  @override
+  Widget build(BuildContext context) => Wrap(
+    spacing: 10,
+    runSpacing: 10,
+    children: [
+      for (final item in const [
+        ('Real-time monitoring', '/realtime', Icons.update),
+        ('Satellite NDVI map', '/ndvi', Icons.layers_outlined),
+        ('Crop intelligence', '/crop-intelligence', Icons.spa_outlined),
+        ('Soil & laboratory reports', '/lab-reports', Icons.science_outlined),
+        ('Image analysis', '/image-analysis', Icons.photo_camera_outlined),
+        ('Farm explorer', '/location', Icons.map_outlined),
+        ('Rotation comparison', '/rotations', Icons.compare_arrows),
+        ('Farmer history', '/season', Icons.history),
+      ])
+        OutlinedButton.icon(
+          onPressed: () => context.push(item.$2),
+          icon: Icon(item.$3),
+          label: Text(item.$1),
+        ),
+    ],
+  );
 }

@@ -12,7 +12,8 @@ import 'companion_copy.dart';
 import 'soil_workflows.dart';
 
 class FarmPhotosScreen extends ConsumerStatefulWidget {
-  const FarmPhotosScreen({super.key});
+  const FarmPhotosScreen({super.key, this.initialKind = 'crop'});
+  final String initialKind;
   @override
   ConsumerState<FarmPhotosScreen> createState() => _FarmPhotosState();
 }
@@ -52,6 +53,7 @@ class _FarmPhotosState extends ConsumerState<FarmPhotosScreen> {
                   key: ValueKey(snapshot.farmId),
                   client: client,
                   farmId: snapshot.farmId,
+                  initialKind: widget.initialKind,
                 ),
               FilledButton.icon(
                 onPressed:

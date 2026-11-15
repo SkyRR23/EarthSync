@@ -14,7 +14,16 @@ class LocalProfileStore implements ProfileStore {
   Future<HomeProfile> load() async {
     final raw = (await SharedPreferences.getInstance()).getString(key);
     return raw == null
-        ? const HomeProfile()
+        ? const bool.fromEnvironment('EARTHSYNC_JUDGES_DEMO')
+              ? HomeProfile(
+                  onboarded: true,
+                  userLocation: ApproximateArea(
+                    point: GeoPoint(42.0308, -93.6319),
+                    label: 'Ames, Iowa · public demo reference',
+                    source: AreaSource.example,
+                  ),
+                )
+              : const HomeProfile()
         : HomeProfile.fromJson(jsonDecode(raw) as Map<String, dynamic>);
   }
 
