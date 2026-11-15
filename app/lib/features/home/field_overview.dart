@@ -31,6 +31,17 @@ class FieldTab extends ConsumerStatefulWidget {
 class _FieldTabState extends ConsumerState<FieldTab> {
   final _map = MapController();
   bool _plantHealth = false;
+  int? _shownTab;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // The map may get ready while this tab is hidden; nudge it each time
+    // the Field tab is opened so its tiles are drawn.
+    final tab = HomeTabs.of(context)?.current;
+    if (tab == 2 && _shownTab != 2) nudgeMap(_map);
+    _shownTab = tab;
+  }
 
   void _showFarm(FarmBoundary? farm, LatLng pin) {
     try {
