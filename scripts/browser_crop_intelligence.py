@@ -147,7 +147,7 @@ def main():
                 click("button", "Analyze image")
             assert analysis.value.json()["status"] == "vision_unavailable"
             steps.append("Actual image upload and honest disabled-vision fallback")
-            click("button", re.compile("Crop / Leaf"))
+            click("button", "Crop / Leaf")
             page.get_by_text("Soil Laboratory Report", exact=True).last.click(force=True)
             with page.expect_response(lambda r: r.url.endswith("/lab-extraction")) as extraction:
                 click("button", "Analyze image")
