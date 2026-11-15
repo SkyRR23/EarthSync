@@ -22,6 +22,7 @@ List<FarmTask> watchTasks(WidgetRef ref, DateTime now) => buildTasks(
   marks: ref.watch(taskMarksProvider),
   now: now,
   canTakePhotos: ref.watch(photoStoreProvider) != null,
+  et0: ref.watch(et0Provider).value,
 );
 
 /// Short task name for "Next check".

@@ -27,6 +27,25 @@ PAST_YEARS = 10
 RAIN = "PRECTOTCORR"
 WET = "GWETROOT"
 UNITS = {RAIN: "mm/day", WET: "1"}
+# Inputs for the team engine's FAO-56 reference ET0 (engine v03::water).
+ET0_UNITS = {
+    "T2M_MIN": "C",
+    "T2M_MAX": "C",
+    "T2MDEW": "C",
+    "WS2M": "m/s",
+    "PS": "kPa",
+    "ALLSKY_SFC_SW_DWN": "MJ/m^2/day",
+    RAIN: "mm/day",
+}
+ET0_FIELDS = {
+    "T2M_MIN": "tmin_c",
+    "T2M_MAX": "tmax_c",
+    "T2MDEW": "dewpoint_c",
+    "WS2M": "wind_2m_m_s",
+    "PS": "pressure_kpa",
+    "ALLSKY_SFC_SW_DWN": "solar_mj_m2_day",
+    RAIN: "rainfall_mm",
+}
 
 router = APIRouter()
 
@@ -35,7 +54,12 @@ class RecentProvider(Protocol):
     def today(self) -> date: ...
 
     async def daily(
-        self, latitude: float, longitude: float, start: date, end: date
+        self,
+        latitude: float,
+        longitude: float,
+        start: date,
+        end: date,
+        parameters: str = f"{RAIN},{WET}",
     ) -> dict: ...
 
 
@@ -48,9 +72,9 @@ class PowerRecentProvider:
     def today(self) -> date:
         return datetime.now(timezone.utc).date()
 
-    async def daily(self, latitude, longitude, start, end):
+    async def daily(self, latitude, longitude, start, end, parameters=f"{RAIN},{WET}"):
         params = {
-            "parameters": f"{RAIN},{WET}",
+            "parameters": parameters,
             "community": "AG",
             "latitude": latitude,
             "longitude": longitude,
@@ -116,6 +140,47 @@ def _parse(payload: dict) -> tuple[dict, dict, list]:
             out[key] = series
         return out[RAIN], out[WET], list(header.get("sources") or [])
     except (KeyError, TypeError, AttributeError, ValueError) as exc:
+        raise ProviderError() from exc
+
+
+def et0_request(payload: dict, latitude: float, as_of: date) -> dict:
+    """The engine's ET0 request for the 7 days ending [as_of]: NASA values
+    as they are, missing days as null (the engine then withholds ET0 for that
+    day instead of guessing)."""
+    try:
+        units = {k: payload["parameters"][k]["units"] for k in ET0_UNITS}
+        if units != ET0_UNITS:
+            raise ProviderError("UPSTREAM_UNITS_CHANGED")
+        fill = payload["header"]["fill_value"]
+        if payload["header"].get("time_standard") != "LST":
+            raise ProviderError("UPSTREAM_TIME_STANDARD_CHANGED")
+        values = payload["properties"]["parameter"]
+        coords = (payload.get("geometry") or {}).get("coordinates") or []
+        elevation = coords[2] if len(coords) > 2 else None
+        if type(elevation) not in (int, float) or not math.isfinite(elevation):
+            elevation = None
+        days = []
+        for i in range(6, -1, -1):
+            d = as_of - timedelta(days=i)
+            day = {"date": {"year": d.year, "month": d.month, "day": d.day}}
+            for key, field in ET0_FIELDS.items():
+                v = values[key].get(d.strftime("%Y%m%d"))
+                ok = (
+                    type(v) in (int, float)
+                    and math.isfinite(v)
+                    and v != fill
+                    and (key != RAIN or v >= 0)
+                )
+                day[field] = v if ok else None
+            days.append(day)
+        return {
+            "method": "fao56-daily-pm.v1",
+            "latitude": latitude,
+            "elevation_m": elevation,
+            "day_basis": "NASA_POWER_LST",
+            "days": days,
+        }
+    except (KeyError, TypeError, AttributeError) as exc:
         raise ProviderError() from exc
 
 
@@ -255,9 +320,28 @@ async def recent(
             latitude, longitude, start, today - timedelta(days=1)
         )
         rain, wet, sources = _parse(payload)
+        summary = summarize(rain, wet, today)
+        et0 = None
+        if summary["as_of"]:
+            # Extra: inputs for the engine's ET0. Never fails the answer.
+            try:
+                et0 = et0_request(
+                    await provider.daily(
+                        latitude,
+                        longitude,
+                        today - timedelta(days=21),
+                        today - timedelta(days=1),
+                        parameters=",".join(ET0_UNITS),
+                    ),
+                    latitude,
+                    date.fromisoformat(summary["as_of"]),
+                )
+            except ProviderError:
+                et0 = None
         return {
             "status": "success",
-            **summarize(rain, wet, today),
+            **summary,
+            "et0_request": et0,
             "provenance": {
                 "provider": "NASA POWER",
                 "product": "Daily point: PRECTOTCORR (rain), GWETROOT (root-zone soil wetness, 0-1)",

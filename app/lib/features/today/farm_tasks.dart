@@ -56,6 +56,7 @@ List<FarmTask> buildTasks({
   required Map<String, String> marks,
   required DateTime now,
   bool canTakePhotos = true,
+  Et0? et0,
 }) {
   final today = dayOf(now);
   final todo = <FarmTask>[], done = <FarmTask>[];
@@ -110,7 +111,7 @@ List<FarmTask> buildTasks({
         ),
       );
     } else {
-      add(_waterTask(draft, recent, since, source));
+      add(_waterTask(draft, recent, since, source, et0));
     }
   }
 
@@ -184,6 +185,7 @@ FarmTask _waterTask(
   RecentConditions? recent,
   int? since,
   String? source,
+  Et0? et0,
 ) {
   final facts = <String>[];
   var verdict = WaterVerdict.check;
@@ -191,8 +193,22 @@ FarmTask _waterTask(
     facts.add(S.waterNoData);
   } else {
     final rain = recent.rainVsPast, wet = recent.wetnessVsPast;
-    final wetter = rain == Compared.higher || wet == Compared.higher;
-    final drier = rain == Compared.lower || wet == Compared.lower;
+    // Rain against the engine's grass water loss (FAO-56), only when the
+    // engine had every day; a partial week is shown but not used.
+    final loss = et0?.totalMm, mm7 = recent.rain7dMm;
+    final balance = loss == null || mm7 == null
+        ? null
+        : mm7 >= loss
+        ? Compared.higher
+        : Compared.lower;
+    final wetter =
+        rain == Compared.higher ||
+        wet == Compared.higher ||
+        balance == Compared.higher;
+    final drier =
+        rain == Compared.lower ||
+        wet == Compared.lower ||
+        balance == Compared.lower;
     if (wetter && !drier) verdict = WaterVerdict.canWait;
     if (drier && !wetter) verdict = WaterVerdict.mayNeed;
     final mm = recent.rain7dMm;
@@ -213,6 +229,19 @@ FarmTask _waterTask(
       Compared.unknown => null,
     };
     if (w != null) facts.add(w);
+    if (loss != null) {
+      facts.add(
+        S.et0Week(loss.round(), switch (balance) {
+          Compared.higher => S.lessThanRain,
+          Compared.lower => S.moreThanRain,
+          _ => null,
+        }),
+      );
+    } else if (et0?.partialMm != null) {
+      facts.add(
+        S.et0Partial(et0!.partialMm!.round(), et0.usableDays, et0.expectedDays),
+      );
+    }
   }
   final soil = soilClassFromName(draft.soilTexture)?.engine6;
   if (soil == 'sand' || soil == 'sandy_loam') facts.add(S.sandyDries);
@@ -228,6 +257,6 @@ FarmTask _waterTask(
       WaterVerdict.check => S.waterCheck,
     },
     facts: facts,
-    source: source,
+    source: source == null || et0 == null ? source : '$source ${S.et0Source}',
   );
 }

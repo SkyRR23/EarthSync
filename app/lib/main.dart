@@ -15,6 +15,8 @@ import 'firebase_options.dart';
 import 'design/theme.dart';
 import 'state/account.dart';
 import 'state/providers.dart';
+import 'state/today.dart';
+import 'src/rust/api/bridge.dart' as rust;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,6 +53,10 @@ Future<void> main() async {
         authProvider.overrideWithValue(auth),
         cloudSyncProvider.overrideWithValue(cloud),
         photoStoreProvider.overrideWithValue(photos),
+        if (kEngine == 'rust')
+          et0EngineProvider.overrideWithValue(
+            (json) => rust.referenceEt0Json(requestJson: json),
+          ),
       ],
       child: FieldShiftApp(setupDone: setupDone),
     ),

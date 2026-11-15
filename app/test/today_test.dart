@@ -136,6 +136,43 @@ void main() {
     });
   });
 
+  group('engine ET0 (FAO-56 grass water loss) in the water advice', () {
+    List<FarmTask> withEt0(Et0 e, {String rain = 'usual'}) => buildTasks(
+      draft: farm,
+      recent: recent(rain: rain),
+      waterLog: const [],
+      notes: const [],
+      marks: const {},
+      now: now,
+      et0: e,
+    );
+
+    test('less water lost than rain fell: counts toward "can wait"', () {
+      final w = water(
+        withEt0(const Et0(totalMm: 20.4, usableDays: 7, expectedDays: 7)),
+      );
+      expect(w.facts, contains(S.et0Week(20, S.lessThanRain)));
+      expect(w.verdict, WaterVerdict.canWait);
+      expect(w.source, endsWith(S.et0Source));
+    });
+
+    test('more water lost than rain fell: counts toward "may need"', () {
+      final w = water(
+        withEt0(const Et0(totalMm: 80, usableDays: 7, expectedDays: 7)),
+      );
+      expect(w.facts, contains(S.et0Week(80, S.moreThanRain)));
+      expect(w.verdict, WaterVerdict.mayNeed);
+    });
+
+    test('a partial week is shown as partial and not used to decide', () {
+      final w = water(
+        withEt0(const Et0(partialMm: 18.6, usableDays: 5, expectedDays: 7)),
+      );
+      expect(w.facts, contains(S.et0Partial(19, 5, 7)));
+      expect(w.verdict, WaterVerdict.check);
+    });
+  });
+
   group('heavy rain', () {
     test('unusual rain + water stays: first task, with the facts', () {
       final t = tasks(

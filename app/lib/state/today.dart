@@ -296,3 +296,43 @@ class ForecastNotifier extends Notifier<ForecastState> {
 final forecastProvider = NotifierProvider<ForecastNotifier, ForecastState>(
   ForecastNotifier.new,
 );
+
+/// Reference water loss (FAO-56 grass ET0) from the team engine. Not a crop
+/// need: it says how much water a short grass field would lose to sun and
+/// wind, and the engine leaves out any day with missing NASA inputs.
+class Et0 {
+  const Et0({
+    this.totalMm,
+    this.partialMm,
+    required this.usableDays,
+    required this.expectedDays,
+  });
+  final double? totalMm, partialMm;
+  final int usableDays, expectedDays;
+}
+
+/// Runs the engine's `reference_et0_json` (Rust, on the phone). Null where
+/// the native engine is not loaded (web build, widget tests): ET0 is then
+/// simply not shown.
+final et0EngineProvider = Provider<Future<String> Function(String)?>(
+  (ref) => null,
+);
+
+final et0Provider = FutureProvider<Et0?>((ref) async {
+  final request = ref.watch(recentProvider.select((s) => s.data?.et0Request));
+  final run = ref.watch(et0EngineProvider);
+  if (request == null || run == null) return null;
+  try {
+    final out = jsonDecode(await run(jsonEncode(request))) as Map;
+    if (out['status'] != 'success') return null;
+    final d = (out['data'] as Map).cast<String, dynamic>();
+    return Et0(
+      totalMm: (d['et0_total_mm'] as num?)?.toDouble(),
+      partialMm: (d['et0_partial_sum_mm'] as num?)?.toDouble(),
+      usableDays: (d['et0_usable_days'] as num?)?.toInt() ?? 0,
+      expectedDays: (d['expected_days'] as num?)?.toInt() ?? 0,
+    );
+  } catch (_) {
+    return null;
+  }
+});

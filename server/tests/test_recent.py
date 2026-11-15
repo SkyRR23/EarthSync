@@ -30,16 +30,27 @@ def payload(rain_fn, wet_fn, today=TODAY, units=None, fill=-999.0):
     }
 
 
+ET0_REAL = json.loads(
+    (
+        Path(__file__).parent / "fixtures/nasa_power_et0_inputs_yangon_20261115.json"
+    ).read_text()
+)
+
+
 class Fake:
-    def __init__(self, data, today=TODAY):
-        self.data, self._today, self.calls = data, today, 0
+    def __init__(self, data, today=TODAY, et0=ET0_REAL):
+        self.data, self._today, self.calls, self.et0 = data, today, 0, et0
 
     def today(self):
         return self._today
 
-    async def daily(self, latitude, longitude, start, end):
-        self.calls += 1
+    async def daily(self, latitude, longitude, start, end, parameters=None):
         assert end == self._today - timedelta(days=1)
+        if parameters and "T2M_MIN" in parameters:
+            if isinstance(self.et0, Exception):
+                raise self.et0
+            return self.et0
+        self.calls += 1
         assert start <= date(self._today.year - 10, 10, 6)  # 10 years + margin
         return self.data
 
@@ -174,3 +185,43 @@ def test_real_yangon_capture():
     assert body["heaviest_day"]["rain_mm"] == 16.35
     assert body["rain_7d_vs_past"] in {"less", "usual", "more"}
     assert body["root_wetness_vs_past"] in {"drier", "usual", "wetter"}
+
+
+def test_et0_request_for_the_engine_from_real_nasa_days():
+    """The 7 days of the rain week, exactly as the engine's v03::water wants."""
+    data = json.loads(
+        (
+            Path(__file__).parent / "fixtures/nasa_power_recent_yangon_20261115.json"
+        ).read_text()
+    )
+    req = get(data)[0].json()["et0_request"]
+    assert req["method"] == "fao56-daily-pm.v1"
+    assert req["day_basis"] == "NASA_POWER_LST"
+    assert req["latitude"] == 16.85
+    assert req["elevation_m"] == 10.91
+    days = req["days"]
+    assert [d["date"] for d in (days[0], days[-1])] == [
+        {"year": 2026, "month": 11, "day": 5},
+        {"year": 2026, "month": 11, "day": 11},
+    ]
+    assert days[0] == {
+        "date": {"year": 2026, "month": 11, "day": 5},
+        "tmin_c": 24.94,
+        "tmax_c": 33.13,
+        "dewpoint_c": 24.72,
+        "wind_2m_m_s": 0.8,
+        "pressure_kpa": 101.03,
+        "solar_mj_m2_day": 14.95,
+        "rainfall_mm": 4.95,
+    }
+    assert days[-1]["solar_mj_m2_day"] is None  # NASA sunlight not in yet
+
+
+def test_et0_inputs_failing_never_fails_the_answer():
+    from earthsync.power import ProviderError
+
+    fake = Fake(payload(lambda d: 1.0, lambda d: 0.5), et0=ProviderError())
+    with TestClient(create_app(recent_provider=fake)) as c:
+        body = c.get(URL).json()
+    assert body["status"] == "success"
+    assert body["et0_request"] is None

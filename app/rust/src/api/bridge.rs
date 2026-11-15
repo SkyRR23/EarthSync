@@ -181,3 +181,10 @@ mod tests {
         );
     }
 }
+
+/// FAO-56 daily grass reference ET0 from NASA POWER days, computed by the
+/// team engine (`v03::water`). Returns the engine's JSON unchanged. It is a
+/// reference value for short grass: no crop rule and no irrigation advice.
+pub fn reference_et0_json(request_json: String) -> String {
+    field_shift_engine::v03::water::calculate_json(&request_json)
+}

@@ -455,4 +455,12 @@ abstract final class S {
   static const phoneMode = 'Phone';
   static const screenColoursNote =
       'Light is easiest to read outside. Phone follows your phone setting.';
+  // Engine ET0 (FAO-56 grass reference) in the water task
+  static String et0Week(int mm, String? vsRain) =>
+      'A grass field lost about $mm mm of water to sun and wind in these 7 days${vsRain == null ? '' : ', $vsRain'}.';
+  static const lessThanRain = 'less than the rain';
+  static const moreThanRain = 'more than the rain';
+  static String et0Partial(int mm, int days, int of) =>
+      'A grass field lost about $mm mm of water to sun and wind in $days of these $of days (NASA sunlight data for the rest is not in yet).';
+  static const et0Source = 'Water loss: FAO-56, team engine.';
 }

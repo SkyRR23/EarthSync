@@ -28,6 +28,7 @@ class RecentConditions {
     this.heavierThanPercent,
     this.heaviestUnusual = false,
     this.pastYears = 10,
+    this.et0Request,
   });
 
   /// Newest day NASA has published (a few days behind today).
@@ -42,6 +43,9 @@ class RecentConditions {
   final int? heavierThanPercent;
   final bool heaviestUnusual;
   final int pastYears;
+
+  /// NASA days ready for the team engine's FAO-56 ET0 (`v03::water`).
+  final Map<String, dynamic>? et0Request;
 
   factory RecentConditions.fromJson(
     Map<String, dynamic> j, {
@@ -60,6 +64,7 @@ class RecentConditions {
       heavierThanPercent: (h?['heavier_than_percent'] as num?)?.toInt(),
       heaviestUnusual: h?['unusual'] == true,
       pastYears: (j['past_years'] as num?)?.toInt() ?? 10,
+      et0Request: (j['et0_request'] as Map?)?.cast<String, dynamic>(),
     );
   }
 }

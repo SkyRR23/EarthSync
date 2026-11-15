@@ -15,6 +15,7 @@ import json
 import os
 from typing import Literal, Optional, Protocol
 
+import httpx
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, ValidationError, field_validator
@@ -278,8 +279,120 @@ def _provider_error(e: Exception) -> Exception:
     return e
 
 
+GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
+# Groq's image model (a preview model on Groq, Nov 2026); override with
+# SOIL_GROQ_MODEL if Groq renames it.
+GROQ_MODEL = os.environ.get("SOIL_GROQ_MODEL", "qwen/qwen3.8-27b")
+JSON_RULES = (
+    "\n\nAnswer with ONE JSON object only, no other text, with exactly these "
+    "keys: soil_class (one of: " + ", ".join(SOIL_CLASSES) + ", unknown), "
+    "confidence (low, medium or high), photo_usable (true or false), "
+    "signs_seen (a list using only: " + ", ".join(SIGNS) + "), "
+    "reason (one or two short sentences)."
+)
+
+
+def _answers_text(req: SoilRequest, hand: Optional[str]) -> str:
+    a = req.answers
+    return (
+        f"Photos: {len(req.photos)} (first: soil on the ground; second: "
+        "squeezed handful).\n"
+        f"Ribbon test: {RIBBON_TEXT[a.ribbon]}.\n"
+        f"Feel when rubbed wet: {a.feel}.\n"
+        f"Signs the farmer reported: {', '.join(a.signs) or 'none'}.\n"
+        f"Hand-texture key result from these answers: {hand or 'not decided'}."
+    )
+
+
+def _json_object(text: str) -> dict:
+    """The JSON object in a model reply (drops any thinking text around it)."""
+    if "</think>" in text:
+        text = text.rsplit("</think>", 1)[1]
+    start, end = text.find("{"), text.rfind("}")
+    if start < 0 or end < start:
+        raise ValueError("no JSON object")
+    data = json.loads(text[start : end + 1])
+    if not isinstance(data, dict):
+        raise ValueError("not an object")
+    return data
+
+
+class GroqSoilEstimator:
+    """Groq vision model (OpenAI-compatible API). The key comes only from the
+    GROQ_API_KEY environment variable (Secret Manager on Cloud Run)."""
+
+    def __init__(self, client: Optional[httpx.AsyncClient] = None):
+        self._client = client
+        self.model = GROQ_MODEL
+
+    async def estimate(self, req: SoilRequest, hand: Optional[str]) -> SoilEstimate:
+        key = os.environ.get("GROQ_API_KEY")
+        if not key:
+            raise NotConfigured()
+        content: list[dict] = [
+            {
+                "type": "image_url",
+                "image_url": {
+                    "url": f"data:{_media_type(_decode(p))};base64,{p}",
+                },
+            }
+            for p in req.photos
+        ]
+        content.append({"type": "text", "text": _answers_text(req, hand)})
+        body = {
+            "model": self.model,
+            "temperature": 0.2,
+            "max_completion_tokens": 2048,
+            "response_format": {"type": "json_object"},
+            "messages": [
+                {"role": "system", "content": SYSTEM + JSON_RULES},
+                {"role": "user", "content": content},
+            ],
+        }
+        client = self._client or httpx.AsyncClient(
+            timeout=httpx.Timeout(60, connect=10)
+        )
+        try:
+            r = await client.post(
+                GROQ_URL, headers={"Authorization": f"Bearer {key}"}, json=body
+            )
+        except (httpx.TimeoutException, httpx.TransportError) as e:
+            raise EstimateFailed("ai_unreachable", True) from e
+        finally:
+            if self._client is None:
+                await client.aclose()
+        if r.status_code == 429:
+            raise EstimateFailed("ai_busy", True)
+        if r.status_code in (401, 403):
+            raise EstimateFailed("ai_key_rejected", False)
+        if r.status_code >= 500:
+            raise EstimateFailed("ai_error", True)
+        if r.status_code != 200:
+            raise EstimateFailed("ai_error", False)
+        try:
+            choice = r.json()["choices"][0]
+            if choice.get("finish_reason") == "length":
+                raise EstimateFailed("ai_incomplete", True)
+            data = _json_object(choice["message"]["content"] or "")
+            # Keep only signs from our list; the class itself must be exact.
+            data["signs_seen"] = [s for s in data.get("signs_seen") or [] if s in SIGNS]
+            return SoilEstimate.model_validate(data)
+        except EstimateFailed:
+            raise
+        except (KeyError, IndexError, TypeError, ValueError, ValidationError) as e:
+            raise EstimateFailed("ai_bad_answer", True) from e
+
+
 router = APIRouter()
-_default_estimator = ClaudeSoilEstimator()
+_GROQ = GroqSoilEstimator()
+_CLAUDE = ClaudeSoilEstimator()
+
+
+def _default_estimator() -> SoilEstimator:
+    """Groq when its key is set, else Claude when its key is set; with
+    neither, the estimator answers not_configured and the app uses the hand
+    test."""
+    return _GROQ if os.environ.get("GROQ_API_KEY") else _CLAUDE
 
 
 def _error(status: int, code: str, message: str, retryable: bool) -> JSONResponse:
@@ -303,7 +416,7 @@ async def soil_estimate(request: Request):
 
     hand = hand_key(body.answers.ribbon, body.answers.feel)
     estimator: SoilEstimator = (
-        getattr(request.app.state, "soil_estimator", None) or _default_estimator
+        getattr(request.app.state, "soil_estimator", None) or _default_estimator()
     )
     if not body.photos:
         # Nothing for the AI to look at: the hand test is the answer.
@@ -334,7 +447,7 @@ async def soil_estimate(request: Request):
     return {
         "status": "success",
         "source": "ai_estimate",
-        "model": MODEL,
+        "model": getattr(estimator, "model", MODEL),
         **est.model_dump(),
         "hand_test": hand,
     }
