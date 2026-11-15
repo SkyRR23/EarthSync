@@ -569,6 +569,7 @@ class _LabValues extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
+      if (data['status'] != null) Text('Extraction: ${data['status']}'),
       Text(
         'Laboratory: ${data['laboratory'] ?? 'Not reported'}\nSample: ${data['sample_id'] ?? 'Not reported'}\nSample date: ${data['sample_date'] ?? 'Not reported'}',
       ),
