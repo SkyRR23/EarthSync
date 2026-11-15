@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/foundation.dart';
 import '../features/home/farmer_start.dart';
+import '../submission/soil_reference_page.dart';
 import '../evidence/app/router.dart';
 import '../submission/science_hub.dart';
 import '../submission/soil_map_page.dart';
@@ -34,7 +35,7 @@ GoRouter buildRouter({bool setupDone = false, bool introductionDone = true}) => 
     GoRoute(path: '/intro', builder: (_, _) => const FarmerIntroduction()),
     ...buildEvidenceRoutes(),
     GoRoute(path: '/science', builder: (_, _) => const ScienceHub()),
-    GoRoute(path: '/soil-map', builder: (_, _) => const SoilMapPage()),
+    GoRoute(path: '/soil-map', builder: (_, _) => kIsWeb ? const SoilMapPage() : const SoilReferencePage()),
     GoRoute(
       path: '/rotation-plans',
       builder: (_, _) => const RotationPlansPage(),
