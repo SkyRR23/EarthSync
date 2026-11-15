@@ -1,5 +1,12 @@
 # Farmer Experience 2.0 verification
 
+For the combined submission, the final branded Flutter Web release compiled
+successfully with Flutter 3.44.0, and the offline packager prepared 57 public
+static assets. Python imports/bytecode compilation succeeded. Further local
+test suites and interactive/device acceptance were deferred at the user's
+explicit request. The Android artifact and exact source revision are recorded
+by the `Submission APK` workflow and the final submission handoff.
+
 Source base: `190f4c527d427c6e009c04c9115e0cb49988801a`. This report records the independently tested local-first implementation before the user's final submission integration. The final submission must retain the friend's PR #32 frontend and add the historical timeline; its combined checks are reported separately.
 
 | Check | Observed result |

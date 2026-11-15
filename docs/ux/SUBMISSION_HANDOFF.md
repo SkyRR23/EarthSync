@@ -45,7 +45,7 @@ Android reminder delivery, permission behavior on a phone, background behavior, 
 
 The `Submission APK` workflow builds a release-mode, debug-key-signed APK for sideload testing. It is not a store-signed release. It includes the source SHA and SHA-256 digest in the downloadable artifact. Its application ID matches the existing team app; preserve/export existing phone data before installation, and do not uninstall a differently signed existing build without backing it up.
 
-The retained scientific feature code and domain tests live under `app/lib/evidence` and `app/test/evidence`. They use one root router and the primary generated Rust bridge. Four obsolete whole-app navigation tests from the replaced shell are superseded by the team shell tests; the retained engine/model/evidence tests are not removed. The Rust scientific engine is unchanged; the primary bridge includes the team's existing ET0 method.
+The retained scientific feature code and domain tests live under `app/lib/evidence` and `app/test/evidence`. They use one root router and the primary generated Rust bridge. Six obsolete whole-app/onboarding navigation tests from the replaced shell are superseded by the team's shell, setup and question-flow tests; the retained engine/model/evidence tests remain. The Rust scientific engine is unchanged; the primary bridge includes the team's existing ET0 method. The SDK localization test dependency pins `intl` to compatible 0.20.2; it introduces no new scientific calculations.
 
 All 60 blocked crop-rule candidates remain blocked. There are no new suitability thresholds, automatic fertilizer/pesticide prescriptions, yield or health scores, or synthetic outage fallbacks.
 
@@ -59,3 +59,25 @@ All 60 blocked crop-rule candidates remain blocked. There are no new suitability
 6. **4:30–5:00** Disconnect and reopen saved tasks/plans/observations. Show original evidence dates and Sources & data. Export the local records if needed.
 
 The demonstration is a walkthrough script, not a claim that device acceptance was run.
+
+## Rebuilding and installing
+
+Use the repository's pinned Flutter 3.44.0/Dart 3.12, JDK 17 and Android SDK 36
+with NDK 28.2.13676358. From `app`:
+
+```sh
+flutter pub get --enforce-lockfile
+flutter build apk --release --dart-define-from-file=config/cloud.json
+```
+
+The output is `app/build/app/outputs/flutter-apk/app-release.apk`. The workflow
+packages that file as `EarthSync-submission.apk` with source and checksum files.
+For a phone connected with USB debugging, use `adb install -r <apk-path>`.
+If Android reports a signature mismatch, export the existing app's data before
+making any decision to remove it. The final APK uses the existing team ID and
+the build environment's debug signing certificate.
+
+Use `./start-earthsync.ps1` on Windows or `./start-earthsync.sh` on macOS/Linux
+for the desktop historical demo. This builds the actual backend and Rust tools,
+selects available local ports, and keeps its databases in a checkout-specific
+sibling demo-state directory. The launcher does not deploy the hosted service.

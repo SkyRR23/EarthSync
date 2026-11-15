@@ -85,10 +85,11 @@ class _RotationPlansState extends ConsumerState<RotationPlansPage> {
         ],
       }, queue: true);
       ref.read(localRevisionProvider.notifier).changed();
-      if (mounted)
+      if (mounted) {
         setState(
           () => _message = 'Your rotation decision is saved on this device.',
         );
+      }
     } catch (error) {
       if (mounted) setState(() => _message = 'Could not save: $error');
     } finally {

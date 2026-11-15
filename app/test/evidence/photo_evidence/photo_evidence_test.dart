@@ -10,8 +10,9 @@ import 'package:http/testing.dart';
 
 const photoId = 'b20cb742-ddcd-48f8-b457-67b197e90cb2';
 const token = 'synthetic-workspace-test-token-12345678';
-Uint8List fixture() =>
-    File('test/photo_evidence/fixtures/synthetic.png').readAsBytesSync();
+Uint8List fixture() => File(
+  'test/evidence/photo_evidence/fixtures/synthetic.png',
+).readAsBytesSync();
 
 Map<String, dynamic> storedJson({String? farmId, String? caption}) => {
   'schema_version': 'evidence.v1',
@@ -116,7 +117,7 @@ void main() {
     'preflight dimensions are bounded without web-unsupported descriptor getters',
     () {
       final png = File(
-        'test/photo_evidence/fixtures/synthetic.png',
+        'test/evidence/photo_evidence/fixtures/synthetic.png',
       ).readAsBytesSync();
       final dimensions = encodedPhotoDimensions(png, png: true);
       expect(dimensions.$1, greaterThan(0));
@@ -194,7 +195,7 @@ void main() {
     () async {
       final gps = await readConsentedGps(
         File(
-          'test/photo_evidence/fixtures/synthetic_gps.jpg',
+          'test/evidence/photo_evidence/fixtures/synthetic_gps.jpg',
         ).readAsBytesSync(),
       );
       expect(gps?.latitude, closeTo(-33.9, 0.00001));

@@ -1,4 +1,9 @@
-# Integration handoff
+# Predecessor integration handoff (archived)
+
+This file records the earlier independent worktree before the user selected
+PR #32 as the primary frontend and authorized final main integration. The
+[combined submission handoff](SUBMISSION_HANDOFF.md) supersedes its branch,
+navigation, integration-status and authorization descriptions below.
 
 Base: `190f4c527d427c6e009c04c9115e0cb49988801a`.
 Branch: `feat/earthsync-local-farmer-experience-v2`.

@@ -193,6 +193,7 @@ def create_app(
                 "daily_coverage": "complete",
             },
         }
+
     # Field Shift photo soil check (see soil.py); injectable for tests.
     app.state.soil_estimator = soil_estimator
     app.include_router(soil_router)

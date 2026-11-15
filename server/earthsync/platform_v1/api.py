@@ -285,13 +285,20 @@ def create_app(
     app.state.ndvi = ndvi
     from .datasets import DatasetRegistry
 
-    datasets = DatasetRegistry(store, os.getenv("EARTHSYNC_DATASET_ROOT", str(store.path.parent / "datasets")))
+    datasets = DatasetRegistry(
+        store, os.getenv("EARTHSYNC_DATASET_ROOT", str(store.path.parent / "datasets"))
+    )
     datasets.bootstrap()
 
     @app.get(PREFIX + "/datasets")
     def dataset_registry():
-        return {"schema_version": "earthsync.dataset-registry.v1", "datasets": datasets.records(),
-                "blocked_crop_rule_count": 60, "approved_executable_crop_rules": 0}
+        return {
+            "schema_version": "earthsync.dataset-registry.v1",
+            "datasets": datasets.records(),
+            "blocked_crop_rule_count": 60,
+            "approved_executable_crop_rules": 0,
+        }
+
     if allowed_origins:
         app.add_middleware(
             CORSMiddleware,
