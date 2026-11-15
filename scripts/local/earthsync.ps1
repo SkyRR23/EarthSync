@@ -10,6 +10,15 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $repo = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\..'))
+$earthdataCredential = Join-Path $repo '.earthsync-runtime\earthdata-token.xml'
+if ($Action -in @('start', 'test') -and -not $env:EARTHDATA_TOKEN -and (Test-Path -LiteralPath $earthdataCredential)) {
+    try {
+        $credential = Import-Clixml -LiteralPath $earthdataCredential
+        $env:EARTHDATA_TOKEN = $credential.GetNetworkCredential().Password
+    } catch {
+        throw 'Cannot unlock the local Earthdata credential. Use the Windows account that saved it, or set EARTHDATA_TOKEN for this session.'
+    }
+}
 $venvPython = Join-Path $repo '.venv\Scripts\python.exe'
 $pythonExe = $null
 if (Test-Path -LiteralPath $venvPython) { $pythonExe = $venvPython }

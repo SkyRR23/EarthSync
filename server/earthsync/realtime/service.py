@@ -136,6 +136,7 @@ class Realtime:
         self.lock = asyncio.Lock()
         self.task = None
         self.inflight = {}
+        self.auth_retried = set()
         self.wake = asyncio.Event()
         self.running = False
 
@@ -236,8 +237,19 @@ class Realtime:
             "last_success_at": None,
         }
         epoch = self.clock()
-        if state.get("next_check", 0) > epoch:
+        retry_auth = (
+            source in {"imerg", "smap", "hls_ndvi"}
+            and bool(os.getenv("EARTHDATA_TOKEN"))
+            and state.get("error")
+            in {"AUTHENTICATION_REQUIRED", "AUTHORIZATION_DENIED"}
+            and key not in self.auth_retried
+        )
+        if state.get("next_check", 0) > epoch and not retry_auth:
             return
+        if retry_auth:
+            # Newly configured credentials get one attempt per source/run.
+            # Rejected credentials still retain the ordinary provider backoff.
+            self.auth_retried.add(key)
         now = datetime.fromtimestamp(epoch, timezone.utc)
         location = self.locations[location_id]
         if (source.startswith("nws_") and location["country"] != "US") or (

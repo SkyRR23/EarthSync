@@ -152,6 +152,57 @@ def test_iowa_timezone_dst():
 
 
 @pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "configured,error,expected",
+    [
+        (True, "AUTHENTICATION_REQUIRED", 1),
+        (False, "AUTHENTICATION_REQUIRED", 0),
+        (True, "AUTHORIZATION_DENIED", 1),
+        (True, "PROVIDER_OUTAGE", 0),
+    ],
+)
+async def test_new_credentials_retry_cached_auth_failure_once(
+    tmp_path, monkeypatch, configured, error, expected
+):
+    if configured:
+        monkeypatch.setenv("EARTHDATA_TOKEN", "SYNTHETIC_TEST_TOKEN")
+    else:
+        monkeypatch.delenv("EARTHDATA_TOKEN", raising=False)
+    async with httpx.AsyncClient(
+        transport=httpx.MockTransport(fixture_response)
+    ) as client:
+        service = Realtime(
+            Store(tmp_path), client=client, clock=lambda: NOW.timestamp()
+        )
+        calls = []
+
+        class RejectedCredentials:
+            interval = 900
+
+            async def fetch(self, location, old, now):
+                calls.append(location)
+                raise SourceError("AUTHENTICATION_REQUIRED")
+
+        service.adapters["imerg"] = RejectedCredentials()
+        original = {"classification": "SYNTHETIC TEST", "observed_at": iso(-3600)}
+        key = "source:ames:imerg"
+        service.repository.put(
+            key,
+            {
+                "data": original,
+                "error": error,
+                "failures": 2,
+                "last_success_at": iso(-3600),
+                "next_check": NOW.timestamp() + 7200,
+            },
+        )
+        await service.refresh("ames", "imerg")
+        await service.refresh("ames", "imerg")
+        assert len(calls) == expected
+        assert service.repository.get(key)["data"] == original
+
+
+@pytest.mark.asyncio
 async def test_conditional_get_and_provider_ttl(repository):
     epoch = [NOW.timestamp()]
     calls = []
