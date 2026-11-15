@@ -16,7 +16,7 @@ The source lives in a new isolated `earthsync-submission` worktree. The original
 
 The teammate subsequently published `c630ea4695df0f92bdf2f6fe5491060064a1cc45`, merging current main into their branch while retaining the same primary app. That commit is also included. Its dependency and soil-test naming fixes are retained; the added scientific feature namespace, reminders, routes and source links remain intact.
 
-The project owner's supplied shield/leaf logo is used unchanged in onboarding, Home, the Android launcher and Web branding.
+The project owner's supplied shield/leaf artwork appears in onboarding, Home, the Android launcher and Web branding. Its JPEG-encoded source was converted to PNG and scaled for Android launcher densities without redesigning the artwork.
 
 ## Where to find features
 
