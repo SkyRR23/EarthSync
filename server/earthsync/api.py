@@ -70,6 +70,7 @@ def create_app(
     chat_bot=None,
 ):
     diagnostics_enabled = os.getenv("EARTHSYNC_DIAGNOSTICS") == "1"
+
     @asynccontextmanager
     async def lifespan(app):
         async with httpx.AsyncClient(

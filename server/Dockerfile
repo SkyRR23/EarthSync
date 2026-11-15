@@ -1,4 +1,4 @@
-# Cloud Run image for the NASA POWER climate backend (P2 code, unchanged).
+# Cloud Run image for the EarthSync backend (team code + app endpoints).
 # Runtime deps only; versions pinned by requirements.lock (tested resolution).
 FROM python:3.12-slim
 
@@ -10,7 +10,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /srv
 COPY requirements.lock pyproject.toml ./
 COPY earthsync ./earthsync
-RUN pip install -c requirements.lock ".[satellite]" \
+RUN pip install -c requirements.lock . \
     && useradd --create-home --uid 10001 app
 
 USER app
