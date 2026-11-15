@@ -1,0 +1,800 @@
+{
+  "schema_version": "earthsync.crop-intelligence.v1",
+  "provider": "deterministic-fts5",
+  "recommendation_eligible": false,
+  "executable_rules": [],
+  "catalog_sha256": "9c61fc394bd73f990fa12cba21d77a3e21028c233b956e1ce31f664178ad241b",
+  "corpus_sha256": "6d4b4ee55a858d831237f085dd855550462c702efca586c6c56b6d10ca80f900",
+  "crop": {
+    "id": "ecocrop.2175@1",
+    "scientific_name": "Zea mays",
+    "aliases": [
+      "maize",
+      "corn"
+    ],
+    "family": "Poaceae",
+    "categories": [
+      "cereals_grains"
+    ],
+    "agricultural_basis": "Official crop datasheet use plus GRIN species check",
+    "identity_claim_id": "identity-2175",
+    "profile_coverage": "reference_profiles",
+    "recommendation_eligible": false,
+    "approved_for_candidates": false,
+    "review": "reference_only"
+  },
+  "claims": [
+    {
+      "id": "research.maize.iowa_sampling_depth",
+      "source_id": "isu_sampling_2024",
+      "crop_id": "ecocrop.2175@1",
+      "parameter": "soil_sampling_context",
+      "claim": "The Iowa corn/soybean sampling reference uses a six-inch depth; consistent sampling depth matters for comparable results.",
+      "value": 6,
+      "unit": "inches",
+      "statistic": "Source sampling/calibration context, not a crop pH requirement",
+      "region": "US-IA",
+      "production_system": null,
+      "cultivar": null,
+      "locator": "Best practices for soil sampling paragraph, sentences on corn/soybean sampling depth",
+      "evidence_status": "source_transcribed_reference_only",
+      "origin": "research-source-dossier-v1",
+      "limitations": [
+        "No cultivar-specific requirement or field applicability approval.",
+        "Six inches is retained as reported; it is not the SoilGrids 0–5 cm layer.",
+        "Do not transfer Iowa sampling/calibration guidance to Myanmar without local review.",
+        "No amendment, fertilizer or crop suitability recommendation is generated."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "isu_sampling_2024",
+      "publisher": "Iowa State University Extension and Outreach; Gentry Sorenson",
+      "title": "Taking Good Soil Samples, the First Step in a Good Fertilizer Decision",
+      "url": "https://crops.extension.iastate.edu/post/taking-good-soil-samples-first-step-good-fertilizer-decision",
+      "publication_date": "2024-10-07",
+      "retrieval_date": "2026-11-15",
+      "response_sha256": "7bf170232f2221275deca0ad8d1e1b4e2e379a0051eafd96a005a8d65adc5f38",
+      "rights_note": "Attributed factual paraphrase and source link only. No full article, images or logos redistributed. Article permits attributed verbatim republication; other uses require author permission."
+    }
+  ],
+  "citations": [
+    {
+      "claim_id": "research.maize.iowa_sampling_depth",
+      "source_id": "isu_sampling_2024",
+      "locator": "Best practices for soil sampling paragraph, sentences on corn/soybean sampling depth"
+    }
+  ],
+  "scope": {
+    "crop": "maize",
+    "region": "US-IA",
+    "cultivar": null,
+    "system": null,
+    "limit": 12
+  },
+  "missing_information": [
+    "Named cultivar and establishment method",
+    "Local season and production system",
+    "Representative soil sample with depth and test method",
+    "Independent field-applicability review"
+  ],
+  "local_review_questions": [
+    "Which cultivar and planting method are used here?",
+    "Does this reference cover the field's region, season and water regime?",
+    "What sampling depth, test method and field coverage does the laboratory report describe?"
+  ],
+  "limitations": [
+    "Reference evidence does not establish field suitability.",
+    "Annual rainfall cannot be converted into seasonal water supply.",
+    "Regional modeled pH, farmer reports and laboratory samples have different support."
+  ],
+  "status": "evidence_available",
+  "rule_review": {
+    "source_sha": "5ffe71e45f0f141d0e383cd437ab35c843960dc6",
+    "source_pr": "https://github.com/SkyRR23/EarthSync/pull/26",
+    "source_package_sha256": "0771cc950de3eda4c47c283616728102d3256d1f5233fb503f93ad34939d3c84",
+    "source_path": "data/crop-rule-candidates/v1/package.json",
+    "review_kind": "Independent automated scientific desk review; no credentialed agronomist or field applicability approval",
+    "executable_rule_count": 0,
+    "candidate_count": 60,
+    "method_findings": {
+      "kc_curve": "FAO-56 Eq.66: constant initial/mid stages; linear development/late stages",
+      "synthetic_example_28": {
+        "etc_mm_with_interpolation": 358.5,
+        "etc_mm_with_four_constant_endpoints": 381.0,
+        "synthetic_et0_mm_per_day": 5,
+        "days": 100,
+        "field_applicability": false
+      },
+      "sesame_table_11": "Official HTML stage lengths sum to 110 days beside a stated total of 100; unresolved, conversion blocked"
+    },
+    "status": "blocked_or_not_independently_reviewed",
+    "candidates": [
+      {
+        "id": "7v.maize.planting_window@1",
+        "crop_id": "ecocrop.2175@1",
+        "domain": "planting_window",
+        "execution_status": "blocked",
+        "recommendation_eligible": false,
+        "approved_for_candidates": false,
+        "block_reason": "Calendar remains dated advisory context; AEZ label does not locate a farm or establish a safe planting constraint.",
+        "required_evidence": [
+          "Local extension/agronomist review of crop identity, cultivar, establishment, geography and water regime.",
+          "Explicit date convention, relevant year and weather/soil contingency."
+        ],
+        "contradictions_and_limits": [
+          "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+          "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+        ],
+        "review": {
+          "source_fact": "verified",
+          "method_numerically_verified": false,
+          "applicable_rule_independently_reviewed": false,
+          "needs_agronomist_field_validation": true,
+          "unsupported": false,
+          "independent_review_status": "desk_review_complete_execution_blocked",
+          "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+          "reviewed_on": "2026-11-14",
+          "agronomist_reviewer": null
+        }
+      },
+      {
+        "id": "7v.maize.growing_duration@1",
+        "crop_id": "ecocrop.2175@1",
+        "domain": "growing_duration",
+        "execution_status": "blocked",
+        "recommendation_eligible": false,
+        "approved_for_candidates": false,
+        "block_reason": "Global species cycles and reported type/calendar durations do not establish inclusive plan duration for a selected cultivar.",
+        "required_evidence": [
+          "Named cultivar/type, establishment origin, harvest purpose, location and season.",
+          "Source versus inclusive end-day convention reconciled."
+        ],
+        "contradictions_and_limits": [
+          "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+          "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+        ],
+        "review": {
+          "source_fact": "verified",
+          "method_numerically_verified": false,
+          "applicable_rule_independently_reviewed": false,
+          "needs_agronomist_field_validation": true,
+          "unsupported": false,
+          "independent_review_status": "desk_review_complete_execution_blocked",
+          "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+          "reviewed_on": "2026-11-14",
+          "agronomist_reviewer": null
+        }
+      },
+      {
+        "id": "7v.maize.temperature@1",
+        "crop_id": "ecocrop.2175@1",
+        "domain": "temperature",
+        "execution_status": "blocked",
+        "recommendation_eligible": false,
+        "approved_for_candidates": false,
+        "block_reason": "Seasonal average Tmin/Tmax envelopes cannot bound each daily extreme; monthly means and GDD are different statistics.",
+        "required_evidence": [
+          "Original stage/cultivar-specific daily-extreme or thermal-time evidence.",
+          "Exact temporal statistic and accepted regional data with full period coverage."
+        ],
+        "contradictions_and_limits": [
+          "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+          "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+        ],
+        "review": {
+          "source_fact": "verified",
+          "method_numerically_verified": false,
+          "applicable_rule_independently_reviewed": false,
+          "needs_agronomist_field_validation": true,
+          "unsupported": false,
+          "independent_review_status": "desk_review_complete_execution_blocked",
+          "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+          "reviewed_on": "2026-11-14",
+          "agronomist_reviewer": null
+        }
+      },
+      {
+        "id": "7v.maize.growing_period_rainfall@1",
+        "crop_id": "ecocrop.2175@1",
+        "domain": "growing_period_rainfall",
+        "execution_status": "blocked",
+        "recommendation_eligible": false,
+        "approved_for_candidates": false,
+        "block_reason": "Annual ecological envelopes cannot be prorated into growing-period rainfall, effective rain, ETc or irrigation demand.",
+        "required_evidence": [
+          "Original crop-season rainfall requirement with period/statistic/system and cultivar.",
+          "Separate ETc, effective rain, storage, irrigation and paddy loss accounting where relevant."
+        ],
+        "contradictions_and_limits": [
+          "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+          "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+        ],
+        "review": {
+          "source_fact": "verified",
+          "method_numerically_verified": false,
+          "applicable_rule_independently_reviewed": false,
+          "needs_agronomist_field_validation": true,
+          "unsupported": false,
+          "independent_review_status": "desk_review_complete_execution_blocked",
+          "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+          "reviewed_on": "2026-11-14",
+          "agronomist_reviewer": null
+        }
+      },
+      {
+        "id": "7v.maize.soil_ph@1",
+        "crop_id": "ecocrop.2175@1",
+        "domain": "soil_ph",
+        "execution_status": "blocked",
+        "recommendation_eligible": false,
+        "approved_for_candidates": false,
+        "block_reason": "Ecological pH has no accepted depth or chemical method; ecological root depth is not a sample layer.",
+        "required_evidence": [
+          "Crop requirement at explicit depth and pH method (water/salt).",
+          "Representative soil evidence with units, uncertainty and temporal support."
+        ],
+        "contradictions_and_limits": [
+          "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+          "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+        ],
+        "review": {
+          "source_fact": "partially_verified",
+          "method_numerically_verified": false,
+          "applicable_rule_independently_reviewed": false,
+          "needs_agronomist_field_validation": true,
+          "unsupported": false,
+          "independent_review_status": "desk_review_complete_execution_blocked",
+          "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+          "reviewed_on": "2026-11-14",
+          "agronomist_reviewer": null
+        }
+      },
+      {
+        "id": "7v.maize.soil_texture@1",
+        "crop_id": "ecocrop.2175@1",
+        "domain": "soil_texture",
+        "execution_status": "blocked",
+        "recommendation_eligible": false,
+        "approved_for_candidates": false,
+        "block_reason": "Qualitative ecological texture categories need a reviewed crosswalk; absence in maize remains unknown.",
+        "required_evidence": [
+          "Source and engine category vocabulary crosswalk with independent review.",
+          "Field representative texture evidence; texture does not establish drainage."
+        ],
+        "contradictions_and_limits": [
+          "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+          "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+        ],
+        "review": {
+          "source_fact": "unsupported",
+          "method_numerically_verified": false,
+          "applicable_rule_independently_reviewed": false,
+          "needs_agronomist_field_validation": true,
+          "unsupported": true,
+          "independent_review_status": "desk_review_complete_execution_blocked",
+          "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+          "reviewed_on": "2026-11-14",
+          "agronomist_reviewer": null
+        }
+      },
+      {
+        "id": "7v.maize.soil_drainage@1",
+        "crop_id": "ecocrop.2175@1",
+        "domain": "soil_drainage",
+        "execution_status": "blocked",
+        "recommendation_eligible": false,
+        "approved_for_candidates": false,
+        "block_reason": "Ecological drainage descriptors do not establish present field drainage or flood tolerance.",
+        "required_evidence": [
+          "Reviewed category vocabulary and production-system-specific constraint.",
+          "Attributed field drainage/landform/water-table evidence; no soil-colour proxy."
+        ],
+        "contradictions_and_limits": [
+          "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+          "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+        ],
+        "review": {
+          "source_fact": "unsupported",
+          "method_numerically_verified": false,
+          "applicable_rule_independently_reviewed": false,
+          "needs_agronomist_field_validation": true,
+          "unsupported": true,
+          "independent_review_status": "desk_review_complete_execution_blocked",
+          "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+          "reviewed_on": "2026-11-14",
+          "agronomist_reviewer": null
+        }
+      },
+      {
+        "id": "7v.maize.flood_tolerance@1",
+        "crop_id": "ecocrop.2175@1",
+        "domain": "flood_tolerance",
+        "execution_status": "blocked",
+        "recommendation_eligible": false,
+        "approved_for_candidates": false,
+        "block_reason": "No validated stage-specific flood depth, duration or recovery threshold; irrigation and paddy culture do not prove submergence tolerance.",
+        "required_evidence": [
+          "Original cultivar/stage-specific flood experiments and quantitative exposure definition.",
+          "Separate rice upland, lowland, delayed flooding and management regimes; v0.3 has no flood-injury requirement."
+        ],
+        "contradictions_and_limits": [
+          "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+          "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+        ],
+        "review": {
+          "source_fact": "unsupported",
+          "method_numerically_verified": false,
+          "applicable_rule_independently_reviewed": false,
+          "needs_agronomist_field_validation": true,
+          "unsupported": true,
+          "independent_review_status": "desk_review_complete_execution_blocked",
+          "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+          "reviewed_on": "2026-11-14",
+          "agronomist_reviewer": null
+        }
+      },
+      {
+        "id": "7v.maize.drought_stage_sensitivity@1",
+        "crop_id": "ecocrop.2175@1",
+        "domain": "drought_stage_sensitivity",
+        "execution_status": "blocked",
+        "recommendation_eligible": false,
+        "approved_for_candidates": false,
+        "block_reason": "Training sensitivity classes lack quantitative drought exposure and crop-stage dates; generic tolerance cannot waive water requirements.",
+        "required_evidence": [
+          "Stage/cultivar-specific intensity-duration evidence and uncertainty.",
+          "Validated phenology and soil-water exposure; v0.3 has no stage-injury condition."
+        ],
+        "contradictions_and_limits": [
+          "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+          "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+        ],
+        "review": {
+          "source_fact": "verified",
+          "method_numerically_verified": false,
+          "applicable_rule_independently_reviewed": false,
+          "needs_agronomist_field_validation": true,
+          "unsupported": false,
+          "independent_review_status": "desk_review_complete_execution_blocked",
+          "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+          "reviewed_on": "2026-11-14",
+          "agronomist_reviewer": null
+        }
+      },
+      {
+        "id": "7v.maize.kc_curve@1",
+        "crop_id": "ecocrop.2175@1",
+        "domain": "kc_curve",
+        "execution_status": "blocked",
+        "recommendation_eligible": false,
+        "approved_for_candidates": false,
+        "block_reason": "Source Kc rows require local adjustments and endpoint selection; v0.3 constant stages cannot silently replace FAO-56 linear transitions.",
+        "required_evidence": [
+          "Applicable Kc initial/wetting and mid/end climate/height corrections.",
+          "Locally reviewed day-indexed linear curve encoding and aligned daily grass-reference ETo.",
+          "Review that ETc is standard-condition demand, not rainfall/irrigation sufficiency."
+        ],
+        "contradictions_and_limits": [
+          "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+          "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+        ],
+        "review": {
+          "source_fact": "verified",
+          "method_numerically_verified": true,
+          "applicable_rule_independently_reviewed": false,
+          "needs_agronomist_field_validation": true,
+          "unsupported": false,
+          "independent_review_status": "desk_review_complete_execution_blocked",
+          "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+          "reviewed_on": "2026-11-14",
+          "agronomist_reviewer": null
+        }
+      },
+      {
+        "id": "7v.maize.stage_duration@1",
+        "crop_id": "ecocrop.2175@1",
+        "domain": "stage_duration",
+        "execution_status": "blocked",
+        "recommendation_eligible": false,
+        "approved_for_candidates": false,
+        "block_reason": "Table 11 stages are regional examples needing local validation; they do not fill calendar-profile stage offsets automatically.",
+        "required_evidence": [
+          "Validated crop/cultivar stage lengths with establishment origin and actual season.",
+          "Resolve any source total disagreement before daily indexing."
+        ],
+        "contradictions_and_limits": [
+          "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+          "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+        ],
+        "review": {
+          "source_fact": "verified",
+          "method_numerically_verified": false,
+          "applicable_rule_independently_reviewed": false,
+          "needs_agronomist_field_validation": true,
+          "unsupported": false,
+          "independent_review_status": "desk_review_complete_execution_blocked",
+          "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+          "reviewed_on": "2026-11-14",
+          "agronomist_reviewer": null
+        }
+      },
+      {
+        "id": "7v.maize.succession@1",
+        "crop_id": "ecocrop.2175@1",
+        "domain": "succession",
+        "execution_status": "blocked",
+        "recommendation_eligible": false,
+        "approved_for_candidates": false,
+        "block_reason": "Published sequences and general family identity do not establish mandatory predecessor or numerical fallow requirements.",
+        "required_evidence": [
+          "Original system/location-specific predecessor and fallow evidence.",
+          "Complete attributed confirmed-field history; elapsed gap is not proof of fallow.",
+          "Separate rotation from intercropping; independently substantiate any N/pest/yield claim."
+        ],
+        "contradictions_and_limits": [
+          "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+          "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+        ],
+        "review": {
+          "source_fact": "partially_verified",
+          "method_numerically_verified": false,
+          "applicable_rule_independently_reviewed": false,
+          "needs_agronomist_field_validation": true,
+          "unsupported": false,
+          "independent_review_status": "desk_review_complete_execution_blocked",
+          "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+          "reviewed_on": "2026-11-14",
+          "agronomist_reviewer": null
+        }
+      }
+    ]
+  },
+  "blocked_candidates": [
+    {
+      "id": "7v.maize.planting_window@1",
+      "crop_id": "ecocrop.2175@1",
+      "domain": "planting_window",
+      "execution_status": "blocked",
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "block_reason": "Calendar remains dated advisory context; AEZ label does not locate a farm or establish a safe planting constraint.",
+      "required_evidence": [
+        "Local extension/agronomist review of crop identity, cultivar, establishment, geography and water regime.",
+        "Explicit date convention, relevant year and weather/soil contingency."
+      ],
+      "contradictions_and_limits": [
+        "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+        "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+      ],
+      "review": {
+        "source_fact": "verified",
+        "method_numerically_verified": false,
+        "applicable_rule_independently_reviewed": false,
+        "needs_agronomist_field_validation": true,
+        "unsupported": false,
+        "independent_review_status": "desk_review_complete_execution_blocked",
+        "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+        "reviewed_on": "2026-11-14",
+        "agronomist_reviewer": null
+      }
+    },
+    {
+      "id": "7v.maize.growing_duration@1",
+      "crop_id": "ecocrop.2175@1",
+      "domain": "growing_duration",
+      "execution_status": "blocked",
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "block_reason": "Global species cycles and reported type/calendar durations do not establish inclusive plan duration for a selected cultivar.",
+      "required_evidence": [
+        "Named cultivar/type, establishment origin, harvest purpose, location and season.",
+        "Source versus inclusive end-day convention reconciled."
+      ],
+      "contradictions_and_limits": [
+        "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+        "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+      ],
+      "review": {
+        "source_fact": "verified",
+        "method_numerically_verified": false,
+        "applicable_rule_independently_reviewed": false,
+        "needs_agronomist_field_validation": true,
+        "unsupported": false,
+        "independent_review_status": "desk_review_complete_execution_blocked",
+        "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+        "reviewed_on": "2026-11-14",
+        "agronomist_reviewer": null
+      }
+    },
+    {
+      "id": "7v.maize.temperature@1",
+      "crop_id": "ecocrop.2175@1",
+      "domain": "temperature",
+      "execution_status": "blocked",
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "block_reason": "Seasonal average Tmin/Tmax envelopes cannot bound each daily extreme; monthly means and GDD are different statistics.",
+      "required_evidence": [
+        "Original stage/cultivar-specific daily-extreme or thermal-time evidence.",
+        "Exact temporal statistic and accepted regional data with full period coverage."
+      ],
+      "contradictions_and_limits": [
+        "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+        "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+      ],
+      "review": {
+        "source_fact": "verified",
+        "method_numerically_verified": false,
+        "applicable_rule_independently_reviewed": false,
+        "needs_agronomist_field_validation": true,
+        "unsupported": false,
+        "independent_review_status": "desk_review_complete_execution_blocked",
+        "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+        "reviewed_on": "2026-11-14",
+        "agronomist_reviewer": null
+      }
+    },
+    {
+      "id": "7v.maize.growing_period_rainfall@1",
+      "crop_id": "ecocrop.2175@1",
+      "domain": "growing_period_rainfall",
+      "execution_status": "blocked",
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "block_reason": "Annual ecological envelopes cannot be prorated into growing-period rainfall, effective rain, ETc or irrigation demand.",
+      "required_evidence": [
+        "Original crop-season rainfall requirement with period/statistic/system and cultivar.",
+        "Separate ETc, effective rain, storage, irrigation and paddy loss accounting where relevant."
+      ],
+      "contradictions_and_limits": [
+        "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+        "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+      ],
+      "review": {
+        "source_fact": "verified",
+        "method_numerically_verified": false,
+        "applicable_rule_independently_reviewed": false,
+        "needs_agronomist_field_validation": true,
+        "unsupported": false,
+        "independent_review_status": "desk_review_complete_execution_blocked",
+        "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+        "reviewed_on": "2026-11-14",
+        "agronomist_reviewer": null
+      }
+    },
+    {
+      "id": "7v.maize.soil_ph@1",
+      "crop_id": "ecocrop.2175@1",
+      "domain": "soil_ph",
+      "execution_status": "blocked",
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "block_reason": "Ecological pH has no accepted depth or chemical method; ecological root depth is not a sample layer.",
+      "required_evidence": [
+        "Crop requirement at explicit depth and pH method (water/salt).",
+        "Representative soil evidence with units, uncertainty and temporal support."
+      ],
+      "contradictions_and_limits": [
+        "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+        "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+      ],
+      "review": {
+        "source_fact": "partially_verified",
+        "method_numerically_verified": false,
+        "applicable_rule_independently_reviewed": false,
+        "needs_agronomist_field_validation": true,
+        "unsupported": false,
+        "independent_review_status": "desk_review_complete_execution_blocked",
+        "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+        "reviewed_on": "2026-11-14",
+        "agronomist_reviewer": null
+      }
+    },
+    {
+      "id": "7v.maize.soil_texture@1",
+      "crop_id": "ecocrop.2175@1",
+      "domain": "soil_texture",
+      "execution_status": "blocked",
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "block_reason": "Qualitative ecological texture categories need a reviewed crosswalk; absence in maize remains unknown.",
+      "required_evidence": [
+        "Source and engine category vocabulary crosswalk with independent review.",
+        "Field representative texture evidence; texture does not establish drainage."
+      ],
+      "contradictions_and_limits": [
+        "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+        "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+      ],
+      "review": {
+        "source_fact": "unsupported",
+        "method_numerically_verified": false,
+        "applicable_rule_independently_reviewed": false,
+        "needs_agronomist_field_validation": true,
+        "unsupported": true,
+        "independent_review_status": "desk_review_complete_execution_blocked",
+        "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+        "reviewed_on": "2026-11-14",
+        "agronomist_reviewer": null
+      }
+    },
+    {
+      "id": "7v.maize.soil_drainage@1",
+      "crop_id": "ecocrop.2175@1",
+      "domain": "soil_drainage",
+      "execution_status": "blocked",
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "block_reason": "Ecological drainage descriptors do not establish present field drainage or flood tolerance.",
+      "required_evidence": [
+        "Reviewed category vocabulary and production-system-specific constraint.",
+        "Attributed field drainage/landform/water-table evidence; no soil-colour proxy."
+      ],
+      "contradictions_and_limits": [
+        "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+        "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+      ],
+      "review": {
+        "source_fact": "unsupported",
+        "method_numerically_verified": false,
+        "applicable_rule_independently_reviewed": false,
+        "needs_agronomist_field_validation": true,
+        "unsupported": true,
+        "independent_review_status": "desk_review_complete_execution_blocked",
+        "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+        "reviewed_on": "2026-11-14",
+        "agronomist_reviewer": null
+      }
+    },
+    {
+      "id": "7v.maize.flood_tolerance@1",
+      "crop_id": "ecocrop.2175@1",
+      "domain": "flood_tolerance",
+      "execution_status": "blocked",
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "block_reason": "No validated stage-specific flood depth, duration or recovery threshold; irrigation and paddy culture do not prove submergence tolerance.",
+      "required_evidence": [
+        "Original cultivar/stage-specific flood experiments and quantitative exposure definition.",
+        "Separate rice upland, lowland, delayed flooding and management regimes; v0.3 has no flood-injury requirement."
+      ],
+      "contradictions_and_limits": [
+        "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+        "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+      ],
+      "review": {
+        "source_fact": "unsupported",
+        "method_numerically_verified": false,
+        "applicable_rule_independently_reviewed": false,
+        "needs_agronomist_field_validation": true,
+        "unsupported": true,
+        "independent_review_status": "desk_review_complete_execution_blocked",
+        "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+        "reviewed_on": "2026-11-14",
+        "agronomist_reviewer": null
+      }
+    },
+    {
+      "id": "7v.maize.drought_stage_sensitivity@1",
+      "crop_id": "ecocrop.2175@1",
+      "domain": "drought_stage_sensitivity",
+      "execution_status": "blocked",
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "block_reason": "Training sensitivity classes lack quantitative drought exposure and crop-stage dates; generic tolerance cannot waive water requirements.",
+      "required_evidence": [
+        "Stage/cultivar-specific intensity-duration evidence and uncertainty.",
+        "Validated phenology and soil-water exposure; v0.3 has no stage-injury condition."
+      ],
+      "contradictions_and_limits": [
+        "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+        "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+      ],
+      "review": {
+        "source_fact": "verified",
+        "method_numerically_verified": false,
+        "applicable_rule_independently_reviewed": false,
+        "needs_agronomist_field_validation": true,
+        "unsupported": false,
+        "independent_review_status": "desk_review_complete_execution_blocked",
+        "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+        "reviewed_on": "2026-11-14",
+        "agronomist_reviewer": null
+      }
+    },
+    {
+      "id": "7v.maize.kc_curve@1",
+      "crop_id": "ecocrop.2175@1",
+      "domain": "kc_curve",
+      "execution_status": "blocked",
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "block_reason": "Source Kc rows require local adjustments and endpoint selection; v0.3 constant stages cannot silently replace FAO-56 linear transitions.",
+      "required_evidence": [
+        "Applicable Kc initial/wetting and mid/end climate/height corrections.",
+        "Locally reviewed day-indexed linear curve encoding and aligned daily grass-reference ETo.",
+        "Review that ETc is standard-condition demand, not rainfall/irrigation sufficiency."
+      ],
+      "contradictions_and_limits": [
+        "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+        "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+      ],
+      "review": {
+        "source_fact": "verified",
+        "method_numerically_verified": true,
+        "applicable_rule_independently_reviewed": false,
+        "needs_agronomist_field_validation": true,
+        "unsupported": false,
+        "independent_review_status": "desk_review_complete_execution_blocked",
+        "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+        "reviewed_on": "2026-11-14",
+        "agronomist_reviewer": null
+      }
+    },
+    {
+      "id": "7v.maize.stage_duration@1",
+      "crop_id": "ecocrop.2175@1",
+      "domain": "stage_duration",
+      "execution_status": "blocked",
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "block_reason": "Table 11 stages are regional examples needing local validation; they do not fill calendar-profile stage offsets automatically.",
+      "required_evidence": [
+        "Validated crop/cultivar stage lengths with establishment origin and actual season.",
+        "Resolve any source total disagreement before daily indexing."
+      ],
+      "contradictions_and_limits": [
+        "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+        "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+      ],
+      "review": {
+        "source_fact": "verified",
+        "method_numerically_verified": false,
+        "applicable_rule_independently_reviewed": false,
+        "needs_agronomist_field_validation": true,
+        "unsupported": false,
+        "independent_review_status": "desk_review_complete_execution_blocked",
+        "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+        "reviewed_on": "2026-11-14",
+        "agronomist_reviewer": null
+      }
+    },
+    {
+      "id": "7v.maize.succession@1",
+      "crop_id": "ecocrop.2175@1",
+      "domain": "succession",
+      "execution_status": "blocked",
+      "recommendation_eligible": false,
+      "approved_for_candidates": false,
+      "block_reason": "Published sequences and general family identity do not establish mandatory predecessor or numerical fallow requirements.",
+      "required_evidence": [
+        "Original system/location-specific predecessor and fallow evidence.",
+        "Complete attributed confirmed-field history; elapsed gap is not proof of fallow.",
+        "Separate rotation from intercropping; independently substantiate any N/pest/yield claim."
+      ],
+      "contradictions_and_limits": [
+        "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+        "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+      ],
+      "review": {
+        "source_fact": "partially_verified",
+        "method_numerically_verified": false,
+        "applicable_rule_independently_reviewed": false,
+        "needs_agronomist_field_validation": true,
+        "unsupported": false,
+        "independent_review_status": "desk_review_complete_execution_blocked",
+        "reviewer": "Codex 7V independent desk review of pinned 7P; no credentialed agronomist or field-trial reviewer supplied",
+        "reviewed_on": "2026-11-14",
+        "agronomist_reviewer": null
+      }
+    }
+  ],
+  "contradictions": [
+    "0113 Maize versus Corn, sweet identity/harvest-purpose conflict unresolved.",
+    "ECOCROP has no texture/drainage categories on the retained sheet; do not fill from another crop."
+  ],
+  "truncated": false,
+  "answer": "Retrieved source references are shown below with their original scope and limitations. No field recommendation is approved."
+}

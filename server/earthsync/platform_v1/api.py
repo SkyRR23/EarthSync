@@ -689,6 +689,9 @@ def create_app(
         location_id = realtime.farm_location(farm)
         return realtime.snapshot(location_id)
 
+    from earthsync.research.local import local_router
+
+    app.include_router(local_router(store, objects, reference_catalog, OWNER))
     return app
 
 

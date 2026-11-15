@@ -25,6 +25,10 @@ assert reference['status'] == 'reference_only'
 assert reference['rule_review']['executable_rule_count'] == 0
 assert len(reference['rule_review']['candidates']) == 12
 assert all(c['execution_status'] == 'blocked' for c in reference['rule_review']['candidates'])
+intelligence = call('/crop-intelligence', {'crop':'rice', 'question':'soil pH'})
+assert intelligence['status'] == 'evidence_available'
+assert intelligence['recommendation_eligible'] is False
+assert intelligence['citations']
 corner = -93.62675015869141
 polygon = {'type':'Polygon', 'coordinates': [[[corner,42.02],[-93.61,42.02],[-93.61,42.04],[corner,42.04],[corner,42.02]]]}
 farm = call('/farms', {'name':'Container software test, no field ground truth','confirmed_point':{'latitude':42.03,'longitude':-93.62},'confirmed_polygon':polygon,'confirmed_on':'2026-11-14','production_system':'rainfed'})
