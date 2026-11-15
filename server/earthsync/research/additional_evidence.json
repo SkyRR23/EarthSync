@@ -1,0 +1,38 @@
+{
+  "sources": [
+    {
+      "id": "isu_sampling_2024",
+      "publisher": "Iowa State University Extension and Outreach; Gentry Sorenson",
+      "title": "Taking Good Soil Samples, the First Step in a Good Fertilizer Decision",
+      "url": "https://crops.extension.iastate.edu/post/taking-good-soil-samples-first-step-good-fertilizer-decision",
+      "publication_date": "2024-10-07",
+      "retrieval_date": "2026-11-15",
+      "response_sha256": "7bf170232f2221275deca0ad8d1e1b4e2e379a0051eafd96a005a8d65adc5f38",
+      "rights_note": "Attributed factual paraphrase and source link only. No full article, images or logos redistributed. Article permits attributed verbatim republication; other uses require author permission."
+    }
+  ],
+  "claims": [
+    {
+      "id": "research.maize.iowa_sampling_depth",
+      "source_id": "isu_sampling_2024",
+      "crop_id": "ecocrop.2175@1",
+      "parameter": "soil_sampling_context",
+      "claim": "The Iowa corn/soybean sampling reference uses a six-inch depth; consistent sampling depth matters for comparable results.",
+      "value": 6,
+      "unit": "inches",
+      "statistic": "Source sampling/calibration context, not a crop pH requirement",
+      "region": "US-IA",
+      "production_system": null,
+      "cultivar": null,
+      "locator": "Best practices for soil sampling paragraph, sentences on corn/soybean sampling depth",
+      "evidence_status": "source_transcribed_reference_only",
+      "origin": "research-source-dossier-v1",
+      "limitations": [
+        "No cultivar-specific requirement or field applicability approval.",
+        "Six inches is retained as reported; it is not the SoilGrids 0–5 cm layer.",
+        "Do not transfer Iowa sampling/calibration guidance to Myanmar without local review.",
+        "No amendment, fertilizer or crop suitability recommendation is generated."
+      ]
+    }
+  ]
+}

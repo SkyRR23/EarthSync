@@ -651,6 +651,9 @@ def create_app(
         objects.delete(OWNER, farm_id, photo_id)
         return Response(status_code=204)
 
+    from earthsync.research.local import local_router
+
+    app.include_router(local_router(store, objects, reference_catalog, OWNER))
     return app
 
 

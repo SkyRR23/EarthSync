@@ -24,6 +24,8 @@ RUN pip install --no-index --find-links=/tmp/wheels --no-cache-dir -r /tmp/serve
 RUN python -c "import rasterio, shapely; from PIL import Image"
 COPY --chown=10001:10001 server/earthsync/__init__.py ./server/earthsync/__init__.py
 COPY --chown=10001:10001 server/earthsync/platform_v1 ./server/earthsync/platform_v1
+COPY --chown=10001:10001 server/earthsync/research ./server/earthsync/research
+COPY --chown=10001:10001 data/crop-rule-candidates/v1 ./data/crop-rule-candidates/v1
 COPY --chown=10001:10001 data/crop-knowledge/v2 ./data/crop-knowledge/v2
 COPY --chown=10001:10001 --from=compat_source /16/server/earthsync/evidence ./server/earthsync/evidence
 COPY --chown=10001:10001 --from=compat_source /15/data/crop-knowledge/v1/catalog.json /app/catalog.json

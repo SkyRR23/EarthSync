@@ -28,6 +28,24 @@ def digest(path):
         return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
+def copy_research_references(source, state):
+    """Retain the exact four public sidecars consumed by the optional RAG runtime."""
+    if not (source / "server/earthsync/research/retrieval.py").is_file():
+        return []
+    target = state / "data/crop-rule-candidates/v1"
+    target.mkdir(parents=True)
+    files = []
+    for name in (
+        "integrity.json",
+        "sources.json",
+        "source-receipts.json",
+        "facts.json",
+    ):
+        shutil.copyfile(source / "data/crop-rule-candidates/v1" / name, target / name)
+        files.append(target / name)
+    return files
+
+
 def private_path(value):
     path = Path(value).absolute()
     if path.resolve() != path:
@@ -279,6 +297,7 @@ def build(args, source, state):
                 reference, target, ignore=shutil.ignore_patterns("__pycache__", "*.pyc")
             )
             files += sorted(target.rglob("*"))
+        files += copy_research_references(source, state)
         if compat:
             files.append(compat / "pins.json")
     files.append(Path(manifest["engine"]))

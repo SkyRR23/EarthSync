@@ -4,6 +4,13 @@ import 'package:flutter/widgets.dart';
 /// Native language and agricultural review remain required before field rollout.
 abstract final class CompanionCopy {
   static const my = {
+    'Crop intelligence': 'သီးနှံအချက်အလက်',
+    'Known requirements': 'သိရှိထားသော လိုအပ်ချက်များ',
+    'Retrieve evidence': 'အထောက်အထား ရယူရန်',
+    'Unresolved questions': 'မဖြေရှင်းရသေးသော မေးခွန်းများ',
+    'Scientific eligibility': 'သိပ္ပံနည်းကျ အသုံးချနိုင်မှု',
+    'References': 'ကိုးကားချက်များ',
+    'Available farm evidence': 'ရရှိနိုင်သော လယ်ယာအထောက်အထား',
     'Income / market interests': 'ဝင်ငွေ / ဈေးကွက်စိတ်ဝင်စားမှု',
     'Water conservation': 'ရေချွေတာရေး',
     'Soil structure & organic matter':

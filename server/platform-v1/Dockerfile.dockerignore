@@ -14,6 +14,10 @@ server/earthsync/platform_v1/migrations/**
 !server/earthsync/platform_v1/providers/
 server/earthsync/platform_v1/providers/**
 !server/earthsync/platform_v1/providers/*.py
+!server/earthsync/research/
+server/earthsync/research/**
+!server/earthsync/research/*.py
+!server/earthsync/research/additional_evidence.json
 !data/
 data/**
 !data/crop-knowledge/
@@ -38,6 +42,14 @@ data/crop-knowledge/v2/originals/**
 !data/crop-knowledge/v2/tools/
 data/crop-knowledge/v2/tools/**
 !data/crop-knowledge/v2/tools/knowledge.py
+!data/crop-rule-candidates/
+data/crop-rule-candidates/**
+!data/crop-rule-candidates/v1/
+data/crop-rule-candidates/v1/**
+!data/crop-rule-candidates/v1/integrity.json
+!data/crop-rule-candidates/v1/sources.json
+!data/crop-rule-candidates/v1/source-receipts.json
+!data/crop-rule-candidates/v1/facts.json
 !server/platform-v1/
 server/platform-v1/**
 !server/platform-v1/requirements.lock
