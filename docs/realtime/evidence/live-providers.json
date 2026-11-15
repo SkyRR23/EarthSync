@@ -1,0 +1,636 @@
+{
+  "baseline_sha": "660b479c3ffb714cd1d489e1241c026ceae6ed67",
+  "public_reference_only": true,
+  "locations": {
+    "ames": {
+      "classification": "ACTUAL_LIVE_PROVIDER_REQUESTS",
+      "sources": {
+        "iowa_station": {
+          "status": "FRESH",
+          "error": null,
+          "last_success_at": "2026-11-15T03:24:48.352603+00:00",
+          "observed_at": "2026-11-15T03:23:00+00:00",
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": null,
+          "record_count": 0,
+          "provenance": [
+            {
+              "url": "https://mesonet.agron.iastate.edu/geojson/network.py?network=ISUSM&only_online=1",
+              "sha256": "f84cdb25818dcf0c93d48f6d9b316176c85e7b18686d2dd1649db0d1d358b793",
+              "retrieved_at": "2026-11-15T03:24:47.527876+00:00",
+              "http_status": 200,
+              "request_ms": 592.1
+            },
+            {
+              "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/isusm.py?station=AMFI4%2CAHDI4%2CAKCI4&mode=hourly&timeres=minute&format=comma&tz=UTC&qcflags=1&missing=M&vars=tmpf%2Crelh%2Cprecip%2Cspeed%2Cdrct%2Csoil04t%2Csoil12t%2Csoil24t%2Csoil50t%2Csoil12vwc%2Csoil24vwc%2Csoil50vwc%2Csv&sts=2026-11-15T01%3A24%3A00%2B00%3A00&ets=2026-11-15T03%3A24%3A00%2B00%3A00",
+              "sha256": "5dd36ebdf2c5d96cf3625caf0b806ff2983bdad8d948c94475e4760b9a45046a",
+              "retrieved_at": "2026-11-15T03:24:48.352603+00:00",
+              "http_status": 200,
+              "request_ms": 259.18
+            }
+          ]
+        },
+        "nws_forecast": {
+          "status": "FRESH",
+          "error": null,
+          "last_success_at": "2026-11-15T03:24:49.193953+00:00",
+          "observed_at": null,
+          "issued_at": "2026-11-15T03:20:30+00:00",
+          "updated_at": "2026-11-15T01:47:50+00:00",
+          "office": "https://api.weather.gov/offices/DMX",
+          "valid_until": "2026-11-21T15:00:00+00:00",
+          "record_count": 156,
+          "provenance": [
+            {
+              "url": "https://api.weather.gov/points/42.0308,-93.6319",
+              "sha256": "0cb8ea29020e74948b07793f55591e90bc9d78d64757e92201f50abe0d9a9f1a",
+              "retrieved_at": "2026-11-15T03:24:48.464185+00:00",
+              "http_status": 200,
+              "request_ms": 138.37
+            },
+            {
+              "url": "https://api.weather.gov/gridpoints/DMX/73,69/forecast",
+              "sha256": "44459305bbf65dedda6547d2792f08596e956a9671e986ad5b2ebfeecddcd980",
+              "retrieved_at": "2026-11-15T03:24:49.193953+00:00",
+              "http_status": 200,
+              "request_ms": 91.73
+            },
+            {
+              "url": "https://api.weather.gov/gridpoints/DMX/73,69/forecast/hourly",
+              "sha256": "e9df34f882d0015aeb387eefda50d564757da9cd1b44e2ba3970ed658248d333",
+              "retrieved_at": "2026-11-15T03:24:49.916043+00:00",
+              "http_status": 200,
+              "request_ms": 96.02
+            }
+          ]
+        },
+        "nws_alerts": {
+          "status": "FRESH",
+          "error": null,
+          "last_success_at": "2026-11-15T03:24:48.657888+00:00",
+          "observed_at": null,
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": null,
+          "record_count": 0,
+          "provenance": [
+            {
+              "url": "https://api.weather.gov/alerts/active?point=42.0308,-93.6319",
+              "sha256": "c203ff319a1d13b0a2c5e7d3e02968645d8b693e49d8558121c9cbc50dd55f44",
+              "retrieved_at": "2026-11-15T03:24:48.657888+00:00",
+              "http_status": 200,
+              "request_ms": 189.29
+            }
+          ]
+        },
+        "open_meteo": {
+          "status": "FRESH",
+          "error": null,
+          "last_success_at": "2026-11-15T03:24:47.957682+00:00",
+          "observed_at": null,
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": "2026-11-22T00:00:00+00:00",
+          "record_count": 165,
+          "provenance": [
+            {
+              "url": "https://api.open-meteo.com/v1/forecast?latitude=42.0308&longitude=-93.6319&hourly=temperature_2m%2Crelative_humidity_2m%2Cprecipitation%2Cprecipitation_probability%2Cwind_speed_10m%2Csoil_moisture_0_to_1cm&forecast_days=7&timezone=UTC&timeformat=unixtime&wind_speed_unit=ms",
+              "sha256": "1136953be2fa51c405bb8b7f2950a5120ec679737e4b393624c5a721756d4d2c",
+              "retrieved_at": "2026-11-15T03:24:47.957682+00:00",
+              "http_status": 200,
+              "request_ms": 131.53
+            }
+          ]
+        },
+        "nasa_catalog": {
+          "status": "METADATA_ONLY",
+          "error": null,
+          "last_success_at": "2026-11-15T03:24:49.308414+00:00",
+          "observed_at": null,
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": null,
+          "record_count": 0,
+          "provenance": [
+            {
+              "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?short_name=HLSL30_VI&version=2.0&point=-93.6319%2C42.0308&sort_key=-start_date&page_size=1",
+              "sha256": "1162d3ed0368c1e5a3f31f0218bf0057c9c2f8b138de5f2e11cbd3d86bde93ad",
+              "retrieved_at": "2026-11-15T03:24:49.308414+00:00",
+              "http_status": 200,
+              "request_ms": 296.97
+            },
+            {
+              "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?short_name=HLSS30_VI&version=2.0&point=-93.6319%2C42.0308&sort_key=-start_date&page_size=1",
+              "sha256": "00ac7dc1930978192c108b45630c39c0b56ee2a199bcbef616b0c36d0a66dd97",
+              "retrieved_at": "2026-11-15T03:24:50.667395+00:00",
+              "http_status": 200,
+              "request_ms": 219.97
+            },
+            {
+              "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?short_name=SPL4SMGP&version=008&point=-93.6319%2C42.0308&sort_key=-start_date&page_size=1",
+              "sha256": "40a01185b576735daa533e15ba3b02a241434282fa08c8e689a1b0ae928be194",
+              "retrieved_at": "2026-11-15T03:24:52.013615+00:00",
+              "http_status": 200,
+              "request_ms": 192.66
+            },
+            {
+              "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?short_name=GPM_3IMERGHHE&version=07&point=-93.6319%2C42.0308&sort_key=-start_date&page_size=1",
+              "sha256": "6dadb418f29c5d3e0f761002ae328e42037169928fa9ee9d2893af5da78482c9",
+              "retrieved_at": "2026-11-15T03:24:53.304788+00:00",
+              "http_status": 200,
+              "request_ms": 238.08
+            }
+          ]
+        }
+      }
+    },
+    "crawfordsville": {
+      "classification": "ACTUAL_LIVE_PROVIDER_REQUESTS",
+      "sources": {
+        "iowa_station": {
+          "status": "FRESH",
+          "error": null,
+          "last_success_at": "2026-11-15T03:24:47.990849+00:00",
+          "observed_at": "2026-11-15T03:23:00+00:00",
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": null,
+          "record_count": 0,
+          "provenance": [
+            {
+              "url": "https://mesonet.agron.iastate.edu/geojson/network.py?network=ISUSM&only_online=1",
+              "sha256": "f84cdb25818dcf0c93d48f6d9b316176c85e7b18686d2dd1649db0d1d358b793",
+              "retrieved_at": "2026-11-15T03:24:47.527876+00:00",
+              "http_status": 200,
+              "request_ms": 592.1
+            },
+            {
+              "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/isusm.py?station=CRFI4%2CFRUI4%2CWMNI4&mode=hourly&timeres=minute&format=comma&tz=UTC&qcflags=1&missing=M&vars=tmpf%2Crelh%2Cprecip%2Cspeed%2Cdrct%2Csoil04t%2Csoil12t%2Csoil24t%2Csoil50t%2Csoil12vwc%2Csoil24vwc%2Csoil50vwc%2Csv&sts=2026-11-15T01%3A24%3A00%2B00%3A00&ets=2026-11-15T03%3A24%3A00%2B00%3A00",
+              "sha256": "6e3e493ccbb166425511c2dbce12349b2429f7b5f7fe947b09097b0554962093",
+              "retrieved_at": "2026-11-15T03:24:47.990849+00:00",
+              "http_status": 200,
+              "request_ms": 458.78
+            }
+          ]
+        },
+        "nws_forecast": {
+          "status": "FRESH",
+          "error": null,
+          "last_success_at": "2026-11-15T03:24:48.868361+00:00",
+          "observed_at": null,
+          "issued_at": "2026-11-15T03:24:48+00:00",
+          "updated_at": "2026-11-14T22:31:10+00:00",
+          "office": "https://api.weather.gov/offices/DVN",
+          "valid_until": "2026-11-21T15:00:00+00:00",
+          "record_count": 156,
+          "provenance": [
+            {
+              "url": "https://api.weather.gov/points/41.2142,-91.5374",
+              "sha256": "bb0e47b0484da64f45b7e6dff835c5e941358ed83cfdb4c632d4f188326a7a7a",
+              "retrieved_at": "2026-11-15T03:24:47.520404+00:00",
+              "http_status": 200,
+              "request_ms": 562.08
+            },
+            {
+              "url": "https://api.weather.gov/gridpoints/DVN/35,51/forecast",
+              "sha256": "91423ed027ba80453fef7e207d55451d7bdb16a23471789ed0993a71b029e1bf",
+              "retrieved_at": "2026-11-15T03:24:48.868361+00:00",
+              "http_status": 200,
+              "request_ms": 205.2
+            },
+            {
+              "url": "https://api.weather.gov/gridpoints/DVN/35,51/forecast/hourly",
+              "sha256": "96da599220e4fd94b0a42fc784019ca9d6a831e4a1e5c0db27fbf9cede5865fe",
+              "retrieved_at": "2026-11-15T03:24:49.552154+00:00",
+              "http_status": 200,
+              "request_ms": 355.53
+            }
+          ]
+        },
+        "nws_alerts": {
+          "status": "FRESH",
+          "error": null,
+          "last_success_at": "2026-11-15T03:24:47.708130+00:00",
+          "observed_at": null,
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": null,
+          "record_count": 0,
+          "provenance": [
+            {
+              "url": "https://api.weather.gov/alerts/active?point=41.2142,-91.5374",
+              "sha256": "84380b2e60e6dbc78e457bf8c37e638851428e4c36c27a3014a9fb71a51f004d",
+              "retrieved_at": "2026-11-15T03:24:47.708130+00:00",
+              "http_status": 200,
+              "request_ms": 184.6
+            }
+          ]
+        },
+        "open_meteo": {
+          "status": "FRESH",
+          "error": null,
+          "last_success_at": "2026-11-15T03:24:47.424825+00:00",
+          "observed_at": null,
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": "2026-11-22T00:00:00+00:00",
+          "record_count": 165,
+          "provenance": [
+            {
+              "url": "https://api.open-meteo.com/v1/forecast?latitude=41.2142&longitude=-91.5374&hourly=temperature_2m%2Crelative_humidity_2m%2Cprecipitation%2Cprecipitation_probability%2Cwind_speed_10m%2Csoil_moisture_0_to_1cm&forecast_days=7&timezone=UTC&timeformat=unixtime&wind_speed_unit=ms",
+              "sha256": "a7b2b4bdcb63c484bf5634dce3dd77db654cf126374f2f88c1a2b89ce7a71fd6",
+              "retrieved_at": "2026-11-15T03:24:47.424825+00:00",
+              "http_status": 200,
+              "request_ms": 465.52
+            }
+          ]
+        },
+        "nasa_catalog": {
+          "status": "METADATA_ONLY",
+          "error": null,
+          "last_success_at": "2026-11-15T03:24:47.608231+00:00",
+          "observed_at": null,
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": null,
+          "record_count": 0,
+          "provenance": [
+            {
+              "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?short_name=HLSL30_VI&version=2.0&point=-91.5374%2C41.2142&sort_key=-start_date&page_size=1",
+              "sha256": "87fcb2a862a5565bd19fc05e9f0c612a072163593ed9372d7f3152c0f18be62f",
+              "retrieved_at": "2026-11-15T03:24:47.608231+00:00",
+              "http_status": 200,
+              "request_ms": 647.94
+            },
+            {
+              "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?short_name=HLSS30_VI&version=2.0&point=-91.5374%2C41.2142&sort_key=-start_date&page_size=1",
+              "sha256": "b6063fd772639015fa1e07de8f8f06e77254bbe84801a8edb86a2d09ea59c1c5",
+              "retrieved_at": "2026-11-15T03:24:49.543929+00:00",
+              "http_status": 200,
+              "request_ms": 232.29
+            },
+            {
+              "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?short_name=SPL4SMGP&version=008&point=-91.5374%2C41.2142&sort_key=-start_date&page_size=1",
+              "sha256": "04105c2b4535b791a81259e44061784b2a93d342e894dd460d18d32290f77002",
+              "retrieved_at": "2026-11-15T03:24:50.904187+00:00",
+              "http_status": 200,
+              "request_ms": 233.26
+            },
+            {
+              "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?short_name=GPM_3IMERGHHE&version=07&point=-91.5374%2C41.2142&sort_key=-start_date&page_size=1",
+              "sha256": "691439296b8b37576ffc023ac58b900eb90a2ce2473b157b98ca020a2cb49ace",
+              "retrieved_at": "2026-11-15T03:24:52.279962+00:00",
+              "http_status": 200,
+              "request_ms": 263.77
+            }
+          ]
+        }
+      }
+    },
+    "davis": {
+      "classification": "ACTUAL_LIVE_PROVIDER_REQUESTS",
+      "sources": {
+        "iowa_station": {
+          "status": "GEOGRAPHIC_NON_COVERAGE",
+          "error": "GEOGRAPHIC_NON_COVERAGE",
+          "last_success_at": null,
+          "observed_at": null,
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": null,
+          "record_count": 0,
+          "provenance": null
+        },
+        "nws_forecast": {
+          "status": "FRESH",
+          "error": null,
+          "last_success_at": "2026-11-15T03:24:49.099309+00:00",
+          "observed_at": null,
+          "issued_at": "2026-11-15T03:24:49+00:00",
+          "updated_at": "2026-11-14T21:00:58+00:00",
+          "office": "https://api.weather.gov/offices/STO",
+          "valid_until": "2026-11-21T15:00:00+00:00",
+          "record_count": 156,
+          "provenance": [
+            {
+              "url": "https://api.weather.gov/points/38.5449,-121.7405",
+              "sha256": "39855eea7f84c5fa5e4d9219fa05262aa3aae246ea69f41511257dd64fd2a6ee",
+              "retrieved_at": "2026-11-15T03:24:47.881121+00:00",
+              "http_status": 200,
+              "request_ms": 169.12
+            },
+            {
+              "url": "https://api.weather.gov/gridpoints/STO/32,68/forecast",
+              "sha256": "09918e938fd84e5176e3fa3f771df02e394d9cca586f69006ed6a3d7f9735e7f",
+              "retrieved_at": "2026-11-15T03:24:49.099309+00:00",
+              "http_status": 200,
+              "request_ms": 227.91
+            },
+            {
+              "url": "https://api.weather.gov/gridpoints/STO/32,68/forecast/hourly",
+              "sha256": "d22d54320d6d7d520127e13b57a3ae7a9ebb81eff731dab38ed4af252ee07b21",
+              "retrieved_at": "2026-11-15T03:24:49.812218+00:00",
+              "http_status": 200,
+              "request_ms": 253.73
+            }
+          ]
+        },
+        "nws_alerts": {
+          "status": "FRESH",
+          "error": null,
+          "last_success_at": "2026-11-15T03:24:48.320280+00:00",
+          "observed_at": null,
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": null,
+          "record_count": 0,
+          "provenance": [
+            {
+              "url": "https://api.weather.gov/alerts/active?point=38.5449,-121.7405",
+              "sha256": "5004c74cd22fb41d0cd09d15ab356ffb2a6428b9dc24b1aca9ecbb9db5291def",
+              "retrieved_at": "2026-11-15T03:24:48.320280+00:00",
+              "http_status": 200,
+              "request_ms": 436.72
+            }
+          ]
+        },
+        "open_meteo": {
+          "status": "FRESH",
+          "error": null,
+          "last_success_at": "2026-11-15T03:24:47.819361+00:00",
+          "observed_at": null,
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": "2026-11-22T00:00:00+00:00",
+          "record_count": 165,
+          "provenance": [
+            {
+              "url": "https://api.open-meteo.com/v1/forecast?latitude=38.5449&longitude=-121.7405&hourly=temperature_2m%2Crelative_humidity_2m%2Cprecipitation%2Cprecipitation_probability%2Cwind_speed_10m%2Csoil_moisture_0_to_1cm&forecast_days=7&timezone=UTC&timeformat=unixtime&wind_speed_unit=ms",
+              "sha256": "408255e0e6b2337bfe4e25b62982754bb7ed0abc86ac68f4d5c2c2c185388ee4",
+              "retrieved_at": "2026-11-15T03:24:47.819361+00:00",
+              "http_status": 200,
+              "request_ms": 131.93
+            }
+          ]
+        },
+        "nasa_catalog": {
+          "status": "METADATA_ONLY",
+          "error": null,
+          "last_success_at": "2026-11-15T03:24:49.008469+00:00",
+          "observed_at": null,
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": null,
+          "record_count": 0,
+          "provenance": [
+            {
+              "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?short_name=HLSL30_VI&version=2.0&point=-121.7405%2C38.5449&sort_key=-start_date&page_size=1",
+              "sha256": "04aecc1f1554a6ac3b9e3e5d8bc74334a18a58156820c9036533fe6adbd8bb05",
+              "retrieved_at": "2026-11-15T03:24:49.008469+00:00",
+              "http_status": 200,
+              "request_ms": 270.26
+            },
+            {
+              "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?short_name=HLSS30_VI&version=2.0&point=-121.7405%2C38.5449&sort_key=-start_date&page_size=1",
+              "sha256": "eb99ed748fc42c82b827212c86e4bd227e2ca6e20cf02accdcceb4f8752d4d3e",
+              "retrieved_at": "2026-11-15T03:24:50.444016+00:00",
+              "http_status": 200,
+              "request_ms": 272.94
+            },
+            {
+              "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?short_name=SPL4SMGP&version=008&point=-121.7405%2C38.5449&sort_key=-start_date&page_size=1",
+              "sha256": "32245edd757b430e331937af245893bcaf39a9bd89252b20ae05e7c727a9b660",
+              "retrieved_at": "2026-11-15T03:24:51.818203+00:00",
+              "http_status": 200,
+              "request_ms": 186.34
+            },
+            {
+              "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?short_name=GPM_3IMERGHHE&version=07&point=-121.7405%2C38.5449&sort_key=-start_date&page_size=1",
+              "sha256": "9d5f7836eeaf4af2cd3fd6ca22fca3143eb6cc62d51754c32ec0adcb4fd6efd1",
+              "retrieved_at": "2026-11-15T03:24:53.061847+00:00",
+              "http_status": 200,
+              "request_ms": 255.8
+            }
+          ]
+        }
+      }
+    },
+    "mandalay": {
+      "classification": "ACTUAL_LIVE_PROVIDER_REQUESTS",
+      "sources": {
+        "iowa_station": {
+          "status": "GEOGRAPHIC_NON_COVERAGE",
+          "error": "GEOGRAPHIC_NON_COVERAGE",
+          "last_success_at": null,
+          "observed_at": null,
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": null,
+          "record_count": 0,
+          "provenance": null
+        },
+        "nws_forecast": {
+          "status": "GEOGRAPHIC_NON_COVERAGE",
+          "error": "GEOGRAPHIC_NON_COVERAGE",
+          "last_success_at": null,
+          "observed_at": null,
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": null,
+          "record_count": 0,
+          "provenance": null
+        },
+        "nws_alerts": {
+          "status": "GEOGRAPHIC_NON_COVERAGE",
+          "error": "GEOGRAPHIC_NON_COVERAGE",
+          "last_success_at": null,
+          "observed_at": null,
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": null,
+          "record_count": 0,
+          "provenance": null
+        },
+        "open_meteo": {
+          "status": "FRESH",
+          "error": null,
+          "last_success_at": "2026-11-15T03:24:47.681507+00:00",
+          "observed_at": null,
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": "2026-11-22T00:00:00+00:00",
+          "record_count": 165,
+          "provenance": [
+            {
+              "url": "https://api.open-meteo.com/v1/forecast?latitude=21.9588&longitude=96.0891&hourly=temperature_2m%2Crelative_humidity_2m%2Cprecipitation%2Cprecipitation_probability%2Cwind_speed_10m%2Csoil_moisture_0_to_1cm&forecast_days=7&timezone=UTC&timeformat=unixtime&wind_speed_unit=ms",
+              "sha256": "b74067b699774f49b42000a7a7f74969540922085978cbe9c92b396946ded4b7",
+              "retrieved_at": "2026-11-15T03:24:47.681507+00:00",
+              "http_status": 200,
+              "request_ms": 129.28
+            }
+          ]
+        },
+        "nasa_catalog": {
+          "status": "METADATA_ONLY",
+          "error": null,
+          "last_success_at": "2026-11-15T03:24:48.734968+00:00",
+          "observed_at": null,
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": null,
+          "record_count": 0,
+          "provenance": [
+            {
+              "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?short_name=HLSL30_VI&version=2.0&point=96.0891%2C21.9588&sort_key=-start_date&page_size=1",
+              "sha256": "b0236f14a7293f8e3bebe24565a8e0f70c1c871c83adf5fb190f6e2c22bd7e13",
+              "retrieved_at": "2026-11-15T03:24:48.734968+00:00",
+              "http_status": 200,
+              "request_ms": 563.06
+            },
+            {
+              "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?short_name=HLSS30_VI&version=2.0&point=96.0891%2C21.9588&sort_key=-start_date&page_size=1",
+              "sha256": "623a41dee436019729ca3d5f18e8041b9f969ad27ece41b263fa6a1d9020de16",
+              "retrieved_at": "2026-11-15T03:24:50.168065+00:00",
+              "http_status": 200,
+              "request_ms": 306.03
+            },
+            {
+              "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?short_name=SPL4SMGP&version=008&point=96.0891%2C21.9588&sort_key=-start_date&page_size=1",
+              "sha256": "54b8d2d46ea50f2362cacea59e714d1cfd008fd1a23939953276fb0333e5b97e",
+              "retrieved_at": "2026-11-15T03:24:51.628880+00:00",
+              "http_status": 200,
+              "request_ms": 518.16
+            },
+            {
+              "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?short_name=GPM_3IMERGHHE&version=07&point=96.0891%2C21.9588&sort_key=-start_date&page_size=1",
+              "sha256": "7532fe45a55c5c421ac9e4070077f017bdee8bdb75bb33c76a0b90b82a2d00a6",
+              "retrieved_at": "2026-11-15T03:24:52.799118+00:00",
+              "http_status": 200,
+              "request_ms": 251.33
+            }
+          ]
+        }
+      }
+    },
+    "yangon": {
+      "classification": "ACTUAL_LIVE_PROVIDER_REQUESTS",
+      "sources": {
+        "iowa_station": {
+          "status": "GEOGRAPHIC_NON_COVERAGE",
+          "error": "GEOGRAPHIC_NON_COVERAGE",
+          "last_success_at": null,
+          "observed_at": null,
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": null,
+          "record_count": 0,
+          "provenance": null
+        },
+        "nws_forecast": {
+          "status": "GEOGRAPHIC_NON_COVERAGE",
+          "error": "GEOGRAPHIC_NON_COVERAGE",
+          "last_success_at": null,
+          "observed_at": null,
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": null,
+          "record_count": 0,
+          "provenance": null
+        },
+        "nws_alerts": {
+          "status": "GEOGRAPHIC_NON_COVERAGE",
+          "error": "GEOGRAPHIC_NON_COVERAGE",
+          "last_success_at": null,
+          "observed_at": null,
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": null,
+          "record_count": 0,
+          "provenance": null
+        },
+        "open_meteo": {
+          "status": "FRESH",
+          "error": null,
+          "last_success_at": "2026-11-15T03:24:47.546713+00:00",
+          "observed_at": null,
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": "2026-11-22T00:00:00+00:00",
+          "record_count": 165,
+          "provenance": [
+            {
+              "url": "https://api.open-meteo.com/v1/forecast?latitude=16.8661&longitude=96.1951&hourly=temperature_2m%2Crelative_humidity_2m%2Cprecipitation%2Cprecipitation_probability%2Cwind_speed_10m%2Csoil_moisture_0_to_1cm&forecast_days=7&timezone=UTC&timeformat=unixtime&wind_speed_unit=ms",
+              "sha256": "1ef72a29c332c727da7b61e95b0084fcee9bfca4f7a9b5d0d3b3b9c27b0f475e",
+              "retrieved_at": "2026-11-15T03:24:47.546713+00:00",
+              "http_status": 200,
+              "request_ms": 113.46
+            }
+          ]
+        },
+        "nasa_catalog": {
+          "status": "METADATA_ONLY",
+          "error": null,
+          "last_success_at": "2026-11-15T03:24:48.167750+00:00",
+          "observed_at": null,
+          "issued_at": null,
+          "updated_at": null,
+          "office": null,
+          "valid_until": null,
+          "record_count": 0,
+          "provenance": [
+            {
+              "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?short_name=HLSL30_VI&version=2.0&point=96.1951%2C16.8661&sort_key=-start_date&page_size=1",
+              "sha256": "d447ff32acbca3b31bebfbf6aef61602307a54795c08123dc477096f523fcabb",
+              "retrieved_at": "2026-11-15T03:24:48.167750+00:00",
+              "http_status": 200,
+              "request_ms": 556.8
+            },
+            {
+              "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?short_name=HLSS30_VI&version=2.0&point=96.1951%2C16.8661&sort_key=-start_date&page_size=1",
+              "sha256": "24df231452e375b2452fd485baaf5dfb17a20b7fde1c1e3e81399d1b483325c0",
+              "retrieved_at": "2026-11-15T03:24:49.859198+00:00",
+              "http_status": 200,
+              "request_ms": 312.3
+            },
+            {
+              "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?short_name=SPL4SMGP&version=008&point=96.1951%2C16.8661&sort_key=-start_date&page_size=1",
+              "sha256": "5bd18720040a97db4513d9b2cb58bb439fef2e53f7fbbc38c0fee3d0e2d3fee5",
+              "retrieved_at": "2026-11-15T03:24:51.107594+00:00",
+              "http_status": 200,
+              "request_ms": 199.9
+            },
+            {
+              "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?short_name=GPM_3IMERGHHE&version=07&point=96.1951%2C16.8661&sort_key=-start_date&page_size=1",
+              "sha256": "ae81017ae0148ddd8f6273cb704eb7fb012e36f1c152ccd69da86efdac6124a2",
+              "retrieved_at": "2026-11-15T03:24:52.543597+00:00",
+              "http_status": 200,
+              "request_ms": 259.62
+            }
+          ]
+        }
+      }
+    }
+  }
+}

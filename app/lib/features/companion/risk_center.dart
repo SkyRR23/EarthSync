@@ -186,7 +186,7 @@ class _RiskCenterState extends ConsumerState<RiskCenter> {
               ],
             ),
             const Text(
-              'Refresh and reassessment are on demand. No background delivery, scheduler or pest prediction is implied.',
+              'Saved assessment refresh and reassessment are on demand. Real-time EarthSync separately monitors environmental sources while the backend runs. No pest prediction or background agronomic reassessment is implied.',
             ),
           ],
         ),

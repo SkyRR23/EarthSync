@@ -14,6 +14,9 @@ server/earthsync/platform_v1/migrations/**
 !server/earthsync/platform_v1/providers/
 server/earthsync/platform_v1/providers/**
 !server/earthsync/platform_v1/providers/*.py
+!server/earthsync/realtime/
+server/earthsync/realtime/**
+!server/earthsync/realtime/*.py
 !data/
 data/**
 !data/crop-knowledge/

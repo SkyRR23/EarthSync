@@ -45,13 +45,14 @@ class CompanionScreen extends ConsumerWidget {
               PageHeader(
                 title: farm?.name ?? tr('Farm records'),
                 subtitle:
-                    'Farmer reports, plans and source evidence stay distinct. Refresh is on demand; no background monitoring is running.',
+                    'Farmer reports, plans and source evidence stay distinct. Real-time environmental monitoring runs separately while the local backend is running.',
               ),
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
                 children: [
                   for (final route in const {
+                    '/realtime': 'Real-time EarthSync',
                     '/field': 'Map & environment',
                     '/rotations': 'Reassess with selected evidence',
                     '/crops': 'Crop references',

@@ -1,4 +1,5 @@
 import '../features/companion/rotation_workspace.dart';
+import '../features/realtime/realtime_panel.dart';
 import '../features/companion/companion_screen.dart';
 import '../features/companion/crop_explorer.dart';
 import '../features/companion/farm_photos.dart';
@@ -29,6 +30,12 @@ GoRouter buildRouter() => GoRouter(
       builder: (_, state, child) =>
           AppShell(path: state.uri.path, child: child),
       routes: [
+        GoRoute(
+          path: '/realtime',
+          builder: (_, s) => RealtimeScreen(
+            initialField: s.uri.queryParameters['field'] == '1',
+          ),
+        ),
         GoRoute(
           path: '/daily-climate',
           builder: (_, s) => DailyClimateScreen(

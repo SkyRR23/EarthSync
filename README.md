@@ -5,16 +5,21 @@ SQLite and the native Rust v0.3 evidence engine. A farmer confirms a field,
 inspects dated environmental evidence, explores crop references, compares an
 existing declared rotation with alternatives, and retains reports and decisions.
 
-This is a **local release candidate**, published in [PR #29](https://github.com/SkyRR23/EarthSync/pull/29).
-Main is not updated while mandatory release gates remain unmet. Numeric NDVI
-observations and official warnings are unavailable in the tested provider scope.
+This branch is the independent **real-time local candidate**, based on the
+combined [PR #29](https://github.com/SkyRR23/EarthSync/pull/29) release. It adds
+actual Iowa station observations, NWS forecasts/alerts, global model forecasts and
+authorized, quality-controlled NASA point/cell evidence with honest acquisition
+times and source delays. Main is not updated while release gates remain unmet.
 There are **zero approved executable crop suitability rules**; all 60 candidates
 remain blocked. Exploration never ranks a “best crop”, predicts income or gives
 an irrigation prescription.
 
-- [Implemented, partial and unavailable objectives](docs/release/COVERAGE.md)
-- [Combined verification and exact evidence classifications](docs/release/VERIFICATION.md)
-- [Local startup, Windows commands and rollback](docs/release/RUNBOOK.md)
+- [Real-time implementation, coverage and measured evidence](docs/realtime/README.md)
+- [Real-time verification and remaining gates](docs/realtime/VERIFICATION.md)
+- [Real-time Windows launch and retest](docs/realtime/WINDOWS_LOCAL_TESTING.md)
+- [Baseline implemented, partial and unavailable objectives](docs/release/COVERAGE.md)
+- [Baseline combined verification](docs/release/VERIFICATION.md)
+- [Baseline staging, private storage and rollback](docs/release/RUNBOOK.md)
 - [NASA demonstration script and screenshots](docs/release/DEMO.md)
 - [Source provenance, licenses and privacy](docs/release/PROVENANCE.md)
 - [Full-stack Windows/Linux packages](docs/release/ARTIFACTS.md)
@@ -38,8 +43,10 @@ they do not become approved crop requirements.
 
 The season view combines reported crop periods, explicitly declared bare/fallow
 periods, unknown gaps, chronology conflicts, photos, environmental snapshots and
-assessment history. New context offers explicit reassessment. Refresh is on
-demand; there is no background monitoring or push-warning service.
+assessment history. New context offers explicit reassessment. Saved assessments
+remain immutable and reassessment is on demand. The real-time backend separately
+monitors environmental sources while running; browsers read its private cache.
+A stopped local PC does not keep monitoring or delivering warnings.
 
 Core interface labels support English and Burmese. Untranslated scientific
 material remains English and requires local agricultural/language review.
@@ -52,4 +59,4 @@ New runtime receipts are kept privately; public release evidence contains saniti
 
 Historical development evidence is retained under `docs/integration/`; it is not
 proof that a feature passed the final combined browser journey. Use the release
-report for the current candidate and its remaining limits.
+report for the baseline and `docs/realtime/VERIFICATION.md` for this candidate.

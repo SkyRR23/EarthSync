@@ -81,6 +81,8 @@ def create_app(
     local_enabled=False,
     allowed_origins=(),
     rate_limit=120,
+    realtime_enabled=False,
+    realtime_client=None,
 ):
     # This is intentionally not a custom authentication protocol. No hosted
     # private API is enabled until an identity provider integration is reviewed.
@@ -128,6 +130,11 @@ def create_app(
     )
     orchestrator = Orchestrator(store, engine, catalog, reference_catalog)
     water = WaterPipeline(transport, engine)
+    from earthsync.realtime.service import Realtime, REFERENCES
+
+    realtime = Realtime(
+        store, client=realtime_client, enabled=realtime_enabled, gfs=forecast_source
+    )
 
     def association(farm_id, point):
         if farm_id and store.farm(OWNER, farm_id).confirmed_point != point:
@@ -245,10 +252,14 @@ def create_app(
             except PlatformError as exc:
                 health.record("Rust v0.3", exc.code, exc.retryable)
         await jobs.start()
-        yield
-        await jobs.close()
-        if client:
-            await client.aclose()
+        await realtime.start()
+        try:
+            yield
+        finally:
+            await realtime.close()
+            await jobs.close()
+            if client:
+                await client.aclose()
 
     app = FastAPI(
         title="EarthSync backend evidence platform (local single-user)",
@@ -256,6 +267,7 @@ def create_app(
         lifespan=lifespan,
     )
     app.state.jobs, app.state.store = jobs, store
+    app.state.realtime = realtime
     if allowed_origins:
         app.add_middleware(
             CORSMiddleware,
@@ -651,12 +663,39 @@ def create_app(
         objects.delete(OWNER, farm_id, photo_id)
         return Response(status_code=204)
 
+    @app.get(PREFIX + "/realtime/locations")
+    def realtime_locations():
+        return REFERENCES
+
+    @app.get(PREFIX + "/realtime/{location_id}")
+    def realtime_snapshot(location_id: str):
+        if location_id not in {r["id"] for r in REFERENCES}:
+            raise PlatformError("NOT_FOUND", 404)
+        return realtime.snapshot(location_id)
+
+    @app.post(PREFIX + "/realtime/{location_id}/refresh", status_code=202)
+    async def realtime_refresh(location_id: str):
+        if location_id not in {r["id"] for r in REFERENCES}:
+            raise PlatformError("NOT_FOUND", 404)
+        realtime.activate(location_id)
+        return {
+            "scheduled": realtime.running,
+            "policy": "Only due sources are checked; provider cache/backoff is preserved.",
+        }
+
+    @app.get(PREFIX + "/farms/{farm_id}/realtime")
+    async def farm_realtime(farm_id: UUID):
+        farm = store.farm(OWNER, farm_id)
+        location_id = realtime.farm_location(farm)
+        return realtime.snapshot(location_id)
+
     return app
 
 
 def app_factory():
     return create_app(
         local_enabled=os.getenv("EARTHSYNC_PLATFORM_LOCAL") == "1",
+        realtime_enabled=os.getenv("EARTHSYNC_REALTIME_ENABLED", "1") == "1",
         allowed_origins=tuple(
             filter(None, os.getenv("EARTHSYNC_PLATFORM_ORIGINS", "").split(","))
         ),

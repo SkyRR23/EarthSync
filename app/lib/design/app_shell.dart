@@ -116,6 +116,11 @@ class AppShell extends ConsumerWidget {
                                 ),
                                 const SizedBox(height: 16),
                                 TextButton.icon(
+                                  onPressed: () => context.push('/realtime'),
+                                  icon: const Icon(Icons.update),
+                                  label: const Text('Real-time EarthSync'),
+                                ),
+                                TextButton.icon(
                                   onPressed: () => context.push('/sources'),
                                   icon: const Icon(
                                     Icons.menu_book_outlined,

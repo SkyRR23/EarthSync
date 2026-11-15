@@ -8,6 +8,7 @@ import '../../state/journal_provider.dart';
 import '../../state/platform_provider.dart';
 import '../field/agricultural_intelligence_panel.dart';
 import 'companion_copy.dart';
+import '../realtime/realtime_panel.dart';
 
 /// Reuses the existing NASA/Rust assessment journey for strategy creation/editing.
 class RotationWorkspace extends ConsumerStatefulWidget {
@@ -40,6 +41,13 @@ class _RotationWorkspaceState extends ConsumerState<RotationWorkspace> {
                 title: 'Rotation strategies',
                 subtitle:
                     'Create and save each proposed sequence, then compare your declared existing plan with alternatives. Editing saves a new assessment; previous evidence and decisions remain immutable.',
+              ),
+              ExpansionTile(
+                title: Text(realtimeCopy(context, 'Real-time EarthSync')),
+                subtitle: const Text(
+                  'Latest environmental context alongside all three strategies; no suitability ranking.',
+                ),
+                children: const [RealtimePanel(compact: true, fieldOnly: true)],
               ),
               Wrap(
                 spacing: 8,
