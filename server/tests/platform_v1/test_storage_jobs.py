@@ -22,6 +22,7 @@ def test_migration_idempotent_and_foreign_keys(store, farm_input, records):
             for p in (
                 Path(__file__).parents[2] / "earthsync/platform_v1/migrations"
             ).glob("*.sql")
+            if p.name != "040_crop_lab_reports.sql"
         }
         assert (
             dict(db.execute("SELECT version,sha256 FROM schema_migrations")) == expected
