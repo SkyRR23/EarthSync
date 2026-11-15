@@ -1,11 +1,25 @@
 # EarthSync — NASA Field Shift
 
+This branch implements **Farmer Experience 2.0**: a cream/green responsive
+interface, soil-first field views, local SQLite tasks, notes and photos, an
+in-app notification center and optional Android local reminders. Daily farm
+management works without an account or a running backend. Fresh environmental
+retrieval still needs a connection, and saved evidence retains its original dates.
+
+Start with `./start-earthsync.ps1` in PowerShell. Read the
+[Farmer Experience guide](docs/ux/FARMER_EXPERIENCE_V2.md),
+[verification and device limitations](docs/ux/VERIFICATION.md) and
+[integration handoff](docs/ux/INTEGRATION_HANDOFF.md) before testing.
+Physical Android reminder delivery is unverified. Cloud task synchronization and
+FCM remain explicitly unconfigured. This isolated branch is for review and testing;
+it has not been merged into `main`.
+
 EarthSync is a Flutter Web agricultural companion backed by Python FastAPI,
 SQLite and the native Rust v0.3 evidence engine. A farmer confirms a field,
 inspects dated environmental evidence, explores crop references, compares an
 existing declared rotation with alternatives, and retains reports and decisions.
 
-This is the **final local real-time integration**, starting from PR #35 and
+The full-stack baseline is the local real-time integration, starting from PR #35 and
 combining the completed crop-intelligence PR #34 and multimodal RAG PR #36.
 The foundation is the combined [PR #29](https://github.com/SkyRR23/EarthSync/pull/29) release. It includes
 actual Iowa station observations, NWS forecasts/alerts, global model forecasts and
@@ -38,9 +52,8 @@ Use a fresh checkout of the reviewed PR head with Python 3.12, Rust 1.99.0 and
 Flutter 3.44.0 / Dart 3.12.0. Keep private databases, tokens and photos outside
 Git and static assets. Follow the runbook to build both pinned runtime profiles
 and run them on loopback. No public deployment is claimed.
-The final integration is gated on combined automated, scientific and runtime
-checks. The current user request authorizes its merge once those checks pass;
-older workstream-specific manual-acceptance notes remain historical context.
+The baseline release reports retain their original verification scope;
+the `docs/ux/` reports describe this farmer-experience branch.
 
 The application connects farm maps and modeled soil pH, sparse regional GFS
 forecasts, NASA POWER historical climate and Rust FAO-56 reference ET0 to saved
@@ -59,10 +72,11 @@ A stopped local PC does not keep monitoring or delivering warnings.
 
 Core interface labels support English and Burmese. Untranslated scientific
 material remains English and requires local agricultural/language review.
-Opt-in device caches support read-only saved records and crop references; original
-retrieval times stay visible. Offline drafts require explicit submission after
-reconnection. Private API responses, map tiles and rasters are excluded from the
-public application-shell service worker.
+Existing evidence caches retain original retrieval times. New local tasks,
+notes, crop reports and photos support offline edits through SQLite. Optional
+cloud synchronization is not configured, and local changes are not uploaded
+automatically. Private API responses, map tiles and rasters are excluded from
+the public application-shell service worker.
 
 New runtime receipts are kept privately; public release evidence contains sanitized summaries, hashes and location-free screenshots.
 

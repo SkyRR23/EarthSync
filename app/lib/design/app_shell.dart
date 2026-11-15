@@ -4,12 +4,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../app/ui_copy.dart';
 import '../state/home_provider.dart';
+import 'tokens.dart';
 
 class AppShell extends ConsumerWidget {
   const AppShell({super.key, required this.child, required this.path});
   final Widget child;
   final String path;
   static const features = [
+    ('Sources & Evidence', '/sources', Icons.menu_book_outlined),
+    ('Notifications', '/notifications', Icons.notifications_outlined),
+    ('Account & privacy', '/settings', Icons.tune_outlined),
+    ('Farmer assistant', '/assistant', Icons.chat_bubble_outline),
     ('Real-Time EarthSync', '/realtime', Icons.update),
     ('Satellite NDVI Map', '/ndvi', Icons.layers_outlined),
     ('Farm Map', '/location', Icons.map_outlined),
@@ -21,17 +26,17 @@ class AppShell extends ConsumerWidget {
     ('Rotation Comparison', '/rotations', Icons.compare_arrows),
   ];
   static const destinations = [
-    ('home', '/dashboard', Icons.grid_view_outlined),
-    ('farm', '/field', Icons.grass_outlined),
-    ('explore', '/explore', Icons.public_outlined),
-    ('assistant', '/assistant', Icons.chat_bubble_outline),
-    ('settings', '/settings', Icons.tune_outlined),
+    ('Home', '/dashboard', Icons.home_outlined),
+    ('My Farm', '/field', Icons.grass_outlined),
+    ('Weather', '/weather', Icons.cloud_outlined),
+    ('Tasks', '/tasks', Icons.checklist_outlined),
+    ('Crops', '/crops', Icons.spa_outlined),
   ];
-  int get selected => path == '/settings'
+  int get selected => ['/crops', '/crop-intelligence'].contains(path)
       ? 4
-      : path == '/assistant'
+      : ['/tasks', '/notifications'].contains(path)
       ? 3
-      : ['/explore', '/area', '/crops'].contains(path)
+      : ['/weather', '/realtime', '/daily-climate'].contains(path)
       ? 2
       : [
               '/field',
@@ -57,7 +62,7 @@ class AppShell extends ConsumerWidget {
     }
     return LayoutBuilder(
       builder: (context, box) {
-        final wide = box.maxWidth >= 1000;
+        final wide = box.maxWidth >= FsLayout.rail;
         return Scaffold(
           appBar: wide
               ? null
@@ -68,6 +73,15 @@ class AppShell extends ConsumerWidget {
                   child: SafeArea(
                     child: ListView(
                       children: [
+                        for (final destination in destinations)
+                          ListTile(
+                            leading: Icon(destination.$3),
+                            title: Text(destination.$1),
+                            onTap: () {
+                              Navigator.of(context).pop();
+                              context.go(destination.$2);
+                            },
+                          ),
                         const Padding(
                           padding: EdgeInsets.all(20),
                           child: Text(

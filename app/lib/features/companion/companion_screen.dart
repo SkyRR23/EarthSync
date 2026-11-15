@@ -45,13 +45,15 @@ class CompanionScreen extends ConsumerWidget {
               PageHeader(
                 title: farm?.name ?? tr('Farm records'),
                 subtitle:
-                    'Farmer reports, plans and source evidence stay distinct. Real-time environmental monitoring runs separately while the local backend is running.',
+                    'Your field story, saved locally. Farmer reports, plans and source evidence stay distinct.',
               ),
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
                 children: [
                   for (final route in const {
+                    '/local-records': 'Local notes & photos',
+                    '/tasks': 'Farm tasks',
                     '/realtime': 'Real-time EarthSync',
                     '/field': 'Map & environment',
                     '/rotations': 'Reassess with selected evidence',
@@ -92,7 +94,7 @@ class CompanionScreen extends ConsumerWidget {
                       ? tr('Cached copy · may be stale')
                       : tr('Last retrieved'),
                   message:
-                      '${snapshot.retrieved}\n${snapshot.cached ? 'Read only · source times remain unchanged. Reconnect and refresh before reassessing or submitting records.' : 'Source acquisition and issue times remain attached to each source. Retrieval does not establish current conditions.'}',
+                      '${snapshot.retrieved}\n${snapshot.cached ? 'Saved source context may be stale. Local reports and tasks remain editable. Refresh online before reassessing.' : 'Source acquisition and issue times remain attached to each source. Retrieval does not establish current conditions.'}',
                 ),
                 Wrap(
                   spacing: 8,
@@ -316,7 +318,7 @@ class _Timeline extends ConsumerWidget {
             if (['season', 'fallow'].contains(e['kind']) &&
                 e['harvest_on'] != null)
               OutlinedButton(
-                onPressed: snapshot.cached
+                onPressed: snapshot.cached || e['local_only'] == true
                     ? null
                     : () async {
                         if (!await confirmAction(

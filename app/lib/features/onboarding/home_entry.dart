@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../state/home_provider.dart';
-import '../dashboard/dashboard_screen.dart';
+import '../dashboard/farmer_dashboard.dart';
 import 'welcome_screen.dart';
 
 class HomeEntry extends ConsumerWidget {
@@ -14,6 +14,6 @@ class HomeEntry extends ConsumerWidget {
             const Scaffold(body: Center(child: CircularProgressIndicator())),
         error: (_, _) => const WelcomeScreen(),
         data: (profile) =>
-            profile.onboarded ? const DashboardScreen() : const WelcomeScreen(),
+            profile.onboarded ? const FarmerDashboard() : const WelcomeScreen(),
       );
 }

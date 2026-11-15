@@ -5,6 +5,7 @@ import 'package:earthsync/data/models/home_profile.dart';
 import 'package:earthsync/design/theme.dart';
 import 'package:earthsync/state/dashboard_provider.dart';
 import 'package:earthsync/state/home_provider.dart';
+import 'package:earthsync/state/local_farm_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,10 +23,12 @@ Future<void> launch(
   t.view.devicePixelRatio = 1;
   addTearDown(t.view.reset);
   final router = buildRouter()..go(start);
+  final localStore = await memoryFarmStore(t);
   addTearDown(router.dispose);
   await t.pumpWidget(
     ProviderScope(
       overrides: [
+        localFarmStoreProvider.overrideWith((ref) async => localStore),
         profileStoreProvider.overrideWithValue(store),
         deviceLocationProvider.overrideWithValue(location),
         dashboardClimateClientProvider.overrideWithValue(
@@ -156,7 +159,7 @@ void main() {
     expect(t.widget<FilledButton>(save).onPressed, null);
     await tapText(t, 'I confirm this point marks my field.');
     await tapText(t, 'Save Confirmed Farm');
-    expect(find.text('East field'), findsOneWidget);
+    expect(find.text('East field'), findsWidgets);
     await t.scrollUntilVisible(
       find.text('Open Farm Questionnaire'),
       300,

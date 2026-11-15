@@ -162,7 +162,10 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text('Explore the world'), findsOneWidget);
-    await tester.tap(find.text('Assistant'));
+    await tester.tap(find.byTooltip('Open navigation menu'));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Farmer assistant'));
+    await tester.tap(find.text('Farmer assistant'));
     await tester.pumpAndSettle();
     expect(find.text('EarthSync assistant'), findsOneWidget);
     expect(find.textContaining('You’re exploring an area.'), findsOneWidget);

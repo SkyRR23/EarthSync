@@ -7,6 +7,7 @@ import '../../state/home_provider.dart';
 import '../../state/integration_provider.dart';
 import '../../state/journal_provider.dart';
 import '../../state/platform_provider.dart';
+import '../../state/local_farm_provider.dart';
 import 'companion_copy.dart';
 import 'crop_picker.dart';
 
@@ -190,25 +191,28 @@ class _JournalFormState extends ConsumerState<JournalForm>
       return;
     }
     await _act(() async {
-      final platform = ref.read(platformFarmClientProvider);
-      final snapshot = widget.snapshot;
-      if (platform == null || snapshot == null || snapshot.cached) {
-        throw StateError(
-          'Reconnect before submitting. Your draft remains local.',
-        );
-      }
+      final farm = ref.read(homeProfileProvider).value?.farm;
+      if (farm == null) throw StateError('Choose a saved farm first.');
       final payload = value();
-      // Persist the same UUID before sending so explicit retries are idempotent.
-      await ref.read(journalCacheProvider).save(_draftKey!, payload);
-      await FarmJournalClient(platform).save(snapshot.farmId, payload);
-      await ref.read(journalCacheProvider).remove(_draftKey!);
+      await updateLocalFarm(
+        ref,
+        (store) => store.put(farm.id, 'journal', {
+          ...payload,
+          'farm_revision': farm.confirmedAt.toUtc().toIso8601String(),
+          'evidence_type': 'farmer_reported',
+          'updated_at': DateTime.now().toUtc().toIso8601String(),
+        }, queue: true),
+      );
+      if (_draftKey != null) {
+        await ref.read(journalCacheProvider).remove(_draftKey!);
+      }
       if (!mounted) return;
       setState(() {
         _id = journalId();
         _notes.clear();
         _photos.clear();
         _evidence.clear();
-        _message = tr('Report saved');
+        _message = 'Report saved on this device. Optional backup is separate.';
       });
       ref.invalidate(journalProvider);
       ref.invalidate(platformAssistantProvider);
@@ -295,7 +299,7 @@ class _JournalFormState extends ConsumerState<JournalForm>
         children: [
           Text(tr('Farmer reported')),
           const Text(
-            'Save a draft first if offline. Nothing is submitted or retried automatically. Dates and crop stages are reported by you.',
+            'Records save on this device, including offline. Dates and crop stages are reported by you. Backup is optional.',
           ),
           choice('Record type', _kind, journalKinds, (v) {
             _kind = v;

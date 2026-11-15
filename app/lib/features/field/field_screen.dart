@@ -15,6 +15,7 @@ import '../../state/integration_provider.dart';
 import '../dashboard/climate_panel.dart';
 import '../dashboard/satellite_preview.dart';
 import 'evidence_panels.dart';
+import '../map/soil_first_map.dart';
 
 class FieldScreen extends ConsumerWidget {
   const FieldScreen({super.key});
@@ -46,6 +47,10 @@ class FieldScreen extends ConsumerWidget {
           child: ListView(
             padding: const EdgeInsets.all(24),
             children: [
+              SoilFirstMap(
+                key: ValueKey('soil-first:${farm.id}:${farm.confirmedAt}'),
+                farm: farm,
+              ),
               if (platformUrl.isNotEmpty)
                 OutlinedButton(
                   onPressed: () => context.push('/farm-evidence'),
@@ -59,6 +64,14 @@ class FieldScreen extends ConsumerWidget {
                 spacing: 8,
                 runSpacing: 8,
                 children: [
+                  OutlinedButton(
+                    onPressed: () => context.push('/local-records'),
+                    child: const Text('Field notes & photos'),
+                  ),
+                  OutlinedButton(
+                    onPressed: () => context.push('/tasks'),
+                    child: const Text('Field tasks'),
+                  ),
                   OutlinedButton(
                     onPressed: () => context.push('/season'),
                     child: Text(tr('season')),

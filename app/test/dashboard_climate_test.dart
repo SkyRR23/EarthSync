@@ -6,6 +6,8 @@ import 'package:earthsync/data/models/farmer_input.dart';
 import 'package:earthsync/data/models/home_profile.dart';
 import 'package:earthsync/features/dashboard/climate_panel.dart';
 import 'package:earthsync/state/dashboard_provider.dart';
+import 'package:earthsync/state/local_farm_provider.dart';
+import 'home_test_support.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -111,13 +113,17 @@ void main() {
     t,
   ) async {
     var fail = false;
+    final store = await memoryFarmStore(t);
     final client = NasaPowerClient(
       client: MockClient(
         (_) async => http.Response(fail ? '' : raw, fail ? 503 : 200),
       ),
     );
     final container = ProviderContainer(
-      overrides: [dashboardClimateClientProvider.overrideWithValue(client)],
+      overrides: [
+        dashboardClimateClientProvider.overrideWithValue(client),
+        localFarmStoreProvider.overrideWith((ref) async => store),
+      ],
     );
     addTearDown(container.dispose);
     await t.pumpWidget(
@@ -137,7 +143,7 @@ void main() {
     await t.pumpAndSettle();
     expect(find.textContaining('0.04 mm'), findsOneWidget);
     fail = true;
-    container.invalidate(dashboardClimateProvider(query));
+    container.invalidate(liveDashboardClimateProvider(query));
     await t.pumpAndSettle();
     expect(
       find.textContaining('Last-known data for this same point'),

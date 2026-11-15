@@ -11,6 +11,7 @@ import '../../state/dashboard_provider.dart';
 import '../results/climate_provenance.dart';
 import '../field/evidence_panels.dart';
 import '../../state/integration_provider.dart';
+import 'source_directory.dart';
 
 class SourcesScreen extends ConsumerWidget {
   const SourcesScreen({super.key});
@@ -39,6 +40,7 @@ class SourcesScreen extends ConsumerWidget {
           child: ListView(
             padding: const EdgeInsets.all(24),
             children: [
+              const SourceDirectory(),
               PageHeader(title: tr('sources'), subtitle: tr('sourceNote')),
               EvidenceNotice(
                 title: UiLabels.readTheEvidenceInContext,

@@ -32,7 +32,7 @@ class ClimateReading {
 /// Presentation of backend monthly values only. No crop analysis, gap filling,
 /// spatial averaging, or alternative climate source.
 class AreaClimate {
-  AreaClimate(this.evidence, HistoricalWindow window) {
+  AreaClimate(this.evidence, HistoricalWindow window, {this.cached = false}) {
     final observations =
         evidence.environment['seasonal']['observations'] as List;
     for (
@@ -66,5 +66,6 @@ class AreaClimate {
     }
   }
   final NasaPowerEvidence evidence;
+  final bool cached;
   final List<ClimateReading> readings = [];
 }

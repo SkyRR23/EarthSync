@@ -1,6 +1,27 @@
 import 'package:earthsync/data/local/profile_store.dart';
 import 'package:earthsync/data/location/device_location.dart';
 import 'package:earthsync/data/models/home_profile.dart';
+import 'package:earthsync/data/local/database.dart';
+import 'package:earthsync/data/local/farm_store.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+
+Future<LocalFarmStore> memoryFarmStore(WidgetTester tester) async {
+  final store = (await tester.runAsync(() async {
+    sqfliteFfiInit();
+    final db = await databaseFactoryFfiNoIsolate.openDatabase(
+      inMemoryDatabasePath,
+      options: OpenDatabaseOptions(
+        version: 1,
+        onCreate: createFarmSchema,
+        singleInstance: false,
+      ),
+    );
+    return LocalFarmStore(db);
+  }))!;
+  addTearDown(store.db.close);
+  return store;
+}
 
 class MemoryProfileStore implements ProfileStore {
   MemoryProfileStore([this.profile = const HomeProfile()]);

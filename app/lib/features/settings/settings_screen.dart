@@ -160,6 +160,14 @@ class SettingsScreen extends ConsumerWidget {
                   ],
                 ),
               ),
+              OutlinedButton(
+                onPressed: () => context.push('/local-data'),
+                child: const Text('Local data: export & privacy'),
+              ),
+              OutlinedButton(
+                onPressed: () => context.push('/notifications'),
+                child: const Text('Notification preferences'),
+              ),
               if (platformUrl.isNotEmpty)
                 OutlinedButton(
                   onPressed: () => context.push('/daily-climate'),

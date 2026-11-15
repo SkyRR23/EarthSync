@@ -3,6 +3,9 @@ import 'package:earthsync/data/farm_journal.dart';
 import 'package:earthsync/data/platform_farms.dart';
 import 'package:earthsync/data/platform_transport.dart';
 import 'package:earthsync/state/home_provider.dart';
+import 'package:earthsync/state/local_farm_provider.dart';
+import 'package:earthsync/state/journal_provider.dart';
+import 'package:earthsync/state/platform_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -12,6 +15,60 @@ import 'home_test_support.dart';
 
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
+  testWidgets(
+    'authorization denial hides retained server evidence and keeps device records',
+    (tester) async {
+      final store = await memoryFarmStore(tester);
+      await tester.runAsync(() async {
+        await store.put('field-1', 'journal', {
+          'id': 'local-note',
+          'kind': 'observation',
+        });
+        var denied = false;
+        final client = PlatformFarmClient(
+          PlatformTransport(
+            MockClient((_) async => http.Response('{}', 503)),
+            baseUri: Uri.parse('http://127.0.0.1:8021'),
+          ),
+        );
+        final container = ProviderContainer(
+          overrides: [
+            profileStoreProvider.overrideWithValue(
+              MemoryProfileStore(confirmedProfile()),
+            ),
+            localFarmStoreProvider.overrideWith((ref) async => store),
+            platformFarmClientProvider.overrideWithValue(client),
+            remoteJournalProvider.overrideWith((ref) async {
+              if (denied) throw const PlatformFailure('HTTP_403');
+              return FarmJournalSnapshot({
+                'farm_id': 'remote-farm',
+                'retrieved_at': '2024-01-01T00:00:00Z',
+                'evidence': [
+                  {'id': 'private-server-evidence'},
+                ],
+              });
+            }),
+          ],
+        );
+        addTearDown(container.dispose);
+        await container.read(homeProfileProvider.future);
+        final subscription = container.listen(journalProvider, (_, _) {});
+        addTearDown(subscription.close);
+        await container.read(remoteJournalProvider.future);
+        expect(
+          (await container.read(journalProvider.future))!.rows('evidence'),
+          isNotEmpty,
+        );
+        denied = true;
+        container.invalidate(remoteJournalProvider);
+        await container.pump();
+        final after = (await container.read(journalProvider.future))!;
+        expect(after.rows('evidence'), isEmpty);
+        expect(after.rows('entries').single['id'], 'local-note');
+        expect(after.cached, true);
+      });
+    },
+  );
   test(
     'offline snapshot is explicit and isolated by origin and farm revision',
     () async {

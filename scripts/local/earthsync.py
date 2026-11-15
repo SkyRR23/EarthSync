@@ -205,6 +205,7 @@ def setup(ports, rebuild=False):
         "platform_port": ports["platform"],
         "web_port": ports["web"],
         "sdk": str(flutter),
+        "judges_demo": os.getenv("EARTHSYNC_JUDGES_DEMO", "false"),
     }
     if (
         rebuild
@@ -220,6 +221,9 @@ def setup(ports, rebuild=False):
         )
     ):
         command([flutter, "pub", "get", "--enforce-lockfile"], cwd=ROOT / "app")
+        dart = flutter.with_name("dart.bat" if os.name == "nt" else "dart")
+        if not all((ROOT / "app/web" / name).is_file() for name in ("sqlite3.wasm", "sqflite_sw.js")):
+            command([dart, "run", "sqflite_common_ffi_web:setup"], cwd=ROOT / "app")
         command(
             [
                 flutter,
@@ -230,7 +234,7 @@ def setup(ports, rebuild=False):
                 f"--dart-define=PLATFORM_URL=http://127.0.0.1:{ports['platform']}",
                 f"--dart-define=WEB_DEMO_URL=http://127.0.0.1:{ports['web']}/",
                 f"--dart-define=BACKEND_URL=http://127.0.0.1:{ports['web']}",
-                "--dart-define=EARTHSYNC_JUDGES_DEMO=true",
+                f"--dart-define=EARTHSYNC_JUDGES_DEMO={build['judges_demo']}",
             ],
             cwd=ROOT / "app",
         )
@@ -662,7 +666,9 @@ def main():
             command(["cargo", "test", "--locked"], cwd=ROOT / "app/rust")
             flutter = flutter_sdk()
             command([flutter, "analyze"], cwd=ROOT / "app")
-            command([flutter, "test"], cwd=ROOT / "app")
+            native_dir = ROOT / "app/rust/target/release"
+            test_env = {**os.environ, "PATH": str(native_dir) + os.pathsep + os.environ.get("PATH", "")}
+            command([flutter, "test"], cwd=ROOT / "app", env=test_env)
     elif args.action == "logs":
         for name in ("supervisor", "web", "platform", "research"):
             path = RUNTIME / f"{name}.log"

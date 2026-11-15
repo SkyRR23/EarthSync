@@ -6,8 +6,8 @@ ThemeData fsTheme({Brightness brightness = Brightness.light}) {
   final scheme = ColorScheme.fromSeed(
     seedColor: FsColors.primary,
     brightness: brightness,
-    primary: dark ? const Color(0xFFA4D5B8) : FsColors.primary,
-    surface: dark ? const Color(0xFF192A23) : FsColors.surface,
+    primary: dark ? FsColors.darkPrimary : FsColors.primary,
+    surface: dark ? FsColors.darkSurface : FsColors.surface,
     error: dark ? const Color(0xFFFFB4AB) : FsColors.riskHigh,
   );
   final base = ThemeData(
@@ -58,9 +58,9 @@ ThemeData fsTheme({Brightness brightness = Brightness.light}) {
   final shape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(14));
   return base.copyWith(
     textTheme: text,
-    scaffoldBackgroundColor: dark ? const Color(0xFF101E18) : FsColors.bg,
+    scaffoldBackgroundColor: dark ? FsColors.darkBackground : FsColors.bg,
     appBarTheme: AppBarTheme(
-      backgroundColor: dark ? const Color(0xFF101E18) : FsColors.bg,
+      backgroundColor: dark ? FsColors.darkBackground : FsColors.bg,
       foregroundColor: scheme.onSurface,
       elevation: 0,
       scrolledUnderElevation: 0,

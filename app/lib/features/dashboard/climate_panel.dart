@@ -13,6 +13,7 @@ class ClimatePanel extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(dashboardClimateProvider(query));
+    final live = ref.watch(liveDashboardClimateProvider(query));
     final climate = state.value;
     return Card(
       semanticContainer: false,
@@ -32,31 +33,39 @@ class ClimatePanel extends ConsumerWidget {
             Text(
               '${DateFormat.yMMM().format(DateTime(query.window.startYear, query.window.startMonth))} – ${DateFormat.yMMM().format(DateTime(query.window.endYear, query.window.endMonth))} · LST',
             ),
-            if (state.isLoading) ...[
+            if (state.isLoading || live.isLoading) ...[
               const SizedBox(height: 12),
               const LinearProgressIndicator(),
               const Text(
                 'Loading climate records… NASA requests can take up to 90 seconds.',
               ),
             ],
-            if (state.hasError) ...[
+            if (state.hasError || live.hasError) ...[
               const SizedBox(height: 12),
               const Text(
                 'Climate data unavailable. Try again when the service is reachable. No example or synthetic climate was substituted. Missing data do not mean safe conditions.',
               ),
-              if (state.error case final EngineError error) Text(error.message),
+              if ((state.error ?? live.error) case final EngineError error)
+                Text(error.message),
             ],
             if (climate != null) ...[
-              if (state.hasError || state.isLoading)
+              if (climate.cached)
                 const Text(
-                  'Last-known data for this same point and period · kept in this session.',
+                  'Saved NASA climate copy. Original source dates are unchanged; it may be stale and cannot be refreshed offline.',
+                ),
+              if (live.hasError || live.isLoading)
+                const Text(
+                  'Last-known data for this same point and period. Original source dates are retained.',
                 ),
               ClimateReadings(climate: climate),
             ],
             TextButton.icon(
-              onPressed: state.isLoading
+              onPressed: live.isLoading
                   ? null
-                  : () => ref.invalidate(dashboardClimateProvider(query)),
+                  : () {
+                      ref.invalidate(liveDashboardClimateProvider(query));
+                      ref.invalidate(dashboardClimateProvider(query));
+                    },
               icon: const Icon(Icons.refresh),
               label: Text(
                 state.hasError ? 'Try climate again' : 'Refresh climate',

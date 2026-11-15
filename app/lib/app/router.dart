@@ -1,4 +1,10 @@
 import '../features/companion/rotation_workspace.dart';
+import '../features/tasks/tasks_screen.dart';
+import '../features/tasks/notifications_screen.dart';
+import '../features/companion/local_records_screen.dart';
+import '../features/dashboard/farmer_dashboard.dart';
+import '../features/dashboard/weather_screen.dart';
+import '../features/settings/local_data_screen.dart';
 import '../features/realtime/realtime_panel.dart';
 import '../features/map/ndvi_panel.dart';
 import '../features/companion/companion_screen.dart';
@@ -31,6 +37,33 @@ GoRouter buildRouter() => GoRouter(
       builder: (_, state, child) =>
           AppShell(path: state.uri.path, child: child),
       routes: [
+        GoRoute(
+          path: '/local-data',
+          builder: (_, _) => const LocalDataScreen(),
+        ),
+        GoRoute(path: '/weather', builder: (_, _) => const WeatherScreen()),
+        GoRoute(
+          path: '/climate-overview',
+          builder: (_, _) => const DashboardScreen(),
+        ),
+        GoRoute(
+          path: '/local-records',
+          builder: (_, state) => FarmRequired(
+            child: LocalRecordsScreen(
+              initialKind: state.uri.queryParameters['kind'] ?? 'observation',
+            ),
+          ),
+        ),
+        GoRoute(
+          path: '/tasks',
+          builder: (_, state) => FarmRequired(
+            child: TasksScreen(taskId: state.uri.queryParameters['task']),
+          ),
+        ),
+        GoRoute(
+          path: '/notifications',
+          builder: (_, _) => const NotificationsScreen(),
+        ),
         GoRoute(path: '/ndvi', builder: (_, _) => const NdviScreen()),
         GoRoute(
           path: '/crop-intelligence',
@@ -77,7 +110,7 @@ GoRouter buildRouter() => GoRouter(
         GoRoute(path: '/explore', builder: (_, _) => const ExploreScreen()),
         GoRoute(path: '/settings', builder: (_, _) => const SettingsScreen()),
         GoRoute(path: '/', builder: (_, _) => const HomeEntry()),
-        GoRoute(path: '/dashboard', builder: (_, _) => const DashboardScreen()),
+        GoRoute(path: '/dashboard', builder: (_, _) => const FarmerDashboard()),
         GoRoute(
           path: '/field',
           builder: (_, _) => const FarmRequired(child: FieldScreen()),
