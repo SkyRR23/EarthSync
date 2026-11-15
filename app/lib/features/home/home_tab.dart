@@ -12,6 +12,7 @@ import '../../data/models/farmer_input.dart';
 import '../../design/components/buttons.dart';
 import '../../design/components/earth.dart';
 import '../../design/components/grouped.dart';
+import '../../design/components/logo.dart';
 import '../../design/tokens.dart';
 import '../../state/account.dart';
 import '../../state/providers.dart';
@@ -106,7 +107,7 @@ class _HomeTabState extends ConsumerState<HomeTab> {
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.eco_rounded, color: p.tint, size: 30),
+                      const EarthSyncLogo(),
                       const SizedBox(width: FsSpace.sm),
                       Expanded(
                         child: Text(

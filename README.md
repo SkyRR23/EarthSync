@@ -1,5 +1,11 @@
 # EarthSync — NASA Field Shift
 
+The final combined submission uses the team's PR #32 interface, with persistent
+local Tasks, crop rotation decisions, soil layers and historical evidence tools.
+Read the [submission handoff and timed judging demo](docs/ux/SUBMISSION_HANDOFF.md).
+Build and device limitations are stated there; the team requested deferring the
+combined acceptance tests to their own testing.
+
 This branch implements **Farmer Experience 2.0**: a cream/green responsive
 interface, soil-first field views, local SQLite tasks, notes and photos, an
 in-app notification center and optional Android local reminders. Daily farm

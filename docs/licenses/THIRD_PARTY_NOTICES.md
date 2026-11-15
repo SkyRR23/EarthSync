@@ -1,5 +1,9 @@
 # Third-party source register — foundation increment
 
+The EarthSync shield/leaf logo in `app/assets/branding/earthsync-logo.png`, the
+Android launcher resources and Web icon was supplied by the project owner on
+2026-11-15. The supplied PNG is used unchanged; no stock-art license is asserted.
+
 No final project license has been selected. Team confirmation is required.
 This is an initial register, not a complete distribution license bundle.
 

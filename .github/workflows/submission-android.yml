@@ -19,6 +19,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@1.99.0
         with:
           targets: aarch64-linux-android,armv7-linux-androideabi,x86_64-linux-android
+      - uses: android-actions/setup-android@v3
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.44.0'

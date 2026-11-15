@@ -7,6 +7,7 @@ import '../../app/strings.dart';
 import '../../data/models/farmer_input.dart';
 import '../../design/components/buttons.dart';
 import '../../design/components/earth.dart';
+import '../../design/components/logo.dart';
 import '../../design/components/page.dart' show FsBackArrow;
 import '../../design/components/pressable.dart';
 import '../../design/components/scenario.dart' show cropEmoji, monthNames;
@@ -52,7 +53,7 @@ class SetupWelcome extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.eco_rounded, color: p.tint, size: 34),
+                        const EarthSyncLogo(size: 44),
                         const SizedBox(width: FsSpace.sm),
                         Text(
                           S.appName,
