@@ -35,7 +35,7 @@ from .http import SourceError
 from .nasa_assets import AssetSession, RangeFile
 from .providers import timestamp
 
-MAX_CELLS = 65536
+MAX_CELLS = 131072
 POLICY = "hls-v2-conservative.v1"
 
 
@@ -47,9 +47,24 @@ def geometry(location, polygon=None):
     validated = Polygon.model_validate(polygon).model_dump(mode="json")
     geom = shape(validated)
     west, south, east, north = geom.bounds
-    if not (-80 < south < north < 80) or east - west > 0.1 or north - south > 0.1:
+    if not (-80 < south < north < 80) or east - west > 0.2 or north - south > 0.2:
         raise SourceError("NDVI_AREA_TOO_LARGE")
     return validated
+
+
+def viewport_bbox(value):
+    try:
+        west, south, east, north = map(float, value.split(","))
+    except (TypeError, ValueError):
+        raise SourceError("INVALID_MAP_BOUNDS") from None
+    if (
+        not all(math.isfinite(v) for v in (west, south, east, north))
+        or not -180 <= west < east <= 180
+        or not -80 < south < north < 80
+    ):
+        raise SourceError("INVALID_MAP_BOUNDS")
+    polygon = geometry({}, mapping(box(west, south, east, north)))
+    return {"lon": (west + east) / 2, "lat": (south + north) / 2}, polygon
 
 
 def _read(product, polygon, session, url, qa):
