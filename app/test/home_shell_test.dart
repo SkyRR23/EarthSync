@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:earthsync/app/strings.dart';
@@ -7,7 +6,9 @@ import 'package:earthsync/data/models/farm_boundary.dart';
 import 'package:earthsync/data/models/field_analysis.dart';
 import 'package:earthsync/design/components/scenario.dart';
 import 'package:earthsync/design/theme.dart';
+import 'package:earthsync/features/home/crops_tab.dart';
 import 'package:earthsync/features/home/home_shell.dart';
+import 'package:earthsync/features/home/home_tab.dart';
 import 'package:earthsync/state/providers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,23 +32,37 @@ class _Ready extends AnalysisNotifier {
   AnalysisState build() => AnalysisReady(a);
 }
 
+class _PresetDraft extends FarmerDraftNotifier {
+  _PresetDraft(this._initial);
+  final FarmerDraft _initial;
+  @override
+  FarmerDraft build() => _initial;
+}
+
 Widget _buildShell({
   required FieldAnalysis analysis,
   required SharedPreferences prefs,
   required ThemeData theme,
   double textScale = 1.0,
+  FarmerDraft draft = const FarmerDraft(
+    latitude: 16.866,
+    longitude: 96.195,
+    currentCrop: 'rice',
+  ),
 }) {
   return ProviderScope(
     overrides: [
       analysisProvider.overrideWith(() => _Ready(analysis)),
       prefsProvider.overrideWithValue(prefs),
+      farmerDraftProvider.overrideWith(() => _PresetDraft(draft)),
     ],
     child: MaterialApp(
       theme: theme,
       builder: (context, child) => MediaQuery(
-        data: MediaQuery.of(
-          context,
-        ).copyWith(textScaler: TextScaler.linear(textScale)),
+        data: MediaQuery.of(context).copyWith(
+          textScaler: TextScaler.linear(textScale),
+          disableAnimations: true,
+        ),
         child: child!,
       ),
       home: const HomeShell(),
@@ -55,22 +70,12 @@ Widget _buildShell({
   );
 }
 
-Finder _navTitle(String text) => find.descendant(
-  of: find.byType(CupertinoSliverNavigationBar),
-  matching: find.text(text),
-);
-
 Future<void> _visitTabs(WidgetTester tester) async {
-  for (final tab in [
-    S.tabCrops,
-    S.tabWeather,
-    S.tabField,
-    S.tabNotes,
-    S.tabToday,
-  ]) {
+  for (final tab in [S.tabCrops, S.tabWeather, S.tabField, S.tabNotes]) {
     await tester.tap(find.text(tab).last);
     await tester.pumpAndSettle();
-    expect(tester.takeException(), isNull, reason: 'visiting tab $tab');
+    final err = tester.takeException();
+    expect(err, isNull, reason: 'visiting tab $tab');
   }
 }
 
@@ -84,41 +89,32 @@ void main() {
     analysis = _loadAnalysis();
   });
 
-  testWidgets(
-    '5 tabs: Today, Crops, Weather, Field, Notes — each shows its page',
-    (tester) async {
-      await tester.pumpWidget(
-        _buildShell(analysis: analysis, prefs: prefs, theme: fsLightTheme()),
-      );
-      await tester.pumpAndSettle();
+  testWidgets('4 tabs: Crops, Weather, Field, Notes — each shows its page', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _buildShell(analysis: analysis, prefs: prefs, theme: fsLightTheme()),
+    );
+    await tester.pumpAndSettle();
 
-      for (final tab in [
-        S.tabToday,
-        S.tabCrops,
-        S.tabWeather,
-        S.tabField,
-        S.tabNotes,
-      ]) {
-        expect(find.text(tab), findsWidgets);
-      }
+    for (final tab in [S.tabCrops, S.tabWeather, S.tabField, S.tabNotes]) {
+      expect(find.text(tab), findsWidgets);
+    }
 
-      await tester.tap(find.text(S.tabCrops).last);
-      await tester.pumpAndSettle();
-      expect(_navTitle(S.nextSeason), findsOneWidget);
+    expect(find.text(greeting(DateTime.now())), findsOneWidget);
 
-      await tester.tap(find.text(S.tabWeather).last);
-      await tester.pumpAndSettle();
-      expect(_navTitle(S.tabWeather), findsOneWidget);
+    await tester.tap(find.text(S.tabWeather).last);
+    await tester.pumpAndSettle();
+    expect(find.text(S.weatherTitle), findsOneWidget);
 
-      await tester.tap(find.text(S.tabField).last);
-      await tester.pumpAndSettle();
-      expect(_navTitle(S.myFarm), findsOneWidget);
+    await tester.tap(find.text(S.tabField).last);
+    await tester.pumpAndSettle();
+    expect(find.text(S.yourFieldsTitle), findsOneWidget);
 
-      await tester.tap(find.text(S.tabNotes).last);
-      await tester.pumpAndSettle();
-      expect(_navTitle(S.notesTitle), findsOneWidget);
-    },
-  );
+    await tester.tap(find.text(S.tabNotes).last);
+    await tester.pumpAndSettle();
+    expect(find.text(S.notesTitle), findsOneWidget);
+  });
 
   testWidgets(
     'Crops: one card per plan, best fit first, tap opens "why" sheet',
@@ -128,10 +124,17 @@ void main() {
       addTearDown(tester.view.reset);
 
       await tester.pumpWidget(
-        _buildShell(analysis: analysis, prefs: prefs, theme: fsLightTheme()),
+        ProviderScope(
+          overrides: [
+            analysisProvider.overrideWith(() => _Ready(analysis)),
+            prefsProvider.overrideWithValue(prefs),
+          ],
+          child: MaterialApp(
+            theme: fsLightTheme(),
+            home: CropsTab(analysis: analysis),
+          ),
+        ),
       );
-      await tester.pumpAndSettle();
-      await tester.tap(find.text(S.tabCrops).last);
       await tester.pumpAndSettle();
 
       final cards = find.byType(FsCropCard);
@@ -141,7 +144,7 @@ void main() {
 
       await tester.tap(cards.first);
       await tester.pumpAndSettle();
-      expect(find.text(S.whyGood.toUpperCase()), findsOneWidget);
+      expect(find.text(S.whyGood), findsOneWidget);
       expect(find.text(S.moreDetails), findsOneWidget);
       expect(find.textContaining('%'), findsNothing);
     },
@@ -195,7 +198,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text(S.save));
     await tester.pumpAndSettle();
-    expect(find.text(S.yourNotes.toUpperCase()), findsOneWidget);
+    expect(find.text(S.yourNotes), findsOneWidget);
     expect(find.text(S.kindWater), findsNWidgets(2)); // tile + saved note
   });
 
@@ -208,8 +211,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text(S.tabField).last);
     await tester.pumpAndSettle();
-    expect(find.text(S.markFarmBody), findsOneWidget);
-    expect(find.text(S.editFarm), findsNothing);
+    expect(find.text(S.markFarm), findsOneWidget);
+    expect(find.text(S.viewFieldDetails), findsNothing);
   });
 
   testWidgets('Field: a saved farm shows its size and the edit row', (
@@ -221,27 +224,27 @@ void main() {
       LatLng(16.8670, 96.1960),
       LatLng(16.8670, 96.1940),
     ]);
-    SharedPreferences.setMockInitialValues({
-      'farmer_draft_v1': jsonEncode(
-        FarmerDraft(
-          latitude: 16.866,
-          longitude: 96.195,
-          currentCrop: 'rice',
-          farm: farm,
-        ).toJson(),
-      ),
-    });
-    prefs = await SharedPreferences.getInstance();
+    final draftWithFarm = FarmerDraft(
+      latitude: 16.866,
+      longitude: 96.195,
+      currentCrop: 'rice',
+      farm: farm,
+    );
 
     await tester.pumpWidget(
-      _buildShell(analysis: analysis, prefs: prefs, theme: fsLightTheme()),
+      _buildShell(
+        analysis: analysis,
+        prefs: prefs,
+        theme: fsLightTheme(),
+        draft: draftWithFarm,
+      ),
     );
     await tester.pumpAndSettle();
     await tester.tap(find.text(S.tabField).last);
     await tester.pumpAndSettle();
-    expect(find.text(S.editFarm), findsOneWidget);
-    expect(find.text(farmSizeLabel(farm)), findsWidgets);
-    expect(find.text(S.markFarmBody), findsNothing);
+    expect(find.text(S.viewFieldDetails), findsOneWidget);
+    expect(find.textContaining(farmSizeLabel(farm)), findsWidgets);
+    expect(find.text(S.markFarm), findsNothing);
   });
 
   testWidgets('light mode renders every tab without layout errors', (
@@ -288,7 +291,7 @@ void main() {
       _buildShell(analysis: analysis, prefs: prefs, theme: fsLightTheme()),
     );
     await tester.pumpAndSettle();
-    expect(find.text(S.appName), findsOneWidget);
+    expect(find.text(S.appName), findsWidgets);
     await _visitTabs(tester);
   });
 }

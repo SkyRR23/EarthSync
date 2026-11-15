@@ -86,7 +86,13 @@ class _HomeShellState extends ConsumerState<HomeShell>
             ),
           );
         },
-        child: IndexedStack(index: _tab, children: pages),
+        child: IndexedStack(
+          index: _tab,
+          children: [
+            for (var i = 0; i < pages.length; i++)
+              TickerMode(enabled: i == _tab, child: pages[i]),
+          ],
+        ),
       ),
     );
 

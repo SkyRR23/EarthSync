@@ -249,16 +249,17 @@ class _FieldTabState extends ConsumerState<FieldTab> {
                                 child: _MapPill(
                                   child: health
                                       ? const PlantHealthLegend()
-                                      : Row(
-                                          mainAxisSize: MainAxisSize.min,
+                                      : Wrap(
+                                          spacing: FsSpace.md,
+                                          runSpacing: FsSpace.xs,
                                           children: [
-                                            _Dot(const Color(0xFF4CAF50)),
-                                            Text(S.onTrack, style: t.subhead),
-                                            const SizedBox(width: FsSpace.md),
-                                            _Dot(const Color(0xFFF2B233)),
-                                            Text(
+                                            _LegendItem(
+                                              const Color(0xFF4CAF50),
+                                              S.onTrack,
+                                            ),
+                                            _LegendItem(
+                                              const Color(0xFFF2B233),
                                               S.needsALook,
-                                              style: t.subhead,
                                             ),
                                           ],
                                         ),
@@ -419,6 +420,21 @@ class _MapPill extends StatelessWidget {
       boxShadow: FsShadow.soft(context.fs),
     ),
     child: child,
+  );
+}
+
+class _LegendItem extends StatelessWidget {
+  const _LegendItem(this.color, this.label);
+  final Color color;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) => Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      _Dot(color),
+      Flexible(child: Text(label, style: context.type.subhead)),
+    ],
   );
 }
 

@@ -5,7 +5,7 @@ import 'package:earthsync/data/environment/recent_conditions.dart';
 import 'package:earthsync/data/models/farmer_input.dart';
 import 'package:earthsync/data/models/field_note.dart';
 import 'package:earthsync/design/theme.dart';
-import 'package:earthsync/features/home/today_tab.dart';
+import 'package:earthsync/features/home/home_tab.dart';
 import 'package:earthsync/features/today/farm_tasks.dart';
 import 'package:earthsync/state/providers.dart';
 import 'package:earthsync/state/today.dart';
@@ -311,7 +311,7 @@ void main() {
         container: c,
         child: MaterialApp(
           theme: fsLightTheme(),
-          home: TodayTab(now: now),
+          home: HomeTab(now: now),
         ),
       ),
     );

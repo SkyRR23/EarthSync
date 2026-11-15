@@ -417,7 +417,7 @@ class _FloatingState extends State<_Floating>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (context.reduceMotion) {
+    if (context.reduceMotion || !TickerMode.valuesOf(context).enabled) {
       _c.stop();
     } else if (!_c.isAnimating && TickerMode.valuesOf(context).enabled) {
       _c.repeat(reverse: true);
