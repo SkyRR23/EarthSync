@@ -83,7 +83,7 @@ GoRouter buildRouter({bool setupDone = false, bool introductionDone = true}) => 
           MapScreen(plantHealth: s.uri.queryParameters['layer'] == 'health'),
     ),
     GoRoute(path: '/farm', builder: (_, _) => const MarkFarmScreen()),
-    GoRoute(path: '/chat', builder: (_, _) => const ChatScreen()),
+    GoRoute(path: '/chat', builder: (_, s) => ChatScreen(noteId: s.uri.queryParameters['note'])),
     GoRoute(path: '/crops', builder: (_, _) => const NextSeasonPage()),
     GoRoute(
       path: '/field-details',

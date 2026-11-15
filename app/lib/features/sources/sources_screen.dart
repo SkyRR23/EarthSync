@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import '../../submission/simulation_clock.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show SelectableText;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,6 +27,7 @@ class SourcesScreen extends ConsumerWidget {
     return FsPage(
       title: S.sources,
       children: [
+        if (!kIsWeb) const SimulationBanner(),
         Padding(
           padding: const EdgeInsets.fromLTRB(
             FsSpace.gutter + FsSpace.xs,

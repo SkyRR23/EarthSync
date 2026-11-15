@@ -1,3 +1,4 @@
+import '../../submission/simulation_clock.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -282,6 +283,7 @@ class _FieldDetailsState extends ConsumerState<FieldDetailsScreen> {
       title: S.fieldDetails,
       subtitle: d.hasFarm ? farmSizeLabel(d.farm!) : null,
       children: [
+        if (!kIsWeb) const SimulationBanner(),
         if (!d.hasFarm)
           _MarkFarmCard(onTap: () => context.push('/farm'))
         else

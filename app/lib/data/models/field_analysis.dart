@@ -153,6 +153,7 @@ class MonthlyClimate {
 
   factory MonthlyClimate.fromJson(Map<String, dynamic> j) => MonthlyClimate(
     month: j['month'] as int,
+    year: j['year'] as int?,
     rainMm: _num(j['rain_mm']),
     tempMeanC: _num(j['temp_mean_c']),
   );

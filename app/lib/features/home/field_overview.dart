@@ -82,10 +82,10 @@ class _FieldTabState extends ConsumerState<FieldTab> {
     final health = _plantHealth && farm != null;
     // NASA HLS (30 m) greenness inside the border; MODIS (250 m) when HLS
     // has no clear image or cannot be read.
-    final green = health ? ref.watch(greennessProvider) : null;
+    final green = health ? (kIsWeb ? ref.watch(greennessProvider) : const AsyncValue<FarmGreenness?>.data(null)) : null;
     final scene = green?.value?.latest;
     final hls = scene != null && scene.cells.isNotEmpty;
-    final modis = health
+    final modis = health && kIsWeb
         ? '${plantHealthDateLabel(ref.watch(plantHealthDateProvider(farm.center)).value)}. ${S.insideFarmOnly} ${S.pixelNote}'
         : null;
     final caption = farm == null

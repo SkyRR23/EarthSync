@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import '../../state/today.dart';
+import '../../data/environment/greenness.dart';
 import '../home/field_overview.dart' show ndviColor;
 import 'dart:ui';
 
@@ -17,6 +17,8 @@ import '../../design/tokens.dart';
 import '../../state/providers.dart';
 import '../home/field_tab.dart' show farmOutlineLayer;
 import 'gibs_layer.dart';
+
+final historicalVegetationProvider = Provider<GreenScene?>((ref) => null);
 
 enum MapLayerKind { street, plantHealth }
 
@@ -52,7 +54,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     );
     final farm = d.hasFarm ? d.farm! : null;
     final cfg = configFor(_layer);
-    final scene = !kIsWeb && farm != null && _layer == MapLayerKind.plantHealth ? ref.watch(greennessProvider).value?.latest : null;
+    final scene = ref.watch(historicalVegetationProvider);
     final fit = farm == null
         ? null
         : CameraFit.coordinates(

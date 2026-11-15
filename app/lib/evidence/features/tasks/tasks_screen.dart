@@ -10,8 +10,9 @@ import '../../state/home_provider.dart';
 import '../../state/local_farm_provider.dart';
 
 class TasksScreen extends ConsumerStatefulWidget {
-  const TasksScreen({super.key, this.taskId});
+  const TasksScreen({super.key, this.taskId, this.advice});
   final String? taskId;
+  final Widget? advice;
   @override
   ConsumerState<TasksScreen> createState() => _TasksScreenState();
 }
@@ -208,6 +209,9 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
             )
             .toList()
           ..sort((a, b) => a.due.compareTo(b.due));
+    if (widget.advice != null) {
+      return Scaffold(appBar: AppBar(title: const Text('Suggested farm checks'), actions: [IconButton(onPressed: () => context.push('/notifications'), tooltip: 'Reminders', icon: const Icon(Icons.notifications_outlined))]), body: ListView(padding: const EdgeInsets.all(16), children: [widget.advice!, const ExpansionTile(title: Text('My saved activities and reminders'), subtitle: Text('Optional activities you manage yourself'), children: [SizedBox(height: 640, child: TasksScreen())])]));
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('Farm tasks'),

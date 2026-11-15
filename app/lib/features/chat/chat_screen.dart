@@ -1,3 +1,4 @@
+import '../../submission/historical_reference.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +16,9 @@ import 'chat_state.dart';
 /// "Ask EarthSync": chat about this farm. Answers come from Groq on the
 /// backend, using only the farm facts the app already shows.
 class ChatScreen extends ConsumerStatefulWidget {
-  const ChatScreen({super.key, this.now});
+  const ChatScreen({super.key, this.now, this.noteId});
   final DateTime? now;
+  final String? noteId;
 
   @override
   ConsumerState<ChatScreen> createState() => _ChatScreenState();
@@ -31,6 +33,16 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   void initState() {
     super.initState();
     if (!kIsWeb) _aboutField = ref.read(prefsProvider)?.getBool('chat_about_field') ?? false;
+    if (widget.noteId != null) {
+      _aboutField = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        final note = ref.read(notesProvider).where((n) => n.id == widget.noteId).firstOrNull;
+        if (note == null) return;
+        final words = note.text.length > 1400 ? note.text.substring(0, 1400) : note.text;
+        _send('My farmer-reported observation on ${note.createdAt.toIso8601String().substring(0, 10)} (${note.kind.name}): $words. What should I inspect or do next? Use relevant retrieved sources and explain their limits. Do not diagnose from this text.');
+      });
+    }
   }
 
   Map<String, String> _facts() => kIsWeb || _aboutField
@@ -47,6 +59,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   Future<void> _send(String text) async {
     if (text.trim().isEmpty) return;
     _input.clear();
+    if (!kIsWeb && ref.read(referenceChoiceProvider)) { await ref.read(historicalReferenceProvider.future); if (!mounted) return; }
     final facts = _facts();
     final f = ref.read(chatProvider.notifier).send(text, facts);
     _toEnd();

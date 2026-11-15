@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'simulation_advice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../state/providers.dart' as team;
@@ -129,7 +130,7 @@ class FarmTasksTab extends ConsumerWidget {
               Center(child: Text('Local tasks could not open: $error')),
           data: (profile) => profile.farm == null
               ? const Center(child: Text('Choose your field first.'))
-              : const TasksScreen(),
+              : const TasksScreen(advice: SimulationAdvicePanel()),
         );
   }
 }

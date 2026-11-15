@@ -1,3 +1,5 @@
+import '../../submission/historical_reference.dart';
+import '../../submission/simulation_clock.dart';
 import '../../data/backend_response.dart';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
@@ -94,8 +96,8 @@ Map<String, String> farmFacts(WidgetRef ref, DateTime now) {
   final d = ref.read(farmerDraftProvider);
   final f = ref.read(forecastProvider).data;
   final r = ref.read(recentProvider).data;
-  final et0 = ref.read(et0Provider).value;
-  final green = ref.read(greennessProvider).value?.latest;
+  final et0 = kIsWeb ? ref.read(et0Provider).value : null;
+  final green = kIsWeb ? ref.read(greennessProvider).value?.latest : null;
   final log = ref.read(waterLogProvider);
   final soil = soilClassFromName(d.soilTexture);
   final todo = [
@@ -118,7 +120,7 @@ Map<String, String> farmFacts(WidgetRef ref, DateTime now) {
     Compared.usual => 'about usual for this time of year',
     Compared.unknown => 'not known',
   };
-  return {
+  final facts = {
     'today': shortDate(now),
     'area': d.fieldLatitude == null
         ? 'not set'
@@ -175,6 +177,26 @@ Map<String, String> farmFacts(WidgetRef ref, DateTime now) {
     'tasks to do today': todo.isEmpty ? 'none' : todo.join('; '),
     'crop advice': S.cropsUnknownTitle,
   };
+  if (!kIsWeb) {
+    facts.removeWhere((key, _) => key.startsWith('weather now') || key.startsWith('forecast next') || key.startsWith('rain last 7') || key.startsWith('soil wetness') || key.startsWith('tasks to do today') || key == 'last watered');
+    final date = ref.read(simulationClockProvider);
+    final state = ref.read(analysisProvider);
+    final monthly = state is AnalysisReady ? state.analysis.climateSummary.months.where((m) => m.year == date.year && m.month == date.month).firstOrNull : null;
+    facts['today'] = date.toIso8601String().substring(0,10);
+    facts['mode'] = 'Historical simulation, not real time';
+    if (ref.read(referenceChoiceProvider)) {
+      final reference = ref.read(historicalReferenceProvider).value;
+      final rows = reference?['months'] as List? ?? [];
+      final selected = rows.where((m)=>m['year']==date.year && m['month']==date.month).firstOrNull as Map?;
+      facts['historical reference source'] = 'Explicit archived Yangon point 16.85, 96.15, not measurements from this farm';
+      facts['historical month temperature'] = 'Unknown in the offline reference';
+      facts['historical month rainfall'] = selected?['rain_mm'] == null ? 'Unknown' : '${selected!['rain_mm']} mm for ${date.month}/${date.year}, archived Yangon reference only';
+      return facts;
+    }
+    facts['historical month temperature'] = monthly?.tempMeanC == null ? 'unknown' : '${monthly!.tempMeanC} C, monthly mean for ${date.month}/${date.year}; not a daily reading';
+    facts['historical month rainfall'] = monthly?.rainMm == null ? 'unknown' : '${monthly!.rainMm} mm total for ${date.month}/${date.year}; not a daily reading';
+  }
+  return facts;
 }
 
 class ChatState {

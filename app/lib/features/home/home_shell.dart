@@ -1,3 +1,4 @@
+import '../../submission/simulation_weather.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'farmer_start.dart';
@@ -41,6 +42,12 @@ class _HomeShellState extends ConsumerState<HomeShell>
     ('Tasks', Icons.checklist_outlined, Icons.checklist),
   ];
 
+  @override
+  void didUpdateWidget(covariant HomeShell oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.initialTab != widget.initialTab) _go(widget.initialTab.clamp(0,4));
+  }
+
   void _go(int i) {
     if (i == _tab) return;
     setState(() => _tab = i);
@@ -76,7 +83,7 @@ class _HomeShellState extends ConsumerState<HomeShell>
     final p = context.fs;
     const pages = [
       kIsWeb ? HomeTab() : FarmerStart(),
-      WeatherTab(),
+      kIsWeb ? WeatherTab() : SimulationWeatherPage(),
       FieldTab(),
       NotesTab(),
       FarmTasksTab(),

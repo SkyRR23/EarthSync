@@ -9,6 +9,8 @@ import '../state/providers.dart' as team;
 import '../evidence/data/farm_journal.dart' show journalId;
 import '../evidence/state/local_farm_provider.dart';
 import 'farm_bridge.dart';
+import 'rotation_simulator.dart';
+import 'simulation_clock.dart';
 
 final savedRotationPlansProvider = FutureProvider<List<Map<String, dynamic>>>((
   ref,
@@ -34,6 +36,7 @@ class _RotationPlansState extends ConsumerState<RotationPlansPage> {
   int? _chosen;
   bool _saving = false;
   String? _message;
+  Map<String, dynamic>? _simulation;
   static const _names = ['Existing plan', 'Alternative 1', 'Alternative 2'];
   @override
   void initState() {
@@ -49,6 +52,10 @@ class _RotationPlansState extends ConsumerState<RotationPlansPage> {
   }
 
   Future<void> _save() async {
+    if (!kIsWeb && (_simulation == null || _simulation!['simulation_date'] != ref.read(simulationClockProvider).toIso8601String().substring(0,10))) {
+      setState(() => _message = 'Generate and compare the rotation alternatives before saving this simulation decision.');
+      return;
+    }
     if (_chosen == null || _sequences[_chosen!].every((crop) => crop == null)) {
       setState(() => _message = 'Choose a plan and add at least one crop.');
       return;
@@ -69,6 +76,7 @@ class _RotationPlansState extends ConsumerState<RotationPlansPage> {
         'created_at': now,
         'updated_at': now,
         'origin': 'farmer_selected',
+        if (!kIsWeb) 'simulation_assessment': _simulation,
         'evidence_type': 'farmer_reported',
         'selected_option': _chosen,
         'reason': _reason.text.trim(),
@@ -107,6 +115,7 @@ class _RotationPlansState extends ConsumerState<RotationPlansPage> {
           _sequences[i][j] = seasons[j] as String?;
         }
       }
+      _simulation = plan['simulation_assessment'] is Map ? Map<String,dynamic>.from(plan['simulation_assessment'] as Map) : null;
       _chosen = plan['selected_option'] as int?;
       _reason.text = plan['reason'] as String? ?? '';
       _message = 'Saved decision opened. Saving creates a new dated decision.';
@@ -124,26 +133,19 @@ class _RotationPlansState extends ConsumerState<RotationPlansPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              if (!kIsWeb) ...[
+                const SimulationBanner(),
+              ],
               Text(
                 'Compare your next three seasons',
                 style: context.type.title2,
               ),
               const SizedBox(height: FsSpace.sm),
               const Text(
-                'Enter your existing sequence and alternatives, review the available field evidence, then save your own choice. Empty seasons stay unknown.',
+                'Enter your existing three-crop sequence. In the simulation, the Rust engine generates two alternatives and explains the comparison before you choose.',
               ),
               const SizedBox(height: FsSpace.md),
-              if (!kIsWeb) ...[
-                Text('Your seasons at a glance', style: context.type.headline),
-                const Text('Read each row from top to bottom. These are your proposed crops, not predicted results.'),
-                for (var i = 0; i < 3; i++)
-                  Card(child: Padding(padding: const EdgeInsets.all(12), child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                    Text('${_names[i]}${_chosen == i ? ' · Your choice' : ''}', style: context.type.headline),
-                    for (var j = 0; j < 3; j++)
-                      ListTile(dense: true, leading: CircleAvatar(child: Text('${j + 1}')), title: Text(_sequences[i][j] == null ? 'Not decided' : Crops.label(_sequences[i][j])), subtitle: j < 2 ? const Text('↓ Next season') : const Text('Third season')),
-                  ]))),
-              ],
-              for (var i = 0; i < 3; i++)
+              for (var i = 0; i < (kIsWeb ? 3 : 1); i++)
                 Card(
                   child: Padding(
                     padding: const EdgeInsets.all(FsSpace.md),
@@ -174,8 +176,7 @@ class _RotationPlansState extends ConsumerState<RotationPlansPage> {
                                     child: Text(crop.value),
                                   ),
                               ],
-                              onChanged: (crop) =>
-                                  setState(() => _sequences[i][j] = crop),
+                              onChanged: (crop) => setState(() { _sequences[i][j] = crop; _simulation = null; }),
                             ),
                           ),
                         const SizedBox(height: FsSpace.sm),
@@ -197,6 +198,13 @@ class _RotationPlansState extends ConsumerState<RotationPlansPage> {
                   ),
                 ),
               const SizedBox(height: FsSpace.md),
+              if (!kIsWeb)
+                RotationSimulator(initialResult: _simulation, onChosen: (index) => setState(() => _chosen = index), onInvalidated: () => setState(() => _simulation = null), baseline: List<String?>.of(_sequences[0]), onGenerated: (alternatives, result) => setState(() {
+                  for (var i = 0; i < alternatives.length && i < 2; i++) { _sequences[i + 1] = alternatives[i].cast<String?>(); }
+                  _simulation = result;
+                  _chosen = null;
+                })),
+              if (!kIsWeb && _chosen != null) Text(_chosen == 0 ? 'Your selection: existing plan' : 'Your selection: Alternative $_chosen', style: context.type.headline),
               Text('Evidence to review', style: context.type.headline),
               const Text(
                 'Crop suitability is not yet determined. Historical comparisons do not predict future yield or certify a crop recommendation.',

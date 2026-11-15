@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import '../../submission/simulation_advice.dart';
 import 'package:go_router/go_router.dart';
 import '../features/historical/historical_screen.dart';
 import '../features/tasks/tasks_screen.dart';
@@ -33,7 +35,7 @@ List<RouteBase> buildEvidenceRoutes() => [
   GoRoute(
     path: '/tasks',
     builder: (_, s) =>
-        FarmRequired(child: TasksScreen(taskId: s.uri.queryParameters['task'])),
+        FarmRequired(child: TasksScreen(taskId: s.uri.queryParameters['task'], advice: kIsWeb ? null : const SimulationAdvicePanel())),
   ),
   GoRoute(
     path: '/notifications',

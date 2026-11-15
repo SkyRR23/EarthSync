@@ -1,10 +1,10 @@
-import '../../data/backend_response.dart';
+import '../../submission/simulation_weather.dart';
+import '../../submission/simulation_clock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../state/providers.dart';
-import '../../state/today.dart';
 import '../../data/environment/forecast.dart';
 import '../../design/components/logo.dart';
 import 'home_shell.dart';
@@ -63,6 +63,7 @@ class _IntroductionState extends ConsumerState<FarmerIntroduction> {
           const SizedBox(height: 16),
           Text(item.$3, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 24),
+          const SimulationBanner(changeDate: false),
           Text('Step ${_step + 1} of ${_steps.length}'),
           const SizedBox(height: 8),
           LinearProgressIndicator(value: (_step + 1) / _steps.length),
@@ -88,30 +89,23 @@ class FarmerStart extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final draft = ref.watch(farmerDraftProvider);
-    final forecast = ref.watch(forecastProvider);
     final tabs = HomeTabs.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('My farm today'), actions: [
+      appBar: AppBar(title: const Text('My farm simulation'), actions: [
         IconButton(tooltip: 'Help getting started', onPressed: () => context.push('/intro'), icon: const Icon(Icons.help_outline)),
         IconButton(tooltip: 'Notifications', onPressed: () => context.push('/notifications'), icon: const Icon(Icons.notifications_outlined)),
       ]),
       body: SafeArea(child: ListView(padding: const EdgeInsets.all(20), children: [
+        const SimulationBanner(),
         Text(draft.hasLocation ? (draft.farmName?.trim().isNotEmpty == true ? draft.farmName! : 'Your field') : 'Let’s get started', style: Theme.of(context).textTheme.headlineMedium),
         const SizedBox(height: 8),
         Text(draft.hasLocation ? 'Check the weather, plan your work and keep track of your field.' : 'Save your field to see local weather. You can ask general crop questions right away.'),
         const SizedBox(height: 16),
         if (!draft.hasLocation)
           FilledButton.icon(onPressed: () => context.push('/setup/1'), icon: const Icon(Icons.add_location_alt_outlined), label: const Text('Set up my field')),
-        if (draft.hasLocation && forecast.data != null)
-          ForecastRainChart(days: forecast.data!.days, saved: forecast.failed, fetchedAt: forecast.data!.fetchedAt),
-        if (draft.hasLocation && forecast.data == null)
-          Card(child: Padding(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text('Weather for your field'),
-            Text(forecast.loading ? 'Getting the latest forecast…' : backendMessage(forecast.errorCode ?? 'unreachable')),
-            TextButton(onPressed: () => ref.read(forecastProvider.notifier).refresh(), child: const Text('Load weather')),
-          ]))),
+        if (draft.hasLocation) const HistoricalWeatherSummary(),
         const SizedBox(height: 12),
-        _action(context, Icons.cloud_outlined, 'Check the weather', 'Rain and temperature for the coming days', () => tabs?.go(1)),
+        _action(context, Icons.cloud_outlined, 'Explore historical weather', 'Dated rain and temperature for the simulation', () => tabs?.go(1)),
         _action(context, Icons.checklist, 'My tasks', 'Plan field visits and set reminders', () => tabs?.go(4)),
         _action(context, Icons.compare_arrows, 'Plan my next crops', 'Compare crop sequences and save your choice', () => context.push(draft.hasLocation ? '/rotation-plans' : '/setup/1')),
         _action(context, Icons.chat_bubble_outline, 'Ask EarthSync', 'General crop questions or help with your field', () => context.push('/chat')),

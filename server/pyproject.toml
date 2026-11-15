@@ -22,6 +22,7 @@ asyncio_mode = "auto"
 testpaths = ["tests"]
 
 [tool.setuptools.package-data]
+"earthsync" = ["chat_references.json"]
 "earthsync.assistant" = ["locales/*.json"]
 
 "earthsync.platform_v1" = ["migrations/*.sql", "rule_review.json"]

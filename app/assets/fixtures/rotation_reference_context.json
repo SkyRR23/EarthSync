@@ -1,0 +1,278 @@
+{
+  "schema_version": "earthsync.simulation.reference.v1",
+  "catalog_sha256": "9c61fc394bd73f990fa12cba21d77a3e21028c233b956e1ce31f664178ad241b",
+  "profiles": [
+    {
+      "crop_id": "rice",
+      "label": "Rice",
+      "family": "Poaceae",
+      "temperature": {
+        "optimal": {
+          "min": 20.0,
+          "max": 30.0
+        },
+        "absolute": {
+          "min": 10.0,
+          "max": 36.0
+        }
+      },
+      "annual_rainfall": {
+        "optimal": {
+          "min": 1500.0,
+          "max": 2000.0
+        },
+        "absolute": {
+          "min": 1000.0,
+          "max": 4000.0
+        }
+      },
+      "source_ids": [
+        "ecocrop_rice"
+      ],
+      "scope": "Historical global ECOCROP descriptors, not Myanmar thresholds; environmental average minimum/maximum growing-season temperatures per help 2000, not daily-extreme limits.",
+      "recommendation_eligible": false
+    },
+    {
+      "crop_id": "sesame",
+      "label": "Sesame",
+      "family": "Pedaliaceae",
+      "temperature": {
+        "optimal": {
+          "min": 20.0,
+          "max": 30.0
+        },
+        "absolute": {
+          "min": 10.0,
+          "max": 40.0
+        }
+      },
+      "annual_rainfall": {
+        "optimal": {
+          "min": 500.0,
+          "max": 1000.0
+        },
+        "absolute": {
+          "min": 300.0,
+          "max": 1500.0
+        }
+      },
+      "source_ids": [
+        "ecocrop_sesame"
+      ],
+      "scope": "Historical global ECOCROP descriptors, not Myanmar thresholds; environmental average minimum/maximum growing-season temperatures per help 2000, not daily-extreme limits.",
+      "recommendation_eligible": false
+    },
+    {
+      "crop_id": "mung_bean",
+      "label": "Mung bean",
+      "family": "Fabaceae",
+      "temperature": {
+        "optimal": {
+          "min": 21.0,
+          "max": 36.0
+        },
+        "absolute": {
+          "min": 8.0,
+          "max": 40.0
+        }
+      },
+      "annual_rainfall": {
+        "optimal": {
+          "min": 650.0,
+          "max": 900.0
+        },
+        "absolute": {
+          "min": 500.0,
+          "max": 1250.0
+        }
+      },
+      "source_ids": [
+        "ecocrop_mung_bean"
+      ],
+      "scope": "Historical global ECOCROP descriptors, not Myanmar thresholds; environmental average minimum/maximum growing-season temperatures per help 2000, not daily-extreme limits.",
+      "recommendation_eligible": false
+    },
+    {
+      "crop_id": "maize",
+      "label": "Maize",
+      "family": "Poaceae",
+      "temperature": {
+        "optimal": {
+          "min": 18.0,
+          "max": 33.0
+        },
+        "absolute": {
+          "min": 10.0,
+          "max": 47.0
+        }
+      },
+      "annual_rainfall": {
+        "optimal": {
+          "min": 600.0,
+          "max": 1200.0
+        },
+        "absolute": {
+          "min": 400.0,
+          "max": 1800.0
+        }
+      },
+      "source_ids": [
+        "ecocrop_maize"
+      ],
+      "scope": "Historical global ECOCROP descriptors, not Myanmar thresholds; environmental average minimum/maximum growing-season temperatures per help 2000, not daily-extreme limits.",
+      "recommendation_eligible": false
+    },
+    {
+      "crop_id": "groundnut",
+      "label": "Groundnut",
+      "family": "Fabaceae",
+      "temperature": {
+        "optimal": {
+          "min": 22.0,
+          "max": 32.0
+        },
+        "absolute": {
+          "min": 10.0,
+          "max": 45.0
+        }
+      },
+      "annual_rainfall": {
+        "optimal": {
+          "min": 600.0,
+          "max": 1500.0
+        },
+        "absolute": {
+          "min": 400.0,
+          "max": 4000.0
+        }
+      },
+      "source_ids": [
+        "ecocrop_groundnut"
+      ],
+      "scope": "Historical global ECOCROP descriptors, not Myanmar thresholds; environmental average minimum/maximum growing-season temperatures per help 2000, not daily-extreme limits.",
+      "recommendation_eligible": false
+    }
+  ],
+  "sources": [
+    {
+      "id": "ecocrop_rice",
+      "dataset_id": "ecocrop",
+      "title": "ECOCROP data sheet 1574: Oryza sativa",
+      "publisher": "FAO",
+      "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1574",
+      "version": "historical database; discontinued circa 2015; per-sheet publication unknown",
+      "publication_date": null,
+      "publication_date_precision": "unknown",
+      "retrieved_at": null,
+      "retrieval_date": "2026-11-14",
+      "access_status": "captured",
+      "review": "reference_only",
+      "license": "CC-BY-4.0 per official ECOCROP dataset metadata",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "rights_note": "Retain attribution and limitations. Full response redistributed only where original_file is present; other sources have selected factual extracts/metadata, not licensed full-text copies. No images, logos or third-party figures copied.",
+      "attribution": "FAO; ECOCROP data sheet 1574: Oryza sativa; historical database; discontinued circa 2015; per-sheet publication unknown; https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1574",
+      "response_sha256": "73e150aaf5c203a6b4c55e95d87284cfd3b5c70a425b888c9c436bb74b217e6c",
+      "original_file": "originals/ecocrop_rice.html",
+      "limitations": [
+        "Source inspection is a reference desk review, not independent agronomic acceptance.",
+        "Publication/revision and local applicability remain bounded by this source."
+      ]
+    },
+    {
+      "id": "ecocrop_mung_bean",
+      "dataset_id": "ecocrop",
+      "title": "ECOCROP data sheet 2150: Vigna radiata",
+      "publisher": "FAO",
+      "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2150",
+      "version": "historical database; discontinued circa 2015; per-sheet publication unknown",
+      "publication_date": null,
+      "publication_date_precision": "unknown",
+      "retrieved_at": null,
+      "retrieval_date": "2026-11-14",
+      "access_status": "captured",
+      "review": "reference_only",
+      "license": "CC-BY-4.0 per official ECOCROP dataset metadata",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "rights_note": "Retain attribution and limitations. Full response redistributed only where original_file is present; other sources have selected factual extracts/metadata, not licensed full-text copies. No images, logos or third-party figures copied.",
+      "attribution": "FAO; ECOCROP data sheet 2150: Vigna radiata; historical database; discontinued circa 2015; per-sheet publication unknown; https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2150",
+      "response_sha256": "772f2edbece09d0ca0a641396c73a5b70ed52dea6fd78671ac8e2810d529254c",
+      "original_file": "originals/ecocrop_mung_bean.html",
+      "limitations": [
+        "Source inspection is a reference desk review, not independent agronomic acceptance.",
+        "Publication/revision and local applicability remain bounded by this source."
+      ]
+    },
+    {
+      "id": "ecocrop_sesame",
+      "dataset_id": "ecocrop",
+      "title": "ECOCROP data sheet 1937: Sesamum indicum",
+      "publisher": "FAO",
+      "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1937",
+      "version": "historical database; discontinued circa 2015; per-sheet publication unknown",
+      "publication_date": null,
+      "publication_date_precision": "unknown",
+      "retrieved_at": null,
+      "retrieval_date": "2026-11-14",
+      "access_status": "captured",
+      "review": "reference_only",
+      "license": "CC-BY-4.0 per official ECOCROP dataset metadata",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "rights_note": "Retain attribution and limitations. Full response redistributed only where original_file is present; other sources have selected factual extracts/metadata, not licensed full-text copies. No images, logos or third-party figures copied.",
+      "attribution": "FAO; ECOCROP data sheet 1937: Sesamum indicum; historical database; discontinued circa 2015; per-sheet publication unknown; https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1937",
+      "response_sha256": "0e56e837107dfc2f7bc21d3bd4236ae6efc6cfc831877a0a5197ece19cafb5f7",
+      "original_file": "originals/ecocrop_sesame.html",
+      "limitations": [
+        "Source inspection is a reference desk review, not independent agronomic acceptance.",
+        "Publication/revision and local applicability remain bounded by this source."
+      ]
+    },
+    {
+      "id": "ecocrop_groundnut",
+      "dataset_id": "ecocrop",
+      "title": "ECOCROP data sheet 2199: Arachis hypogaea",
+      "publisher": "FAO",
+      "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2199",
+      "version": "historical database; discontinued circa 2015; per-sheet publication unknown",
+      "publication_date": null,
+      "publication_date_precision": "unknown",
+      "retrieved_at": null,
+      "retrieval_date": "2026-11-14",
+      "access_status": "captured",
+      "review": "reference_only",
+      "license": "CC-BY-4.0 per official ECOCROP dataset metadata",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "rights_note": "Retain attribution and limitations. Full response redistributed only where original_file is present; other sources have selected factual extracts/metadata, not licensed full-text copies. No images, logos or third-party figures copied.",
+      "attribution": "FAO; ECOCROP data sheet 2199: Arachis hypogaea; historical database; discontinued circa 2015; per-sheet publication unknown; https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2199",
+      "response_sha256": "fc99ce99d40be5ef2b89d5c391e740fde7501ef68ae0ed3e14e54da782e07956",
+      "original_file": "originals/ecocrop_groundnut.html",
+      "limitations": [
+        "Source inspection is a reference desk review, not independent agronomic acceptance.",
+        "Publication/revision and local applicability remain bounded by this source."
+      ]
+    },
+    {
+      "id": "ecocrop_maize",
+      "dataset_id": "ecocrop",
+      "title": "ECOCROP data sheet 2175: Zea mays",
+      "publisher": "FAO",
+      "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2175",
+      "version": "historical database; discontinued circa 2015; per-sheet publication unknown",
+      "publication_date": null,
+      "publication_date_precision": "unknown",
+      "retrieved_at": null,
+      "retrieval_date": "2026-11-14",
+      "access_status": "captured",
+      "review": "reference_only",
+      "license": "CC-BY-4.0 per official ECOCROP dataset metadata",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "rights_note": "Retain attribution and limitations. Full response redistributed only where original_file is present; other sources have selected factual extracts/metadata, not licensed full-text copies. No images, logos or third-party figures copied.",
+      "attribution": "FAO; ECOCROP data sheet 2175: Zea mays; historical database; discontinued circa 2015; per-sheet publication unknown; https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2175",
+      "response_sha256": "285c1b1cc3522c5e34ddc552ec46306a364a7c44897421e421e1657bb8194bb0",
+      "original_file": "originals/ecocrop_maize.html",
+      "limitations": [
+        "Source inspection is a reference desk review, not independent agronomic acceptance.",
+        "Publication/revision and local applicability remain bounded by this source."
+      ]
+    }
+  ]
+}

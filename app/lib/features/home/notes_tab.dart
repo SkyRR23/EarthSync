@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
+import '../../submission/simulation_clock.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -248,6 +250,11 @@ class _NoteRow extends ConsumerWidget {
                       date,
                       style: t.subhead.copyWith(color: p.secondaryLabel),
                     ),
+                    TextButton.icon(
+                      onPressed: () => context.push(Uri(path: '/chat', queryParameters: {'note': note.id}).toString()),
+                      icon: const Icon(Icons.chat_bubble_outline, size: 18),
+                      label: const Text('Ask for next steps'),
+                    ),
                     if (note.cloudPhoto != null)
                       Icon(
                         CupertinoIcons.cloud_fill,
@@ -464,6 +471,7 @@ class _AddNoteSheetState extends ConsumerState<AddNoteSheet> {
                             .add(
                               widget.kind,
                               _controller.text,
+                              observedOn: kIsWeb ? null : ref.read(simulationClockProvider),
                               photo: _photo,
                               id: _id,
                             );

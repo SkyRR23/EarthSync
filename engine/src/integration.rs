@@ -247,6 +247,11 @@ pub fn analyze_integration(
 /// Proposed JSON bridge boundary: always a success/error JSON envelope.
 /// Parse errors do not echo input values. Existing JSON adapters are unchanged.
 pub fn analyze_integration_json(input: &str) -> String {
+    if let Ok(value) = serde_json::from_str::<serde_json::Value>(input) {
+        if value["schema_version"] == "earthsync.simulation.v1" {
+            return crate::simulation::analyze(&value).to_string();
+        }
+    }
     let response = match serde_json::from_str::<IntegrationRequest>(input) {
         Ok(request) => match analyze_integration(&request) {
             Ok(data) => IntegrationResponse::Success {

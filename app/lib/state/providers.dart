@@ -510,11 +510,11 @@ class NotesNotifier extends Notifier<List<FieldNote>> {
         ?.setString(_notesKey, jsonEncode([for (final n in notes) n.toJson()]));
   }
 
-  FieldNote add(NoteKind kind, String text, {String? photo, String? id}) {
+  FieldNote add(NoteKind kind, String text, {String? photo, String? id, DateTime? observedOn}) {
     final now = DateTime.now();
     final note = FieldNote(
       id: id ?? now.microsecondsSinceEpoch.toString(),
-      createdAt: now,
+      createdAt: observedOn ?? now,
       kind: kind,
       text: text.trim(),
       photo: photo,
