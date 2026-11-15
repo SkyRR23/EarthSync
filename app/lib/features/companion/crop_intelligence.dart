@@ -53,7 +53,8 @@ class _CropIntelligenceState extends ConsumerState<CropIntelligencePanel> {
           expectedStatus: 200,
         );
         if (mounted &&
-            ref.read(journalProvider).asData?.value?.farmId == snapshot.farmId) {
+            ref.read(journalProvider).asData?.value?.farmId ==
+                snapshot.farmId) {
           setState(() => _context = Map<String, dynamic>.from(result as Map));
         }
       } else {

@@ -23,7 +23,8 @@ artifact in Git; raw runtime state and temporary credentials stay outside Git.
 | Actual research HTTP client | Authenticated source retrieval, synthetic PNG upload, unavailable vision response, authorized deletion passed on loopback |
 | Teammate Firebase health | Public and supplied test host each returned 200, `upstream_checked:false`; test OpenAPI paths 404; local-origin CORS header absent |
 | External AI/real agricultural image evaluation | Not performed; no provider configured or cloud photo transfer |
-| Docker build / interactive Windows destination | Not claimed; runtime allowlist updated and CI smoke extended; destination acceptance remains pending |
+| Docker build / runtime smoke | Existing GitHub platform CI container job passed at implementation commit `90652b2b8d709679fa14db55d427e077f5dab83c`; extended smoke checks cited retrieval |
+| Windows/Linux research CI | 62 passed, 1 optional local-Tesseract skip on each OS at implementation commit; no interactive Windows destination/ACL acceptance claimed |
 | Exported container runtime closure | Fresh temporary copy of runtime modules/catalog and the four allowlisted 7V JSON files imported successfully and returned hash-checked cited evidence |
 
 Optional/live provider and environment-specific skips are explicit; local offline
@@ -36,6 +37,11 @@ confusion. The fix decodes JSON metadata using the actual response Content-Type
 while retaining the existing fallback for headerless transports. Its regression
 is included in the 135-test Flutter result. Earlier failed harness attempts are
 not counted as browser acceptance; the final smoke receipt is reported separately.
+The first remote full-Flutter job failed only its format gate on two new files;
+the subsequent formatting-only delivery corrects this and adds the same gate to
+the new workflow. The locally browser-tested implementation is `90652b2b8d709679fa14db55d427e077f5dab83c`;
+later whitespace/CI/documentation changes do not alter runtime behavior. Inspect
+the final-head GitHub checks separately; earlier failure is not represented as a pass.
 
 ## Commands
 

@@ -196,14 +196,14 @@ class _SoilWorkflowsState extends State<SoilWorkflows> {
                             originalImage: FutureBuilder<Object?>(
                               future: pixels,
                               builder: (_, state) {
-                                  if (state.hasError) {
+                                if (state.hasError) {
                                   return const Text(
                                     'Original image unavailable. Cancel until you can check the report.',
                                   );
-                                  }
-                                  if (!state.hasData) {
+                                }
+                                if (!state.hasData) {
                                   return const LinearProgressIndicator();
-                                  }
+                                }
                                 return InteractiveViewer(
                                   child: Image.memory(
                                     Uint8List.fromList(
