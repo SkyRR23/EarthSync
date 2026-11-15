@@ -22,6 +22,14 @@ Only comparable known inputs support a preference; otherwise the result states
 that superiority is not established. Output reasons, assumptions, source IDs,
 source year and exact assessment are retained with a saved decision.
 
+The Android comparison offers an explicit rain-only or irrigated scenario, or
+the saved water-supply answer. When climate comparisons are unavailable, a
+suggestion can still meet the farmer's selected diversity goal if both complete
+sequences have known crop families; it is labelled preference-based, with climate
+fit unknown. Missing data are never scored as evidence of a better crop.
+Each option shows assumed season dates. Changing the source, field, date,
+baseline or assumptions requires a fresh comparison before selecting/saving.
+
 The historical year is an analog repeated across proposed seasons. It is not a
 forecast. The interface does not claim yield, profit, field accuracy or validated
 agronomic suitability. This is decision exploration using declared assumptions.
@@ -49,6 +57,12 @@ check. The 30 °C hot-month trigger is an explicit simulation assumption and doe
 not represent a daily observation or validated crop threshold. No irrigation
 amount or pesticide application schedule is invented. A wind advisory requires a
 dated wind input, absent from the packaged reference.
+
+Suggested checks can be marked done and undone. These marks and simulated
+watering/wet-soil observations are stored locally per field and historical day,
+separately from real watering records, and are removed by Delete my data.
+Only explicitly simulated notes in the selected historical seven-day window
+trigger the simulation pest follow-up; future notes are excluded.
 
 New farmer notes retain their simulation observation date. Existing notes keep
 their original dates. “Ask for next steps” sends the selected note text and

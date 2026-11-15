@@ -7,6 +7,7 @@ import '../data/cloud/cloud_sync.dart';
 import 'providers.dart';
 import 'today.dart';
 import '../submission/farm_bridge.dart';
+import '../submission/simulation_observations.dart';
 
 /// Firebase Auth, or null when Firebase did not start (tests / no config).
 final authProvider = Provider<FirebaseAuth?>((ref) => null);
@@ -82,6 +83,7 @@ Future<String?> deleteMyData(WidgetRef ref) async {
   ref.read(notesProvider.notifier).clearAll();
   ref.read(waterLogProvider.notifier).clearAll();
   ref.read(taskMarksProvider.notifier).clearAll();
+  ref.read(simulationChecksProvider.notifier).clearAll();
   await ref.read(recentProvider.notifier).forget();
   await ref.read(forecastProvider.notifier).forget();
   ref.read(farmerDraftProvider.notifier).reset();

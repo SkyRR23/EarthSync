@@ -26,6 +26,7 @@ fn evaluate(crops: &[String], req: &Value, profiles: &[Value]) -> Value {
     let mut flags = 0;
     let mut known = 0;
     let mut family_breaks = 0;
+    let mut family_comparisons = 0;
     let mut previous_family = String::new();
     let mut findings = Vec::new();
     for (index, crop) in crops.iter().enumerate() {
@@ -38,8 +39,11 @@ fn evaluate(crops: &[String], req: &Value, profiles: &[Value]) -> Value {
             continue;
         };
         let family = p["family"].as_str().unwrap_or("");
-        if !family.is_empty() && !previous_family.is_empty() && family != previous_family {
-            family_breaks += 1;
+        if !family.is_empty() && !previous_family.is_empty() {
+            family_comparisons += 1;
+            if family != previous_family {
+                family_breaks += 1;
+            }
         }
         previous_family = family.to_string();
         let selected: Vec<&Value> = (0..length)
@@ -79,7 +83,7 @@ fn evaluate(crops: &[String], req: &Value, profiles: &[Value]) -> Value {
         }
     }
     let repeats = crops.windows(2).filter(|w| w[0] == w[1]).count();
-    json!({"crops":crops,"reference_conflicts":flags,"known_comparisons":known,"family_breaks":family_breaks,"consecutive_repeats":repeats,"findings":findings})
+    json!({"crops":crops,"reference_conflicts":flags,"known_comparisons":known,"family_breaks":family_breaks,"family_comparisons":family_comparisons,"consecutive_repeats":repeats,"findings":findings})
 }
 
 pub fn analyze(req: &Value) -> Value {
@@ -149,18 +153,21 @@ pub fn analyze(req: &Value) -> Value {
     }
     let recommendation = alternatives.first().map(|best| {
         let evidence = best["known_comparisons"].as_u64().unwrap_or(0);
+        let comparable_families = best["family_comparisons"].as_u64() == Some(2) && base["family_comparisons"].as_u64() == Some(2);
         let fewer = best["reference_conflicts"].as_u64() < base["reference_conflicts"].as_u64();
         if evidence > 0 && fewer && best["known_comparisons"].as_u64() == base["known_comparisons"].as_u64() {
             "Consider Alternative 1 instead of the existing plan in this simulation because it has fewer conflicts with the supplied ecological reference envelopes over the historical analog. Review its findings and missing inputs before applying it to a real field."
-        } else if evidence > 0 && req["prefer_diversity"] == true && best["reference_conflicts"] == base["reference_conflicts"] && best["known_comparisons"] == base["known_comparisons"] && best["family_breaks"].as_u64() > base["family_breaks"].as_u64() {
+        } else if evidence > 0 && comparable_families && req["prefer_diversity"] == true && best["reference_conflicts"] == base["reference_conflicts"] && best["known_comparisons"] == base["known_comparisons"] && best["family_breaks"].as_u64() > base["family_breaks"].as_u64() {
             "Consider Alternative 1 instead in this simulation because it changes crop families more often, matching your selected diversity objective, without adding reference-envelope conflicts in the supplied climate data. This does not prove reduced pests, improved soil or higher yield."
+        } else if evidence == 0 && comparable_families && base["known_comparisons"].as_u64() == Some(0) && req["prefer_diversity"] == true && best["family_breaks"].as_u64() > base["family_breaks"].as_u64() {
+            "Consider Alternative 1 instead because it changes crop families more often, matching your chosen diversity goal. Climate fit is still unknown: the available inputs do not support a climate comparison. This is a preference-based simulation suggestion, not evidence of better yield, soil or pest control."
         } else if evidence == 0 {
-            "The engine generated alternatives, but historical climate evidence is missing. No data-based preference can be established yet. Load the selected historical year, then compare again."
+            "Two alternatives are ready to explore, but the available inputs do not support a climate comparison. Check the data source and water-supply assumption. A loaded archive can still lack temperature or a usable rainfall comparison; no climate-based preference is established."
         } else {
             "These alternatives are worth exploring, but the supplied evidence does not establish a better option than the existing plan. Family breaks describe sequence diversity only, not a verified pest or soil benefit."
         }
     }).unwrap_or("No alternative could be generated from the supplied crop references.");
-    json!({"status":"success","engine":"rust-exploratory-simulation-v1","simulation_date":req["simulation_date"],"data_year":req["data_year"],"season_months":req["season_months"],"start_month":req["start_month"],"climate_source":req["climate_source"],"climate_source_hash":req["climate_source_hash"],"baseline":base,"alternatives":alternatives,"recommendation":recommendation,"sources":req["sources"],"limitations":["Uses a historical year as an analog repeated over proposed seasons, not future weather.","Season lengths are user-declared assumptions, not crop maturity predictions.","Global ecological references are not locally validated thresholds. No blocked crop rule is enabled.","No yield, profit, pesticide, fertilizer or irrigation amount is predicted."]})
+    json!({"status":"success","engine":"rust-exploratory-simulation-v1","simulation_date":req["simulation_date"],"data_year":req["data_year"],"season_months":req["season_months"],"start_month":req["start_month"],"prefer_diversity":req["prefer_diversity"],"irrigated":req["irrigated"],"climate_source":req["climate_source"],"climate_source_hash":req["climate_source_hash"],"baseline":base,"alternatives":alternatives,"recommendation":recommendation,"sources":req["sources"],"limitations":["Uses a historical year as an analog repeated over proposed seasons, not future weather.","Season lengths are user-declared assumptions, not crop maturity predictions.","Global ecological references are not locally validated thresholds. No blocked crop rule is enabled.","No yield, profit, pesticide, fertilizer or irrigation amount is predicted."]})
 }
 
 fn tasks(req: &Value) -> Value {
@@ -206,5 +213,12 @@ fn tasks(req: &Value) -> Value {
         }
     }
     output.push(json!({"id":"record","title":"Record what you find in the field","reason":"Add a note with the simulation date so the next advice can use your observation.","done":false}));
+    if let Some(checked) = req["checked_ids"].as_array() {
+        for task in &mut output {
+            if checked.iter().any(|id| id == &task["id"]) {
+                task["done"] = json!(true);
+            }
+        }
+    }
     json!({"status":"success","engine":"rust-simulation-advice-v1","simulation_date":date,"tasks":output,"limitations":["Historical monthly context is not today's actual weather.","No wind-specific advice is triggered without a supplied dated wind value.","Heat triggers are disclosed simulation assumptions; recommendations are checks, not irrigation or chemical prescriptions."]})
 }

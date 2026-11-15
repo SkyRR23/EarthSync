@@ -38,6 +38,15 @@ class _RotationPlansState extends ConsumerState<RotationPlansPage> {
   String? _message;
   Map<String, dynamic>? _simulation;
   static const _names = ['Existing plan', 'Alternative 1', 'Alternative 2'];
+
+  bool get _assessmentCurrent => rotationAssessmentIsCurrent(_simulation,
+      ref.read(rotationContextKeyProvider), _sequences[0]);
+
+  void _invalidateSimulation() => setState(() {
+    _simulation = null;
+    _chosen = null;
+    _message = null;
+  });
   @override
   void initState() {
     super.initState();
@@ -52,7 +61,7 @@ class _RotationPlansState extends ConsumerState<RotationPlansPage> {
   }
 
   Future<void> _save() async {
-    if (!kIsWeb && (_simulation == null || _simulation!['simulation_date'] != ref.read(simulationClockProvider).toIso8601String().substring(0,10))) {
+    if (!kIsWeb && !_assessmentCurrent) {
       setState(() => _message = 'Generate and compare the rotation alternatives before saving this simulation decision.');
       return;
     }
@@ -69,6 +78,7 @@ class _RotationPlansState extends ConsumerState<RotationPlansPage> {
       if (farm == null) throw StateError('Choose your field first.');
       final now = DateTime.now().toUtc().toIso8601String();
       final store = await ref.read(localFarmStoreProvider.future);
+      if (!kIsWeb && !_assessmentCurrent) throw StateError('The comparison inputs changed. Compare again before saving.');
       await store.put(farm.id, 'rotation_plan', {
         'id': journalId(),
         'farm_id': farm.id,
@@ -126,6 +136,8 @@ class _RotationPlansState extends ConsumerState<RotationPlansPage> {
   @override
   Widget build(BuildContext context) {
     final saved = ref.watch(savedRotationPlansProvider);
+    final assessmentCurrent = kIsWeb || rotationAssessmentIsCurrent(_simulation,
+        ref.watch(rotationContextKeyProvider), _sequences[0]);
     return FsPage(
       title: 'Crop rotation decisions',
       children: [
@@ -143,7 +155,7 @@ class _RotationPlansState extends ConsumerState<RotationPlansPage> {
               ),
               const SizedBox(height: FsSpace.sm),
               const Text(
-                'Enter your existing three-crop sequence. In the simulation, the Rust engine generates two alternatives and explains the comparison before you choose.',
+                'Enter your existing three-crop sequence. Compare alternatives and their reasons, then choose a plan to save.',
               ),
               const SizedBox(height: FsSpace.md),
               for (var i = 0; i < (kIsWeb ? 3 : 1); i++)
@@ -177,11 +189,15 @@ class _RotationPlansState extends ConsumerState<RotationPlansPage> {
                                     child: Text(crop.value),
                                   ),
                               ],
-                              onChanged: (crop) => setState(() { _sequences[i][j] = crop; _simulation = null; }),
+                              onChanged: _saving ? null : (crop) => setState(() {
+                                _sequences[i][j] = crop;
+                                _simulation = null;
+                                if (!kIsWeb) _chosen = null;
+                              }),
                             ),
                           ),
                         const SizedBox(height: FsSpace.sm),
-                        OutlinedButton.icon(
+                        if (kIsWeb) OutlinedButton.icon(
                           onPressed: () => setState(() => _chosen = i),
                           icon: Icon(
                             _chosen == i
@@ -200,12 +216,12 @@ class _RotationPlansState extends ConsumerState<RotationPlansPage> {
                 ),
               const SizedBox(height: FsSpace.md),
               if (!kIsWeb)
-                RotationSimulator(initialResult: _simulation, onChosen: (index) => setState(() => _chosen = index), onInvalidated: () => setState(() => _simulation = null), baseline: List<String?>.of(_sequences[0]), onGenerated: (alternatives, result) => setState(() {
+                RotationSimulator(initialResult: _simulation, onChosen: (index) => setState(() => _chosen = index), onInvalidated: _invalidateSimulation, baseline: List<String?>.of(_sequences[0]), onGenerated: (alternatives, result) => setState(() {
                   for (var i = 0; i < alternatives.length && i < 2; i++) { _sequences[i + 1] = alternatives[i].cast<String?>(); }
                   _simulation = result;
                   _chosen = null;
                 })),
-              if (!kIsWeb && _chosen != null) Text(_chosen == 0 ? 'Your selection: existing plan' : 'Your selection: Alternative $_chosen', style: context.type.headline),
+              if (!kIsWeb && _chosen != null && assessmentCurrent) Text(_chosen == 0 ? 'Your selection: existing plan' : 'Your selection: Alternative $_chosen', style: context.type.headline),
               Text('Evidence to review', style: context.type.headline),
               const Text(
                 'Crop suitability is not yet determined. Historical comparisons do not predict future yield or certify a crop recommendation.',
@@ -245,7 +261,7 @@ class _RotationPlansState extends ConsumerState<RotationPlansPage> {
               ),
               const SizedBox(height: FsSpace.md),
               FilledButton.icon(
-                onPressed: _saving ? null : _save,
+                onPressed: _saving || (!kIsWeb && (!assessmentCurrent || _chosen == null)) ? null : _save,
                 icon: const Icon(Icons.save_outlined),
                 label: const Text('Save my rotation decision'),
               ),
@@ -277,7 +293,9 @@ class _RotationPlansState extends ConsumerState<RotationPlansPage> {
                           _names[(plan['selected_option'] as int?) ?? 0],
                         ),
                         subtitle: Text(
-                          '${plan['created_at']} · Farmer-selected · Suitability unknown',
+                          plan['simulated'] == true
+                            ? 'Simulation ${((plan['simulation_assessment'] as Map?)?['simulation_date']) ?? 'date unknown'} · Your saved choice'
+                            : '${plan['created_at']} · Farmer-selected · Suitability unknown',
                         ),
                         onTap: () => _reopen(plan),
                         trailing: IconButton(
