@@ -22,14 +22,15 @@ class SimulationClock extends Notifier<DateTime> {
 final simulationClockProvider = NotifierProvider<SimulationClock, DateTime>(SimulationClock.new);
 
 class SimulationBanner extends ConsumerWidget {
-  const SimulationBanner({super.key, this.changeDate = true});
+  const SimulationBanner({super.key, this.changeDate = true, this.compact = false});
   final bool changeDate;
+  final bool compact;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final date = ref.watch(simulationClockProvider);
     return Card(child: Padding(padding: const EdgeInsets.all(12), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       const Text('SIMULATED TEST · NOT LIVE', style: TextStyle(fontWeight: FontWeight.bold)),
-      Text('Simulation today: ${date.day}/${date.month}/${date.year}. Advice uses historical data and declared assumptions, not current field readings.'),
+      Text(compact ? 'Simulation today: ${date.day}/${date.month}/${date.year}' : 'Simulation today: ${date.day}/${date.month}/${date.year}. Advice uses historical data and declared assumptions, not current field readings.'),
       if (changeDate) TextButton.icon(icon: const Icon(Icons.calendar_month), label: const Text('Change simulation date'), onPressed: () async {
         final picked = await showDatePicker(context: context, initialDate: date, firstDate: DateTime(1981), lastDate: DateTime(DateTime.now().year, 1, 1).subtract(const Duration(days: 1)));
         if (picked != null) ref.read(simulationClockProvider.notifier).select(picked);

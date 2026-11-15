@@ -96,18 +96,17 @@ class FarmerStart extends ConsumerWidget {
         IconButton(tooltip: 'Notifications', onPressed: () => context.push('/notifications'), icon: const Icon(Icons.notifications_outlined)),
       ]),
       body: SafeArea(child: ListView(padding: const EdgeInsets.all(20), children: [
-        const SimulationBanner(),
+        const SimulationBanner(compact: true),
         Text(draft.hasLocation ? (draft.farmName?.trim().isNotEmpty == true ? draft.farmName! : 'Your field') : 'Let’s get started', style: Theme.of(context).textTheme.headlineMedium),
         const SizedBox(height: 8),
-        Text(draft.hasLocation ? 'Check the weather, plan your work and keep track of your field.' : 'Save your field to see local weather. You can ask general crop questions right away.'),
+        Text(draft.hasLocation ? 'Start with a field check or compare crop rotations.' : 'Save your field to see local weather. You can ask general crop questions right away.'),
         const SizedBox(height: 16),
         if (!draft.hasLocation)
           FilledButton.icon(onPressed: () => context.push('/setup/1'), icon: const Icon(Icons.add_location_alt_outlined), label: const Text('Set up my field')),
-        if (draft.hasLocation) const HistoricalWeatherSummary(),
         const SizedBox(height: 12),
-        _action(context, Icons.cloud_outlined, 'Explore historical weather', 'Dated rain and temperature for the simulation', () => tabs?.go(1)),
-        _action(context, Icons.checklist, 'My tasks', 'Plan field visits and set reminders', () => tabs?.go(4)),
+        _action(context, Icons.checklist, 'Suggested checks', 'See what to inspect on this simulation day', () => tabs?.go(4)),
         _action(context, Icons.compare_arrows, 'Plan my next crops', 'Compare crop sequences and save your choice', () => context.push(draft.hasLocation ? '/rotation-plans' : '/setup/1')),
+        if (draft.hasLocation) const HistoricalWeatherSummary(compact: true),
         _action(context, Icons.chat_bubble_outline, 'Ask EarthSync', 'General crop questions or help with your field', () => context.push('/chat')),
         _action(context, Icons.edit_note, 'My farm records', 'Keep observations, photos and notes', () => tabs?.go(3)),
         ExpansionTile(title: const Text('More field tools'), children: [
@@ -122,7 +121,7 @@ class FarmerStart extends ConsumerWidget {
   }
 
   Widget _action(BuildContext context, IconData icon, String title, String subtitle, VoidCallback onTap) => Card(
-    child: ListTile(contentPadding: const EdgeInsets.all(16), leading: Icon(icon, color: Theme.of(context).colorScheme.primary), title: Text(title), subtitle: Text(subtitle), trailing: const Icon(Icons.chevron_right), onTap: onTap),
+    child: ListTile(contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8), leading: Icon(icon, color: Theme.of(context).colorScheme.primary), title: Text(title), subtitle: Text(subtitle), trailing: const Icon(Icons.chevron_right), onTap: onTap),
   );
 }
 
