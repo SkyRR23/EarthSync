@@ -12,7 +12,7 @@ final dashboardClimateClientProvider = Provider<NasaPowerClient>(
         ? const String.fromEnvironment('BACKEND_URL')
         : kIsWeb
         ? Uri.base.origin
-        : 'http://127.0.0.1:8000',
+        : 'https://fieldshift-yangon-2026.web.app',
   ),
 );
 
