@@ -157,7 +157,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                   SwitchListTile(
                     title: const Text('Use online AI (Groq)'),
                     subtitle: Text(ref.watch(onlineChatChoiceProvider)
-                        ? 'Online answers use retrieved sources. If unavailable, the offline guide will answer.'
+                        ? 'Needs the hosted AI service. If unavailable, the offline guide will answer.'
                         : 'Offline guide: saved references and checklists. Works without the server.'),
                     value: ref.watch(onlineChatChoiceProvider),
                     onChanged: s.sending ? null : (value) {

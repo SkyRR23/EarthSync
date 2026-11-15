@@ -236,19 +236,19 @@ class _FieldTabState extends ConsumerState<FieldTab> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Icon(
-                                      CupertinoIcons.leaf_arrow_circlepath,
+                                      kIsWeb ? CupertinoIcons.leaf_arrow_circlepath : CupertinoIcons.map,
                                       size: 18,
                                       color: kIsWeb ? p.positiveText : Colors.blueGrey,
                                     ),
                                     const SizedBox(width: FsSpace.xs + 2),
                                     Text(
-                                      kIsWeb ? S.plantHealthChip : 'Satellite layer',
+                                      kIsWeb ? S.plantHealthChip : 'Field boundary',
                                       style: t.subhead.copyWith(
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                     const SizedBox(width: FsSpace.xs),
-                                    Transform.scale(
+                                    if (kIsWeb) Transform.scale(
                                       scale: 0.8,
                                       child: CupertinoSwitch(
                                         value: health,

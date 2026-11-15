@@ -29,6 +29,10 @@ class SourcesScreen extends ConsumerWidget {
       children: [
         if (!kIsWeb) const SimulationBanner(),
         if (!kIsWeb) const SelectableText('Build: ${String.fromEnvironment("SOURCE_SHA", defaultValue: "development")}'),
+        if (!kIsWeb) const Padding(
+          padding: EdgeInsets.all(FsSpace.gutter),
+          child: Text('Offline help uses saved reference passages and general app checklists, labelled separately. It does not generate AI answers or diagnose plants. Online AI is optional and requires the hosted Groq service. Satellite plant health is unavailable without an accepted dated image; field outlines are not health results. Soil reference maps still need internet.'),
+        ),
         Padding(
           padding: const EdgeInsets.fromLTRB(
             FsSpace.gutter + FsSpace.xs,

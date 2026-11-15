@@ -14,7 +14,7 @@ Future<String> offlineFarmReply(String question, Map<String, String> farm) async
   if (farm['mode'] != null) output.add('Simulation day: ${farm['today']}. Historical context, not live conditions.');
   bool contains(List<String> words) => words.any(q.contains);
   final pests = contains(['(pests)', 'pest', 'insect', 'crawling', 'ပိုး']);
-  final water = contains(['(water)', 'water', 'rain', 'wind', 'ရေ']);
+  final water = contains(['(water)', '(weather)', 'weather', 'water', 'rain', 'wind', 'ရေ']);
   final soil = contains(['(soil)', 'soil', 'crack', 'compaction', 'မြေ']);
   final stress = contains(['(growth)', 'yellow', 'strip', 'leaf', 'leaves', 'အရွက်']);
   final aboutField = contains(['know about my field', 'my farm details']);
@@ -30,6 +30,7 @@ Future<String> offlineFarmReply(String question, Map<String, String> farm) async
     output.add('• Record the crop stage and photograph the insects and damage. Ask a local agricultural adviser to identify them before choosing treatment.');
     output.add('• This guide cannot identify an insect or choose a pesticide from a note.');
   } else if (soil) {
+    if (farm['soil type'] != null) output.add('• Saved soil description: ${farm['soil type']}.');
     output.add('• Compare wet and dry areas and note crusts, cracks or standing water. A hand test does not establish soil chemistry.');
     output.add('• Use Soil properties for modelled pH, clay and sand layers. They need an internet connection and are reference maps, not current soil readings.');
   } else if (water) {
