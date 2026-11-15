@@ -249,7 +249,9 @@ def test_real_local_ocr_on_labeled_synthetic_report(tmp_path):
         pytest.skip("Optional local Tesseract is not installed")
     image = Image.new("RGB", (1600, 750), "white")
     draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype("C:/Windows/Fonts/arial.ttf" if os.name == "nt" else "DejaVuSans.ttf", 30)
+    font = ImageFont.truetype(
+        "C:/Windows/Fonts/arial.ttf" if os.name == "nt" else "DejaVuSans.ttf", 30
+    )
     draw.multiline_text((35, 30), TEXT, font=font, fill="black", spacing=12)
     stream = io.BytesIO()
     image.save(stream, format="PNG")
