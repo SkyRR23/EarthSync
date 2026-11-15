@@ -1,5 +1,7 @@
 """Appearance observations and lab transcription are intentionally separate."""
 
+import os
+from pathlib import Path
 import re
 import shutil
 import subprocess
@@ -246,7 +248,17 @@ def parse_lab_text(text):
 
 class LocalOCR:
     def __init__(self):
-        self.executable = shutil.which("tesseract")
+        self.executable = os.getenv("EARTHSYNC_TESSERACT") or shutil.which("tesseract")
+        if not self.executable and os.name == "nt":
+            for directory in (
+                Path(os.getenv("LOCALAPPDATA", "")) / "Programs/Tesseract-OCR",
+                Path(os.getenv("LOCALAPPDATA", "")) / "Tesseract-OCR",
+                Path(os.getenv("ProgramFiles", "C:/Program Files")) / "Tesseract-OCR",
+            ):
+                candidate = directory / "tesseract.exe"
+                if candidate.is_file():
+                    self.executable = str(candidate)
+                    break
 
     def extract(self, image):
         if not self.executable:

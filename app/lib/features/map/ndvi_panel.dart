@@ -45,7 +45,7 @@ class NdviPanel extends ConsumerStatefulWidget {
 class _NdviPanelState extends ConsumerState<NdviPanel> {
   final _map = MapController();
   Timer? _timer;
-  Map<String, dynamic>? _snapshot, _pixel;
+  Map<String, dynamic>? _snapshot, _pixel, _pointReading;
   Uint8List? _png;
   String? _error, _image;
   String _location = 'ames';
@@ -90,10 +90,33 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
       final raw = Map<String, dynamic>.from(
         await client.transport.request('GET', path, expectedStatus: 200) as Map,
       );
+      Map<String, dynamic>? pointReading;
+      if (raw['data'] == null) {
+        try {
+          final pointPath = widget.farmId == null
+              ? '/api/platform/v1/realtime/$_location'
+              : '/api/platform/v1/farms/${widget.farmId}/realtime';
+          final context =
+              await client.transport.request(
+                    'GET',
+                    pointPath,
+                    expectedStatus: 200,
+                  )
+                  as Map;
+          final source = (context['sources'] as Map?)?['hls_ndvi'] as Map?;
+          if (source?['data'] is Map &&
+              (source!['data'] as Map)['value'] is num) {
+            pointReading = Map<String, dynamic>.from(source);
+          }
+        } catch (_) {
+          // A missing point reading does not prevent the map from opening.
+        }
+      }
       if (!mounted || revision != _revision) return;
       final image = (raw['data'] as Map?)?['png_base64'] as String?;
       setState(() {
         _snapshot = raw;
+        _pointReading = pointReading;
         if (image != _image) {
           _image = image;
           _png = image == null ? null : base64Decode(image);
@@ -146,6 +169,8 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
   Widget build(BuildContext context) {
     final data = _snapshot?['data'] as Map?;
     final bounds = data?['bounds'] as List?;
+    final hasLayer = _png != null && bounds != null;
+    final pointData = _pointReading?['data'] as Map?;
     final local = ref.watch(homeProfileProvider).value?.farm;
     final centre = widget.farmId == null
         ? switch (_location) {
@@ -177,7 +202,7 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
             ),
             const SizedBox(height: 8),
             const Text(
-              'Actual HLS-VI v2 native 30 m NDVI. Colours describe the numerical index, not crop suitability, disease, yield or a field average.',
+              'NDVI is a satellite measure of vegetation reflectance. When available, the coloured layer shows actual NASA HLS-VI pixels at 30 m resolution. It does not predict crop suitability, disease or yield.',
             ),
             const SizedBox(height: 16),
             if (widget.farmId == null)
@@ -185,7 +210,7 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
                 initialValue: _location,
                 isExpanded: true,
                 decoration: const InputDecoration(
-                  labelText: 'Public demo viewport',
+                  labelText: 'Choose an area to explore',
                 ),
                 items: const [
                   DropdownMenuItem(value: 'ames', child: Text('Ames, Iowa')),
@@ -217,6 +242,7 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
                           _png = null;
                           _image = null;
                           _pixel = null;
+                          _pointReading = null;
                           _revision++;
                         });
                         _map.move(centreFor(value), 15);
@@ -231,7 +257,7 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
                 OutlinedButton.icon(
                   onPressed: _busy ? null : () => _load(refresh: true),
                   icon: const Icon(Icons.refresh),
-                  label: const Text('Check NASA acquisition'),
+                  label: const Text('Check for satellite data'),
                 ),
                 if (bounds != null)
                   OutlinedButton.icon(
@@ -271,15 +297,65 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
                 _error!,
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
-            if (data == null)
+            if (data == null && !_busy)
               Semantics(
                 liveRegion: true,
-                child: Text(
-                  _snapshot?['error'] == 'AUTHENTICATION_REQUIRED'
-                      ? 'NASA raster unavailable: Earthdata authorization is not configured. No verified overlay is cached yet. The rest of EarthSync remains available.'
-                      : 'No verified NDVI overlay is available${_snapshot?['error'] == null ? ' yet' : ': ${_snapshot!['error']}'}. Missing pixels are never replaced.',
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  margin: const EdgeInsets.symmetric(vertical: 12),
+                  decoration: BoxDecoration(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.surfaceContainerHighest,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(Icons.satellite_alt_outlined),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Satellite layer unavailable',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        _snapshot?['error'] == 'AUTHENTICATION_REQUIRED'
+                            ? 'You’re seeing a street map, not an NDVI image. Earthdata authorization is not configured on this computer and no verified overlay is saved. You can still explore the map and use the rest of EarthSync.'
+                            : 'No verified NDVI image is available for this area yet. You can still explore the street map. Try checking for satellite data again later.',
+                      ),
+                      if (_snapshot?['error'] != null &&
+                          _snapshot?['error'] != 'AUTHENTICATION_REQUIRED')
+                        Text('Source status: ${_snapshot!['error']}'),
+                    ],
+                  ),
                 ),
               ),
+            if (data == null && pointData != null) ...[
+              Text(
+                'Available point reading',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              Text(
+                'NDVI ${(pointData['value'] as num).toStringAsFixed(3)}',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              Text(
+                '${_pointReading!['status'] == 'FRESH' ? 'Observed' : 'Saved earlier observation · stale'} · ${_date(pointData['acquired_start'])}',
+              ),
+              const Text(
+                'One accepted 30 m satellite cell at the reference point. This is not a field average or a coloured map. More pixels are needed to show an overlay.',
+              ),
+              ExpansionTile(
+                tilePadding: EdgeInsets.zero,
+                title: const Text('Point reading source'),
+                children: [
+                  SelectableText(
+                    'NASA ${pointData['product']} v${pointData['version']}\nAcquired ${pointData['acquired_start']}\n${pointData['granule_id']}\n${pointData['qa_policy']}',
+                  ),
+                ],
+              ),
+            ],
             if (data != null) ...[
               Text(
                 'Acquisition: ${data['acquired_at']} · age ${_snapshot?['data_age_days']} days',
@@ -305,8 +381,11 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
               title: const Text('Show NDVI overlay'),
-              value: _show,
-              onChanged: (v) => setState(() => _show = v),
+              subtitle: hasLayer
+                  ? null
+                  : const Text('Available when satellite pixels have loaded'),
+              value: hasLayer && _show,
+              onChanged: hasLayer ? (v) => setState(() => _show = v) : null,
             ),
             Row(
               children: [
@@ -318,11 +397,20 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
                     label: '${(_opacity * 100).round()}%',
                     semanticFormatterCallback: (v) =>
                         '${(v * 100).round()} percent',
-                    onChanged: (v) => setState(() => _opacity = v),
+                    onChanged: hasLayer && _show
+                        ? (v) => setState(() => _opacity = v)
+                        : null,
                   ),
                 ),
               ],
             ),
+            Text(
+              hasLayer && _show
+                  ? 'NASA NDVI layer over street map · tap a coloured pixel for its value'
+                  : 'Street map only · no NDVI colours displayed',
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+            const SizedBox(height: 8),
             SizedBox(
               height: 390,
               child: ClipRRect(
@@ -410,10 +498,11 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
               ),
             ),
             const SizedBox(height: 12),
-            const _NdviLegend(),
-            const Text(
-              'Cloud, shadow, snow, high aerosol, nodata and cells outside the polygon are transparent. Tap the map to inspect an original native value.',
-            ),
+            if (hasLayer) const _NdviLegend(),
+            if (hasLayer)
+              const Text(
+                'Cloud, shadow, snow, high aerosol, nodata and cells outside the polygon are transparent. Tap the map to inspect an original native value.',
+              ),
             if (_pixel != null)
               Semantics(
                 liveRegion: true,
@@ -427,6 +516,26 @@ class _NdviPanelState extends ConsumerState<NdviPanel> {
         ),
       ),
     );
+  }
+
+  String _date(dynamic value) {
+    final date = DateTime.tryParse(value?.toString() ?? '')?.toUtc();
+    if (date == null) return 'acquisition date unavailable';
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    return '${date.day} ${months[date.month - 1]} ${date.year} UTC';
   }
 
   LatLng centreFor(String location) => switch (location) {

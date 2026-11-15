@@ -26,6 +26,7 @@ def local_router(store, objects, catalog, owner, vision=None):
     @router.get("/image-capabilities")
     def capabilities():
         return {
+            "local_ocr": bool(ocr.executable),
             "enabled": vision is not None,
             "external": bool(vision and vision.external),
             "provider": vision.name if vision else None,

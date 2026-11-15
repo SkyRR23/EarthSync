@@ -149,14 +149,18 @@ def main():
                 page.get_by_role(
                     "group",
                     name=re.compile(
-                        "NASA raster unavailable|Cached real acquisition|No verified NDVI"
+                        "Satellite layer unavailable|Cached real acquisition|No verified NDVI"
                     ),
                 ).first
             ).to_be_attached()
-            click("switch", "Show NDVI overlay")
+            overlay_switch = page.get_by_role("switch", name="Show NDVI overlay")
+            if overlay_switch.is_enabled():
+                click("switch", "Show NDVI overlay")
+            else:
+                expect(overlay_switch).to_be_disabled()
             page.screenshot(path=str(output / "ndvi-status-desktop.png"))
             record(
-                "NDVI map, numerical legend, toggle and honest authorization/cache state"
+                "NDVI map with truthful availability and disabled controls when no raster exists"
             )
             go("crops")
             field = bring("textbox", "Search crops or aliases")
@@ -256,7 +260,7 @@ def main():
                 "provider": report["original"].get("provider"),
             }
             assert report["confirmed"] is None
-            click("button", re.compile("Report "))
+            click("button", re.compile("Soil report ·"))
             click("button", "Check, correct and confirm sample")
             expect(
                 page.get_by_text("Confirm laboratory sample values", exact=True)

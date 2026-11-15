@@ -104,6 +104,16 @@ class _FarmMapEditorState extends State<FarmMapEditor> {
 
   @override
   Widget build(BuildContext context) {
+    FarmBoundary? draft;
+    if (_editing && _vertices.length >= 3) {
+      try {
+        draft = FarmBoundary(_vertices);
+      } on FormatException {
+        // Invalid drafts remain editable; confirmation performs validation.
+      }
+    }
+    final needsPin =
+        draft != null && (widget.point == null || !draft.covers(widget.point!));
     final points = (_editing ? _vertices : widget.boundary?.vertices ?? [])
         .map((p) => LatLng(p.latitude, p.longitude))
         .toList();
@@ -114,18 +124,29 @@ class _FarmMapEditorState extends State<FarmMapEditor> {
       children: [
         DropdownButtonFormField<String>(
           initialValue: _mode,
+          isExpanded: true,
           decoration: InputDecoration(labelText: tr('mapLayer')),
           items: ['standard', 'satellite']
               .map((v) => DropdownMenuItem(value: v, child: Text(tr('map_$v'))))
               .toList(),
           onChanged: (v) => setState(() => _mode = v!),
         ),
-        Text(tr('hybridUnavailable')),
         if (satellite)
           Text(
             'NASA MODIS true color · ${c.dateString} UTC · requested imagery date; availability varies. Native zoom ≤9, not field-resolution imagery or NDVI.',
           ),
-        Text(_editing ? tr('boundaryHelp') : tr('pointHelp')),
+        const SizedBox(height: 12),
+        Text(
+          _editing ? tr('boundaryHelp') : tr('pointHelp'),
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
+        const SizedBox(height: 8),
+        Text(
+          _editing
+              ? 'Green numbers are field corners. Tap a number, then tap where you want to move that corner. Undo removes your last change.'
+              : 'The red pin is the location used for your farm’s data. Drawing a field outline is optional.',
+        ),
+        const SizedBox(height: 12),
         SizedBox(
           height: 360,
           child: FlutterMap(
@@ -198,7 +219,7 @@ class _FarmMapEditorState extends State<FarmMapEditor> {
                         width: 44,
                         height: 44,
                         child: IconButton(
-                          tooltip: 'Move vertex ${i + 1}',
+                          tooltip: 'Move corner ${i + 1}',
                           onPressed: () => setState(() => _selected = i),
                           icon: CircleAvatar(
                             backgroundColor: _selected == i
@@ -254,9 +275,28 @@ class _FarmMapEditorState extends State<FarmMapEditor> {
               ? '© OpenStreetMap contributors (base) · NASA GIBS / MODIS'
               : '© OpenStreetMap contributors · ODbL',
         ),
-        const Text(
-          'Tiles need a network connection. A blank tile is missing imagery; saved geometry remains available. Only tile coordinates go to map providers; the polygon stays local/private.',
-        ),
+        const Text('Red pin = farm location · Green outline = field edge'),
+        const SizedBox(height: 12),
+        if (needsPin) ...[
+          const Text(
+            'Your red pin is outside the outline. Move it inside before continuing.',
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: FilledButton.icon(
+              onPressed: () {
+                widget.onPoint(draft!.interiorPoint);
+                setState(() => _error = null);
+              },
+              icon: const Icon(Icons.pin_drop_outlined),
+              label: const Text('Move farm pin inside outline'),
+            ),
+          ),
+          const Text(
+            'This suggests a location only. Check it before saving your farm.',
+          ),
+          const SizedBox(height: 12),
+        ],
         if (!widget.areaOnly)
           Wrap(
             spacing: 8,
@@ -278,14 +318,6 @@ class _FarmMapEditorState extends State<FarmMapEditor> {
                 ),
               if (_editing) ...[
                 OutlinedButton(
-                  onPressed: _coordinates,
-                  child: Text(
-                    _selected == null
-                        ? 'Add corner by coordinates'
-                        : 'Edit selected vertex coordinates',
-                  ),
-                ),
-                OutlinedButton(
                   onPressed: _undo.isEmpty
                       ? null
                       : () => setState(() {
@@ -299,7 +331,9 @@ class _FarmMapEditorState extends State<FarmMapEditor> {
                   child: Text(tr('cancelBoundary')),
                 ),
                 FilledButton(
-                  onPressed: () => _finish(),
+                  onPressed: _vertices.length < 3 || needsPin
+                      ? null
+                      : () => _finish(),
                   child: Text(tr('confirmBoundary')),
                 ),
                 if (_selected != null)
@@ -316,7 +350,23 @@ class _FarmMapEditorState extends State<FarmMapEditor> {
           ),
         if (_editing)
           Text(
-            '${_vertices.length} vertices${_selected == null ? '' : ' · vertex ${_selected! + 1} selected; tap its new position'}',
+            '${_vertices.length} corners added${_selected == null ? (_vertices.length < 3 ? ' · add ${3 - _vertices.length} more to make an outline' : '') : ' · corner ${_selected! + 1} selected; tap its new position'}',
+          ),
+        if (_editing)
+          ExpansionTile(
+            key: const PageStorageKey('farm-map-coordinate-entry'),
+            tilePadding: EdgeInsets.zero,
+            title: const Text('Enter a corner by coordinates (optional)'),
+            children: [
+              OutlinedButton(
+                onPressed: _coordinates,
+                child: Text(
+                  _selected == null
+                      ? 'Add corner by coordinates'
+                      : 'Edit selected corner coordinates',
+                ),
+              ),
+            ],
           ),
         if (_error != null)
           Text(
@@ -327,6 +377,16 @@ class _FarmMapEditorState extends State<FarmMapEditor> {
           Text(
             'Approximate area: ${(widget.boundary!.areaSquareMetres / 10000).toStringAsFixed(3)} ha · spherical calculation, not a survey.',
           ),
+        const ExpansionTile(
+          key: PageStorageKey('farm-map-source-details'),
+          tilePadding: EdgeInsets.zero,
+          title: Text('Map sources & privacy'),
+          children: [
+            Text(
+              'Street map: OpenStreetMap. Satellite reference: NASA MODIS, not NDVI. Map backgrounds need internet; a blank tile means imagery is missing. Your field outline stays in your local workspace. Map providers receive the viewed tile area.',
+            ),
+          ],
+        ),
       ],
     );
   }

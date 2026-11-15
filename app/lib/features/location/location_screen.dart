@@ -193,20 +193,32 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
                 Text(
                   widget.areaOnly
                       ? 'Explore anywhere'
-                      : 'Confirm your field point',
+                      : 'Find and save your field',
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 const SizedBox(height: 8),
                 Text(
                   widget.areaOnly
                       ? 'Choose a point for climate context. This will not change your farm.'
-                      : 'Check that this point is on your field. Your device location may be somewhere else. A boundary is optional and must be explicitly drawn and confirmed.',
+                      : 'Find your field on the map, place a pin inside it, then confirm and save. You can also draw its outline. GPS is optional and may show where you are now, rather than your field.',
                 ),
                 const SizedBox(height: 16),
                 OutlinedButton.icon(
-                  onPressed: _saving ? null : _suggestLocation,
-                  icon: const Icon(Icons.my_location),
-                  label: const Text('Suggest a point with GPS (optional)'),
+                  onPressed: _saving
+                      ? null
+                      : !_map && !widget.areaOnly
+                      ? () => setState(() => _map = true)
+                      : _suggestLocation,
+                  icon: Icon(
+                    !_map && !widget.areaOnly
+                        ? Icons.map_outlined
+                        : Icons.my_location,
+                  ),
+                  label: Text(
+                    !_map && !widget.areaOnly
+                        ? 'Find my field on the map'
+                        : 'Suggest a point with GPS (optional)',
+                  ),
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
@@ -324,6 +336,17 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
                 if (!_map && _boundary != null)
                   Text(
                     'Saved boundary: ${_boundary!.vertices.length} vertices · ${(_boundary!.areaSquareMetres / 10000).toStringAsFixed(3)} ha. Open map to edit.',
+                  ),
+                if (!widget.areaOnly)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: Text(
+                      _boundaryEditing
+                          ? 'Next: finish your outline using “Use this outline” above.'
+                          : !_confirmed
+                          ? '3. Check the pin is on your field, then tick the box below to enable Save.'
+                          : 'Ready to save. Your location will be kept on this device.',
+                    ),
                   ),
                 if (!widget.areaOnly)
                   CheckboxListTile(

@@ -204,6 +204,15 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     label: const Text(UiLabels.openFarmQuestionnaire),
                   ),
                 ],
+                Text(
+                  'What would you like to do?',
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'Start with the weather, find your field, or ask for help. Your farm records stay in your local workspace.',
+                ),
+                const SizedBox(height: 16),
                 const DemoNavigation(),
                 const SizedBox(height: 16),
                 RealtimePanel(
@@ -258,58 +267,67 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   ),
                 ] else ...[
                   ExpansionTile(
-                    key: const PageStorageKey('dashboard.historical-dates'),
-                    tilePadding: EdgeInsets.zero,
-                    title: const Text(UiLabels.changeHistoricalDates),
-                    children: const [HistoricalWindowSelector()],
-                  ),
-                  const SizedBox(height: 12),
-                  ClimatePanel(
-                    query: ClimateQuery(
-                      point,
-                      ref.watch(historicalWindowProvider),
+                    key: const PageStorageKey('dashboard.reference-context'),
+                    title: const Text('Climate history & reference images'),
+                    subtitle: const Text(
+                      'Older climate records and background imagery',
                     ),
-                  ),
-                  const SizedBox(height: 12),
-                  ResponsivePair(
-                    first: SatellitePreview(point: point),
-                    second: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        ActionCard(
-                          title: tr('satellite'),
-                          body: tr('satelliteBody'),
-                          icon: Icons.layers_outlined,
-                          onTap: () => context.push('/explore'),
+                    children: [
+                      ExpansionTile(
+                        key: const PageStorageKey('dashboard.historical-dates'),
+                        tilePadding: EdgeInsets.zero,
+                        title: const Text(UiLabels.changeHistoricalDates),
+                        children: const [HistoricalWindowSelector()],
+                      ),
+                      const SizedBox(height: 12),
+                      ClimatePanel(
+                        query: ClimateQuery(
+                          point,
+                          ref.watch(historicalWindowProvider),
                         ),
-                        EvidenceNotice(
-                          title: tr('forecast'),
-                          message: tr('forecastBody'),
-                          icon: Icons.cloud_outlined,
-                          action: TextButton(
-                            onPressed: () => context.push('/realtime'),
-                            child: Text(
-                              realtimeCopy(
-                                context,
-                                'Open monitoring dashboard',
+                      ),
+                      const SizedBox(height: 12),
+                      ResponsivePair(
+                        first: SatellitePreview(point: point),
+                        second: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            ActionCard(
+                              title: tr('satellite'),
+                              body: tr('satelliteBody'),
+                              icon: Icons.layers_outlined,
+                              onTap: () => context.push('/explore'),
+                            ),
+                            EvidenceNotice(
+                              title: tr('forecast'),
+                              message: tr('forecastBody'),
+                              icon: Icons.cloud_outlined,
+                              action: TextButton(
+                                onPressed: () => context.push('/realtime'),
+                                child: Text(
+                                  realtimeCopy(
+                                    context,
+                                    'Open monitoring dashboard',
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                            if (showingFarm)
+                              OutlinedButton.icon(
+                                onPressed: () => context.push('/photos'),
+                                icon: const Icon(Icons.photo_library_outlined),
+                                label: const Text(UiLabels.fieldPhotos),
+                              ),
+                          ],
                         ),
-                        if (showingFarm)
-                          OutlinedButton.icon(
-                            onPressed: () => context.push('/photos'),
-                            icon: const Icon(Icons.photo_library_outlined),
-                            label: const Text(UiLabels.fieldPhotos),
-                          ),
-                      ],
-                    ),
+                      ),
+                      if (!showingFarm)
+                        TextButton(
+                          onPressed: () => context.push('/area'),
+                          child: const Text(UiLabels.switchArea),
+                        ),
+                    ],
                   ),
-                  if (!showingFarm)
-                    TextButton(
-                      onPressed: () => context.push('/area'),
-                      child: const Text(UiLabels.switchArea),
-                    ),
                 ],
                 const SourceNote(),
                 TextButton(
@@ -328,25 +346,108 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 class DemoNavigation extends StatelessWidget {
   const DemoNavigation({super.key});
   @override
-  Widget build(BuildContext context) => Wrap(
-    spacing: 10,
-    runSpacing: 10,
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
-      for (final item in const [
-        ('Real-time monitoring', '/realtime', Icons.update),
-        ('Satellite NDVI map', '/ndvi', Icons.layers_outlined),
-        ('Crop intelligence', '/crop-intelligence', Icons.spa_outlined),
-        ('Soil & laboratory reports', '/lab-reports', Icons.science_outlined),
-        ('Image analysis', '/image-analysis', Icons.photo_camera_outlined),
-        ('Farm explorer', '/location', Icons.map_outlined),
-        ('Rotation comparison', '/rotations', Icons.compare_arrows),
-        ('Farmer history', '/season', Icons.history),
-      ])
-        OutlinedButton.icon(
-          onPressed: () => context.push(item.$2),
-          icon: Icon(item.$3),
-          label: Text(item.$1),
+      LayoutBuilder(
+        builder: (context, constraints) {
+          final width = constraints.maxWidth >= 800
+              ? (constraints.maxWidth - 24) / 3
+              : constraints.maxWidth;
+          return Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: [
+              for (final item in const [
+                (
+                  '1. Check the weather',
+                  'Latest observations, forecasts and official alerts.',
+                  '/realtime',
+                  Icons.cloud_outlined,
+                ),
+                (
+                  '2. Find my field',
+                  'Place a pin and optionally draw your field outline.',
+                  '/location',
+                  Icons.map_outlined,
+                ),
+                (
+                  '3. Ask EarthSync',
+                  'Get a plain-language explanation of your data.',
+                  '/assistant',
+                  Icons.chat_bubble_outline,
+                ),
+              ])
+                SizedBox(
+                  width: width,
+                  child: Card(
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(16),
+                      onTap: () => context.push(item.$3),
+                      child: Padding(
+                        padding: const EdgeInsets.all(18),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(item.$4),
+                            const SizedBox(height: 12),
+                            Text(
+                              item.$1,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(item.$2),
+                            const SizedBox(height: 8),
+                            const Icon(Icons.arrow_forward, size: 20),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          );
+        },
+      ),
+      ExpansionTile(
+        key: const PageStorageKey('dashboard.more-tools'),
+        tilePadding: EdgeInsets.zero,
+        title: const Text('Explore more tools'),
+        subtitle: const Text(
+          'Satellite map, crop search, photos, soil tests and saved records',
         ),
+        children: [
+          Wrap(
+            spacing: 10,
+            runSpacing: 10,
+            children: [
+              for (final item in const [
+                ('Real-time monitoring', '/realtime', Icons.update),
+                ('Satellite NDVI map', '/ndvi', Icons.layers_outlined),
+                ('Crop intelligence', '/crop-intelligence', Icons.spa_outlined),
+                (
+                  'Soil & laboratory reports',
+                  '/lab-reports',
+                  Icons.science_outlined,
+                ),
+                (
+                  'Image analysis',
+                  '/image-analysis',
+                  Icons.photo_camera_outlined,
+                ),
+                ('Farm explorer', '/location', Icons.map_outlined),
+                ('Rotation comparison', '/rotations', Icons.compare_arrows),
+                ('Farmer history', '/season', Icons.history),
+              ])
+                OutlinedButton.icon(
+                  onPressed: () => context.push(item.$2),
+                  icon: Icon(item.$3),
+                  label: Text(item.$1),
+                ),
+            ],
+          ),
+        ],
+      ),
     ],
   );
 }

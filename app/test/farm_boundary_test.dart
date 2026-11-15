@@ -30,6 +30,21 @@ void main() {
     expect(b.covers(GeoPoint(1, 1)), false);
     expect(FarmBoundary.fromJson(b.toJson()).vertices, square);
   });
+  test('suggested pin remains inside a concave field in either ring order', () {
+    final ring = [
+      GeoPoint(0, 0),
+      GeoPoint(0, .004),
+      GeoPoint(.001, .004),
+      GeoPoint(.001, .001),
+      GeoPoint(.004, .001),
+      GeoPoint(.004, 0),
+    ];
+    for (final points in [ring, ring.reversed.toList()]) {
+      final boundary = FarmBoundary(points);
+      expect(boundary.covers(GeoPoint(.002, .002)), isFalse);
+      expect(boundary.covers(boundary.interiorPoint), isTrue);
+    }
+  });
   test(
     'reject self-intersection, degenerate, adjacent duplicates, antimeridian',
     () {

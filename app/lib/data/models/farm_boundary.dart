@@ -83,6 +83,32 @@ class FarmBoundary {
     return inside;
   }
 
+  /// A draft pin inside the outline; the farmer must still confirm its location.
+  GeoPoint get interiorPoint {
+    final ys = vertices.map((p) => p.latitude).toSet().toList()..sort();
+    for (var row = 0; row < ys.length - 1; row++) {
+      final y = (ys[row] + ys[row + 1]) / 2;
+      final crossings = <double>[];
+      for (var i = 0; i < vertices.length; i++) {
+        final a = vertices[i], b = vertices[(i + 1) % vertices.length];
+        if ((a.latitude > y) != (b.latitude > y)) {
+          crossings.add(
+            a.longitude +
+                (y - a.latitude) *
+                    (b.longitude - a.longitude) /
+                    (b.latitude - a.latitude),
+          );
+        }
+      }
+      crossings.sort();
+      for (var i = 0; i + 1 < crossings.length; i += 2) {
+        final point = GeoPoint(y, (crossings[i] + crossings[i + 1]) / 2);
+        if (covers(point)) return point;
+      }
+    }
+    throw const FormatException('Unable to place a pin inside this outline.');
+  }
+
   /// Spherical trapezoid integral, mean Earth radius 6371008.8 m.
   /// Approximate area, not a survey (ellipsoid difference about 1% or less).
   double get areaSquareMetres {

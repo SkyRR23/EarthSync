@@ -67,6 +67,20 @@ still fail closed. Clean initialization and both upgrades/reopening are tested.
 
 ## Demo sequence
 
+The dashboard starts with three actions: check the weather, find your field,
+and ask EarthSync. Additional tools are under “Explore more tools”. Map corners
+and the farm pin have separate roles; the outline editor offers an explicit
+suggested pin inside the field, followed by the farmer's own confirmation.
+The same Flutter screens adapt to mobile widths. Assistant answers lead with
+plain explanations; citations and original records remain available in details.
+
+Local report OCR detects Tesseract on PATH, the usual Windows per-user/system
+installations, or `EARTHSYNC_TESSERACT`. This Windows demo machine has
+Tesseract 5.4 installed. Crop/soil photographs are not laboratory reports:
+only a readable written report can provide values for manual review.
+External visual AI remains disabled. A missing raster disables NDVI controls;
+a genuine cached point reading is shown separately and never stretched into a map.
+
 1. Dashboard: Ames public reference; distinguish stations, forecasts and alerts.
 2. Satellite NDVI map: acquisition age, QA, coverage and a native pixel, or the
    honest unavailable state when Earthdata has not been configured.

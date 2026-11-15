@@ -281,17 +281,26 @@ class _AnswerCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          for (final claim in answer.claims)
+          for (final claim in answer.claims.skip(
+            answer.claims.length > 1 &&
+                    answer.claims.first.category ==
+                        AssistantCategory.generalKnowledge &&
+                    answer.claims[1].category ==
+                        AssistantCategory.generalKnowledge
+                ? 1
+                : 0,
+          ))
             Padding(
               padding: const EdgeInsets.only(bottom: 12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    words(claim.category.wire),
-                    style: Theme.of(context).textTheme.labelMedium,
+                  SelectableText(
+                    claim.text,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge?.copyWith(height: 1.55),
                   ),
-                  SelectableText(claim.text),
                   if (claim.sourceIds.isNotEmpty)
                     Text(
                       '[${claim.sourceIds.join(', ')}]',
@@ -305,6 +314,10 @@ class _AnswerCard extends StatelessWidget {
             title: Text(words('sources')),
             children: [
               Text(words('detailsNote')),
+              if (answer.claims.length > 1 &&
+                  answer.claims.first.category ==
+                      AssistantCategory.generalKnowledge)
+                Text(answer.claims.first.text),
               if (answer.citations.isEmpty) Text(words('noSources')),
               // Plain selectable links: no HTML/Markdown execution, link fetching or actions.
               for (final source in answer.citations)
@@ -314,24 +327,34 @@ class _AnswerCard extends StatelessWidget {
                     '${source.title}\n${source.url ?? words('unknown')}',
                   ),
                 ),
-              for (final record in answer.evidence)
-                ListTile(
-                  title: Text(record.id),
-                  subtitle: SelectableText(
-                    const JsonEncoder.withIndent('  ').convert(record.toJson()),
-                  ),
-                ),
-              for (final decision in answer.decisions)
-                ListTile(
-                  title: Text(decision.scenarioId),
-                  subtitle: SelectableText(
-                    const JsonEncoder.withIndent(
-                      '  ',
-                    ).convert(decision.toJson()),
-                  ),
-                ),
               for (final note in answer.limitations) Text(note),
-              for (final warning in answer.warnings) Text(warning),
+              if (answer.evidence.isNotEmpty ||
+                  answer.decisions.isNotEmpty ||
+                  answer.warnings.isNotEmpty)
+                ExpansionTile(
+                  title: const Text('Original records (technical details)'),
+                  children: [
+                    for (final record in answer.evidence)
+                      ListTile(
+                        title: Text(record.id),
+                        subtitle: SelectableText(
+                          const JsonEncoder.withIndent(
+                            '  ',
+                          ).convert(record.toJson()),
+                        ),
+                      ),
+                    for (final decision in answer.decisions)
+                      ListTile(
+                        title: Text(decision.scenarioId),
+                        subtitle: SelectableText(
+                          const JsonEncoder.withIndent(
+                            '  ',
+                          ).convert(decision.toJson()),
+                        ),
+                      ),
+                    for (final warning in answer.warnings) Text(warning),
+                  ],
+                ),
             ],
           ),
         ],

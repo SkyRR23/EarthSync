@@ -97,7 +97,7 @@ void main() {
           await tester.pumpAndSettle();
           expect(
             find.text('NDVI · dimensionless numerical scale'),
-            findsOneWidget,
+            cached ? findsOneWidget : findsNothing,
           );
           if (cached) {
             expect(
@@ -117,6 +117,7 @@ void main() {
               findsOneWidget,
             );
           } else {
+            expect(find.text('Satellite layer unavailable'), findsOneWidget);
             expect(
               find.textContaining('Earthdata authorization is not configured'),
               findsOneWidget,
@@ -124,7 +125,20 @@ void main() {
             expect(find.text('Inspect map centre'), findsNothing);
           }
           await tester.ensureVisible(find.byType(SwitchListTile));
-          await tester.tap(find.byType(SwitchListTile));
+          if (cached) {
+            await tester.tap(find.byType(SwitchListTile));
+          } else {
+            expect(
+              tester
+                  .widget<SwitchListTile>(find.byType(SwitchListTile))
+                  .onChanged,
+              isNull,
+            );
+            expect(
+              tester.widget<Slider>(find.byType(Slider)).onChanged,
+              isNull,
+            );
+          }
           await tester.pumpAndSettle();
           expect(
             tester.widget<SwitchListTile>(find.byType(SwitchListTile)).value,

@@ -1,17 +1,17 @@
 const assistantEnglish = <String, String>{
   'title': 'Farm assistant',
   'intro':
-      'Ask about agricultural evidence. Answers use only the context provided.',
-  'question': 'Ask a question',
+      'Ask about your weather, soil, crops or satellite data. I’ll explain what the available information means.',
+  'question': 'What would you like to know?',
   'send': 'Send',
   'loading': 'Preparing an explanation…',
   'error':
       'The assistant is unavailable. Your evidence has not been replaced. Try again.',
   'retry': 'Retry',
-  'expanded': 'Expanded explanation',
+  'expanded': 'Explain in more detail',
   'sources': 'Evidence and sources',
   'detailsNote':
-      'Supplied records — text and links are not independently verified.',
+      'These are the records used for this answer. Check the dates and source coverage before using them for a field decision.',
   'warnings':
       'Some evidence is missing or needs review. Open details before using these results.',
   'retrieved_fact': 'Supplied fact',
@@ -20,8 +20,10 @@ const assistantEnglish = <String, String>{
   'unavailable_evidence': 'Unknown or needs review',
   'noSources': 'No source citations supplied.',
   'unknown': 'Unknown',
-  'noFarm': 'No confirmed farm. General or regional information only.',
-  'farm': 'Farm confirmed. Source coverage still applies.',
+  'noFarm':
+      'You’re exploring an area. Add your farm when you want to keep field records.',
+  'farm':
+      'Using your selected farm. Nearby weather stations and regional maps may differ from conditions in your field.',
 };
 const assistantEnglishQuestions = <String>[
   'What is happening in my area?',

@@ -351,6 +351,17 @@ class _SoilWorkflowsState extends State<SoilWorkflows> {
                     _assist = false;
                   }),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Text(switch (_kind) {
+              'lab' =>
+                'Use a clear photo or screenshot of a written soil test report. A photo of soil cannot provide pH or nutrient measurements.',
+              'soil' =>
+                'Upload a photo of the soil surface and describe what you see. Soil colour cannot establish pH, nutrients or moisture around roots.',
+              _ =>
+                'Upload a clear crop or leaf photo and describe your question. Photos are observations, not a confirmed disease diagnosis.',
+            }),
+          ),
           Wrap(
             spacing: 8,
             runSpacing: 8,
@@ -386,24 +397,30 @@ class _SoilWorkflowsState extends State<SoilWorkflows> {
             _input('Reported symptoms (optional)', _symptoms, 500),
           ] else ...[
             const Text(
-              'Local Tesseract runs first. Check every value against the original report. Uploads are not independently authenticated.',
+              'Read the text from your report, then check and correct the extracted values before saving. Uploads are not independently authenticated.',
             ),
-            CheckboxListTile(
-              value: _assist,
-              onChanged: !enabled || _busy
-                  ? null
-                  : (v) => setState(() {
-                      _assist = v ?? false;
-                      _consent = false;
-                    }),
-              title: const Text('Request optional AI document assistance'),
+            Text(
+              _capabilities?['local_ocr'] == true
+                  ? 'Text reading is ready on this computer.'
+                  : 'Automatic text reading is not available. You can still enter values from a written report by hand.',
             ),
+            if (enabled)
+              CheckboxListTile(
+                value: _assist,
+                onChanged: !enabled || _busy
+                    ? null
+                    : (v) => setState(() {
+                        _assist = v ?? false;
+                        _consent = false;
+                      }),
+                title: const Text('Request optional AI document assistance'),
+              ),
           ],
           if (!enabled)
             Text(
-              tr(
-                'External vision is unavailable. Local OCR and saved evidence still work.',
-              ),
+              _kind == 'lab'
+                  ? 'External vision is unavailable. Report text reading runs locally when installed; your uploaded image remains saved.'
+                  : 'External vision is unavailable. Your photo can still be saved with your own observations. Automatic visual interpretation is off.',
             ),
           if (needsConsent)
             CheckboxListTile(
@@ -432,10 +449,12 @@ class _SoilWorkflowsState extends State<SoilWorkflows> {
           for (final report in _reports)
             ExpansionTile(
               key: ValueKey(report['id']),
-              title: Text('Report ${report['id']}'),
+              title: Text(
+                'Soil report · ${report['original']['sample_date'] ?? 'date not entered'}',
+              ),
               subtitle: Text(
                 report['confirmed'] == null
-                    ? '${report['original']['status']} · check before confirmation'
+                    ? _reportStatus(report['original']['status'])
                     : 'User-confirmed sample transcription',
               ),
               expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
@@ -446,6 +465,29 @@ class _SoilWorkflowsState extends State<SoilWorkflows> {
                 _LabValues(
                   data: Map<String, dynamic>.from(report['original'] as Map),
                 ),
+                if ([
+                  'ocr_unavailable',
+                  'ocr_failed',
+                  'manual_entry_required',
+                ].contains(report['original']['status']))
+                  TextButton(
+                    onPressed: _busy
+                        ? null
+                        : () => _act(() async {
+                            await widget.client.transport.request(
+                              'POST',
+                              '$prefix/photos/${report['photo_id']}/lab-extraction',
+                              expectedStatus: 201,
+                              body: {
+                                'request_ai_assistance': false,
+                                'external_image_consent': false,
+                              },
+                              timeout: const Duration(seconds: 45),
+                            );
+                            await _refresh();
+                          }),
+                    child: const Text('Try reading this report again'),
+                  ),
                 if (report['original']['ai_assistance'] != null) ...[
                   const Text(
                     'Unverified AI assistance (never automatically confirmed):',
@@ -573,7 +615,7 @@ class _LabValues extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
-      if (data['status'] != null) Text('Extraction: ${data['status']}'),
+      if (data['status'] != null) Text(_reportStatus(data['status'])),
       Text(
         'Laboratory: ${data['laboratory'] ?? 'Not reported'}\nSample: ${data['sample_id'] ?? 'Not reported'}\nSample date: ${data['sample_date'] ?? 'Not reported'}',
       ),
@@ -588,11 +630,23 @@ class _LabValues extends StatelessWidget {
         ),
       if ((data['unreadable_fields'] as List? ?? []).isNotEmpty)
         Text(
-          'Missing or unreadable: ${(data['unreadable_fields'] as List).join(', ')}',
+          'Please add or check: ${(data['unreadable_fields'] as List).map((field) => field.toString().replaceAll('_', ' ')).join(', ')}',
         ),
     ],
   );
 }
+
+String _reportStatus(dynamic status) => switch (status) {
+  'ocr_unavailable' =>
+    'Text reading was unavailable for this upload. Enter the report values manually or try again after setup.',
+  'ocr_failed' =>
+    'The text could not be read. Try a clearer report photo or enter the values manually.',
+  'manual_entry_required' =>
+    'No laboratory values were found. Check that this is a readable written report, then enter the values manually.',
+  'pending_confirmation' =>
+    'Text extracted · check the values against your report before confirming',
+  _ => 'Review the report values before confirming',
+};
 
 class _Measurement {
   _Measurement(Map<String, dynamic> value)
