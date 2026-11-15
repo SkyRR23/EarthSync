@@ -43,9 +43,9 @@ flutter pub get
 flutter analyze
 flutter test
 cargo test --locked --manifest-path rust/Cargo.toml
-flutter build apk --debug --target-platform android-arm64 --dart-define=ENGINE=rust
+flutter build apk --release --target-platform android-arm64 --dart-define-from-file=config/cloud.json  # phone build: live backend
 flutter test integration_test/simple_test.dart -d PHONE_ID
-flutter run -d PHONE_ID --dart-define=ENGINE=rust
+flutter run -d PHONE_ID --dart-define-from-file=config/cloud.json
 ```
 
 The ARM64 build command requires an ARM64 phone for installation. For other

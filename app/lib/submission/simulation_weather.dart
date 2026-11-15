@@ -31,7 +31,7 @@ class HistoricalWeatherSummary extends ConsumerWidget {
     final rows = usingReference ? <MonthlyClimate>[for (final m in reference?['months'] as List? ?? []) if (m['year'] == date.year) MonthlyClimate(year: m['year'] as int, month: m['month'] as int, rainMm: (m['rain_mm'] as num?)?.toDouble())] : climate?.months ?? <MonthlyClimate>[];
     final month = rows.where((m) => m.year == date.year && m.month == date.month).firstOrNull;
     String dayKey(DateTime d) => '${d.year.toString().padLeft(4,'0')}${d.month.toString().padLeft(2,'0')}${d.day.toString().padLeft(2,'0')}';
-    final daily = usingReference ? reference?['daily'] as Map? : null;
+    final daily = usingReference ? (reference?['daily'] as Map?) : null;
     final selectedDay = daily?[dayKey(date)] as Map?;
     final visual = WeatherHistoryVisual(date:date, source:usingReference ? 'Yangon reference' : 'Your field’s historical context', temperature:month?.tempMeanC, rain:usingReference ? (selectedDay?['rain_mm'] as num?)?.toDouble() : month?.rainMm, wetness:(selectedDay?['root_wetness'] as num?)?.toDouble(), rainIsDaily:usingReference, compact:compact, onOpen:()=>HomeTabs.of(context)?.go(1), days:[if(usingReference) for(var i=6;i>=0;i--) {'date':date.subtract(Duration(days:i)), 'rain':(daily?[dayKey(date.subtract(Duration(days:i)))] as Map?)?['rain_mm']}]);
     if(compact) return visual;

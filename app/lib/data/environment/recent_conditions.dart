@@ -80,7 +80,7 @@ class RecentClient {
   RecentClient({
     this.baseUrl = const String.fromEnvironment(
       'BACKEND_URL',
-      defaultValue: 'http://127.0.0.1:8000',
+      defaultValue: 'https://fieldshift-yangon-2026.web.app',
     ),
     this.client,
     this.timeout = const Duration(seconds: 60),
