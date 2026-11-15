@@ -1,0 +1,35 @@
+name: Publish the verified submission APK once
+on:
+  workflow_dispatch:
+permissions: {}
+jobs:
+  publish:
+    if: github.repository == 'SkyRR23/EarthSync' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: read
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: SkyRR23/EarthSync
+      BUILD_RUN_ID: '43738875497'
+      EXPECTED_SHA: 46a6982ebe735ced69179b1515e54181ed4cdc8f
+    steps:
+      - name: Download only the successful, exact source build
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/$GH_REPO/actions/runs/$BUILD_RUN_ID" > run.json
+          jq -e --arg sha "$EXPECTED_SHA" '.conclusion == "success" and .head_sha == $sha and .path == ".github/workflows/submission-android.yml"' run.json
+          gh run download "$BUILD_RUN_ID" --name earthsync-submission-apk --dir submission
+      - name: Verify the source and checksum, then replace the same release assets
+        working-directory: submission
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(cat SOURCE_COMMIT.txt)" = "$EXPECTED_SHA"
+          sha256sum --check EarthSync-submission.apk.sha256
+          gh release upload submission-20261115-eeca926 EarthSync-submission.apk EarthSync-submission.apk.sha256 SOURCE_COMMIT.txt --clobber
+          sha256sum EarthSync-submission.apk >> "$GITHUB_STEP_SUMMARY"
+          printf 'Source: %s\n' "$EXPECTED_SHA" >> "$GITHUB_STEP_SUMMARY"
