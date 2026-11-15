@@ -37,7 +37,7 @@ class MapScreen extends ConsumerStatefulWidget {
 }
 
 class _MapScreenState extends ConsumerState<MapScreen> {
-  late MapLayerKind _layer = widget.plantHealth
+  late MapLayerKind _layer = kIsWeb && widget.plantHealth
       ? MapLayerKind.plantHealth
       : MapLayerKind.street;
   final _map = MapController();
@@ -121,7 +121,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                     ],
                   ),
                   const SizedBox(height: FsSpace.sm),
-                  MapGlass(
+                  if (kIsWeb) MapGlass(
                     child: Padding(
                       padding: const EdgeInsets.all(FsSpace.xs),
                       child: FsSegmented<MapLayerKind>(

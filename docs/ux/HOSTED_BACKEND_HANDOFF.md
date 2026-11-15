@@ -43,6 +43,21 @@ fallback is excluded on Android. Gray/neutral outlines are field boundaries,
 not plant-health measurements. All vegetation images retain source dates;
 urban vegetation can have NDVI without being crops.
 
+The latest primary offline simulation disables the satellite control explicitly:
+no historical HLS pixels are bundled. The retained live endpoint searches the
+last 75 days relative to the server clock, not the simulation date. Do not treat
+that result as a historical simulation observation.
+
+The HLS response now includes `availability` and bounded diagnostic counts:
+`catalog_items`, `attempted_reads`, `unreadable_images`,
+`cloudy_scenes_skipped`, and `insufficient_clear_pixels`.
+`unreadable_images` means catalog images were found but all attempted reads
+failed; it does not establish that imagery is absent. Check Earthdata access,
+asset reads and provider responses in the deployed revision without logging
+tokens or signed asset URLs. `no_catalog_items` and `no_clear_pixels` are
+different outcomes. Cloud/quality checks are retained, not weakened to force
+an image. These diagnostics require deploying the updated server source.
+
 Native soil layers use ISRIC's public WMS display service directly, separately
 from the app backend: pH, clay and sand, modeled top 0–5 cm at roughly 250 m.
 Reference: https://maps.isric.org/soilgrids.html and

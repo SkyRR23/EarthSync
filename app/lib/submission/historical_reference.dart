@@ -5,7 +5,7 @@ import '../state/providers.dart';
 
 class ReferenceChoice extends Notifier<bool> {
   @override
-  bool build() => ref.read(prefsProvider)?.getBool('simulation.use.yangon.reference') ?? false;
+  bool build() => ref.read(prefsProvider)?.getBool('simulation.use.yangon.reference') ?? true;
   void select(bool value) {
     state = value;
     ref.read(prefsProvider)?.setBool('simulation.use.yangon.reference',value);

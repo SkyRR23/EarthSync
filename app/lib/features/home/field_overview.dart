@@ -88,7 +88,9 @@ class _FieldTabState extends ConsumerState<FieldTab> {
     final modis = health && kIsWeb
         ? '${plantHealthDateLabel(ref.watch(plantHealthDateProvider(farm.center)).value)}. ${S.insideFarmOnly} ${S.pixelNote}'
         : null;
-    final caption = farm == null
+    final caption = !kIsWeb
+        ? 'Satellite imagery is unavailable in the offline simulation. No dated field image is bundled. The outline marks your field, not its health.'
+        : farm == null
         ? S.markFarmForHealth
         : !health
         ? null
@@ -236,11 +238,11 @@ class _FieldTabState extends ConsumerState<FieldTab> {
                                     Icon(
                                       CupertinoIcons.leaf_arrow_circlepath,
                                       size: 18,
-                                      color: p.positiveText,
+                                      color: kIsWeb ? p.positiveText : Colors.blueGrey,
                                     ),
                                     const SizedBox(width: FsSpace.xs + 2),
                                     Text(
-                                      kIsWeb ? S.plantHealthChip : 'Vegetation history',
+                                      kIsWeb ? S.plantHealthChip : 'Satellite layer',
                                       style: t.subhead.copyWith(
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -251,7 +253,7 @@ class _FieldTabState extends ConsumerState<FieldTab> {
                                       child: CupertinoSwitch(
                                         value: health,
                                         activeTrackColor: p.tint,
-                                        onChanged: farm == null
+                                        onChanged: !kIsWeb || farm == null
                                             ? null
                                             : (v) => setState(
                                                 () => _plantHealth = v,

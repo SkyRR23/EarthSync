@@ -28,11 +28,13 @@ agronomic suitability. This is decision exploration using declared assumptions.
 
 ## Offline reference
 
-Weather offers an explicit opt-in to the included NASA POWER Yangon reference,
+The demo defaults to the clearly labelled included NASA POWER Yangon reference,
 16.85 N, 96.15 E. It contains 2016–2025 dated rainfall and modeled root wetness,
 derived from the pre-existing captured provider response. The package retains
 its original source path and SHA-256. The source label remains distinct from the
-user's saved field. There is no automatic outage substitution.
+user's saved field. An explicit source choice in Weather can select field-loaded
+history instead. There is no automatic outage substitution, and existing saved
+source choices are retained.
 
 Missing temperature, wind and dates stay missing. No daily extreme is inferred
 from a monthly mean. Real-time implementations remain unused by the primary

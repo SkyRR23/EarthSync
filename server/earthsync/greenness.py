@@ -224,11 +224,15 @@ async def farm_greenness(
     items = await search.items(farm, now - timedelta(days=DAYS_BACK))
     found: list[dict] = []
     reads = 0
+    unreadable = 0
+    cloudy = 0
+    insufficient = 0
     for item in items:
         if reads >= MAX_READS or len(found) == 2:
             break
         cloud = item["properties"].get("eo:cloud_cover")
         if isinstance(cloud, (int, float)) and cloud > 90:
+            cloudy += 1
             continue
         if found and found[0]["date"] == item["properties"]["datetime"][:10]:
             continue
@@ -236,9 +240,11 @@ async def farm_greenness(
         try:
             pixels = await asyncio.to_thread(reader.read, item, farm)
         except Exception:
+            unreadable += 1
             continue  # one unreadable image never fails the answer
         s = summarize(pixels)
         if s["pixels_inside"] == 0 or s["pixels_clear"] * 2 < s["pixels_inside"]:
+            insufficient += 1
             continue
         sensor, _ = COLLECTIONS[item["collection"]]
         scene = {
@@ -250,10 +256,25 @@ async def farm_greenness(
         if not found:
             scene["cells"] = pixels
         found.append(scene)
+    availability = (
+        "available" if found else
+        "no_catalog_items" if not items else
+        "unreadable_images" if reads > 0 and unreadable == reads else
+        "no_clear_pixels" if insufficient > 0 or cloudy > 0 else
+        "no_accepted_image"
+    )
     return {
         "latest": found[0] if found else None,
         "previous": found[1] if len(found) > 1 else None,
         "searched_days": DAYS_BACK,
+        "availability": availability,
+        "diagnostics": {
+            "catalog_items": len(items),
+            "attempted_reads": reads,
+            "unreadable_images": unreadable,
+            "cloudy_scenes_skipped": cloudy,
+            "insufficient_clear_pixels": insufficient,
+        },
     }
 
 
