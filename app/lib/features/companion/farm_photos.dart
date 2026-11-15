@@ -9,6 +9,7 @@ import '../../state/platform_provider.dart';
 import '../photo_evidence/photo_picker.dart';
 import '../photo_evidence/photo_evidence_models.dart';
 import 'companion_copy.dart';
+import 'soil_workflows.dart';
 
 class FarmPhotosScreen extends ConsumerStatefulWidget {
   const FarmPhotosScreen({super.key});
@@ -46,6 +47,12 @@ class _FarmPhotosState extends ConsumerState<FarmPhotosScreen> {
                   'Connect this farm to the local evidence service to manage its photos.',
                 ),
               if (_error != null) Text(_error!),
+              if (client != null && snapshot != null && !snapshot.cached)
+                SoilWorkflows(
+                  key: ValueKey(snapshot.farmId),
+                  client: client,
+                  farmId: snapshot.farmId,
+                ),
               FilledButton.icon(
                 onPressed:
                     _busy ||

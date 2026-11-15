@@ -23,3 +23,5 @@ testpaths = ["tests"]
 "earthsync.assistant" = ["locales/*.json"]
 
 "earthsync.platform_v1" = ["migrations/*.sql", "rule_review.json"]
+
+"earthsync.research" = ["additional_evidence.json"]

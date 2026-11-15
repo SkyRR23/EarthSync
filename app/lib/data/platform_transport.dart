@@ -49,7 +49,15 @@ class PlatformTransport {
         await client.send(request),
       ))().timeout(const Duration(seconds: 30));
       Object? data;
-      if (response.bodyBytes.isNotEmpty && contentType == 'application/json') {
+      // Upload request bytes and response metadata can have different formats.
+      // Retain the declared-format fallback for transports without MIME headers.
+      final responseMime = response.headers['content-type']
+          ?.split(';')
+          .first
+          .trim();
+      if (response.bodyBytes.isNotEmpty &&
+          (responseMime == 'application/json' ||
+              (responseMime == null && contentType == 'application/json'))) {
         try {
           data = jsonDecode(utf8.decode(response.bodyBytes));
         } on FormatException {

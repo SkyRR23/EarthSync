@@ -8,6 +8,7 @@ import '../../state/journal_provider.dart';
 import '../../state/platform_provider.dart';
 import '../field/evidence_panels.dart';
 import 'companion_copy.dart';
+import 'crop_intelligence.dart';
 
 /// Read-only crop facts. No scoring, ranking, extrapolation or rule promotion.
 class CropExplorer extends ConsumerStatefulWidget {
@@ -234,6 +235,11 @@ class _ReferenceCard extends StatelessWidget {
         Text(
           'Aliases: ${(result['crop']?['aliases'] as List? ?? []).join(', ')}',
         ),
+        if (result['crop']?['id'] != null)
+          CropIntelligencePanel(
+            key: ValueKey(result['crop']['id']),
+            cropId: result['crop']['id'] as String,
+          ),
         if ((result['profiles'] as List? ?? []).isEmpty)
           const Text(
             'No source profile available. Identity alone cannot support an assessment.',
