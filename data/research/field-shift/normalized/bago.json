@@ -1,0 +1,5722 @@
+{
+  "schema_version": "research-fixture-v1",
+  "fixture_status": "reference_only_not_production_input",
+  "location": {
+    "id": "bago",
+    "country": "Myanmar",
+    "query_latitude": 17.33,
+    "query_longitude": 96.48,
+    "crs": "EPSG:4326",
+    "coordinate_source": "raw/original/data-pack/scripts/fetch_sources.py LOCATIONS, corroborated by soil CSVs; not surveyed field boundaries"
+  },
+  "data_type_vocabulary": [
+    "observed",
+    "modeled",
+    "forecast",
+    "hypothetical",
+    "farmer_reported",
+    "unavailable"
+  ],
+  "fetch_log_source": {
+    "path": "raw/original/data-pack/_meta/fetch_log.csv",
+    "sha256": "3d9c78f002c406fac66e42e21739a6457204b67364581e23f0db70ba6656e401"
+  },
+  "soil_context": {
+    "provider": "ISRIC SoilGrids WMS",
+    "data_type": "modeled",
+    "source": {
+      "path": "raw/original/data-pack/csv/soilgrids_bago.csv",
+      "sha256": "bdc24e5687b6b0dbd51b51acddac0bd19cfae0f36efba2eb1f9124cfcaebf4c3"
+    },
+    "nominal_native_resolution_m": 250,
+    "query_support": "WMS EPSG:4326, 0.5-degree bbox, 101x101 display pixels, X=Y=50; native cell footprint not retained",
+    "release": null,
+    "retrieved_at": null,
+    "measurement_date": null,
+    "temporal_support": "Static modeled soil context; no acquisition date per property",
+    "provided_depths_cm": [
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        15
+      ],
+      [
+        15,
+        30
+      ],
+      [
+        30,
+        60
+      ]
+    ],
+    "missing_standard_depths_cm": [
+      [
+        60,
+        100
+      ],
+      [
+        100,
+        200
+      ]
+    ],
+    "drainage": {
+      "value": null,
+      "data_type": "unavailable",
+      "reason": "No validated drainage method or measurement"
+    },
+    "integration_ready": false,
+    "records": [
+      {
+        "source_csv_row": 2,
+        "property": "phh2o",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 0,
+          "bottom": 5
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 61.0,
+          "unit": "pH*10"
+        },
+        "normalized": {
+          "value": 6.1,
+          "unit": "pH"
+        },
+        "transformation": {
+          "multiply_by": 0.1,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          35,
+          193,
+          460
+        ]
+      },
+      {
+        "source_csv_row": 3,
+        "property": "phh2o",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 5,
+          "bottom": 15
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 62.0,
+          "unit": "pH*10"
+        },
+        "normalized": {
+          "value": 6.2,
+          "unit": "pH"
+        },
+        "transformation": {
+          "multiply_by": 0.1,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          34,
+          195,
+          462
+        ]
+      },
+      {
+        "source_csv_row": 4,
+        "property": "phh2o",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 15,
+          "bottom": 30
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 63.0,
+          "unit": "pH*10"
+        },
+        "normalized": {
+          "value": 6.3,
+          "unit": "pH"
+        },
+        "transformation": {
+          "multiply_by": 0.1,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          38,
+          194,
+          470
+        ]
+      },
+      {
+        "source_csv_row": 5,
+        "property": "phh2o",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 30,
+          "bottom": 60
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 62.0,
+          "unit": "pH*10"
+        },
+        "normalized": {
+          "value": 6.2,
+          "unit": "pH"
+        },
+        "transformation": {
+          "multiply_by": 0.1,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          39,
+          196,
+          461
+        ]
+      },
+      {
+        "source_csv_row": 6,
+        "property": "clay",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 0,
+          "bottom": 5
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 323.0,
+          "unit": "g/kg"
+        },
+        "normalized": {
+          "value": 32.3,
+          "unit": "% by mass"
+        },
+        "transformation": {
+          "multiply_by": 0.1,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          36,
+          191,
+          463
+        ]
+      },
+      {
+        "source_csv_row": 7,
+        "property": "clay",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 5,
+          "bottom": 15
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 320.0,
+          "unit": "g/kg"
+        },
+        "normalized": {
+          "value": 32.0,
+          "unit": "% by mass"
+        },
+        "transformation": {
+          "multiply_by": 0.1,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          37,
+          192,
+          464
+        ]
+      },
+      {
+        "source_csv_row": 8,
+        "property": "clay",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 15,
+          "bottom": 30
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 316.0,
+          "unit": "g/kg"
+        },
+        "normalized": {
+          "value": 31.6,
+          "unit": "% by mass"
+        },
+        "transformation": {
+          "multiply_by": 0.1,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          40,
+          198,
+          465
+        ]
+      },
+      {
+        "source_csv_row": 9,
+        "property": "clay",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 30,
+          "bottom": 60
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 345.0,
+          "unit": "g/kg"
+        },
+        "normalized": {
+          "value": 34.5,
+          "unit": "% by mass"
+        },
+        "transformation": {
+          "multiply_by": 0.1,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          41,
+          199,
+          469
+        ]
+      },
+      {
+        "source_csv_row": 10,
+        "property": "sand",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 0,
+          "bottom": 5
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 306.0,
+          "unit": "g/kg"
+        },
+        "normalized": {
+          "value": 30.6,
+          "unit": "% by mass"
+        },
+        "transformation": {
+          "multiply_by": 0.1,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          42,
+          197,
+          468
+        ]
+      },
+      {
+        "source_csv_row": 11,
+        "property": "sand",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 5,
+          "bottom": 15
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 304.0,
+          "unit": "g/kg"
+        },
+        "normalized": {
+          "value": 30.4,
+          "unit": "% by mass"
+        },
+        "transformation": {
+          "multiply_by": 0.1,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          48,
+          200,
+          467
+        ]
+      },
+      {
+        "source_csv_row": 12,
+        "property": "sand",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 15,
+          "bottom": 30
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 297.0,
+          "unit": "g/kg"
+        },
+        "normalized": {
+          "value": 29.7,
+          "unit": "% by mass"
+        },
+        "transformation": {
+          "multiply_by": 0.1,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          47,
+          201,
+          466
+        ]
+      },
+      {
+        "source_csv_row": 13,
+        "property": "sand",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 30,
+          "bottom": 60
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 289.0,
+          "unit": "g/kg"
+        },
+        "normalized": {
+          "value": 28.9,
+          "unit": "% by mass"
+        },
+        "transformation": {
+          "multiply_by": 0.1,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          43,
+          202,
+          471
+        ]
+      },
+      {
+        "source_csv_row": 14,
+        "property": "silt",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 0,
+          "bottom": 5
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 371.0,
+          "unit": "g/kg"
+        },
+        "normalized": {
+          "value": 37.1,
+          "unit": "% by mass"
+        },
+        "transformation": {
+          "multiply_by": 0.1,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          44,
+          204,
+          472
+        ]
+      },
+      {
+        "source_csv_row": 15,
+        "property": "silt",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 5,
+          "bottom": 15
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 376.0,
+          "unit": "g/kg"
+        },
+        "normalized": {
+          "value": 37.6,
+          "unit": "% by mass"
+        },
+        "transformation": {
+          "multiply_by": 0.1,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          46,
+          203,
+          474
+        ]
+      },
+      {
+        "source_csv_row": 16,
+        "property": "silt",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 15,
+          "bottom": 30
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 387.0,
+          "unit": "g/kg"
+        },
+        "normalized": {
+          "value": 38.7,
+          "unit": "% by mass"
+        },
+        "transformation": {
+          "multiply_by": 0.1,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          45,
+          206,
+          473
+        ]
+      },
+      {
+        "source_csv_row": 17,
+        "property": "silt",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 30,
+          "bottom": 60
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 366.0,
+          "unit": "g/kg"
+        },
+        "normalized": {
+          "value": 36.6,
+          "unit": "% by mass"
+        },
+        "transformation": {
+          "multiply_by": 0.1,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          49,
+          205,
+          475
+        ]
+      },
+      {
+        "source_csv_row": 18,
+        "property": "soc",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 0,
+          "bottom": 5
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 325.0,
+          "unit": "dg/kg"
+        },
+        "normalized": {
+          "value": 32.5,
+          "unit": "g/kg"
+        },
+        "transformation": {
+          "multiply_by": 0.1,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          50,
+          207,
+          476
+        ]
+      },
+      {
+        "source_csv_row": 19,
+        "property": "soc",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 5,
+          "bottom": 15
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 305.0,
+          "unit": "dg/kg"
+        },
+        "normalized": {
+          "value": 30.5,
+          "unit": "g/kg"
+        },
+        "transformation": {
+          "multiply_by": 0.1,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          51,
+          211,
+          477
+        ]
+      },
+      {
+        "source_csv_row": 20,
+        "property": "soc",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 15,
+          "bottom": 30
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 243.0,
+          "unit": "dg/kg"
+        },
+        "normalized": {
+          "value": 24.3,
+          "unit": "g/kg"
+        },
+        "transformation": {
+          "multiply_by": 0.1,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          52,
+          210,
+          479
+        ]
+      },
+      {
+        "source_csv_row": 21,
+        "property": "soc",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 30,
+          "bottom": 60
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 269.0,
+          "unit": "dg/kg"
+        },
+        "normalized": {
+          "value": 26.9,
+          "unit": "g/kg"
+        },
+        "transformation": {
+          "multiply_by": 0.1,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          53,
+          208,
+          478
+        ]
+      },
+      {
+        "source_csv_row": 22,
+        "property": "nitrogen",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 0,
+          "bottom": 5
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 258.0,
+          "unit": "cg/kg"
+        },
+        "normalized": {
+          "value": 2.58,
+          "unit": "g/kg"
+        },
+        "transformation": {
+          "multiply_by": 0.01,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          59,
+          212,
+          480
+        ]
+      },
+      {
+        "source_csv_row": 23,
+        "property": "nitrogen",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 5,
+          "bottom": 15
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 206.0,
+          "unit": "cg/kg"
+        },
+        "normalized": {
+          "value": 2.06,
+          "unit": "g/kg"
+        },
+        "transformation": {
+          "multiply_by": 0.01,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          58,
+          209,
+          481
+        ]
+      },
+      {
+        "source_csv_row": 24,
+        "property": "nitrogen",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 15,
+          "bottom": 30
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 162.0,
+          "unit": "cg/kg"
+        },
+        "normalized": {
+          "value": 1.62,
+          "unit": "g/kg"
+        },
+        "transformation": {
+          "multiply_by": 0.01,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          56,
+          213,
+          482
+        ]
+      },
+      {
+        "source_csv_row": 25,
+        "property": "nitrogen",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 30,
+          "bottom": 60
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 130.0,
+          "unit": "cg/kg"
+        },
+        "normalized": {
+          "value": 1.3,
+          "unit": "g/kg"
+        },
+        "transformation": {
+          "multiply_by": 0.01,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          54,
+          214,
+          483
+        ]
+      },
+      {
+        "source_csv_row": 26,
+        "property": "cec",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 0,
+          "bottom": 5
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 266.0,
+          "unit": "mmol(c)/kg"
+        },
+        "normalized": {
+          "value": 266.0,
+          "unit": "mmol(c)/kg"
+        },
+        "transformation": {
+          "multiply_by": 1.0,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          55,
+          218,
+          486
+        ]
+      },
+      {
+        "source_csv_row": 27,
+        "property": "cec",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 5,
+          "bottom": 15
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 264.0,
+          "unit": "mmol(c)/kg"
+        },
+        "normalized": {
+          "value": 264.0,
+          "unit": "mmol(c)/kg"
+        },
+        "transformation": {
+          "multiply_by": 1.0,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          57,
+          215,
+          487
+        ]
+      },
+      {
+        "source_csv_row": 28,
+        "property": "cec",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 15,
+          "bottom": 30
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 265.0,
+          "unit": "mmol(c)/kg"
+        },
+        "normalized": {
+          "value": 265.0,
+          "unit": "mmol(c)/kg"
+        },
+        "transformation": {
+          "multiply_by": 1.0,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          60,
+          216,
+          485
+        ]
+      },
+      {
+        "source_csv_row": 29,
+        "property": "cec",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 30,
+          "bottom": 60
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 267.0,
+          "unit": "mmol(c)/kg"
+        },
+        "normalized": {
+          "value": 267.0,
+          "unit": "mmol(c)/kg"
+        },
+        "transformation": {
+          "multiply_by": 1.0,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          62,
+          217,
+          484
+        ]
+      },
+      {
+        "source_csv_row": 30,
+        "property": "bdod",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 0,
+          "bottom": 5
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 131.0,
+          "unit": "cg/cm³"
+        },
+        "normalized": {
+          "value": 1.31,
+          "unit": "g/cm3"
+        },
+        "transformation": {
+          "multiply_by": 0.01,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          219,
+          491
+        ]
+      },
+      {
+        "source_csv_row": 31,
+        "property": "bdod",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 5,
+          "bottom": 15
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 135.0,
+          "unit": "cg/cm³"
+        },
+        "normalized": {
+          "value": 1.35,
+          "unit": "g/cm3"
+        },
+        "transformation": {
+          "multiply_by": 0.01,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          220,
+          488
+        ]
+      },
+      {
+        "source_csv_row": 32,
+        "property": "bdod",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 15,
+          "bottom": 30
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 137.0,
+          "unit": "cg/cm³"
+        },
+        "normalized": {
+          "value": 1.37,
+          "unit": "g/cm3"
+        },
+        "transformation": {
+          "multiply_by": 0.01,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          221,
+          489
+        ]
+      },
+      {
+        "source_csv_row": 33,
+        "property": "bdod",
+        "data_type": "modeled",
+        "depth_cm": {
+          "top": 30,
+          "bottom": 60
+        },
+        "statistic": "mean",
+        "original": {
+          "value": 136.0,
+          "unit": "cg/cm³"
+        },
+        "normalized": {
+          "value": 1.36,
+          "unit": "g/cm3"
+        },
+        "transformation": {
+          "multiply_by": 0.01,
+          "documentation": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html"
+        },
+        "prediction_interval_90": null,
+        "uncertainty_status": "not_contributed",
+        "candidate_fetch_log_rows": [
+          222,
+          490
+        ]
+      }
+    ],
+    "limitations": [
+      "Predictions are not farm samples.",
+      "No quantiles, pinned release, response bodies or native cell geometry contributed.",
+      "Fetch log rows are candidate retrievals, not a hash-bound response-to-CSV chain.",
+      "value_si in the original is a convenience label, not uniformly SI units."
+    ]
+  },
+  "vegetation_context": {
+    "series": {
+      "ndvi": {
+        "provider": "NASA MODIS via ORNL DAAC point API",
+        "product": "MOD13Q1",
+        "collection_version": null,
+        "band": "250m_16_days_NDVI",
+        "data_type": "observed",
+        "observation_method": "Satellite-derived retrieval/index, not direct farm or canopy measurement",
+        "source": {
+          "path": "raw/original/data-pack/csv/modis_ndvi_bago.csv",
+          "sha256": "df98ad22898542b3a02783423f118d72f1af7aefbee6cba483521b61fd03fa14"
+        },
+        "retrieved_at": null,
+        "candidate_fetch_log_rows": [
+          279,
+          280,
+          281,
+          282,
+          283,
+          284
+        ],
+        "nominal_native_resolution_m": 250,
+        "spatial_support": "Requested single-pixel subset; pixel centre, footprint and extraction response absent",
+        "nominal_composite_days": 16,
+        "time_coverage": {
+          "first_start": "2024-01-01",
+          "last_start": "2025-12-19",
+          "expected_composites": 46,
+          "present_composites": 46,
+          "missing_composite_starts": [],
+          "unexpected_composite_starts": [],
+          "missing_or_invalid_values": 0
+        },
+        "original_unit": "dimensionless after scaling",
+        "normalized_unit": "dimensionless",
+        "transformation": {
+          "multiply_by": 0.0001,
+          "add": 0
+        },
+        "integration_ready": false,
+        "records": [
+          {
+            "source_csv_row": 2,
+            "composite_start_date": "2024-01-01",
+            "data_type": "observed",
+            "original_value": 4413.0,
+            "normalized_value": 0.4413,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 3,
+            "composite_start_date": "2024-01-17",
+            "data_type": "observed",
+            "original_value": 4942.0,
+            "normalized_value": 0.4942,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 4,
+            "composite_start_date": "2024-02-02",
+            "data_type": "observed",
+            "original_value": 4152.0,
+            "normalized_value": 0.4152,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 5,
+            "composite_start_date": "2024-02-18",
+            "data_type": "observed",
+            "original_value": 4060.0,
+            "normalized_value": 0.406,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 6,
+            "composite_start_date": "2024-03-05",
+            "data_type": "observed",
+            "original_value": 3929.0,
+            "normalized_value": 0.3929,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 7,
+            "composite_start_date": "2024-03-21",
+            "data_type": "observed",
+            "original_value": 4327.0,
+            "normalized_value": 0.4327,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 8,
+            "composite_start_date": "2024-04-06",
+            "data_type": "observed",
+            "original_value": 4801.0,
+            "normalized_value": 0.4801,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 9,
+            "composite_start_date": "2024-04-22",
+            "data_type": "observed",
+            "original_value": 4376.0,
+            "normalized_value": 0.4376,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 10,
+            "composite_start_date": "2024-05-08",
+            "data_type": "observed",
+            "original_value": 3875.0,
+            "normalized_value": 0.3875,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 11,
+            "composite_start_date": "2024-05-24",
+            "data_type": "observed",
+            "original_value": 3470.0,
+            "normalized_value": 0.347,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 12,
+            "composite_start_date": "2024-06-09",
+            "data_type": "observed",
+            "original_value": 3358.0,
+            "normalized_value": 0.3358,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 13,
+            "composite_start_date": "2024-06-25",
+            "data_type": "observed",
+            "original_value": 4830.0,
+            "normalized_value": 0.483,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 14,
+            "composite_start_date": "2024-07-11",
+            "data_type": "observed",
+            "original_value": 3477.0,
+            "normalized_value": 0.3477,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 15,
+            "composite_start_date": "2024-07-27",
+            "data_type": "observed",
+            "original_value": 1271.0,
+            "normalized_value": 0.1271,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 16,
+            "composite_start_date": "2024-08-12",
+            "data_type": "observed",
+            "original_value": 1859.0,
+            "normalized_value": 0.1859,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 17,
+            "composite_start_date": "2024-08-28",
+            "data_type": "observed",
+            "original_value": 2065.0,
+            "normalized_value": 0.2065,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 18,
+            "composite_start_date": "2024-09-13",
+            "data_type": "observed",
+            "original_value": 2788.0,
+            "normalized_value": 0.2788,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 19,
+            "composite_start_date": "2024-09-29",
+            "data_type": "observed",
+            "original_value": 5730.0,
+            "normalized_value": 0.573,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 20,
+            "composite_start_date": "2024-10-15",
+            "data_type": "observed",
+            "original_value": 4784.0,
+            "normalized_value": 0.4784,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 21,
+            "composite_start_date": "2024-10-31",
+            "data_type": "observed",
+            "original_value": 4563.0,
+            "normalized_value": 0.4563,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 22,
+            "composite_start_date": "2024-11-16",
+            "data_type": "observed",
+            "original_value": 5031.0,
+            "normalized_value": 0.5031,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 23,
+            "composite_start_date": "2024-12-02",
+            "data_type": "observed",
+            "original_value": 4430.0,
+            "normalized_value": 0.443,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 24,
+            "composite_start_date": "2024-12-18",
+            "data_type": "observed",
+            "original_value": 5199.0,
+            "normalized_value": 0.5199,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 25,
+            "composite_start_date": "2025-01-01",
+            "data_type": "observed",
+            "original_value": 4861.0,
+            "normalized_value": 0.4861,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 26,
+            "composite_start_date": "2025-01-17",
+            "data_type": "observed",
+            "original_value": 4409.0,
+            "normalized_value": 0.4409,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 27,
+            "composite_start_date": "2025-02-02",
+            "data_type": "observed",
+            "original_value": 2540.0,
+            "normalized_value": 0.254,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 28,
+            "composite_start_date": "2025-02-18",
+            "data_type": "observed",
+            "original_value": 3898.0,
+            "normalized_value": 0.3898,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 29,
+            "composite_start_date": "2025-03-06",
+            "data_type": "observed",
+            "original_value": 4189.0,
+            "normalized_value": 0.4189,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 30,
+            "composite_start_date": "2025-03-22",
+            "data_type": "observed",
+            "original_value": 4097.0,
+            "normalized_value": 0.4097,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 31,
+            "composite_start_date": "2025-04-07",
+            "data_type": "observed",
+            "original_value": 4006.0,
+            "normalized_value": 0.4006,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 32,
+            "composite_start_date": "2025-04-23",
+            "data_type": "observed",
+            "original_value": 4773.0,
+            "normalized_value": 0.4773,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 33,
+            "composite_start_date": "2025-05-09",
+            "data_type": "observed",
+            "original_value": 4978.0,
+            "normalized_value": 0.4978,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 34,
+            "composite_start_date": "2025-05-25",
+            "data_type": "observed",
+            "original_value": 2484.0,
+            "normalized_value": 0.2484,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 35,
+            "composite_start_date": "2025-06-10",
+            "data_type": "observed",
+            "original_value": 1234.0,
+            "normalized_value": 0.1234,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 36,
+            "composite_start_date": "2025-06-26",
+            "data_type": "observed",
+            "original_value": 2329.0,
+            "normalized_value": 0.2329,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 37,
+            "composite_start_date": "2025-07-12",
+            "data_type": "observed",
+            "original_value": 2747.0,
+            "normalized_value": 0.2747,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 38,
+            "composite_start_date": "2025-07-28",
+            "data_type": "observed",
+            "original_value": 3917.0,
+            "normalized_value": 0.3917,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 39,
+            "composite_start_date": "2025-08-13",
+            "data_type": "observed",
+            "original_value": 2093.0,
+            "normalized_value": 0.2093,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 40,
+            "composite_start_date": "2025-08-29",
+            "data_type": "observed",
+            "original_value": 3907.0,
+            "normalized_value": 0.3907,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 41,
+            "composite_start_date": "2025-09-14",
+            "data_type": "observed",
+            "original_value": 6354.0,
+            "normalized_value": 0.6354,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 42,
+            "composite_start_date": "2025-09-30",
+            "data_type": "observed",
+            "original_value": 5416.0,
+            "normalized_value": 0.5416,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 43,
+            "composite_start_date": "2025-10-16",
+            "data_type": "observed",
+            "original_value": 4049.0,
+            "normalized_value": 0.4049,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 44,
+            "composite_start_date": "2025-11-01",
+            "data_type": "observed",
+            "original_value": 5253.0,
+            "normalized_value": 0.5253,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 45,
+            "composite_start_date": "2025-11-17",
+            "data_type": "observed",
+            "original_value": 4600.0,
+            "normalized_value": 0.46,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 46,
+            "composite_start_date": "2025-12-03",
+            "data_type": "observed",
+            "original_value": 4356.0,
+            "normalized_value": 0.4356,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 47,
+            "composite_start_date": "2025-12-19",
+            "data_type": "observed",
+            "original_value": 3540.0,
+            "normalized_value": 0.354,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          }
+        ]
+      },
+      "evi": {
+        "provider": "NASA MODIS via ORNL DAAC point API",
+        "product": "MOD13Q1",
+        "collection_version": null,
+        "band": "250m_16_days_EVI",
+        "data_type": "observed",
+        "observation_method": "Satellite-derived retrieval/index, not direct farm or canopy measurement",
+        "source": {
+          "path": "raw/original/data-pack/csv/modis_evi_bago.csv",
+          "sha256": "1b43158898bbaeb98ffa21df1a62f714f09ce155b121ff8a3efa1e13d7e23da5"
+        },
+        "retrieved_at": null,
+        "candidate_fetch_log_rows": [
+          285,
+          286,
+          287,
+          288,
+          289,
+          290
+        ],
+        "nominal_native_resolution_m": 250,
+        "spatial_support": "Requested single-pixel subset; pixel centre, footprint and extraction response absent",
+        "nominal_composite_days": 16,
+        "time_coverage": {
+          "first_start": "2024-01-01",
+          "last_start": "2025-12-19",
+          "expected_composites": 46,
+          "present_composites": 46,
+          "missing_composite_starts": [],
+          "unexpected_composite_starts": [],
+          "missing_or_invalid_values": 0
+        },
+        "original_unit": "dimensionless after scaling",
+        "normalized_unit": "dimensionless",
+        "transformation": {
+          "multiply_by": 0.0001,
+          "add": 0
+        },
+        "integration_ready": false,
+        "records": [
+          {
+            "source_csv_row": 2,
+            "composite_start_date": "2024-01-01",
+            "data_type": "observed",
+            "original_value": 2160.0,
+            "normalized_value": 0.216,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 3,
+            "composite_start_date": "2024-01-17",
+            "data_type": "observed",
+            "original_value": 2602.0,
+            "normalized_value": 0.2602,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 4,
+            "composite_start_date": "2024-02-02",
+            "data_type": "observed",
+            "original_value": 2307.0,
+            "normalized_value": 0.2307,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 5,
+            "composite_start_date": "2024-02-18",
+            "data_type": "observed",
+            "original_value": 2004.0,
+            "normalized_value": 0.2004,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 6,
+            "composite_start_date": "2024-03-05",
+            "data_type": "observed",
+            "original_value": 2468.0,
+            "normalized_value": 0.2468,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 7,
+            "composite_start_date": "2024-03-21",
+            "data_type": "observed",
+            "original_value": 2855.0,
+            "normalized_value": 0.2855,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 8,
+            "composite_start_date": "2024-04-06",
+            "data_type": "observed",
+            "original_value": 2863.0,
+            "normalized_value": 0.2863,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 9,
+            "composite_start_date": "2024-04-22",
+            "data_type": "observed",
+            "original_value": 2294.0,
+            "normalized_value": 0.2294,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 10,
+            "composite_start_date": "2024-05-08",
+            "data_type": "observed",
+            "original_value": 1994.0,
+            "normalized_value": 0.1994,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 11,
+            "composite_start_date": "2024-05-24",
+            "data_type": "observed",
+            "original_value": 2098.0,
+            "normalized_value": 0.2098,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 12,
+            "composite_start_date": "2024-06-09",
+            "data_type": "observed",
+            "original_value": 2002.0,
+            "normalized_value": 0.2002,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 13,
+            "composite_start_date": "2024-06-25",
+            "data_type": "observed",
+            "original_value": 1118.0,
+            "normalized_value": 0.1118,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 14,
+            "composite_start_date": "2024-07-11",
+            "data_type": "observed",
+            "original_value": 2461.0,
+            "normalized_value": 0.2461,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 15,
+            "composite_start_date": "2024-07-27",
+            "data_type": "observed",
+            "original_value": 1099.0,
+            "normalized_value": 0.1099,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 16,
+            "composite_start_date": "2024-08-12",
+            "data_type": "observed",
+            "original_value": 1561.0,
+            "normalized_value": 0.1561,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 17,
+            "composite_start_date": "2024-08-28",
+            "data_type": "observed",
+            "original_value": 1677.0,
+            "normalized_value": 0.1677,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 18,
+            "composite_start_date": "2024-09-13",
+            "data_type": "observed",
+            "original_value": 1689.0,
+            "normalized_value": 0.1689,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 19,
+            "composite_start_date": "2024-09-29",
+            "data_type": "observed",
+            "original_value": 3317.0,
+            "normalized_value": 0.3317,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 20,
+            "composite_start_date": "2024-10-15",
+            "data_type": "observed",
+            "original_value": 2530.0,
+            "normalized_value": 0.253,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 21,
+            "composite_start_date": "2024-10-31",
+            "data_type": "observed",
+            "original_value": 2116.0,
+            "normalized_value": 0.2116,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 22,
+            "composite_start_date": "2024-11-16",
+            "data_type": "observed",
+            "original_value": 2790.0,
+            "normalized_value": 0.279,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 23,
+            "composite_start_date": "2024-12-02",
+            "data_type": "observed",
+            "original_value": 1990.0,
+            "normalized_value": 0.199,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 24,
+            "composite_start_date": "2024-12-18",
+            "data_type": "observed",
+            "original_value": 2682.0,
+            "normalized_value": 0.2682,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 25,
+            "composite_start_date": "2025-01-01",
+            "data_type": "observed",
+            "original_value": 2382.0,
+            "normalized_value": 0.2382,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 26,
+            "composite_start_date": "2025-01-17",
+            "data_type": "observed",
+            "original_value": 2618.0,
+            "normalized_value": 0.2618,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 27,
+            "composite_start_date": "2025-02-02",
+            "data_type": "observed",
+            "original_value": 1450.0,
+            "normalized_value": 0.145,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 28,
+            "composite_start_date": "2025-02-18",
+            "data_type": "observed",
+            "original_value": 1823.0,
+            "normalized_value": 0.1823,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 29,
+            "composite_start_date": "2025-03-06",
+            "data_type": "observed",
+            "original_value": 2280.0,
+            "normalized_value": 0.228,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 30,
+            "composite_start_date": "2025-03-22",
+            "data_type": "observed",
+            "original_value": 2056.0,
+            "normalized_value": 0.2056,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 31,
+            "composite_start_date": "2025-04-07",
+            "data_type": "observed",
+            "original_value": 1369.0,
+            "normalized_value": 0.1369,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 32,
+            "composite_start_date": "2025-04-23",
+            "data_type": "observed",
+            "original_value": 2987.0,
+            "normalized_value": 0.2987,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 33,
+            "composite_start_date": "2025-05-09",
+            "data_type": "observed",
+            "original_value": 2559.0,
+            "normalized_value": 0.2559,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 34,
+            "composite_start_date": "2025-05-25",
+            "data_type": "observed",
+            "original_value": 1645.0,
+            "normalized_value": 0.1645,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 35,
+            "composite_start_date": "2025-06-10",
+            "data_type": "observed",
+            "original_value": 973.0,
+            "normalized_value": 0.0973,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 36,
+            "composite_start_date": "2025-06-26",
+            "data_type": "observed",
+            "original_value": 1883.0,
+            "normalized_value": 0.1883,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 37,
+            "composite_start_date": "2025-07-12",
+            "data_type": "observed",
+            "original_value": 1671.0,
+            "normalized_value": 0.1671,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 38,
+            "composite_start_date": "2025-07-28",
+            "data_type": "observed",
+            "original_value": 2362.0,
+            "normalized_value": 0.2362,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 39,
+            "composite_start_date": "2025-08-13",
+            "data_type": "observed",
+            "original_value": 1834.0,
+            "normalized_value": 0.1834,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 40,
+            "composite_start_date": "2025-08-29",
+            "data_type": "observed",
+            "original_value": 1049.0,
+            "normalized_value": 0.1049,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 41,
+            "composite_start_date": "2025-09-14",
+            "data_type": "observed",
+            "original_value": 5102.0,
+            "normalized_value": 0.5102,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 42,
+            "composite_start_date": "2025-09-30",
+            "data_type": "observed",
+            "original_value": 3879.0,
+            "normalized_value": 0.3879,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 43,
+            "composite_start_date": "2025-10-16",
+            "data_type": "observed",
+            "original_value": 1731.0,
+            "normalized_value": 0.1731,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 44,
+            "composite_start_date": "2025-11-01",
+            "data_type": "observed",
+            "original_value": 2519.0,
+            "normalized_value": 0.2519,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 45,
+            "composite_start_date": "2025-11-17",
+            "data_type": "observed",
+            "original_value": 2095.0,
+            "normalized_value": 0.2095,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 46,
+            "composite_start_date": "2025-12-03",
+            "data_type": "observed",
+            "original_value": 2323.0,
+            "normalized_value": 0.2323,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 47,
+            "composite_start_date": "2025-12-19",
+            "data_type": "observed",
+            "original_value": 1418.0,
+            "normalized_value": 0.1418,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          }
+        ]
+      },
+      "lst_day": {
+        "provider": "NASA MODIS via ORNL DAAC point API",
+        "product": "MOD11A2",
+        "collection_version": null,
+        "band": "LST_Day_1km",
+        "data_type": "observed",
+        "observation_method": "Satellite-derived retrieval/index, not direct farm or canopy measurement",
+        "source": {
+          "path": "raw/original/data-pack/csv/modis_lst_day_bago.csv",
+          "sha256": "41000499d7a3cd7f9fcbe1a86384fd2e0947db782aa329ac4c23b2f29ae0e530"
+        },
+        "retrieved_at": null,
+        "candidate_fetch_log_rows": [
+          296,
+          359,
+          360,
+          361,
+          384,
+          385,
+          386,
+          387,
+          388,
+          389,
+          390,
+          391,
+          392,
+          393,
+          394
+        ],
+        "nominal_native_resolution_m": 1000,
+        "spatial_support": "Requested single-pixel subset; pixel centre, footprint and extraction response absent",
+        "nominal_composite_days": 8,
+        "time_coverage": {
+          "first_start": "2024-01-01",
+          "last_start": "2025-12-27",
+          "expected_composites": 92,
+          "present_composites": 92,
+          "missing_composite_starts": [],
+          "unexpected_composite_starts": [],
+          "missing_or_invalid_values": 39
+        },
+        "original_unit": "K after scaling",
+        "normalized_unit": "deg_c",
+        "transformation": {
+          "multiply_by": 0.02,
+          "add": -273.15
+        },
+        "integration_ready": false,
+        "records": [
+          {
+            "source_csv_row": 2,
+            "composite_start_date": "2024-01-01",
+            "data_type": "observed",
+            "original_value": 15192.0,
+            "normalized_value": 30.69,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 3,
+            "composite_start_date": "2024-01-09",
+            "data_type": "observed",
+            "original_value": 15143.0,
+            "normalized_value": 29.71,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 4,
+            "composite_start_date": "2024-01-17",
+            "data_type": "observed",
+            "original_value": 15154.0,
+            "normalized_value": 29.93,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 5,
+            "composite_start_date": "2024-01-25",
+            "data_type": "observed",
+            "original_value": 15024.0,
+            "normalized_value": 27.33,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 6,
+            "composite_start_date": "2024-02-02",
+            "data_type": "observed",
+            "original_value": 15206.0,
+            "normalized_value": 30.97,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 7,
+            "composite_start_date": "2024-02-10",
+            "data_type": "observed",
+            "original_value": 15262.0,
+            "normalized_value": 32.09,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 8,
+            "composite_start_date": "2024-02-18",
+            "data_type": "observed",
+            "original_value": 15274.0,
+            "normalized_value": 32.33,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 9,
+            "composite_start_date": "2024-02-26",
+            "data_type": "observed",
+            "original_value": 15381.0,
+            "normalized_value": 34.47,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 10,
+            "composite_start_date": "2024-03-05",
+            "data_type": "observed",
+            "original_value": 15341.0,
+            "normalized_value": 33.67,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 11,
+            "composite_start_date": "2024-03-13",
+            "data_type": "observed",
+            "original_value": 15366.0,
+            "normalized_value": 34.17,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 12,
+            "composite_start_date": "2024-03-21",
+            "data_type": "observed",
+            "original_value": 15488.0,
+            "normalized_value": 36.61,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 13,
+            "composite_start_date": "2024-03-29",
+            "data_type": "observed",
+            "original_value": 15507.0,
+            "normalized_value": 36.99,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 14,
+            "composite_start_date": "2024-04-06",
+            "data_type": "observed",
+            "original_value": 15351.0,
+            "normalized_value": 33.87,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 15,
+            "composite_start_date": "2024-04-14",
+            "data_type": "observed",
+            "original_value": 15480.0,
+            "normalized_value": 36.45,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 16,
+            "composite_start_date": "2024-04-22",
+            "data_type": "observed",
+            "original_value": 15315.0,
+            "normalized_value": 33.15,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 17,
+            "composite_start_date": "2024-04-30",
+            "data_type": "observed",
+            "original_value": 15525.0,
+            "normalized_value": 37.35,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 18,
+            "composite_start_date": "2024-05-08",
+            "data_type": "observed",
+            "original_value": 15633.0,
+            "normalized_value": 39.51,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 19,
+            "composite_start_date": "2024-05-16",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 20,
+            "composite_start_date": "2024-05-24",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 21,
+            "composite_start_date": "2024-06-01",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 22,
+            "composite_start_date": "2024-06-09",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 23,
+            "composite_start_date": "2024-06-17",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 24,
+            "composite_start_date": "2024-06-25",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 25,
+            "composite_start_date": "2024-07-03",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 26,
+            "composite_start_date": "2024-07-11",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 27,
+            "composite_start_date": "2024-07-19",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 28,
+            "composite_start_date": "2024-07-27",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 29,
+            "composite_start_date": "2024-08-04",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 30,
+            "composite_start_date": "2024-08-12",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 31,
+            "composite_start_date": "2024-08-20",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 32,
+            "composite_start_date": "2024-08-28",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 33,
+            "composite_start_date": "2024-09-05",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 34,
+            "composite_start_date": "2024-09-13",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 35,
+            "composite_start_date": "2024-09-21",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 36,
+            "composite_start_date": "2024-09-29",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 37,
+            "composite_start_date": "2024-10-07",
+            "data_type": "observed",
+            "original_value": 15226.0,
+            "normalized_value": 31.37,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 38,
+            "composite_start_date": "2024-10-15",
+            "data_type": "observed",
+            "original_value": 15182.0,
+            "normalized_value": 30.49,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 39,
+            "composite_start_date": "2024-10-23",
+            "data_type": "observed",
+            "original_value": 15189.0,
+            "normalized_value": 30.63,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 40,
+            "composite_start_date": "2024-10-31",
+            "data_type": "observed",
+            "original_value": 15257.0,
+            "normalized_value": 31.99,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 41,
+            "composite_start_date": "2024-11-08",
+            "data_type": "observed",
+            "original_value": 15247.0,
+            "normalized_value": 31.79,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 42,
+            "composite_start_date": "2024-11-16",
+            "data_type": "observed",
+            "original_value": 15226.0,
+            "normalized_value": 31.37,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 43,
+            "composite_start_date": "2024-11-24",
+            "data_type": "observed",
+            "original_value": 15138.0,
+            "normalized_value": 29.61,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 44,
+            "composite_start_date": "2024-12-02",
+            "data_type": "observed",
+            "original_value": 15166.0,
+            "normalized_value": 30.17,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 45,
+            "composite_start_date": "2024-12-10",
+            "data_type": "observed",
+            "original_value": 15155.0,
+            "normalized_value": 29.95,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 46,
+            "composite_start_date": "2024-12-18",
+            "data_type": "observed",
+            "original_value": 15033.0,
+            "normalized_value": 27.51,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 47,
+            "composite_start_date": "2024-12-26",
+            "data_type": "observed",
+            "original_value": 15093.0,
+            "normalized_value": 28.71,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 48,
+            "composite_start_date": "2025-01-01",
+            "data_type": "observed",
+            "original_value": 15100.0,
+            "normalized_value": 28.85,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 49,
+            "composite_start_date": "2025-01-09",
+            "data_type": "observed",
+            "original_value": 15055.0,
+            "normalized_value": 27.95,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 50,
+            "composite_start_date": "2025-01-17",
+            "data_type": "observed",
+            "original_value": 15099.0,
+            "normalized_value": 28.83,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 51,
+            "composite_start_date": "2025-01-25",
+            "data_type": "observed",
+            "original_value": 15076.0,
+            "normalized_value": 28.37,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 52,
+            "composite_start_date": "2025-02-02",
+            "data_type": "observed",
+            "original_value": 15171.0,
+            "normalized_value": 30.27,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 53,
+            "composite_start_date": "2025-02-10",
+            "data_type": "observed",
+            "original_value": 15202.0,
+            "normalized_value": 30.89,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 54,
+            "composite_start_date": "2025-02-18",
+            "data_type": "observed",
+            "original_value": 15288.0,
+            "normalized_value": 32.61,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 55,
+            "composite_start_date": "2025-02-26",
+            "data_type": "observed",
+            "original_value": 15366.0,
+            "normalized_value": 34.17,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 56,
+            "composite_start_date": "2025-03-06",
+            "data_type": "observed",
+            "original_value": 15349.0,
+            "normalized_value": 33.83,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 57,
+            "composite_start_date": "2025-03-14",
+            "data_type": "observed",
+            "original_value": 15316.0,
+            "normalized_value": 33.17,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 58,
+            "composite_start_date": "2025-03-22",
+            "data_type": "observed",
+            "original_value": 15378.0,
+            "normalized_value": 34.41,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 59,
+            "composite_start_date": "2025-03-30",
+            "data_type": "observed",
+            "original_value": 15549.0,
+            "normalized_value": 37.83,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 60,
+            "composite_start_date": "2025-04-07",
+            "data_type": "observed",
+            "original_value": 15430.0,
+            "normalized_value": 35.45,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 61,
+            "composite_start_date": "2025-04-15",
+            "data_type": "observed",
+            "original_value": 15343.0,
+            "normalized_value": 33.71,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 62,
+            "composite_start_date": "2025-04-23",
+            "data_type": "observed",
+            "original_value": 15463.0,
+            "normalized_value": 36.11,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 63,
+            "composite_start_date": "2025-05-01",
+            "data_type": "observed",
+            "original_value": 15444.0,
+            "normalized_value": 35.73,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 64,
+            "composite_start_date": "2025-05-09",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 65,
+            "composite_start_date": "2025-05-17",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 66,
+            "composite_start_date": "2025-05-25",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 67,
+            "composite_start_date": "2025-06-02",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 68,
+            "composite_start_date": "2025-06-10",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 69,
+            "composite_start_date": "2025-06-18",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 70,
+            "composite_start_date": "2025-06-26",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 71,
+            "composite_start_date": "2025-07-04",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 72,
+            "composite_start_date": "2025-07-12",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 73,
+            "composite_start_date": "2025-07-20",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 74,
+            "composite_start_date": "2025-07-28",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 75,
+            "composite_start_date": "2025-08-05",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 76,
+            "composite_start_date": "2025-08-13",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 77,
+            "composite_start_date": "2025-08-21",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 78,
+            "composite_start_date": "2025-08-29",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 79,
+            "composite_start_date": "2025-09-06",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 80,
+            "composite_start_date": "2025-09-14",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 81,
+            "composite_start_date": "2025-09-22",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 82,
+            "composite_start_date": "2025-09-30",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 83,
+            "composite_start_date": "2025-10-08",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 84,
+            "composite_start_date": "2025-10-16",
+            "data_type": "observed",
+            "original_value": 15297.0,
+            "normalized_value": 32.79,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 85,
+            "composite_start_date": "2025-10-24",
+            "data_type": "observed",
+            "original_value": 15197.0,
+            "normalized_value": 30.79,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 86,
+            "composite_start_date": "2025-11-01",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 87,
+            "composite_start_date": "2025-11-09",
+            "data_type": "observed",
+            "original_value": 15113.0,
+            "normalized_value": 29.11,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 88,
+            "composite_start_date": "2025-11-17",
+            "data_type": "observed",
+            "original_value": 15159.0,
+            "normalized_value": 30.03,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 89,
+            "composite_start_date": "2025-11-25",
+            "data_type": "observed",
+            "original_value": 14981.0,
+            "normalized_value": 26.47,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 90,
+            "composite_start_date": "2025-12-03",
+            "data_type": "observed",
+            "original_value": 15076.0,
+            "normalized_value": 28.37,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 91,
+            "composite_start_date": "2025-12-11",
+            "data_type": "observed",
+            "original_value": 15031.0,
+            "normalized_value": 27.47,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 92,
+            "composite_start_date": "2025-12-19",
+            "data_type": "observed",
+            "original_value": 15033.0,
+            "normalized_value": 27.51,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 93,
+            "composite_start_date": "2025-12-27",
+            "data_type": "observed",
+            "original_value": 15003.0,
+            "normalized_value": 26.91,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          }
+        ]
+      },
+      "lst_night": {
+        "provider": "NASA MODIS via ORNL DAAC point API",
+        "product": "MOD11A2",
+        "collection_version": null,
+        "band": "LST_Night_1km",
+        "data_type": "observed",
+        "observation_method": "Satellite-derived retrieval/index, not direct farm or canopy measurement",
+        "source": {
+          "path": "raw/original/data-pack/csv/modis_lst_night_bago.csv",
+          "sha256": "f4ea39f1fe596be69f317bc137a4b7a0fb043bbe8e76050cec4b47d361fc4400"
+        },
+        "retrieved_at": null,
+        "candidate_fetch_log_rows": [
+          302,
+          395,
+          396,
+          397,
+          398,
+          399,
+          400,
+          401,
+          402,
+          403,
+          404,
+          405
+        ],
+        "nominal_native_resolution_m": 1000,
+        "spatial_support": "Requested single-pixel subset; pixel centre, footprint and extraction response absent",
+        "nominal_composite_days": 8,
+        "time_coverage": {
+          "first_start": "2024-01-01",
+          "last_start": "2025-12-27",
+          "expected_composites": 92,
+          "present_composites": 92,
+          "missing_composite_starts": [],
+          "unexpected_composite_starts": [],
+          "missing_or_invalid_values": 39
+        },
+        "original_unit": "K after scaling",
+        "normalized_unit": "deg_c",
+        "transformation": {
+          "multiply_by": 0.02,
+          "add": -273.15
+        },
+        "integration_ready": false,
+        "records": [
+          {
+            "source_csv_row": 2,
+            "composite_start_date": "2024-01-01",
+            "data_type": "observed",
+            "original_value": 14728.0,
+            "normalized_value": 21.41,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 3,
+            "composite_start_date": "2024-01-09",
+            "data_type": "observed",
+            "original_value": 14725.0,
+            "normalized_value": 21.35,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 4,
+            "composite_start_date": "2024-01-17",
+            "data_type": "observed",
+            "original_value": 14699.0,
+            "normalized_value": 20.83,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 5,
+            "composite_start_date": "2024-01-25",
+            "data_type": "observed",
+            "original_value": 14716.0,
+            "normalized_value": 21.17,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 6,
+            "composite_start_date": "2024-02-02",
+            "data_type": "observed",
+            "original_value": 14749.0,
+            "normalized_value": 21.83,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 7,
+            "composite_start_date": "2024-02-10",
+            "data_type": "observed",
+            "original_value": 14809.0,
+            "normalized_value": 23.03,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 8,
+            "composite_start_date": "2024-02-18",
+            "data_type": "observed",
+            "original_value": 14751.0,
+            "normalized_value": 21.87,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 9,
+            "composite_start_date": "2024-02-26",
+            "data_type": "observed",
+            "original_value": 14928.0,
+            "normalized_value": 25.41,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 10,
+            "composite_start_date": "2024-03-05",
+            "data_type": "observed",
+            "original_value": 14941.0,
+            "normalized_value": 25.67,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 11,
+            "composite_start_date": "2024-03-13",
+            "data_type": "observed",
+            "original_value": 14977.0,
+            "normalized_value": 26.39,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 12,
+            "composite_start_date": "2024-03-21",
+            "data_type": "observed",
+            "original_value": 14981.0,
+            "normalized_value": 26.47,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 13,
+            "composite_start_date": "2024-03-29",
+            "data_type": "observed",
+            "original_value": 15018.0,
+            "normalized_value": 27.21,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 14,
+            "composite_start_date": "2024-04-06",
+            "data_type": "observed",
+            "original_value": 15085.0,
+            "normalized_value": 28.55,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 15,
+            "composite_start_date": "2024-04-14",
+            "data_type": "observed",
+            "original_value": 15055.0,
+            "normalized_value": 27.95,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 16,
+            "composite_start_date": "2024-04-22",
+            "data_type": "observed",
+            "original_value": 15088.0,
+            "normalized_value": 28.61,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 17,
+            "composite_start_date": "2024-04-30",
+            "data_type": "observed",
+            "original_value": 15059.0,
+            "normalized_value": 28.03,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 18,
+            "composite_start_date": "2024-05-08",
+            "data_type": "observed",
+            "original_value": 15003.0,
+            "normalized_value": 26.91,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 19,
+            "composite_start_date": "2024-05-16",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 20,
+            "composite_start_date": "2024-05-24",
+            "data_type": "observed",
+            "original_value": 14957.0,
+            "normalized_value": 25.99,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 21,
+            "composite_start_date": "2024-06-01",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 22,
+            "composite_start_date": "2024-06-09",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 23,
+            "composite_start_date": "2024-06-17",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 24,
+            "composite_start_date": "2024-06-25",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 25,
+            "composite_start_date": "2024-07-03",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 26,
+            "composite_start_date": "2024-07-11",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 27,
+            "composite_start_date": "2024-07-19",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 28,
+            "composite_start_date": "2024-07-27",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 29,
+            "composite_start_date": "2024-08-04",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 30,
+            "composite_start_date": "2024-08-12",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 31,
+            "composite_start_date": "2024-08-20",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 32,
+            "composite_start_date": "2024-08-28",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 33,
+            "composite_start_date": "2024-09-05",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 34,
+            "composite_start_date": "2024-09-13",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 35,
+            "composite_start_date": "2024-09-21",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 36,
+            "composite_start_date": "2024-09-29",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 37,
+            "composite_start_date": "2024-10-07",
+            "data_type": "observed",
+            "original_value": 14961.0,
+            "normalized_value": 26.07,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 38,
+            "composite_start_date": "2024-10-15",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 39,
+            "composite_start_date": "2024-10-23",
+            "data_type": "observed",
+            "original_value": 14924.0,
+            "normalized_value": 25.33,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 40,
+            "composite_start_date": "2024-10-31",
+            "data_type": "observed",
+            "original_value": 14916.0,
+            "normalized_value": 25.17,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 41,
+            "composite_start_date": "2024-11-08",
+            "data_type": "observed",
+            "original_value": 14905.0,
+            "normalized_value": 24.95,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 42,
+            "composite_start_date": "2024-11-16",
+            "data_type": "observed",
+            "original_value": 14916.0,
+            "normalized_value": 25.17,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 43,
+            "composite_start_date": "2024-11-24",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 44,
+            "composite_start_date": "2024-12-02",
+            "data_type": "observed",
+            "original_value": 14910.0,
+            "normalized_value": 25.05,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 45,
+            "composite_start_date": "2024-12-10",
+            "data_type": "observed",
+            "original_value": 14797.0,
+            "normalized_value": 22.79,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 46,
+            "composite_start_date": "2024-12-18",
+            "data_type": "observed",
+            "original_value": 14788.0,
+            "normalized_value": 22.61,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 47,
+            "composite_start_date": "2024-12-26",
+            "data_type": "observed",
+            "original_value": 14826.0,
+            "normalized_value": 23.37,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 48,
+            "composite_start_date": "2025-01-01",
+            "data_type": "observed",
+            "original_value": 14741.0,
+            "normalized_value": 21.67,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 49,
+            "composite_start_date": "2025-01-09",
+            "data_type": "observed",
+            "original_value": 14669.0,
+            "normalized_value": 20.23,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 50,
+            "composite_start_date": "2025-01-17",
+            "data_type": "observed",
+            "original_value": 14657.0,
+            "normalized_value": 19.99,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 51,
+            "composite_start_date": "2025-01-25",
+            "data_type": "observed",
+            "original_value": 14735.0,
+            "normalized_value": 21.55,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 52,
+            "composite_start_date": "2025-02-02",
+            "data_type": "observed",
+            "original_value": 14827.0,
+            "normalized_value": 23.39,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 53,
+            "composite_start_date": "2025-02-10",
+            "data_type": "observed",
+            "original_value": 14845.0,
+            "normalized_value": 23.75,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 54,
+            "composite_start_date": "2025-02-18",
+            "data_type": "observed",
+            "original_value": 14901.0,
+            "normalized_value": 24.87,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 55,
+            "composite_start_date": "2025-02-26",
+            "data_type": "observed",
+            "original_value": 14941.0,
+            "normalized_value": 25.67,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 56,
+            "composite_start_date": "2025-03-06",
+            "data_type": "observed",
+            "original_value": 14965.0,
+            "normalized_value": 26.15,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 57,
+            "composite_start_date": "2025-03-14",
+            "data_type": "observed",
+            "original_value": 14995.0,
+            "normalized_value": 26.75,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 58,
+            "composite_start_date": "2025-03-22",
+            "data_type": "observed",
+            "original_value": 15028.0,
+            "normalized_value": 27.41,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 59,
+            "composite_start_date": "2025-03-30",
+            "data_type": "observed",
+            "original_value": 15032.0,
+            "normalized_value": 27.49,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 60,
+            "composite_start_date": "2025-04-07",
+            "data_type": "observed",
+            "original_value": 14919.0,
+            "normalized_value": 25.23,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 61,
+            "composite_start_date": "2025-04-15",
+            "data_type": "observed",
+            "original_value": 15031.0,
+            "normalized_value": 27.47,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 62,
+            "composite_start_date": "2025-04-23",
+            "data_type": "observed",
+            "original_value": 14961.0,
+            "normalized_value": 26.07,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 63,
+            "composite_start_date": "2025-05-01",
+            "data_type": "observed",
+            "original_value": 15076.0,
+            "normalized_value": 28.37,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 64,
+            "composite_start_date": "2025-05-09",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 65,
+            "composite_start_date": "2025-05-17",
+            "data_type": "observed",
+            "original_value": 15020.0,
+            "normalized_value": 27.25,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 66,
+            "composite_start_date": "2025-05-25",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 67,
+            "composite_start_date": "2025-06-02",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 68,
+            "composite_start_date": "2025-06-10",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 69,
+            "composite_start_date": "2025-06-18",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 70,
+            "composite_start_date": "2025-06-26",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 71,
+            "composite_start_date": "2025-07-04",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 72,
+            "composite_start_date": "2025-07-12",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 73,
+            "composite_start_date": "2025-07-20",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 74,
+            "composite_start_date": "2025-07-28",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 75,
+            "composite_start_date": "2025-08-05",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 76,
+            "composite_start_date": "2025-08-13",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 77,
+            "composite_start_date": "2025-08-21",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 78,
+            "composite_start_date": "2025-08-29",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 79,
+            "composite_start_date": "2025-09-06",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 80,
+            "composite_start_date": "2025-09-14",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 81,
+            "composite_start_date": "2025-09-22",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 82,
+            "composite_start_date": "2025-09-30",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 83,
+            "composite_start_date": "2025-10-08",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 84,
+            "composite_start_date": "2025-10-16",
+            "data_type": "observed",
+            "original_value": 14968.0,
+            "normalized_value": 26.21,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 85,
+            "composite_start_date": "2025-10-24",
+            "data_type": "observed",
+            "original_value": 14914.0,
+            "normalized_value": 25.13,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 86,
+            "composite_start_date": "2025-11-01",
+            "data_type": "unavailable",
+            "original_value": null,
+            "normalized_value": null,
+            "status": "missing_or_invalid",
+            "missing_reason": "Contributed blank or invalid; original fill code and cause not recoverable",
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 87,
+            "composite_start_date": "2025-11-09",
+            "data_type": "observed",
+            "original_value": 14875.0,
+            "normalized_value": 24.35,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 88,
+            "composite_start_date": "2025-11-17",
+            "data_type": "observed",
+            "original_value": 14845.0,
+            "normalized_value": 23.75,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 89,
+            "composite_start_date": "2025-11-25",
+            "data_type": "observed",
+            "original_value": 14672.0,
+            "normalized_value": 20.29,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 90,
+            "composite_start_date": "2025-12-03",
+            "data_type": "observed",
+            "original_value": 14805.0,
+            "normalized_value": 22.95,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 91,
+            "composite_start_date": "2025-12-11",
+            "data_type": "observed",
+            "original_value": 14805.0,
+            "normalized_value": 22.95,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 92,
+            "composite_start_date": "2025-12-19",
+            "data_type": "observed",
+            "original_value": 14740.0,
+            "normalized_value": 21.65,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          },
+          {
+            "source_csv_row": 93,
+            "composite_start_date": "2025-12-27",
+            "data_type": "observed",
+            "original_value": 14773.0,
+            "normalized_value": 22.31,
+            "status": "units_and_range_valid_qa_unknown",
+            "missing_reason": null,
+            "quality_flags": null,
+            "usable_for_analysis": false
+          }
+        ]
+      }
+    },
+    "limitations": [
+      "QA bands absent: numeric values cannot be certified cloud-free or scientifically usable.",
+      "Two historical years do not validate a current anomaly baseline or disease diagnosis.",
+      "LST is surface skin temperature, not POWER T2M air temperature.",
+      "Collection version must be recovered from original subset metadata; CMR granules do not prove subset version."
+    ]
+  },
+  "weather_outlook": {
+    "provider": "Open-Meteo",
+    "endpoint": "https://api.open-meteo.com/v1/forecast",
+    "source": {
+      "path": "raw/original/data-pack/csv/forecast16_bago.csv",
+      "sha256": "35d8639a95a83573f263ac33b25e051e9674bc3dc5c94765bcbbc1a3ef9860c2"
+    },
+    "data_type": "forecast",
+    "integration_ready": false,
+    "issue_at": null,
+    "retrieved_at": null,
+    "expires_at": null,
+    "freshness_status": "unverifiable_do_not_serve_as_live",
+    "requested_model": "default Best Match (per contributed collector)",
+    "resolved_models": null,
+    "spatial_resolution": null,
+    "response_grid_coordinates": null,
+    "time_coverage": {
+      "first_local_date": "2026-11-14",
+      "last_local_date": "2026-11-29",
+      "timezone": null,
+      "expected_days_from_contributed_request": 16,
+      "present_days": 16,
+      "missing_by_variable": {
+        "tmax_c": 0,
+        "tmin_c": 0,
+        "precip_mm": 0,
+        "precip_prob_pct": 0,
+        "rh_pct": 0,
+        "wind_max_kmh": 0,
+        "gust_max_kmh": 0,
+        "et0_mm": 0,
+        "srad_mj_m2": 0,
+        "sm_0_7_m3m3": 2,
+        "sm_7_28_m3m3": 2,
+        "soil_temp_0_7_c": 2
+      }
+    },
+    "unit_validation": "Column and request semantics match provider documentation; original daily_units response absent, so no runtime unit assertion is possible",
+    "transformation": "No numerical conversion; blank CSV cells become null. Column aliases mapped to documented variables.",
+    "records": [
+      {
+        "source_csv_row": 2,
+        "local_date": "2026-11-14",
+        "variables": {
+          "tmax_c": {
+            "value": 31.9,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "tmin_c": {
+            "value": 23.5,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_min",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_mm": {
+            "value": 0.0,
+            "unit": "mm",
+            "provider_variable": "precipitation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_prob_pct": {
+            "value": 2.0,
+            "unit": "%",
+            "provider_variable": "precipitation_probability_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "rh_pct": {
+            "value": 73.0,
+            "unit": "%",
+            "provider_variable": "relative_humidity_2m_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "wind_max_kmh": {
+            "value": 11.7,
+            "unit": "km/h",
+            "provider_variable": "wind_speed_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "gust_max_kmh": {
+            "value": 25.6,
+            "unit": "km/h",
+            "provider_variable": "wind_gusts_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "et0_mm": {
+            "value": 4.24,
+            "unit": "mm",
+            "provider_variable": "et0_fao_evapotranspiration",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "srad_mj_m2": {
+            "value": 18.81,
+            "unit": "MJ/m2",
+            "provider_variable": "shortwave_radiation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_0_7_m3m3": {
+            "value": 0.264,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_7_28_m3m3": {
+            "value": 0.251,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_7_to_28cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "soil_temp_0_7_c": {
+            "value": 28.3,
+            "unit": "deg_c",
+            "provider_variable": "soil_temperature_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          }
+        }
+      },
+      {
+        "source_csv_row": 3,
+        "local_date": "2026-11-15",
+        "variables": {
+          "tmax_c": {
+            "value": 31.9,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "tmin_c": {
+            "value": 23.6,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_min",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_mm": {
+            "value": 0.2,
+            "unit": "mm",
+            "provider_variable": "precipitation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_prob_pct": {
+            "value": 20.0,
+            "unit": "%",
+            "provider_variable": "precipitation_probability_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "rh_pct": {
+            "value": 78.0,
+            "unit": "%",
+            "provider_variable": "relative_humidity_2m_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "wind_max_kmh": {
+            "value": 9.0,
+            "unit": "km/h",
+            "provider_variable": "wind_speed_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "gust_max_kmh": {
+            "value": 19.8,
+            "unit": "km/h",
+            "provider_variable": "wind_gusts_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "et0_mm": {
+            "value": 4.03,
+            "unit": "mm",
+            "provider_variable": "et0_fao_evapotranspiration",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "srad_mj_m2": {
+            "value": 18.99,
+            "unit": "MJ/m2",
+            "provider_variable": "shortwave_radiation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_0_7_m3m3": {
+            "value": 0.242,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_7_28_m3m3": {
+            "value": 0.247,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_7_to_28cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "soil_temp_0_7_c": {
+            "value": 28.6,
+            "unit": "deg_c",
+            "provider_variable": "soil_temperature_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          }
+        }
+      },
+      {
+        "source_csv_row": 4,
+        "local_date": "2026-11-16",
+        "variables": {
+          "tmax_c": {
+            "value": 31.9,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "tmin_c": {
+            "value": 23.7,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_min",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_mm": {
+            "value": 0.4,
+            "unit": "mm",
+            "provider_variable": "precipitation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_prob_pct": {
+            "value": 37.0,
+            "unit": "%",
+            "provider_variable": "precipitation_probability_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "rh_pct": {
+            "value": 79.0,
+            "unit": "%",
+            "provider_variable": "relative_humidity_2m_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "wind_max_kmh": {
+            "value": 6.7,
+            "unit": "km/h",
+            "provider_variable": "wind_speed_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "gust_max_kmh": {
+            "value": 15.1,
+            "unit": "km/h",
+            "provider_variable": "wind_gusts_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "et0_mm": {
+            "value": 3.82,
+            "unit": "mm",
+            "provider_variable": "et0_fao_evapotranspiration",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "srad_mj_m2": {
+            "value": 18.29,
+            "unit": "MJ/m2",
+            "provider_variable": "shortwave_radiation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_0_7_m3m3": {
+            "value": 0.226,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_7_28_m3m3": {
+            "value": 0.243,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_7_to_28cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "soil_temp_0_7_c": {
+            "value": 28.8,
+            "unit": "deg_c",
+            "provider_variable": "soil_temperature_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          }
+        }
+      },
+      {
+        "source_csv_row": 5,
+        "local_date": "2026-11-17",
+        "variables": {
+          "tmax_c": {
+            "value": 32.2,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "tmin_c": {
+            "value": 23.7,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_min",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_mm": {
+            "value": 4.3,
+            "unit": "mm",
+            "provider_variable": "precipitation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_prob_pct": {
+            "value": 56.0,
+            "unit": "%",
+            "provider_variable": "precipitation_probability_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "rh_pct": {
+            "value": 86.0,
+            "unit": "%",
+            "provider_variable": "relative_humidity_2m_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "wind_max_kmh": {
+            "value": 13.8,
+            "unit": "km/h",
+            "provider_variable": "wind_speed_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "gust_max_kmh": {
+            "value": 27.7,
+            "unit": "km/h",
+            "provider_variable": "wind_gusts_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "et0_mm": {
+            "value": 3.64,
+            "unit": "mm",
+            "provider_variable": "et0_fao_evapotranspiration",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "srad_mj_m2": {
+            "value": 17.62,
+            "unit": "MJ/m2",
+            "provider_variable": "shortwave_radiation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_0_7_m3m3": {
+            "value": 0.227,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_7_28_m3m3": {
+            "value": 0.239,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_7_to_28cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "soil_temp_0_7_c": {
+            "value": 28.5,
+            "unit": "deg_c",
+            "provider_variable": "soil_temperature_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          }
+        }
+      },
+      {
+        "source_csv_row": 6,
+        "local_date": "2026-11-18",
+        "variables": {
+          "tmax_c": {
+            "value": 32.4,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "tmin_c": {
+            "value": 24.3,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_min",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_mm": {
+            "value": 3.0,
+            "unit": "mm",
+            "provider_variable": "precipitation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_prob_pct": {
+            "value": 37.0,
+            "unit": "%",
+            "provider_variable": "precipitation_probability_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "rh_pct": {
+            "value": 83.0,
+            "unit": "%",
+            "provider_variable": "relative_humidity_2m_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "wind_max_kmh": {
+            "value": 7.8,
+            "unit": "km/h",
+            "provider_variable": "wind_speed_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "gust_max_kmh": {
+            "value": 23.8,
+            "unit": "km/h",
+            "provider_variable": "wind_gusts_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "et0_mm": {
+            "value": 3.83,
+            "unit": "mm",
+            "provider_variable": "et0_fao_evapotranspiration",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "srad_mj_m2": {
+            "value": 18.19,
+            "unit": "MJ/m2",
+            "provider_variable": "shortwave_radiation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_0_7_m3m3": {
+            "value": 0.247,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_7_28_m3m3": {
+            "value": 0.236,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_7_to_28cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "soil_temp_0_7_c": {
+            "value": 28.6,
+            "unit": "deg_c",
+            "provider_variable": "soil_temperature_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          }
+        }
+      },
+      {
+        "source_csv_row": 7,
+        "local_date": "2026-11-19",
+        "variables": {
+          "tmax_c": {
+            "value": 32.4,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "tmin_c": {
+            "value": 24.3,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_min",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_mm": {
+            "value": 0.3,
+            "unit": "mm",
+            "provider_variable": "precipitation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_prob_pct": {
+            "value": 30.0,
+            "unit": "%",
+            "provider_variable": "precipitation_probability_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "rh_pct": {
+            "value": 81.0,
+            "unit": "%",
+            "provider_variable": "relative_humidity_2m_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "wind_max_kmh": {
+            "value": 9.4,
+            "unit": "km/h",
+            "provider_variable": "wind_speed_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "gust_max_kmh": {
+            "value": 24.1,
+            "unit": "km/h",
+            "provider_variable": "wind_gusts_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "et0_mm": {
+            "value": 3.78,
+            "unit": "mm",
+            "provider_variable": "et0_fao_evapotranspiration",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "srad_mj_m2": {
+            "value": 17.96,
+            "unit": "MJ/m2",
+            "provider_variable": "shortwave_radiation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_0_7_m3m3": {
+            "value": 0.258,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_7_28_m3m3": {
+            "value": 0.234,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_7_to_28cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "soil_temp_0_7_c": {
+            "value": 28.7,
+            "unit": "deg_c",
+            "provider_variable": "soil_temperature_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          }
+        }
+      },
+      {
+        "source_csv_row": 8,
+        "local_date": "2026-11-20",
+        "variables": {
+          "tmax_c": {
+            "value": 32.3,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "tmin_c": {
+            "value": 24.2,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_min",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_mm": {
+            "value": 0.0,
+            "unit": "mm",
+            "provider_variable": "precipitation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_prob_pct": {
+            "value": 20.0,
+            "unit": "%",
+            "provider_variable": "precipitation_probability_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "rh_pct": {
+            "value": 80.0,
+            "unit": "%",
+            "provider_variable": "relative_humidity_2m_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "wind_max_kmh": {
+            "value": 8.1,
+            "unit": "km/h",
+            "provider_variable": "wind_speed_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "gust_max_kmh": {
+            "value": 19.8,
+            "unit": "km/h",
+            "provider_variable": "wind_gusts_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "et0_mm": {
+            "value": 3.84,
+            "unit": "mm",
+            "provider_variable": "et0_fao_evapotranspiration",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "srad_mj_m2": {
+            "value": 18.15,
+            "unit": "MJ/m2",
+            "provider_variable": "shortwave_radiation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_0_7_m3m3": {
+            "value": 0.289,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_7_28_m3m3": {
+            "value": 0.272,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_7_to_28cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "soil_temp_0_7_c": {
+            "value": 28.9,
+            "unit": "deg_c",
+            "provider_variable": "soil_temperature_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          }
+        }
+      },
+      {
+        "source_csv_row": 9,
+        "local_date": "2026-11-21",
+        "variables": {
+          "tmax_c": {
+            "value": 32.9,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "tmin_c": {
+            "value": 24.3,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_min",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_mm": {
+            "value": 0.0,
+            "unit": "mm",
+            "provider_variable": "precipitation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_prob_pct": {
+            "value": 14.0,
+            "unit": "%",
+            "provider_variable": "precipitation_probability_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "rh_pct": {
+            "value": 79.0,
+            "unit": "%",
+            "provider_variable": "relative_humidity_2m_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "wind_max_kmh": {
+            "value": 9.2,
+            "unit": "km/h",
+            "provider_variable": "wind_speed_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "gust_max_kmh": {
+            "value": 20.5,
+            "unit": "km/h",
+            "provider_variable": "wind_gusts_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "et0_mm": {
+            "value": 3.98,
+            "unit": "mm",
+            "provider_variable": "et0_fao_evapotranspiration",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "srad_mj_m2": {
+            "value": 18.7,
+            "unit": "MJ/m2",
+            "provider_variable": "shortwave_radiation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_0_7_m3m3": {
+            "value": 0.269,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_7_28_m3m3": {
+            "value": 0.27,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_7_to_28cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "soil_temp_0_7_c": {
+            "value": 29.0,
+            "unit": "deg_c",
+            "provider_variable": "soil_temperature_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          }
+        }
+      },
+      {
+        "source_csv_row": 10,
+        "local_date": "2026-11-22",
+        "variables": {
+          "tmax_c": {
+            "value": 32.9,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "tmin_c": {
+            "value": 24.0,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_min",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_mm": {
+            "value": 0.0,
+            "unit": "mm",
+            "provider_variable": "precipitation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_prob_pct": {
+            "value": 10.0,
+            "unit": "%",
+            "provider_variable": "precipitation_probability_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "rh_pct": {
+            "value": 79.0,
+            "unit": "%",
+            "provider_variable": "relative_humidity_2m_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "wind_max_kmh": {
+            "value": 9.0,
+            "unit": "km/h",
+            "provider_variable": "wind_speed_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "gust_max_kmh": {
+            "value": 19.4,
+            "unit": "km/h",
+            "provider_variable": "wind_gusts_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "et0_mm": {
+            "value": 3.9,
+            "unit": "mm",
+            "provider_variable": "et0_fao_evapotranspiration",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "srad_mj_m2": {
+            "value": 18.75,
+            "unit": "MJ/m2",
+            "provider_variable": "shortwave_radiation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_0_7_m3m3": {
+            "value": 0.248,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_7_28_m3m3": {
+            "value": 0.265,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_7_to_28cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "soil_temp_0_7_c": {
+            "value": 28.9,
+            "unit": "deg_c",
+            "provider_variable": "soil_temperature_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          }
+        }
+      },
+      {
+        "source_csv_row": 11,
+        "local_date": "2026-11-23",
+        "variables": {
+          "tmax_c": {
+            "value": 32.7,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "tmin_c": {
+            "value": 23.4,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_min",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_mm": {
+            "value": 0.0,
+            "unit": "mm",
+            "provider_variable": "precipitation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_prob_pct": {
+            "value": 4.0,
+            "unit": "%",
+            "provider_variable": "precipitation_probability_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "rh_pct": {
+            "value": 78.0,
+            "unit": "%",
+            "provider_variable": "relative_humidity_2m_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "wind_max_kmh": {
+            "value": 8.5,
+            "unit": "km/h",
+            "provider_variable": "wind_speed_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "gust_max_kmh": {
+            "value": 20.9,
+            "unit": "km/h",
+            "provider_variable": "wind_gusts_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "et0_mm": {
+            "value": 3.96,
+            "unit": "mm",
+            "provider_variable": "et0_fao_evapotranspiration",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "srad_mj_m2": {
+            "value": 18.34,
+            "unit": "MJ/m2",
+            "provider_variable": "shortwave_radiation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_0_7_m3m3": {
+            "value": 0.231,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_7_28_m3m3": {
+            "value": 0.259,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_7_to_28cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "soil_temp_0_7_c": {
+            "value": 28.4,
+            "unit": "deg_c",
+            "provider_variable": "soil_temperature_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          }
+        }
+      },
+      {
+        "source_csv_row": 12,
+        "local_date": "2026-11-24",
+        "variables": {
+          "tmax_c": {
+            "value": 32.5,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "tmin_c": {
+            "value": 22.7,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_min",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_mm": {
+            "value": 0.0,
+            "unit": "mm",
+            "provider_variable": "precipitation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_prob_pct": {
+            "value": 8.0,
+            "unit": "%",
+            "provider_variable": "precipitation_probability_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "rh_pct": {
+            "value": 79.0,
+            "unit": "%",
+            "provider_variable": "relative_humidity_2m_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "wind_max_kmh": {
+            "value": 7.5,
+            "unit": "km/h",
+            "provider_variable": "wind_speed_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "gust_max_kmh": {
+            "value": 21.2,
+            "unit": "km/h",
+            "provider_variable": "wind_gusts_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "et0_mm": {
+            "value": 4.01,
+            "unit": "mm",
+            "provider_variable": "et0_fao_evapotranspiration",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "srad_mj_m2": {
+            "value": 19.04,
+            "unit": "MJ/m2",
+            "provider_variable": "shortwave_radiation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_0_7_m3m3": {
+            "value": 0.215,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_7_28_m3m3": {
+            "value": 0.254,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_7_to_28cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "soil_temp_0_7_c": {
+            "value": 28.3,
+            "unit": "deg_c",
+            "provider_variable": "soil_temperature_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          }
+        }
+      },
+      {
+        "source_csv_row": 13,
+        "local_date": "2026-11-25",
+        "variables": {
+          "tmax_c": {
+            "value": 32.8,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "tmin_c": {
+            "value": 22.9,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_min",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_mm": {
+            "value": 0.0,
+            "unit": "mm",
+            "provider_variable": "precipitation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_prob_pct": {
+            "value": 4.0,
+            "unit": "%",
+            "provider_variable": "precipitation_probability_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "rh_pct": {
+            "value": 79.0,
+            "unit": "%",
+            "provider_variable": "relative_humidity_2m_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "wind_max_kmh": {
+            "value": 9.1,
+            "unit": "km/h",
+            "provider_variable": "wind_speed_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "gust_max_kmh": {
+            "value": 24.1,
+            "unit": "km/h",
+            "provider_variable": "wind_gusts_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "et0_mm": {
+            "value": 3.9,
+            "unit": "mm",
+            "provider_variable": "et0_fao_evapotranspiration",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "srad_mj_m2": {
+            "value": 18.26,
+            "unit": "MJ/m2",
+            "provider_variable": "shortwave_radiation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_0_7_m3m3": {
+            "value": 0.202,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_7_28_m3m3": {
+            "value": 0.248,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_7_to_28cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "soil_temp_0_7_c": {
+            "value": 28.3,
+            "unit": "deg_c",
+            "provider_variable": "soil_temperature_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          }
+        }
+      },
+      {
+        "source_csv_row": 14,
+        "local_date": "2026-11-26",
+        "variables": {
+          "tmax_c": {
+            "value": 32.8,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "tmin_c": {
+            "value": 23.6,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_min",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_mm": {
+            "value": 0.0,
+            "unit": "mm",
+            "provider_variable": "precipitation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_prob_pct": {
+            "value": 12.0,
+            "unit": "%",
+            "provider_variable": "precipitation_probability_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "rh_pct": {
+            "value": 75.0,
+            "unit": "%",
+            "provider_variable": "relative_humidity_2m_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "wind_max_kmh": {
+            "value": 10.6,
+            "unit": "km/h",
+            "provider_variable": "wind_speed_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "gust_max_kmh": {
+            "value": 22.0,
+            "unit": "km/h",
+            "provider_variable": "wind_gusts_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "et0_mm": {
+            "value": 4.0,
+            "unit": "mm",
+            "provider_variable": "et0_fao_evapotranspiration",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "srad_mj_m2": {
+            "value": 17.68,
+            "unit": "MJ/m2",
+            "provider_variable": "shortwave_radiation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_0_7_m3m3": {
+            "value": 0.189,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_7_28_m3m3": {
+            "value": 0.242,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_7_to_28cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "soil_temp_0_7_c": {
+            "value": 28.8,
+            "unit": "deg_c",
+            "provider_variable": "soil_temperature_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          }
+        }
+      },
+      {
+        "source_csv_row": 15,
+        "local_date": "2026-11-27",
+        "variables": {
+          "tmax_c": {
+            "value": 32.6,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "tmin_c": {
+            "value": 23.2,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_min",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_mm": {
+            "value": 0.0,
+            "unit": "mm",
+            "provider_variable": "precipitation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_prob_pct": {
+            "value": 16.0,
+            "unit": "%",
+            "provider_variable": "precipitation_probability_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "rh_pct": {
+            "value": 75.0,
+            "unit": "%",
+            "provider_variable": "relative_humidity_2m_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "wind_max_kmh": {
+            "value": 9.0,
+            "unit": "km/h",
+            "provider_variable": "wind_speed_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "gust_max_kmh": {
+            "value": 21.6,
+            "unit": "km/h",
+            "provider_variable": "wind_gusts_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "et0_mm": {
+            "value": 3.91,
+            "unit": "mm",
+            "provider_variable": "et0_fao_evapotranspiration",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "srad_mj_m2": {
+            "value": 18.28,
+            "unit": "MJ/m2",
+            "provider_variable": "shortwave_radiation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_0_7_m3m3": {
+            "value": 0.178,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_7_28_m3m3": {
+            "value": 0.237,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_7_to_28cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "soil_temp_0_7_c": {
+            "value": 28.7,
+            "unit": "deg_c",
+            "provider_variable": "soil_temperature_0_to_7cm_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          }
+        }
+      },
+      {
+        "source_csv_row": 16,
+        "local_date": "2026-11-28",
+        "variables": {
+          "tmax_c": {
+            "value": 32.7,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "tmin_c": {
+            "value": 20.9,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_min",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_mm": {
+            "value": 0.0,
+            "unit": "mm",
+            "provider_variable": "precipitation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_prob_pct": {
+            "value": 25.0,
+            "unit": "%",
+            "provider_variable": "precipitation_probability_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "rh_pct": {
+            "value": 71.0,
+            "unit": "%",
+            "provider_variable": "relative_humidity_2m_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "wind_max_kmh": {
+            "value": 12.8,
+            "unit": "km/h",
+            "provider_variable": "wind_speed_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "gust_max_kmh": {
+            "value": 30.2,
+            "unit": "km/h",
+            "provider_variable": "wind_gusts_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "et0_mm": {
+            "value": 4.35,
+            "unit": "mm",
+            "provider_variable": "et0_fao_evapotranspiration",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "srad_mj_m2": {
+            "value": 19.41,
+            "unit": "MJ/m2",
+            "provider_variable": "shortwave_radiation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_0_7_m3m3": {
+            "value": null,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_0_to_7cm_mean",
+            "data_type": "unavailable",
+            "status": "missing_in_contribution"
+          },
+          "sm_7_28_m3m3": {
+            "value": null,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_7_to_28cm_mean",
+            "data_type": "unavailable",
+            "status": "missing_in_contribution"
+          },
+          "soil_temp_0_7_c": {
+            "value": null,
+            "unit": "deg_c",
+            "provider_variable": "soil_temperature_0_to_7cm_mean",
+            "data_type": "unavailable",
+            "status": "missing_in_contribution"
+          }
+        }
+      },
+      {
+        "source_csv_row": 17,
+        "local_date": "2026-11-29",
+        "variables": {
+          "tmax_c": {
+            "value": 29.6,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "tmin_c": {
+            "value": 18.9,
+            "unit": "deg_c",
+            "provider_variable": "temperature_2m_min",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_mm": {
+            "value": 0.0,
+            "unit": "mm",
+            "provider_variable": "precipitation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "precip_prob_pct": {
+            "value": 22.0,
+            "unit": "%",
+            "provider_variable": "precipitation_probability_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "rh_pct": {
+            "value": 75.0,
+            "unit": "%",
+            "provider_variable": "relative_humidity_2m_mean",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "wind_max_kmh": {
+            "value": 13.0,
+            "unit": "km/h",
+            "provider_variable": "wind_speed_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "gust_max_kmh": {
+            "value": 25.9,
+            "unit": "km/h",
+            "provider_variable": "wind_gusts_10m_max",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "et0_mm": {
+            "value": 4.08,
+            "unit": "mm",
+            "provider_variable": "et0_fao_evapotranspiration",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "srad_mj_m2": {
+            "value": 19.82,
+            "unit": "MJ/m2",
+            "provider_variable": "shortwave_radiation_sum",
+            "data_type": "forecast",
+            "status": "metadata_unverified"
+          },
+          "sm_0_7_m3m3": {
+            "value": null,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_0_to_7cm_mean",
+            "data_type": "unavailable",
+            "status": "missing_in_contribution"
+          },
+          "sm_7_28_m3m3": {
+            "value": null,
+            "unit": "m3/m3",
+            "provider_variable": "soil_moisture_7_to_28cm_mean",
+            "data_type": "unavailable",
+            "status": "missing_in_contribution"
+          },
+          "soil_temp_0_7_c": {
+            "value": null,
+            "unit": "deg_c",
+            "provider_variable": "soil_temperature_0_to_7cm_mean",
+            "data_type": "unavailable",
+            "status": "missing_in_contribution"
+          }
+        }
+      }
+    ],
+    "limitations": [
+      "No forecast/current-weather fetch log entries, raw provider response, UTC offset, issue time or response units contributed.",
+      "Local-date range does not establish freshness. API processing duration generationtime_ms would not establish issue time either.",
+      "Model/provider mix and resolution cannot be inferred from an ERA5-Land/IFS comment.",
+      "Soil forecast variables are absent on the last two days; do not fill them or treat the whole row as complete."
+    ]
+  }
+}

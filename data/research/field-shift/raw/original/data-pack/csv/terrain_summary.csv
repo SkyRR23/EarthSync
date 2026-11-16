@@ -1,0 +1,4 @@
+location,elev_min_m,elev_max_m,relief_m,elev_mean_m,elev_center_m,slope_to_center_pct
+hlegu,3.0,15.0,12.0,6.6,5.0,0.065
+bago,6.0,33.0,27.0,14.9,12.0,0.148
+magway,39.0,109.0,70.0,64.6,63.0,1.266
